@@ -1,0 +1,126 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-11 12:31-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: database/models/annotations.py:17
+#, fuzzy
+#| msgid "itemid"
+msgid "item id"
+msgstr "item id"
+
+#: database/models/annotations.py:18
+msgid "Annotated item"
+msgstr "Item anotado"
+
+#: database/models/annotations.py:24
+msgid "annotation type"
+msgstr "tipo de anotación"
+
+#: database/models/annotations.py:25
+msgid "Type of annotation"
+msgstr "Tipo de anotación"
+
+#: database/models/annotations.py:30
+msgid "event type"
+msgstr "tipo de evento"
+
+#: database/models/annotations.py:31
+msgid "Type of event being annotated"
+msgstr "Tipo de evento siendo anotado"
+
+#: database/models/annotations.py:35
+msgid "label"
+msgstr "etiqueta"
+
+#: database/models/annotations.py:36
+msgid "Labels associated to annotation"
+msgstr "Etiquetas asociadas a la anotación"
+
+#: database/models/annotations.py:40
+msgid "annotation"
+msgstr "anotación"
+
+#: database/models/annotations.py:41
+msgid "Information of annotation location within item"
+msgstr "Información de la ubicación de la anotación dentro del item"
+
+#: database/models/annotations.py:45
+msgid "metadata"
+msgstr "metadatos"
+
+#: database/models/annotations.py:46
+msgid "Metadata associated to annotation"
+msgstr "Metadatos asociados a la anotación"
+
+#: database/models/annotations.py:50
+msgid "certainty"
+msgstr "certeza"
+
+#: database/models/annotations.py:51
+msgid "Level of certainty of location or labelling of annotation"
+msgstr "Nivel de certeza de la ubicación o la etiqueta de la anotación"
+
+#: database/models/annotations.py:56
+msgid "quality"
+msgstr "calidad"
+
+#: database/models/annotations.py:57
+msgid "Quality of item content inside annotation"
+msgstr ""
+"Calidad del contenido de la información del item dentro de la anotación"
+
+#: database/models/annotations.py:63
+msgid "commentaries"
+msgstr "comentarios"
+
+#: database/models/annotations.py:64
+msgid "Commentaries of annotator"
+msgstr "Comentarios de anotador"
+
+#: database/models/annotations.py:68
+msgid "created on"
+msgstr "creado en"
+
+#: database/models/annotations.py:69
+msgid "Date of creation of annotation"
+msgstr "Fecha de creación de la anotación"
+
+#: database/models/annotations.py:74
+msgid "modified on"
+msgstr "modificado en"
+
+#: database/models/annotations.py:75
+msgid "Date of last modification"
+msgstr "Fecha de última modificación"
+
+#: database/models/annotations.py:80
+msgid "artificial"
+msgstr "artificial"
+
+#: database/models/annotations.py:81
+msgid "Is the annotation artificially created?"
+msgstr "¿La anotación fue creada de modo artificial?"
+
+#: database/models/annotations.py:86
+msgid "user id"
+msgstr "id de usuario"
+
+#: database/models/annotations.py:87
+msgid "Creator of annotation"
+msgstr "Creador de la anotación"
