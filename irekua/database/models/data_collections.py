@@ -23,6 +23,7 @@ class Collection(models.Model):
         blank=False)
     coordinator = models.ForeignKey(
         User,
+        on_delete=models.PROTECT,
         db_column='coordinator_id',
         verbose_name=_('coordinator id'),
         help_text=_('Collection coordinator'),

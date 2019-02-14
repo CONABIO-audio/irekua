@@ -77,6 +77,7 @@ class Annotation(models.Model):
         auto_now=True)
     model = models.ForeignKey(
         'Model',
+        on_delete=models.PROTECT,
         db_column='model_id',
         verbose_name=_('model id'),
         help_text=_('Creator of annotation (AI model)'),

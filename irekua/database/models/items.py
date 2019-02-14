@@ -34,6 +34,7 @@ class Item(models.Model):
         blank=False)
     sampling = models.ForeignKey(
         'SamplingEvent',
+        on_delete=models.PROTECT,
         blank=True,
         null=True)
     source = models.ForeignKey(

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 12:31-0600\n"
+"POT-Creation-Date: 2019-02-13 18:04-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -60,7 +60,8 @@ msgstr "anotación"
 msgid "Information of annotation location within item"
 msgstr "Información de la ubicación de la anotación dentro del item"
 
-#: database/models/annotations.py:45
+#: database/models/annotations.py:45 database/models/data_collections.py:21
+#: database/models/devices.py:44 database/models/entailments.py:25
 msgid "metadata"
 msgstr "metadatos"
 
@@ -109,18 +110,153 @@ msgstr "modificado en"
 msgid "Date of last modification"
 msgstr "Fecha de última modificación"
 
-#: database/models/annotations.py:80
-msgid "artificial"
-msgstr "artificial"
+#: database/models/annotations.py:82
+msgid "model id"
+msgstr "id modelo"
 
-#: database/models/annotations.py:81
-msgid "Is the annotation artificially created?"
-msgstr "¿La anotación fue creada de modo artificial?"
+#: database/models/annotations.py:83
+#, fuzzy
+#| msgid "Creator of annotation"
+msgid "Creator of annotation (AI model)"
+msgstr "Creador de la anotación"
 
-#: database/models/annotations.py:86
+#: database/models/annotations.py:88
+#, fuzzy
+#| msgid "created on"
+msgid "created by"
+msgstr "creado en"
+
+#: database/models/annotations.py:89
+#, fuzzy
+#| msgid "Creator of annotation"
+msgid "Creator of annotation (User)"
+msgstr "Creador de la anotación"
+
+#: database/models/data_collections.py:11
+msgid "name"
+msgstr "nombre"
+
+#: database/models/data_collections.py:12
+msgid "Name of collection"
+msgstr "Nombre de la colección"
+
+#: database/models/data_collections.py:16
+msgid "description"
+msgstr "descripción"
+
+#: database/models/data_collections.py:17
+#, fuzzy
+#| msgid "Date of creation of annotation"
+msgid "Description of collection"
+msgstr "Fecha de creación de la anotación"
+
+#: database/models/data_collections.py:22
+msgid "Collection metadata"
+msgstr "Metadatos de la colección"
+
+#: database/models/data_collections.py:28
+msgid "coordinator id"
+msgstr "id coordinador"
+
+#: database/models/data_collections.py:29
+msgid "Collection coordinator"
+msgstr "Coordinador de la colección"
+
+#: database/models/data_collections.py:38
+msgid "collection id"
+msgstr "id coleccion"
+
+#: database/models/data_collections.py:39
+msgid "Collection beign owned"
+msgstr "Nombre de la colleción"
+
+#: database/models/data_collections.py:45
 msgid "user id"
 msgstr "id de usuario"
 
-#: database/models/annotations.py:87
-msgid "Creator of annotation"
-msgstr "Creador de la anotación"
+#: database/models/data_collections.py:46
+msgid "User owner of collection"
+msgstr "Usuario, dueño de la colección"
+
+#: database/models/devices.py:11
+msgid "serial number"
+msgstr "numero de serie"
+
+#: database/models/devices.py:12
+msgid "Serial number of device"
+msgstr "Numero de serie del dispositivo"
+
+#: database/models/devices.py:19
+msgid "type"
+msgstr "tipo"
+
+#: database/models/devices.py:20
+msgid "Type of device"
+msgstr "Tipo de dispositivo"
+
+#: database/models/devices.py:25
+msgid "brand"
+msgstr "marca"
+
+#: database/models/devices.py:26
+msgid "Brand of device"
+msgstr "Marca del dispositivo"
+
+#: database/models/devices.py:31
+msgid "model"
+msgstr "modelo"
+
+#: database/models/devices.py:32
+msgid "Model of device"
+msgstr "Modelo del dispositivo"
+
+#: database/models/devices.py:38
+msgid "owner"
+msgstr "dueño"
+
+#: database/models/devices.py:39
+msgid "Owner of device"
+msgstr "Dueño del dispositivo"
+
+#: database/models/devices.py:45
+#, fuzzy
+#| msgid "Metadata associated to annotation"
+msgid "Metadata associated to device"
+msgstr "Metadatos asociados a la anotación"
+
+#: database/models/devices.py:50
+msgid "bundle"
+msgstr "manojo"
+
+#: database/models/devices.py:51
+msgid "Does this device possibly represents many physical devices?"
+msgstr ""
+"¿Este dispositivo representa (posiblemente) varios dispositivos físicos?"
+
+#: database/models/entailments.py:11
+msgid "source id"
+msgstr "id fuente"
+
+#: database/models/entailments.py:12
+msgid "Source of entailment"
+msgstr "Fuente de la implicación"
+
+#: database/models/entailments.py:19
+msgid "target id"
+msgstr "id objetivo"
+
+#: database/models/entailments.py:20
+msgid "Target of entailment"
+msgstr "Objetivo de la implicación"
+
+#: database/models/entailments.py:26
+#, fuzzy
+#| msgid "Metadata associated to annotation"
+msgid "Metadata associated to entailment"
+msgstr "Metadatos asociados a la anotación"
+
+#~ msgid "artificial"
+#~ msgstr "artificial"
+
+#~ msgid "Is the annotation artificially created?"
+#~ msgstr "¿La anotación fue creada de modo artificial?"

@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
-from db_config import (
+from .db_config import (
     DB_NAME,
     DB_USER,
     DB_PASSWORD,
@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django.contrib.gis',
     'django.contrib.admindocs',
+    'rest_framework',
+    'rest',
     'database',
 ]
 

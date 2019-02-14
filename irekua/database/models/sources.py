@@ -16,5 +16,6 @@ class Source(models.Model):
         auto_now_add=True)
     uploader = models.ForeignKey(
         User,
+        on_delete=models.PROTECT,
         related_name='source_uploader',
         blank=False)
