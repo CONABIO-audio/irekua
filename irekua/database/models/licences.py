@@ -11,6 +11,9 @@ class Licence(models.Model):
     document = models.CharField(
         max_length=70,
         blank=True)
+    public = models.BooleanField(
+        blank=False,
+        null=False)
     created_on = models.DateTimeField(
         blank=False)
     valid_until = models.DateTimeField(

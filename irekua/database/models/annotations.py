@@ -1,4 +1,4 @@
-from django.contrib.postgres.fields import HStoreField, JSONField
+from django.contrib.postgres.fields import JSONField
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -30,7 +30,7 @@ class Annotation(models.Model):
         verbose_name=_('event type'),
         help_text=_('Type of event being annotated'),
         blank=False)
-    label = HStoreField(
+    label = JSONField(
         db_column='label',
         verbose_name=_('label'),
         help_text=_('Labels associated to annotation'),

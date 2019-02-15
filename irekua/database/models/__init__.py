@@ -12,6 +12,8 @@ from .sources import Source
 from .users import UserData
 from .models import Model
 from .synonyms import Synonym
+from .schemas import Schema
+from .collection_schemas import CollectionSchema
 
 
 __all__ = [
@@ -30,4 +32,6 @@ __all__ = [
     'UserData',
     'Model',
     'Synonym',
+    'Schema',
+    'CollectionSchema',
 ]

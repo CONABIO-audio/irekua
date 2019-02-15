@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 from django.contrib.auth.models import User
 
 
@@ -16,3 +17,6 @@ class Model(models.Model):
         User,
         on_delete=models.PROTECT,
         blank=False)
+    metadata = JSONField(
+        blank=True,
+        null=True)

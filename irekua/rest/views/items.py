@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from rest_framework import viewsets
 import database.models as db
 
-from .serializers import ItemSerializer
+from rest.serializers import ItemSerializer
 
 
 # Create your views here.

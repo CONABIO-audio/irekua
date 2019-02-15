@@ -142,3 +142,11 @@ STATIC_URL = '/static/'
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'irekua', 'locale'),
 )
+
+
+# Rest framework settings
+# https://www.django-rest-framework.org/tutorial/quickstart/#settings
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
