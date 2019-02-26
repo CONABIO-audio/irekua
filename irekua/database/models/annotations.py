@@ -6,9 +6,9 @@ from django.utils.translation import gettext_lazy as _
 
 class Annotation(models.Model):
     QUALITY_OPTIONS = [
-        ('L', 'baja'),
-        ('M', 'media'),
-        ('H', 'alta')
+        ('L', _('low')),
+        ('M', _('medium')),
+        ('H', _('high')),
     ]
 
     item = models.ForeignKey(
@@ -16,30 +16,63 @@ class Annotation(models.Model):
         db_column='item_id',
         verbose_name=_('item id'),
         help_text=_('Annotated item'),
+        limit_choices_to={'is_uploaded': True},
         on_delete=models.PROTECT,
         blank=False)
-    annotation_type = models.CharField(
-        max_length=30,
-        db_column='annotation_type',
-        verbose_name=_('annotation type'),
-        help_text=_('Type of annotation'),
-        blank=False)
-    event_type = models.CharField(
-        max_length=30,
+    event_type = models.ForeignKey(
+        'EventType',
+        on_delete=models.PROTECT,
         db_column='event_type',
         verbose_name=_('event type'),
         help_text=_('Type of event being annotated'),
         blank=False)
+    label_type = models.ForeignKey(
+        'Schema',
+        on_delete=models.PROTECT,
+        related_name='annotation_label_type',
+        db_column='label_type',
+        verbose_name=_('label type'),
+        help_text=_('Schema for label structure'),
+        limit_choices_to=(
+            models.Q(field__exact='annotation_label') |
+            models.Q(field__exact='global')),
+        to_field='name',
+        default='free',
+        blank=False,
+        null=False)
     label = JSONField(
         db_column='label',
         verbose_name=_('label'),
         help_text=_('Labels associated to annotation'),
+        blank=False,
+        null=False)
+    annotation_type = models.ForeignKey(
+        'AnnotationType',
+        on_delete=models.PROTECT,
+        db_column='annotation_type',
+        verbose_name=_('annotation type'),
+        help_text=_('Type of annotation'),
         blank=False)
     annotation = JSONField(
         db_column='annotation',
         verbose_name=_('annotation'),
         help_text=_('Information of annotation location within item'),
-        blank=False)
+        blank=False,
+        null=False)
+    metadata_type = models.ForeignKey(
+        'Schema',
+        related_name='annotation_metadata_type',
+        on_delete=models.PROTECT,
+        db_column='metadata_type',
+        verbose_name=_('metadata type'),
+        help_text=_('JSON schema for metadata'),
+        limit_choices_to=(
+            models.Q(field__exact='annotation_metadata') |
+            models.Q(field__exact='global')),
+        blank=True,
+        null=True,
+        to_field='name',
+        default='free')
     metadata = JSONField(
         db_column='metadata',
         verbose_name=_('metadata'),
@@ -75,18 +108,31 @@ class Annotation(models.Model):
         help_text=_('Date of last modification'),
         editable=False,
         auto_now=True)
-    model = models.ForeignKey(
-        'Model',
-        on_delete=models.PROTECT,
-        db_column='model_id',
-        verbose_name=_('model id'),
-        help_text=_('Creator of annotation (AI model)'),
-        blank=False)
     created_by = models.ForeignKey(
         User,
+        related_name='annotation_created_by',
         db_column='created_by',
         verbose_name=_('created by'),
-        help_text=_('Creator of annotation (User)'),
+        help_text=_('Creator of annotation'),
         on_delete=models.PROTECT,
         blank=True,
         null=True)
+    last_modified_by = models.ForeignKey(
+        User,
+        related_name='annotation_last_modified_by',
+        db_column='last_modified_by',
+        verbose_name=_('last modified by'),
+        help_text=_('User that modified the annotation last'),
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True)
+
+    class Meta:
+        verbose_name = _('Annotation')
+        verbose_name_plural = _('Annotations')
+
+    def __str__(self):
+        msg = _('Annotation {annotation_id} of item {item_id}').format(
+            annotation_id=self.id,
+            item_id=self.item.id)
+        return msg

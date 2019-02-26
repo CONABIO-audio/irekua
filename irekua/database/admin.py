@@ -7,33 +7,45 @@ from . import models
 # Register your models here.
 @admin.register(
     models.Annotation,
-    models.Term,
+    models.AnnotationType,
+    models.AnnotationVote,
     models.Collection,
-    models.CollectionOwner,
+    models.CollectionDevice,
+    models.CollectionRole,
+    models.CollectionSchema,
+    models.CollectionSite,
+    models.CollectionUser,
     models.Device,
+    models.DeviceTerm,
     models.Entailment,
+    models.EventType,
+    models.Institution,
     models.Item,
+    models.ItemType,
     models.Licence,
+    models.LicenceType,
+    models.MetaCollection,
+    models.PhysicalDevice,
+    models.RoleType,
     models.SamplingEvent,
+    models.Schema,
     models.SecondaryItem,
     models.Site,
     models.Source,
-    models.Model,
     models.Synonym,
-    models.Schema,
-    models.CollectionSchema)
+    models.SynonymSuggestion,
+    models.Term,
+    models.TermSuggestion,
+    models.UserData)
 class AuthorAdmin(admin.ModelAdmin):
     pass
 
 
-# Define an inline admin descriptor for Employee model
-# which acts a bit like a singleton
 class UserInline(admin.StackedInline):
     model = models.UserData
     can_delete = False
 
 
-# Define a new User admin
 class UserAdmin(BaseUserAdmin):
     inlines = (UserInline,)
 

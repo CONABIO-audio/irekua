@@ -8,4 +8,14 @@ import database.models as db
 class ItemSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = db.Item
-        exclude = ()
+        fields = (
+            'url',
+            'type',
+            'media_info',
+            'metadata',
+            'keywords',
+            'captured_on',
+            'sampling',
+            'collection',
+            'owner',
+            'licence')

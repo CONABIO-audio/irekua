@@ -9,6 +9,12 @@ from rest import views
 router = routers.DefaultRouter()
 router.register(r'items', views.ItemViewSet)
 router.register(r'users', views.UserViewSet)
+router.register(r'annotations', views.AnnotationViewSet)
+router.register(r'collections', views.CollectionViewSet)
+router.register(r'devices', views.DeviceViewSet)
+router.register(r'sampling_events', views.SamplingEventViewSet)
+router.register(r'sites', views.SiteViewSet)
+router.register(r'terms', views.TermViewSet)
 
 
 urlpatterns = [

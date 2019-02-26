@@ -1,0 +1,62 @@
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from django_countries.fields import CountryField
+
+
+class Institution(models.Model):
+    institution_name = models.CharField(
+        max_length=256,
+        db_column='institution_name',
+        verbose_name=_('institution name'),
+        help_text=_('Name of institution'),
+        blank=False)
+    institution_code = models.CharField(
+        max_length=64,
+        db_column='institution_code',
+        verbose_name=_('institution code'),
+        help_text=_('Code of institution'),
+        blank=True)
+    institution_id = models.CharField(
+        max_length=64,
+        db_column='institution_id',
+        verbose_name=_('institution id'),
+        help_text=_('ID of institution'),
+        blank=True)
+    subdependency = models.CharField(
+        max_length=256,
+        db_column='subdependency',
+        verbose_name=_('subdependency'),
+        help_text=_('Subdependency at institution'),
+        blank=True)
+    country = CountryField(
+        db_column='country',
+        verbose_name=_('country'),
+        help_text=_('Country home of institution'),
+        blank=True)
+    postal_code = models.CharField(
+        max_length=8,
+        db_column='postal_code',
+        verbose_name=_('postal code'),
+        help_text=_('Postal code'))
+    address = models.TextField(
+        blank=True,
+        db_column='address',
+        verbose_name=_('address'),
+        help_text=_('Address of institution'))
+    website = models.URLField(
+        blank=True,
+        db_column='website',
+        verbose_name=_('website'),
+        help_text=_('Website of institution'))
+
+    class Meta:
+        ordering = ['institution_name']
+        verbose_name = _('Institution')
+        verbose_name_plural = _('Institutions')
+        unique_together = (('institution_name', 'subdependency'))
+
+    def __str__(self):
+        msg = self.institution_code
+        if self.subdependency != '':
+            msg += ' - ' + self.subdependency
+        return msg
