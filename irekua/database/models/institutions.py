@@ -48,6 +48,13 @@ class Institution(models.Model):
         db_column='website',
         verbose_name=_('website'),
         help_text=_('Website of institution'))
+    logo = models.ImageField(
+        db_column='logo',
+        verbose_name=_('logo'),
+        help_text=_('Institution logo'),
+        upload_to='images/institutions/',
+        blank=True,
+        null=True)
 
     class Meta:
         ordering = ['institution_name']

@@ -4,6 +4,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import validate_json_instance
+
 
 class Site(models.Model):
     name = models.CharField(
@@ -70,3 +72,7 @@ class Site(models.Model):
         if self.name != '':
             return self.name
         return _('Site {id}').format(id=self.id)
+
+    def clean(self, *args, **kwargs):
+        validate_json_instance(self.metadata, self.metadata_type.schema)
+        super(Site, self).clean(*args, **kwargs)

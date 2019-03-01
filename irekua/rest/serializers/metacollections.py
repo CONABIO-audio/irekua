@@ -5,11 +5,13 @@ from rest_framework import serializers
 import database.models as db
 
 
-class CollectionSerializer(serializers.HyperlinkedModelSerializer):
+class MetaCollectionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = db.Collection
+        model = db.MetaCollection
         fields = (
+            'url',
             'name',
             'description',
-            'metadata',
-            'coordinator')
+            'creator',
+            'collections',
+        )

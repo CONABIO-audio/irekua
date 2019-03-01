@@ -10,8 +10,10 @@ class SamplingEventSerializer(serializers.HyperlinkedModelSerializer):
         model = db.SamplingEvent
         fields = (
             'device',
+            'configuration_type',
             'configuration',
             'commentaries',
+            'metadata_type',
             'metadata',
             'started_on',
             'ended_on',

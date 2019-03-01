@@ -2,6 +2,11 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import (
+    validate_json_instance,
+    validate_is_of_collection,
+)
+
 
 class CollectionSite(models.Model):
     site = models.ForeignKey(
@@ -55,3 +60,8 @@ class CollectionSite(models.Model):
             site=str(self.site),
             collection=str(self.collection))
         return msg
+
+    def clean(self, *args, **kwargs):
+        validate_json_instance(self.metadata, self.metadata_type.schema)
+        validate_is_of_collection(self.collection, self.metadata_type.schema)
+        super(CollectionSite, self).clean(*args, **kwargs)

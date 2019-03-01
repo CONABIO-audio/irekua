@@ -3,6 +3,11 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import (
+    validate_json_instance,
+    validate_is_of_collection,
+)
+
 
 class CollectionUser(models.Model):
     collection = models.ForeignKey(
@@ -45,6 +50,13 @@ class CollectionUser(models.Model):
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to user in collection'),
         null=True)
+    is_admin = models.BooleanField(
+        db_column='is_admin',
+        verbose_name=_('is admin'),
+        help_text=_('Flag that indicates if user is administrator of the collection'),
+        null=False,
+        blank=False,
+        default=False)
 
     class Meta:
         verbose_name = _('Collection User')
@@ -55,3 +67,8 @@ class CollectionUser(models.Model):
             user=str(self.user),
             collection=str(self.collection))
         return msg
+
+    def clean(self, *args, **kwargs):
+        validate_is_of_collection(self.collection, self.metadata_type.schema)
+        validate_json_instance(self.metadata, self.metadata_type.schema)
+        super(CollectionUser, self).clean(*args, **kwargs)

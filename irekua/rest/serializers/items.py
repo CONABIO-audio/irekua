@@ -10,12 +10,20 @@ class ItemSerializer(serializers.HyperlinkedModelSerializer):
         model = db.Item
         fields = (
             'url',
-            'type',
+            'path',
+            'filesize',
+            'hash',
+            'hash_function',
+            'item_type',
+            'source_foreign_key',
             'media_info',
-            'metadata',
-            'keywords',
-            'captured_on',
             'sampling',
+            'source',
+            'metadata_type',
+            'metadata',
+            'captured_on',
+            'created_on',
             'collection',
             'owner',
-            'licence')
+            'licence',
+            'is_uploaded')

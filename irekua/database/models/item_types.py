@@ -24,6 +24,13 @@ class ItemType(models.Model):
         help_text=_('Reference to JSON Schema to be used with media info of this item type'),
         blank=False,
         null=False)
+    icon = models.ImageField(
+        db_column='icon',
+        verbose_name=_('icon'),
+        help_text=_('Item type icon'),
+        upload_to='images/item_types/',
+        blank=True,
+        null=True)
 
     class Meta:
         verbose_name = _('Item Type')

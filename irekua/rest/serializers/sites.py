@@ -9,9 +9,12 @@ class SiteSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = db.Site
         fields = (
+            'url',
             'name',
             'geo_ref',
             'latitude',
             'longitude',
             'altitude',
-            'metadata')
+            'metadata_type',
+            'metadata',
+            'creator')

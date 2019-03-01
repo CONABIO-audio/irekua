@@ -16,7 +16,8 @@ from . import models
     models.CollectionSite,
     models.CollectionUser,
     models.Device,
-    models.DeviceTerm,
+    models.DeviceType,
+    models.DeviceBrand,
     models.Entailment,
     models.EventType,
     models.Institution,
@@ -35,6 +36,7 @@ from . import models
     models.Synonym,
     models.SynonymSuggestion,
     models.Term,
+    models.TermType,
     models.TermSuggestion,
     models.UserData)
 class AuthorAdmin(admin.ModelAdmin):

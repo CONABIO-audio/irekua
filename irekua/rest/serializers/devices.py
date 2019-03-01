@@ -9,10 +9,7 @@ class DeviceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = db.Device
         fields = (
-            'type',
-            'serial_number',
+            'device_type',
             'brand',
             'model',
-            'owner',
-            'metadata',
-            'bundle')
+        )

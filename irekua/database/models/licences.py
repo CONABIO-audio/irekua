@@ -2,6 +2,8 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import validate_json_instance
+
 
 class Licence(models.Model):
     licence_type = models.ForeignKey(
@@ -47,3 +49,8 @@ class Licence(models.Model):
             type=str(self.licence_type),
             date=self.created_on)
         return msg
+
+    def clean(self, *args, **kwargs):
+        licence_metadata_schema = self.licence_type.metadata_schema.schema
+        validate_json_instance(self.metadata, licence_metadata_schema)
+        super(Licence, self).clean(*args, **kwargs)

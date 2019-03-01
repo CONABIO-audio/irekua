@@ -3,16 +3,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import validate_json_instance
+
 
 class TermSuggestion(models.Model):
-    term_type = models.CharField(
-        max_length=50,
-        db_column='term_type',
-        verbose_name=_('term type'),
-        help_text=_('Type of term'),
-        blank=False)
-    value = models.CharField(
-        max_length=50,
+    value = models.ForeignKey(
+        'TermType',
+        on_delete=models.CASCADE,
         db_column='value',
         verbose_name=_('value'),
         help_text=_('Value of term'),
@@ -22,19 +19,6 @@ class TermSuggestion(models.Model):
         verbose_name=_('description'),
         help_text=_('Description of term'),
         blank=True)
-    metadata_type = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        db_column='metadata_type',
-        verbose_name=_('metadata type'),
-        help_text=_('Schema for term suggestion metadata'),
-        limit_choices_to=(
-            models.Q(field__exact='term_metadata') |
-            models.Q(field__exact='global')),
-        to_field='name',
-        default='free',
-        blank=False,
-        null=False)
     metadata = JSONField(
         blank=True,
         db_column='metadata',
@@ -65,3 +49,8 @@ class TermSuggestion(models.Model):
             term_type=self.term_type,
             value=self.value)
         return msg
+
+    def clean(self, *args, **kwargs):
+        metadata_schema = self.term_type.metadata_type.schema
+        validate_json_instance(self.metadata, metadata_schema)
+        super(TermSuggestion, self).clean(*args, **kwargs)

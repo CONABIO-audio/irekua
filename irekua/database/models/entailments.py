@@ -2,6 +2,8 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import validate_json_instance
+
 
 class Entailment(models.Model):
     source = models.ForeignKey(
@@ -49,3 +51,7 @@ class Entailment(models.Model):
             source=self.source,
             target=self.target)
         return msg
+
+    def clean(self, *args, **kwargs):
+        validate_json_instance(self.metadata, self.metadata_type.schema)
+        super(Entailment, self).clean(*args, **kwargs)

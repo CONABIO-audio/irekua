@@ -139,6 +139,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+# Locale files
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'irekua', 'locale'),
 )
@@ -148,5 +154,6 @@ LOCALE_PATHS = (
 # https://www.django-rest-framework.org/tutorial/quickstart/#settings
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
     'PAGE_SIZE': 10,
 }

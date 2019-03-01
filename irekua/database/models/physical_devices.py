@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import validate_json_instance
+
 
 class PhysicalDevice(models.Model):
     serial_number = models.CharField(
@@ -63,3 +65,7 @@ class PhysicalDevice(models.Model):
             id=self.id,
             device=str(self.device))
         return msg
+
+    def clean(self, *args, **kwargs):
+        validate_json_instance(self.metadata, self.metadata_type.schema)
+        super(PhysicalDevice, self).clean(*args, **kwargs)

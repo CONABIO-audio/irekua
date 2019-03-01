@@ -3,6 +3,11 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import (
+    validate_json_instance,
+    validate_is_of_collection,
+)
+
 
 class Annotation(models.Model):
     QUALITY_OPTIONS = [
@@ -136,3 +141,19 @@ class Annotation(models.Model):
             annotation_id=self.id,
             item_id=self.item.id)
         return msg
+
+    def clean(self, *args, **kwargs):
+        validate_json_instance(self.label, self.label_type.schema)
+        validate_json_instance(self.annotation, self.annotation_type.schema)
+        validate_json_instance(self.metadata, self.metadata_type.schema)
+
+        collection = self.item.collection
+        if collection is not None:
+            validate_is_of_collection(
+                collection,
+                self.annotation_type.schema)
+            validate_is_of_collection(
+                collection,
+                self.metadata_type.schema)
+
+        super(Annotation, self).clean(*args, **kwargs)

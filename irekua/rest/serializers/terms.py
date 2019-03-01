@@ -9,7 +9,10 @@ class TermSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = db.Term
         fields = (
-            'type',
+            'url',
+            'term_type',
             'value',
             'description',
-            'metadata')
+            'metadata_type',
+            'metadata'
+        )

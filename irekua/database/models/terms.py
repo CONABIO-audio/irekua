@@ -2,6 +2,8 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import validate_json_instance
+
 
 class Term(models.Model):
     term_type = models.CharField(
@@ -21,19 +23,6 @@ class Term(models.Model):
         verbose_name=_('description'),
         help_text=_('Description of term'),
         blank=True)
-    metadata_type = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        db_column='metadata_type',
-        verbose_name=_('metadata type'),
-        help_text=_('Schema for term metadata'),
-        limit_choices_to=(
-            models.Q(field__exact='term_metadata') |
-            models.Q(field__exact='global')),
-        to_field='name',
-        default='free',
-        blank=False,
-        null=False)
     metadata = JSONField(
         db_column='metadata',
         verbose_name=_('metadata'),
@@ -51,3 +40,8 @@ class Term(models.Model):
             term_type=self.term_type,
             value=self.value)
         return msg
+
+    def clean(self, *args, **kwargs):
+        metadata_schema = self.term_type.metadata_type.schema
+        validate_json_instance(self.metadata, metadata_schema)
+        super(Term, self).clean(*args, **kwargs)

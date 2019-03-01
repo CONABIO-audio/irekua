@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import validate_json_instance
+
 
 class SynonymSuggestion(models.Model):
     source = models.ForeignKey(
@@ -64,3 +66,7 @@ class SynonymSuggestion(models.Model):
             term=str(self.source),
             suggestion=self.synonym)
         return msg
+
+    def clean(self, *args, **kwargs):
+        validate_json_instance(self.metadata, self.metadata_type.schema)
+        super(SynonymSuggestion, self).clean(*args, **kwargs)

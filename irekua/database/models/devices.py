@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 class Device(models.Model):
     device_type = models.ForeignKey(
-        'DeviceTerm',
+        'DeviceType',
         on_delete=models.PROTECT,
         related_name='device_type',
         db_column='device_type',
@@ -13,7 +13,7 @@ class Device(models.Model):
         limit_choices_to={'term_type': 'device_type'},
         blank=False)
     brand = models.ForeignKey(
-        'DeviceTerm',
+        'DeviceBrand',
         on_delete=models.PROTECT,
         related_name='device_brand',
         db_column='brand',

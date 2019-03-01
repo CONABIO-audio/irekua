@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import (
+    validate_json_instance,
+    validate_is_of_collection)
+
 
 class Item(models.Model):
     HASH_FUNCTIONS = [
@@ -137,5 +141,21 @@ class Item(models.Model):
         verbose_name = _('Item')
         verbose_name_plural = _('Items')
 
+        permissions = (
+            ("download_item", _("Can download item")),
+        )
+
     def __str__(self):
-        return 'Item {id}'.format(self.id)
+        return 'Item {id}'.format(id=self.id)
+
+    def clean(self, *args, **kwargs):
+        media_info_schema = self.item_type.media_info_schema.schema
+        validate_json_instance(self.media_info, media_info_schema)
+        validate_json_instance(self.metadata, self.metadata_type.schema)
+
+        if self.collection is not None:
+            validate_is_of_collection(
+                self.collection,
+                self.metadata_type.schema)
+
+        super(Item, self).clean(*args, **kwargs)

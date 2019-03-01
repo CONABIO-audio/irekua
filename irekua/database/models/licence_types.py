@@ -35,6 +35,13 @@ class LicenceType(models.Model):
         verbose_name=_('document template'),
         help_text=_('Template for licence document'),
         blank=True)
+    icon = models.ImageField(
+        db_column='icon',
+        verbose_name=_('icon'),
+        help_text=_('Licence type icon'),
+        upload_to='images/licence_types/',
+        blank=True,
+        null=True)
     can_view = models.BooleanField(
         db_column='can_view',
         verbose_name=_('can view'),

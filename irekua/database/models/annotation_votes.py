@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import validate_json_instance
+
 
 class AnnotationVote(models.Model):
     annotation = models.ForeignKey(
@@ -50,3 +52,8 @@ class AnnotationVote(models.Model):
             id=self.id,
             annotation=self.annotation.id)
         return msg
+
+    def clean(self, *args, **kwargs):
+        schema = self.annotation.label_type.schema
+        validate_json_instance(self.label, schema)
+        super(AnnotationVote, self).clean(*args, **kwargs)

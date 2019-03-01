@@ -25,6 +25,13 @@ class AnnotationType(models.Model):
             models.Q(field__exact='annotation_annotation') |
             models.Q(field__exact='global')),
         help_text=_('JSON schema for annotation type'))
+    icon = models.ImageField(
+        db_column='icon',
+        upload_to='images/annotation_types/',
+        verbose_name=_('icon'),
+        help_text=_('Annotation type icon'),
+        blank=True,
+        null=True)
 
     class Meta:
         verbose_name = _('Annotation Type')

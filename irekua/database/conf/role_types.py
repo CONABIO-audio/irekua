@@ -1,0 +1,93 @@
+ALL_COLLECTION_PERMISSIONS = [
+    "delete_annotation",
+    "view_annotation",
+    "add_annotation",
+    "change_annotation",
+    "view_annotationvote",
+    "delete_annotationvote",
+    "change_annotationvote",
+    "add_annotationvote",
+    "delete_collectiondevice",
+    "view_collectiondevice",
+    "add_collectiondevice",
+    "change_collectiondevice",
+    "delete_collectionrole",
+    "view_collectionrole",
+    "change_collectionrole",
+    "add_collectionrole",
+    "add_collectionschema",
+    "change_collectionschema",
+    "delete_collectionschema",
+    "view_collectionschema",
+    "change_collectionsite",
+    "view_collectionsite",
+    "add_collectionsite",
+    "delete_collectionsite",
+    "change_collectionuser",
+    "add_collectionuser",
+    "view_collectionuser",
+    "delete_collectionuser",
+    "add_item",
+    "change_item",
+    "download_item",
+    "delete_item",
+    "view_item",
+]
+
+types = [
+    {
+        "name": "Usuario",
+        "description": """Usuario común de una colección""",
+        "permissions": [
+            "view_annotation",
+            "add_annotation",
+            "view_annotationvote",
+            "add_annotationvote",
+            "view_collectiondevice",
+            "add_collectiondevice",
+            "view_collectionsite",
+            "add_collectionsite",
+            "view_item",
+            "add_item",
+            "download_item",
+        ]
+    },
+    {
+        "name": "Admin",
+        "description": """Usuario administrador de una colección""",
+        "permissions": ALL_COLLECTION_PERMISSIONS,
+    },
+    {
+        "name": "Curador",
+        "description": """Usuario curador de una colección. Tiene permisos de
+modificar la información y anotar todos los archivos, pero no de crear
+nuevos objetos""",
+        "permissions": [
+            "delete_annotation",
+            "view_annotation",
+            "add_annotation",
+            "change_annotation",
+            "view_annotationvote",
+            "add_annotationvote",
+            "view_collectiondevice",
+            "change_collectiondevice",
+            "change_collectionsite",
+            "view_collectionsite",
+            "change_item",
+            "download_item",
+            "view_item",
+        ]
+    },
+    {
+        "name": "Recolector",
+        "description": """Usuario común de una colección""",
+        "permissions": [
+            "view_collectiondevice",
+            "add_collectiondevice",
+            "view_collectionsite",
+            "add_collectionsite",
+            "add_item",
+            "view_item",
+        ]
+    },
+]

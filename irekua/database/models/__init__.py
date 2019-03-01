@@ -7,7 +7,8 @@ from .collection_schemas import CollectionSchema
 from .collection_sites import CollectionSite
 from .collection_users import CollectionUser
 from .data_collections import Collection
-from .device_terms import DeviceTerm
+from .device_types import DeviceType
+from .device_brands import DeviceBrand
 from .devices import Device
 from .entailments import Entailment
 from .event_types import EventType
@@ -28,6 +29,7 @@ from .synonym_suggestions import SynonymSuggestion
 from .synonyms import Synonym
 from .term_suggestions import TermSuggestion
 from .terms import Term
+from .term_types import TermType
 from .users import UserData
 
 
@@ -37,13 +39,13 @@ __all__ = [
     'AnnotationVote',
     'Collection',
     'CollectionDevice',
-    'CollectionOwner',
     'CollectionRole',
     'CollectionSite',
     'CollectionUser',
     'CollectionSchema',
     'Device',
-    'DeviceTerm',
+    'DeviceBrand',
+    'DeviceType',
     'Entailment',
     'EventType',
     'Institution',
@@ -62,6 +64,7 @@ __all__ = [
     'Synonym',
     'SynonymSuggestion',
     'Term',
+    'TermType',
     'TermSuggestion',
     'UserData',
 ]

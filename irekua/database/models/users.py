@@ -4,14 +4,6 @@ from django.utils.translation import gettext_lazy as _
 
 
 class UserData(models.Model):
-    USER_ROLES = [
-        ('admin', 'admin'),
-        ('developer', 'developer'),
-        ('curator', 'curator'),
-        ('model', 'model'),
-        ('user', 'user'),
-    ]
-
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
@@ -27,13 +19,27 @@ class UserData(models.Model):
         verbose_name=_('institution id'),
         help_text=_('Institution to which user belongs'),
         blank=False)
-    role = models.CharField(
-        max_length=30,
-        choices=USER_ROLES,
-        db_column='role',
-        verbose_name=_('role'),
-        help_text=_('Role of user'),
-        blank=False)
+    is_developer = models.BooleanField(
+        db_column='is_developer',
+        verbose_name=_('is developer'),
+        help_text=_('Flag to indicate if user is a model developer'),
+        blank=False,
+        null=False,
+        default=False)
+    is_curator = models.BooleanField(
+       db_column='is_curator',
+       verbose_name=_('is curator'),
+       help_text=_('Flag to indicate if user is a curator'),
+       blank=False,
+       null=False,
+       default=False)
+    is_model = models.BooleanField(
+       db_column='is_model',
+       verbose_name=_('is model'),
+       help_text=_('Flag to indicate if user is an AI model'),
+       blank=False,
+       null=False,
+       default=False)
 
     class Meta:
         verbose_name = _('User Data')

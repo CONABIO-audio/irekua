@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import validate_json_instance
+
 
 class Collection(models.Model):
     name = models.CharField(
@@ -54,6 +56,19 @@ class Collection(models.Model):
         help_text=_('Institution to which the collection belogs'),
         blank=True,
         null=True)
+    is_open = models.BooleanField(
+        db_column='is_open',
+        verbose_name=_('is open'),
+        help_text=_('Any user can enter this collection'),
+        blank=False,
+        null=False)
+    logo = models.ImageField(
+        db_column='logo',
+        verbose_name=_('logo'),
+        help_text=_('Logo of data collection'),
+        upload_to='images/collections/',
+        blank=True,
+        null=True)
 
     schemas = models.ManyToManyField(
         'Schema',
@@ -84,3 +99,7 @@ class Collection(models.Model):
 
     def __str__(self):
         return self.name
+
+    def clean(self, *args, **kwargs):
+        validate_json_instance(self.metadata, self.metadata_type.schema)
+        super(Collection, self).clean(*args, **kwargs)

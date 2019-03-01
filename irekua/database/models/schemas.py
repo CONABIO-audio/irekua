@@ -2,6 +2,8 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import validate_json_schema
+
 
 class Schema(models.Model):
     JSON_FIELDS = [
@@ -17,7 +19,6 @@ class Schema(models.Model):
         ('item_media_info', _('item media info')),
         ('item_metadata', _('item metadata')),
         ('licence_metadata', _('licence metadata')),
-        ('model_metadata', _('model metadata')),
         ('sampling_event_configuration', _('sampling event configuration')),
         ('sampling_event_metadata', _('sampling event metadata')),
         ('secondary_item_media_info', _('secondary item media info')),
@@ -62,3 +63,7 @@ class Schema(models.Model):
 
     def __str__(self):
         return self.name
+
+    def clean(self, *args, **kwargs):
+        validate_json_schema(self.schema)
+        super(Schema, self).clean(*args, **kwargs)

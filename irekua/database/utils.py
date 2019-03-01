@@ -1,30 +1,37 @@
-import os
-import glob
-import json
-
-from . import APP_DIRECTORY
+import jsonschema
+from django import forms
+from django.utils.translation import gettext_lazy as _
 
 
-NONE_SCHEMA_NAME = 'none.json'
+def validate_json_schema(schema):
+    try:
+        jsonschema.validate({}, schema)
+    except jsonschema.exceptions.SchemaError as error:
+        msg = _('JSON Schema is not valid. Error: {error}')
+        msg = msg.format(error=str(error))
+        raise forms.ValidationError(msg)
+    except jsonschema.exceptions.ValidationError:
+        pass
 
-SCHEMAS_SUBDIR = 'schemas'
+
+def validate_json_instance(schema, instance):
+    try:
+        jsonschema.validate(schema, instance)
+    except jsonschema.exceptions.ValidationError as error:
+        msg = _('Instance does not comply with JSON schema. Error: {error}')
+        msg = msg.format(error=str(error))
+        raise forms.ValidationError(msg)
 
 
-def get_types_of_schema(subdir):
-    schemas = []
-
-    none_schema_path = os.path.join(
-        APP_DIRECTORY, SCHEMAS_SUBDIR, NONE_SCHEMA_NAME)
-    with open(none_schema_path, 'r') as jsonfile:
-        schemas.append(json.load(jsonfile))
-
-    schemas = glob.glob(os.path.join(
-        APP_DIRECTORY, 'schemas', subdir, '*.json'))
-
-    for schema in schemas:
-        with open(schema, 'r') as jsonfile:
-            schemas.append(json.load(jsonfile))
-
-    titles = [schema['title'] for schema in schemas]
-
-    return titles, schemas
+def validate_is_of_collection(collection, schema):
+    is_of_collection = (
+        collection
+        .schemas
+        .filter(name__exact=schema.name)
+        .count() > 0)
+    if not is_of_collection:
+        msg = _('Schema {schema} is not part of collection {collection}')
+        msg = msg.format(
+            schema=schema.name,
+            collection=collection.name)
+        raise forms.ValidationError(msg)

@@ -15,6 +15,13 @@ class EventType(models.Model):
         verbose_name=_('description'),
         help_text=_('Description of event type'),
         blank=False)
+    icon = models.ImageField(
+        db_column='icon',
+        verbose_name=_('icon'),
+        help_text=_('Event type icon'),
+        upload_to='images/event_types/',
+        blank=True,
+        null=True)
 
     class Meta:
         verbose_name = _('Event Type')

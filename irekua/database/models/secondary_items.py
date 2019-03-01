@@ -2,6 +2,8 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import validate_json_instance
+
 
 class SecondaryItem(models.Model):
     HASH_FUNCTIONS = [
@@ -72,3 +74,8 @@ class SecondaryItem(models.Model):
             id=self.id,
             itemid=self.item.id)
         return msg
+
+    def clean(self, *args, **kwargs):
+        media_info_schema = self.item_type.media_info_schema.schema
+        validate_json_instance(self.media_info, media_info_schema)
+        super(SecondaryItem, self).clean(*args, **kwargs)
