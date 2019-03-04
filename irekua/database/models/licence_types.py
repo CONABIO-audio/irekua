@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from database.models.schemas import Schema
 
@@ -81,3 +82,11 @@ class LicenceType(models.Model):
 
     def __str__(self):
         return self.name
+
+    def validate_metadata(self, metadata):
+        try:
+            self.metadata_schema.validate_instance(metadata)
+        except ValidationError as error:
+            msg = _('Invalid licence metadata. Error: %(error)s')
+            params = dict(error=str(error))
+            raise ValidationError(msg, params=params)

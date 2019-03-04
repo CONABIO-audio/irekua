@@ -1,9 +1,9 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    validate_json_instance,
     empty_json,
 )
 
@@ -54,8 +54,9 @@ class Licence(models.Model):
             date=self.created_on)
         return msg
 
-    def clean(self, *args, **kwargs):
-        validate_json_instance(
-            self.metadata,
-            self.licence_type.metadata_schema.schema)
-        super(Licence, self).clean(*args, **kwargs)
+    def clean(self):
+        try:
+            self.licence_type.validate_metadata(self.metadata)
+        except ValidationError as error:
+            raise ValidationError({'metadata': error})
+        super(Licence, self).clean()

@@ -1,9 +1,9 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    validate_json_instance,
     empty_json
 )
 
@@ -74,13 +74,16 @@ class SecondaryItem(models.Model):
         verbose_name_plural = _('Secondary Items')
 
     def __str__(self):
-        msg = _('Secondary Item {id} derived from {itemid}').format(
+        msg = _('Secondary Item %(id)s derived from %(itemid)s')
+        params = dict(
             id=self.id,
-            itemid=self.item.id)
-        return msg
+            itemid=str(self.item))
+        return msg % params
 
-    def clean(self, *args, **kwargs):
-        validate_json_instance(
-            self.media_info,
-            self.item_type.media_info_schema.schema)
+    def clean(self):
+        try:
+            self.item_type.validate_media_info(self.media_info)
+        except ValidationError as error:
+            raise ValidationError({'media_info': error})
+
         super(SecondaryItem, self).clean(*args, **kwargs)

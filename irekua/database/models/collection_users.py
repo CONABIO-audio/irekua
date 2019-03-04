@@ -1,12 +1,10 @@
 from django.contrib.postgres.fields import JSONField
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from database.models.schemas import Schema
 from database.utils import (
-    validate_json_instance,
-    validate_is_of_collection,
     empty_json,
 )
 
@@ -27,25 +25,12 @@ class CollectionUser(models.Model):
         on_delete=models.CASCADE,
         blank=False)
     role = models.ForeignKey(
-        'CollectionRole',
+        'CollectionRoleType',
         on_delete=models.PROTECT,
         db_column='role',
         verbose_name=_('role'),
         help_text=_('Role of user in collection'),
         blank=False)
-    metadata_type = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        db_column='metadata_type',
-        verbose_name=_('metadata type'),
-        help_text=_('JSON schema for collection user metadata'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.COLLECTION_USER_METADATA) |
-            models.Q(field__exact=Schema.GLOBAL)),
-        to_field='name',
-        default=Schema.FREE_SCHEMA,
-        blank=False,
-        null=False)
     metadata = JSONField(
         blank=True,
         db_column='metadata',
@@ -66,16 +51,20 @@ class CollectionUser(models.Model):
         verbose_name_plural = _('Collection Users')
 
     def __str__(self):
-        msg = _('User {user} of collection {collection}').format(
+        msg = _('User %(user)s of collection %(collection)s')
+        params = dict(
             user=str(self.user),
             collection=str(self.collection))
-        return msg
+        return msg % params
 
-    def clean(self, *args, **kwargs):
-        validate_is_of_collection(
-            self.collection,
-            self.metadata_type)
-        validate_json_instance(
-            self.metadata,
-            self.metadata_type.schema)
-        super(CollectionUser, self).clean(*args, **kwargs)
+    def clean(self):
+        try:
+            self.role.validate_metadata(self.metadata)
+        except ValidationError as error:
+            msg = _('Invalid metadata for user of role type %(role)s in collection %(collection)s. Error: %(error)s')
+            params = dict(
+                role=str(self.role),
+                collection=str(self.collection),
+                error=str(error))
+            raise ValidationError({'metadata': msg}, params=params)
+        super(CollectionUser, self).clean()

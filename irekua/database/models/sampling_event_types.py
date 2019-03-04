@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from .schemas import Schema
 
@@ -70,3 +71,33 @@ class SamplingEventType(models.Model):
 
     def __str__(self):
         return self.name
+
+    def validate_metadata(self, metadata):
+        try:
+            self.metadata_schema.validate_intance(metadata)
+        except ValidationError as error:
+            msg = _('Invalid metadata for sampling event of type %(type)s. Error: %(error)')
+            params = dict(type=str(self), error=str(error))
+            raise ValidationError(msg, params=params)
+
+    def validate_device_type(self, device_type):
+        if not self.restrict_device_types:
+            return
+
+        try:
+            self.device_types.get(name=device_type.name)
+        except self.device_types.model.DoesNotExist:
+            msg = _('Device type %(device_type) is not valid for sampling event of type %(type)s')
+            params = dict(device_type=str(device_type), type=str(self))
+            raise ValidationError(msg, params=params)
+
+    def validate_site_type(self, site_type):
+        if not self.restrict_site_types:
+            return
+
+        try:
+            self.site_types.get(name=site_type.name)
+        except self.site_types.model.DoesNotExist:
+            msg = _('Site type %(site_type) is not valid for sampling event of type %(type)s')
+            params = dict(site_type=str(site_type), type=str(self))
+            raise ValidationError(msg, params=params)

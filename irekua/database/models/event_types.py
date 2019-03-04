@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 
@@ -33,11 +34,13 @@ class EventType(models.Model):
         verbose_name = _('Event Type')
         verbose_name_plural = _('Event Types')
 
-    class InvalidTermType(Exception):
-        pass
-
     def __str__(self):
         return self.name
 
-    def get_term_type(self, term_type):
-        return self.label_term_types.get(name=term_type)
+    def validate_and_get_term_type(self, term_type):
+        try:
+            return self.label_term_types.get(name=term_type.name)
+        except self.label_term_types.model.DoesNotExist:
+            msg = _('Term type %(term_type)s is invalid for event type %(event_type)s')
+            params = dict(term_type=str(term_type), event_type=str(self))
+            raise ValidationError(msg, params=params)

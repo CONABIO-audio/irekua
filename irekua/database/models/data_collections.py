@@ -61,10 +61,6 @@ class Collection(models.Model):
         blank=True,
         null=True)
 
-    roles = models.ManyToManyField(
-        'RoleType',
-        through='CollectionRole',
-        through_fields=('collection', 'role_type'))
     devices = models.ManyToManyField(
         'PhysicalDevice',
         through='CollectionDevice',
@@ -97,15 +93,20 @@ class Collection(models.Model):
             raise ValidationError({'metadata': msg})
         super(Collection, self).save()
 
-    def validate_site(self, site):
-        self.collection_type.validate_site(site)
+    def validate_and_get_device_type_annotation_type(self, annotation_type):
+        return self.collection_type.validate_and_get_annotation_type(annotation_type)
 
-    def validate_site_metadata(self, metadata):
-        self.collection_type.validate_site_metadata(metadata)
+    def validate_and_get_event_type(self, event_type):
+        return self.collection_type.validate_and_get_event_type(event_type)
 
-    def has_user(self, user):
-        try:
-            self.users.get(username=user.username)
-            return True
-        except self.users.model.DoesNotExist:
-            return False
+    def validate_and_get_site_type(self, site_type):
+        return self.collection_type.validate_and_get_site_type(site_type)
+
+    def validate_and_get_device_type(self, device_type):
+        return self.collection_type.validate_and_get_device_type(device_type)
+
+    def validate_and_get_item_type(self, item_type):
+        return self.collection_type.validate_and_get_item_type(item_type)
+
+    def validate_and_get_sampling_event_type(self, sampling_event_type):
+        return self.validate_and_get_sampling_event_type(sampling_event_type)

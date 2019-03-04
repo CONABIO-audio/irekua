@@ -3,7 +3,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    validate_json_instance,
     validate_are_same_term_type,
     empty_json
 )
@@ -39,16 +38,20 @@ class Synonym(models.Model):
         verbose_name_plural = _('Synonyms')
 
     def __str__(self):
-        msg = '{source} = {target}'.format(
+        msg = '%(source)s = %(target)s'
+        params = dict(
             source=str(self.source),
             target=str(self.target))
-        return msg
+        return msg % params
 
-    def clean(self, *args, **kwargs):
-        validate_are_same_term_type(
-            self.source,
-            self.target)
-        validate_json_instance(
-            self.metadata,
-            self.source.term_type.synonym_metadata_schema.schema)
-        super(Synonym, self).clean(*args, **kwargs)
+    def clean(self):
+        if self.source.term_type != self.target.term_type:
+            msg = _('Source and target terms are not of the same type')
+            raise ValidationError({'target': msg})
+
+        try:
+            self.source.term_type.validate_synonym_metadata(self.metadata)
+        except ValidationError as error:
+            raise ValidationError({'metadata': error})
+
+        super(Synonym, self).clean()

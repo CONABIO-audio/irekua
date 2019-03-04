@@ -65,6 +65,6 @@ class AnnotationTool(models.Model):
         try:
             self.configuration_schema.validate_instance(configuration)
         except ValidationError as error:
-            msg = _('Invalid annotation tool configuration. Error: {error}')
-            msg = msg.format(error=str(error))
-            raise ValidationError(msg)
+            msg = _('Invalid annotation tool configuration. Error: %(error)s')
+            params = dict(error=str(error))
+            raise ValidationError(msg, params=params)

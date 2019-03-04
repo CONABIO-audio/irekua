@@ -3,7 +3,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    validate_json_instance,
     empty_json,
     GENERIC_SAMPLING_EVENT,
 )
@@ -79,11 +78,25 @@ class SamplingEvent(models.Model):
             end=self.ended_on)
         return msg
 
-    def clean(self, *args, **kwargs):
-        validate_json_instance(
-            self.metadata,
-            self.sampling_event_type.metadata_schema.schema)
-        validate_json_instance(
-            self.configuration,
-            self.device.device.configuration_type.schema)
-        super(SamplingEvent, self).clean(*args, **kwargs)
+    def clean(self):
+        try:
+            self.sampling_event_type.validate_metadata(self.metadata)
+        except ValidationError as error:
+            raise ValidationError({'metadata': error})
+
+        try:
+            self.sampling_event_types.validate_device_type(self.device.device_type)
+        except ValidationError as error:
+            raise ValidationError({'device': error})
+
+        try:
+            self.sampling_event_types.validate_site_type(self.site.site_type)
+        except ValidationError as error:
+            raise ValidationError({'site': error})
+
+        try:
+            self.device.validate_configuration(self.configuration)
+        except ValidationError as error:
+            raise ValidationError({'configuration': error})
+
+        super(SamplingEvent, self).clean()

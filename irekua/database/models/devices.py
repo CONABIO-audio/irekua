@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from database.models.schemas import Schema
 
@@ -62,8 +63,25 @@ class Device(models.Model):
         unique_together = (('brand', 'model'))
 
     def __str__(self):
-        msg = '{device_type}: {brand} - {model}'.format(
+        msg = '%(device_type)s: %(brand)s - %(model)s'
+        params = dict(
             device_type=self.device_type,
             brand=self.brand,
             model=self.model)
-        return msg
+        return msg % params
+
+    def validate_configuration(self, configuration):
+        try:
+            self.configuration_type.validate_instance(configuration)
+        except ValidationError as error:
+            msg = _('Invalid device configuration. Error: %(error)s')
+            params = dict(error=str(error))
+            raise ValidationError(msg, params=params)
+
+    def validate_metadata(self, metadata):
+        try:
+            self.metadata_type.validate_instance(metadata)
+        except ValidationError as error:
+            msg = _('Invalid device metadata. Error: %(error)s')
+            params = dict(error=str(error))
+            raise ValidationError(msg, params=params)

@@ -2,11 +2,10 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+import jsonschema
 
 
 from database.utils import (
-    validate_json_schema,
-    validate_json_instance,
     empty_json,
     FREE_SCHEMA
 )
@@ -18,6 +17,24 @@ def not_reserved_names(value):
             _('%(value)s is a reserved schema name'),
             params={'value': value})
 
+def validate_json_schema(schema):
+    try:
+        jsonschema.validate({}, schema)
+    except jsonschema.exceptions.SchemaError as error:
+        msg = _('JSON Schema is not valid. Error: %(error)s')
+        params = dict(error=str(error))
+        raise ValidationError(msg, params=params)
+    except jsonschema.exceptions.ValidationError:
+        pass
+
+
+def validate_json_instance(schema, instance):
+    try:
+        jsonschema.validate(schema, instance)
+    except jsonschema.exceptions.ValidationError as error:
+        msg = _('Instance does not comply with JSON schema. Error: %(error)s')
+        params = dict(error=str(error))
+        raise ValidationError(msg, params=params)
 
 class Schema(models.Model):
     FREE_SCHEMA = FREE_SCHEMA
@@ -101,9 +118,12 @@ class Schema(models.Model):
     def __str__(self):
         return self.name
 
-    def clean(self, *args, **kwargs):
-        validate_json_schema(self.schema)
-        super(Schema, self).clean(*args, **kwargs)
+    def clean(self):
+        try:
+            validate_json_schema(self.schema)
+        except ValidationError as error:
+            raise ValidationError({'schema': error})
+        super(Schema, self).clean()
 
     def validate_instance(self, instance):
         validate_json_instance(self.schema, instance)

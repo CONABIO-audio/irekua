@@ -1,9 +1,9 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from database.models.schemas import Schema
-from database.utils import validate_json_instance
 
 
 class Entailment(models.Model):
@@ -48,13 +48,18 @@ class Entailment(models.Model):
         verbose_name_plural = _('Entailments')
 
     def __str__(self):
-        msg = '{source} => {target}'.format(
-            source=self.source,
-            target=self.target)
-        return msg
+        msg = '%(source)s => %(target)s'
+        params = dict(
+            source=str(self.source),
+            target=str(self.target))
+        return msg % params
 
-    def clean(self, *args, **kwargs):
-        validate_json_instance(
-            self.metadata,
-            self.metadata_type.schema)
-        super(Entailment, self).clean(*args, **kwargs)
+    def clean(self):
+        try:
+            self.metadata_type.validate_instance(self.metadata)
+        except ValidationError as error:
+            msg = _('Invalid entailment metadata. Error %(error)s')
+            params = dict(error=str(error))
+            raise ValidationError(msg, params=params)
+
+        super(Entailment, self).clean()

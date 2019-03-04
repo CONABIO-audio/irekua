@@ -41,19 +41,17 @@ class CollectionItemType(models.Model):
         verbose_name_plural = _('Collection Item Types')
 
     def __str__(self):
-        msg = _('Item type {item} for collection {collection}')
-        msg = msg.format(
-            role=str(self.item_type),
-            collection=str(self.collection))
-        return msg
+        msg = _('Item type %(item)s for collection %(collection)s')
+        params = dict(role=str(self.item_type), collection=str(self.collection))
+        return msg % params
 
     def validate_metadata(self, metadata):
         try:
             self.metadata_schema.validate_instance(metadata)
         except ValidationError as error:
-            msg = _('Invalid metadata for item type {type} in collection {collection}. Error: {error}')
-            msg = msg.format(
+            msg = _('Invalid metadata for item type %(type)s in collection %(collection). Error: %(error)')
+            params = dict(
                 type=str(self.item_type),
                 collection=str(self.collection),
                 error=str(error))
-            raise ValidationError(msg)
+            raise ValidationError(msg, params=params)

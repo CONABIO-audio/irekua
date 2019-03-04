@@ -5,7 +5,7 @@ from .annotations import Annotation
 from .collection_device_types import CollectionDeviceType
 from .collection_devices import CollectionDevice
 from .collection_item_types import CollectionItemType
-from .collection_roles import CollectionRole
+from .collection_roles import CollectionRoleType
 from .collection_sites import CollectionSite
 from .collection_types import CollectionType
 from .collection_users import CollectionUser
@@ -32,6 +32,7 @@ from .sites import Site
 from .sources import Source
 from .synonym_suggestions import SynonymSuggestion
 from .synonyms import Synonym
+from .tags import Tag
 from .term_suggestions import TermSuggestion
 from .term_types import TermType
 from .terms import Term
@@ -47,7 +48,7 @@ __all__ = [
     'CollectionDevice',
     'CollectionDeviceType',
     'CollectionItemType',
-    'CollectionRole',
+    'CollectionRoleType',
     'CollectionSite',
     'CollectionType',
     'CollectionUser',
@@ -73,6 +74,7 @@ __all__ = [
     'Source',
     'Synonym',
     'SynonymSuggestion',
+    'Tag',
     'Term',
     'TermSuggestion',
     'TermType',

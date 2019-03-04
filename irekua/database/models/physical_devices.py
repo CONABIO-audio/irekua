@@ -1,10 +1,10 @@
 from django.contrib.postgres.fields import JSONField
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    validate_json_instance,
     empty_json
 )
 
@@ -52,13 +52,16 @@ class PhysicalDevice(models.Model):
         verbose_name_plural = _('Physical Devices')
 
     def __str__(self):
-        msg = _('Device {id} of type {device}').format(
+        msg = _('Device %(id)s of type %(device)s')
+        params = dict(
             id=self.id,
             device=str(self.device))
-        return msg
+        return msg % params
 
     def clean(self, *args, **kwargs):
-        validate_json_instance(
-            self.metadata,
-            self.device.metadata_type.schema)
+        try:
+            self.device.validate_metadata(self.metadata)
+        except ValidationError as error:
+            raise ValidationError({'metadata': error})
+
         super(PhysicalDevice, self).clean(*args, **kwargs)

@@ -47,8 +47,6 @@ class AnnotationType(models.Model):
         try:
             self.schema.validate_instance(annotation)
         except ValidationError as error:
-            msg = _('Invalid annotation for annotation type: {type}. Error: {error}')
-            msg = msg.format(
-                type=str(self),
-                error=str(error))
-            raise ValidationError(msg)
+            msg = _('Invalid annotation for annotation type %(type)s. Error: %(error)s')
+            params = dict(type=str(self), error=str(error))
+            raise ValidationError(msg, params=params)

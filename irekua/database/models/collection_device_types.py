@@ -41,15 +41,14 @@ class CollectionDeviceType(models.Model):
         verbose_name_plural = _('Collection Device Types')
 
     def __str__(self):
-        msg = _('Device type {device} for collection {collection}').format(
-            role=str(self.device_type),
-            collection=str(self.collection))
-        return msg
+        msg = _('Device type %(device)s for collection %(collection)s')
+        params = dict(device=str(self.device_type), collection=str(self.collection))
+        return msg % params
 
     def validate_metadata(self, metadata):
         try:
             self.metadata_schema.validate_instance(metadata)
         except ValidationError as error:
-            msg = _('Invalid metadata for collection device. Error: {error}')
-            msg = msg.format(error=str(error))
-            raise ValidationError(msg)
+            msg = _('Invalid metadata for collection device. Error: %(error)s')
+            params = dict(error=str(error))
+            raise ValidationError(msg, params=params)

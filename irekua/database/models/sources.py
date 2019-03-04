@@ -43,7 +43,8 @@ class Source(models.Model):
         verbose_name_plural = _('Sources')
 
     def __str__(self):
-        msg = _('Directory {dir} uploaded with {func}').format(
+        msg = _('Directory %(dir)s uploaded with %(func)s')
+        params = dict(
             dir=self.directory,
             func=self.parse_function)
-        return msg
+        return msg % params

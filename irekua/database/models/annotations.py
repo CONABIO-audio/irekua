@@ -5,7 +5,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    validate_json_instance,
     empty_json,
 )
 
@@ -67,12 +66,6 @@ class Annotation(models.Model):
         help_text=_('Configuration of annotation tool'),
         blank=False,
         null=False)
-    metadata = JSONField(
-        db_column='metadata',
-        verbose_name=_('metadata'),
-        default=empty_json,
-        help_text=_('Metadata associated to annotation'),
-        blank=False)
     certainty = models.FloatField(
         db_column='certainty',
         verbose_name=_('certainty'),
@@ -128,16 +121,26 @@ class Annotation(models.Model):
         verbose_name_plural = _('Annotations')
 
     def __str__(self):
-        msg = _('Annotation {annotation_id} of item {item_id}').format(
-            annotation_id=self.id,
-            item_id=self.item.id)
-        return msg
+        msg = _('Annotation %(annotation_id)s of item %(item_id)s')
+        params = dict(annotation_id=self.id, item_id=self.item.id)
+        return msg % params
 
     def clean(self):
-        # TODO
-        validate_json_instance(
-            self.metadata,
-            self.metadata_type.schema)
+        try:
+            self.item.validate_event_type(self.event_type)
+        except ValidationError as error:
+            raise ValidationError({'event_type': error})
+
+        collection = self.item.collection
+        try:
+            collection.validate_event_type(self.event_type)
+        except ValidationError as error:
+            raise ValidationError({'event_type': error})
+
+        try:
+            collection.validate_annotation_type(self.annotation_type)
+        except ValidationError as error:
+            raise ValidationError({'annotation_type': error})
 
         try:
             self.annotation_type.validate_annotation(self.annotation)
@@ -149,20 +152,25 @@ class Annotation(models.Model):
         except ValidationError as error:
             raise ValidationError({'annotation_configuration': error})
 
-        self.item.validate_annotation(self)
-        self.validate_label(self.label)
+        try:
+            self.validate_label(self.label)
+        except ValidationError as error:
+            raise ValidationError({'label': error})
+
         super(Annotation, self).clean()
 
     def validate_label(self, label):
         for key, value in label.items():
             try:
-                term_type = self.event_type.get_term_type_or_none(key)
-            except self.event_type.InvalidTermType:
-                msg = _('Label contains a term type ({type}) that is not valid for the event type or does not exist')
-                msg = msg.format(type=key)
-                raise ValidationError({'label': msg})
+                term_type = self.event_type.validate_and_get_term_type(key)
+            except ValidationError:
+                msg = _('Label contains a term (of type %(type)s) that is not valid for the event type or does not exist')
+                params = dict(type=key)
+                raise ValidationError(msg, params=params)
 
-            if not term_type.is_valid_value(value):
-                msg = _('{value} is not a valid value for term type {type}')
-                msg = msg.format(value=value, type=str(term_type))
-                raise ValidationError({'label': msg})
+            try:
+                term_type.validate_value(value)
+            except ValidationError as error:
+                msg = _('Invalid label. Error: %(error)s')
+                params = dict(error=str(error))
+                raise ValidationError(msg, params=params)

@@ -1,5 +1,6 @@
 import mimetypes
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.models.schemas import Schema
@@ -63,11 +64,18 @@ class ItemType(models.Model):
     def __str__(self):
         return self.name
 
-    class InvalidEventType(Exception):
-        pass
-
-    def validate_event_type(self, event_type):
+    def validate_media_info(self, media_info):
         try:
-            self.event_types.get(name=event_type.name)
+            self.media_info_schema.validate_instance(media_info)
+        except ValidationError as error:
+            msg = _('Invalid media info for item of type %(type)s. Error %(error)s')
+            params = dict(type=str(self), error=str(error))
+            raise ValidationError(msg, params=params)
+
+    def validate_and_get_event_type(self, event_type):
+        try:
+            return self.event_types.get(name=event_type.name)
         except self.event_types.model.DoesNotExist:
-            raise self.InvalidEventType
+            msg = _('Event type %(event_type)s is invalid for item type %(item_type)s')
+            params = dict(even_type=str(event_type), item_type=str(self))
+            raise ValidationError(msg, params=params)

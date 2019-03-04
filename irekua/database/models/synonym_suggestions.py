@@ -1,10 +1,10 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    validate_json_instance,
     empty_json
 )
 
@@ -58,8 +58,10 @@ class SynonymSuggestion(models.Model):
             suggestion=self.synonym)
         return msg
 
-    def clean(self, *args, **kwargs):
-        validate_json_instance(
-            self.metadata,
-            self.source.term_type.synonym_metadata_schema.schema)
-        super(SynonymSuggestion, self).clean(*args, **kwargs)
+    def clean(self):
+        try:
+            self.source.term_type.validate_synonym_metadata(self.metadata)
+        except ValidationError as error:
+            raise ValidationError({'metadata': error})
+
+        super(SynonymSuggestion, self).clean()

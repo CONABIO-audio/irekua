@@ -44,20 +44,21 @@ class CollectionDevice(models.Model):
         verbose_name_plural = _('Collection Devices')
 
     def __str__(self):
-        msg = 'Device {device_id} from collection {collection_id}'.format(
-            device_id=str(self.device),
-            collection_id=str(self.collection))
-        return msg
+        msg = 'Device %(device_id)s from collection %(collection_id)s'
+        params = dict(device_id=str(self.device), collection_id=str(self.collection))
+        return msg % params
 
     def clean(self):
         try:
-            self.collection.validate_device_type(self.device.device_type)
+            device_type = self.collection.validate_and_get_device_type(
+                self.device.device_type)
         except ValidationError as error:
             raise ValidationError({'device': str(error)})
 
-        try:
-            self.collection.validate_device_metadata(self.metadata)
-        except ValidationError as error:
-            raise ValidationError({'metadata': str(error)})
+        if device_types is not None:
+            try:
+                device_type.validate_metadata(self.metadata)
+            except ValidationError as error:
+                raise ValidationError({'metadata': str(error)})
 
         super(CollectionDevice, self).clean()

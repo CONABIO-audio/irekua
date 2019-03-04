@@ -43,12 +43,21 @@ class CollectionSite(models.Model):
         verbose_name_plural = _('Collection Sites')
 
     def __str__(self):
-        msg = _('Site {site} of collection {collection}').format(
+        msg = _('Site %(site)s of collection %(collection)')
+        params = dict(
             site=str(self.site),
             collection=str(self.collection))
-        return msg
+        return msg % params
 
     def clean(self):
-        self.collection.validate_site(self.site)
-        self.collection.validate_site_metadata(self.metadata)
+        try:
+            site_type = self.collection.validate_and_get_site_type(self.site.site_type)
+        except ValidationError as error:
+            raise ValidationError({'site': error})
+
+        if site_type is not None:
+            try:
+                self.collection.validate_site_metadata(self.metadata)
+            except ValidationError as error:
+                raise ValidationError({'metadata': error})
         super(CollectionSite, self).clean()

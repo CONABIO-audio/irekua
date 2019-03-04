@@ -56,6 +56,10 @@ class CollectionType(models.Model):
         db_column='restrict_event_types',
         verbose_name=_('restrict event types'),
         help_text=_('Flag indicating whether types of events are restricted to registered ones'))
+    restrict_sampling_event_types = models.BooleanField(
+        db_column='restrict_sampling_event_types',
+        verbose_name=_('restrict sampling event types'),
+        help_text=_('Flag indicating whether types of sampling events are restricted to registered ones'))
 
     site_types = models.ManyToManyField(
         'SiteType')
@@ -65,6 +69,8 @@ class CollectionType(models.Model):
         'LicenceType')
     event_types = models.ManyToManyField(
         'EventType')
+    sampling_event_types = models.ManyToManyField(
+        'SamplingEventType')
     item_types = models.ManyToManyField(
         'ItemType',
         through='CollectionItemType',
@@ -73,6 +79,10 @@ class CollectionType(models.Model):
         'DeviceType',
         through='CollectionDeviceType',
         through_fields=('collection', 'device_type'))
+    role_types = models.ManyToManyField(
+        'RoleType',
+        through='CollectionRoleType',
+        through_fields=('collection', 'role_type'))
 
     class Meta:
         verbose_name = _('Collection Type')
@@ -81,18 +91,101 @@ class CollectionType(models.Model):
     def __str__(self):
         return self.name
 
-    def validate_site_type(self, site_type):
+    def validate_metadata(self, metadata):
+        try:
+            self.metadata_schema.validate_intance(metadata)
+        except ValidationError as error:
+            msg = _('Invalid collection metadata for collection of type %(type)s. Error: %(error)s')
+            params = dict(type=str(self), error=str(error))
+            raise ValidationError(msg, params=params)
+
+    def validate_and_get_site_type(self, site_type):
         if not self.restrict_site_types:
             return
 
         try:
-            self.site_types.get(name=site_type)
+            return self.site_types.get(name=site_type)
         except self.site_types.model.DoesNotExist:
-            msg = _('Site type %(site_type)s is accepted in collection of type %(col_type) or does not exist')
-            msg = msg.format(
+            msg = _('Site type %(site_type)s is not accepted in collection of type %(col_type)s or does not exist')
+            params = dict(
                 site_type=site_type,
                 col_type=str(self))
-            raise ValidationError(msg)
+            raise ValidationError(msg, params=params)
 
-    def validate_site_metadata(self, site):
-        pass
+    def validate_and_get_annotation_type(self, annotation_type):
+        if not self.restrict_annotation_types:
+            return
+
+        try:
+            return self.annotation_types.get(name=annotation_type)
+        except self.annotation_types.model.DoesNotExist:
+            msg = _('Annotation type %(annotation_type)s is not accepted in collection of type %(col_type)s or does not exist')
+            params = dict(
+                annotation_type=annotation_type,
+                col_type=str(self))
+            raise ValidationError(msg, params=params)
+
+    def validate_and_get_licence_type(self, licence_type):
+        if not self.restrict_licence_types:
+            return
+
+        try:
+            return self.licence_type.get(name=licence_type)
+        except self.licence_types.model.DoesNotExist:
+            msg = _('Licence type %(licence_type)s is not accepted in collection of type %(col_type)s or does not exist')
+            params = dict(
+                licence_type=licence_type,
+                col_type=str(self))
+            raise ValidationError(msg, params=params)
+
+    def validate_and_get_event_type(self, event_type):
+        if not self.restrict_event_types:
+            return
+
+        try:
+            return self.event_types.get(name=event_type)
+        except self.event_types.model.DoesNotExist:
+            msg = _('Event type %(event_type)s is not accepted in collection of type %(col_type)s or does not exist')
+            params = dict(
+                event_type=event_type,
+                col_type=str(self))
+            raise ValidationError(msg, params=params)
+
+    def validate_and_get_item_type(self, item_type):
+        if not self.restrict_item_types:
+            return
+
+        try:
+            return self.item_types.get(name=item_type)
+        except self.item_types.model.DoesNotExist:
+            msg = _('Item type %(item_type)s is not accepted in collection of type %(col_type)s or does not exist')
+            params = dict(
+                item_type=item_type,
+                col_type=str(self))
+            raise ValidationError(msg, params=params)
+
+    def validate_and_get_device_type(self, device_type):
+        if not self.restrict_device_types:
+            return
+
+        try:
+            return self.device_types.get(name=device_type)
+        except self.device_types.model.DoesNotExist:
+            msg = _('Item type %(device_type)s is not accepted in collection of type %(col_type)s or does not exist')
+            params = dict(
+                device_type=device_type,
+                col_type=str(self))
+            raise ValidationError(msg, params=params)
+
+    def validate_and_get_sampling_event_type(self, sampling_event_type):
+        if not self.restrict_sampling_event_types:
+            return
+
+        try:
+            return self.sampling_event_types.get(name=sampling_event_type)
+        except self.sampling_event_types.model.DoesNotExist:
+            msg = _('Sampling Event type %(sampling_event_type)s is not accepted in collection of type %(col_type)s or does not exist')
+            params = dict(
+                sampling_event_type=sampling_event_type,
+                col_type=str(self))
+            raise ValidationError(msg, params=params)

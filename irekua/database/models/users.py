@@ -27,19 +27,19 @@ class UserData(models.Model):
         null=False,
         default=False)
     is_curator = models.BooleanField(
-       db_column='is_curator',
-       verbose_name=_('is curator'),
-       help_text=_('Flag to indicate if user is a curator'),
-       blank=False,
-       null=False,
-       default=False)
+        db_column='is_curator',
+        verbose_name=_('is curator'),
+        help_text=_('Flag to indicate if user is a curator'),
+        blank=False,
+        null=False,
+        default=False)
     is_model = models.BooleanField(
-       db_column='is_model',
-       verbose_name=_('is model'),
-       help_text=_('Flag to indicate if user is an AI model'),
-       blank=False,
-       null=False,
-       default=False)
+        db_column='is_model',
+        verbose_name=_('is model'),
+        help_text=_('Flag to indicate if user is an AI model'),
+        blank=False,
+        null=False,
+        default=False)
 
     class Meta:
         verbose_name = _('User Data')

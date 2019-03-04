@@ -2,16 +2,20 @@ from django.contrib.postgres.fields import JSONField
 from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models import PointField
 from django.db import models
-from django import forms
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    validate_coordinates_and_geometry,
-    validate_json_instance,
     empty_json,
     GENERIC_SITE,
 )
+
+
+def validate_coordinates_and_geometry(geometry, latitude, longitude):
+    if geometry.x != longitude or geometry.y != latitude:
+        msg = _('Georeference and longitude-latitude do not coincide')
+        raise ValidationError(msg)
 
 
 class Site(models.Model):
@@ -90,16 +94,19 @@ class Site(models.Model):
             return
 
         msg = _('Geo reference or longitude-latitude must be provided')
-        raise forms.ValidationError(msg)
+        raise ValidationError({'geo_ref': msg})
 
     def __str__(self):
         if self.name != '':
             return self.name
         return _('Site {id}').format(id=self.id)
 
-    def clean(self, *args, **kwargs):
+    def clean(self):
         self.sync_coordinates_and_georef()
-        validate_json_instance(
-            self.metadata,
-            self.site_type.metadata_schema.schema)
-        super(Site, self).clean(*args, **kwargs)
+
+        try:
+            self.site_type.validate_metadata(self.metadata)
+        except ValidationError as error:
+            raise ValidationError({'metadata': error})
+
+        super(Site, self).clean()

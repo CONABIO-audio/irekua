@@ -37,3 +37,11 @@ class SiteType(models.Model):
 
     def __str__(self):
         return self.name
+
+    def validate_metadata(self, metadata):
+        try:
+            self.metadata_schema.validate_instance(metadata)
+        except ValidationError as error:
+            msg = _('Invalid site metadata for site of type %(type)s. Error: %(error)')
+            params = dict(type=str(self), error=str(error))
+            raise ValidationError(msg, params=params)

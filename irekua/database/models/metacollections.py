@@ -15,22 +15,25 @@ class MetaCollection(models.Model):
     description = models.TextField(
         db_column='description',
         verbose_name=_('description'),
-        help_text=_('Description of metacollection'),
+        help_text=_('Description of Meta Collection'),
         blank=False)
     creator = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         db_column='creator_id',
         verbose_name=_('creator id'),
-        help_text=_('Reference to creator of metacollection'),
+        help_text=_('Reference to creator of Meta Collection'),
         null=True,
         blank=True)
     items = models.ManyToManyField(
-        'Item')
+        'Item',
+        db_column='items',
+        verbose_name=_('items'),
+        help_text=_('Items belonging to MetaCollection'))
 
     class Meta:
-        verbose_name = _('Metacollection')
-        verbose_name_plural = _('Metacollections')
+        verbose_name = _('Meta Collection')
+        verbose_name_plural = _('Meta Collections')
 
     def __str__(self):
         return self.name

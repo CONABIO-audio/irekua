@@ -1,18 +1,25 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    validate_json_instance,
     empty_json
 )
 
 
 class TermSuggestion(models.Model):
-    value = models.ForeignKey(
+    term_type = models.ForeignKey(
         'TermType',
         on_delete=models.CASCADE,
+        db_column='term_type',
+        verbose_name=_('term type'),
+        help_text=_('Type of term'),
+        blank=False,
+        null=False)
+    value = models.CharField(
+        max_length=128,
         db_column='value',
         verbose_name=_('value'),
         help_text=_('Value of term'),
@@ -49,13 +56,16 @@ class TermSuggestion(models.Model):
         verbose_name = _('Term Suggestions')
 
     def __str__(self):
-        msg = _('Suggestion: {term_type}: {value}').format(
-            term_type=self.term_type,
+        msg = _('Suggestion: %(term_type)s: %(value)s')
+        params = dict(
+            term_type=str(self.term_type),
             value=self.value)
-        return msg
+        return msg % params
 
     def clean(self, *args, **kwargs):
-        validate_json_instance(
-            self.metadata,
-            self.term_type.metadata_schema.schema)
+        try:
+            self.term_type.validate_metadata(self.metadata)
+        except ValidationError as error:
+            raise ValidationError({'metadata': error})
+
         super(TermSuggestion, self).clean(*args, **kwargs)

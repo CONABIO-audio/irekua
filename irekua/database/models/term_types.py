@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.models.schemas import Schema
@@ -66,21 +67,38 @@ class TermType(models.Model):
     def __str__(self):
         return self.name
 
-    class InvalidTermValue(Exception):
-        pass
+    def validate_non_categorical_value(self, value):
+        if not isinstance(value, (int, float)):
+            msg = _('Value %(value)s is invalid for non-categorical term of type %(type)')
+            params = dict(value=value, type=str(self))
+            raise ValidationError(msg, params=params)
 
-    def is_valid_non_categorical_value(self, value):
-        return isinstance(value, (int, float))
-
-    def is_valid_categorical_value(self, value):
+    def validate_categorical_value(self, value):
         try:
             self.term_set.get(value=value)
-            return True
         except self.term_set.model.DoesNotExist:
-            return False
+            msg = _('Value %(value) is invalid for categorical term of type %(type)')
+            params = dict(value=value, type=str(self))
+            raise ValidationError(msg, params=params)
 
-    def is_valid_value(self, value):
+    def validate_value(self, value):
         if self.is_categorical:
-            return self.is_valid_categorical_value(value)
-        else:
-            return self.is_valid_non_categorical_value(value)
+            return self.validate_categorical_value(value)
+
+        return self.validate_non_categorical_value(value)
+
+    def validate_metadata(self, metadata):
+        try:
+            self.metadata_schema.validate_instance(metadata)
+        except ValidationError as error:
+            msg = _('Invalid metadata for term of type %(type)s. Error: %(error)s')
+            params = dict(type=str(self), error=str(error))
+            raise ValidationError(msg, params=params)
+
+    def validate_synonym_metadata(self, metadata):
+        try:
+            self.synonym_metadata_schema.validate_instance(metadata)
+        except ValidationError as error:
+            msg = _('Invalid metadata for synonym of terms of type %(type)s. Error: %(error)s')
+            params = dict(type=str(self), error=str(error))
+            raise ValidationError(msg, params=params)

@@ -1,12 +1,10 @@
 from django.contrib.postgres.fields import JSONField
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from database.models.schemas import Schema
 from database.utils import (
-    validate_json_instance,
-    validate_is_of_collection,
     empty_json,
 )
 
@@ -81,19 +79,6 @@ class Item(models.Model):
         on_delete=models.PROTECT,
         blank=True,
         null=True)
-    metadata_type = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        db_column='metadata_type',
-        verbose_name=_('metadata type'),
-        help_text=_('Schema for item metadata structure'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.ITEM_METADATA) |
-            models.Q(field__exact=Schema.GLOBAL)),
-        to_field='name',
-        default=Schema.FREE_SCHEMA,
-        blank=False,
-        null=False)
     metadata = JSONField(
         db_column='metadata',
         default=empty_json,
@@ -141,6 +126,11 @@ class Item(models.Model):
         db_column='is_uploaded',
         verbose_name=_('is uploaded'),
         help_text=_('Is the item file on the server?'))
+    tags = models.ManyToManyField(
+        'Tag',
+        db_column='tags',
+        verbose_name=_('tags'),
+        help_text=_('Tags for item'))
 
     class Meta:
         verbose_name = _('Item')
@@ -153,18 +143,31 @@ class Item(models.Model):
     def __str__(self):
         return 'Item {id}'.format(id=self.id)
 
-    def clean(self, *args, **kwargs):
-        validate_json_instance(
-            self.media_info,
-            self.item_type.media_info_schema.schema)
-        validate_json_instance(
-            self.metadata,
-            self.metadata_type.schema)
-        validate_is_of_collection(
-            self.collection,
-            self.metadata_type)
-        super(Item, self).clean(*args, **kwargs)
+    def clean(self):
+        try:
+            self.item_type.validate_media_info(self.media_info)
+        except ValidationError as error:
+            raise ValidationError({'media_info': error})
 
-    def validate_annotation(self, annotation):
-        self.item_type.validate_event_type(annotation.event_type)
-        self.collection.validate_annotation_type(annotation.annotation_type)
+        if self.collection:
+            try:
+                self.collection.validate_sampling_event_type(self.sampling.sampling_event_type)
+            except ValidationError as error:
+                raise ValidationError({'sampling': error})
+
+            try:
+                collection_item_type = self.collection.validate_and_get_item_type(
+                    self.item_type)
+            except ValidationError as error:
+                raise ValidationError({'item_type': error})
+
+            if collection_item_type is not None:
+                try:
+                    collection_item_type.validate_metadata(self.metadata)
+                except ValidationError as error:
+                    raise ValidationError({'metadata': error})
+
+        super(Item, self).clean()
+
+    def validate_and_get_event_type(self, event_type):
+        return self.item_type.validate_and_get_event_type(event_type)

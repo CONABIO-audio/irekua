@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import HStoreField
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -51,12 +52,15 @@ class AnnotationVote(models.Model):
         verbose_name_plural = _('Annotation Votes')
 
     def __str__(self):
-        msg = _('Vote {id} on annotation {annotation}')
-        msg = msg.format(
-            id=self.id,
-            annotation=self.annotation.id)
-        return msg
+        msg = _('Vote %(id)s on annotation %(annotation)s')
+        params = dict(id=self.id, annotation=self.annotation.id)
+        return msg % params
 
     def clean(self):
-        self.annotation.validate_label(self.label)
+        try:
+            self.annotation.validate_label(self.label)
+        except ValidationError as error:
+            msg = _('Invalid label for event type %(type)s. Error: %(error)s')
+            params = dict(type=str(self.event_type), error=str(error))
+            raise ValidationError({'label': msg}, params=params)
         super(AnnotationVote, self).clean()

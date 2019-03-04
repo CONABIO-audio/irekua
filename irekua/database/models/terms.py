@@ -1,8 +1,7 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-
-from database.utils import validate_json_instance
 
 
 class Term(models.Model):
@@ -46,7 +45,9 @@ class Term(models.Model):
         return msg
 
     def clean(self, *args, **kwargs):
-        validate_json_instance(
-            self.metadata,
-            self.term_type.metadata_schema.schema)
+        try:
+            self.term_type.validate_metadata(self.metadata)
+        except ValidationError as error:
+            raise ValidationError({'metadata': error})
+
         super(Term, self).clean(*args, **kwargs)
