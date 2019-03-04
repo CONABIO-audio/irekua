@@ -1,11 +1,9 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from database.models.schemas import Schema
 from database.utils import (
-    validate_json_instance,
-    validate_is_of_collection,
     empty_json,
 )
 
@@ -33,20 +31,6 @@ class CollectionDevice(models.Model):
         verbose_name=_('internal id'),
         help_text=_('ID of device within the collection'),
         blank=True)
-    metadata_type = models.ForeignKey(
-        'Schema',
-        related_name='collection_device_metadata_type',
-        on_delete=models.PROTECT,
-        db_column='metadata_type',
-        verbose_name=_('metadata_type'),
-        help_text=_('JSON schema for metadata'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.COLLECTION_DEVICE_METADATA) |
-            models.Q(field__exact=Schema.GLOBAL)),
-        blank=False,
-        null=False,
-        to_field='name',
-        default=Schema.FREE_SCHEMA)
     metadata = JSONField(
         blank=True,
         db_column='metadata',
@@ -65,11 +49,15 @@ class CollectionDevice(models.Model):
             collection_id=str(self.collection))
         return msg
 
-    def clean(self, *args, **kwargs):
-        validate_is_of_collection(
-            self.collection,
-            self.metadata_type)
-        validate_json_instance(
-            self.metadata,
-            self.metadata_type.schema)
-        super(CollectionDevice, self).clean(*args, **kwargs)
+    def clean(self):
+        try:
+            self.collection.validate_device_type(self.device.device_type)
+        except ValidationError as error:
+            raise ValidationError({'device': str(error)})
+
+        try:
+            self.collection.validate_device_metadata(self.metadata)
+        except ValidationError as error:
+            raise ValidationError({'metadata': str(error)})
+
+        super(CollectionDevice, self).clean()

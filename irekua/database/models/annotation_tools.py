@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from database.models.schemas import Schema
 
@@ -61,4 +62,9 @@ class AnnotationTool(models.Model):
         return msg
 
     def validate_configuration(self, configuration):
-        self.configuration_schema.validate_instance(configuration)
+        try:
+            self.configuration_schema.validate_instance(configuration)
+        except ValidationError as error:
+            msg = _('Invalid annotation tool configuration. Error: {error}')
+            msg = msg.format(error=str(error))
+            raise ValidationError(msg)

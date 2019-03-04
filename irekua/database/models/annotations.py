@@ -133,7 +133,7 @@ class Annotation(models.Model):
             item_id=self.item.id)
         return msg
 
-    def clean(self, *args, **kwargs):
+    def clean(self):
         # TODO
         validate_json_instance(
             self.metadata,
@@ -149,10 +149,9 @@ class Annotation(models.Model):
         except ValidationError as error:
             raise ValidationError({'annotation_configuration': error})
 
-        
         self.item.validate_annotation(self)
         self.validate_label(self.label)
-        super(Annotation, self).clean(*args, **kwargs)
+        super(Annotation, self).clean()
 
     def validate_label(self, label):
         for key, value in label.items():

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from .schemas import Schema
 
@@ -41,6 +42,14 @@ class CollectionDeviceType(models.Model):
 
     def __str__(self):
         msg = _('Device type {device} for collection {collection}').format(
-                role=str(self.device_type),
-                collection=str(self.collection))
+            role=str(self.device_type),
+            collection=str(self.collection))
         return msg
+
+    def validate_metadata(self, metadata):
+        try:
+            self.metadata_schema.validate_instance(metadata)
+        except ValidationError as error:
+            msg = _('Invalid metadata for collection device. Error: {error}')
+            msg = msg.format(error=str(error))
+            raise ValidationError(msg)

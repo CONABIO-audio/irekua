@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from database.models.schemas import Schema
 
@@ -79,3 +80,19 @@ class CollectionType(models.Model):
 
     def __str__(self):
         return self.name
+
+    def validate_site_type(self, site_type):
+        if not self.restrict_site_types:
+            return
+
+        try:
+            self.site_types.get(name=site_type)
+        except self.site_types.model.DoesNotExist:
+            msg = _('Site type %(site_type)s is accepted in collection of type %(col_type) or does not exist')
+            msg = msg.format(
+                site_type=site_type,
+                col_type=str(self))
+            raise ValidationError(msg)
+
+    def validate_site_metadata(self, site):
+        pass

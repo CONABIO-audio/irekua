@@ -51,11 +51,12 @@ class AnnotationVote(models.Model):
         verbose_name_plural = _('Annotation Votes')
 
     def __str__(self):
-        msg = _('Vote {id} on annotation {annotation}').format(
+        msg = _('Vote {id} on annotation {annotation}')
+        msg = msg.format(
             id=self.id,
             annotation=self.annotation.id)
         return msg
 
-    def clean(self, *args, **kwargs):
+    def clean(self):
         self.annotation.validate_label(self.label)
-        super(AnnotationVote, self).clean(*args, **kwargs)
+        super(AnnotationVote, self).clean()

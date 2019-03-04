@@ -1,11 +1,11 @@
 from django.contrib.postgres.fields import JSONField
 from django.contrib.auth.models import User
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
     GENERIC_COLLECTION,
-    validate_json_instance,
     empty_json,
 )
 
@@ -86,11 +86,22 @@ class Collection(models.Model):
     def __str__(self):
         return self.name
 
-    def clean(self, *args, **kwargs):
-        validate_json_instance(
-            self.metadata,
-            self.collection_type.metadata_schema.schema)
-        super(Collection, self).save(*args, **kwargs)
+    def clean(self):
+        try:
+            self.collection_type.validate_metadata(self.metadata)
+        except ValidationError as error:
+            msg = _('Invalid metadata for collection of type {type}. Error: {error}')
+            msg = msg.format(
+                type=str(self.collection_type),
+                error=str(error))
+            raise ValidationError({'metadata': msg})
+        super(Collection, self).save()
+
+    def validate_site(self, site):
+        self.collection_type.validate_site(site)
+
+    def validate_site_metadata(self, metadata):
+        self.collection_type.validate_site_metadata(metadata)
 
     def has_user(self, user):
         try:

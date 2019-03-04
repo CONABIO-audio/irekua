@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from .schemas import Schema
 
@@ -40,7 +41,19 @@ class CollectionItemType(models.Model):
         verbose_name_plural = _('Collection Item Types')
 
     def __str__(self):
-        msg = _('Item type {item} for collection {collection}').format(
-                role=str(self.item_type),
-                collection=str(self.collection))
+        msg = _('Item type {item} for collection {collection}')
+        msg = msg.format(
+            role=str(self.item_type),
+            collection=str(self.collection))
         return msg
+
+    def validate_metadata(self, metadata):
+        try:
+            self.metadata_schema.validate_instance(metadata)
+        except ValidationError as error:
+            msg = _('Invalid metadata for item type {type} in collection {collection}. Error: {error}')
+            msg = msg.format(
+                type=str(self.item_type),
+                collection=str(self.collection),
+                error=str(error))
+            raise ValidationError(msg)

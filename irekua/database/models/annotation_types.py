@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from database.models.schemas import Schema
 
@@ -43,4 +44,11 @@ class AnnotationType(models.Model):
         return self.name
 
     def validate_annotation(self, annotation):
-        self.schema.validate_instance(annotation)
+        try:
+            self.schema.validate_instance(annotation)
+        except ValidationError as error:
+            msg = _('Invalid annotation for annotation type: {type}. Error: {error}')
+            msg = msg.format(
+                type=str(self),
+                error=str(error))
+            raise ValidationError(msg)
