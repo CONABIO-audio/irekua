@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from .schemas import Schema
+
 
 class CollectionRole(models.Model):
     collection = models.ForeignKey(
@@ -17,6 +19,19 @@ class CollectionRole(models.Model):
         db_column='role_type',
         verbose_name=_('role type'),
         help_text=_('Role to be part of collection'),
+        blank=False,
+        null=False)
+    metadata_schema = models.ForeignKey(
+        'Schema',
+        on_delete=models.PROTECT,
+        db_column='metadata_type',
+        verbose_name=_('metadata type'),
+        help_text=_('JSON schema for collection role metadata'),
+        limit_choices_to=(
+            models.Q(field__exact=Schema.COLLECTION_USER_METADATA) |
+            models.Q(field__exact=Schema.GLOBAL)),
+        to_field='name',
+        default=Schema.FREE_SCHEMA,
         blank=False,
         null=False)
 

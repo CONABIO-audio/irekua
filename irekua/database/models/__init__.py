@@ -1,14 +1,17 @@
+from .annotation_tools import AnnotationTool
 from .annotation_types import AnnotationType
 from .annotation_votes import AnnotationVote
 from .annotations import Annotation
+from .collection_device_types import CollectionDeviceType
 from .collection_devices import CollectionDevice
+from .collection_item_types import CollectionItemType
 from .collection_roles import CollectionRole
-from .collection_schemas import CollectionSchema
 from .collection_sites import CollectionSite
+from .collection_types import CollectionType
 from .collection_users import CollectionUser
 from .data_collections import Collection
-from .device_types import DeviceType
 from .device_brands import DeviceBrand
+from .device_types import DeviceType
 from .devices import Device
 from .entailments import Entailment
 from .event_types import EventType
@@ -21,28 +24,33 @@ from .metacollections import MetaCollection
 from .physical_devices import PhysicalDevice
 from .role_types import RoleType
 from .sampling_event import SamplingEvent
+from .sampling_event_types import SamplingEventType
 from .schemas import Schema
 from .secondary_items import SecondaryItem
+from .site_types import SiteType
 from .sites import Site
 from .sources import Source
 from .synonym_suggestions import SynonymSuggestion
 from .synonyms import Synonym
 from .term_suggestions import TermSuggestion
-from .terms import Term
 from .term_types import TermType
+from .terms import Term
 from .users import UserData
 
 
 __all__ = [
     'Annotation',
+    'AnnotationTool',
     'AnnotationType',
     'AnnotationVote',
     'Collection',
     'CollectionDevice',
+    'CollectionDeviceType',
+    'CollectionItemType',
     'CollectionRole',
     'CollectionSite',
+    'CollectionType',
     'CollectionUser',
-    'CollectionSchema',
     'Device',
     'DeviceBrand',
     'DeviceType',
@@ -57,14 +65,16 @@ __all__ = [
     'PhysicalDevice',
     'RoleType',
     'SamplingEvent',
+    'SamplingEventType',
     'Schema',
     'SecondaryItem',
     'Site',
+    'SiteType',
     'Source',
     'Synonym',
     'SynonymSuggestion',
     'Term',
-    'TermType',
     'TermSuggestion',
+    'TermType',
     'UserData',
 ]

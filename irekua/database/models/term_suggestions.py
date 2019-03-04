@@ -3,7 +3,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
-from database.utils import validate_json_instance
+from database.utils import (
+    validate_json_instance,
+    empty_json
+)
 
 
 class TermSuggestion(models.Model):
@@ -22,6 +25,7 @@ class TermSuggestion(models.Model):
     metadata = JSONField(
         blank=True,
         db_column='metadata',
+        default=empty_json,
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to term'),
         null=True)
@@ -51,6 +55,7 @@ class TermSuggestion(models.Model):
         return msg
 
     def clean(self, *args, **kwargs):
-        metadata_schema = self.term_type.metadata_type.schema
-        validate_json_instance(self.metadata, metadata_schema)
+        validate_json_instance(
+            self.metadata,
+            self.term_type.metadata_schema.schema)
         super(TermSuggestion, self).clean(*args, **kwargs)

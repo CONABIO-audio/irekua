@@ -10,10 +10,12 @@ class AnnotationSerializer(serializers.HyperlinkedModelSerializer):
         model = db.Annotation
         fields = (
             'item',
-            'annotation_type',
             'event_type',
+            'label_type',
             'label',
+            'annotation_type',
             'annotation',
+            'metadata_type',
             'metadata',
             'certainty',
             'quality',
@@ -21,4 +23,6 @@ class AnnotationSerializer(serializers.HyperlinkedModelSerializer):
             'created_on',
             'modified_on',
             'model',
-            'created_by')
+            'created_by'
+            'last_modified_by',
+        )

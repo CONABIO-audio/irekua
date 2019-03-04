@@ -13,7 +13,9 @@ class AnnotationTypeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = db.AnnotationType
         fields = (
-                'url',
-                'name',
-                'description',
-                'schema')
+            'url',
+            'name',
+            'description',
+            'schema',
+            'icon'
+        )

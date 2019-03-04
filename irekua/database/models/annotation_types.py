@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.models.schemas import Schema
+
 
 class AnnotationType(models.Model):
     name = models.CharField(
@@ -22,8 +24,8 @@ class AnnotationType(models.Model):
         db_column='schema_id',
         verbose_name=_('schema id'),
         limit_choices_to=(
-            models.Q(field__exact='annotation_annotation') |
-            models.Q(field__exact='global')),
+            models.Q(field__exact=Schema.ANNOTATION) |
+            models.Q(field__exact=Schema.GLOBAL)),
         help_text=_('JSON schema for annotation type'))
     icon = models.ImageField(
         db_column='icon',
@@ -39,3 +41,6 @@ class AnnotationType(models.Model):
 
     def __str__(self):
         return self.name
+
+    def validate_annotation(self, annotation):
+        self.schema.validate_instance(annotation)

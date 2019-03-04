@@ -2,10 +2,23 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from database.utils import validate_json_instance
+from database.utils import (
+    validate_json_instance,
+    empty_json,
+    GENERIC_SAMPLING_EVENT,
+)
 
 
 class SamplingEvent(models.Model):
+    sampling_event_type = models.ForeignKey(
+        'SamplingEventType',
+        on_delete=models.PROTECT,
+        db_column='sampling_event_type',
+        verbose_name=_('sampling event type'),
+        help_text=_('Type of sampling event'),
+        blank=False,
+        null=False,
+        default=GENERIC_SAMPLING_EVENT)
     device = models.ForeignKey(
         'PhysicalDevice',
         db_column='device_id',
@@ -13,23 +26,10 @@ class SamplingEvent(models.Model):
         help_text=_('Reference to device used on sampling event'),
         on_delete=models.PROTECT,
         blank=False)
-    configuration_type = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        related_name='sampling_event_configuration_type',
-        db_column='configuration_type',
-        verbose_name=_('configuration type'),
-        help_text=_('Schema for sampling event configuration'),
-        limit_choices_to=(
-            models.Q(field__exact='sampling_configuration_metadata') |
-            models.Q(field__exact='global')),
-        to_field='name',
-        default='free',
-        blank=False,
-        null=False)
     configuration = JSONField(
         db_column='configuration',
         verbose_name=_('configuration'),
+        default=empty_json,
         help_text=_('Configuration on device through the sampling event'),
         blank=True,
         null=True)
@@ -38,24 +38,11 @@ class SamplingEvent(models.Model):
         verbose_name=_('commentaries'),
         help_text=_('Sampling event commentaries'),
         blank=True)
-    metadata_type = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        related_name='sampling_event_metadata_type',
-        db_column='metadata_type',
-        verbose_name=_('metadata type'),
-        help_text=_('Schema for sampling event metadata'),
-        limit_choices_to=(
-            models.Q(field__exact='sampling_event_metadata') |
-            models.Q(field__exact='global')),
-        to_field='name',
-        default='free',
-        blank=False,
-        null=False)
     metadata = JSONField(
         db_column='metadata',
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to sampling event'),
+        default=empty_json,
         blank=True,
         null=True)
     started_on = models.DateTimeField(
@@ -93,6 +80,10 @@ class SamplingEvent(models.Model):
         return msg
 
     def clean(self, *args, **kwargs):
-        validate_json_instance(self.metadata, self.metadata_type.schema)
-        validate_json_instance(self.configuration, self.configuration_type.schema)
+        validate_json_instance(
+            self.metadata,
+            self.sampling_event_type.metadata_schema.schema)
+        validate_json_instance(
+            self.configuration,
+            self.device.device.configuration_type.schema)
         super(SamplingEvent, self).clean(*args, **kwargs)

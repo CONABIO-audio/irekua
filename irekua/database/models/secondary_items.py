@@ -2,7 +2,10 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from database.utils import validate_json_instance
+from database.utils import (
+    validate_json_instance,
+    empty_json
+)
 
 
 class SecondaryItem(models.Model):
@@ -62,6 +65,7 @@ class SecondaryItem(models.Model):
         db_column='media_info',
         verbose_name=_('media info'),
         help_text=_('Media information of secondary item file'),
+        default=empty_json,
         blank=True,
         null=True)
 
@@ -76,6 +80,7 @@ class SecondaryItem(models.Model):
         return msg
 
     def clean(self, *args, **kwargs):
-        media_info_schema = self.item_type.media_info_schema.schema
-        validate_json_instance(self.media_info, media_info_schema)
+        validate_json_instance(
+            self.media_info,
+            self.item_type.media_info_schema.schema)
         super(SecondaryItem, self).clean(*args, **kwargs)

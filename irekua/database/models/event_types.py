@@ -23,9 +23,21 @@ class EventType(models.Model):
         blank=True,
         null=True)
 
+    label_term_types = models.ManyToManyField(
+        'TermType',
+        db_column='label_term_types',
+        verbose_name=_('label term types'),
+        help_text=_('Valid term types with which to label this type of events'))
+
     class Meta:
         verbose_name = _('Event Type')
         verbose_name_plural = _('Event Types')
 
+    class InvalidTermType(Exception):
+        pass
+
     def __str__(self):
         return self.name
+
+    def get_term_type(self, term_type):
+        return self.label_term_types.get(name=term_type)

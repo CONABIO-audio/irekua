@@ -1,9 +1,11 @@
-from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import HStoreField
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from database.utils import validate_json_instance
+from database.utils import (
+    empty_json
+)
 
 
 class AnnotationVote(models.Model):
@@ -15,9 +17,10 @@ class AnnotationVote(models.Model):
         help_text=_('Reference to annotation being voted'),
         blank=False,
         null=False)
-    label = JSONField(
+    label = HStoreField(
         db_column='label',
         verbose_name=_('label'),
+        default=empty_json,
         help_text=_('Labels associated to annotation vote'),
         blank=False,
         null=False)
@@ -54,6 +57,5 @@ class AnnotationVote(models.Model):
         return msg
 
     def clean(self, *args, **kwargs):
-        schema = self.annotation.label_type.schema
-        validate_json_instance(self.label, schema)
+        self.annotation.validate_label(self.label)
         super(AnnotationVote, self).clean(*args, **kwargs)

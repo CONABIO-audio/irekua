@@ -3,7 +3,6 @@ from .annotation_votes import AnnotationVoteViewSet
 from .annotations import AnnotationViewSet
 from .collection_devices import CollectionDeviceViewSet
 from .collection_roles import CollectionRoleViewSet
-from .collection_schemas import CollectionSchemaViewSet
 from .collection_sites import CollectionSiteViewSet
 from .collection_users import CollectionUserViewSet
 from .data_collections import CollectionViewSet
@@ -39,7 +38,6 @@ __all__ = [
         'AnnotationVoteViewSet',
         'CollectionDeviceViewSet',
         'CollectionRoleViewSet',
-        'CollectionSchemaViewSet',
         'CollectionSiteViewSet',
         'CollectionUserViewSet',
         'CollectionViewSet',

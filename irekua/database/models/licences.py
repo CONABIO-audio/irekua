@@ -2,7 +2,10 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from database.utils import validate_json_instance
+from database.utils import (
+    validate_json_instance,
+    empty_json,
+)
 
 
 class Licence(models.Model):
@@ -36,6 +39,7 @@ class Licence(models.Model):
     metadata = JSONField(
         db_column='metadata',
         verbose_name=_('metadata'),
+        default=empty_json,
         help_text=_('Metadata associated with licence'),
         blank=True,
         null=True)
@@ -51,6 +55,7 @@ class Licence(models.Model):
         return msg
 
     def clean(self, *args, **kwargs):
-        licence_metadata_schema = self.licence_type.metadata_schema.schema
-        validate_json_instance(self.metadata, licence_metadata_schema)
+        validate_json_instance(
+            self.metadata,
+            self.licence_type.metadata_schema.schema)
         super(Licence, self).clean(*args, **kwargs)

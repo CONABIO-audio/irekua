@@ -2,7 +2,11 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from database.utils import validate_json_instance
+from database.utils import (
+    validate_json_instance,
+    validate_are_same_term_type,
+    empty_json
+)
 
 
 class Synonym(models.Model):
@@ -22,22 +26,10 @@ class Synonym(models.Model):
         verbose_name=_('target id'),
         help_text=_('Reference to the target of the synonym'),
         blank=False)
-    metadata_type = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        db_column='metadata_type',
-        verbose_name=_('metadata type'),
-        help_text=_('Schema for synonym metadata'),
-        limit_choices_to=(
-            models.Q(field__exact='synonym_metadata') |
-            models.Q(field__exact='global')),
-        to_field='name',
-        default='free',
-        blank=False,
-        null=False)
     metadata = JSONField(
         blank=True,
         db_column='metadata',
+        default=empty_json,
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to the synonym'),
         null=True)
@@ -53,5 +45,10 @@ class Synonym(models.Model):
         return msg
 
     def clean(self, *args, **kwargs):
-        validate_json_instance(self.metadata, self.metadata_type.schema)
+        validate_are_same_term_type(
+            self.source,
+            self.target)
+        validate_json_instance(
+            self.metadata,
+            self.source.term_type.synonym_metadata_schema.schema)
         super(Synonym, self).clean(*args, **kwargs)

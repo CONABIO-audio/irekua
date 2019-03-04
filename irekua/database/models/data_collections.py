@@ -3,10 +3,23 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from database.utils import validate_json_instance
+from database.utils import (
+    GENERIC_COLLECTION,
+    validate_json_instance,
+    empty_json,
+)
 
 
 class Collection(models.Model):
+    collection_type = models.ForeignKey(
+        'CollectionType',
+        on_delete=models.PROTECT,
+        db_column='collection_type',
+        verbose_name=_('collection type'),
+        help_text=_('Type of collection'),
+        default=GENERIC_COLLECTION,
+        blank=False,
+        null=False)
     name = models.CharField(
         max_length=70,
         primary_key=True,
@@ -19,35 +32,13 @@ class Collection(models.Model):
         verbose_name=_('description'),
         help_text=_('Description of collection'),
         blank=False)
-    metadata_type = models.ForeignKey(
-        'Schema',
-        related_name='collection_metadata_type',
-        on_delete=models.PROTECT,
-        db_column='metadata_type',
-        verbose_name=_('metadata type'),
-        help_text=_('JSON schema for collection metadata'),
-        limit_choices_to=(
-            models.Q(field__exact='collection_metadata') |
-            models.Q(field__exact='global')),
-        to_field='name',
-        default='free',
-        blank=False,
-        null=False)
     metadata = JSONField(
         db_column='metadata',
         verbose_name=_('metadata'),
-        help_text=_('Collection metadata'),
-        blank=True,
-        null=True)
-    coordinator = models.ForeignKey(
-        User,
-        related_name='collection_coordinator',
-        on_delete=models.PROTECT,
-        db_column='coordinator_id',
-        verbose_name=_('coordinator id'),
-        help_text=_('Collection coordinator'),
-        blank=True,
-        null=True)
+        help_text=_('Metadata associated to collection'),
+        blank=False,
+        default=empty_json,
+        null=False)
     institution = models.ForeignKey(
         'Institution',
         on_delete=models.PROTECT,
@@ -70,11 +61,6 @@ class Collection(models.Model):
         blank=True,
         null=True)
 
-    schemas = models.ManyToManyField(
-        'Schema',
-        related_name='collection_schemas',
-        through='CollectionSchema',
-        through_fields=('collection', 'schema'))
     roles = models.ManyToManyField(
         'RoleType',
         through='CollectionRole',
@@ -101,5 +87,14 @@ class Collection(models.Model):
         return self.name
 
     def clean(self, *args, **kwargs):
-        validate_json_instance(self.metadata, self.metadata_type.schema)
-        super(Collection, self).clean(*args, **kwargs)
+        validate_json_instance(
+            self.metadata,
+            self.collection_type.metadata_schema.schema)
+        super(Collection, self).save(*args, **kwargs)
+
+    def has_user(self, user):
+        try:
+            self.users.get(username=user.username)
+            return True
+        except self.users.model.DoesNotExist:
+            return False

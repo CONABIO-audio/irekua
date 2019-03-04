@@ -1,32 +1,66 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
-from database.utils import validate_json_schema
+
+from database.utils import (
+    validate_json_schema,
+    validate_json_instance,
+    empty_json,
+    FREE_SCHEMA
+)
+
+
+def not_reserved_names(value):
+    if value == Schema.FREE_SCHEMA:
+        raise ValidationError(
+            _('%(value)s is a reserved schema name'),
+            params={'value': value})
 
 
 class Schema(models.Model):
+    FREE_SCHEMA = FREE_SCHEMA
+
+    ANNOTATION = 'annotation'
+    ANNOTATION_CONFIGURATION = 'annotation_configuration'
+    ANNOTATION_METADATA = 'annotation_metadata'
+    COLLECTION_METADATA = 'collection_metadata'
+    COLLECTION_DEVICE_METADATA = 'collection_device_metadata'
+    COLLECTION_SITE_METADATA = 'collection_site_metadata'
+    COLLECTION_USER_METADATA = 'collection_user_metadata'
+    DEVICE_METADATA = 'device_metadata'
+    DEVICE_CONFIGURATION = 'device_configuration'
+    ENTAILMENT_METADATA = 'entailment_metadata'
+    ITEM_MEDIA_INFO = 'item_media_info'
+    ITEM_METADATA = 'item_metadata'
+    LICENCE_METADATA = 'licence_metadata'
+    SAMPLING_EVENT_METADATA = 'sampling_event_metadata'
+    SECONDARY_ITEM_MEDIA_INFO = 'secondary_item_media_info'
+    SITE_METADATA = 'site_metadata'
+    SYNONYM_METADATA = 'synonym_metadata'
+    TERM_METADATA = 'term_metadata'
+    GLOBAL = 'global'
     JSON_FIELDS = [
-        ('annotation_label', _('annotation label')),
-        ('annotation_annotation', _('annotation annotation')),
-        ('annotation_metadata', _('annotation metadata')),
-        ('collection_metadata', _('collection metadata')),
-        ('collection_device_metadata', _('collection device metadata')),
-        ('collection_site_metadata', _('collection site metadata')),
-        ('collection_user_metadata', _('collection user metadata')),
-        ('device_metadata', _('device metadata')),
-        ('entailment_metadata', _('entailment metadata')),
-        ('item_media_info', _('item media info')),
-        ('item_metadata', _('item metadata')),
-        ('licence_metadata', _('licence metadata')),
-        ('sampling_event_configuration', _('sampling event configuration')),
-        ('sampling_event_metadata', _('sampling event metadata')),
-        ('secondary_item_media_info', _('secondary item media info')),
-        ('site_metadata', _('site metadata')),
-        ('synonym_metadata', _('synonym metadata')),
-        ('term_metadata', _('term metadata')),
-        ('user_metadata', _('user metadata')),
-        ('global', _('global')),
+        (ANNOTATION, _('annotation')),
+        (ANNOTATION_CONFIGURATION, _('annotation configuration')),
+        (ANNOTATION_METADATA, _('annotation metadata')),
+        (COLLECTION_METADATA, _('collection metadata')),
+        (COLLECTION_DEVICE_METADATA, _('collection device metadata')),
+        (COLLECTION_SITE_METADATA, _('collection site metadata')),
+        (COLLECTION_USER_METADATA, _('collection user metadata')),
+        (DEVICE_METADATA, _('device metadata')),
+        (DEVICE_CONFIGURATION, _('device configuration')),
+        (ENTAILMENT_METADATA, _('entailment metadata')),
+        (ITEM_MEDIA_INFO, _('item media info')),
+        (ITEM_METADATA, _('item metadata')),
+        (LICENCE_METADATA, _('licence metadata')),
+        (SAMPLING_EVENT_METADATA, _('sampling event metadata')),
+        (SECONDARY_ITEM_MEDIA_INFO, _('secondary item media info')),
+        (SITE_METADATA, _('site metadata')),
+        (SYNONYM_METADATA, _('synonym metadata')),
+        (TERM_METADATA, _('term metadata')),
+        (GLOBAL, _('global')),
     ]
 
     field = models.CharField(
@@ -42,6 +76,7 @@ class Schema(models.Model):
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name of JSON schema'),
+        validators=[not_reserved_names],
         unique=True,
         blank=False,
         null=False)
@@ -55,11 +90,13 @@ class Schema(models.Model):
         db_column='schema',
         verbose_name=_('schema'),
         help_text=_('JSON object with schema'),
+        default=empty_json,
         null=False)
 
     class Meta:
         verbose_name = _('Schema')
         verbose_name_plural = _('Schemas')
+        unique_together = (('field', 'name'))
 
     def __str__(self):
         return self.name
@@ -67,3 +104,6 @@ class Schema(models.Model):
     def clean(self, *args, **kwargs):
         validate_json_schema(self.schema)
         super(Schema, self).clean(*args, **kwargs)
+
+    def validate_instance(self, instance):
+        validate_json_instance(self.schema, instance)

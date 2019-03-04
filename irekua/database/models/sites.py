@@ -1,10 +1,17 @@
 from django.contrib.postgres.fields import JSONField
+from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models import PointField
 from django.db import models
+from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
-from database.utils import validate_json_instance
+from database.utils import (
+    validate_coordinates_and_geometry,
+    validate_json_instance,
+    empty_json,
+    GENERIC_SITE,
+)
 
 
 class Site(models.Model):
@@ -14,8 +21,17 @@ class Site(models.Model):
         verbose_name=_('name'),
         help_text=_('Name of site'),
         blank=True)
-    geo_ref = PointField(
+    site_type = models.ForeignKey(
+        'SiteType',
+        on_delete=models.PROTECT,
+        db_column='site_type',
+        verbose_name=_('site type'),
+        help_text=_('Type of site'),
+        default=GENERIC_SITE,
         blank=False,
+        null=False)
+    geo_ref = PointField(
+        blank=True,
         db_column='geo_ref',
         verbose_name=_('geo ref'),
         help_text=_('Georeference of site as Geometry'),
@@ -24,35 +40,23 @@ class Site(models.Model):
         db_column='latitude',
         verbose_name=_('latitude'),
         help_text=_('Latitude of site'),
-        blank=False)
+        blank=True)
     longitude = models.FloatField(
         db_column='longitude',
         verbose_name=_('longitude'),
         help_text=_('Longitude of site'),
-        blank=False)
+        blank=True)
     altitude = models.FloatField(
         blank=True,
         db_column='altitude',
         verbose_name=_('altitude'),
         help_text=_('Altitude of site (in meters)'),
         null=True)
-    metadata_type = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        db_column='metadata_type',
-        verbose_name=_('metadata type'),
-        help_text=_('Schema for site metadata'),
-        limit_choices_to=(
-            models.Q(field__exact='site_metadata') |
-            models.Q(field__exact='global')),
-        to_field='name',
-        default='free',
-        blank=False,
-        null=False)
     metadata = JSONField(
         db_column='metadata',
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to site'),
+        default=empty_json,
         blank=True,
         null=True)
     creator = models.ForeignKey(
@@ -68,11 +72,34 @@ class Site(models.Model):
         verbose_name = _('Site')
         verbose_name_plural = _('Sites')
 
+    def sync_coordinates_and_georef(self):
+        if self.geo_ref and self.latitude and self.longitude:
+            validate_coordinates_and_geometry(
+                self.geo_ref,
+                self.latitude,
+                self.longitude)
+            return
+
+        if self.geo_ref:
+            self.latitude = self.geo_ref.y
+            self.longitude = self.geo_ref.x
+            return
+
+        if self.latitude and self.longitude:
+            self.geo_ref = Point([self.longitude, self.latitude])
+            return
+
+        msg = _('Geo reference or longitude-latitude must be provided')
+        raise forms.ValidationError(msg)
+
     def __str__(self):
         if self.name != '':
             return self.name
         return _('Site {id}').format(id=self.id)
 
     def clean(self, *args, **kwargs):
-        validate_json_instance(self.metadata, self.metadata_type.schema)
+        self.sync_coordinates_and_georef()
+        validate_json_instance(
+            self.metadata,
+            self.site_type.metadata_schema.schema)
         super(Site, self).clean(*args, **kwargs)

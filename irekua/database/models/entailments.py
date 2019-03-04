@@ -2,6 +2,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.models.schemas import Schema
 from database.utils import validate_json_instance
 
 
@@ -29,10 +30,10 @@ class Entailment(models.Model):
         verbose_name=_('metadata type'),
         help_text=_('JSON schema for entailment metadata'),
         limit_choices_to=(
-            models.Q(field__exact='entailment_metadata') |
-            models.Q(field__exact='global')),
+            models.Q(field__exact=Schema.ENTAILMENT_METADATA) |
+            models.Q(field__exact=Schema.GLOBAL)),
         to_field='name',
-        default='free',
+        default=Schema.FREE_SCHEMA,
         blank=False,
         null=False)
     metadata = JSONField(
@@ -53,5 +54,7 @@ class Entailment(models.Model):
         return msg
 
     def clean(self, *args, **kwargs):
-        validate_json_instance(self.metadata, self.metadata_type.schema)
+        validate_json_instance(
+            self.metadata,
+            self.metadata_type.schema)
         super(Entailment, self).clean(*args, **kwargs)

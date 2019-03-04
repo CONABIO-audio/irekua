@@ -3,7 +3,6 @@ from .annotation_votes import AnnotationVoteSerializer
 from .annotations import AnnotationSerializer
 from .collection_devices import CollectionDeviceSerializer
 from .collection_roles import CollectionRoleSerializer
-from .collection_schemas import CollectionSchemaSerializer
 from .collection_sites import CollectionSiteSerializer
 from .collection_users import CollectionUserSerializer
 from .data_collections import CollectionSerializer
@@ -39,7 +38,6 @@ __all__ = [
     'AnnotationVoteSerializer',
     'CollectionDeviceSerializer',
     'CollectionRoleSerializer',
-    'CollectionSchemaSerializer',
     'CollectionSerializer',
     'CollectionSiteSerializer',
     'CollectionUserSerializer',

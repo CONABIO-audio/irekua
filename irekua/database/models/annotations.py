@@ -1,11 +1,12 @@
-from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import JSONField, HStoreField
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
     validate_json_instance,
-    validate_is_of_collection,
+    empty_json,
 )
 
 
@@ -16,6 +17,13 @@ class Annotation(models.Model):
         ('H', _('high')),
     ]
 
+    annotation_tool = models.ForeignKey(
+        'AnnotationTool',
+        on_delete=models.PROTECT,
+        db_column='annotation_tool',
+        verbose_name=_('annotation tool'),
+        help_text=_('Annotation tool used'),
+        blank=False)
     item = models.ForeignKey(
         'Item',
         db_column='item_id',
@@ -31,24 +39,11 @@ class Annotation(models.Model):
         verbose_name=_('event type'),
         help_text=_('Type of event being annotated'),
         blank=False)
-    label_type = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        related_name='annotation_label_type',
-        db_column='label_type',
-        verbose_name=_('label type'),
-        help_text=_('Schema for label structure'),
-        limit_choices_to=(
-            models.Q(field__exact='annotation_label') |
-            models.Q(field__exact='global')),
-        to_field='name',
-        default='free',
-        blank=False,
-        null=False)
-    label = JSONField(
+    label = HStoreField(
         db_column='label',
         verbose_name=_('label'),
         help_text=_('Labels associated to annotation'),
+        default=empty_json,
         blank=False,
         null=False)
     annotation_type = models.ForeignKey(
@@ -61,26 +56,21 @@ class Annotation(models.Model):
     annotation = JSONField(
         db_column='annotation',
         verbose_name=_('annotation'),
+        default=empty_json,
         help_text=_('Information of annotation location within item'),
         blank=False,
         null=False)
-    metadata_type = models.ForeignKey(
-        'Schema',
-        related_name='annotation_metadata_type',
-        on_delete=models.PROTECT,
-        db_column='metadata_type',
-        verbose_name=_('metadata type'),
-        help_text=_('JSON schema for metadata'),
-        limit_choices_to=(
-            models.Q(field__exact='annotation_metadata') |
-            models.Q(field__exact='global')),
-        blank=True,
-        null=True,
-        to_field='name',
-        default='free')
+    annotation_configuration = JSONField(
+        db_column='annotation_configuration',
+        verbose_name=_('annotation configuration'),
+        default=empty_json,
+        help_text=_('Configuration of annotation tool'),
+        blank=False,
+        null=False)
     metadata = JSONField(
         db_column='metadata',
         verbose_name=_('metadata'),
+        default=empty_json,
         help_text=_('Metadata associated to annotation'),
         blank=False)
     certainty = models.FloatField(
@@ -124,6 +114,7 @@ class Annotation(models.Model):
         null=True)
     last_modified_by = models.ForeignKey(
         User,
+        editable=False,
         related_name='annotation_last_modified_by',
         db_column='last_modified_by',
         verbose_name=_('last modified by'),
@@ -143,17 +134,36 @@ class Annotation(models.Model):
         return msg
 
     def clean(self, *args, **kwargs):
-        validate_json_instance(self.label, self.label_type.schema)
-        validate_json_instance(self.annotation, self.annotation_type.schema)
-        validate_json_instance(self.metadata, self.metadata_type.schema)
+        # TODO
+        validate_json_instance(
+            self.metadata,
+            self.metadata_type.schema)
 
-        collection = self.item.collection
-        if collection is not None:
-            validate_is_of_collection(
-                collection,
-                self.annotation_type.schema)
-            validate_is_of_collection(
-                collection,
-                self.metadata_type.schema)
+        try:
+            self.annotation_type.validate_annotation(self.annotation)
+        except ValidationError as error:
+            raise ValidationError({'annotation': error})
 
+        try:
+            self.annotation_tool.validate_configuration(self.annotation_configuration)
+        except ValidationError as error:
+            raise ValidationError({'annotation_configuration': error})
+
+        
+        self.item.validate_annotation(self)
+        self.validate_label(self.label)
         super(Annotation, self).clean(*args, **kwargs)
+
+    def validate_label(self, label):
+        for key, value in label.items():
+            try:
+                term_type = self.event_type.get_term_type_or_none(key)
+            except self.event_type.InvalidTermType:
+                msg = _('Label contains a term type ({type}) that is not valid for the event type or does not exist')
+                msg = msg.format(type=key)
+                raise ValidationError({'label': msg})
+
+            if not term_type.is_valid_value(value):
+                msg = _('{value} is not a valid value for term type {type}')
+                msg = msg.format(value=value, type=str(term_type))
+                raise ValidationError({'label': msg})

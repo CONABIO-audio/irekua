@@ -18,4 +18,5 @@ class InstitutionSerializer(serializers.HyperlinkedModelSerializer):
             'postal_code',
             'address',
             'website',
+            'logo',
         )

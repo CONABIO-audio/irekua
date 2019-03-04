@@ -14,6 +14,7 @@ class LicenceTypeSerializer(serializers.HyperlinkedModelSerializer):
             'description',
             'metadata_schema',
             'document_template',
+            'icon',
             'can_view',
             'can_download',
             'can_view_annotations',

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 14:12-0600\n"
+"POT-Creation-Date: 2019-03-01 12:49-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,276 +18,297 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: database/models/annotation_types.py:10
-#: database/models/data_collections.py:12 database/models/event_types.py:10
-#: database/models/item_types.py:9 database/models/licence_types.py:10
-#: database/models/metacollections.py:11 database/models/role_types.py:10
-#: database/models/schemas.py:42 database/models/sites.py:12
+#: database/models/annotation_types.py:12
+#: database/models/data_collections.py:18 database/models/device_brands.py:9
+#: database/models/device_types.py:10 database/models/event_types.py:12
+#: database/models/item_types.py:11 database/models/licence_types.py:12
+#: database/models/metacollections.py:11 database/models/schemas.py:78
+#: database/models/site_types.py:12 database/models/sites.py:20
+#: database/models/term_types.py:12
 msgid "name"
 msgstr "nombre"
 
-#: database/models/annotation_types.py:11
+#: database/models/annotation_types.py:13
 msgid "Name for type of annotation"
 msgstr "Nombre para el tipo de anotación"
 
-#: database/models/annotation_types.py:15
-#: database/models/data_collections.py:17 database/models/event_types.py:15
-#: database/models/item_types.py:15 database/models/licence_types.py:15
-#: database/models/metacollections.py:17 database/models/role_types.py:15
-#: database/models/schemas.py:49 database/models/synonym_suggestions.py:21
-#: database/models/term_suggestions.py:22 database/models/terms.py:21
+#: database/models/annotation_types.py:17
+#: database/models/data_collections.py:23 database/models/device_types.py:15
+#: database/models/event_types.py:17 database/models/item_types.py:17
+#: database/models/licence_types.py:17 database/models/metacollections.py:17
+#: database/models/role_types.py:9 database/models/schemas.py:86
+#: database/models/site_types.py:17 database/models/synonym_suggestions.py:26
+#: database/models/term_suggestions.py:22 database/models/term_types.py:17
+#: database/models/terms.py:23
 msgid "description"
 msgstr "descripción"
 
-#: database/models/annotation_types.py:16
+#: database/models/annotation_types.py:18
 msgid "Description of annotation type"
 msgstr "Descripción del tipo de anotación"
 
-#: database/models/annotation_types.py:23
-#: database/models/collection_schemas.py:15
+#: database/models/annotation_types.py:25
+#: database/models/collection_schemas.py:18
 msgid "schema id"
 msgstr "id de esquema"
 
-#: database/models/annotation_types.py:27
+#: database/models/annotation_types.py:29
 msgid "JSON schema for annotation type"
 msgstr "Esquema JSON para tipo de anotación"
 
-#: database/models/annotation_types.py:30
+#: database/models/annotation_types.py:33 database/models/device_types.py:20
+#: database/models/event_types.py:22 database/models/item_types.py:31
+#: database/models/licence_types.py:42 database/models/role_types.py:14
+#: database/models/term_types.py:22
+msgid "icon"
+msgstr "ícono"
+
+#: database/models/annotation_types.py:34
+msgid "Annotation type icon"
+msgstr "Ícono de tipo de anotación"
+
+#: database/models/annotation_types.py:39
 msgid "Annotation Type"
 msgstr "Tipo de Anotación"
 
-#: database/models/annotation_types.py:31
+#: database/models/annotation_types.py:40
 msgid "Annotation Types"
 msgstr "Tipo de Anotación"
 
-#: database/models/annotation_votes.py:12
+#: database/models/annotation_votes.py:17
 msgid "annotation id"
 msgstr "id anotación"
 
-#: database/models/annotation_votes.py:13
+#: database/models/annotation_votes.py:18
 msgid "Reference to annotation being voted"
 msgstr "Referencia a la anotación siendo votada"
 
-#: database/models/annotation_votes.py:21 database/models/annotations.py:34
-msgid "label type"
-msgstr "tipo etiqueta"
-
-#: database/models/annotation_votes.py:22 database/models/annotations.py:35
-msgid "Schema for label structure"
-msgstr "Esquema JSON para la estructura de la etiqueta"
-
-#: database/models/annotation_votes.py:31 database/models/annotations.py:45
+#: database/models/annotation_votes.py:23 database/models/annotations.py:54
+#: database/models/schemas.py:45
 msgid "label"
 msgstr "etiqueta"
 
-#: database/models/annotation_votes.py:32
+#: database/models/annotation_votes.py:25
 msgid "Labels associated to annotation vote"
 msgstr "Etiquetas asociadas a la anotación"
 
-#: database/models/annotation_votes.py:38 database/models/annotations.py:114
+#: database/models/annotation_votes.py:31 database/models/annotations.py:126
 msgid "created by"
-msgstr "creado en"
+msgstr "creado por"
 
-#: database/models/annotation_votes.py:39
+#: database/models/annotation_votes.py:32
 msgid "Creator of annotation vote"
 msgstr "Creador de la votación de anotación"
 
-#: database/models/annotation_votes.py:45 database/models/annotations.py:101
-#: database/models/items.py:102 database/models/licences.py:25
-#: database/models/secondary_items.py:39
+#: database/models/annotation_votes.py:38 database/models/annotations.py:112
+#: database/models/items.py:111 database/models/licences.py:30
+#: database/models/secondary_items.py:44
 msgid "created on"
 msgstr "creado en"
 
-#: database/models/annotation_votes.py:46 database/models/annotations.py:102
+#: database/models/annotation_votes.py:39 database/models/annotations.py:113
 msgid "Date of creation of annotation"
 msgstr "Fecha de creación de la anotación"
 
-#: database/models/annotation_votes.py:51 database/models/annotations.py:107
+#: database/models/annotation_votes.py:44 database/models/annotations.py:118
 msgid "modified on"
 msgstr "modificado en"
 
-#: database/models/annotation_votes.py:52 database/models/annotations.py:108
+#: database/models/annotation_votes.py:45 database/models/annotations.py:119
 msgid "Date of last modification"
 msgstr "Fecha de última modificación"
 
-#: database/models/annotation_votes.py:58
+#: database/models/annotation_votes.py:51
 msgid "Annotation Vote"
 msgstr "Voto de Annotación"
 
-#: database/models/annotation_votes.py:59
+#: database/models/annotation_votes.py:52
 msgid "Annotation Votes"
 msgstr "Votos de Anotaciones"
 
-#: database/models/annotation_votes.py:62
+#: database/models/annotation_votes.py:55
 #, python-brace-format
 msgid "Vote {id} on annotation {annotation}"
 msgstr "Voto {id} de la anotación {annotation}"
 
-#: database/models/annotations.py:9
+#: database/models/annotations.py:18
 msgid "low"
 msgstr "baja"
 
-#: database/models/annotations.py:10
+#: database/models/annotations.py:19
 msgid "medium"
 msgstr "media"
 
-#: database/models/annotations.py:11
+#: database/models/annotations.py:20
 msgid "high"
 msgstr "alta"
 
-#: database/models/annotations.py:17 database/models/secondary_items.py:53
+#: database/models/annotations.py:26 database/models/secondary_items.py:58
 msgid "item id"
 msgstr "id item"
 
-#: database/models/annotations.py:18
+#: database/models/annotations.py:27
 msgid "Annotated item"
 msgstr "Item anotado"
 
-#: database/models/annotations.py:26
+#: database/models/annotations.py:35
 msgid "event type"
 msgstr "tipo de evento"
 
-#: database/models/annotations.py:27
+#: database/models/annotations.py:36
 msgid "Type of event being annotated"
 msgstr "Tipo de evento siendo anotado"
 
-#: database/models/annotations.py:46
+#: database/models/annotations.py:43
+msgid "label type"
+msgstr "tipo etiqueta"
+
+#: database/models/annotations.py:44
+msgid "Schema for label structure"
+msgstr "Esquema JSON para la estructura de la etiqueta"
+
+#: database/models/annotations.py:55
 msgid "Labels associated to annotation"
 msgstr "Etiquetas asociadas a la anotación"
 
-#: database/models/annotations.py:53
+#: database/models/annotations.py:63
 msgid "annotation type"
 msgstr "tipo de anotación"
 
-#: database/models/annotations.py:54
+#: database/models/annotations.py:64
 msgid "Type of annotation"
 msgstr "Tipo de anotación"
 
-#: database/models/annotations.py:58
+#: database/models/annotations.py:68 database/models/schemas.py:46
 msgid "annotation"
 msgstr "anotación"
 
-#: database/models/annotations.py:59
+#: database/models/annotations.py:70
 msgid "Information of annotation location within item"
 msgstr "Información de la ubicación de la anotación dentro del item"
 
-#: database/models/annotations.py:67 database/models/collection_sites.py:33
-#: database/models/collection_users.py:33
-#: database/models/data_collections.py:24 database/models/entailments.py:27
-#: database/models/items.py:80 database/models/physical_devices.py:36
-#: database/models/sampling_event.py:43 database/models/sites.py:41
-#: database/models/synonym_suggestions.py:28 database/models/synonyms.py:27
-#: database/models/term_suggestions.py:29 database/models/terms.py:28
+#: database/models/annotations.py:78 database/models/collection_sites.py:40
+#: database/models/collection_users.py:40
+#: database/models/data_collections.py:31 database/models/devices.py:35
+#: database/models/entailments.py:30 database/models/items.py:88
+#: database/models/sampling_event.py:37 database/models/site_types.py:24
+#: database/models/term_types.py:32
 msgid "metadata type"
 msgstr "tipo metadatos"
 
-#: database/models/annotations.py:68 database/models/collection_devices.py:35
+#: database/models/annotations.py:79 database/models/collection_devices.py:42
 msgid "JSON schema for metadata"
 msgstr "Esquema de JSON para metadatos"
 
-#: database/models/annotations.py:78 database/models/collection_devices.py:46
-#: database/models/collection_sites.py:45
-#: database/models/collection_users.py:45
-#: database/models/data_collections.py:35 database/models/entailments.py:38
-#: database/models/items.py:91 database/models/licences.py:36
-#: database/models/physical_devices.py:47 database/models/sampling_event.py:54
-#: database/models/sites.py:52 database/models/synonym_suggestions.py:40
-#: database/models/synonyms.py:39 database/models/term_suggestions.py:41
-#: database/models/terms.py:39
+#: database/models/annotations.py:89 database/models/collection_devices.py:54
+#: database/models/collection_sites.py:53
+#: database/models/collection_users.py:52
+#: database/models/data_collections.py:42 database/models/entailments.py:41
+#: database/models/items.py:100 database/models/licences.py:41
+#: database/models/physical_devices.py:39 database/models/sampling_event.py:48
+#: database/models/sites.py:56 database/models/synonym_suggestions.py:32
+#: database/models/synonyms.py:33 database/models/term_suggestions.py:29
+#: database/models/terms.py:28
 msgid "metadata"
 msgstr "metadatos"
 
-#: database/models/annotations.py:79
+#: database/models/annotations.py:90
 msgid "Metadata associated to annotation"
 msgstr "Metadatos asociados a la anotación"
 
-#: database/models/annotations.py:83
+#: database/models/annotations.py:94
 msgid "certainty"
 msgstr "certeza"
 
-#: database/models/annotations.py:84
+#: database/models/annotations.py:95
 msgid "Level of certainty of location or labelling of annotation"
 msgstr "Nivel de certeza de la ubicación o la etiqueta de la anotación"
 
-#: database/models/annotations.py:89
+#: database/models/annotations.py:100
 msgid "quality"
 msgstr "calidad"
 
-#: database/models/annotations.py:90
+#: database/models/annotations.py:101
 msgid "Quality of item content inside annotation"
 msgstr ""
 "Calidad del contenido de la información del item dentro de la anotación"
 
-#: database/models/annotations.py:96 database/models/sampling_event.py:35
+#: database/models/annotations.py:107 database/models/sampling_event.py:29
 msgid "commentaries"
 msgstr "comentarios"
 
-#: database/models/annotations.py:97
+#: database/models/annotations.py:108
 msgid "Commentaries of annotator"
 msgstr "Comentarios de anotador"
 
-#: database/models/annotations.py:115
+#: database/models/annotations.py:127
 msgid "Creator of annotation"
 msgstr "Creador de la anotación"
 
-#: database/models/annotations.py:121
+#: database/models/annotations.py:135
+msgid "last modified by"
+msgstr "modificado por ultima vez por"
+
+#: database/models/annotations.py:136
+msgid "User that modified the annotation last"
+msgstr "Ultimo modificador de la anotación"
+
+#: database/models/annotations.py:142
 msgid "Annotation"
 msgstr "Anotación"
 
-#: database/models/annotations.py:122
+#: database/models/annotations.py:143
 msgid "Annotations"
 msgstr "Anotaciones"
 
-#: database/models/annotations.py:125
+#: database/models/annotations.py:146
 #, python-brace-format
 msgid "Annotation {annotation_id} of item {item_id}"
 msgstr "Anotación {annotation_id} del item {item_id}"
 
-#: database/models/collection_devices.py:11
-#: database/models/physical_devices.py:20 database/models/sampling_event.py:10
+#: database/models/collection_devices.py:18
+#: database/models/physical_devices.py:25 database/models/sampling_event.py:16
 msgid "device id"
 msgstr "id dispositivo"
 
-#: database/models/collection_devices.py:12
+#: database/models/collection_devices.py:19
 msgid "Reference to physical device"
 msgstr "Referencia al dispositivo físico"
 
-#: database/models/collection_devices.py:19
+#: database/models/collection_devices.py:26
 #: database/models/collection_roles.py:10
-#: database/models/collection_schemas.py:9
-#: database/models/collection_sites.py:19
-#: database/models/collection_users.py:11
-#: database/models/collections_metacollections.py:10
-#: database/models/items.py:108
+#: database/models/collection_schemas.py:10
+#: database/models/collection_sites.py:26
+#: database/models/collection_users.py:18 database/models/items.py:117
 msgid "collection id"
 msgstr "id coleccion"
 
-#: database/models/collection_devices.py:20
+#: database/models/collection_devices.py:27
 msgid "Collection to which the device belongs"
 msgstr "Colección al la cual pertenece el dispositivo"
 
-#: database/models/collection_devices.py:26
-#: database/models/collection_sites.py:26
+#: database/models/collection_devices.py:33
+#: database/models/collection_sites.py:33
 msgid "internal id"
 msgstr "id interno"
 
-#: database/models/collection_devices.py:27
+#: database/models/collection_devices.py:34
 msgid "ID of device within the collection"
 msgstr "ID del dispositivo dentro de la colección"
 
-#: database/models/collection_devices.py:34
+#: database/models/collection_devices.py:41
 msgid "metadata_type"
 msgstr "tipo metadato"
 
-#: database/models/collection_devices.py:47
+#: database/models/collection_devices.py:55
 msgid "Metadata associated with device within collection"
 msgstr "Metadatos asociados al dispositivo dentro de la colección"
 
-#: database/models/collection_devices.py:51
+#: database/models/collection_devices.py:59
 msgid "Collection Device"
 msgstr "Dispositivo de Colección"
 
-#: database/models/collection_devices.py:52
+#: database/models/collection_devices.py:60
 msgid "Collection Devices"
 msgstr "Dispositivos de Colección"
 
@@ -316,283 +337,308 @@ msgstr "Roles de Colección"
 msgid "Role {role} for collection {collection}"
 msgstr "Rol {role} para la colección {collection}"
 
-#: database/models/collection_schemas.py:10
-msgid "Collection in which to apply schema"
-msgstr "Colección en la cual aplicar el esquema"
+#: database/models/collection_schemas.py:11
+msgid "Collection in which schema applies"
+msgstr "Colección en la cual aplica el esquema"
 
-#: database/models/collection_schemas.py:16
-msgid "Schema to apply in collection"
-msgstr "Esquema a aplicar en la colección"
+#: database/models/collection_schemas.py:19
+msgid "Schema to be part of collection"
+msgstr "Esquema que forma parte de la colección"
 
-#: database/models/collection_schemas.py:20
+#: database/models/collection_schemas.py:24
 msgid "Collection Schema"
 msgstr "Esquema de Colleción"
 
-#: database/models/collection_schemas.py:21
+#: database/models/collection_schemas.py:25
 msgid "Collection Schemas"
 msgstr "Esquemas de Colección"
 
-#: database/models/collection_schemas.py:24
+#: database/models/collection_schemas.py:28
 #, python-brace-format
 msgid "Schema {schema} for collection {collection}"
 msgstr "Esquema {schema} para la colección {collection}"
 
-#: database/models/collection_sites.py:11 database/models/sampling_event.py:73
+#: database/models/collection_sites.py:18 database/models/sampling_event.py:68
 msgid "site id"
 msgstr "id de sitio"
 
-#: database/models/collection_sites.py:12
+#: database/models/collection_sites.py:19
 msgid "Reference to Site"
 msgstr "Referencia al Sitio"
 
-#: database/models/collection_sites.py:20
+#: database/models/collection_sites.py:27
 msgid "Collection to which the site belongs"
 msgstr "Colección a la cual pertenece el sitio"
 
-#: database/models/collection_sites.py:27
+#: database/models/collection_sites.py:34
 msgid "ID of site within the collection"
 msgstr "ID del sitio de la colleción"
 
-#: database/models/collection_sites.py:34
+#: database/models/collection_sites.py:41
 msgid "JSON schema for collection site metadata"
 msgstr "Esquema JSON para los metadatos del sitio de la colección"
 
-#: database/models/collection_sites.py:46
+#: database/models/collection_sites.py:54
 msgid "Metadata associated with site within collection"
 msgstr "Metadatos asociados al sitio de la colección"
 
-#: database/models/collection_sites.py:50
+#: database/models/collection_sites.py:58
 msgid "Collection Site"
 msgstr "Sitio de Colección"
 
-#: database/models/collection_sites.py:51
+#: database/models/collection_sites.py:59
 msgid "Collection Sites"
 msgstr "Sitios de Colección"
 
-#: database/models/collection_sites.py:54
+#: database/models/collection_sites.py:62
 #, python-brace-format
 msgid "Site {site} of collection {collection}"
 msgstr "Sitio {site} de la colección {collection}"
 
-#: database/models/collection_users.py:12
+#: database/models/collection_users.py:19
 msgid "Collection to which user belongs"
 msgstr "Colección a la cual pertenece el usuario"
 
-#: database/models/collection_users.py:18 database/models/users.py:21
+#: database/models/collection_users.py:25 database/models/users.py:12
 msgid "user id"
 msgstr "id de usuario"
 
-#: database/models/collection_users.py:19
+#: database/models/collection_users.py:26
 msgid "User of collection"
 msgstr "Usuario de la colección"
 
-#: database/models/collection_users.py:26 database/models/users.py:35
+#: database/models/collection_users.py:33
 msgid "role"
 msgstr "rol"
 
-#: database/models/collection_users.py:27
+#: database/models/collection_users.py:34
 msgid "Role of user in collection"
 msgstr "Rol del usuario en la colección"
 
-#: database/models/collection_users.py:34
+#: database/models/collection_users.py:41
 msgid "JSON schema for collection user metadata"
 msgstr "Esquema JSON para los metadatos de usuarios de la colección"
 
-#: database/models/collection_users.py:46
+#: database/models/collection_users.py:54
 msgid "Metadata associated to user in collection"
 msgstr "Metadatos asociados a usuario en la colección"
 
-#: database/models/collection_users.py:50
+#: database/models/collection_users.py:58
+msgid "is admin"
+msgstr "es admin"
+
+#: database/models/collection_users.py:59
+msgid "Flag that indicates if user is administrator of the collection"
+msgstr "Bandera que indica si el usuario es un administrador de la colección"
+
+#: database/models/collection_users.py:65
 msgid "Collection User"
 msgstr "Usario de la Colección"
 
-#: database/models/collection_users.py:51
+#: database/models/collection_users.py:66
 msgid "Collection Users"
 msgstr "Usuarios de la Colección"
 
-#: database/models/collection_users.py:54
+#: database/models/collection_users.py:69
 #, python-brace-format
 msgid "User {user} of collection {collection}"
 msgstr "Usuario {user} de la colección {collection}"
 
-#: database/models/collections_metacollections.py:11
-msgid "Collection belonging to Metacollection"
-msgstr "Colección que pertenece a la metacolección"
-
-#: database/models/collections_metacollections.py:18
-msgid "metacollection id"
-msgstr "id de metacolección"
-
-#: database/models/collections_metacollections.py:19
-msgid "Metacollection to which collections belong"
-msgstr "Metacolección a la cual pertenece la colección"
-
-#: database/models/collections_metacollections.py:24
-msgid "Metacollection Collection"
-msgstr "Colección de Metacolección"
-
-#: database/models/collections_metacollections.py:25
-msgid "MetaCollection Collections"
-msgstr "Colecciones de Metacolección"
-
-#: database/models/collections_metacollections.py:28
-#, python-brace-format
-msgid "Collection {col} of Metacollection {meta}"
-msgstr "Colección {col} de Metacolección {meta}"
-
-#: database/models/data_collections.py:13
+#: database/models/data_collections.py:19
 msgid "Name of collection"
 msgstr "Nombre de la colección"
 
-#: database/models/data_collections.py:18
+#: database/models/data_collections.py:24
 msgid "Description of collection"
 msgstr "Descripción de la colección"
 
-#: database/models/data_collections.py:25
+#: database/models/data_collections.py:32
 msgid "JSON schema for collection metadata"
 msgstr "Esquema JSON para los metadatos de la colección"
 
-#: database/models/data_collections.py:36
+#: database/models/data_collections.py:44
 msgid "Collection metadata"
 msgstr "Metadatos de la colección"
 
-#: database/models/data_collections.py:42
-msgid "coordinator id"
-msgstr "id coordinador"
-
-#: database/models/data_collections.py:43
-msgid "Collection coordinator"
-msgstr "Coordinador de la colección"
-
-#: database/models/data_collections.py:50 database/models/institutions.py:22
-#: database/models/users.py:28
+#: database/models/data_collections.py:51 database/models/institutions.py:22
+#: database/models/users.py:19
 msgid "institution id"
 msgstr "id de institutción"
 
-#: database/models/data_collections.py:51
+#: database/models/data_collections.py:52
 msgid "Institution to which the collection belogs"
 msgstr "Institución a la cual pertenece la colección"
 
-#: database/models/data_collections.py:56
+#: database/models/data_collections.py:57
+msgid "is open"
+msgstr "es abierta"
+
+#: database/models/data_collections.py:58
+msgid "Any user can enter this collection"
+msgstr "Cualquier usuario puede ingresar a la colección"
+
+#: database/models/data_collections.py:63 database/models/device_brands.py:21
+#: database/models/institutions.py:53
+msgid "logo"
+msgstr "logo"
+
+#: database/models/data_collections.py:64
+msgid "Logo of data collection"
+msgstr "Logo de la colección"
+
+#: database/models/data_collections.py:93
 msgid "Collection"
 msgstr "Colección"
 
-#: database/models/data_collections.py:57
+#: database/models/data_collections.py:94
 msgid "Collections"
 msgstr "Colecciones"
 
-#: database/models/device_terms.py:8 database/models/devices.py:11
+#: database/models/device_brands.py:10
+msgid "Name of device brand"
+msgstr "Nombre de la marca de dispositivo"
+
+#: database/models/device_brands.py:15 database/models/institutions.py:49
+msgid "website"
+msgstr "sitio web"
+
+#: database/models/device_brands.py:16
+msgid "Brand's website"
+msgstr "Sitio web de la marca"
+
+#: database/models/device_brands.py:22
+msgid "Logo of device brand"
+msgstr "Logo de la marca de dispositivo"
+
+#: database/models/device_brands.py:28
+msgid "Device Brand"
+msgstr "Marca de Dispositivo"
+
+#: database/models/device_brands.py:29
+msgid "Device Brands"
+msgstr "Mercas de Dispositivo"
+
+#: database/models/device_types.py:11
+msgid "Name for device type"
+msgstr "Nombre del tipo de dispositivo"
+
+#: database/models/device_types.py:16
+msgid "Description of device type"
+msgstr "Descripción del tipo de dispositivo"
+
+#: database/models/device_types.py:21
+msgid "Icon for device type"
+msgstr "Ícono para tipo de dispositivo"
+
+#: database/models/device_types.py:27
+msgid "Device Type"
+msgstr "Tipo de Dispositivo"
+
+#: database/models/device_types.py:28
+msgid "Device Types"
+msgstr "Tipos de Dispositivo"
+
+#: database/models/devices.py:13
 msgid "device type"
 msgstr "tipo de dispositivo"
 
-#: database/models/device_terms.py:9 database/models/devices.py:27
-msgid "model"
-msgstr "modelo"
-
-#: database/models/device_terms.py:16 database/models/term_suggestions.py:11
-#: database/models/terms.py:10
-msgid "term type"
-msgstr "tipo de término"
-
-#: database/models/device_terms.py:17 database/models/term_suggestions.py:12
-#: database/models/terms.py:11
-msgid "Type of term"
-msgstr "Tipo de término"
-
-#: database/models/device_terms.py:22 database/models/term_suggestions.py:17
-#: database/models/terms.py:16
-msgid "value"
-msgstr "valor"
-
-#: database/models/device_terms.py:23
-msgid "Admissible value for type of term"
-msgstr "Valor admisible para el tipo de término"
-
-#: database/models/device_terms.py:28
-msgid "added by"
-msgstr "añadido por"
-
-#: database/models/device_terms.py:29
-msgid "User that uploaded this term"
-msgstr "Usuario que registró este término"
-
-#: database/models/device_terms.py:34
-msgid "Device Term"
-msgstr "Término de Dispositivo"
-
-#: database/models/device_terms.py:35
-msgid "Device Terms"
-msgstr "Términos de Dispositivo"
-
-#: database/models/devices.py:12
+#: database/models/devices.py:14
 msgid "Type of device"
 msgstr "Tipo de dispositivo"
 
-#: database/models/devices.py:20
+#: database/models/devices.py:21
 msgid "brand"
 msgstr "marca"
 
-#: database/models/devices.py:21
+#: database/models/devices.py:22
 msgid "Brand of device"
 msgstr "Marca del dispositivo"
+
+#: database/models/devices.py:27
+msgid "model"
+msgstr "modelo"
 
 #: database/models/devices.py:28
 msgid "Model of device"
 msgstr "Modelo del dispositivo"
 
-#: database/models/devices.py:32
+#: database/models/devices.py:36
+msgid "JSON schema for device metadata"
+msgstr "Esquema JSON para los metadatos del dispositivo"
+
+#: database/models/devices.py:49
+msgid "configuration type"
+msgstr "tipo de configuración"
+
+#: database/models/devices.py:50
+msgid "JSON schema for device configuration"
+msgstr "Esquema JSON para la configuración del dispositivo"
+
+#: database/models/devices.py:60
 msgid "Device"
 msgstr "Dispositivo"
 
-#: database/models/devices.py:33
+#: database/models/devices.py:61
 msgid "Devices"
 msgstr "Dispositivos"
 
-#: database/models/entailments.py:11 database/models/synonyms.py:12
+#: database/models/entailments.py:14 database/models/synonyms.py:18
 msgid "source id"
 msgstr "id fuente"
 
-#: database/models/entailments.py:12
+#: database/models/entailments.py:15
 msgid "Source of entailment"
 msgstr "Fuente de la implicación"
 
-#: database/models/entailments.py:19 database/models/synonyms.py:20
+#: database/models/entailments.py:22 database/models/synonyms.py:26
 msgid "target id"
 msgstr "id objetivo"
 
-#: database/models/entailments.py:20
+#: database/models/entailments.py:23
 msgid "Target of entailment"
 msgstr "Objetivo de la implicación"
 
-#: database/models/entailments.py:28
+#: database/models/entailments.py:31
 msgid "JSON schema for entailment metadata"
 msgstr "Esquema JSON para los metadatos de la implicación"
 
-#: database/models/entailments.py:39
+#: database/models/entailments.py:42
 msgid "Metadata associated to entailment"
 msgstr "Metadatos asociados a la implicación"
 
-#: database/models/entailments.py:44
+#: database/models/entailments.py:47
 msgid "Entailment"
 msgstr "Implicación"
 
-#: database/models/entailments.py:45
+#: database/models/entailments.py:48
 msgid "Entailments"
 msgstr "Implicaciones"
 
-#: database/models/event_types.py:11
+#: database/models/event_types.py:13
 msgid "Name of event type"
 msgstr "Nombre del tipo de evento"
 
-#: database/models/event_types.py:16
+#: database/models/event_types.py:18
 msgid "Description of event type"
 msgstr "Descripción del tipo de evento"
 
-#: database/models/event_types.py:20
+#: database/models/event_types.py:23
+msgid "Event type icon"
+msgstr "Ícono para el tipo de evento"
+
+#: database/models/event_types.py:31
+msgid "labels"
+msgstr "etiquetas"
+
+#: database/models/event_types.py:32
+msgid "JSON schemas for valid labels on type of event"
+msgstr "Esquemas JSON de etiqueta válidos para el para tipo de evento"
+
+#: database/models/event_types.py:39
 msgid "Event Type"
 msgstr "Tipo de Evento"
 
-#: database/models/event_types.py:21
+#: database/models/event_types.py:40
 msgid "Event Types"
 msgstr "Tipos de Evento"
 
@@ -648,287 +694,307 @@ msgstr "dirección"
 msgid "Address of institution"
 msgstr "Dirección de la institución"
 
-#: database/models/institutions.py:49
-msgid "website"
-msgstr "sitio web"
-
 #: database/models/institutions.py:50
 msgid "Website of institution"
 msgstr "Sitio web de la institución"
 
 #: database/models/institutions.py:54
+msgid "Institution logo"
+msgstr "Logo de la institución"
+
+#: database/models/institutions.py:61
 msgid "Institution"
 msgstr "Institución"
 
-#: database/models/institutions.py:55
+#: database/models/institutions.py:62
 msgid "Institutions"
 msgstr "Instituciones"
 
-#: database/models/item_types.py:11
+#: database/models/item_types.py:13
 msgid "Name of item type"
 msgstr "Nombre del tipo de item"
 
-#: database/models/item_types.py:16
+#: database/models/item_types.py:18
 msgid "Description of item type"
 msgstr "Descripción del tipo de item"
 
-#: database/models/item_types.py:22
+#: database/models/item_types.py:24
 msgid "media info schema id"
 msgstr "id esquema media info"
 
-#: database/models/item_types.py:24
+#: database/models/item_types.py:26
 msgid "Reference to JSON Schema to be used with media info of this item type"
 msgstr "Esquema JSON para la información de media asociada a este tipo de item"
 
-#: database/models/item_types.py:29
+#: database/models/item_types.py:32
+msgid "Item type icon"
+msgstr "Ícono de tipo de item"
+
+#: database/models/item_types.py:40
+msgid "event types"
+msgstr "tipos de evento"
+
+#: database/models/item_types.py:41
+msgid "Types of event for this item type"
+msgstr "Tipos de evento para este tipo de item"
+
+#: database/models/item_types.py:44
 msgid "Item Type"
 msgstr "Tipo de Item"
 
-#: database/models/item_types.py:30
+#: database/models/item_types.py:45
 msgid "Item Types"
 msgstr "Tipos de Item"
 
-#: database/models/items.py:19 database/models/secondary_items.py:19
+#: database/models/items.py:26 database/models/secondary_items.py:24
 msgid "path"
 msgstr "ruta"
 
-#: database/models/items.py:21
+#: database/models/items.py:28
 msgid "Path to resource"
 msgstr "Ruta al recurso"
 
-#: database/models/items.py:25
+#: database/models/items.py:32
 msgid "file size"
 msgstr "tamaño archivo"
 
-#: database/models/items.py:26
+#: database/models/items.py:33
 msgid "Size of resouce in Bytes"
 msgstr "Tamaño del archivo en Bytes"
 
-#: database/models/items.py:30 database/models/secondary_items.py:26
+#: database/models/items.py:37 database/models/secondary_items.py:31
 msgid "hash"
 msgstr "has"
 
-#: database/models/items.py:31
+#: database/models/items.py:38
 msgid "Hash of resource file"
 msgstr "Hash del archivo asociado"
 
-#: database/models/items.py:37 database/models/secondary_items.py:33
+#: database/models/items.py:44 database/models/secondary_items.py:38
 msgid "hash function"
 msgstr "funcion hash"
 
-#: database/models/items.py:38
+#: database/models/items.py:45
 msgid "Function used to create hash of file"
 msgstr "Función de hash utilizada"
 
-#: database/models/items.py:46 database/models/secondary_items.py:46
+#: database/models/items.py:53 database/models/secondary_items.py:51
 msgid "item type"
 msgstr "tipo de item"
 
-#: database/models/items.py:47
+#: database/models/items.py:54
 msgid "Type of resource"
 msgstr "Tipo de recurso"
 
-#: database/models/items.py:51
+#: database/models/items.py:58
 msgid "source foreign key"
 msgstr "llave foranea fuente"
 
-#: database/models/items.py:52
+#: database/models/items.py:59
 msgid "Foreign key of file in source database"
 msgstr "Llave foranea del archivo en la base de datos de la fuente"
 
-#: database/models/items.py:57 database/models/secondary_items.py:61
+#: database/models/items.py:65 database/models/secondary_items.py:66
 msgid "media info"
 msgstr "info media"
 
-#: database/models/items.py:58
+#: database/models/items.py:66
 msgid "Information of resource file"
 msgstr "Información del archivo asociado"
 
-#: database/models/items.py:63
+#: database/models/items.py:71
 msgid "sampling id"
 msgstr "id muestreo"
 
-#: database/models/items.py:64
+#: database/models/items.py:72
 msgid "Sampling event associated with item"
 msgstr "Evento de muestreo asociado con el item"
 
-#: database/models/items.py:71
+#: database/models/items.py:79
 msgid "event id"
 msgstr "tipo de evento"
 
-#: database/models/items.py:72
+#: database/models/items.py:80
 msgid "Reference to source of item (parsing function and parent directory)"
 msgstr "Fuente del item (función de parseo y directorio raíz)"
 
-#: database/models/items.py:81
+#: database/models/items.py:89
 msgid "Schema for item metadata structure"
 msgstr "Esquema JSON para los metadatos del item"
 
-#: database/models/items.py:92
+#: database/models/items.py:101
 msgid "Metadata associated to item"
 msgstr "Metadatos asociados al item"
 
-#: database/models/items.py:97
+#: database/models/items.py:106
 msgid "captured on"
 msgstr "capturado en"
 
-#: database/models/items.py:98
+#: database/models/items.py:107
 msgid "Date on which item was produced"
 msgstr "Fecha en la cual el item fue producido"
 
-#: database/models/items.py:103
+#: database/models/items.py:112
 msgid "Date on which item was uploaded to database"
 msgstr "Fecha en la cual el item fue registrado en la base de datos"
 
-#: database/models/items.py:109
+#: database/models/items.py:118
 msgid "Collection to which item belongs"
 msgstr "Colección a la cual pertenece el item"
 
-#: database/models/items.py:116
+#: database/models/items.py:125
 msgid "owner id"
 msgstr "id dueño"
 
-#: database/models/items.py:117
+#: database/models/items.py:126
 msgid "Owner of item"
 msgstr "Dueño del item"
 
-#: database/models/items.py:125
+#: database/models/items.py:134
 msgid "licence"
 msgstr "licencia"
 
-#: database/models/items.py:126
+#: database/models/items.py:135
 msgid "Licence of item"
 msgstr "Licencia del item"
 
-#: database/models/items.py:133
+#: database/models/items.py:142
 msgid "is uploaded"
 msgstr "esta presente"
 
-#: database/models/items.py:134
+#: database/models/items.py:143
 msgid "Is the item file on the server?"
 msgstr "¿Está presente el archivo del item en el servido?"
 
-#: database/models/items.py:137
+#: database/models/items.py:146
 msgid "Item"
 msgstr "Item"
 
-#: database/models/items.py:138
+#: database/models/items.py:147
 msgid "Items"
 msgstr "Items"
 
-#: database/models/licence_types.py:11
+#: database/models/items.py:150
+msgid "Can download item"
+msgstr "Puede descargar items"
+
+#: database/models/licence_types.py:13
 msgid "Licence type name"
 msgstr "Nombre del tipo de licencia"
 
-#: database/models/licence_types.py:16
+#: database/models/licence_types.py:18
 msgid "Description of licence"
 msgstr "Fecha de creación de la anotación"
 
-#: database/models/licence_types.py:22
+#: database/models/licence_types.py:24
 msgid "metadata schema"
 msgstr "esquema metadatos"
 
-#: database/models/licence_types.py:23
+#: database/models/licence_types.py:25
 msgid "Schema for licence metadata structure"
 msgstr "Esquema JSON para los metadatos de la licencia"
 
-#: database/models/licence_types.py:35
+#: database/models/licence_types.py:37
 msgid "document template"
 msgstr "templete documento"
 
-#: database/models/licence_types.py:36
+#: database/models/licence_types.py:38
 msgid "Template for licence document"
 msgstr "Templete para el documento de la licencia"
 
-#: database/models/licence_types.py:40
+#: database/models/licence_types.py:43
+msgid "Licence type icon"
+msgstr "Ícono para tipo de licencia"
+
+#: database/models/licence_types.py:49
 msgid "can view"
 msgstr "puede ver"
 
-#: database/models/licence_types.py:41
+#: database/models/licence_types.py:50
 msgid "Any user can view item info"
 msgstr "Cualquier usuario puede ver la información de este item"
 
-#: database/models/licence_types.py:46
+#: database/models/licence_types.py:55
 msgid "can download"
 msgstr "puede descargar"
 
-#: database/models/licence_types.py:47
+#: database/models/licence_types.py:56
 msgid "Any user can download item"
 msgstr "Cualquier usuario puede descargar este item"
 
-#: database/models/licence_types.py:52
+#: database/models/licence_types.py:61
 msgid "can view annotations"
 msgstr "puede ver anotaciones"
 
-#: database/models/licence_types.py:53
+#: database/models/licence_types.py:62
 msgid "Any user can view item annotations"
 msgstr "Cualquier usuario puede ver las anotaciones de este item"
 
-#: database/models/licence_types.py:58
+#: database/models/licence_types.py:67
 msgid "can annotate"
 msgstr "puede anotar"
 
-#: database/models/licence_types.py:59
+#: database/models/licence_types.py:68
 msgid "Any user can annotate item"
 msgstr "Cualquier usuario puede anotar este item"
 
-#: database/models/licence_types.py:64
+#: database/models/licence_types.py:73
 msgid "can vote annotations"
 msgstr "puede votar anotaciones"
 
-#: database/models/licence_types.py:65
+#: database/models/licence_types.py:74
 msgid "Any user can vote on item annotations"
 msgstr "Cualquier usuario puede votar en las anotaciones de este item"
 
-#: database/models/licence_types.py:70
+#: database/models/licence_types.py:79
 msgid "Licence Type"
 msgstr "Tipo de Licencia"
 
-#: database/models/licence_types.py:71
+#: database/models/licence_types.py:80
 msgid "Licence Types"
 msgstr "Tipos de Licencia"
 
-#: database/models/licences.py:11
+#: database/models/licences.py:16
 msgid "licence type"
 msgstr "tipo de licencia"
 
-#: database/models/licences.py:12
+#: database/models/licences.py:17
 msgid "Type of licence used"
 msgstr "Tipo de licencia utilizada"
 
-#: database/models/licences.py:18
+#: database/models/licences.py:23
 msgid "document"
 msgstr "documento"
 
-#: database/models/licences.py:19
+#: database/models/licences.py:24
 msgid "Legal document of licence agreement"
 msgstr "Documento legal del contrato de licencia"
 
-#: database/models/licences.py:26
+#: database/models/licences.py:31
 msgid "Date of licence creation"
 msgstr "Fecha de última modificación"
 
-#: database/models/licences.py:30
+#: database/models/licences.py:35
 msgid "valid until"
 msgstr "valido hasta"
 
-#: database/models/licences.py:31
+#: database/models/licences.py:36
 msgid "Date at which the licence expires"
 msgstr "Fecha en la cual se expira la licencia"
 
-#: database/models/licences.py:37
+#: database/models/licences.py:43
 msgid "Metadata associated with licence"
 msgstr "Metadatos asociados a la anotación"
 
-#: database/models/licences.py:42
+#: database/models/licences.py:48
 msgid "Licence"
 msgstr "Licencia"
 
-#: database/models/licences.py:43
+#: database/models/licences.py:49
 msgid "Licences"
 msgstr "Licencias"
 
-#: database/models/licences.py:46
+#: database/models/licences.py:52
 #, python-brace-format
 msgid "Licence of type {type} created on {date}"
 msgstr "Licencia de tipo {type} creada en {date}"
@@ -941,7 +1007,7 @@ msgstr "Nombre de la metacolección"
 msgid "Description of metacollection"
 msgstr "Descipción de la metacolección"
 
-#: database/models/metacollections.py:24 database/models/sites.py:62
+#: database/models/metacollections.py:24 database/models/sites.py:67
 msgid "creator id"
 msgstr "id creador"
 
@@ -949,507 +1015,372 @@ msgstr "id creador"
 msgid "Reference to creator of metacollection"
 msgstr "Referencia al creador de la metacolección"
 
-#: database/models/metacollections.py:30
+#: database/models/metacollections.py:32
 msgid "Metacollection"
 msgstr "Metacolleción"
 
-#: database/models/metacollections.py:31
+#: database/models/metacollections.py:33
 msgid "Metacollections"
 msgstr "Metacolecciones"
 
-#: database/models/physical_devices.py:11
+#: database/models/physical_devices.py:16
 msgid "serial number"
 msgstr "numero de serie"
 
-#: database/models/physical_devices.py:12
+#: database/models/physical_devices.py:17
 msgid "Serial number of device"
 msgstr "Numero de serie del dispositivo"
 
-#: database/models/physical_devices.py:21
+#: database/models/physical_devices.py:26
 msgid "Reference to type of device"
 msgstr "Referencia al tipo de dispositivo"
 
-#: database/models/physical_devices.py:28
+#: database/models/physical_devices.py:33
 msgid "owner"
 msgstr "dueño"
 
-#: database/models/physical_devices.py:29
+#: database/models/physical_devices.py:34
 msgid "Owner of device"
 msgstr "Dueño del dispositivo"
 
-#: database/models/physical_devices.py:37
-msgid "Schema for device metadata"
-msgstr "Esquema JSON para los metadatos del dispositivo físico"
-
-#: database/models/physical_devices.py:48
+#: database/models/physical_devices.py:40
 msgid "Metadata associated to device"
 msgstr "Metadatos asociados al dispositivo"
 
-#: database/models/physical_devices.py:53
+#: database/models/physical_devices.py:46
 msgid "bundle"
 msgstr "manojo"
 
-#: database/models/physical_devices.py:54
+#: database/models/physical_devices.py:47
 msgid "Does this device possibly represents many physical devices?"
 msgstr ""
 "¿Este dispositivo representa (posiblemente) varios dispositivos físicos?"
 
-#: database/models/physical_devices.py:58
+#: database/models/physical_devices.py:51
 msgid "Physical Device"
 msgstr "Dispositivo Físico"
 
-#: database/models/physical_devices.py:59
+#: database/models/physical_devices.py:52
 msgid "Physical Devices"
 msgstr "Dispositivos Físicos"
 
-#: database/models/physical_devices.py:62
+#: database/models/physical_devices.py:55
 #, python-brace-format
 msgid "Device {id} of type {device}"
 msgstr "Dispositivo {id} de tipo {device}"
 
-#: database/models/role_types.py:11
-msgid "Name of role"
-msgstr "Nombre del rol"
-
-#: database/models/role_types.py:16
+#: database/models/role_types.py:10
 msgid "Description of role"
 msgstr "Descripción del rol"
 
+#: database/models/role_types.py:15
+msgid "Role type icon"
+msgstr "Ícono de tipo de rol"
+
 #: database/models/role_types.py:21
-msgid "can add items"
-msgstr "puede añadir items"
-
-#: database/models/role_types.py:22
-msgid "Can add items to collection"
-msgstr "Puede añadir items a la colección"
-
-#: database/models/role_types.py:27
-msgid "can view items"
-msgstr "puede ver items"
-
-#: database/models/role_types.py:28
-msgid "Can view items in collection"
-msgstr "Puede ver los items de la colección"
-
-#: database/models/role_types.py:33
-msgid "can update items"
-msgstr "Item anotado"
-
-#: database/models/role_types.py:34
-msgid "Can update items in collection"
-msgstr "Puede actualizar los items en la colección"
-
-#: database/models/role_types.py:39
-msgid "can download items"
-msgstr "puede descargar items"
-
-#: database/models/role_types.py:40
-msgid "Can download items in collection"
-msgstr "Puede descargar los items de la colección"
-
-#: database/models/role_types.py:46
-msgid "can add sites"
-msgstr "puede añadir sitios"
-
-#: database/models/role_types.py:47
-msgid "Can add sites to collection"
-msgstr "Puede añadir sitios a la colección"
-
-#: database/models/role_types.py:52
-msgid "can view sites"
-msgstr "puede ver sitios"
-
-#: database/models/role_types.py:53
-msgid "Can view sites in collection"
-msgstr "Puede ver los sitios de la colección"
-
-#: database/models/role_types.py:58
-msgid "can update sites"
-msgstr "puede actualizar sitios"
-
-#: database/models/role_types.py:59
-msgid "Can update sites in collection"
-msgstr "Puede actualizar los sitios en la colección"
-
-#: database/models/role_types.py:64
-msgid "can remove sites"
-msgstr "puede quitar sitios"
-
-#: database/models/role_types.py:65
-msgid "Can remove sites from collection"
-msgstr "Puede quitar sitios de la colección"
-
-#: database/models/role_types.py:71
-msgid "can add devices"
-msgstr "puede añadir dispositivos"
-
-#: database/models/role_types.py:72
-msgid "Can add devices to collection"
-msgstr "Puede añadir dispositivos a la colección"
-
-#: database/models/role_types.py:77
-msgid "can view devices"
-msgstr "puede ver dispositivos"
-
-#: database/models/role_types.py:78
-msgid "Can view devices in collection"
-msgstr "Puede ver los dispositivos de la colección"
-
-#: database/models/role_types.py:83
-msgid "can update devices"
-msgstr "puede actualizar dispositivos"
-
-#: database/models/role_types.py:84
-msgid "Can update devices in collection"
-msgstr "Puede actualizar los dispositivos en la colección"
-
-#: database/models/role_types.py:89
-msgid "can remove devices"
-msgstr "puede quitar dispositivos"
-
-#: database/models/role_types.py:90
-msgid "Can remove devices from collection"
-msgstr "Puede quitar dispositivos de la colección"
-
-#: database/models/role_types.py:96
-msgid "can add schemas"
-msgstr "puede añadir esquemas"
-
-#: database/models/role_types.py:97
-msgid "Can add schemas to collection"
-msgstr "Puede añadir esquemas a la colección"
-
-#: database/models/role_types.py:102
-msgid "can remove schemas"
-msgstr "puede quitar esquemas"
-
-#: database/models/role_types.py:103
-msgid "Can remove schemas from collection"
-msgstr "Puede quitar esquemas de la colección"
-
-#: database/models/role_types.py:109
-msgid "can add roles"
-msgstr "puede añadir roles"
-
-#: database/models/role_types.py:110
-msgid "Can add roles to collection"
-msgstr "Puede añadir roles a la colección"
-
-#: database/models/role_types.py:121
-msgid "can remove roles"
-msgstr "puede quitar roles"
-
-#: database/models/role_types.py:122
-msgid "Can remove roles from collection"
-msgstr "Puede quitar roles de la colección"
-
-#: database/models/role_types.py:128
-msgid "can add users"
-msgstr "puede añadir usuarios"
-
-#: database/models/role_types.py:129
-msgid "Can add users to collection"
-msgstr "Puede añadir usuarios a la colección"
-
-#: database/models/role_types.py:134
-msgid "can update users"
-msgstr "puede actualizar usuarios"
-
-#: database/models/role_types.py:135
-msgid "Can update users in collection"
-msgstr "Puede actualizar los usuarios de la colección"
-
-#: database/models/role_types.py:140
-msgid "can remove users"
-msgstr "puede quitar usuarios"
-
-#: database/models/role_types.py:141
-msgid "Can remove users from collection"
-msgstr "Puede quitar usuarios de la colección"
-
-#: database/models/role_types.py:146
 msgid "Role Type"
 msgstr "Tipo de Rol"
 
-#: database/models/role_types.py:147
+#: database/models/role_types.py:22
 msgid "Role Types"
 msgstr "Tipos de Rol"
 
-#: database/models/sampling_event.py:11
+#: database/models/sampling_event.py:17
 msgid "Reference to device used on sampling event"
 msgstr "Referencial al dispositivo utilizado en el evento de muestreo"
 
-#: database/models/sampling_event.py:19
-msgid "configuration type"
-msgstr "tipo de configuración"
-
-#: database/models/sampling_event.py:20
-msgid "Schema for sampling event configuration"
-msgstr "Esquema JSON para la configuración del evento de muestreo"
-
-#: database/models/sampling_event.py:30
+#: database/models/sampling_event.py:22
 msgid "configuration"
 msgstr "configuración"
 
-#: database/models/sampling_event.py:31
+#: database/models/sampling_event.py:24
 msgid "Configuration on device through the sampling event"
 msgstr "Configuración del dispositivo a lo largo del evento de muestreo"
 
-#: database/models/sampling_event.py:36
+#: database/models/sampling_event.py:30
 msgid "Sampling event commentaries"
 msgstr "Comentarios del evento de muestreo"
 
-#: database/models/sampling_event.py:44
+#: database/models/sampling_event.py:38
 msgid "Schema for sampling event metadata"
 msgstr "Esquema JSON para los metadatos del evento de muestreo"
 
-#: database/models/sampling_event.py:55
+#: database/models/sampling_event.py:49
 msgid "Metadata associated to sampling event"
 msgstr "Metadatos asociados al evento de muestreo"
 
-#: database/models/sampling_event.py:60
+#: database/models/sampling_event.py:55
 msgid "started on"
 msgstr "empenzando en"
 
-#: database/models/sampling_event.py:61
+#: database/models/sampling_event.py:56
 msgid "Date at which sampling begun"
 msgstr "Fecha en la cual comenzó el muestreo"
 
-#: database/models/sampling_event.py:66
+#: database/models/sampling_event.py:61
 msgid "ended on"
 msgstr "terminando en"
 
-#: database/models/sampling_event.py:67
+#: database/models/sampling_event.py:62
 msgid "Date at which sampling stoped"
 msgstr "Fecha en la cual terminó el muestreo"
 
-#: database/models/sampling_event.py:74
+#: database/models/sampling_event.py:69
 msgid "Reference to site at which sampling took place"
 msgstr "Referencia al sitio en el cual ocurrió el muestreo"
 
-#: database/models/sampling_event.py:80
+#: database/models/sampling_event.py:75
 msgid "Sampling Event"
 msgstr "Evento de Muestreo"
 
-#: database/models/sampling_event.py:81
+#: database/models/sampling_event.py:76
 msgid "Sampling Events"
 msgstr "Eventos de Muestreo"
 
-#: database/models/sampling_event.py:84
+#: database/models/sampling_event.py:79
 #, python-brace-format
 msgid "Sampling event {id} on site {site}: {start} - {end}"
 msgstr "Evento de muestreo {id} en el sitio {site}: {start} - {end}"
 
-#: database/models/schemas.py:8
-msgid "annotation label"
-msgstr "etiqueta anotación"
+#: database/models/schemas.py:17
+#, python-format
+msgid "%(value)s is a reserved schema name"
+msgstr "%(value)s es un nombre de esquema reservado"
 
-#: database/models/schemas.py:9
-msgid "annotation annotation"
-msgstr "Fecha de creación de la anotación"
-
-#: database/models/schemas.py:10
+#: database/models/schemas.py:47
 msgid "annotation metadata"
 msgstr "metadatos anotacion"
 
-#: database/models/schemas.py:11
+#: database/models/schemas.py:48
 msgid "collection metadata"
 msgstr "metadatos colección"
 
-#: database/models/schemas.py:12
+#: database/models/schemas.py:49
 msgid "collection device metadata"
 msgstr "metadatos dispositivo colección"
 
-#: database/models/schemas.py:13
+#: database/models/schemas.py:50
 msgid "collection site metadata"
 msgstr "metadatos sitio colección"
 
-#: database/models/schemas.py:14
+#: database/models/schemas.py:51
 msgid "collection user metadata"
 msgstr "metadatos usuario colección"
 
-#: database/models/schemas.py:15
+#: database/models/schemas.py:52
 msgid "device metadata"
 msgstr "metadatos de dispositivo"
 
-#: database/models/schemas.py:16
+#: database/models/schemas.py:53
+msgid "device configuration"
+msgstr "configuración dispositivo"
+
+#: database/models/schemas.py:54
 msgid "entailment metadata"
 msgstr "metadatos implicación"
 
-#: database/models/schemas.py:17
+#: database/models/schemas.py:55
 msgid "item media info"
 msgstr "media info item"
 
-#: database/models/schemas.py:18
+#: database/models/schemas.py:56
 msgid "item metadata"
 msgstr "metadatos item"
 
-#: database/models/schemas.py:19
+#: database/models/schemas.py:57
 msgid "licence metadata"
 msgstr "metadatos licencia"
 
-#: database/models/schemas.py:21
-msgid "sampling event configuration"
-msgstr "configuración evento de muestreo"
-
-#: database/models/schemas.py:22
+#: database/models/schemas.py:58
 msgid "sampling event metadata"
 msgstr "metadatos evento de muestreo"
 
-#: database/models/schemas.py:23
+#: database/models/schemas.py:59
 msgid "secondary item media info"
 msgstr "media info item secundario"
 
-#: database/models/schemas.py:24
+#: database/models/schemas.py:60
 msgid "site metadata"
 msgstr "metadatos sitio"
 
-#: database/models/schemas.py:25
+#: database/models/schemas.py:61
 msgid "synonym metadata"
 msgstr "metadatos sinónimo"
 
-#: database/models/schemas.py:26
+#: database/models/schemas.py:62
 msgid "term metadata"
 msgstr "metadatos término"
 
-#: database/models/schemas.py:27
+#: database/models/schemas.py:63
 msgid "user metadata"
 msgstr "metadatos usuario"
 
-#: database/models/schemas.py:28
+#: database/models/schemas.py:64
 msgid "global"
 msgstr "global"
 
-#: database/models/schemas.py:35
+#: database/models/schemas.py:71
 msgid "field"
 msgstr "campo"
 
-#: database/models/schemas.py:36
+#: database/models/schemas.py:72
 msgid "Field to which JSON schema applies"
 msgstr "Campo al cual aplica el esquema JSON"
 
-#: database/models/schemas.py:43
+#: database/models/schemas.py:79
 msgid "Name of JSON schema"
 msgstr "Nombre del esquema JSON"
 
-#: database/models/schemas.py:50
+#: database/models/schemas.py:87
 msgid "Description of schema"
 msgstr "Descripción del esquema"
 
-#: database/models/schemas.py:55
+#: database/models/schemas.py:92
 msgid "schema"
 msgstr "esquema"
 
-#: database/models/schemas.py:56
+#: database/models/schemas.py:93
 msgid "JSON object with schema"
 msgstr "Objecto JSON con esquema"
 
-#: database/models/schemas.py:60
+#: database/models/schemas.py:98
 msgid "Schema"
 msgstr "Esquema"
 
-#: database/models/schemas.py:61
+#: database/models/schemas.py:99
 msgid "Schemas"
 msgstr "Esquemas"
 
-#: database/models/secondary_items.py:20
+#: database/models/secondary_items.py:25
 msgid "Path to secondary resource"
 msgstr "Ruta al archivo secundario"
 
-#: database/models/secondary_items.py:27
+#: database/models/secondary_items.py:32
 msgid "Hash of secondary resource file"
 msgstr "Hash del archivo secundario"
 
-#: database/models/secondary_items.py:34
+#: database/models/secondary_items.py:39
 msgid "Hash function used to generate has of secondary file"
 msgstr "Función de hash utilizada"
 
-#: database/models/secondary_items.py:40
+#: database/models/secondary_items.py:45
 msgid "Date of creation of secondary item"
 msgstr "Fecha de creación del item secundario"
 
-#: database/models/secondary_items.py:47
+#: database/models/secondary_items.py:52
 msgid "Type of file of secondary item"
 msgstr "Tipo de archivo de item secundario"
 
-#: database/models/secondary_items.py:54
+#: database/models/secondary_items.py:59
 msgid "Reference to primary item associated to secondary item"
 msgstr "Item primario asociado al item secundario"
 
-#: database/models/secondary_items.py:62
+#: database/models/secondary_items.py:67
 msgid "Media information of secondary item file"
 msgstr "Información de media del item secundario"
 
-#: database/models/secondary_items.py:67
+#: database/models/secondary_items.py:73
 msgid "Secondary Item"
 msgstr "Item Secundario"
 
-#: database/models/secondary_items.py:68
+#: database/models/secondary_items.py:74
 msgid "Secondary Items"
 msgstr "Items Secundarios"
 
-#: database/models/secondary_items.py:71
+#: database/models/secondary_items.py:77
 #, python-brace-format
 msgid "Secondary Item {id} derived from {itemid}"
 msgstr "Item Secundario {id} derivado de {itemid}"
 
-#: database/models/sites.py:13
-msgid "Name of site"
-msgstr "Nombre del sitio"
+#: database/models/site_types.py:13
+msgid "Name of site type"
+msgstr "Nombre del tipo de sitio"
 
-#: database/models/sites.py:18
-msgid "geo ref"
-msgstr "geo ref"
+#: database/models/site_types.py:18
+msgid "Description of site type"
+msgstr "Descripción del tipo de sitio"
 
-#: database/models/sites.py:19
-msgid "Georeference of site as Geometry"
-msgstr "Georeferencia del sitio"
-
-#: database/models/sites.py:23
-msgid "latitude"
-msgstr "latitud"
-
-#: database/models/sites.py:24
-msgid "Latitude of site"
-msgstr "Latitud del sitio"
-
-#: database/models/sites.py:28
-msgid "longitude"
-msgstr "longitud"
-
-#: database/models/sites.py:29
-msgid "Longitude of site"
-msgstr "Longitud del sitio"
-
-#: database/models/sites.py:34
-msgid "altitude"
-msgstr "altitud"
-
-#: database/models/sites.py:35
-msgid "Altitude of site (in meters)"
-msgstr "Altitud del sitio (en metros)"
-
-#: database/models/sites.py:42
+#: database/models/site_types.py:25
 msgid "Schema for site metadata"
 msgstr "Esquema JSON para los metadatos del sitio"
 
-#: database/models/sites.py:53
+#: database/models/site_types.py:35
+msgid "Site Type"
+msgstr "Tipo de Sitio"
+
+#: database/models/site_types.py:36
+msgid "Site Types"
+msgstr "Tipos de Sitio"
+
+#: database/models/sites.py:21
+msgid "Name of site"
+msgstr "Nombre del sitio"
+
+#: database/models/sites.py:27
+msgid "site type"
+msgstr "tipo de sitio"
+
+#: database/models/sites.py:28
+msgid "Type of site"
+msgstr "Tipo de sitio"
+
+#: database/models/sites.py:29
+msgid "generic site"
+msgstr "sitio genérico"
+
+#: database/models/sites.py:35
+msgid "geo ref"
+msgstr "geo ref"
+
+#: database/models/sites.py:36
+msgid "Georeference of site as Geometry"
+msgstr "Georeferencia del sitio"
+
+#: database/models/sites.py:40
+msgid "latitude"
+msgstr "latitud"
+
+#: database/models/sites.py:41
+msgid "Latitude of site"
+msgstr "Latitud del sitio"
+
+#: database/models/sites.py:45
+msgid "longitude"
+msgstr "longitud"
+
+#: database/models/sites.py:46
+msgid "Longitude of site"
+msgstr "Longitud del sitio"
+
+#: database/models/sites.py:51
+msgid "altitude"
+msgstr "altitud"
+
+#: database/models/sites.py:52
+msgid "Altitude of site (in meters)"
+msgstr "Altitud del sitio (en metros)"
+
+#: database/models/sites.py:57
 msgid "Metadata associated to site"
 msgstr "Metadatos asociados al sitio"
 
-#: database/models/sites.py:63
+#: database/models/sites.py:68
 msgid "Refrence to creator of site"
 msgstr "Creador del sitio"
 
-#: database/models/sites.py:66
+#: database/models/sites.py:71
 msgid "Site"
 msgstr "Sitio"
 
-#: database/models/sites.py:67
+#: database/models/sites.py:72
 msgid "Sites"
 msgstr "Sitios"
 
-#: database/models/sites.py:72
+#: database/models/sites.py:91
+msgid "Geo reference or longitude-latitude must be provided"
+msgstr "La georeferencia o la longitud-latitud deben de ser provistas"
+
+#: database/models/sites.py:97
 #, python-brace-format
 msgid "Site {id}"
 msgstr "Sitio {id}"
@@ -1468,7 +1399,9 @@ msgstr "archivo fuente"
 
 #: database/models/sources.py:18
 msgid "File containing metadata for files in source directory"
-msgstr "Archivo que contiene todos los metadatos de los archivos contenidos en el directorio fuente"
+msgstr ""
+"Archivo que contiene todos los metadatos de los archivos contenidos en el "
+"directorio fuente"
 
 #: database/models/sources.py:23
 msgid "parse function"
@@ -1476,7 +1409,9 @@ msgstr "funcion parseo"
 
 #: database/models/sources.py:24
 msgid "Parse function used to insert files and metadata to database"
-msgstr "Funcion de parseo utilizada para insertar los archivos y los metadatos a la base de datos"
+msgstr ""
+"Funcion de parseo utilizada para insertar los archivos y los metadatos a la "
+"base de datos"
 
 #: database/models/sources.py:29
 msgid "uploaded on"
@@ -1484,7 +1419,9 @@ msgstr "subido en"
 
 #: database/models/sources.py:30
 msgid "Date on which files in source where parsed and uploaded to database"
-msgstr "Fecha en la cual los archivos en la fuente fueron parseados y subidos a la base de datos"
+msgstr ""
+"Fecha en la cual los archivos en la fuente fueron parseados y subidos a la "
+"base de datos"
 
 #: database/models/sources.py:36
 msgid "uploader id"
@@ -1507,146 +1444,232 @@ msgstr "Fuentes"
 msgid "Directory {dir} uploaded with {func}"
 msgstr "Directorio {dir} subido con la funcion {func}"
 
-#: database/models/synonym_suggestions.py:16
+#: database/models/synonym_suggestions.py:21
 msgid "synonym"
 msgstr "sinónimo"
 
-#: database/models/synonym_suggestions.py:17
+#: database/models/synonym_suggestions.py:22
 msgid "Suggestion of synonym"
 msgstr "Sugerencia de sinónimo"
 
-#: database/models/synonym_suggestions.py:22
+#: database/models/synonym_suggestions.py:27
 msgid "Description of synonym"
 msgstr "Descripción del sinónimo"
 
-#: database/models/synonym_suggestions.py:29
-msgid "Schema for synonym suggestion metadata"
-msgstr "Esquema JSON para los metadatos de la sinonimia"
-
-#: database/models/synonym_suggestions.py:41
+#: database/models/synonym_suggestions.py:33
 msgid "Metadata associated to synonym"
 msgstr "Metadatos asociados a la sinonimia"
 
-#: database/models/synonym_suggestions.py:47
-#: database/models/term_suggestions.py:48
+#: database/models/synonym_suggestions.py:40
+#: database/models/term_suggestions.py:36
 msgid "suggested by"
 msgstr "sugerido por"
 
-#: database/models/synonym_suggestions.py:48
+#: database/models/synonym_suggestions.py:41
 msgid "User who made the synonym suggestion"
 msgstr "Usuario que hizo la sugerencia de sinónimo"
 
-#: database/models/synonym_suggestions.py:53
-#: database/models/term_suggestions.py:54
+#: database/models/synonym_suggestions.py:46
+#: database/models/term_suggestions.py:42
 msgid "suggested on"
 msgstr "sugerido en"
 
-#: database/models/synonym_suggestions.py:54
+#: database/models/synonym_suggestions.py:47
 msgid "Date of synonym suggestion"
 msgstr "Fecha de sugerencia de sinonimia"
 
-#: database/models/synonym_suggestions.py:59
+#: database/models/synonym_suggestions.py:52
 msgid "Synonym Suggestion"
 msgstr "Sugerencia de Sinonimia"
 
-#: database/models/synonym_suggestions.py:60
+#: database/models/synonym_suggestions.py:53
 msgid "Synonym Suggestions"
 msgstr "Sugerencias de Sinonimia"
 
-#: database/models/synonym_suggestions.py:63
+#: database/models/synonym_suggestions.py:56
 #, python-brace-format
 msgid "Suggestion: {term} = {suggestion}"
 msgstr "Sugerencia: {term} = {suggestion}"
 
-#: database/models/synonyms.py:13
+#: database/models/synonyms.py:19
 msgid "Reference to the source of synonym"
 msgstr "Fuente de la sinonimia"
 
-#: database/models/synonyms.py:21
+#: database/models/synonyms.py:27
 msgid "Reference to the target of the synonym"
 msgstr "Objetivo de la sinonimia"
 
-#: database/models/synonyms.py:28
-msgid "Schema for synonym metadata"
-msgstr "Esquema JSON para los metadatos de la sinonimia"
-
-#: database/models/synonyms.py:40
+#: database/models/synonyms.py:34
 msgid "Metadata associated to the synonym"
 msgstr "Metadatos asociados a la sinonimia"
 
-#: database/models/synonyms.py:44
+#: database/models/synonyms.py:38
 msgid "Synonym"
 msgstr "Sinónimo"
 
-#: database/models/synonyms.py:45
+#: database/models/synonyms.py:39
 msgid "Synonyms"
 msgstr "Sinónimos"
 
-#: database/models/term_suggestions.py:18 database/models/terms.py:17
+#: database/models/term_suggestions.py:17 database/models/terms.py:18
+msgid "value"
+msgstr "valor"
+
+#: database/models/term_suggestions.py:18 database/models/terms.py:19
 msgid "Value of term"
 msgstr "Valor del término"
 
-#: database/models/term_suggestions.py:23 database/models/terms.py:22
+#: database/models/term_suggestions.py:23 database/models/terms.py:24
 msgid "Description of term"
 msgstr "Descripción del término"
 
-#: database/models/term_suggestions.py:30
-msgid "Schema for term suggestion metadata"
-msgstr "Esquema JSON para los metadatos del término"
-
-#: database/models/term_suggestions.py:42 database/models/terms.py:40
+#: database/models/term_suggestions.py:30 database/models/terms.py:29
 msgid "Metadata associated to term"
 msgstr "Metadatos asociados al término"
 
-#: database/models/term_suggestions.py:49
+#: database/models/term_suggestions.py:37
 msgid "User who made the term suggestion"
 msgstr "Usuario que hizo la sugerencia"
 
-#: database/models/term_suggestions.py:55
+#: database/models/term_suggestions.py:43
 msgid "Date of term suggestion"
 msgstr "Fecha de la sugerencia de término"
 
-#: database/models/term_suggestions.py:60
+#: database/models/term_suggestions.py:48
 msgid "Term Suggestion"
 msgstr "Sugerencia de Término"
 
-#: database/models/term_suggestions.py:61
+#: database/models/term_suggestions.py:49
 msgid "Term Suggestions"
 msgstr "Sugerencias de Término"
 
-#: database/models/term_suggestions.py:64
+#: database/models/term_suggestions.py:52
 #, python-brace-format
 msgid "Suggestion: {term_type}: {value}"
 msgstr "Sugerencia: {term_type}: {value}"
 
-#: database/models/terms.py:29
-msgid "Schema for term metadata"
-msgstr "Esquema JSON para los metadatos de término"
+#: database/models/term_types.py:13
+msgid "Name for term type"
+msgstr "Nombre del tipo de término"
 
-#: database/models/terms.py:46
+#: database/models/term_types.py:18
+msgid "Description of term type"
+msgstr "Descripción del tipo de término"
+
+#: database/models/term_types.py:23
+msgid "Term type icon"
+msgstr "Ícono de tipo de término"
+
+#: database/models/term_types.py:33
+msgid "Metadata for terms of type"
+msgstr "Esquema JSON para los metadatos de tipo de término"
+
+#: database/models/term_types.py:46
+msgid "synonym metadata type"
+msgstr "tipo metadatos sinónimo"
+
+#: database/models/term_types.py:47
+msgid "Metadata for synonym of terms of type"
+msgstr "Esquema JSON para los metadatos de una sinonimia para el tipo de término"
+
+#: database/models/term_types.py:57
+msgid "Term Type"
+msgstr "Tipo de Término"
+
+#: database/models/term_types.py:58
+msgid "Term Types"
+msgstr "Tipos de Términos"
+
+#: database/models/terms.py:12
+msgid "term type"
+msgstr "tipo de término"
+
+#: database/models/terms.py:13
+msgid "Type of term"
+msgstr "Tipo de término"
+
+#: database/models/terms.py:35
 msgid "Term"
 msgstr "Término"
 
-#: database/models/terms.py:47
+#: database/models/terms.py:36
 msgid "Terms"
 msgstr "Términos"
 
-#: database/models/users.py:22
+#: database/models/users.py:13
 msgid "Reference to user"
 msgstr "Referencia al Usuario"
 
-#: database/models/users.py:29
+#: database/models/users.py:20
 msgid "Institution to which user belongs"
 msgstr "Institución a la cual pertenece el usuario"
 
-#: database/models/users.py:36
-msgid "Role of user"
-msgstr "Rol del usuario"
+#: database/models/users.py:24
+msgid "is developer"
+msgstr "es desarrollador"
 
-#: database/models/users.py:40
+#: database/models/users.py:25
+msgid "Flag to indicate if user is a model developer"
+msgstr "Bandera para indicar is el usuario es un desarrollador de modelos"
+
+#: database/models/users.py:31
+msgid "is curator"
+msgstr "es curador"
+
+#: database/models/users.py:32
+msgid "Flag to indicate if user is a curator"
+msgstr "Bandera para indicar si el usuario es curador"
+
+#: database/models/users.py:38
+msgid "is model"
+msgstr "es modelo"
+
+#: database/models/users.py:39
+msgid "Flag to indicate if user is an AI model"
+msgstr "Bandera para indicar si el usuario es un modelo de IA"
+
+#: database/models/users.py:45
 msgid "User Data"
 msgstr "Datos de usuario"
 
-#: database/models/users.py:41
+#: database/models/users.py:46
 msgid "Users Data"
 msgstr "Datos de Usuarios"
+
+#: database/utils.py:6
+msgid "free"
+msgstr "libre"
+
+#: database/utils.py:13
+#, python-brace-format
+msgid "JSON Schema is not valid. Error: {error}"
+msgstr "El esquema de JSON no es válido. Error: {error}"
+
+#: database/utils.py:24
+#, python-brace-format
+msgid "Instance does not comply with JSON schema. Error: {error}"
+msgstr "La instancia no se ajusta al esquema de JSON. Error: {error}"
+
+#: database/utils.py:42
+#, python-brace-format
+msgid "Schema {schema} is not part of collection {collection}"
+msgstr "El esquema {schema} no es parte de la colección {collection}"
+
+#: database/utils.py:51
+#, python-brace-format
+msgid "Term types must be equal for synonyms ({type1} != {type2})"
+msgstr "Los tipos de términos deben de ser iguales para una sinonimia ({type1} != {type2})"
+
+#: database/utils.py:60
+msgid "Georeference and longitude-latitude do not coincide"
+msgstr "La georeferencia y la longitud-latitud no coinciden"
+
+#: database/utils.py:71
+#, python-brace-format
+msgid "Event type {event} is not valid for item type {item}"
+msgstr "El tipo de evento {event} no es válido para el tipo de item {item}"
+
+#: database/utils.py:85
+#, python-brace-format
+msgid "Label type {label} is not valid for event type {event}"
+msgstr "El tipo de etiqueta {label} no es valido para el tipo de evento {event}"

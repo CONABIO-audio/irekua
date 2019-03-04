@@ -2,9 +2,11 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.models.schemas import Schema
 from database.utils import (
     validate_json_instance,
     validate_is_of_collection,
+    empty_json,
 )
 
 
@@ -38,15 +40,16 @@ class CollectionSite(models.Model):
         verbose_name=_('metadata type'),
         help_text=_('JSON schema for collection site metadata'),
         limit_choices_to=(
-            models.Q(field__exact='collection_site_metadata') |
-            models.Q(field__exact='global')),
+            models.Q(field__exact=Schema.COLLECTION_SITE_METADATA) |
+            models.Q(field__exact=Schema.GLOBAL)),
         to_field='name',
-        default='free',
+        default=Schema.FREE_SCHEMA,
         blank=False,
         null=False)
     metadata = JSONField(
         blank=True,
         db_column='metadata',
+        default=empty_json,
         verbose_name=_('metadata'),
         help_text=_('Metadata associated with site within collection'),
         null=True)
@@ -62,6 +65,10 @@ class CollectionSite(models.Model):
         return msg
 
     def clean(self, *args, **kwargs):
-        validate_json_instance(self.metadata, self.metadata_type.schema)
-        validate_is_of_collection(self.collection, self.metadata_type.schema)
+        validate_json_instance(
+            self.metadata,
+            self.metadata_type.schema)
+        validate_is_of_collection(
+            self.collection,
+            self.metadata_type)
         super(CollectionSite, self).clean(*args, **kwargs)

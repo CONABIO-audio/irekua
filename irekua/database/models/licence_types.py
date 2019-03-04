@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.models.schemas import Schema
+
 
 class LicenceType(models.Model):
     name = models.CharField(
@@ -22,10 +24,10 @@ class LicenceType(models.Model):
         verbose_name=_('metadata schema'),
         help_text=_('Schema for licence metadata structure'),
         limit_choices_to=(
-            models.Q(field__exact='licence_metadata') |
-            models.Q(field__exact='global')),
+            models.Q(field__exact=Schema.LICENCE_METADATA) |
+            models.Q(field__exact=Schema.GLOBAL)),
         to_field='name',
-        default='free',
+        default=Schema.FREE_SCHEMA,
         blank=False,
         null=False)
     document_template = models.CharField(

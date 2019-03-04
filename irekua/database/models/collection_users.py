@@ -3,9 +3,11 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.models.schemas import Schema
 from database.utils import (
     validate_json_instance,
     validate_is_of_collection,
+    empty_json,
 )
 
 
@@ -38,16 +40,17 @@ class CollectionUser(models.Model):
         verbose_name=_('metadata type'),
         help_text=_('JSON schema for collection user metadata'),
         limit_choices_to=(
-            models.Q(field__exact='collection_user_metadata') |
-            models.Q(field__exact='global')),
+            models.Q(field__exact=Schema.COLLECTION_USER_METADATA) |
+            models.Q(field__exact=Schema.GLOBAL)),
         to_field='name',
-        default='free',
+        default=Schema.FREE_SCHEMA,
         blank=False,
         null=False)
     metadata = JSONField(
         blank=True,
         db_column='metadata',
         verbose_name=_('metadata'),
+        default=empty_json,
         help_text=_('Metadata associated to user in collection'),
         null=True)
     is_admin = models.BooleanField(
@@ -69,6 +72,10 @@ class CollectionUser(models.Model):
         return msg
 
     def clean(self, *args, **kwargs):
-        validate_is_of_collection(self.collection, self.metadata_type.schema)
-        validate_json_instance(self.metadata, self.metadata_type.schema)
+        validate_is_of_collection(
+            self.collection,
+            self.metadata_type)
+        validate_json_instance(
+            self.metadata,
+            self.metadata_type.schema)
         super(CollectionUser, self).clean(*args, **kwargs)

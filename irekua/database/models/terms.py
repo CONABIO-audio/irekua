@@ -6,12 +6,15 @@ from database.utils import validate_json_instance
 
 
 class Term(models.Model):
-    term_type = models.CharField(
-        max_length=50,
+    term_type = models.ForeignKey(
+        'TermType',
+        on_delete=models.CASCADE,
         db_column='term_type',
         verbose_name=_('term type'),
         help_text=_('Type of term'),
-        blank=False)
+        limit_choices_to={'is_categorical': True},
+        blank=False,
+        null=False)
     value = models.CharField(
         max_length=50,
         db_column='value',
@@ -34,6 +37,7 @@ class Term(models.Model):
         ordering = ['term_type', 'value']
         verbose_name = _('Term')
         verbose_name_plural = _('Terms')
+        unique_together = (('term_type', 'value'))
 
     def __str__(self):
         msg = '{term_type}: {value}'.format(
@@ -42,6 +46,7 @@ class Term(models.Model):
         return msg
 
     def clean(self, *args, **kwargs):
-        metadata_schema = self.term_type.metadata_type.schema
-        validate_json_instance(self.metadata, metadata_schema)
+        validate_json_instance(
+            self.metadata,
+            self.term_type.metadata_schema.schema)
         super(Term, self).clean(*args, **kwargs)

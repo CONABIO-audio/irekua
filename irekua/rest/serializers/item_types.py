@@ -13,4 +13,5 @@ class ItemTypeSerializer(serializers.HyperlinkedModelSerializer):
             'name',
             'description',
             'media_info_schema',
+            'icon',
         )

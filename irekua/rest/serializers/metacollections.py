@@ -13,5 +13,5 @@ class MetaCollectionSerializer(serializers.HyperlinkedModelSerializer):
             'name',
             'description',
             'creator',
-            'collections',
+            'items',
         )

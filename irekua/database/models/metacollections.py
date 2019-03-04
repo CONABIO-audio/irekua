@@ -25,8 +25,8 @@ class MetaCollection(models.Model):
         help_text=_('Reference to creator of metacollection'),
         null=True,
         blank=True)
-    collections = models.ManyToManyField(
-        'Collection')
+    items = models.ManyToManyField(
+        'Item')
 
     class Meta:
         verbose_name = _('Metacollection')

@@ -3,9 +3,12 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.models.schemas import Schema
 from database.utils import (
     validate_json_instance,
-    validate_is_of_collection)
+    validate_is_of_collection,
+    empty_json,
+)
 
 
 class Item(models.Model):
@@ -58,6 +61,7 @@ class Item(models.Model):
         blank=True)
     media_info = JSONField(
         db_column='media_info',
+        default=empty_json,
         verbose_name=_('media info'),
         help_text=_('Information of resource file'),
         blank=False)
@@ -84,14 +88,15 @@ class Item(models.Model):
         verbose_name=_('metadata type'),
         help_text=_('Schema for item metadata structure'),
         limit_choices_to=(
-            models.Q(field__exact='item_metadata') |
-            models.Q(field__exact='global')),
+            models.Q(field__exact=Schema.ITEM_METADATA) |
+            models.Q(field__exact=Schema.GLOBAL)),
         to_field='name',
-        default='free',
+        default=Schema.FREE_SCHEMA,
         blank=False,
         null=False)
     metadata = JSONField(
         db_column='metadata',
+        default=empty_json,
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to item'),
         blank=True,
@@ -149,13 +154,17 @@ class Item(models.Model):
         return 'Item {id}'.format(id=self.id)
 
     def clean(self, *args, **kwargs):
-        media_info_schema = self.item_type.media_info_schema.schema
-        validate_json_instance(self.media_info, media_info_schema)
-        validate_json_instance(self.metadata, self.metadata_type.schema)
-
-        if self.collection is not None:
-            validate_is_of_collection(
-                self.collection,
-                self.metadata_type.schema)
-
+        validate_json_instance(
+            self.media_info,
+            self.item_type.media_info_schema.schema)
+        validate_json_instance(
+            self.metadata,
+            self.metadata_type.schema)
+        validate_is_of_collection(
+            self.collection,
+            self.metadata_type)
         super(Item, self).clean(*args, **kwargs)
+
+    def validate_annotation(self, annotation):
+        self.item_type.validate_event_type(annotation.event_type)
+        self.collection.validate_annotation_type(annotation.annotation_type)
