@@ -58,10 +58,13 @@ class PhysicalDevice(models.Model):
             device=str(self.device))
         return msg % params
 
-    def clean(self, *args, **kwargs):
+    def clean(self):
         try:
             self.device.validate_metadata(self.metadata)
         except ValidationError as error:
             raise ValidationError({'metadata': error})
 
-        super(PhysicalDevice, self).clean(*args, **kwargs)
+        super(PhysicalDevice, self).clean()
+
+    def validate_configuration(self, configuration):
+        self.device.validate_configuration(configuration)

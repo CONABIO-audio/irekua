@@ -130,7 +130,8 @@ class Item(models.Model):
         'Tag',
         db_column='tags',
         verbose_name=_('tags'),
-        help_text=_('Tags for item'))
+        help_text=_('Tags for item'),
+        blank=True)
 
     class Meta:
         verbose_name = _('Item')
@@ -151,7 +152,8 @@ class Item(models.Model):
 
         if self.collection:
             try:
-                self.collection.validate_sampling_event_type(self.sampling.sampling_event_type)
+                self.collection.validate_and_get_sampling_event_type(
+                    self.sampling.sampling_event_type)
             except ValidationError as error:
                 raise ValidationError({'sampling': error})
 

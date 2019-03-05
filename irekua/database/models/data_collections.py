@@ -36,7 +36,7 @@ class Collection(models.Model):
         db_column='metadata',
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to collection'),
-        blank=False,
+        blank=True,
         default=empty_json,
         null=False)
     institution = models.ForeignKey(
@@ -94,7 +94,8 @@ class Collection(models.Model):
         super(Collection, self).save()
 
     def validate_and_get_device_type_annotation_type(self, annotation_type):
-        return self.collection_type.validate_and_get_annotation_type(annotation_type)
+        return self.collection_type.validate_and_get_annotation_type(
+            annotation_type)
 
     def validate_and_get_event_type(self, event_type):
         return self.collection_type.validate_and_get_event_type(event_type)
@@ -109,4 +110,5 @@ class Collection(models.Model):
         return self.collection_type.validate_and_get_item_type(item_type)
 
     def validate_and_get_sampling_event_type(self, sampling_event_type):
-        return self.validate_and_get_sampling_event_type(sampling_event_type)
+        return self.collection_type.validate_and_get_sampling_event_type(
+            sampling_event_type)

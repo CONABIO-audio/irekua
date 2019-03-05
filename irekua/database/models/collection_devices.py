@@ -51,11 +51,11 @@ class CollectionDevice(models.Model):
     def clean(self):
         try:
             device_type = self.collection.validate_and_get_device_type(
-                self.device.device_type)
+                self.device.device.device_type)
         except ValidationError as error:
             raise ValidationError({'device': str(error)})
 
-        if device_types is not None:
+        if device_type is not None:
             try:
                 device_type.validate_metadata(self.metadata)
             except ValidationError as error:

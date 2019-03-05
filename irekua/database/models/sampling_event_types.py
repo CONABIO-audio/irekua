@@ -58,12 +58,14 @@ class SamplingEventType(models.Model):
         'DeviceType',
         db_column='device_types',
         verbose_name=_('device types'),
-        help_text=_('Valid device types for this sampling event type'))
+        help_text=_('Valid device types for this sampling event type'),
+        blank=True)
     site_types = models.ManyToManyField(
         'SiteType',
         db_column='site_types',
         verbose_name=_('site types'),
-        help_text=_('Valid site types for this sampling event type'))
+        help_text=_('Valid site types for this sampling event type'),
+        blank=True)
 
     class Meta:
         verbose_name = _('Sampling Event Type')
@@ -74,7 +76,7 @@ class SamplingEventType(models.Model):
 
     def validate_metadata(self, metadata):
         try:
-            self.metadata_schema.validate_intance(metadata)
+            self.metadata_schema.validate_instance(metadata)
         except ValidationError as error:
             msg = _('Invalid metadata for sampling event of type %(type)s. Error: %(error)')
             params = dict(type=str(self), error=str(error))

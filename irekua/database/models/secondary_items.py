@@ -86,4 +86,4 @@ class SecondaryItem(models.Model):
         except ValidationError as error:
             raise ValidationError({'media_info': error})
 
-        super(SecondaryItem, self).clean(*args, **kwargs)
+        super(SecondaryItem, self).clean()

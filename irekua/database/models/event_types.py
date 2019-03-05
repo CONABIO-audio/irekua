@@ -28,7 +28,8 @@ class EventType(models.Model):
         'TermType',
         db_column='label_term_types',
         verbose_name=_('label term types'),
-        help_text=_('Valid term types with which to label this type of events'))
+        help_text=_('Valid term types with which to label this type of events'),
+        blank=True)
 
     class Meta:
         verbose_name = _('Event Type')

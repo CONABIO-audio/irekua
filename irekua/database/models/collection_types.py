@@ -62,15 +62,35 @@ class CollectionType(models.Model):
         help_text=_('Flag indicating whether types of sampling events are restricted to registered ones'))
 
     site_types = models.ManyToManyField(
-        'SiteType')
+        'SiteType',
+        db_column='site_types',
+        verbose_name=_('site types'),
+        help_text=_('Types of site valid for collections of type'),
+        blank=True)
     annotation_types = models.ManyToManyField(
-        'AnnotationType')
+        'AnnotationType',
+        db_column='annotation_types',
+        verbose_name=_('annotation types'),
+        help_text=_('Types of annotation valid for collections of type'),
+        blank=True)
     licence_types = models.ManyToManyField(
-        'LicenceType')
+        'LicenceType',
+        db_column='licence_types',
+        verbose_name=_('licence types'),
+        help_text=_('Types of licence valid for collections of type'),
+        blank=True)
     event_types = models.ManyToManyField(
-        'EventType')
+        'EventType',
+        db_column='event_types',
+        verbose_name=_('event types'),
+        help_text=_('Types of event valid for collections of type'),
+        blank=True)
     sampling_event_types = models.ManyToManyField(
-        'SamplingEventType')
+        'SamplingEventType',
+        db_column='sampling_event_types',
+        verbose_name=_('sampling event types'),
+        help_text=_('Types of sampling event valid for collections of type'),
+        blank=True)
     item_types = models.ManyToManyField(
         'ItemType',
         through='CollectionItemType',
@@ -93,7 +113,7 @@ class CollectionType(models.Model):
 
     def validate_metadata(self, metadata):
         try:
-            self.metadata_schema.validate_intance(metadata)
+            self.metadata_schema.validate_instance(metadata)
         except ValidationError as error:
             msg = _('Invalid collection metadata for collection of type %(type)s. Error: %(error)s')
             params = dict(type=str(self), error=str(error))

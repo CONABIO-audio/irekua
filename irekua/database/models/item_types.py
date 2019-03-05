@@ -55,7 +55,8 @@ class ItemType(models.Model):
         'EventType',
         db_column='event_types',
         verbose_name=_('event types'),
-        help_text=_('Types of event for this item type'))
+        help_text=_('Types of event for this item type'),
+        blank=True)
 
     class Meta:
         verbose_name = _('Item Type')
