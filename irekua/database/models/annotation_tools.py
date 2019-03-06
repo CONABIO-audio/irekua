@@ -40,7 +40,7 @@ class AnnotationTool(models.Model):
     configuration_schema = models.ForeignKey(
         'Schema',
         on_delete=models.PROTECT,
-        db_column='configuration_schema',
+        db_column='configuration_schema_id',
         verbose_name=_('configuration schema'),
         help_text=_('JSON schema for configuration of annotation tool'),
         limit_choices_to=(

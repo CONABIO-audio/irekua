@@ -47,7 +47,7 @@ class Item(models.Model):
     item_type = models.ForeignKey(
         'ItemType',
         on_delete=models.PROTECT,
-        db_column='item_type',
+        db_column='item_type_id',
         verbose_name=_('item type'),
         help_text=_('Type of resource'),
         blank=False)
@@ -63,18 +63,18 @@ class Item(models.Model):
         verbose_name=_('media info'),
         help_text=_('Information of resource file'),
         blank=False)
-    sampling = models.ForeignKey(
+    sampling_event = models.ForeignKey(
         'SamplingEvent',
-        db_column='sampling_id',
-        verbose_name=_('sampling id'),
+        db_column='sampling_event_id',
+        verbose_name=_('sampling event'),
         help_text=_('Sampling event associated with item'),
         on_delete=models.PROTECT,
         blank=True,
         null=True)
     source = models.ForeignKey(
         'Source',
-        db_column='event_id',
-        verbose_name=_('event id'),
+        db_column='source_id',
+        verbose_name=_('source'),
         help_text=_('Reference to source of item (parsing function and parent directory)'),
         on_delete=models.PROTECT,
         blank=True,
@@ -99,7 +99,7 @@ class Item(models.Model):
     collection = models.ForeignKey(
         'Collection',
         db_column='collection_id',
-        verbose_name=_('collection id'),
+        verbose_name=_('collection'),
         help_text=_('Collection to which item belongs'),
         on_delete=models.PROTECT,
         blank=True,
@@ -107,7 +107,7 @@ class Item(models.Model):
     owner = models.ForeignKey(
         User,
         db_column='owner_id',
-        verbose_name=_('owner id'),
+        verbose_name=_('owner'),
         help_text=_('Owner of item'),
         related_name='owner',
         on_delete=models.PROTECT,
@@ -115,7 +115,7 @@ class Item(models.Model):
         null=True)
     licence = models.ForeignKey(
         'Licence',
-        db_column='licence',
+        db_column='licence_id',
         verbose_name=_('licence'),
         help_text=_('Licence of item'),
         on_delete=models.PROTECT,
@@ -153,7 +153,7 @@ class Item(models.Model):
         if self.collection:
             try:
                 self.collection.validate_and_get_sampling_event_type(
-                    self.sampling.sampling_event_type)
+                    self.sampling_event.sampling_event_type)
             except ValidationError as error:
                 raise ValidationError({'sampling': error})
 

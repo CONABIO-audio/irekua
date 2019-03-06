@@ -21,7 +21,7 @@ class LicenceType(models.Model):
     metadata_schema = models.ForeignKey(
         'Schema',
         on_delete=models.PROTECT,
-        db_column='metadata_schema',
+        db_column='metadata_schema_id',
         verbose_name=_('metadata schema'),
         help_text=_('Schema for licence metadata structure'),
         limit_choices_to=(

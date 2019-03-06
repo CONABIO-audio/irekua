@@ -16,12 +16,6 @@ class Institution(models.Model):
         verbose_name=_('institution code'),
         help_text=_('Code of institution'),
         blank=True)
-    institution_id = models.CharField(
-        max_length=64,
-        db_column='institution_id',
-        verbose_name=_('institution id'),
-        help_text=_('ID of institution'),
-        blank=True)
     subdependency = models.CharField(
         max_length=256,
         db_column='subdependency',
@@ -37,7 +31,8 @@ class Institution(models.Model):
         max_length=8,
         db_column='postal_code',
         verbose_name=_('postal code'),
-        help_text=_('Postal code'))
+        help_text=_('Postal code'),
+        blank=True)
     address = models.TextField(
         blank=True,
         db_column='address',

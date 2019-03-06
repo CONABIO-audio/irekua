@@ -6,18 +6,18 @@ from .schemas import Schema
 
 
 class CollectionRoleType(models.Model):
-    collection = models.ForeignKey(
+    collection_type = models.ForeignKey(
         'CollectionType',
         on_delete=models.CASCADE,
-        db_column='collection_id',
-        verbose_name=_('collection id'),
+        db_column='collection_type_id',
+        verbose_name=_('collection type'),
         help_text=_('Collection type in which role applies'),
         blank=False,
         null=False)
     role_type = models.ForeignKey(
         'RoleType',
         on_delete=models.PROTECT,
-        db_column='role_type',
+        db_column='role_type_id',
         verbose_name=_('role type'),
         help_text=_('Role to be part of collection'),
         blank=False,
@@ -25,7 +25,7 @@ class CollectionRoleType(models.Model):
     metadata_schema = models.ForeignKey(
         'Schema',
         on_delete=models.PROTECT,
-        db_column='metadata_type',
+        db_column='metadata_type_id',
         verbose_name=_('metadata type'),
         help_text=_('JSON schema for collection user metadata of role type'),
         limit_choices_to=(
@@ -42,7 +42,7 @@ class CollectionRoleType(models.Model):
 
     def __str__(self):
         msg = _('Role %(role)s for collections of type %(collection)s')
-        params = dict(role=str(self.role), collection=str(self.collection))
+        params = dict(role=str(self.role), collection=str(self.collection_type))
         return msg % params
 
     def validate_metadata(self, metadata):
@@ -52,6 +52,6 @@ class CollectionRoleType(models.Model):
             msg = _('Invalid metadata for user of role type %(type)s in collection %(collection)s. Error: %(error)s')
             params = dict(
                 type=str(self.role_type),
-                collection=str(self.collection),
+                collection=str(self.collection_type),
                 error=str(error))
             raise ValidationError(msg, params=params)

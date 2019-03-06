@@ -12,7 +12,7 @@ class Licence(models.Model):
     licence_type = models.ForeignKey(
         'LicenceType',
         on_delete=models.PROTECT,
-        db_column='licence_type',
+        db_column='licence_type_id',
         verbose_name=_('licence type'),
         help_text=_('Type of licence used'),
         blank=False,

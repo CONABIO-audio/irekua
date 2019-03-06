@@ -10,7 +10,7 @@ class Device(models.Model):
         'DeviceType',
         on_delete=models.PROTECT,
         related_name='device_type',
-        db_column='device_type',
+        db_column='device_type_id',
         verbose_name=_('device type'),
         help_text=_('Type of device'),
         blank=False)
@@ -18,7 +18,7 @@ class Device(models.Model):
         'DeviceBrand',
         on_delete=models.PROTECT,
         related_name='device_brand',
-        db_column='brand',
+        db_column='device_brand_id',
         verbose_name=_('brand'),
         help_text=_('Brand of device'),
         blank=False)
@@ -28,12 +28,12 @@ class Device(models.Model):
         verbose_name=_('model'),
         help_text=_('Model of device'),
         blank=False)
-    metadata_type = models.ForeignKey(
+    metadata_schema = models.ForeignKey(
         'Schema',
         on_delete=models.PROTECT,
-        related_name='device_metadata_type',
-        db_column='metadata_type',
-        verbose_name=_('metadata type'),
+        related_name='device_metadata_schema',
+        db_column='metadata_schema_id',
+        verbose_name=_('metadata schema'),
         help_text=_('JSON schema for device metadata'),
         limit_choices_to=(
             models.Q(field__exact=Schema.DEVICE_METADATA) |
@@ -80,7 +80,7 @@ class Device(models.Model):
 
     def validate_metadata(self, metadata):
         try:
-            self.metadata_type.validate_instance(metadata)
+            self.metadata_schema.validate_instance(metadata)
         except ValidationError as error:
             msg = _('Invalid device metadata. Error: %(error)s')
             params = dict(error=str(error))

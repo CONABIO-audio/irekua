@@ -19,14 +19,14 @@ class Annotation(models.Model):
     annotation_tool = models.ForeignKey(
         'AnnotationTool',
         on_delete=models.PROTECT,
-        db_column='annotation_tool',
+        db_column='annotation_tool_id',
         verbose_name=_('annotation tool'),
         help_text=_('Annotation tool used'),
         blank=False)
     item = models.ForeignKey(
         'Item',
         db_column='item_id',
-        verbose_name=_('item id'),
+        verbose_name=_('item'),
         help_text=_('Annotated item'),
         limit_choices_to={'is_uploaded': True},
         on_delete=models.PROTECT,
@@ -34,7 +34,7 @@ class Annotation(models.Model):
     event_type = models.ForeignKey(
         'EventType',
         on_delete=models.PROTECT,
-        db_column='event_type',
+        db_column='event_type_id',
         verbose_name=_('event type'),
         help_text=_('Type of event being annotated'),
         blank=False)
@@ -48,7 +48,7 @@ class Annotation(models.Model):
     annotation_type = models.ForeignKey(
         'AnnotationType',
         on_delete=models.PROTECT,
-        db_column='annotation_type',
+        db_column='annotation_type_id',
         verbose_name=_('annotation type'),
         help_text=_('Type of annotation'),
         blank=False)

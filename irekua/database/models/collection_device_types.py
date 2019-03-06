@@ -6,18 +6,18 @@ from .schemas import Schema
 
 
 class CollectionDeviceType(models.Model):
-    collection = models.ForeignKey(
+    collection_type = models.ForeignKey(
         'CollectionType',
         on_delete=models.CASCADE,
-        db_column='collection_id',
-        verbose_name=_('collection id'),
-        help_text=_('Collection in which role applies'),
+        db_column='collection_type_id',
+        verbose_name=_('collection type'),
+        help_text=_('Collection type in which role applies'),
         blank=False,
         null=False)
     device_type = models.ForeignKey(
         'DeviceType',
         on_delete=models.PROTECT,
-        db_column='device_type',
+        db_column='device_type_id',
         verbose_name=_('device type'),
         help_text=_('Device to be part of collection'),
         blank=False,
@@ -25,7 +25,7 @@ class CollectionDeviceType(models.Model):
     metadata_schema = models.ForeignKey(
         'Schema',
         on_delete=models.PROTECT,
-        db_column='metadata_type',
+        db_column='metadata_type_id',
         verbose_name=_('metadata type'),
         help_text=_('JSON schema for collection device metadata'),
         limit_choices_to=(

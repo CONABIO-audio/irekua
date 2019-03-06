@@ -13,21 +13,21 @@ class CollectionUser(models.Model):
     collection = models.ForeignKey(
         'Collection',
         db_column='collection_id',
-        verbose_name=_('collection id'),
+        verbose_name=_('collection'),
         help_text=_('Collection to which user belongs'),
         on_delete=models.CASCADE,
         blank=False)
     user = models.ForeignKey(
         User,
         db_column='user_id',
-        verbose_name=_('user id'),
+        verbose_name=_('user'),
         help_text=_('User of collection'),
         on_delete=models.CASCADE,
         blank=False)
     role = models.ForeignKey(
         'CollectionRoleType',
         on_delete=models.PROTECT,
-        db_column='role',
+        db_column='role_type_id',
         verbose_name=_('role'),
         help_text=_('Role of user in collection'),
         blank=False)
@@ -58,6 +58,10 @@ class CollectionUser(models.Model):
         return msg % params
 
     def clean(self):
+        if self.collection.collection_type != self.role.collection_type:
+            msg = _("Role is not valid for this collection's type")
+            raise ValidationError({'role': msg})
+
         try:
             self.role.validate_metadata(self.metadata)
         except ValidationError as error:

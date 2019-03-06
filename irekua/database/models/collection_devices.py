@@ -13,7 +13,7 @@ class CollectionDevice(models.Model):
         'PhysicalDevice',
         on_delete=models.PROTECT,
         db_column='device_id',
-        verbose_name=_('device id'),
+        verbose_name=_('device'),
         help_text=_('Reference to physical device'),
         blank=False,
         null=False)
@@ -21,7 +21,7 @@ class CollectionDevice(models.Model):
         'Collection',
         on_delete=models.CASCADE,
         db_column='collection_id',
-        verbose_name=_('collection id'),
+        verbose_name=_('collection'),
         help_text=_('Collection to which the device belongs'),
         blank=False,
         null=False)

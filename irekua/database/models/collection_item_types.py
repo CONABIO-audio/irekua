@@ -9,15 +9,15 @@ class CollectionItemType(models.Model):
     collection = models.ForeignKey(
         'CollectionType',
         on_delete=models.CASCADE,
-        db_column='collection_id',
-        verbose_name=_('collection id'),
-        help_text=_('Collection in which role applies'),
+        db_column='collection_type_id',
+        verbose_name=_('collection type'),
+        help_text=_('Collection type in which role applies'),
         blank=False,
         null=False)
     item_type = models.ForeignKey(
         'ItemType',
         on_delete=models.PROTECT,
-        db_column='item_type',
+        db_column='item_type_id',
         verbose_name=_('item type'),
         help_text=_('Item to be part of collection'),
         blank=False,

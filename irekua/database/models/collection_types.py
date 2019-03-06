@@ -22,7 +22,7 @@ class CollectionType(models.Model):
         'Schema',
         on_delete=models.PROTECT,
         db_column='metadata_schema_id',
-        verbose_name=_('metadata schema id'),
+        verbose_name=_('metadata schema'),
         help_text=_('JSON Schema to be used with collection metadata for collections of this type'),
         limit_choices_to=(
             models.Q(field__exact=Schema.COLLECTION_METADATA) |
@@ -65,44 +65,56 @@ class CollectionType(models.Model):
         'SiteType',
         db_column='site_types',
         verbose_name=_('site types'),
-        help_text=_('Types of site valid for collections of type'),
+        help_text=_('Types of sites valid for collections of type'),
         blank=True)
     annotation_types = models.ManyToManyField(
         'AnnotationType',
         db_column='annotation_types',
         verbose_name=_('annotation types'),
-        help_text=_('Types of annotation valid for collections of type'),
+        help_text=_('Types of annotations valid for collections of type'),
         blank=True)
     licence_types = models.ManyToManyField(
         'LicenceType',
         db_column='licence_types',
         verbose_name=_('licence types'),
-        help_text=_('Types of licence valid for collections of type'),
+        help_text=_('Types of licences valid for collections of type'),
         blank=True)
     event_types = models.ManyToManyField(
         'EventType',
         db_column='event_types',
         verbose_name=_('event types'),
-        help_text=_('Types of event valid for collections of type'),
+        help_text=_('Types of events valid for collections of type'),
         blank=True)
     sampling_event_types = models.ManyToManyField(
         'SamplingEventType',
         db_column='sampling_event_types',
         verbose_name=_('sampling event types'),
-        help_text=_('Types of sampling event valid for collections of type'),
+        help_text=_('Types of sampling events valid for collections of type'),
         blank=True)
     item_types = models.ManyToManyField(
         'ItemType',
         through='CollectionItemType',
-        through_fields=('collection', 'item_type'))
+        through_fields=('collection', 'item_type'),
+        db_column='item_types',
+        verbose_name=_('item types'),
+        help_text=_('Types of items valid for collections of type'),
+        blank=True)
     device_types = models.ManyToManyField(
         'DeviceType',
         through='CollectionDeviceType',
-        through_fields=('collection', 'device_type'))
+        through_fields=('collection', 'device_type'),
+        db_column='device_types',
+        verbose_name=_('device types'),
+        help_text=_('Types of devices valid for collections of type'),
+        blank=True)
     role_types = models.ManyToManyField(
         'RoleType',
         through='CollectionRoleType',
-        through_fields=('collection', 'role_type'))
+        through_fields=('collection', 'role_type'),
+        db_column='role_types',
+        verbose_name=_('role types'),
+        help_text=_('Types of roles valid for collections of type'),
+        blank=True)
 
     class Meta:
         verbose_name = _('Collection Type')

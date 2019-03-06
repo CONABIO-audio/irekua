@@ -11,7 +11,7 @@ class Entailment(models.Model):
         'Term',
         related_name='entailment_source',
         db_column='source_id',
-        verbose_name=_('source id'),
+        verbose_name=_('source'),
         help_text=_('Source of entailment'),
         on_delete=models.CASCADE,
         blank=False)
@@ -19,15 +19,15 @@ class Entailment(models.Model):
         'Term',
         related_name='entailment_target',
         db_column='target_id',
-        verbose_name=_('target id'),
+        verbose_name=_('target'),
         help_text=_('Target of entailment'),
         on_delete=models.CASCADE,
         blank=False)
-    metadata_type = models.ForeignKey(
+    metadata_schema = models.ForeignKey(
         'Schema',
         on_delete=models.PROTECT,
-        db_column='metadata_type',
-        verbose_name=_('metadata type'),
+        db_column='metadata_schema_id',
+        verbose_name=_('metadata schema'),
         help_text=_('JSON schema for entailment metadata'),
         limit_choices_to=(
             models.Q(field__exact=Schema.ENTAILMENT_METADATA) |
@@ -56,7 +56,7 @@ class Entailment(models.Model):
 
     def clean(self):
         try:
-            self.metadata_type.validate_instance(self.metadata)
+            self.metadata_schema.validate_instance(self.metadata)
         except ValidationError as error:
             msg = _('Invalid entailment metadata. Error %(error)s')
             params = dict(error=str(error))

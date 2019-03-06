@@ -21,7 +21,7 @@ class MetaCollection(models.Model):
         User,
         on_delete=models.CASCADE,
         db_column='creator_id',
-        verbose_name=_('creator id'),
+        verbose_name=_('creator'),
         help_text=_('Reference to creator of Meta Collection'),
         null=True,
         blank=True)

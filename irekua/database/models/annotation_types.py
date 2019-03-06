@@ -23,7 +23,7 @@ class AnnotationType(models.Model):
         blank=False,
         null=False,
         db_column='schema_id',
-        verbose_name=_('schema id'),
+        verbose_name=_('schema'),
         limit_choices_to=(
             models.Q(field__exact=Schema.ANNOTATION) |
             models.Q(field__exact=Schema.GLOBAL)),

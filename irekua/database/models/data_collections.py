@@ -14,7 +14,7 @@ class Collection(models.Model):
     collection_type = models.ForeignKey(
         'CollectionType',
         on_delete=models.PROTECT,
-        db_column='collection_type',
+        db_column='collection_type_id',
         verbose_name=_('collection type'),
         help_text=_('Type of collection'),
         default=GENERIC_COLLECTION,
@@ -43,7 +43,7 @@ class Collection(models.Model):
         'Institution',
         on_delete=models.PROTECT,
         db_column='institution_id',
-        verbose_name=_('institution id'),
+        verbose_name=_('institution'),
         help_text=_('Institution to which the collection belogs'),
         blank=True,
         null=True)
@@ -64,16 +64,19 @@ class Collection(models.Model):
     devices = models.ManyToManyField(
         'PhysicalDevice',
         through='CollectionDevice',
-        through_fields=('collection', 'device'))
+        through_fields=('collection', 'device'),
+        blank=True)
     sites = models.ManyToManyField(
         'Site',
         through='CollectionSite',
-        through_fields=('collection', 'site'))
+        through_fields=('collection', 'site'),
+        blank=True)
     users = models.ManyToManyField(
         User,
         related_name='collection_users',
         through='CollectionUser',
-        through_fields=('collection', 'user'))
+        through_fields=('collection', 'user'),
+        blank=True)
 
     class Meta:
         verbose_name = _('Collection')

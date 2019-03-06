@@ -19,7 +19,7 @@ def not_reserved_names(value):
 
 def validate_json_schema(schema):
     try:
-        jsonschema.validate({}, schema)
+        jsonschema.validate(schema=schema, instance={})
     except jsonschema.exceptions.SchemaError as error:
         msg = _('JSON Schema is not valid. Error: %(error)s')
         params = dict(error=str(error))
@@ -30,7 +30,7 @@ def validate_json_schema(schema):
 
 def validate_json_instance(schema, instance):
     try:
-        jsonschema.validate(schema, instance)
+        jsonschema.validate(schema=schema, instance=instance)
     except jsonschema.exceptions.ValidationError as error:
         msg = _('Instance does not comply with JSON schema. Error: %(error)s')
         params = dict(error=str(error))
@@ -89,7 +89,7 @@ class Schema(models.Model):
         null=False,
         choices=JSON_FIELDS)
     name = models.CharField(
-        max_length=30,
+        max_length=64,
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name of JSON schema'),

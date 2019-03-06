@@ -12,7 +12,7 @@ class CollectionSite(models.Model):
         'Site',
         on_delete=models.PROTECT,
         db_column='site_id',
-        verbose_name=_('site id'),
+        verbose_name=_('site'),
         help_text=_('Reference to Site'),
         blank=False,
         null=False)
@@ -20,7 +20,7 @@ class CollectionSite(models.Model):
         'Collection',
         on_delete=models.CASCADE,
         db_column='collection_id',
-        verbose_name=_('collection id'),
+        verbose_name=_('collection'),
         help_text=_('Collection to which the site belongs'),
         blank=False,
         null=False)

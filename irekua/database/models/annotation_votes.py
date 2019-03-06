@@ -14,7 +14,7 @@ class AnnotationVote(models.Model):
         'Annotation',
         on_delete=models.CASCADE,
         db_column='annotation_id',
-        verbose_name=_('annotation id'),
+        verbose_name=_('annotation'),
         help_text=_('Reference to annotation being voted'),
         blank=False,
         null=False)

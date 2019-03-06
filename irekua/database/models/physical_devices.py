@@ -22,7 +22,7 @@ class PhysicalDevice(models.Model):
         'Device',
         on_delete=models.PROTECT,
         db_column='device_id',
-        verbose_name=_('device id'),
+        verbose_name=_('device'),
         help_text=_('Reference to type of device'),
         blank=False,
         null=False)

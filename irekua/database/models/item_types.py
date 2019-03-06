@@ -31,7 +31,7 @@ class ItemType(models.Model):
         'Schema',
         on_delete=models.CASCADE,
         db_column='media_info_schema_id',
-        verbose_name=_('media info schema id'),
+        verbose_name=_('media info schema'),
         limit_choices_to={'field': Schema.ITEM_MEDIA_INFO},
         help_text=_('Reference to JSON Schema to be used with media info of this item type'),
         blank=False,
