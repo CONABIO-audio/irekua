@@ -102,8 +102,8 @@ class Item(models.Model):
         verbose_name=_('collection'),
         help_text=_('Collection to which item belongs'),
         on_delete=models.PROTECT,
-        blank=True,
-        null=True)
+        blank=False,
+        null=False)
     owner = models.ForeignKey(
         User,
         db_column='owner_id',

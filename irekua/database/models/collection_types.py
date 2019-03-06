@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
@@ -31,6 +32,20 @@ class CollectionType(models.Model):
         default=Schema.FREE_SCHEMA,
         blank=False,
         null=False)
+
+    anyone_can_create = models.BooleanField(
+        db_column='anyone_can_create',
+        verbose_name=_('anyone can create'),
+        help_text=_('Boolean flag indicating wheter any user can create collections of this type'),
+        blank=True,
+        default=False,
+        null=False
+    )
+    administrators = models.ManyToManyField(
+        User,
+        verbose_name=_('administrators'),
+        help_text=_('Administrators of this collection type. Administrators can create collections of this type'),
+        blank=True)
 
     restrict_site_types = models.BooleanField(
         db_column='restrict_site_types',
@@ -94,7 +109,7 @@ class CollectionType(models.Model):
     item_types = models.ManyToManyField(
         'ItemType',
         through='CollectionItemType',
-        through_fields=('collection', 'item_type'),
+        through_fields=('collection_type', 'item_type'),
         db_column='item_types',
         verbose_name=_('item types'),
         help_text=_('Types of items valid for collections of type'),
@@ -102,7 +117,7 @@ class CollectionType(models.Model):
     device_types = models.ManyToManyField(
         'DeviceType',
         through='CollectionDeviceType',
-        through_fields=('collection', 'device_type'),
+        through_fields=('collection_type', 'device_type'),
         db_column='device_types',
         verbose_name=_('device types'),
         help_text=_('Types of devices valid for collections of type'),
@@ -110,7 +125,7 @@ class CollectionType(models.Model):
     role_types = models.ManyToManyField(
         'RoleType',
         through='CollectionRoleType',
-        through_fields=('collection', 'role_type'),
+        through_fields=('collection_type', 'role_type'),
         db_column='role_types',
         verbose_name=_('role types'),
         help_text=_('Types of roles valid for collections of type'),

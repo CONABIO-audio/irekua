@@ -22,8 +22,7 @@ def create_simple_collection():
         name='Sample Collection',
         description='Sample collection',
         metadata=metadata,
-        institution=institution,
-        is_open=True)
+        institution=institution)
 
     return collection
 

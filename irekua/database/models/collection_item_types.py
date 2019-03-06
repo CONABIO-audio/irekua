@@ -6,7 +6,7 @@ from .schemas import Schema
 
 
 class CollectionItemType(models.Model):
-    collection = models.ForeignKey(
+    collection_type = models.ForeignKey(
         'CollectionType',
         on_delete=models.CASCADE,
         db_column='collection_type_id',
@@ -42,7 +42,7 @@ class CollectionItemType(models.Model):
 
     def __str__(self):
         msg = _('Item type %(item)s for collection %(collection)s')
-        params = dict(role=str(self.item_type), collection=str(self.collection))
+        params = dict(role=str(self.item_type), collection=str(self.collection_type))
         return msg % params
 
     def validate_metadata(self, metadata):
@@ -52,6 +52,6 @@ class CollectionItemType(models.Model):
             msg = _('Invalid metadata for item type %(type)s in collection %(collection). Error: %(error)')
             params = dict(
                 type=str(self.item_type),
-                collection=str(self.collection),
+                collection_type=str(self.collection_type),
                 error=str(error))
             raise ValidationError(msg, params=params)

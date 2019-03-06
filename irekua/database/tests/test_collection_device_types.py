@@ -40,7 +40,7 @@ def create_simple_collection_device_type():
         schema=SAMPLE_COLLECTION_DEVICE_TYPE_METADATA_SCHEMA)
 
     collection_device_type , _ = CollectionDeviceType.objects.get_or_create(
-        collection=collection_type,
+        collection_type=collection_type,
         device_type=device_type,
         metadata_schema=schema)
 

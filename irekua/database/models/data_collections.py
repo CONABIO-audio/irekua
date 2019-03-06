@@ -47,12 +47,6 @@ class Collection(models.Model):
         help_text=_('Institution to which the collection belogs'),
         blank=True,
         null=True)
-    is_open = models.BooleanField(
-        db_column='is_open',
-        verbose_name=_('is open'),
-        help_text=_('Any user can enter this collection'),
-        blank=False,
-        null=False)
     logo = models.ImageField(
         db_column='logo',
         verbose_name=_('logo'),
