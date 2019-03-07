@@ -35,9 +35,9 @@ class TermType(models.Model):
         'Schema',
         related_name='term_metadata_type',
         on_delete=models.PROTECT,
-        db_column='metadata_type',
-        verbose_name=_('metadata type'),
-        help_text=_('Metadata for terms of type'),
+        db_column='metadata_schema_id',
+        verbose_name=_('metadata schema'),
+        help_text=_('JSON schema for metadata of terms of type'),
         limit_choices_to=(
             models.Q(field__exact=Schema.TERM_METADATA) |
             models.Q(field__exact=Schema.GLOBAL)),
@@ -47,11 +47,11 @@ class TermType(models.Model):
         null=False)
     synonym_metadata_schema = models.ForeignKey(
         'Schema',
-        related_name='term_synonym_metadata_type',
+        related_name='term_synonym_metadata_schema',
         on_delete=models.PROTECT,
-        db_column='synonym_metadata_type',
-        verbose_name=_('synonym metadata type'),
-        help_text=_('Metadata for synonym of terms of type'),
+        db_column='synonym_metadata_schema_id',
+        verbose_name=_('synonym metadata schema'),
+        help_text=_('JSON schema for metadata of synonyms of terms of type'),
         limit_choices_to=(
             models.Q(field__exact=Schema.SYNONYM_METADATA) |
             models.Q(field__exact=Schema.GLOBAL)),
@@ -67,6 +67,10 @@ class TermType(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def validate_non_categorical_value(self, value):
         if not isinstance(value, (int, float)):
             msg = _('Value %(value)s is invalid for non-categorical term of type %(type)')

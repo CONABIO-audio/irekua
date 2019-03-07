@@ -35,15 +35,19 @@ SAMPLE_ANNOTATION_SCHEMA = {
 
 def create_simple_annotation_type():
     schema, _ = Schema.objects.get_or_create(
-        field='annotation',
         name='Sample Annotation Schema',
-        description="Sample annotation schema",
-        schema=SAMPLE_ANNOTATION_SCHEMA)
+        defaults=dict(
+            field='annotation',
+            description="Sample annotation schema",
+            schema=SAMPLE_ANNOTATION_SCHEMA)
+    )
 
     annotation_type, _ = AnnotationType.objects.get_or_create(
         name='Sample Annotation Type',
-        description='sample annotation type',
-        schema=schema)
+        defaults=dict(
+            description='sample annotation type',
+            schema=schema)
+    )
 
     return annotation_type
 
@@ -68,7 +72,7 @@ class AnnotationTypeTestCase(TestCase):
         try:
             self.annotation_type.validate_annotation(valid_annotation)
         except ValidationError:
-            self.fail('Valid annotation was deemed invalid')
+            self.fail()
 
         invalid_annotation = {
             "y": 50,

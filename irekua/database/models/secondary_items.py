@@ -80,6 +80,10 @@ class SecondaryItem(models.Model):
             itemid=str(self.item))
         return msg % params
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def clean(self):
         try:
             self.item_type.validate_media_info(self.media_info)

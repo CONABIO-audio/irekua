@@ -44,6 +44,10 @@ class Synonym(models.Model):
             target=str(self.target))
         return msg % params
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def clean(self):
         if self.source.term_type != self.target.term_type:
             msg = _('Source and target terms are not of the same type')

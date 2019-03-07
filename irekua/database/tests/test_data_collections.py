@@ -18,11 +18,13 @@ def create_simple_collection():
     }
 
     collection, _ = Collection.objects.get_or_create(
-        collection_type=collection_type,
         name='Sample Collection',
-        description='Sample collection',
-        metadata=metadata,
-        institution=institution)
+        defaults=dict(
+            collection_type=collection_type,
+            description='Sample collection',
+            metadata=metadata,
+            institution=institution)
+    )
 
     return collection
 

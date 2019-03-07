@@ -5,7 +5,7 @@ from .annotations import Annotation
 from .collection_device_types import CollectionDeviceType
 from .collection_devices import CollectionDevice
 from .collection_item_types import CollectionItemType
-from .collection_roles import CollectionRoleType
+from .collection_roles import CollectionRole
 from .collection_sites import CollectionSite
 from .collection_types import CollectionType
 from .collection_users import CollectionUser
@@ -22,8 +22,8 @@ from .licence_types import LicenceType
 from .licences import Licence
 from .metacollections import MetaCollection
 from .physical_devices import PhysicalDevice
-from .role_types import RoleType
-from .sampling_event import SamplingEvent
+from .roles import Role
+from .sampling_events import SamplingEvent
 from .sampling_event_types import SamplingEventType
 from .schemas import Schema
 from .secondary_items import SecondaryItem
@@ -48,7 +48,7 @@ __all__ = [
     'CollectionDevice',
     'CollectionDeviceType',
     'CollectionItemType',
-    'CollectionRoleType',
+    'CollectionRole',
     'CollectionSite',
     'CollectionType',
     'CollectionUser',
@@ -64,7 +64,7 @@ __all__ = [
     'LicenceType',
     'MetaCollection',
     'PhysicalDevice',
-    'RoleType',
+    'Role',
     'SamplingEvent',
     'SamplingEventType',
     'Schema',

@@ -38,6 +38,10 @@ class EventType(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def validate_and_get_term_type(self, term_type):
         try:
             return self.label_term_types.get(name=term_type.name)

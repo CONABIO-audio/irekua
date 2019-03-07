@@ -10,5 +10,5 @@ from rest.serializers import CollectionRoleSerializer
 
 # Create your views here.
 class CollectionRoleViewSet(viewsets.ModelViewSet):
-    queryset = db.CollectionRoleType.objects.all()
+    queryset = db.CollectionRole.objects.all()
     serializer_class = CollectionRoleSerializer

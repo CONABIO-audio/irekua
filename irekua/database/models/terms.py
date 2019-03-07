@@ -44,6 +44,10 @@ class Term(models.Model):
             value=self.value)
         return msg
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def clean(self, *args, **kwargs):
         try:
             self.term_type.validate_metadata(self.metadata)

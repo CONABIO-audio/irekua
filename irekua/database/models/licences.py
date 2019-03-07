@@ -54,6 +54,10 @@ class Licence(models.Model):
             date=self.created_on)
         return msg
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def clean(self):
         try:
             self.licence_type.validate_metadata(self.metadata)

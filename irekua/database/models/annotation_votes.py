@@ -56,6 +56,10 @@ class AnnotationVote(models.Model):
         params = dict(id=self.id, annotation=self.annotation.id)
         return msg % params
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
     def clean(self):
         try:
             self.annotation.validate_label(self.label)

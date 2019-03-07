@@ -18,7 +18,7 @@ from .licence_types import LicenceTypeViewSet
 from .licences import LicenceViewSet
 from .metacollections import MetaCollectionViewSet
 from .physical_devices import PhysicalDeviceViewSet
-from .role_types import RoleTypeViewSet
+from .roles import RoleViewSet
 from .sampling_events import SamplingEventViewSet
 from .schemas import SchemaViewSet
 from .secondary_items import SecondaryItemViewSet
@@ -53,7 +53,7 @@ __all__ = [
         'LicenceViewSet',
         'MetaCollectionViewSet',
         'PhysicalDeviceViewSet',
-        'RoleTypeViewSet',
+        'RoleViewSet',
         'SamplingEventViewSet',
         'SchemaViewSet',
         'SecondaryItemViewSet',

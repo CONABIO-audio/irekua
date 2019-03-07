@@ -7,9 +7,9 @@ import database.models as db
 
 class CollectionRoleSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = db.CollectionRoleType
+        model = db.CollectionRole
         fields = (
             'url',
             'collection',
-            'role_type'
+            'role'
         )

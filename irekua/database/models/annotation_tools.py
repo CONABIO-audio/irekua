@@ -61,6 +61,10 @@ class AnnotationTool(models.Model):
             msg += ' - ' + self.version
         return msg
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
     def validate_configuration(self, configuration):
         try:
             self.configuration_schema.validate_instance(configuration)

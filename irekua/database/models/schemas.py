@@ -118,6 +118,10 @@ class Schema(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def clean(self):
         try:
             validate_json_schema(self.schema)

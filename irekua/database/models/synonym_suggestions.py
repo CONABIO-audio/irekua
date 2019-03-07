@@ -58,6 +58,10 @@ class SynonymSuggestion(models.Model):
             suggestion=self.synonym)
         return msg
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def clean(self):
         try:
             self.source.term_type.validate_synonym_metadata(self.metadata)

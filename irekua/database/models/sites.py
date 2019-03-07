@@ -69,8 +69,8 @@ class Site(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         db_column='creator_id',
-        verbose_name=_('creator id'),
-        help_text=_('Refrence to creator of site'))
+        verbose_name=_('creator'),
+        help_text=_('Creator of site'))
 
     class Meta:
         verbose_name = _('Site')
@@ -89,7 +89,7 @@ class Site(models.Model):
             self.longitude = self.geo_ref.x
             return
 
-        if self.latitude and self.longitude:
+        if self.latitude is not None and self.longitude is not None:
             self.geo_ref = Point([self.longitude, self.latitude])
             return
 
@@ -101,6 +101,10 @@ class Site(models.Model):
             return self.name
         return _('Site {id}').format(id=self.id)
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def clean(self):
         self.sync_coordinates_and_georef()
 
@@ -110,3 +114,7 @@ class Site(models.Model):
             raise ValidationError({'metadata': error})
 
         super(Site, self).clean()
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super(Site, self).save(*args, **kwargs)

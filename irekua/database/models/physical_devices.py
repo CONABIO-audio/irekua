@@ -58,6 +58,10 @@ class PhysicalDevice(models.Model):
             device=str(self.device))
         return msg % params
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def clean(self):
         try:
             self.device.validate_metadata(self.metadata)

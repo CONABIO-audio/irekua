@@ -10,10 +10,13 @@ from database.utils import (
 
 
 class Annotation(models.Model):
+    LOW_QUALITY = 'L'
+    MEDIUM_QUALITY = 'M'
+    HIGH_QUALITY = 'H'
     QUALITY_OPTIONS = [
-        ('L', _('low')),
-        ('M', _('medium')),
-        ('H', _('high')),
+        (LOW_QUALITY, _('low')),
+        (MEDIUM_QUALITY, _('medium')),
+        (HIGH_QUALITY, _('high')),
     ]
 
     annotation_tool = models.ForeignKey(
@@ -124,6 +127,10 @@ class Annotation(models.Model):
         msg = _('Annotation %(annotation_id)s of item %(item_id)s')
         params = dict(annotation_id=self.id, item_id=self.item.id)
         return msg % params
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
 
     def clean(self):
         try:

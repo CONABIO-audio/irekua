@@ -45,6 +45,10 @@ class CollectionItemType(models.Model):
         params = dict(role=str(self.item_type), collection=str(self.collection_type))
         return msg % params
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def validate_metadata(self, metadata):
         try:
             self.metadata_schema.validate_instance(metadata)

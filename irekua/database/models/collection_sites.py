@@ -41,6 +41,7 @@ class CollectionSite(models.Model):
     class Meta:
         verbose_name = _('Collection Site')
         verbose_name_plural = _('Collection Sites')
+        unique_together = (('collection', 'internal_id'))
 
     def __str__(self):
         msg = _('Site %(site)s of collection %(collection)')
@@ -49,6 +50,10 @@ class CollectionSite(models.Model):
             collection=str(self.collection))
         return msg % params
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def clean(self):
         try:
             site_type = self.collection.validate_and_get_site_type(self.site.site_type)

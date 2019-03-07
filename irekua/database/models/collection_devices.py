@@ -48,6 +48,10 @@ class CollectionDevice(models.Model):
         params = dict(device_id=str(self.device), collection_id=str(self.collection))
         return msg % params
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def clean(self):
         try:
             device_type = self.collection.validate_and_get_device_type(

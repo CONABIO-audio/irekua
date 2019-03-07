@@ -5,9 +5,9 @@ from rest_framework import serializers
 import database.models as db
 
 
-class RoleTypeSerializer(serializers.HyperlinkedModelSerializer):
+class RoleSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = db.RoleType
+        model = db.Role
         fields = (
             'url',
             'description',

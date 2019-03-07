@@ -7,7 +7,8 @@ from database.models import DeviceType
 def create_simple_device_type():
     device_type, _ = DeviceType.objects.get_or_create(
         name='Sample Device Type',
-        description='Sample device type')
+        defaults=dict(description='Sample device type')
+    )
 
     return device_type
 

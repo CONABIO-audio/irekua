@@ -122,13 +122,13 @@ class CollectionType(models.Model):
         verbose_name=_('device types'),
         help_text=_('Types of devices valid for collections of type'),
         blank=True)
-    role_types = models.ManyToManyField(
-        'RoleType',
-        through='CollectionRoleType',
-        through_fields=('collection_type', 'role_type'),
-        db_column='role_types',
-        verbose_name=_('role types'),
-        help_text=_('Types of roles valid for collections of type'),
+    roles = models.ManyToManyField(
+        'Role',
+        through='CollectionRole',
+        through_fields=('collection_type', 'role'),
+        db_column='roles',
+        verbose_name=_('roles'),
+        help_text=_('Roles valid for collections of type'),
         blank=True)
 
     class Meta:
@@ -138,6 +138,10 @@ class CollectionType(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def validate_metadata(self, metadata):
         try:
             self.metadata_schema.validate_instance(metadata)
@@ -234,5 +238,15 @@ class CollectionType(models.Model):
             msg = _('Sampling Event type %(sampling_event_type)s is not accepted in collection of type %(col_type)s or does not exist')
             params = dict(
                 sampling_event_type=sampling_event_type,
+                col_type=str(self))
+            raise ValidationError(msg, params=params)
+
+    def validate_and_get_role(self, role):
+        try:
+            return self.roles.get(name=role)
+        except self.roles.model.DoesNotExist:
+            msg = _('Role type %(role)s is not accepted in collection of type %(col_type)s or does not exist')
+            params = dict(
+                role=role,
                 col_type=str(self))
             raise ValidationError(msg, params=params)

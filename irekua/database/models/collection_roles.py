@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from .schemas import Schema
 
 
-class CollectionRoleType(models.Model):
+class CollectionRole(models.Model):
     collection_type = models.ForeignKey(
         'CollectionType',
         on_delete=models.CASCADE,
@@ -14,11 +14,11 @@ class CollectionRoleType(models.Model):
         help_text=_('Collection type in which role applies'),
         blank=False,
         null=False)
-    role_type = models.ForeignKey(
-        'RoleType',
+    role = models.ForeignKey(
+        'Role',
         on_delete=models.PROTECT,
-        db_column='role_type_id',
-        verbose_name=_('role type'),
+        db_column='role_id',
+        verbose_name=_('role'),
         help_text=_('Role to be part of collection'),
         blank=False,
         null=False)
@@ -45,13 +45,17 @@ class CollectionRoleType(models.Model):
         params = dict(role=str(self.role), collection=str(self.collection_type))
         return msg % params
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def validate_metadata(self, metadata):
         try:
             self.metadata_schema.validate_instance(metadata)
         except ValidationError as error:
             msg = _('Invalid metadata for user of role type %(type)s in collection %(collection)s. Error: %(error)s')
             params = dict(
-                type=str(self.role_type),
+                type=str(self.role),
                 collection=str(self.collection_type),
                 error=str(error))
             raise ValidationError(msg, params=params)

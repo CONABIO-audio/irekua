@@ -18,7 +18,7 @@ from .licence_types import LicenceTypeSerializer
 from .licences import LicenceSerializer
 from .metacollections import MetaCollectionSerializer
 from .physical_devices import PhysicalDeviceSerializer
-from .role_types import RoleTypeSerializer
+from .roles import RoleSerializer
 from .sampling_events import SamplingEventSerializer
 from .schemas import SchemaSerializer
 from .secondary_items import SecondaryItemSerializer
@@ -53,7 +53,7 @@ __all__ = [
     'LicenceTypeSerializer',
     'MetaCollectionSerializer',
     'PhysicalDeviceSerializer',
-    'RoleTypeSerializer',
+    'RoleSerializer',
     'SamplingEventSerializer',
     'SchemaSerializer',
     'SecondaryItemSerializer',

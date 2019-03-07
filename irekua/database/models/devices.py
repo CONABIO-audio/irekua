@@ -42,12 +42,12 @@ class Device(models.Model):
         default=Schema.FREE_SCHEMA,
         blank=False,
         null=False)
-    configuration_type = models.ForeignKey(
+    configuration_schema = models.ForeignKey(
         'Schema',
-        related_name='device_configuration_type',
+        related_name='device_configuration_schema',
         on_delete=models.PROTECT,
-        db_column='configuration_type',
-        verbose_name=_('configuration type'),
+        db_column='configuration_schema_id',
+        verbose_name=_('configuration schema'),
         help_text=_('JSON schema for device configuration'),
         limit_choices_to=(
             models.Q(field__exact=Schema.DEVICE_CONFIGURATION) |
@@ -70,9 +70,13 @@ class Device(models.Model):
             model=self.model)
         return msg % params
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def validate_configuration(self, configuration):
         try:
-            self.configuration_type.validate_instance(configuration)
+            self.configuration_schema.validate_instance(configuration)
         except ValidationError as error:
             msg = _('Invalid device configuration. Error: %(error)s')
             params = dict(error=str(error))

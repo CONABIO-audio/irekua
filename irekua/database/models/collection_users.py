@@ -25,9 +25,9 @@ class CollectionUser(models.Model):
         on_delete=models.CASCADE,
         blank=False)
     role = models.ForeignKey(
-        'CollectionRoleType',
+        'Role',
         on_delete=models.PROTECT,
-        db_column='role_type_id',
+        db_column='role_id',
         verbose_name=_('role'),
         help_text=_('Role of user in collection'),
         blank=False)
@@ -57,13 +57,19 @@ class CollectionUser(models.Model):
             collection=str(self.collection))
         return msg % params
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def clean(self):
-        if self.collection.collection_type != self.role.collection_type:
+        try:
+            collection_role = self.collection.validate_and_get_role(self.role)
+        except ValidationError:
             msg = _("Role is not valid for this collection's type")
             raise ValidationError({'role': msg})
 
         try:
-            self.role.validate_metadata(self.metadata)
+            collection_role.validate_metadata(self.metadata)
         except ValidationError as error:
             msg = _('Invalid metadata for user of role type %(role)s in collection %(collection)s. Error: %(error)s')
             params = dict(

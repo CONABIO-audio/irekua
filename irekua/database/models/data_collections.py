@@ -79,6 +79,10 @@ class Collection(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def clean(self):
         try:
             self.collection_type.validate_metadata(self.metadata)
@@ -109,3 +113,6 @@ class Collection(models.Model):
     def validate_and_get_sampling_event_type(self, sampling_event_type):
         return self.collection_type.validate_and_get_sampling_event_type(
             sampling_event_type)
+
+    def validate_and_get_role(self, role):
+        return self.collection_types.validate_and_get_role(role)

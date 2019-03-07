@@ -90,7 +90,8 @@ class Item(models.Model):
         db_column='captured_on',
         verbose_name=_('captured on'),
         help_text=_('Date on which item was produced'),
-        blank=False)
+        blank=True,
+        null=True)
     created_on = models.DateTimeField(
         db_column='created_on',
         verbose_name=_('created on'),
@@ -111,15 +112,16 @@ class Item(models.Model):
         help_text=_('Owner of item'),
         related_name='owner',
         on_delete=models.PROTECT,
-        blank=True,
-        null=True)
+        blank=False,
+        null=False)
     licence = models.ForeignKey(
         'Licence',
         db_column='licence_id',
         verbose_name=_('licence'),
         help_text=_('Licence of item'),
         on_delete=models.PROTECT,
-        blank=False)
+        blank=False,
+        null=False)
     is_uploaded = models.BooleanField(
         blank=False,
         null=False,
@@ -144,30 +146,33 @@ class Item(models.Model):
     def __str__(self):
         return 'Item {id}'.format(id=self.id)
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
     def clean(self):
         try:
             self.item_type.validate_media_info(self.media_info)
         except ValidationError as error:
             raise ValidationError({'media_info': error})
 
-        if self.collection:
-            try:
-                self.collection.validate_and_get_sampling_event_type(
-                    self.sampling_event.sampling_event_type)
-            except ValidationError as error:
-                raise ValidationError({'sampling': error})
+        try:
+            self.collection.validate_and_get_sampling_event_type(
+                self.sampling_event.sampling_event_type)
+        except ValidationError as error:
+            raise ValidationError({'sampling': error})
 
-            try:
-                collection_item_type = self.collection.validate_and_get_item_type(
-                    self.item_type)
-            except ValidationError as error:
-                raise ValidationError({'item_type': error})
+        try:
+            collection_item_type = self.collection.validate_and_get_item_type(
+                self.item_type)
+        except ValidationError as error:
+            raise ValidationError({'item_type': error})
 
-            if collection_item_type is not None:
-                try:
-                    collection_item_type.validate_metadata(self.metadata)
-                except ValidationError as error:
-                    raise ValidationError({'metadata': error})
+        if collection_item_type is not None:
+            try:
+                collection_item_type.validate_metadata(self.metadata)
+            except ValidationError as error:
+                raise ValidationError({'metadata': error})
 
         super(Item, self).clean()
 

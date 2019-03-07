@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
 
 
-class RoleType(Group):
+class Role(Group):
     description = models.TextField(
         db_column='description',
         verbose_name=_('description'),
@@ -23,3 +23,7 @@ class RoleType(Group):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)

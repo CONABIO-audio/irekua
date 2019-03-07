@@ -54,6 +54,10 @@ class Entailment(models.Model):
             target=str(self.target))
         return msg % params
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def clean(self):
         try:
             self.metadata_schema.validate_instance(self.metadata)

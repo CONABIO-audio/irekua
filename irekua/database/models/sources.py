@@ -48,3 +48,7 @@ class Source(models.Model):
             dir=self.directory,
             func=self.parse_function)
         return msg % params
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)

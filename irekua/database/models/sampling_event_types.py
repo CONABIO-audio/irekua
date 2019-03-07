@@ -74,6 +74,10 @@ class SamplingEventType(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
     def validate_metadata(self, metadata):
         try:
             self.metadata_schema.validate_instance(metadata)
