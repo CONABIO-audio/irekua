@@ -9,7 +9,6 @@ def create_simple_device_type():
         name='Sample Device Type',
         defaults=dict(description='Sample device type')
     )
-
     return device_type
 
 

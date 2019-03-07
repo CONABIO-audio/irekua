@@ -57,7 +57,6 @@ class SecondaryItem(models.Model):
         db_column='item_id',
         verbose_name=_('item id'),
         help_text=_('Reference to primary item associated to secondary item'),
-        limit_choices_to={'is_uploaded': True},
         on_delete=models.CASCADE,
         blank=False,
         null=False)

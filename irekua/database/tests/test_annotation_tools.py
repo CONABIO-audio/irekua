@@ -26,10 +26,10 @@ SAMPLE_ANNOTATION_TOOL_CONFIGURATION_SCHEMA = {
 
 
 def create_simple_annotation_tool():
-    schema, _ = Schema.objects.get_or_create(
+    schema, created = Schema.objects.get_or_create(
         name='Sample Device Configuration',
         defaults=dict(
-            field='device_configuration',
+            field=Schema.ANNOTATION_CONFIGURATION,
             description='Sample device configuration schema',
             schema=SAMPLE_ANNOTATION_TOOL_CONFIGURATION_SCHEMA)
     )

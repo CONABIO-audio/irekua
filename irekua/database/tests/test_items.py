@@ -29,9 +29,9 @@ def create_simple_item():
 
     item, _ = Item.objects.get_or_create(
         path='/sample/path/to/item.wav',
+        hash='samplehash',
         defaults=dict(
             filesize=100000,
-            hash='samplehash',
             hash_function='md5',
             item_type=item_type,
             media_info=media_info,
@@ -45,7 +45,6 @@ def create_simple_item():
     )
 
     return item
-
 
 
 class ItemTestCase(TestCase):

@@ -10,7 +10,6 @@ def create_simple_institution():
         institution_name='Sample Institution',
         institution_code='SI',
         subdependency='Sample Subdependency')
-
     return institution
 
 

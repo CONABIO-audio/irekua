@@ -239,7 +239,7 @@ class CollectionType(models.Model):
 
     def validate_and_get_role(self, role):
         try:
-            return self.roles.get(name=role)
+            return self.collectionrole_set.get(role=role)
         except self.roles.model.DoesNotExist:
             msg = _('Role type %(role)s is not accepted in collection of type %(col_type)s or does not exist')
             params = dict(

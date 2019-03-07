@@ -144,7 +144,7 @@ class Item(models.Model):
         )
 
     def __str__(self):
-        return 'Item {id}'.format(id=self.id)
+        return str(self.id)
 
     def clean(self):
         try:

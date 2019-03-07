@@ -89,9 +89,9 @@ class Collection(models.Model):
                 type=str(self.collection_type),
                 error=str(error))
             raise ValidationError({'metadata': msg})
-        super(Collection, self).save()
+        super(Collection, self).clean()
 
-    def validate_and_get_device_type_annotation_type(self, annotation_type):
+    def validate_and_get_annotation_type(self, annotation_type):
         return self.collection_type.validate_and_get_annotation_type(
             annotation_type)
 
@@ -112,4 +112,4 @@ class Collection(models.Model):
             sampling_event_type)
 
     def validate_and_get_role(self, role):
-        return self.collection_types.validate_and_get_role(role)
+        return self.collection_type.validate_and_get_role(role)

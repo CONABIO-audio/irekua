@@ -31,7 +31,6 @@ class Annotation(models.Model):
         db_column='item_id',
         verbose_name=_('item'),
         help_text=_('Annotated item'),
-        limit_choices_to={'is_uploaded': True},
         on_delete=models.PROTECT,
         blank=False)
     event_type = models.ForeignKey(
@@ -125,23 +124,23 @@ class Annotation(models.Model):
 
     def __str__(self):
         msg = _('Annotation %(annotation_id)s of item %(item_id)s')
-        params = dict(annotation_id=self.id, item_id=self.item.id)
+        params = dict(annotation_id=self.id, item_id=self.item)
         return msg % params
 
     def clean(self):
         try:
-            self.item.validate_event_type(self.event_type)
+            self.item.validate_and_get_event_type(self.event_type)
         except ValidationError as error:
             raise ValidationError({'event_type': error})
 
         collection = self.item.collection
         try:
-            collection.validate_event_type(self.event_type)
+            collection.validate_and_get_event_type(self.event_type)
         except ValidationError as error:
             raise ValidationError({'event_type': error})
 
         try:
-            collection.validate_annotation_type(self.annotation_type)
+            collection.validate_and_get_annotation_type(self.annotation_type)
         except ValidationError as error:
             raise ValidationError({'annotation_type': error})
 

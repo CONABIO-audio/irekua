@@ -40,7 +40,7 @@ class EventType(models.Model):
 
     def validate_and_get_term_type(self, term_type):
         try:
-            return self.label_term_types.get(name=term_type.name)
+            return self.label_term_types.get(name=term_type)
         except self.label_term_types.model.DoesNotExist:
             msg = _('Term type %(term_type)s is invalid for event type %(event_type)s')
             params = dict(term_type=str(term_type), event_type=str(self))
