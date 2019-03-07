@@ -17,6 +17,7 @@ from . import models
     models.CollectionRole,
     models.CollectionSite,
     models.CollectionType,
+    models.CollectionLicence,
     models.CollectionUser,
     models.Device,
     models.DeviceBrand,

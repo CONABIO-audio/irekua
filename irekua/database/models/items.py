@@ -170,6 +170,11 @@ class Item(models.Model):
             except ValidationError as error:
                 raise ValidationError({'metadata': error})
 
+        try:
+            self.collection.validate_and_get_licence(self.licence)
+        except ValidationError as error:
+            raise ValidationError({'licence': error})
+
         super(Item, self).clean()
 
     def validate_and_get_event_type(self, event_type):

@@ -7,6 +7,7 @@ from .collection_devices import CollectionDevice
 from .collection_item_types import CollectionItemType
 from .collection_roles import CollectionRole
 from .collection_sites import CollectionSite
+from .collection_licences import CollectionLicence
 from .collection_types import CollectionType
 from .collection_users import CollectionUser
 from .data_collections import Collection
@@ -50,6 +51,7 @@ __all__ = [
     'CollectionItemType',
     'CollectionRole',
     'CollectionSite',
+    'CollectionLicence',
     'CollectionType',
     'CollectionUser',
     'Device',

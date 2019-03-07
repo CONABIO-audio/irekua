@@ -19,6 +19,8 @@ def create_simple_item():
     user = create_simple_user()
     licence = create_simple_licence()
 
+    collection.add_licence(licence)
+
     metadata = {
         'sample_required_parameter': 40
     }
