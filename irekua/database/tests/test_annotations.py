@@ -34,7 +34,7 @@ def create_simple_annotation():
         'width': 50
     }
 
-    annotation, _ = Annotation.objects.create(
+    annotation = Annotation.objects.create(
         annotation_tool=annotation_tool,
         item=item,
         event_type=event_type,

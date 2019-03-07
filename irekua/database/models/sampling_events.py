@@ -18,6 +18,7 @@ class SamplingEvent(models.Model):
         help_text=_('Type of sampling event'),
         blank=False,
         null=False,
+        to_field='name',
         default=GENERIC_SAMPLING_EVENT)
     device = models.ForeignKey(
         'PhysicalDevice',
@@ -79,10 +80,6 @@ class SamplingEvent(models.Model):
             end=self.ended_on)
         return msg
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        
     def clean(self):
         try:
             self.sampling_event_type.validate_metadata(self.metadata)

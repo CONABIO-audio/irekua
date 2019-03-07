@@ -8,7 +8,7 @@ class DeviceBrand(models.Model):
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name of device brand'),
-        primary_key=True,
+        unique=True,
         blank=False)
     website = models.URLField(
         db_column='website',
@@ -30,7 +30,3 @@ class DeviceBrand(models.Model):
 
     def __str__(self):
         return self.name
-
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)

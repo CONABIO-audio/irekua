@@ -18,7 +18,7 @@ def create_simple_annotation_vote():
         term.term_type.name: term.value
     }
 
-    annotation_vote, _ = AnnotationVote.objects.create(
+    annotation_vote = AnnotationVote.objects.create(
         annotation=annotation,
         label=label,
         created_by=user)

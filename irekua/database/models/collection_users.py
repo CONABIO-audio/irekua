@@ -57,10 +57,6 @@ class CollectionUser(models.Model):
             collection=str(self.collection))
         return msg % params
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        
     def clean(self):
         try:
             collection_role = self.collection.validate_and_get_role(self.role)

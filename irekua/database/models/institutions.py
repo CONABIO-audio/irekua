@@ -62,7 +62,3 @@ class Institution(models.Model):
         if self.subdependency != '':
             msg += ' - ' + self.subdependency
         return msg
-
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)

@@ -70,10 +70,6 @@ class Device(models.Model):
             model=self.model)
         return msg % params
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        
     def validate_configuration(self, configuration):
         try:
             self.configuration_schema.validate_instance(configuration)

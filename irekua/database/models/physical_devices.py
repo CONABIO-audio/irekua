@@ -11,7 +11,7 @@ from database.utils import (
 
 class PhysicalDevice(models.Model):
     serial_number = models.CharField(
-        max_length=100,
+        max_length=128,
         db_column='serial_number',
         verbose_name=_('serial number'),
         help_text=_('Serial number of device'),
@@ -58,10 +58,6 @@ class PhysicalDevice(models.Model):
             device=str(self.device))
         return msg % params
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        
     def clean(self):
         try:
             self.device.validate_metadata(self.metadata)

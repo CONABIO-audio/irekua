@@ -8,7 +8,7 @@ from database.models.schemas import Schema
 class LicenceType(models.Model):
     name = models.CharField(
         max_length=128,
-        primary_key=True,
+        unique=True,
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Licence type name'),
@@ -83,10 +83,6 @@ class LicenceType(models.Model):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        
     def validate_metadata(self, metadata):
         try:
             self.metadata_schema.validate_instance(metadata)

@@ -18,11 +18,12 @@ class Collection(models.Model):
         verbose_name=_('collection type'),
         help_text=_('Type of collection'),
         default=GENERIC_COLLECTION,
+        to_field='name',
         blank=False,
         null=False)
     name = models.CharField(
-        max_length=70,
-        primary_key=True,
+        max_length=128,
+        unique=True,
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name of collection'),
@@ -79,10 +80,6 @@ class Collection(models.Model):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        
     def clean(self):
         try:
             self.collection_type.validate_metadata(self.metadata)

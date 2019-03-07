@@ -20,7 +20,7 @@ def validate_coordinates_and_geometry(geometry, latitude, longitude):
 
 class Site(models.Model):
     name = models.CharField(
-        max_length=70,
+        max_length=128,
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name of site'),
@@ -31,6 +31,7 @@ class Site(models.Model):
         db_column='site_type',
         verbose_name=_('site type'),
         help_text=_('Type of site'),
+        to_field='name',
         default=GENERIC_SITE,
         blank=False,
         null=False)
@@ -76,6 +77,8 @@ class Site(models.Model):
         verbose_name = _('Site')
         verbose_name_plural = _('Sites')
 
+        unique_together = (('name', 'site_type'))
+
     def sync_coordinates_and_georef(self):
         if self.geo_ref and self.latitude and self.longitude:
             validate_coordinates_and_geometry(
@@ -101,10 +104,6 @@ class Site(models.Model):
             return self.name
         return _('Site {id}').format(id=self.id)
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        
     def clean(self):
         self.sync_coordinates_and_georef()
 

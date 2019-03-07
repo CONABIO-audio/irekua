@@ -47,7 +47,3 @@ class UserData(models.Model):
 
     def __str__(self):
         return str(self.user)
-
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)

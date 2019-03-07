@@ -19,7 +19,7 @@ class Item(models.Model):
     ]
 
     path = models.CharField(
-        max_length=70,
+        max_length=128,
         db_column='path',
         verbose_name=_('path'),
         unique=True,
@@ -41,7 +41,7 @@ class Item(models.Model):
         db_column='hash_function',
         verbose_name=_('hash function'),
         help_text=_('Function used to create hash of file'),
-        max_length=10,
+        max_length=16,
         blank=False,
         choices=HASH_FUNCTIONS)
     item_type = models.ForeignKey(
@@ -55,7 +55,7 @@ class Item(models.Model):
         db_column='source_foreign_key',
         verbose_name=_('source foreign key'),
         help_text=_('Foreign key of file in source database'),
-        max_length=50,
+        max_length=64,
         blank=True)
     media_info = JSONField(
         db_column='media_info',
@@ -145,10 +145,6 @@ class Item(models.Model):
 
     def __str__(self):
         return 'Item {id}'.format(id=self.id)
-
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
 
     def clean(self):
         try:

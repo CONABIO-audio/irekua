@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 class DeviceType(models.Model):
     name = models.CharField(
         max_length=64,
-        primary_key=True,
+        unique=True,
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name for device type'),
@@ -29,7 +29,3 @@ class DeviceType(models.Model):
 
     def __str__(self):
         return self.name
-
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)

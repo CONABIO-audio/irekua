@@ -19,7 +19,7 @@ class ItemType(models.Model):
         max_length=64,
         db_column='name',
         verbose_name=_('name'),
-        primary_key=True,
+        unique=True,
         help_text=_('Name of item type'),
         blank=False)
     description = models.TextField(
@@ -65,10 +65,6 @@ class ItemType(models.Model):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        
     def validate_media_info(self, media_info):
         try:
             self.media_info_schema.validate_instance(media_info)

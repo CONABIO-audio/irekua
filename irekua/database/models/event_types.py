@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 class EventType(models.Model):
     name = models.CharField(
         max_length=64,
-        primary_key=True,
+        unique=True,
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name of event type'),
@@ -38,10 +38,6 @@ class EventType(models.Model):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        
     def validate_and_get_term_type(self, term_type):
         try:
             return self.label_term_types.get(name=term_type.name)

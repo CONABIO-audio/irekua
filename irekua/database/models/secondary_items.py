@@ -18,7 +18,7 @@ class SecondaryItem(models.Model):
     ]
 
     path = models.CharField(
-        max_length=70,
+        max_length=128,
         db_column='path',
         unique=True,
         verbose_name=_('path'),
@@ -32,7 +32,7 @@ class SecondaryItem(models.Model):
         help_text=_('Hash of secondary resource file'),
         blank=False)
     hash_function = models.CharField(
-        max_length=10,
+        max_length=16,
         blank=False,
         db_column='hash_function',
         verbose_name=_('hash function'),
@@ -80,10 +80,6 @@ class SecondaryItem(models.Model):
             itemid=str(self.item))
         return msg % params
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        
     def clean(self):
         try:
             self.item_type.validate_media_info(self.media_info)

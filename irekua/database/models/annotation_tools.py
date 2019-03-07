@@ -8,7 +8,7 @@ from database.models.schemas import Schema
 class AnnotationTool(models.Model):
     name = models.CharField(
         max_length=64,
-        primary_key=True,
+        unique=True,
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name of annotation tool'),
@@ -60,10 +60,6 @@ class AnnotationTool(models.Model):
         if self.version:
             msg += ' - ' + self.version
         return msg
-
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
 
     def validate_configuration(self, configuration):
         try:

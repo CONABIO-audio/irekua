@@ -18,7 +18,7 @@ class Licence(models.Model):
         blank=False,
         null=False)
     document = models.CharField(
-        max_length=70,
+        max_length=128,
         db_column='document',
         verbose_name=_('document'),
         help_text=_('Legal document of licence agreement'),
@@ -54,10 +54,6 @@ class Licence(models.Model):
             date=self.created_on)
         return msg
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        
     def clean(self):
         try:
             self.licence_type.validate_metadata(self.metadata)

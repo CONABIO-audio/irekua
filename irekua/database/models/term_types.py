@@ -8,7 +8,7 @@ from database.models.schemas import Schema
 class TermType(models.Model):
     name = models.CharField(
         max_length=128,
-        primary_key=True,
+        unique=True,
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name for term type'),
@@ -67,10 +67,6 @@ class TermType(models.Model):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        
     def validate_non_categorical_value(self, value):
         if not isinstance(value, (int, float)):
             msg = _('Value %(value)s is invalid for non-categorical term of type %(type)')

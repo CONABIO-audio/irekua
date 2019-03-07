@@ -80,7 +80,7 @@ class Annotation(models.Model):
         verbose_name=_('quality'),
         help_text=_('Quality of item content inside annotation'),
         blank=True,
-        max_length=10,
+        max_length=16,
         choices=QUALITY_OPTIONS)
     commentaries = models.TextField(
         db_column='commentaries',
@@ -127,10 +127,6 @@ class Annotation(models.Model):
         msg = _('Annotation %(annotation_id)s of item %(item_id)s')
         params = dict(annotation_id=self.id, item_id=self.item.id)
         return msg % params
-
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
 
     def clean(self):
         try:

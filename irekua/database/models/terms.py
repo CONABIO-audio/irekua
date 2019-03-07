@@ -15,7 +15,7 @@ class Term(models.Model):
         blank=False,
         null=False)
     value = models.CharField(
-        max_length=50,
+        max_length=128,
         db_column='value',
         verbose_name=_('value'),
         help_text=_('Value of term'),
@@ -44,10 +44,6 @@ class Term(models.Model):
             value=self.value)
         return msg
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-        
     def clean(self, *args, **kwargs):
         try:
             self.term_type.validate_metadata(self.metadata)
