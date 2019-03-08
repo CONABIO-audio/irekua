@@ -3,16 +3,17 @@ from django.test import TestCase
 from database.models import Source
 
 from .test_users import create_simple_user
+from . import sample
 
 
 def create_simple_source():
     user = create_simple_user()
 
     source, _ = Source.objects.get_or_create(
-        directory='/sample/source/directory/',
+        directory=sample.SOURCE_DIRECTORY,
         defaults=dict(
-            source_file='sample_source_file.csv',
-            parse_function='sample_parse_function',
+            source_file=sample.SOURCE_FILE,
+            parse_function=sample.PARSE_FUNCTION,
             uploader=user)
     )
 
@@ -20,9 +21,6 @@ def create_simple_source():
 
 
 class SourceTestCase(TestCase):
-    def setUp(self):
-        self.source = create_simple_source()
-
     def test_simple_source_creation(self):
         try:
             create_simple_source()

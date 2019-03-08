@@ -5,36 +5,20 @@ from database.models import (
     Schema
 )
 
-
-SAMPLE_LICENCE_METADATA_SCHEMA = {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "title": "Sample Licence Metadata Schema",
-    "required": [
-        "sample_required_parameter"
-        ],
-    "properties": {
-        "sample_parameter": {
-            "type": "string",
-        },
-        "sample_required_parameter": {
-            "type": "integer",
-        }
-    }
-}
+from . import sample
 
 
 def create_simple_licence_type():
     metadata_schema, _ = Schema.objects.get_or_create(
-        name='Sample Licence Metadata Schema',
+        name=sample.LICENCE_METADATA_SCHEMA.name,
         defaults=dict(
             field=Schema.LICENCE_METADATA,
             description='Sample licence metadata schema',
-            schema=SAMPLE_LICENCE_METADATA_SCHEMA)
+            schema=sample.LICENCE_METADATA_SCHEMA.schema)
     )
 
     licence_type, _ = LicenceType.objects.get_or_create(
-        name='Sample Licence Type',
+        name=sample.LICENCE_TYPE,
         defaults=dict(
             description='Sample licence type',
             metadata_schema=metadata_schema,
@@ -49,9 +33,6 @@ def create_simple_licence_type():
 
 
 class LicenceTypeTestCase(TestCase):
-    def setUp(self):
-        self.licence_type = create_simple_licence_type()
-
     def test_simple_licence_type_creation(self):
         try:
             create_simple_licence_type()

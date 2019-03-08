@@ -8,7 +8,7 @@ from .schemas import Schema
 class SamplingEventType(models.Model):
     name = models.CharField(
         max_length=128,
-        unique=True,
+        primary_key=True,
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name fo sampling event type'),

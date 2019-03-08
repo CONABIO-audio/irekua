@@ -4,18 +4,16 @@ from database.models import PhysicalDevice
 
 from .test_devices import create_simple_device
 from .test_users import create_simple_user
+from . import sample
 
 
 def create_simple_physical_device():
     device = create_simple_device()
     user = create_simple_user()
-
-    metadata = {
-        'sample_required_parameter': 20
-    }
+    metadata = sample.VALID_INSTANCE
 
     physical_device, _ = PhysicalDevice.objects.get_or_create(
-        serial_number='123456789',
+        serial_number=sample.DEVICE_SERIAL_NUMBER,
         device=device,
         defaults=dict(
             owner=user,
@@ -27,9 +25,6 @@ def create_simple_physical_device():
 
 
 class PhysicalDeviceTestCase(TestCase):
-    def setUp(self):
-        self.physical_device = create_simple_physical_device()
-
     def test_simple_physical_device_creation(self):
         try:
             create_simple_physical_device()

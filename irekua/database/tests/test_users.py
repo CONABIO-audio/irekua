@@ -1,17 +1,17 @@
 from django.test import TestCase
 
-# Create your tests here.
-from database.models import UserData
 from django.contrib.auth.models import User
+
+from . import sample
 
 
 def create_simple_user():
-    user, _  = User.objects.get_or_create(
-        username='sampleuser',
+    user, _ = User.objects.get_or_create(
+        username=sample.USER_NAME,
         defaults=dict(
-            password='sampleuser',
-            email='sampleuser@sample.domain.com',
-            first_name='Sample User',
+            password=sample.USER_PASSWORD,
+            email=sample.USER_EMAIL,
+            first_name=sample.USER_FIRST_NAME,
             is_staff=False,
             is_superuser=False)
     )

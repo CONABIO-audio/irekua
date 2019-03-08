@@ -19,7 +19,7 @@ class ItemType(models.Model):
         max_length=64,
         db_column='name',
         verbose_name=_('name'),
-        unique=True,
+        primary_key=True,
         help_text=_('Name of item type'),
         blank=False)
     description = models.TextField(

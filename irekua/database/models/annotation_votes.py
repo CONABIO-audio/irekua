@@ -61,6 +61,8 @@ class AnnotationVote(models.Model):
             self.annotation.validate_label(self.label)
         except ValidationError as error:
             msg = _('Invalid label for event type %(type)s. Error: %(error)s')
-            params = dict(type=str(self.event_type), error=str(error))
+            params = dict(
+                type=str(self.annotation.event_type),
+                error=str(error))
             raise ValidationError({'label': msg}, params=params)
         super(AnnotationVote, self).clean()

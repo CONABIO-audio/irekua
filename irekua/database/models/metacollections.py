@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 class MetaCollection(models.Model):
     name = models.CharField(
         max_length=64,
-        unique=True,
+        primary_key=True,
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name of meta collection'),

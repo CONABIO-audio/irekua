@@ -28,7 +28,7 @@ class Item(models.Model):
     filesize = models.IntegerField(
         db_column='filesize',
         verbose_name=_('file size'),
-        help_text=_('Size of resouce in Bytes'),
+        help_text=_('Size of resource in Bytes'),
         blank=False)
     hash = models.CharField(
         db_column='hash',

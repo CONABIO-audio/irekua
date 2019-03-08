@@ -17,6 +17,7 @@ def not_reserved_names(value):
             _('%(value)s is a reserved schema name'),
             params={'value': value})
 
+
 def validate_json_schema(schema):
     try:
         jsonschema.validate(schema=schema, instance={})
@@ -35,6 +36,7 @@ def validate_json_instance(schema, instance):
         msg = _('Instance does not comply with JSON schema. Error: %(error)s')
         params = dict(error=str(error))
         raise ValidationError(msg, params=params)
+
 
 class Schema(models.Model):
     FREE_SCHEMA = FREE_SCHEMA

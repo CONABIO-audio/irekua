@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 class Tag(models.Model):
     name = models.CharField(
         max_length=128,
-        unique=True,
+        primary_key=True,
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name of tag'),

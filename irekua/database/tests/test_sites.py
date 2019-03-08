@@ -4,18 +4,16 @@ from database.models import Site
 
 from .test_site_types import create_simple_site_type
 from .test_users import create_simple_user
+from . import sample
 
 
 def create_simple_site():
     site_type = create_simple_site_type()
     user = create_simple_user()
-
-    metadata = {
-        'sample_required_parameter': 10
-    }
+    metadata = sample.VALID_INSTANCE
 
     site, _ = Site.objects.get_or_create(
-        name='Sample Site',
+        name=sample.SITE,
         defaults=dict(
             site_type=site_type,
             latitude=0,
@@ -29,9 +27,6 @@ def create_simple_site():
 
 
 class SiteTestCase(TestCase):
-    def setUp(self):
-        self.site = create_simple_site()
-
     def test_simple_site_type_creation(self):
         try:
             create_simple_site()

@@ -9,6 +9,7 @@ from .test_sources import create_simple_source
 from .test_data_collections import create_simple_collection
 from .test_users import create_simple_user
 from .test_licences import create_simple_licence
+from . import sample
 
 
 def create_simple_item():
@@ -17,21 +18,16 @@ def create_simple_item():
     source = create_simple_source()
     collection = create_simple_collection()
     user = create_simple_user()
-    licence = create_simple_licence()
 
+    licence = create_simple_licence()
     collection.add_licence(licence)
 
-    metadata = {
-        'sample_required_parameter': 40
-    }
-
-    media_info = {
-        'sample_required_parameter': 50
-    }
+    metadata = sample.VALID_INSTANCE
+    media_info = sample.VALID_INSTANCE
 
     item, _ = Item.objects.get_or_create(
-        path='/sample/path/to/item.wav',
-        hash='samplehash',
+        path=sample.ITEM_PATH,
+        hash=sample.ITEM_HASH,
         defaults=dict(
             filesize=100000,
             hash_function='md5',

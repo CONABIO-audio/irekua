@@ -8,7 +8,7 @@ from database.models.schemas import Schema
 class TermType(models.Model):
     name = models.CharField(
         max_length=128,
-        unique=True,
+        primary_key=True,
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name for term type'),

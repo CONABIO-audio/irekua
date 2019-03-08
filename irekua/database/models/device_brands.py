@@ -8,7 +8,7 @@ class DeviceBrand(models.Model):
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name of device brand'),
-        unique=True,
+        primary_key=True,
         blank=False)
     website = models.URLField(
         db_column='website',

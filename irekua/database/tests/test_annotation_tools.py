@@ -7,35 +7,20 @@ from database.models import (
     Schema
 )
 
-SAMPLE_ANNOTATION_TOOL_CONFIGURATION_SCHEMA = {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "title": "Sample Configuration Schema",
-    "required": [
-        "parameter1",
-    ],
-    "properties": {
-        "parameter1": {
-            "type": "integer",
-        },
-        "parameter2": {
-            "type": "string",
-        }
-    }
-}
+from . import sample
 
 
 def create_simple_annotation_tool():
-    schema, created = Schema.objects.get_or_create(
-        name='Sample Device Configuration',
+    schema, _ = Schema.objects.get_or_create(
+        name=sample.ANNOTATION_TOOL_CONFIGURATION_SCHEMA.name,
         defaults=dict(
             field=Schema.ANNOTATION_CONFIGURATION,
             description='Sample device configuration schema',
-            schema=SAMPLE_ANNOTATION_TOOL_CONFIGURATION_SCHEMA)
+            schema=sample.ANNOTATION_TOOL_CONFIGURATION_SCHEMA.schema)
     )
 
     annotation_tool, _ = AnnotationTool.objects.get_or_create(
-        name="Annotation Tool",
+        name=sample.ANNOTATION_TOOL,
         defaults=dict(
             version="1.0",
             description="Sample Annotation tool",
@@ -49,26 +34,21 @@ class AnnotationToolTestCase(TestCase):
     def setUp(self):
         self.annotation_tool = create_simple_annotation_tool()
 
-
     def test_simple_annotation_tool_creation(self):
         try:
             create_simple_annotation_tool()
-        except:
-            self.fail()
+        except Exception as e:
+            self.fail(e)
 
     def test_validate_configuration(self):
-        valid_configuration = {
-            "parameter1": 10,
-        }
+        valid_configuration = sample.VALID_INSTANCE
 
         try:
             self.annotation_tool.validate_configuration(valid_configuration)
         except ValidationError:
             self.fail('Valid JSON was rejected')
 
-        invalid_configuration = {
-            "parameter2": "ab"
-        }
+        invalid_configuration = sample.INVALID_INSTANCE
 
         with self.assertRaises(ValidationError):
             self.annotation_tool.validate_configuration(invalid_configuration)

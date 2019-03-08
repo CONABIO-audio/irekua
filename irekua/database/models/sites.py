@@ -25,6 +25,12 @@ class Site(models.Model):
         verbose_name=_('name'),
         help_text=_('Name of site'),
         blank=True)
+    locality = models.CharField(
+        max_length=256,
+        db_column='locality',
+        verbose_name=_('locality'),
+        help_text=_('Name of locality in which the site is located'),
+        blank=True)
     site_type = models.ForeignKey(
         'SiteType',
         on_delete=models.PROTECT,

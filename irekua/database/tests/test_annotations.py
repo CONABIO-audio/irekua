@@ -9,6 +9,7 @@ from .test_event_types import create_simple_event_type
 from .test_annotation_types import create_simple_annotation_type
 from .test_users import create_simple_user
 from .test_terms import create_simple_term
+from . import sample
 
 
 def create_simple_annotation():
@@ -23,16 +24,8 @@ def create_simple_annotation():
         term.term_type.name: term.value
     }
 
-    annotation_configuration = {
-        'parameter1': 2,
-    }
-
-    annotation = {
-        'x': 10,
-        'y': 20,
-        'height': 100,
-        'width': 50
-    }
+    annotation_configuration = sample.VALID_INSTANCE
+    annotation = sample.VALID_ANNOTATION
 
     annotation = Annotation.objects.create(
         annotation_tool=annotation_tool,
@@ -51,11 +44,8 @@ def create_simple_annotation():
 
 
 class AnnotationTestCase(TestCase):
-    def setUp(self):
-        self.annotation = create_simple_annotation()
-
     def test_simple_annotation_creation(self):
         try:
             create_simple_annotation()
-        except:
-            self.fail()
+        except Exception as e:
+            self.fail(e)

@@ -5,13 +5,13 @@ from database.models import CollectionSite
 
 from .test_sites import create_simple_site
 from .test_data_collections import create_simple_collection
+from . import sample
 
 
 def create_simple_collection_site():
     site = create_simple_site()
     collection = create_simple_collection()
-
-    metadata = {}
+    metadata = sample.VALID_INSTANCE
 
     collection_site, _ = CollectionSite.objects.get_or_create(
         collection=collection,
@@ -25,11 +25,8 @@ def create_simple_collection_site():
 
 
 class CollectionSiteTestCase(TestCase):
-    def setUp(self):
-        self.collection_site = create_simple_collection_site()
-
     def test_simple_collection_site_creation(self):
         try:
             create_simple_collection_site()
-        except:
-            self.fail()
+        except Exception as e:
+            self.fail(e)

@@ -7,41 +7,7 @@ from database.models import (
 
 from .test_device_types import create_simple_device_type
 from .test_device_brands import create_simple_device_brand
-
-
-SAMPLE_DEVICE_METADATA_SCHEMA = {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "title": "Sample Device Metadata Schema",
-    "required": [
-        "sample_required_parameter"
-        ],
-    "properties": {
-        "sample_parameter": {
-            "type": "string",
-        },
-        "sample_required_parameter": {
-            "type": "integer",
-        }
-    }
-}
-
-SAMPLE_DEVICE_CONFIGURATION_SCHEMA = {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "title": "Sample Device Metadata Schema",
-    "required": [
-        "sample_required_parameter"
-        ],
-    "properties": {
-        "sample_parameter": {
-            "type": "string",
-        },
-        "sample_required_parameter": {
-            "type": "integer",
-        }
-    }
-}
+from . import sample
 
 
 def create_simple_device():
@@ -49,25 +15,25 @@ def create_simple_device():
     brand = create_simple_device_brand()
 
     metadata_schema, _ = Schema.objects.get_or_create(
-        name='Sample Device Metadata Schema',
+        name=sample.DEVICE_METADATA_SCHEMA.name,
         defaults=dict(
             field=Schema.DEVICE_METADATA,
             description='Sample device metadata schema',
-            schema=SAMPLE_DEVICE_METADATA_SCHEMA)
+            schema=sample.DEVICE_METADATA_SCHEMA.schema)
     )
 
     configuration_schema, _ = Schema.objects.get_or_create(
-        name='Sample Device Configuration Schema',
+        name=sample.DEVICE_CONFIGURATION_SCHEMA.name,
         defaults=dict(
             field=Schema.DEVICE_CONFIGURATION,
             description='Sample device configuration schema',
-            schema=SAMPLE_DEVICE_CONFIGURATION_SCHEMA)
+            schema=sample.DEVICE_CONFIGURATION_SCHEMA.schema)
     )
 
     device, _ = Device.objects.get_or_create(
         device_type=device_type,
         brand=brand,
-        model='Sample Model',
+        model=sample.DEVICE_MODEL,
         defaults=dict(
             metadata_schema=metadata_schema,
             configuration_schema=configuration_schema)
@@ -77,9 +43,6 @@ def create_simple_device():
 
 
 class DeviceTestCase(TestCase):
-    def setUp(self):
-        self.device = create_simple_device()
-
     def test_simple_device_creation(self):
         try:
             create_simple_device()
