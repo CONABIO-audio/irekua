@@ -51,12 +51,6 @@ class Item(models.Model):
         verbose_name=_('item type'),
         help_text=_('Type of resource'),
         blank=False)
-    source_foreign_key = models.CharField(
-        db_column='source_foreign_key',
-        verbose_name=_('source foreign key'),
-        help_text=_('Foreign key of file in source database'),
-        max_length=64,
-        blank=True)
     media_info = JSONField(
         db_column='media_info',
         default=empty_json,
@@ -79,6 +73,12 @@ class Item(models.Model):
         on_delete=models.PROTECT,
         blank=True,
         null=True)
+    source_foreign_key = models.CharField(
+        db_column='source_foreign_key',
+        verbose_name=_('source foreign key'),
+        help_text=_('Foreign key of file in source database'),
+        max_length=64,
+        blank=True)
     metadata = JSONField(
         db_column='metadata',
         default=empty_json,

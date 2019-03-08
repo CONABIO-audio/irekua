@@ -24,9 +24,7 @@ class AnnotationType(models.Model):
         null=False,
         db_column='schema_id',
         verbose_name=_('schema'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.ANNOTATION) |
-            models.Q(field__exact=Schema.GLOBAL)),
+        limit_choices_to={'field': Schema.ANNOTATION},
         help_text=_('JSON schema for annotation type'))
     icon = models.ImageField(
         db_column='icon',

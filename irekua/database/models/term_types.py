@@ -38,11 +38,7 @@ class TermType(models.Model):
         db_column='metadata_schema_id',
         verbose_name=_('metadata schema'),
         help_text=_('JSON schema for metadata of terms of type'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.TERM_METADATA) |
-            models.Q(field__exact=Schema.GLOBAL)),
-        to_field='name',
-        default=Schema.FREE_SCHEMA,
+        limit_choices_to={'field': Schema.TERM_METADATA},
         blank=False,
         null=False)
     synonym_metadata_schema = models.ForeignKey(
@@ -52,11 +48,7 @@ class TermType(models.Model):
         db_column='synonym_metadata_schema_id',
         verbose_name=_('synonym metadata schema'),
         help_text=_('JSON schema for metadata of synonyms of terms of type'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.SYNONYM_METADATA) |
-            models.Q(field__exact=Schema.GLOBAL)),
-        to_field='name',
-        default=Schema.FREE_SCHEMA,
+        limit_choices_to={'field': Schema.SYNONYM_METADATA},
         blank=False,
         null=False)
 

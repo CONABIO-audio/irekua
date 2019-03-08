@@ -28,11 +28,7 @@ class CollectionRole(models.Model):
         db_column='metadata_type_id',
         verbose_name=_('metadata type'),
         help_text=_('JSON schema for collection user metadata of role type'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.COLLECTION_USER_METADATA) |
-            models.Q(field__exact=Schema.GLOBAL)),
-        to_field='name',
-        default=Schema.FREE_SCHEMA,
+        limit_choices_to={'field': Schema.COLLECTION_USER_METADATA},
         blank=False,
         null=False)
 

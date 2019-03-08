@@ -17,7 +17,7 @@ class UserDataSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    organization = serializers.CharField(source='userdata.organization')
+    user_data = UserDataSerializer(many=False, read_only=True)
 
     class Meta:
         model = User
@@ -27,4 +27,4 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             'email',
             'first_name',
             'last_name',
-            'organization')
+            'user_data')

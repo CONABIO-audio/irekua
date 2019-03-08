@@ -122,6 +122,10 @@ class Annotation(models.Model):
         verbose_name = _('Annotation')
         verbose_name_plural = _('Annotations')
 
+        permissions = (
+            ("vote", _("Can vote annotation")),
+        )
+
     def __str__(self):
         msg = _('Annotation %(annotation_id)s of item %(item_id)s')
         params = dict(annotation_id=self.id, item_id=self.item)

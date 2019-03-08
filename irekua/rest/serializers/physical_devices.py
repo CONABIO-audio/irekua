@@ -6,6 +6,15 @@ import database.models as db
 
 
 class PhysicalDeviceSerializer(serializers.HyperlinkedModelSerializer):
+    device = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='device-detail')
+    owner = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='user-detail')
+
     class Meta:
         model = db.PhysicalDevice
         fields = (
@@ -13,7 +22,6 @@ class PhysicalDeviceSerializer(serializers.HyperlinkedModelSerializer):
             'serial_number',
             'device',
             'owner',
-            'metadata_type',
             'metadata',
             'bundle',
         )

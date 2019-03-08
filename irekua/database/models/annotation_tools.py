@@ -43,13 +43,9 @@ class AnnotationTool(models.Model):
         db_column='configuration_schema_id',
         verbose_name=_('configuration schema'),
         help_text=_('JSON schema for configuration of annotation tool'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.ANNOTATION_CONFIGURATION) |
-            models.Q(field__exact=Schema.GLOBAL)),
+        limit_choices_to={'field': Schema.ANNOTATION_CONFIGURATION},
         blank=False,
-        null=False,
-        to_field='name',
-        default=Schema.FREE_SCHEMA)
+        null=False)
 
     class Meta:
         verbose_name = _('Annotation Tool')

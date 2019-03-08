@@ -23,11 +23,7 @@ class SiteType(models.Model):
         db_column='metadata_type',
         verbose_name=_('metadata type'),
         help_text=_('Schema for site metadata'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.SITE_METADATA) |
-            models.Q(field__exact=Schema.GLOBAL)),
-        to_field='name',
-        default=Schema.FREE_SCHEMA,
+        limit_choices_to={'field': Schema.SITE_METADATA},
         blank=False,
         null=False)
 

@@ -6,6 +6,35 @@ import database.models as db
 
 
 class ItemSerializer(serializers.HyperlinkedModelSerializer):
+    item_type = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='item_type-detail')
+    sampling_event = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='sampling_event-detail')
+    source = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='source-detail')
+    collection = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='collection-detail')
+    owner = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='user-detail')
+    licence = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='licence-detail')
+    tags = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='tag-detail')
+
     class Meta:
         model = db.Item
         fields = (
@@ -17,7 +46,7 @@ class ItemSerializer(serializers.HyperlinkedModelSerializer):
             'item_type',
             'source_foreign_key',
             'media_info',
-            'sampling',
+            'sampling_event',
             'source',
             'metadata_type',
             'metadata',
@@ -26,4 +55,5 @@ class ItemSerializer(serializers.HyperlinkedModelSerializer):
             'collection',
             'owner',
             'licence',
-            'is_uploaded')
+            'is_uploaded',
+            'tags')

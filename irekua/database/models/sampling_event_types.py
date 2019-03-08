@@ -31,11 +31,7 @@ class SamplingEventType(models.Model):
         db_column='metadata_schema',
         verbose_name=_('metadata schema'),
         help_text=_('Schema for metadata for sampling event of this type'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.SAMPLING_EVENT_METADATA) |
-            models.Q(field__exact=Schema.GLOBAL)),
-        to_field='name',
-        default=Schema.FREE_SCHEMA,
+        limit_choices_to={'field': Schema.SAMPLING_EVENT_METADATA},
         blank=False,
         null=False)
 

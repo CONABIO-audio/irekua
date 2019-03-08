@@ -12,7 +12,6 @@ class InstitutionSerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'institution_name',
             'institution_code',
-            'institution_id',
             'subdependency',
             'country',
             'postal_code',

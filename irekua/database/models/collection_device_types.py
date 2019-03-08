@@ -28,11 +28,7 @@ class CollectionDeviceType(models.Model):
         db_column='metadata_type_id',
         verbose_name=_('metadata type'),
         help_text=_('JSON schema for collection device metadata'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.COLLECTION_DEVICE_METADATA) |
-            models.Q(field__exact=Schema.GLOBAL)),
-        to_field='name',
-        default=Schema.FREE_SCHEMA,
+        limit_choices_to={'field': Schema.COLLECTION_DEVICE_METADATA},
         blank=False,
         null=False)
 

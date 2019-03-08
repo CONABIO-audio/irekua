@@ -6,6 +6,15 @@ import database.models as db
 
 
 class TermSuggestionSerializer(serializers.HyperlinkedModelSerializer):
+    term_type = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='term_type-detail')
+    suggested_by = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='user-detail')
+
     class Meta:
         model = db.TermSuggestion
         fields = (
@@ -13,7 +22,6 @@ class TermSuggestionSerializer(serializers.HyperlinkedModelSerializer):
             'term_type',
             'value',
             'description',
-            'metadata_type',
             'metadata',
             'suggested_by',
             'suggested_on',

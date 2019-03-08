@@ -24,11 +24,7 @@ class LicenceType(models.Model):
         db_column='metadata_schema_id',
         verbose_name=_('metadata schema'),
         help_text=_('Schema for licence metadata structure'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.LICENCE_METADATA) |
-            models.Q(field__exact=Schema.GLOBAL)),
-        to_field='name',
-        default=Schema.FREE_SCHEMA,
+        limit_choices_to={'field': Schema.LICENCE_METADATA},
         blank=False,
         null=False)
     document_template = models.CharField(
@@ -38,6 +34,12 @@ class LicenceType(models.Model):
         verbose_name=_('document template'),
         help_text=_('Template for licence document'),
         blank=True)
+    years_valid_for = models.IntegerField(
+        db_column='years_valid_for',
+        verbose_name=_('years valid for'),
+        help_text=_('Number of years for which licences of this type are valid'),
+        blank=False,
+        null=False)
     icon = models.ImageField(
         db_column='icon',
         verbose_name=_('icon'),

@@ -6,6 +6,15 @@ import database.models as db
 
 
 class SecondaryItemSerializer(serializers.HyperlinkedModelSerializer):
+    item = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='item-detail')
+    item_type = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='item_type-detail')
+
     class Meta:
         model = db.SecondaryItem
         fields = (

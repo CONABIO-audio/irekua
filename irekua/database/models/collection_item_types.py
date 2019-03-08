@@ -28,11 +28,7 @@ class CollectionItemType(models.Model):
         db_column='metadata_type',
         verbose_name=_('metadata type'),
         help_text=_('JSON schema for collection item metadata'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.ITEM_METADATA) |
-            models.Q(field__exact=Schema.GLOBAL)),
-        to_field='name',
-        default=Schema.FREE_SCHEMA,
+        limit_choices_to={'field': Schema.ITEM_METADATA},
         blank=False,
         null=False)
 

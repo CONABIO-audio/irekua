@@ -14,10 +14,7 @@ class EntailmentSerializer(serializers.HyperlinkedModelSerializer):
         many=False,
         read_only=True,
         view_name='term-detail')
-    metadata_schema = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='schema-detail')
+
 
     class Meta:
         model = db.Entailment
@@ -25,6 +22,5 @@ class EntailmentSerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'source',
             'target',
-            'metadata_schema',
             'metadata',
         )

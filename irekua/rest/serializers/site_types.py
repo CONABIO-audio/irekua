@@ -6,8 +6,16 @@ import database.models as db
 
 
 class SiteTypeSerializer(serializers.HyperlinkedModelSerializer):
+    metadata_schema = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='schema-detail')
+
     class Meta:
         model = db.SiteType
         fields = (
             'url',
-                )
+            'name',
+            'description',
+            'metadata_schema'
+        )

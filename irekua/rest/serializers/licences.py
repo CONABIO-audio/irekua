@@ -6,6 +6,11 @@ import database.models as db
 
 
 class LicenceSerializer(serializers.HyperlinkedModelSerializer):
+    licence_type = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='licence-detail')
+
     class Meta:
         model = db.Licence
         fields = (
@@ -13,6 +18,5 @@ class LicenceSerializer(serializers.HyperlinkedModelSerializer):
             'licence_type',
             'document',
             'created_on',
-            'valid_until',
             'metadata',
         )

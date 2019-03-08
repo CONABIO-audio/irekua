@@ -6,6 +6,11 @@ import database.models as db
 
 
 class SourceSerializer(serializers.HyperlinkedModelSerializer):
+    uploader = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='user-detail')
+
     class Meta:
         model = db.Source
         fields = (

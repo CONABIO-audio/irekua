@@ -6,6 +6,11 @@ import database.models as db
 
 
 class EventTypeSerializer(serializers.HyperlinkedModelSerializer):
+    label_term_types = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='term_type-detail')
+
     class Meta:
         model = db.EventType
         fields = (
@@ -13,4 +18,4 @@ class EventTypeSerializer(serializers.HyperlinkedModelSerializer):
             'name',
             'description',
             'icon',
-        )
+            'label_term_types')

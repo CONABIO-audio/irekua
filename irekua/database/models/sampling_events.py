@@ -20,6 +20,14 @@ class SamplingEvent(models.Model):
         null=False,
         to_field='name',
         default=GENERIC_SAMPLING_EVENT)
+    site = models.ForeignKey(
+        'Site',
+        db_column='site_id',
+        verbose_name=_('site id'),
+        help_text=_('Reference to site at which sampling took place'),
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True)
     device = models.ForeignKey(
         'PhysicalDevice',
         db_column='device_id',
@@ -56,14 +64,6 @@ class SamplingEvent(models.Model):
         db_column='ended_on',
         verbose_name=_('ended on'),
         help_text=_('Date at which sampling stoped'),
-        blank=True,
-        null=True)
-    site = models.ForeignKey(
-        'Site',
-        db_column='site_id',
-        verbose_name=_('site id'),
-        help_text=_('Reference to site at which sampling took place'),
-        on_delete=models.PROTECT,
         blank=True,
         null=True)
 

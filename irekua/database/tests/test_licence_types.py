@@ -22,6 +22,7 @@ def create_simple_licence_type():
         defaults=dict(
             description='Sample licence type',
             metadata_schema=metadata_schema,
+            years_valid_for=3,
             can_view=True,
             can_download=True,
             can_view_annotations=True,

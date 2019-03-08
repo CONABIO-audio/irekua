@@ -6,6 +6,15 @@ import database.models as db
 
 
 class SynonymSuggestionSerializer(serializers.HyperlinkedModelSerializer):
+    source = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='term-detail')
+    suggested_by = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='user-detail')
+
     class Meta:
         model = db.SynonymSuggestion
         fields = (
@@ -13,7 +22,6 @@ class SynonymSuggestionSerializer(serializers.HyperlinkedModelSerializer):
             'source',
             'synonym',
             'description',
-            'metadata_type',
             'metadata',
             'suggested_by',
             'suggested_on',

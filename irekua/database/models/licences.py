@@ -2,6 +2,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 
 from database.utils import (
     empty_json,
@@ -30,12 +31,6 @@ class Licence(models.Model):
         verbose_name=_('created on'),
         help_text=_('Date of licence creation'),
         blank=False)
-    valid_until = models.DateTimeField(
-        db_column='valid_until',
-        verbose_name=_('valid until'),
-        help_text=_('Date at which the licence expires'),
-        blank=True,
-        null=True)
     metadata = JSONField(
         db_column='metadata',
         verbose_name=_('metadata'),
@@ -60,3 +55,8 @@ class Licence(models.Model):
         except ValidationError as error:
             raise ValidationError({'metadata': error})
         super(Licence, self).clean()
+
+    def is_invalid(self):
+        now = timezone.now()
+        timedelta = now - self.created_on
+        print(timedelta)

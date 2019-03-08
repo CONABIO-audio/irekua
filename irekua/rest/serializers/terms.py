@@ -6,6 +6,11 @@ import database.models as db
 
 
 class TermSerializer(serializers.HyperlinkedModelSerializer):
+    term_type = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='term_type-detail')
+
     class Meta:
         model = db.Term
         fields = (
@@ -13,6 +18,5 @@ class TermSerializer(serializers.HyperlinkedModelSerializer):
             'term_type',
             'value',
             'description',
-            'metadata_type',
             'metadata'
         )

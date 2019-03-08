@@ -30,11 +30,7 @@ class EntailmentType(models.Model):
         db_column='metadata_schema_id',
         verbose_name=_('metadata schema'),
         help_text=_('JSON schema for entailment metadata'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.ENTAILMENT_METADATA) |
-            models.Q(field__exact=Schema.GLOBAL)),
-        to_field='name',
-        default=Schema.FREE_SCHEMA,
+        limit_choices_to={'field': Schema.ENTAILMENT_METADATA},
         blank=False,
         null=False)
 
