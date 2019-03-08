@@ -8,7 +8,7 @@ from database.models import (
 from . import sample
 
 
-def create_simple_term_type():
+def create_simple_term_type(term_type_name=None):
     metadata_schema, _ = Schema.objects.get_or_create(
         name=sample.TERM_METADATA_SCHEMA.name,
         defaults=dict(
@@ -25,8 +25,11 @@ def create_simple_term_type():
             schema=sample.SYNONYM_METADATA_SCHEMA.schema)
     )
 
+    if term_type_name is None:
+        term_type_name = sample.TERM_TYPE
+
     term_type, _ = TermType.objects.get_or_create(
-        name=sample.TERM_TYPE,
+        name=term_type_name,
         defaults=dict(
             description='Sample term type',
             is_categorical=True,

@@ -5,13 +5,13 @@ from database.models import (
     AnnotationVote,
     TermType,
     Term,
-    Schema,
-    EventType,
 )
 
 from .test_annotations import create_simple_annotation
 from .test_users import create_simple_user
 from .test_terms import create_simple_term
+from .test_schemas import create_simple_schema
+from . import sample
 
 
 def create_simple_annotation_vote():
@@ -45,14 +45,6 @@ class AnnotationVoteTestCase(TestCase):
         annotation = create_simple_annotation()
         user = create_simple_user()
 
-        try:
-            term = Term.objects.get(
-                term_type='Sample Invalid Term Type',
-                value='Sample Invalid Term Value')
-            term.delete()
-        except Term.DoesNotExist:
-            pass
-
         label = {
             'Sample Invalid Term Type': 'Sample Invalid Term Value'
         }
@@ -63,21 +55,23 @@ class AnnotationVoteTestCase(TestCase):
                 label=label,
                 created_by=user)
 
-        free_schema = Schema.objects.get(name=Schema.FREE_SCHEMA)
-
+        schema = create_simple_schema()
         term_type, _ = TermType.objects.get_or_create(
             name='Sample Invalid Term Type',
             defaults={
                 'description': 'Sample invalid term type',
                 'is_categorical': True,
-                'metadata_schema': free_schema,
-                'synonym_metadata_schema': free_schema
+                'metadata_schema': schema,
+                'synonym_metadata_schema': schema
             })
-        event_type = EventType.objects.get(name='Sample Event Type')
 
         term, _ = Term.objects.get_or_create(
             term_type=term_type,
-            value='Sample Invalid Term Value')
+            value='Sample Invalid Term Value',
+            metadata=sample.VALID_INSTANCE)
+
+        annotation.event_type.label_term_types.add(term_type)
+        annotation.save()
 
         try:
             AnnotationVote.objects.create(

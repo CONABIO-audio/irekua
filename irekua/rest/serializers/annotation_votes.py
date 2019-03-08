@@ -10,9 +10,10 @@ class AnnotationVoteSerializer(serializers.HyperlinkedModelSerializer):
         many=False,
         read_only=True,
         view_name='annotation-detail')
-    created_by = serializers.PrimaryKeyRelatedField(
+    created_by = serializers.HyperlinkedRelatedField(
         many=False,
-        read_only=True)
+        read_only=True,
+        view_name='user-detail')
 
     class Meta:
         model = db.AnnotationVote

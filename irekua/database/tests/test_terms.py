@@ -6,8 +6,9 @@ from .test_term_types import create_simple_term_type
 from . import sample
 
 
-def create_simple_term():
-    term_type = create_simple_term_type()
+def create_simple_term(term_type=None):
+    if term_type is None:
+        term_type = create_simple_term_type()
     metadata = sample.VALID_INSTANCE
 
     term, _ = Term.objects.get_or_create(

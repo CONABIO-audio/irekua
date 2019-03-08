@@ -6,6 +6,15 @@ import database.models as db
 
 
 class CollectionDeviceSerializer(serializers.HyperlinkedModelSerializer):
+    device = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='physical_device-detail')
+    collection = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='collection-detail')
+
     class Meta:
         model = db.CollectionDevice
         fields = (
@@ -13,6 +22,5 @@ class CollectionDeviceSerializer(serializers.HyperlinkedModelSerializer):
             'device',
             'collection',
             'internal_id',
-            'metadata_type',
-            'metadata',
+            'metadata'
         )

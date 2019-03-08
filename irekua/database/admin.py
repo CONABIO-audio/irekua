@@ -23,6 +23,7 @@ from . import models
     models.DeviceBrand,
     models.DeviceType,
     models.Entailment,
+    models.EntailmentType,
     models.EventType,
     models.Institution,
     models.Item,

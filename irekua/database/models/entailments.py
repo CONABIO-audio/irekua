@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
-from database.models.schemas import Schema
+from database.models.entailment_types import EntailmentType
 
 
 class Entailment(models.Model):
@@ -23,19 +23,6 @@ class Entailment(models.Model):
         help_text=_('Target of entailment'),
         on_delete=models.CASCADE,
         blank=False)
-    metadata_schema = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        db_column='metadata_schema_id',
-        verbose_name=_('metadata schema'),
-        help_text=_('JSON schema for entailment metadata'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.ENTAILMENT_METADATA) |
-            models.Q(field__exact=Schema.GLOBAL)),
-        to_field='name',
-        default=Schema.FREE_SCHEMA,
-        blank=False,
-        null=False)
     metadata = JSONField(
         db_column='metadata',
         verbose_name=_('metadata'),
@@ -56,7 +43,18 @@ class Entailment(models.Model):
 
     def clean(self):
         try:
-            self.metadata_schema.validate_instance(self.metadata)
+            entailment_type = EntailmentType.objects.get(
+                source_type=self.source.term_type,
+                target_type=self.target.term_type)
+        except EntailmentType.DoesNotExist:
+            msg = _('Entailment between types %(source_type)s and %(target_type)s is not possible')
+            params = dict(
+                source_type=self.source.term_type,
+                target_type=self.target.term_type)
+            raise ValidationError({'target': msg}, params=params)
+
+        try:
+            entailment_type.validate_metadata(self.metadata)
         except ValidationError as error:
             msg = _('Invalid entailment metadata. Error %(error)s')
             params = dict(error=str(error))

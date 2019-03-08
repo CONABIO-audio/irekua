@@ -5,25 +5,25 @@ from rest_framework import serializers
 import database.models as db
 
 
-class CollectionRoleSerializer(serializers.HyperlinkedModelSerializer):
+class CollectionItemTypeSerializer(serializers.HyperlinkedModelSerializer):
     collection_type = serializers.HyperlinkedRelatedField(
         many=False,
         read_only=True,
         view_name='collection_type-detail')
-    role = serializers.HyperlinkedRelatedField(
+    item_type = serializers.HyperlinkedRelatedField(
         many=False,
         read_only=True,
-        view_name='role-detail')
+        view_name='item_type-detail')
     metadata_schema = serializers.HyperlinkedRelatedField(
         many=False,
         read_only=True,
         view_name='schema-detail')
 
     class Meta:
-        model = db.CollectionRole
+        model = db.CollectionItemType
         fields = (
             'url',
             'collection_type',
-            'role',
-            'metadata_schema'
+            'item_type',
+            'metadata_schema',
         )

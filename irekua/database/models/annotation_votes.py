@@ -64,5 +64,5 @@ class AnnotationVote(models.Model):
             params = dict(
                 type=str(self.annotation.event_type),
                 error=str(error))
-            raise ValidationError({'label': msg}, params=params)
+            raise ValidationError({'label': msg % params}, params=params)
         super(AnnotationVote, self).clean()

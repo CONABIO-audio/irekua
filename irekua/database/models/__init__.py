@@ -15,6 +15,7 @@ from .device_brands import DeviceBrand
 from .device_types import DeviceType
 from .devices import Device
 from .entailments import Entailment
+from .entailment_types import EntailmentType
 from .event_types import EventType
 from .institutions import Institution
 from .item_types import ItemType
@@ -58,6 +59,7 @@ __all__ = [
     'DeviceBrand',
     'DeviceType',
     'Entailment',
+    'EntailmentType',
     'EventType',
     'Institution',
     'Item',

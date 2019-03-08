@@ -5,27 +5,20 @@ from rest_framework import serializers
 import database.models as db
 
 
-class CollectionUserSerializer(serializers.HyperlinkedModelSerializer):
+class CollectionLicenceSerializer(serializers.HyperlinkedModelSerializer):
     collection = serializers.HyperlinkedRelatedField(
         many=False,
         read_only=True,
         view_name='collection-detail')
-    user = serializers.HyperlinkedRelatedField(
+    licence = serializers.HyperlinkedRelatedField(
         many=False,
         read_only=True,
-        view_name='user-detail')
-    role = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='role-detail')
+        view_name='licence-detail')
 
     class Meta:
-        model = db.CollectionUser
+        model = db.CollectionLicence
         fields = (
             'url',
             'collection',
-            'user',
-            'role',
-            'metadata',
-            'is_admin',
+            'licence',
         )
