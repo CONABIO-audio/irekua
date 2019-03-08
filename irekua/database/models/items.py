@@ -24,7 +24,8 @@ class Item(models.Model):
         verbose_name=_('path'),
         unique=True,
         help_text=_('Path to resource'),
-        blank=False)
+        blank=True,
+        null=True)
     filesize = models.IntegerField(
         db_column='filesize',
         verbose_name=_('file size'),
