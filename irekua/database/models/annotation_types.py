@@ -1,8 +1,13 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
-from database.models.schemas import Schema
+from database.utils import (
+    validate_JSON_schema,
+    validate_JSON_instance,
+    simple_JSON_schema
+)
 
 
 class AnnotationType(models.Model):
@@ -17,15 +22,14 @@ class AnnotationType(models.Model):
         db_column='description',
         verbose_name=_('description'),
         help_text=_('Description of annotation type'))
-    schema = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
+    annotation_schema = JSONField(
+        db_column='annotation_schema',
+        verbose_name=_('annotation schema'),
+        help_text=_('JSON Schema for annotation info'),
         blank=False,
         null=False,
-        db_column='schema_id',
-        verbose_name=_('schema'),
-        limit_choices_to={'field': Schema.ANNOTATION},
-        help_text=_('JSON schema for annotation type'))
+        default=simple_JSON_schema,
+        validators=[validate_JSON_schema])
     icon = models.ImageField(
         db_column='icon',
         upload_to='images/annotation_types/',
@@ -43,7 +47,9 @@ class AnnotationType(models.Model):
 
     def validate_annotation(self, annotation):
         try:
-            self.schema.validate_instance(annotation)
+            validate_JSON_instance(
+                schema=self.annotation_schema,
+                instance=annotation)
         except ValidationError as error:
             msg = _('Invalid annotation for annotation type %(type)s. Error: %(error)s')
             params = dict(type=str(self), error=str(error))

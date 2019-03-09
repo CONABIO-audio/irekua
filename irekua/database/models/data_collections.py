@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
     GENERIC_COLLECTION,
-    empty_json,
+    empty_JSON,
 )
 
 from .collection_licences import CollectionLicence
@@ -43,7 +43,7 @@ class Collection(models.Model):
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to collection'),
         blank=True,
-        default=empty_json,
+        default=empty_JSON,
         null=False)
     institution = models.ForeignKey(
         'Institution',

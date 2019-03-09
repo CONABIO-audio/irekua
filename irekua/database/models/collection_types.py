@@ -1,9 +1,14 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
-from database.models.schemas import Schema
+from database.utils import (
+    validate_JSON_schema,
+    validate_JSON_instance,
+    simple_JSON_schema,
+)
 
 
 class CollectionType(models.Model):
@@ -19,15 +24,14 @@ class CollectionType(models.Model):
         verbose_name=_('description'),
         help_text=_('Description of collection type'),
         blank=False)
-    metadata_schema = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        db_column='metadata_schema_id',
+    metadata_schema = JSONField(
+        db_column='metadata_schema',
         verbose_name=_('metadata schema'),
-        help_text=_('JSON Schema to be used with collection metadata for collections of this type'),
-        limit_choices_to={'field': Schema.COLLECTION_METADATA},
-        blank=False,
-        null=False)
+        help_text=_('JSON Schema for metadata of collection info'),
+        blank=True,
+        null=False,
+        default=simple_JSON_schema,
+        validators=[validate_JSON_schema])
 
     anyone_can_create = models.BooleanField(
         db_column='anyone_can_create',
@@ -46,31 +50,52 @@ class CollectionType(models.Model):
     restrict_site_types = models.BooleanField(
         db_column='restrict_site_types',
         verbose_name=_('restrict site types'),
-        help_text=_('Flag indicating whether types of sites are restricted to registered ones'))
+        help_text=_('Flag indicating whether types of sites are restricted to registered ones'),
+        default=True,
+        null=False,
+        blank=True)
     restrict_annotation_types = models.BooleanField(
         db_column='restrict_annotation_types',
         verbose_name=_('restrict annotation types'),
-        help_text=_('Flag indicating whether types of annotations are restricted to registered ones'))
+        help_text=_('Flag indicating whether types of annotations are restricted to registered ones'),
+        default=True,
+        null=False,
+        blank=True)
     restrict_item_types = models.BooleanField(
         db_column='restrict_item_types',
         verbose_name=_('restrict item types'),
-        help_text=_('Flag indicating whether types of items are restricted to registered ones'))
+        help_text=_('Flag indicating whether types of items are restricted to registered ones'),
+        default=True,
+        null=False,
+        blank=True)
     restrict_licence_types = models.BooleanField(
         db_column='restrict_licence_types',
         verbose_name=_('restrict licence types'),
-        help_text=_('Flag indicating whether types of licences are restricted to registered ones'))
+        help_text=_('Flag indicating whether types of licences are restricted to registered ones'),
+        default=True,
+        null=False,
+        blank=True)
     restrict_device_types = models.BooleanField(
         db_column='restrict_device_types',
         verbose_name=_('restrict device types'),
-        help_text=_('Flag indicating whether types of devices are restricted to registered ones'))
+        help_text=_('Flag indicating whether types of devices are restricted to registered ones'),
+        default=True,
+        null=False,
+        blank=True)
     restrict_event_types = models.BooleanField(
         db_column='restrict_event_types',
         verbose_name=_('restrict event types'),
-        help_text=_('Flag indicating whether types of events are restricted to registered ones'))
+        help_text=_('Flag indicating whether types of events are restricted to registered ones'),
+        default=True,
+        null=False,
+        blank=True)
     restrict_sampling_event_types = models.BooleanField(
         db_column='restrict_sampling_event_types',
         verbose_name=_('restrict sampling event types'),
-        help_text=_('Flag indicating whether types of sampling events are restricted to registered ones'))
+        help_text=_('Flag indicating whether types of sampling events are restricted to registered ones'),
+        default=True,
+        null=False,
+        blank=True)
 
     site_types = models.ManyToManyField(
         'SiteType',
@@ -136,7 +161,9 @@ class CollectionType(models.Model):
 
     def validate_metadata(self, metadata):
         try:
-            self.metadata_schema.validate_instance(metadata)
+            validate_JSON_instance(
+                schema=self.metadata_schema,
+                instance=metadata)
         except ValidationError as error:
             msg = _('Invalid collection metadata for collection of type %(type)s. Error: %(error)s')
             params = dict(type=str(self), error=str(error))

@@ -1,30 +1,11 @@
 from django.test import TestCase
 
-from database.models import (
-    TermType,
-    Schema
-)
+from database.models import TermType
 
 from . import sample
 
 
 def create_simple_term_type(term_type_name=None):
-    metadata_schema, _ = Schema.objects.get_or_create(
-        name=sample.TERM_METADATA_SCHEMA.name,
-        defaults=dict(
-            field=Schema.TERM_METADATA,
-            description='Sample term metadata schema',
-            schema=sample.TERM_METADATA_SCHEMA.schema)
-    )
-
-    synonym_metadata_schema, _ = Schema.objects.get_or_create(
-        name=sample.SYNONYM_METADATA_SCHEMA.name,
-        defaults=dict(
-            field=Schema.SYNONYM_METADATA,
-            description='Sample synonym metadata schema',
-            schema=sample.SYNONYM_METADATA_SCHEMA.schema)
-    )
-
     if term_type_name is None:
         term_type_name = sample.TERM_TYPE
 
@@ -33,8 +14,8 @@ def create_simple_term_type(term_type_name=None):
         defaults=dict(
             description='Sample term type',
             is_categorical=True,
-            metadata_schema=metadata_schema,
-            synonym_metadata_schema=synonym_metadata_schema)
+            metadata_schema=sample.SCHEMA,
+            synonym_metadata_schema=sample.SCHEMA)
     )
 
     return term_type

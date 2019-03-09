@@ -1,8 +1,13 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.contrib.postgres.fields import JSONField
 
-from database.models.schemas import Schema
+from database.utils import (
+    validate_JSON_schema,
+    validate_JSON_instance,
+    simple_JSON_schema,
+)
 
 
 class LicenceType(models.Model):
@@ -18,15 +23,14 @@ class LicenceType(models.Model):
         verbose_name=_('description'),
         help_text=_('Description of licence'),
         blank=False)
-    metadata_schema = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        db_column='metadata_schema_id',
+    metadata_schema = JSONField(
+        db_column='metadata_schema',
         verbose_name=_('metadata schema'),
-        help_text=_('Schema for licence metadata structure'),
-        limit_choices_to={'field': Schema.LICENCE_METADATA},
-        blank=False,
-        null=False)
+        help_text=_('JSON Schema for metadata of licence info'),
+        blank=True,
+        null=False,
+        default=simple_JSON_schema,
+        validators=[validate_JSON_schema])
     document_template = models.CharField(
         max_length=128,
         unique=True,

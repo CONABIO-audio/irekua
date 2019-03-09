@@ -27,7 +27,6 @@ from .physical_devices import PhysicalDeviceViewSet
 from .roles import RoleViewSet
 from .sampling_events import SamplingEventViewSet
 from .sampling_event_types import SamplingEventTypeViewSet
-from .schemas import SchemaViewSet
 from .secondary_items import SecondaryItemViewSet
 from .site_types import SiteTypeViewSet
 from .sites import SiteViewSet
@@ -71,7 +70,6 @@ __all__ = [
     'RoleViewSet',
     'SamplingEventViewSet',
     'SamplingEventTypeViewSet',
-    'SchemaViewSet',
     'SecondaryItemViewSet',
     'SiteViewSet',
     'SiteTypeViewSet',

@@ -1,8 +1,13 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.contrib.postgres.fields import JSONField
 
-from database.models.schemas import Schema
+from database.utils import (
+    validate_JSON_schema,
+    validate_JSON_instance,
+    simple_JSON_schema,
+)
 
 
 class Device(models.Model):
@@ -28,30 +33,22 @@ class Device(models.Model):
         verbose_name=_('model'),
         help_text=_('Model of device'),
         blank=False)
-    metadata_schema = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        related_name='device_metadata_schema',
-        db_column='metadata_schema_id',
+    metadata_schema = JSONField(
+        db_column='metadata_schema',
         verbose_name=_('metadata schema'),
-        help_text=_('JSON schema for device metadata'),
-        limit_choices_to={'field': Schema.DEVICE_METADATA},
-        blank=False,
-        null=False)
-    configuration_schema = models.ForeignKey(
-        'Schema',
-        related_name='device_configuration_schema',
-        on_delete=models.PROTECT,
-        db_column='configuration_schema_id',
+        help_text=_('JSON Schema for metadata of device info'),
+        blank=True,
+        null=False,
+        default=simple_JSON_schema,
+        validators=[validate_JSON_schema])
+    configuration_schema = JSONField(
+        db_column='configuration_schema',
         verbose_name=_('configuration schema'),
-        help_text=_('JSON schema for device configuration'),
-        limit_choices_to=(
-            models.Q(field__exact=Schema.DEVICE_CONFIGURATION) |
-            models.Q(field__exact=Schema.GLOBAL)),
-        to_field='name',
-        default=Schema.FREE_SCHEMA,
-        blank=False,
-        null=False)
+        help_text=_('JSON Schema for configuration info of device'),
+        blank=True,
+        null=False,
+        default=simple_JSON_schema,
+        validators=[validate_JSON_schema])
 
     class Meta:
         verbose_name = _('Device')

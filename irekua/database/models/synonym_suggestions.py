@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    empty_json
+    empty_JSON
 )
 
 
@@ -31,7 +31,7 @@ class SynonymSuggestion(models.Model):
         db_column='metadata',
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to synonym'),
-        default=empty_json,
+        default=empty_JSON,
         null=True)
     suggested_by = models.ForeignKey(
         User,

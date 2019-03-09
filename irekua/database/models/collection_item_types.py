@@ -1,8 +1,13 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
-from .schemas import Schema
+from database.utils import (
+    validate_JSON_schema,
+    validate_JSON_instance,
+    simple_JSON_schema,
+)
 
 
 class CollectionItemType(models.Model):
@@ -22,15 +27,14 @@ class CollectionItemType(models.Model):
         help_text=_('Item to be part of collection'),
         blank=False,
         null=False)
-    metadata_schema = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        db_column='metadata_type',
-        verbose_name=_('metadata type'),
-        help_text=_('JSON schema for collection item metadata'),
-        limit_choices_to={'field': Schema.ITEM_METADATA},
-        blank=False,
-        null=False)
+    metadata_schema = JSONField(
+        db_column='metadata_schema',
+        verbose_name=_('metadata schema'),
+        help_text=_('JSON Schema for metadata of collection item info'),
+        blank=True,
+        null=False,
+        default=simple_JSON_schema,
+        validators=[validate_JSON_schema])
 
     class Meta:
         verbose_name = _('Collection Item Type')
@@ -43,7 +47,9 @@ class CollectionItemType(models.Model):
 
     def validate_metadata(self, metadata):
         try:
-            self.metadata_schema.validate_instance(metadata)
+            validate_JSON_instance(
+                schema=self.metadata_schema,
+                instance=metadata)
         except ValidationError as error:
             msg = _('Invalid metadata for item type %(type)s in collection %(collection). Error: %(error)')
             params = dict(

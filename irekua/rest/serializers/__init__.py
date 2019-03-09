@@ -27,7 +27,6 @@ from .physical_devices import PhysicalDeviceSerializer
 from .roles import RoleSerializer
 from .sampling_events import SamplingEventSerializer
 from .sampling_event_types import SamplingEventTypeSerializer
-from .schemas import SchemaSerializer
 from .secondary_items import SecondaryItemSerializer
 from .site_types import SiteTypeSerializer
 from .sites import SiteSerializer
@@ -71,7 +70,6 @@ __all__ = [
     'RoleSerializer',
     'SamplingEventSerializer',
     'SamplingEventTypeSerializer',
-    'SchemaSerializer',
     'SecondaryItemSerializer',
     'SiteSerializer',
     'SiteTypeSerializer',

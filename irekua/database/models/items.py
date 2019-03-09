@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    empty_json,
+    empty_JSON,
 )
 
 
@@ -54,7 +54,7 @@ class Item(models.Model):
         blank=False)
     media_info = JSONField(
         db_column='media_info',
-        default=empty_json,
+        default=empty_JSON,
         verbose_name=_('media info'),
         help_text=_('Information of resource file'),
         blank=False)
@@ -82,7 +82,7 @@ class Item(models.Model):
         blank=True)
     metadata = JSONField(
         db_column='metadata',
-        default=empty_json,
+        default=empty_JSON,
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to item'),
         blank=True,

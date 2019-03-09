@@ -1,28 +1,17 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 
-from database.models import (
-    AnnotationType,
-    Schema
-)
+from database.models import AnnotationType
 
 from . import sample
 
 
 def create_simple_annotation_type():
-    schema, _ = Schema.objects.get_or_create(
-        name=sample.ANNOTATION_SCHEMA.name,
-        defaults=dict(
-            field='annotation',
-            description="Sample annotation schema",
-            schema=sample.ANNOTATION_SCHEMA.schema)
-    )
-
     annotation_type, _ = AnnotationType.objects.get_or_create(
         name=sample.ANNOTATION_TYPE,
         defaults=dict(
             description='sample annotation type',
-            schema=schema)
+            annotation_schema=sample.ANNOTATION_SCHEMA)
     )
 
     return annotation_type

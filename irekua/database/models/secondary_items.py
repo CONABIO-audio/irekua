@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    empty_json
+    empty_JSON
 )
 
 
@@ -64,7 +64,7 @@ class SecondaryItem(models.Model):
         db_column='media_info',
         verbose_name=_('media info'),
         help_text=_('Media information of secondary item file'),
-        default=empty_json,
+        default=empty_JSON,
         blank=True,
         null=True)
 

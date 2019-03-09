@@ -1,21 +1,42 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
+import jsonschema
 
 
-FREE_SCHEMA = _('free')
 GENERIC_SAMPLING_EVENT = _('generic sampling event')
 GENERIC_SITE = _('generic site')
 GENERIC_COLLECTION = _('generic collection')
 
-
-def validate_are_same_term_type(source, target):
-    if source.term_type != target.term_type:
-        msg = _('Term types must be equal for synonyms ({type1} != {type2})')
-        msg = msg.format(
-            type1=source.term_type,
-            type2=target.term_type)
-        raise ValidationError(msg)
+SIMPLE_JSON_SCHEMA = {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "title": _("Free JSON Schema")
+}
 
 
-def empty_json():
+def validate_JSON_schema(schema):
+    try:
+        jsonschema.validate(schema=schema, instance={})
+    except jsonschema.exceptions.SchemaError as error:
+        msg = _('JSON Schema is not valid. Error: %(error)s')
+        params = dict(error=str(error))
+        raise ValidationError(msg, params=params)
+    except jsonschema.exceptions.ValidationError:
+        pass
+
+
+def validate_JSON_instance(schema=None, instance=None):
+    try:
+        jsonschema.validate(schema=schema, instance=instance)
+    except jsonschema.exceptions.ValidationError as error:
+        msg = _('Instance does not comply with JSON schema. Error: %(error)s')
+        params = dict(error=str(error))
+        raise ValidationError(msg, params=params)
+
+
+def simple_JSON_schema():
+    return SIMPLE_JSON_SCHEMA
+
+
+def empty_JSON():
     return {}

@@ -27,7 +27,6 @@ from .physical_devices import PhysicalDevice
 from .roles import Role
 from .sampling_events import SamplingEvent
 from .sampling_event_types import SamplingEventType
-from .schemas import Schema
 from .secondary_items import SecondaryItem
 from .site_types import SiteType
 from .sites import Site
@@ -71,7 +70,6 @@ __all__ = [
     'Role',
     'SamplingEvent',
     'SamplingEventType',
-    'Schema',
     'SecondaryItem',
     'Site',
     'SiteType',

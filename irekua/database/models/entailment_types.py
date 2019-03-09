@@ -1,8 +1,13 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.contrib.postgres.fields import JSONField
 
-from database.models.schemas import Schema
+from database.utils import (
+    validate_JSON_schema,
+    validate_JSON_instance,
+    simple_JSON_schema,
+)
 
 
 class EntailmentType(models.Model):
@@ -24,15 +29,14 @@ class EntailmentType(models.Model):
         on_delete=models.CASCADE,
         blank=False,
         null=False)
-    metadata_schema = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        db_column='metadata_schema_id',
+    metadata_schema = JSONField(
+        db_column='metadata_schema',
         verbose_name=_('metadata schema'),
-        help_text=_('JSON schema for entailment metadata'),
-        limit_choices_to={'field': Schema.ENTAILMENT_METADATA},
-        blank=False,
-        null=False)
+        help_text=_('JSON Schema for metadata of entailment info'),
+        blank=True,
+        null=False,
+        default=simple_JSON_schema,
+        validators=[validate_JSON_schema])
 
     class Meta:
         verbose_name = _('Entailment Type')
@@ -53,7 +57,9 @@ class EntailmentType(models.Model):
 
     def validate_metadata(self, metadata):
         try:
-            self.metadata_schema.validate_instance(metadata)
+            validate_JSON_instance(
+                schema=self.metadata_schema,
+                instance=metadata)
         except ValidationError as error:
             msg = _('Invalid metadata for entailment between terms of types %(entailment)s. Error: %(error)s')
             params = dict(

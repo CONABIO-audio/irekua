@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    empty_json
+    empty_JSON
 )
 
 
@@ -38,7 +38,7 @@ class PhysicalDevice(models.Model):
         db_column='metadata',
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to device'),
-        default=empty_json,
+        default=empty_JSON,
         null=True,
         blank=True)
     bundle = models.BooleanField(

@@ -10,7 +10,6 @@ from database.models import (
 from .test_annotations import create_simple_annotation
 from .test_users import create_simple_user
 from .test_terms import create_simple_term
-from .test_schemas import create_simple_schema
 from . import sample
 
 
@@ -55,14 +54,13 @@ class AnnotationVoteTestCase(TestCase):
                 label=label,
                 created_by=user)
 
-        schema = create_simple_schema()
         term_type, _ = TermType.objects.get_or_create(
             name='Sample Invalid Term Type',
             defaults={
                 'description': 'Sample invalid term type',
                 'is_categorical': True,
                 'metadata_schema': schema,
-                'synonym_metadata_schema': schema
+                'synonym_metadata_schema': sample.SCHEMA
             })
 
         term, _ = Term.objects.get_or_create(

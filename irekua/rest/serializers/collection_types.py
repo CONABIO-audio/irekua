@@ -5,43 +5,30 @@ from rest_framework import serializers
 import database.models as db
 
 
+from .site_types import SiteTypeSerializer
+from .annotation_types import AnnotationTypeSerializer
+from .licence_types import LicenceTypeSerializer
+from .event_types import EventTypeSerializer
+from .sampling_event_types import SamplingEventTypeSerializer
+from .device_types import DeviceTypeSerializer
+from .roles import RoleSerializer
+from .item_types import ItemTypeSerializer
+
+
 class CollectionTypeSerializer(serializers.HyperlinkedModelSerializer):
-    metadata_schema = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='schema-detail')
-    site_types = serializers.HyperlinkedRelatedField(
+    site_types = SiteTypeSerializer(many=True, read_only=True)
+    annotation_types = AnnotationTypeSerializer(many=True, read_only=True)
+    licence_types = LicenceTypeSerializer(many=True, read_only=True,)
+    event_types = EventTypeSerializer(many=True, read_only=True)
+    sampling_event_types = SamplingEventTypeSerializer(many=True, read_only=True)
+    item_types = ItemTypeSerializer(many=True, read_only=True)
+    device_types = DeviceTypeSerializer(many=True, read_only=True)
+    roles = RoleSerializer(many=True, read_only=True)
+
+    administrators = serializers.SlugRelatedField(
         many=True,
         read_only=True,
-        view_name='site_type-detail')
-    annotation_types = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='annotation_type-detail')
-    licence_types = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='licence_type-detail')
-    event_types = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='site_type-detail')
-    sampling_event_types = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='sampling_event_type-detail')
-    item_types = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='item_type-detail')
-    device_types = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='device_type-detail')
-    roles = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='role-detail')
+        slug_field='username')
 
     class Meta:
         model = db.CollectionType

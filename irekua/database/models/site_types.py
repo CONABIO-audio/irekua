@@ -1,7 +1,12 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.contrib.postgres.fields import JSONField
 
-from database.models.schemas import Schema
+from database.utils import (
+    validate_JSON_schema,
+    validate_JSON_instance,
+    simple_JSON_schema
+)
 
 
 class SiteType(models.Model):
@@ -17,15 +22,14 @@ class SiteType(models.Model):
         verbose_name=_('description'),
         help_text=_('Description of site type'),
         blank=False)
-    metadata_schema = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        db_column='metadata_type',
-        verbose_name=_('metadata type'),
-        help_text=_('Schema for site metadata'),
-        limit_choices_to={'field': Schema.SITE_METADATA},
-        blank=False,
-        null=False)
+    metadata_schema = JSONField(
+        db_column='metadata_schema',
+        verbose_name=_('metadata schema'),
+        help_text=_('JSON Schema for metadata of site info'),
+        blank=True,
+        null=False,
+        default=simple_JSON_schema,
+        validators=[validate_JSON_schema])
 
     class Meta:
         verbose_name = _('Site Type')
@@ -36,7 +40,9 @@ class SiteType(models.Model):
 
     def validate_metadata(self, metadata):
         try:
-            self.metadata_schema.validate_instance(metadata)
+            validate_JSON_instance(
+                schema=self.metadata_schema,
+                instance=metadata)
         except ValidationError as error:
             msg = _('Invalid site metadata for site of type %(type)s. Error: %(error)')
             params = dict(type=str(self), error=str(error))

@@ -1,8 +1,13 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.contrib.postgres.fields import JSONField
 
-from .schemas import Schema
+from database.utils import (
+    validate_JSON_schema,
+    validate_JSON_instance,
+    simple_JSON_schema,
+)
 
 
 class SamplingEventType(models.Model):
@@ -25,15 +30,14 @@ class SamplingEventType(models.Model):
         upload_to='images/sampling_event_types/',
         blank=True,
         null=True)
-    metadata_schema = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
+    metadata_schema = JSONField(
         db_column='metadata_schema',
         verbose_name=_('metadata schema'),
-        help_text=_('Schema for metadata for sampling event of this type'),
-        limit_choices_to={'field': Schema.SAMPLING_EVENT_METADATA},
-        blank=False,
-        null=False)
+        help_text=_('JSON Schema for metadata of sampling event info'),
+        blank=True,
+        null=False,
+        default=simple_JSON_schema,
+        validators=[validate_JSON_schema])
 
     restrict_device_types = models.BooleanField(
         db_column='restrict_device_types',
@@ -72,7 +76,9 @@ class SamplingEventType(models.Model):
 
     def validate_metadata(self, metadata):
         try:
-            self.metadata_schema.validate_instance(metadata)
+            validate_JSON_instance(
+                schema=self.metadata_schema,
+                instance=metadata)
         except ValidationError as error:
             msg = _('Invalid metadata for sampling event of type %(type)s. Error: %(error)')
             params = dict(type=str(self), error=str(error))

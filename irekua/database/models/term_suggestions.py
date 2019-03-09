@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    empty_json
+    empty_JSON
 )
 
 
@@ -32,7 +32,7 @@ class TermSuggestion(models.Model):
     metadata = JSONField(
         blank=True,
         db_column='metadata',
-        default=empty_json,
+        default=empty_JSON,
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to term'),
         null=True)

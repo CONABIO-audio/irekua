@@ -1,14 +1,18 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
-from database.models.schemas import Schema
+from database.utils import (
+    simple_JSON_schema,
+    validate_JSON_instance,
+    validate_JSON_schema,
+)
 
 
 class AnnotationTool(models.Model):
     name = models.CharField(
         max_length=64,
-        primary_key=True,
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name of annotation tool'),
@@ -37,19 +41,20 @@ class AnnotationTool(models.Model):
         help_text=_('Resource location'),
         blank=True,
         null=True)
-    configuration_schema = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        db_column='configuration_schema_id',
+    configuration_schema = JSONField(
+        db_column='configuration_schema',
         verbose_name=_('configuration schema'),
-        help_text=_('JSON schema for configuration of annotation tool'),
-        limit_choices_to={'field': Schema.ANNOTATION_CONFIGURATION},
-        blank=False,
-        null=False)
+        help_text=_('JSON schema for annotation tool configuration info'),
+        blank=True,
+        null=False,
+        validators=[validate_JSON_schema],
+        default=simple_JSON_schema)
 
     class Meta:
         verbose_name = _('Annotation Tool')
         verbose_name_plural = _('Annotation Tools')
+
+        unique_together = (('name', 'version'))
 
     def __str__(self):
         msg = self.name
@@ -59,7 +64,9 @@ class AnnotationTool(models.Model):
 
     def validate_configuration(self, configuration):
         try:
-            self.configuration_schema.validate_instance(configuration)
+            validate_JSON_instance(
+                schema=self.configuration_schema,
+                instance=configuration)
         except ValidationError as error:
             msg = _('Invalid annotation tool configuration. Error: %(error)s')
             params = dict(error=str(error))

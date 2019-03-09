@@ -2,29 +2,18 @@ from django.test import TestCase
 from django.core.exceptions import ValidationError
 
 # Create your tests here.
-from database.models import (
-    AnnotationTool,
-    Schema
-)
+from database.models import AnnotationTool
 
 from . import sample
 
 
 def create_simple_annotation_tool():
-    schema, _ = Schema.objects.get_or_create(
-        name=sample.ANNOTATION_TOOL_CONFIGURATION_SCHEMA.name,
-        defaults=dict(
-            field=Schema.ANNOTATION_CONFIGURATION,
-            description='Sample device configuration schema',
-            schema=sample.ANNOTATION_TOOL_CONFIGURATION_SCHEMA.schema)
-    )
-
     annotation_tool, _ = AnnotationTool.objects.get_or_create(
         name=sample.ANNOTATION_TOOL,
         defaults=dict(
             version="1.0",
             description="Sample Annotation tool",
-            configuration_schema=schema)
+            configuration_schema=sample.SCHEMA)
     )
 
     return annotation_tool

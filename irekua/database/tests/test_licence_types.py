@@ -1,27 +1,16 @@
 from django.test import TestCase
 
-from database.models import (
-    LicenceType,
-    Schema
-)
+from database.models import LicenceType
 
 from . import sample
 
 
 def create_simple_licence_type():
-    metadata_schema, _ = Schema.objects.get_or_create(
-        name=sample.LICENCE_METADATA_SCHEMA.name,
-        defaults=dict(
-            field=Schema.LICENCE_METADATA,
-            description='Sample licence metadata schema',
-            schema=sample.LICENCE_METADATA_SCHEMA.schema)
-    )
-
     licence_type, _ = LicenceType.objects.get_or_create(
         name=sample.LICENCE_TYPE,
         defaults=dict(
             description='Sample licence type',
-            metadata_schema=metadata_schema,
+            metadata_schema=sample.SCHEMA,
             years_valid_for=3,
             can_view=True,
             can_download=True,

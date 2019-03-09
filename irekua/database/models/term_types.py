@@ -1,8 +1,13 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from django.contrib.postgres.fields import JSONField
 
-from database.models.schemas import Schema
+from database.utils import (
+    validate_JSON_schema,
+    validate_JSON_instance,
+    simple_JSON_schema,
+)
 
 
 class TermType(models.Model):
@@ -31,26 +36,22 @@ class TermType(models.Model):
         help_text=_('Flag indicating whether the term type represents a categorical variable'),
         blank=False,
         null=False)
-    metadata_schema = models.ForeignKey(
-        'Schema',
-        related_name='term_metadata_type',
-        on_delete=models.PROTECT,
-        db_column='metadata_schema_id',
+    metadata_schema = JSONField(
+        db_column='metadata_schema',
         verbose_name=_('metadata schema'),
-        help_text=_('JSON schema for metadata of terms of type'),
-        limit_choices_to={'field': Schema.TERM_METADATA},
-        blank=False,
-        null=False)
-    synonym_metadata_schema = models.ForeignKey(
-        'Schema',
-        related_name='term_synonym_metadata_schema',
-        on_delete=models.PROTECT,
-        db_column='synonym_metadata_schema_id',
+        help_text=_('JSON Schema for metadata of term info'),
+        blank=True,
+        null=False,
+        default=simple_JSON_schema,
+        validators=[validate_JSON_schema])
+    synonym_metadata_schema = JSONField(
+        db_column='synonym_metadata_schema',
         verbose_name=_('synonym metadata schema'),
-        help_text=_('JSON schema for metadata of synonyms of terms of type'),
-        limit_choices_to={'field': Schema.SYNONYM_METADATA},
-        blank=False,
-        null=False)
+        help_text=_('JSON Schema for metadata of synonym info'),
+        blank=True,
+        null=False,
+        default=simple_JSON_schema,
+        validators=[validate_JSON_schema])
 
     class Meta:
         verbose_name = _('Term Type')
@@ -81,7 +82,9 @@ class TermType(models.Model):
 
     def validate_metadata(self, metadata):
         try:
-            self.metadata_schema.validate_instance(metadata)
+            validate_JSON_instance(
+                schema=self.metadata_schema,
+                instance=metadata)
         except ValidationError as error:
             msg = _('Invalid metadata for term of type %(type)s. Error: %(error)s')
             params = dict(type=str(self), error=str(error))
@@ -89,7 +92,9 @@ class TermType(models.Model):
 
     def validate_synonym_metadata(self, metadata):
         try:
-            self.synonym_metadata_schema.validate_instance(metadata)
+            validate_JSON_instance(
+                schema=self.synonym_metadata_schema,
+                instance=metadata)
         except ValidationError as error:
             msg = _('Invalid metadata for synonym of terms of type %(type)s. Error: %(error)s')
             params = dict(type=str(self), error=str(error))

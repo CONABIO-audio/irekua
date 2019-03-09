@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    empty_json,
+    empty_JSON,
 )
 
 
@@ -44,7 +44,7 @@ class Annotation(models.Model):
         db_column='label',
         verbose_name=_('label'),
         help_text=_('Labels associated to annotation'),
-        default=empty_json,
+        default=empty_JSON,
         blank=False,
         null=False)
     annotation_type = models.ForeignKey(
@@ -57,14 +57,14 @@ class Annotation(models.Model):
     annotation = JSONField(
         db_column='annotation',
         verbose_name=_('annotation'),
-        default=empty_json,
+        default=empty_JSON,
         help_text=_('Information of annotation location within item'),
         blank=False,
         null=False)
     annotation_configuration = JSONField(
         db_column='annotation_configuration',
         verbose_name=_('annotation configuration'),
-        default=empty_json,
+        default=empty_JSON,
         help_text=_('Configuration of annotation tool'),
         blank=False,
         null=False)

@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    empty_json
+    empty_JSON
 )
 
 
@@ -21,7 +21,7 @@ class AnnotationVote(models.Model):
     label = HStoreField(
         db_column='label',
         verbose_name=_('label'),
-        default=empty_json,
+        default=empty_JSON,
         help_text=_('Labels associated to annotation vote'),
         blank=False,
         null=False)

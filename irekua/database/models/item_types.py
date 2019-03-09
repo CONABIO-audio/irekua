@@ -2,8 +2,13 @@ import mimetypes
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from django.contrib.postgres.fields import JSONField
 
-from database.models.schemas import Schema
+from database.utils import (
+    validate_JSON_schema,
+    validate_JSON_instance,
+    simple_JSON_schema,
+)
 
 
 mimetypes.init()
@@ -27,15 +32,14 @@ class ItemType(models.Model):
         verbose_name=_('description'),
         help_text=_('Description of item type'),
         blank=False)
-    media_info_schema = models.ForeignKey(
-        'Schema',
-        on_delete=models.CASCADE,
-        db_column='media_info_schema_id',
+    media_info_schema = JSONField(
+        db_column='media_info_schema',
         verbose_name=_('media info schema'),
-        limit_choices_to={'field': Schema.ITEM_MEDIA_INFO},
-        help_text=_('Reference to JSON Schema to be used with media info of this item type'),
+        help_text=_('JSON Schema for item type media info'),
         blank=False,
-        null=False)
+        null=False,
+        default=simple_JSON_schema,
+        validators=[validate_JSON_schema])
     media_type = models.CharField(
         max_length=128,
         db_column='media_type',
@@ -67,7 +71,9 @@ class ItemType(models.Model):
 
     def validate_media_info(self, media_info):
         try:
-            self.media_info_schema.validate_instance(media_info)
+            validate_JSON_instance(
+                schema=self.media_info_schema,
+                instance=media_info)
         except ValidationError as error:
             msg = _('Invalid media info for item of type %(type)s. Error %(error)s')
             params = dict(type=str(self), error=str(error))

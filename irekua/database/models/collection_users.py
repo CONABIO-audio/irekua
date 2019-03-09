@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    empty_json,
+    empty_JSON,
 )
 
 
@@ -35,7 +35,7 @@ class CollectionUser(models.Model):
         blank=True,
         db_column='metadata',
         verbose_name=_('metadata'),
-        default=empty_json,
+        default=empty_JSON,
         help_text=_('Metadata associated to user in collection'),
         null=True)
     is_admin = models.BooleanField(

@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    empty_json,
+    empty_JSON,
     GENERIC_SAMPLING_EVENT,
 )
 
@@ -18,7 +18,6 @@ class SamplingEvent(models.Model):
         help_text=_('Type of sampling event'),
         blank=False,
         null=False,
-        to_field='name',
         default=GENERIC_SAMPLING_EVENT)
     site = models.ForeignKey(
         'Site',
@@ -38,7 +37,7 @@ class SamplingEvent(models.Model):
     configuration = JSONField(
         db_column='configuration',
         verbose_name=_('configuration'),
-        default=empty_json,
+        default=empty_JSON,
         help_text=_('Configuration on device through the sampling event'),
         blank=True,
         null=True)
@@ -51,7 +50,7 @@ class SamplingEvent(models.Model):
         db_column='metadata',
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to sampling event'),
-        default=empty_json,
+        default=empty_JSON,
         blank=True,
         null=True)
     started_on = models.DateTimeField(

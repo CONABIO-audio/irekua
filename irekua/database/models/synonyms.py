@@ -3,8 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    validate_are_same_term_type,
-    empty_json
+    empty_JSON
 )
 
 
@@ -28,7 +27,7 @@ class Synonym(models.Model):
     metadata = JSONField(
         blank=True,
         db_column='metadata',
-        default=empty_json,
+        default=empty_JSON,
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to the synonym'),
         null=True)

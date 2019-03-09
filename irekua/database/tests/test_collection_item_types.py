@@ -1,10 +1,7 @@
 from django.test import TestCase
 
 # Create your tests here.
-from database.models import (
-    CollectionItemType,
-    Schema
-)
+from database.models import CollectionItemType
 
 from .test_collection_types import create_simple_collection_type
 from .test_item_types import create_simple_item_type
@@ -15,18 +12,10 @@ def create_simple_collection_item_type():
     collection_type = create_simple_collection_type()
     item_type = create_simple_item_type()
 
-    metadata_schema, _ = Schema.objects.get_or_create(
-        name=sample.COLLECTION_ITEM_TYPE_METADATA_SCHEMA.name,
-        defaults=dict(
-            field=Schema.ITEM_METADATA,
-            description='Sample item type metadata schema',
-            schema=sample.COLLECTION_ITEM_TYPE_METADATA_SCHEMA.schema)
-    )
-
     collection_item_type, _ = CollectionItemType.objects.get_or_create(
         collection_type=collection_type,
         item_type=item_type,
-        defaults=dict(metadata_schema=metadata_schema)
+        defaults=dict(metadata_schema=sample.SCHEMA)
     )
 
     return collection_item_type

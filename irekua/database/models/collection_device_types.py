@@ -1,8 +1,13 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
-from .schemas import Schema
+from database.utils import (
+    validate_JSON_schema,
+    validate_JSON_instance,
+    simple_JSON_schema,
+)
 
 
 class CollectionDeviceType(models.Model):
@@ -22,28 +27,31 @@ class CollectionDeviceType(models.Model):
         help_text=_('Device to be part of collection'),
         blank=False,
         null=False)
-    metadata_schema = models.ForeignKey(
-        'Schema',
-        on_delete=models.PROTECT,
-        db_column='metadata_type_id',
-        verbose_name=_('metadata type'),
-        help_text=_('JSON schema for collection device metadata'),
-        limit_choices_to={'field': Schema.COLLECTION_DEVICE_METADATA},
-        blank=False,
-        null=False)
+    metadata_schema = JSONField(
+        db_column='metadata_schema',
+        verbose_name=_('metadata schema'),
+        help_text=_('JSON Schema for metadata of collection device info'),
+        blank=True,
+        null=False,
+        default=simple_JSON_schema,
+        validators=[validate_JSON_schema])
 
     class Meta:
         verbose_name = _('Collection Device Type')
         verbose_name_plural = _('Collection Device Types')
 
     def __str__(self):
-        msg = _('Device type %(device)s for collection %(collection)s')
-        params = dict(device=str(self.device_type), collection=str(self.collection))
+        msg = _('Device type %(device_type)s for collection type %(collection_type)s')
+        params = dict(
+            device_type=str(self.device_type),
+            collection_type=str(self.collection_type))
         return msg % params
 
     def validate_metadata(self, metadata):
         try:
-            self.metadata_schema.validate_instance(metadata)
+            validate_JSON_instance(
+                schema=self.metadata_schema,
+                instance=metadata)
         except ValidationError as error:
             msg = _('Invalid metadata for collection device. Error: %(error)s')
             params = dict(error=str(error))

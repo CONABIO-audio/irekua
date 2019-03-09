@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
-    empty_json,
+    empty_JSON,
     GENERIC_SITE,
 )
 
@@ -67,7 +67,7 @@ class Site(models.Model):
         db_column='metadata',
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to site'),
-        default=empty_json,
+        default=empty_JSON,
         blank=True,
         null=True)
     creator = models.ForeignKey(

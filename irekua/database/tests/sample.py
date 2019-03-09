@@ -1,7 +1,5 @@
 from collections import namedtuple
 
-Schema = namedtuple('Schemas', ['name', 'schema'])
-
 
 ANNOTATION_TOOL = 'Sample Annotation Tool'
 ANNOTATION_TYPE = 'Sample Annotation Type'
@@ -59,7 +57,7 @@ VALID_INSTANCE = {'sample_required_parameter': 1}
 INVALID_INSTANCE = {'sample_parameter': "a"}
 
 
-SAMPLE_ANNOTATION_SCHEMA = {
+ANNOTATION_SCHEMA = {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "title": "BBox Annotation",
@@ -93,50 +91,3 @@ VALID_ANNOTATION = {
 INVALID_ANNOTATION = {
     'x': 10
 }
-
-
-ANNOTATION_TOOL_CONFIGURATION_SCHEMA = Schema(
-    name='Sample Annotation Tool Configuration Schema',
-    schema=SCHEMA)
-ANNOTATION_SCHEMA = Schema(
-    name='Sample Annotation Schema',
-    schema=SAMPLE_ANNOTATION_SCHEMA)
-DEVICE_METADATA_SCHEMA = Schema(
-    name='Sample Device Metadata Schema',
-    schema=SCHEMA)
-COLLECTION_ITEM_TYPE_METADATA_SCHEMA = Schema(
-    name='Sample Item Type Metadata Schema',
-    schema=SCHEMA)
-COLLECTION_ROLE_METADATA_SCHEMA = Schema(
-    name='Sample Role Metadata Schema',
-    schema=SCHEMA)
-COLLECTION_TYPE_METADATA_SCHEMA = Schema(
-    name='Sample Type Metadata Schema',
-    schema=SCHEMA)
-DEVICE_METADATA_SCHEMA = Schema(
-    name='Sample Device Metadata Schema',
-    schema=SCHEMA)
-DEVICE_CONFIGURATION_SCHEMA = Schema(
-    name='Sample Device Configuration Schema',
-    schema=SCHEMA)
-MEDIA_INFO_SCHEMA = Schema(
-    name='Sample Media Info Schema',
-    schema=SCHEMA)
-LICENCE_METADATA_SCHEMA = Schema(
-    name='Sample Licence Metadata Schema',
-    schema=SCHEMA)
-SAMPLING_EVENT_METADATA_SCHEMA = Schema(
-    name='Sample Sampling Event Metadata Schema',
-    schema=SCHEMA)
-SITE_METADATA_SCHEMA = Schema(
-    name='Sample Site Metadata Schema',
-    schema=SCHEMA)
-TERM_METADATA_SCHEMA = Schema(
-    name='Sample Term Metadata Schema',
-    schema=SCHEMA)
-SYNONYM_METADATA_SCHEMA = Schema(
-    name='Sample Synonym Metadata Schema',
-    schema=SCHEMA)
-ENTAILMENT_METADATA_SCHEMA = Schema(
-    name='Sample Entailment Metadata Schema',
-    schema=SCHEMA)

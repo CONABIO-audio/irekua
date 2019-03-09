@@ -35,7 +35,6 @@ from . import models
     models.Role,
     models.SamplingEvent,
     models.SamplingEventType,
-    models.Schema,
     models.SecondaryItem,
     models.Site,
     models.SiteType,

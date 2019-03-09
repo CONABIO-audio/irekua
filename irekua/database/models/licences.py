@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
 from database.utils import (
-    empty_json,
+    empty_JSON,
 )
 
 
@@ -34,7 +34,7 @@ class Licence(models.Model):
     metadata = JSONField(
         db_column='metadata',
         verbose_name=_('metadata'),
-        default=empty_json,
+        default=empty_JSON,
         help_text=_('Metadata associated with licence'),
         blank=True,
         null=True)
