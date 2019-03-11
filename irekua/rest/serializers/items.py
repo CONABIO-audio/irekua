@@ -48,7 +48,6 @@ class ItemSerializer(serializers.HyperlinkedModelSerializer):
             'media_info',
             'sampling_event',
             'source',
-            'metadata_type',
             'metadata',
             'captured_on',
             'created_on',

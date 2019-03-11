@@ -17,10 +17,13 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
+from rest_framework.documentation import include_docs_urls
 
 
 urlpatterns = [
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^api/v1/', include(('rest.urls', 'rest-api'), namespace='v1')),
+    url(r'^api-docs/', include_docs_urls(title='Irekua REST API documentation')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,10 +6,6 @@ import database.models as db
 
 
 class ItemTypeSerializer(serializers.HyperlinkedModelSerializer):
-    media_info_schema = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='schema-detail')
     event_types = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,

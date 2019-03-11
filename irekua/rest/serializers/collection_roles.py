@@ -14,10 +14,6 @@ class CollectionRoleSerializer(serializers.HyperlinkedModelSerializer):
         many=False,
         read_only=True,
         view_name='role-detail')
-    metadata_schema = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='schema-detail')
 
     class Meta:
         model = db.CollectionRole

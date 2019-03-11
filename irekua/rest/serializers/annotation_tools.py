@@ -6,19 +6,14 @@ import database.models as db
 
 
 class AnnotationToolSerializer(serializers.HyperlinkedModelSerializer):
-    configuration_schema = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='schema-detail')
-
     class Meta:
         model = db.AnnotationTool
         fields = (
             'url',
+            'id',
             'name',
             'version',
             'description',
             'logo',
-            'url',
             'configuration_schema'
         )

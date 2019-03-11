@@ -7,10 +7,6 @@ import database.models as db
 
 
 class SamplingEventTypeSerializer(serializers.HyperlinkedModelSerializer):
-    metadata_schema = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='schema-detail')
     device_types = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,

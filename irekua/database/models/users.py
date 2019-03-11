@@ -7,18 +7,18 @@ class UserData(models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        editable=False,
         db_column='user_id',
-        verbose_name=_('user id'),
+        verbose_name=_('user'),
         help_text=_('Reference to user'),
         blank=False)
     institution = models.ForeignKey(
         'Institution',
         on_delete=models.PROTECT,
         db_column='institution_id',
-        verbose_name=_('institution id'),
+        verbose_name=_('institution'),
         help_text=_('Institution to which user belongs'),
-        blank=False)
+        blank=True,
+        null=True)
     is_developer = models.BooleanField(
         db_column='is_developer',
         verbose_name=_('is developer'),

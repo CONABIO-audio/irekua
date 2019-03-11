@@ -24,7 +24,7 @@ class SamplingEventSerializer(serializers.HyperlinkedModelSerializer):
         fields = (
             'url',
             'sampling_event_type',
-            'site'
+            'site',
             'device',
             'configuration',
             'commentaries',

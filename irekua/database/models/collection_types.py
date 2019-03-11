@@ -10,6 +10,10 @@ from database.utils import (
     simple_JSON_schema,
 )
 
+from .collection_device_types import CollectionDeviceType
+from .collection_roles import CollectionRole
+from .collection_item_types import CollectionItemType
+
 
 class CollectionType(models.Model):
     name = models.CharField(
@@ -269,3 +273,45 @@ class CollectionType(models.Model):
                 role=role,
                 col_type=str(self))
             raise ValidationError(msg, params=params)
+
+    def add_site_type(self, site_type):
+        self.site_types.add(site_type)
+
+    def add_annotation_type(self, annotation_type):
+        self.annotation_types.add(annotation_type)
+
+    def add_licence_type(self, licence_type):
+        self.licence_types.add(licence_type)
+
+    def add_event_type(self, event_type):
+        self.event_types.add(event_type)
+
+    def add_sampling_event_type(self, sampling_event_type):
+        self.sampling_event_types.add(sampling_event_type)
+
+    def add_device_type(self, device_type, metadata_schema=None):
+        if metadata_schema is None:
+            metadata_schema = simple_JSON_schema()
+
+        CollectionDeviceType.objects.get_or_create(
+            collection_type=self,
+            device_type=device_type,
+            metadata_schema=metadata_schema)
+
+    def add_item_type(self, item_type, metadata_schema=None):
+        if metadata_schema is None:
+            metadata_schema = simple_JSON_schema()
+
+        CollectionItemType.objects.get_or_create(
+            collection_type=self,
+            item_type=item_type,
+            metadata_schema=metadata_schema)
+
+    def add_role(self, role, metadata_schema=None):
+        if metadata_schema is None:
+            metadata_schema = simple_JSON_schema()
+
+        CollectionRole.objects.get_or_create(
+            collection_type=self,
+            role=role,
+            metadata_schema=metadata_schema)
