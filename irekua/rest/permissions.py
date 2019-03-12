@@ -7,4 +7,5 @@ class IsCollectionUser(BasePermission):
 
 class IsDeveloper(BasePermission):
     def has_permission(self, request, view):
-        pass
+        user = request.user
+        return user.userdata.is_developer

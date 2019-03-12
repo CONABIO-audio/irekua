@@ -34,8 +34,15 @@ class AnnotationToolTestCase(BaseTestCase):
         response = self.client.post(url, annotation_tool, format='json')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
+        annotation_tool['version'] = '3'
+        self.client.force_authenticate(user=self.developer_user)
+        response = self.client.post(url, annotation_tool, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
     def test_update_permissions(self):
-        url = reverse('rest-api:annotationtool-detail', args=[self.annotation_tool.id])
+        url = reverse(
+            'rest-api:annotationtool-detail',
+            args=[self.annotation_tool.id])
         annotation_tool = {
             'name': 'Sample annotation tool',
             'version': '1',
@@ -51,6 +58,10 @@ class AnnotationToolTestCase(BaseTestCase):
         response = self.client.put(url, annotation_tool, format='json')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
+        self.client.force_authenticate(user=self.developer_user)
+        response = self.client.put(url, annotation_tool, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
     def test_partial_update_permissions(self):
         url = reverse('rest-api:annotationtool-detail', args=[self.annotation_tool.id])
         annotation_tool = {
@@ -58,6 +69,10 @@ class AnnotationToolTestCase(BaseTestCase):
         }
 
         self.client.force_authenticate(user=self.admin_user)
+        response = self.client.patch(url, annotation_tool, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        self.client.force_authenticate(user=self.developer_user)
         response = self.client.patch(url, annotation_tool, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 

@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from rest_framework.test import APITestCase
 from uuid import uuid4
 
@@ -82,3 +83,10 @@ class BaseTestCase(APITestCase):
             is_model=False)
 
         self.collection.add_user(self.collection_user, role=self.role, metadata={})
+
+    @abstractmethod
+    @staticmethod
+    def generate_random_object():
+        pass
+
+
