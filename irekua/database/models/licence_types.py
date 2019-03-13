@@ -86,6 +86,8 @@ class LicenceType(models.Model):
         verbose_name = _('Licence Type')
         verbose_name_plural = _('Licence Types')
 
+        ordering = ['name']
+
     def __str__(self):
         return self.name
 

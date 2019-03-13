@@ -36,6 +36,8 @@ class Synonym(models.Model):
         verbose_name = _('Synonym')
         verbose_name_plural = _('Synonyms')
 
+        ordering = ['source']
+
     def __str__(self):
         msg = '%(source)s = %(target)s'
         params = dict(

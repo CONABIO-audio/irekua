@@ -55,6 +55,8 @@ class Device(models.Model):
         verbose_name_plural = _('Devices')
         unique_together = (('brand', 'model'))
 
+        ordering = ['brand', 'model']
+
     def __str__(self):
         msg = '%(device_type)s: %(brand)s - %(model)s'
         params = dict(

@@ -72,6 +72,8 @@ class SecondaryItem(models.Model):
         verbose_name = _('Secondary Item')
         verbose_name_plural = _('Secondary Items')
 
+        ordering = ['created_on']
+
     def __str__(self):
         msg = _('Secondary Item %(id)s derived from %(itemid)s')
         params = dict(

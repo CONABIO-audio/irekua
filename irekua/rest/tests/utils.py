@@ -1,10 +1,14 @@
-from abc import abstractmethod
-from rest_framework.test import APITestCase
+from abc import abstractmethod, ABCMeta
 from uuid import uuid4
+from six import add_metaclass
+import logging
 
+from rest_framework import status
+from rest_framework.permissions import SAFE_METHODS
+from django.urls import reverse
 from django.contrib.auth.models import User
-from database.models import UserData
 
+from database.models import UserData
 from database.tests.test_data_collections import create_simple_collection
 from database.tests.test_collection_roles import create_simple_role
 
@@ -34,7 +38,99 @@ def create_or_get_user(
 
     return user
 
-class BaseTestCase(APITestCase):
+class Users:
+    NON_AUTHENTICATED = 'non authenticated'
+    USER = 'user'
+    ADMIN = 'admin'
+    MODEL = 'model'
+    DEVELOPER = 'developer'
+    CURATOR = 'curator'
+    COLLECTION_USER = 'collection user'
+
+    ALL_USERS = [
+        NON_AUTHENTICATED,
+        USER,
+        ADMIN,
+        MODEL,
+        DEVELOPER,
+        CURATOR,
+        COLLECTION_USER,
+    ]
+
+    ALL_AUTHENTICATED_USERS = [
+        USER,
+        ADMIN,
+        MODEL,
+        DEVELOPER,
+        CURATOR,
+        COLLECTION_USER,
+    ]
+
+
+class Actions:
+    LIST = 'list'
+    CREATE = 'create'
+    RETRIEVE = 'retrieve'
+    UPDATE = 'update'
+    PARTIAL_UPDATE = 'partial_update'
+    DESTROY = 'destroy'
+
+    ALL_ACTIONS = [
+        LIST,
+        CREATE,
+        RETRIEVE,
+        UPDATE,
+        PARTIAL_UPDATE,
+        DESTROY
+    ]
+
+    METHOD_MAPPING = {
+        LIST: 'get',
+        CREATE: 'post',
+        RETRIEVE: 'get',
+        UPDATE: 'put',
+        PARTIAL_UPDATE: 'patch',
+        DESTROY: 'delete'
+    }
+
+    STATUS_CODE_MAPPING = {
+        LIST: status.HTTP_200_OK,
+        CREATE: status.HTTP_201_CREATED,
+        RETRIEVE: status.HTTP_200_OK,
+        UPDATE: status.HTTP_200_OK,
+        PARTIAL_UPDATE: status.HTTP_200_OK,
+        DESTROY: status.HTTP_204_NO_CONTENT,
+    }
+
+
+
+def create_permission_mapping_from_lists(permission_lists):
+    permission_mapping = {}
+
+    for action in Actions.ALL_ACTIONS:
+        permission_mapping[action] = {}
+
+        permission_list = permission_lists[action]
+        for user_type in Users.ALL_USERS:
+            permission_mapping[action][user_type] = user_type in permission_list
+
+    return permission_mapping
+
+
+@add_metaclass(ABCMeta)
+class BaseTestCase(object):
+    @property
+    def serializer(self):
+        raise NotImplementedError
+
+    @property
+    def permissions(self):
+        raise NotImplementedError
+
+    @staticmethod
+    def generate_random_json_data():
+        raise NotImplementedError
+
     def setUp(self):
         self.admin_user = create_or_get_user(
             is_superuser=True,
@@ -84,9 +180,111 @@ class BaseTestCase(APITestCase):
 
         self.collection.add_user(self.collection_user, role=self.role, metadata={})
 
-    @abstractmethod
+    def change_user(self, usertype):
+        if usertype is Users.NON_AUTHENTICATED:
+            self.client.force_authenticate()
+            return
+
+        mapping = {
+            Users.USER: self.regular_user,
+            Users.ADMIN: self.admin_user,
+            Users.MODEL: self.model_user,
+            Users.CURATOR: self.curator_user,
+            Users.DEVELOPER: self.developer_user,
+            Users.COLLECTION_USER: self.collection_user
+        }
+
+        self.client.force_authenticate(user=mapping[usertype])
+
+    def check_response(self, action, response, has_permission, user_type):
+        if not has_permission:
+            self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN, msg=user_type)
+        else:
+            status_code = Actions.STATUS_CODE_MAPPING[action]
+            self.assertEqual(response.status_code, status_code, msg=user_type)
+
+    def check_permissions_for_action_and_users(self, action, permissions):
+        method_name = self.get_http_method(action)
+        method = getattr(self.client, method_name)
+        url_name = self.get_url_name(action)
+
+        for user_type in Users.ALL_USERS:
+
+            if 'list' in url_name:
+                url = reverse(url_name)
+            else:
+                sample_object = self.create_random_object()
+                url = reverse(url_name, args=[sample_object.pk])
+
+            self.change_user(user_type)
+            if method_name.upper() in SAFE_METHODS:
+                response = method(url)
+            else:
+                random_data = self.generate_random_json_data()
+                response = method(url, random_data, format='json')
+
+            self.check_response(action, response, permissions[user_type], user_type)
+
     @staticmethod
-    def generate_random_object():
-        pass
+    def get_http_method(action):
+        return Actions.METHOD_MAPPING[action]
 
+    def create_random_object(self):
+        data = self.generate_random_json_data()
+        serializer_instance = self.serializer()
+        random_object = serializer_instance.create(data)
+        return random_object
 
+    def get_class_name(self):
+        return self.serializer.Meta.model.__name__.lower()
+
+    def get_url_name(self, action):
+        class_name = self.get_class_name()
+        base_url = 'rest-api:{class_name}-{view_name}'
+
+        url_mapping = {
+            Actions.LIST: base_url.format(class_name=class_name, view_name='list'),
+            Actions.CREATE: base_url.format(class_name=class_name, view_name='list'),
+            Actions.RETRIEVE: base_url.format(class_name=class_name, view_name='detail'),
+            Actions.UPDATE: base_url.format(class_name=class_name, view_name='detail'),
+            Actions.PARTIAL_UPDATE: base_url.format(class_name=class_name, view_name='detail'),
+            Actions.DESTROY: base_url.format(class_name=class_name, view_name='detail')
+        }
+
+        return url_mapping[action]
+
+    def test_list(self):
+        action = Actions.LIST
+        permissions = self.permissions[action]
+
+        self.check_permissions_for_action_and_users(action, permissions)
+
+    def test_create(self):
+        action = Actions.CREATE
+        permissions = self.permissions[action]
+
+        self.check_permissions_for_action_and_users(action, permissions)
+
+    def test_retrieve(self):
+        action = Actions.RETRIEVE
+        permissions = self.permissions[action]
+
+        self.check_permissions_for_action_and_users(action, permissions)
+
+    def test_update(self):
+        action = Actions.UPDATE
+        permissions = self.permissions[action]
+
+        self.check_permissions_for_action_and_users(action, permissions)
+
+    def test_partial_update(self):
+        action = Actions.PARTIAL_UPDATE
+        permissions = self.permissions[action]
+
+        self.check_permissions_for_action_and_users(action, permissions)
+
+    def test_destroy(self):
+        action = Actions.DESTROY
+        permissions = self.permissions[action]
+
+        self.check_permissions_for_action_and_users(action, permissions)

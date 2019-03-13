@@ -5,7 +5,7 @@ from rest_framework import serializers
 import database.models as db
 
 
-class AnnotationTypeSerializer(serializers.HyperlinkedModelSerializer):
+class AnnotationTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = db.AnnotationType
         fields = (

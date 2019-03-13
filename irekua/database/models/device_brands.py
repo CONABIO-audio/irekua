@@ -28,5 +28,7 @@ class DeviceBrand(models.Model):
         verbose_name = _('Device Brand')
         verbose_name_plural = _('Device Brands')
 
+        ordering = ['name']
+
     def __str__(self):
         return self.name

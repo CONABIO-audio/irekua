@@ -71,6 +71,8 @@ class SamplingEventType(models.Model):
         verbose_name = _('Sampling Event Type')
         verbose_name_plural = _('Sampling Event Types')
 
+        ordering = ['name']
+
     def __str__(self):
         return self.name
 

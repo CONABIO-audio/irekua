@@ -70,6 +70,8 @@ class SamplingEvent(models.Model):
         verbose_name = _('Sampling Event')
         verbose_name_plural = _('Sampling Events')
 
+        ordering = ['-started_on']
+
     def __str__(self):
         msg = _('Sampling event {id} on site {site}: {start} - {end}')
         msg = msg.format(

@@ -35,10 +35,10 @@ class AnnotationTool(models.Model):
         upload_to='images/annotation_tools/',
         blank=True,
         null=True)
-    url = models.URLField(
-        db_column='url',
-        verbose_name=_('url'),
-        help_text=_('Resource location'),
+    website = models.URLField(
+        db_column='website',
+        verbose_name=_('website'),
+        help_text=_('Annotation tool website'),
         blank=True,
         null=True)
     configuration_schema = JSONField(
@@ -55,6 +55,8 @@ class AnnotationTool(models.Model):
         verbose_name_plural = _('Annotation Tools')
 
         unique_together = (('name', 'version'))
+
+        ordering = ['name']
 
     def __str__(self):
         msg = self.name

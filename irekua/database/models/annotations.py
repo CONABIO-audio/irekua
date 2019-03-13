@@ -122,6 +122,8 @@ class Annotation(models.Model):
         verbose_name = _('Annotation')
         verbose_name_plural = _('Annotations')
 
+        ordering = ['-modified_on']
+
         permissions = (
             ("vote", _("Can vote annotation")),
         )

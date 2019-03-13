@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework import viewsets
-import database.models as db
+from rest_framework.viewsets import ModelViewSet
 
+import database.models as db
 from rest.serializers import EventTypeSerializer
 
 
-# Create your views here.
-class EventTypeViewSet(viewsets.ModelViewSet):
+class EventTypeViewSet(ModelViewSet):
     queryset = db.EventType.objects.all()
     serializer_class = EventTypeSerializer
+    search_fields = ('name', )
+    filter_fields = ('name', )

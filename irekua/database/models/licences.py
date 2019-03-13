@@ -43,6 +43,8 @@ class Licence(models.Model):
         verbose_name = _('Licence')
         verbose_name_plural = _('Licences')
 
+        ordering = ['-created_on']
+
     def __str__(self):
         msg = _('Licence of type {type} created on {date}').format(
             type=str(self.licence_type),

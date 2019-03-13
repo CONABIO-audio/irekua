@@ -51,6 +51,8 @@ class PhysicalDevice(models.Model):
         verbose_name = _('Physical Device')
         verbose_name_plural = _('Physical Devices')
 
+        ordering = ['device']
+
     def __str__(self):
         msg = _('Device %(id)s of type %(device)s')
         params = dict(

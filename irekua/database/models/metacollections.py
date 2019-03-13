@@ -35,5 +35,7 @@ class MetaCollection(models.Model):
         verbose_name = _('Meta Collection')
         verbose_name_plural = _('Meta Collections')
 
+        ordering = ['name']
+
     def __str__(self):
         return self.name

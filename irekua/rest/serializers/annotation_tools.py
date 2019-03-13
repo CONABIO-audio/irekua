@@ -15,5 +15,6 @@ class AnnotationToolSerializer(serializers.HyperlinkedModelSerializer):
             'version',
             'description',
             'logo',
+            'website',
             'configuration_schema'
         )

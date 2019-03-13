@@ -57,6 +57,8 @@ class TermType(models.Model):
         verbose_name = _('Term Type')
         verbose_name_plural = _('Term Types')
 
+        ordering = ['name']
+
     def __str__(self):
         return self.name
 

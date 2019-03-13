@@ -42,6 +42,8 @@ class Source(models.Model):
         verbose_name = _('Source')
         verbose_name_plural = _('Sources')
 
+        ordering = ['-uploaded_on']
+
     def __str__(self):
         msg = _('Directory %(dir)s uploaded with %(func)s')
         params = dict(

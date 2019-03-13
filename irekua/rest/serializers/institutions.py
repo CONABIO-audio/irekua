@@ -10,6 +10,7 @@ class InstitutionSerializer(serializers.HyperlinkedModelSerializer):
         model = db.Institution
         fields = (
             'url',
+            'id',
             'institution_name',
             'institution_code',
             'subdependency',

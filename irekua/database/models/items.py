@@ -123,12 +123,6 @@ class Item(models.Model):
         on_delete=models.PROTECT,
         blank=False,
         null=False)
-    is_uploaded = models.BooleanField(
-        blank=False,
-        null=False,
-        db_column='is_uploaded',
-        verbose_name=_('is uploaded'),
-        help_text=_('Is the item file on the server?'))
     tags = models.ManyToManyField(
         'Tag',
         db_column='tags',
@@ -139,6 +133,8 @@ class Item(models.Model):
     class Meta:
         verbose_name = _('Item')
         verbose_name_plural = _('Items')
+
+        ordering = ['created_on']
 
         permissions = (
             ("download_item", _("Can download item")),

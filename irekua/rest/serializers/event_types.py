@@ -5,11 +5,16 @@ from rest_framework import serializers
 import database.models as db
 
 
+class LabelTermSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = db.TermType
+        fields = ('url', 'name')
+
+
 class EventTypeSerializer(serializers.HyperlinkedModelSerializer):
-    label_term_types = serializers.HyperlinkedRelatedField(
+    label_term_types = LabelTermSerializer(
         many=True,
-        read_only=True,
-        view_name='term_type-detail')
+        read_only=True)
 
     class Meta:
         model = db.EventType

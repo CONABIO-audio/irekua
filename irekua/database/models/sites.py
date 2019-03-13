@@ -24,7 +24,8 @@ class Site(models.Model):
         db_column='name',
         verbose_name=_('name'),
         help_text=_('Name of site'),
-        blank=True)
+        blank=True,
+        null=True)
     locality = models.CharField(
         max_length=256,
         db_column='locality',
@@ -82,6 +83,8 @@ class Site(models.Model):
     class Meta:
         verbose_name = _('Site')
         verbose_name_plural = _('Sites')
+
+        ordering = ['name']
 
         unique_together = (('name', 'site_type'))
 

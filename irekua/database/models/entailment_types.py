@@ -43,6 +43,8 @@ class EntailmentType(models.Model):
         verbose_name_plural = _('Entailment Types')
         unique_together = (('source_type', 'target_type'))
 
+        ordering = ['source_type']
+
     def __str__(self):
         msg = '%(source_type)s => %(target_type)s'
         params = dict(

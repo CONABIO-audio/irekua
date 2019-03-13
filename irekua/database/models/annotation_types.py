@@ -42,6 +42,8 @@ class AnnotationType(models.Model):
         verbose_name = _('Annotation Type')
         verbose_name_plural = _('Annotation Types')
 
+        ordering = ['name']
+
     def __str__(self):
         return self.name
 

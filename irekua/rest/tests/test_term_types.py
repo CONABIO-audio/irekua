@@ -1,9 +1,8 @@
 from uuid import uuid4
-from random import randint
 
 from rest_framework.test import APITestCase
 from database.utils import simple_JSON_schema
-from rest.serializers import AnnotationToolSerializer
+from rest.serializers import TermTypeSerializer
 from .utils import (
     BaseTestCase,
     Users,
@@ -12,8 +11,8 @@ from .utils import (
 )
 
 
-class AnnotationToolTestCase(BaseTestCase, APITestCase):
-    serializer = AnnotationToolSerializer
+class TermTypeTestCase(BaseTestCase, APITestCase):
+    serializer = TermTypeSerializer
     permissions = create_permission_mapping_from_lists({
         Actions.LIST: Users.ALL_AUTHENTICATED_USERS,
         Actions.CREATE: [
@@ -35,8 +34,9 @@ class AnnotationToolTestCase(BaseTestCase, APITestCase):
     def generate_random_json_data():
         data = {
             'name': str(uuid4()),
-            'version': randint(1, 10),
-            'description': 'Random Annotation Tool',
-            'configuration_schema': simple_JSON_schema()
+            'description': 'Random term type',
+            'is_categorical': True,
+            'metadata_schema': simple_JSON_schema(),
+            'synonym_metadata_schema': simple_JSON_schema(),
         }
         return data

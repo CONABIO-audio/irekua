@@ -1,9 +1,14 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django_countries.fields import CountryField
+import pycountry
+
 
 
 class Institution(models.Model):
+    COUNTRIES = (
+        (country.alpha_2, country.name) for country in pycountry.countries
+    )
+
     institution_name = models.CharField(
         max_length=256,
         db_column='institution_name',
@@ -21,8 +26,11 @@ class Institution(models.Model):
         db_column='subdependency',
         verbose_name=_('subdependency'),
         help_text=_('Subdependency at institution'),
-        blank=True)
-    country = CountryField(
+        blank=True,
+        null=True)
+    country = models.CharField(
+        max_length=2,
+        choices=COUNTRIES,
         db_column='country',
         verbose_name=_('country'),
         help_text=_('Country home of institution'),

@@ -34,6 +34,8 @@ class Entailment(models.Model):
         verbose_name = _('Entailment')
         verbose_name_plural = _('Entailments')
 
+        ordering = ['source']
+
     def __str__(self):
         msg = '%(source)s => %(target)s'
         params = dict(

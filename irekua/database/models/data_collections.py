@@ -89,6 +89,8 @@ class Collection(models.Model):
         verbose_name = _('Collection')
         verbose_name_plural = _('Collections')
 
+        ordering = ['name']
+
     def __str__(self):
         return self.name
 
