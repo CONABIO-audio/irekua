@@ -6,7 +6,6 @@ import database.models as db
 
 
 class SiteTypeSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = db.SiteType
         fields = (

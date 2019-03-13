@@ -31,13 +31,13 @@ class LicenceType(models.Model):
         null=False,
         default=simple_JSON_schema,
         validators=[validate_JSON_schema])
-    document_template = models.CharField(
-        max_length=128,
-        unique=True,
+    document_template = models.FileField(
+        upload_to='documents/licence_types/',
         db_column='document_template',
         verbose_name=_('document template'),
         help_text=_('Template for licence document'),
-        blank=True)
+        blank=True,
+        null=True)
     years_valid_for = models.IntegerField(
         db_column='years_valid_for',
         verbose_name=_('years valid for'),

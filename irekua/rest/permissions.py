@@ -8,6 +8,13 @@ class ReadOnly(IsAuthenticated):
             return False
         return request.method in SAFE_METHODS
 
+class ReadAndCreateOnly(IsAuthenticated):
+    def has_permission(self, request, view):
+        is_auth = super(ReadAndCreateOnly, self).has_permission(request, view)
+        if not is_auth:
+            return False
+        return request.method in list(SAFE_METHODS) + ['POST']
+
 
 class IsCollectionUser(BasePermission):
     def has_permission(self, request, view):

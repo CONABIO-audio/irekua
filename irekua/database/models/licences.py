@@ -18,8 +18,8 @@ class Licence(models.Model):
         help_text=_('Type of licence used'),
         blank=False,
         null=False)
-    document = models.CharField(
-        max_length=128,
+    document = models.FileField(
+        upload_to='documents/licences/',
         db_column='document',
         verbose_name=_('document'),
         help_text=_('Legal document of licence agreement'),

@@ -13,7 +13,6 @@ from rest.permissions import IsAdmin, IsFromInstitution, ReadOnly
 class InstitutionViewSet(ModelViewSet):
     queryset = db.Institution.objects.all()
     serializer_class = InstitutionSerializer
-    # permission_classes = (IsAdmin|ReadOnly|IsFromInstitution)
     search_fields = (
         'institution_name',
         'institution_code',

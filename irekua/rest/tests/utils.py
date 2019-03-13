@@ -107,7 +107,7 @@ class Actions:
 def create_permission_mapping_from_lists(permission_lists):
     permission_mapping = {}
 
-    for action in Actions.ALL_ACTIONS:
+    for action in permission_lists:
         permission_mapping[action] = {}
 
         permission_list = permission_lists[action]
@@ -119,6 +119,15 @@ def create_permission_mapping_from_lists(permission_lists):
 
 @add_metaclass(ABCMeta)
 class BaseTestCase(object):
+    VIEW_NAME_MAPPING = {
+        Actions.LIST: 'list',
+        Actions.CREATE: 'list',
+        Actions.RETRIEVE: 'detail',
+        Actions.UPDATE: 'detail',
+        Actions.PARTIAL_UPDATE: 'detail',
+        Actions.DESTROY: 'detail'
+    }
+
     @property
     def serializer(self):
         raise NotImplementedError
@@ -238,20 +247,18 @@ class BaseTestCase(object):
     def get_class_name(self):
         return self.serializer.Meta.model.__name__.lower()
 
-    def get_url_name(self, action):
+    def get_url_name(self, action, view_name=None):
         class_name = self.get_class_name()
         base_url = 'rest-api:{class_name}-{view_name}'
 
-        url_mapping = {
-            Actions.LIST: base_url.format(class_name=class_name, view_name='list'),
-            Actions.CREATE: base_url.format(class_name=class_name, view_name='list'),
-            Actions.RETRIEVE: base_url.format(class_name=class_name, view_name='detail'),
-            Actions.UPDATE: base_url.format(class_name=class_name, view_name='detail'),
-            Actions.PARTIAL_UPDATE: base_url.format(class_name=class_name, view_name='detail'),
-            Actions.DESTROY: base_url.format(class_name=class_name, view_name='detail')
-        }
+        if view_name is None:
+            view_name = self.VIEW_NAME_MAPPING[action]
 
-        return url_mapping[action]
+        url_name = base_url.format(
+            class_name=class_name,
+            view_name=view_name)
+
+        return url_name
 
     def test_list(self):
         action = Actions.LIST
