@@ -11,6 +11,6 @@ from rest.permissions import IsDeveloper, IsAdmin, ReadOnly
 class AnnotationToolViewSet(ModelViewSet):
     queryset = db.AnnotationTool.objects.all()
     serializer_class = AnnotationToolSerializer
-    permission_classes = (IsAdmin|IsDeveloper|ReadOnly, )
+    permission_classes = (IsAdmin | IsDeveloper | ReadOnly, )
     search_fields = ('name', )
     filter_fields = ('name', 'version', )

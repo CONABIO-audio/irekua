@@ -1,4 +1,8 @@
-from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
+from rest_framework.permissions import (
+    BasePermission,
+    IsAuthenticated,
+    SAFE_METHODS
+)
 
 
 class ReadOnly(IsAuthenticated):
@@ -8,12 +12,28 @@ class ReadOnly(IsAuthenticated):
             return False
         return request.method in SAFE_METHODS
 
+
 class ReadAndCreateOnly(IsAuthenticated):
     def has_permission(self, request, view):
         is_auth = super(ReadAndCreateOnly, self).has_permission(request, view)
         if not is_auth:
             return False
         return request.method in list(SAFE_METHODS) + ['POST']
+
+
+class IsUser(BasePermission):
+    def has_permission(self, request, view):
+        try:
+            viewed_user = view.get_object()
+            user = request.user
+            return viewed_user == user
+        except:
+            return False
+
+
+class IsUnauthenticated(IsAuthenticated):
+    def has_permission(self, request, view):
+        return not super(IsUnauthenticated, self).has_permission(request, view)
 
 
 class IsCollectionUser(BasePermission):
@@ -34,6 +54,7 @@ class IsDeveloper(BasePermission):
         except AttributeError:
             return False
 
+
 class IsModel(BasePermission):
     def has_permission(self, request, view):
         user = request.user
@@ -41,6 +62,7 @@ class IsModel(BasePermission):
             return user.userdata.is_model
         except AttributeError:
             return False
+
 
 class IsCurator(BasePermission):
     def has_permission(self, request, view):
@@ -50,6 +72,7 @@ class IsCurator(BasePermission):
         except AttributeError:
             return False
 
+
 class IsAdmin(BasePermission):
     def has_permission(self, request, view):
         user = request.user
@@ -57,6 +80,7 @@ class IsAdmin(BasePermission):
             return user.is_superuser | user.is_staff
         except AttributeError:
             return False
+
 
 class IsFromInstitution(IsAuthenticated):
     def has_object_permission(self, request, view, obj):

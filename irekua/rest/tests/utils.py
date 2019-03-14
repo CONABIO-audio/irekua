@@ -1,7 +1,6 @@
-from abc import abstractmethod, ABCMeta
+from abc import ABCMeta
 from uuid import uuid4
 from six import add_metaclass
-import logging
 
 from rest_framework import status
 from rest_framework.permissions import SAFE_METHODS
@@ -37,6 +36,7 @@ def create_or_get_user(
     )
 
     return user
+
 
 class Users:
     NON_AUTHENTICATED = 'non authenticated'
@@ -103,7 +103,6 @@ class Actions:
     }
 
 
-
 def create_permission_mapping_from_lists(permission_lists):
     permission_mapping = {}
 
@@ -112,7 +111,8 @@ def create_permission_mapping_from_lists(permission_lists):
 
         permission_list = permission_lists[action]
         for user_type in Users.ALL_USERS:
-            permission_mapping[action][user_type] = user_type in permission_list
+            permission_mapping[action][user_type] = (
+                user_type in permission_list)
 
     return permission_mapping
 
@@ -187,7 +187,10 @@ class BaseTestCase(object):
             is_curator=False,
             is_model=False)
 
-        self.collection.add_user(self.collection_user, role=self.role, metadata={})
+        self.collection.add_user(
+            self.collection_user,
+            role=self.role,
+            metadata={})
 
     def change_user(self, usertype):
         if usertype is Users.NON_AUTHENTICATED:
@@ -207,7 +210,10 @@ class BaseTestCase(object):
 
     def check_response(self, action, response, has_permission, user_type):
         if not has_permission:
-            self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN, msg=user_type)
+            self.assertEqual(
+                response.status_code,
+                status.HTTP_403_FORBIDDEN,
+                msg=user_type)
         else:
             status_code = Actions.STATUS_CODE_MAPPING[action]
             self.assertEqual(response.status_code, status_code, msg=user_type)
@@ -232,15 +238,23 @@ class BaseTestCase(object):
                 random_data = self.generate_random_json_data()
                 response = method(url, random_data, format='json')
 
-            self.check_response(action, response, permissions[user_type], user_type)
+            self.check_response(
+                action,
+                response,
+                permissions[user_type],
+                user_type)
 
     @staticmethod
     def get_http_method(action):
         return Actions.METHOD_MAPPING[action]
 
+    def get_serializer_context(self):
+        return {}
+
     def create_random_object(self):
+        context = self.get_serializer_context()
         data = self.generate_random_json_data()
-        serializer_instance = self.serializer()
+        serializer_instance = self.serializer(context=context)
         random_object = serializer_instance.create(data)
         return random_object
 

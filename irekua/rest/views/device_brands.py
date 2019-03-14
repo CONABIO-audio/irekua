@@ -11,6 +11,6 @@ from rest.permissions import IsAdmin, IsCurator, ReadAndCreateOnly
 class DeviceBrandViewSet(viewsets.ModelViewSet):
     queryset = db.DeviceBrand.objects.all()
     serializer_class = DeviceBrandSerializer
-    permission_classes = (IsAdmin|IsCurator|ReadAndCreateOnly, )
+    permission_classes = (IsAdmin | IsCurator | ReadAndCreateOnly, )
     search_fields = ('name', )
     filter_fields = ('name', )

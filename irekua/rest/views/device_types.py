@@ -11,6 +11,6 @@ from rest.permissions import IsAdmin, ReadOnly
 class DeviceTypeViewSet(ModelViewSet):
     queryset = db.DeviceType.objects.all()
     serializer_class = DeviceTypeSerializer
-    permission_classes = (IsAdmin|ReadOnly, )
+    permission_classes = (IsAdmin | ReadOnly, )
     search_fields = ('name', )
     filter_fields = ('name', )

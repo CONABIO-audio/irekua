@@ -11,6 +11,6 @@ from rest.permissions import IsAdmin, IsDeveloper, ReadOnly
 class TermViewSet(ModelViewSet):
     queryset = db.Term.objects.all()
     serializer_class = TermSerializer
-    permission_classes = (IsAdmin|IsDeveloper|ReadOnly, )
+    permission_classes = (IsAdmin | IsDeveloper | ReadOnly, )
     search_fields = ('term_type__name', 'value')
     filter_fields = ('term_type__name', 'value')

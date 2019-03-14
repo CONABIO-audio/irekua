@@ -12,7 +12,7 @@ from rest.permissions import IsAdmin, ReadOnly
 class LicenceTypeViewSet(viewsets.ModelViewSet):
     queryset = db.LicenceType.objects.all()
     serializer_class = LicenceTypeSerializer
-    permission_classes = (IsAdmin|ReadOnly, )
+    permission_classes = (IsAdmin | ReadOnly, )
     search_fields = ('name', )
     filter_fields = (
         'name',
