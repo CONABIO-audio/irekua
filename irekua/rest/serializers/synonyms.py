@@ -14,21 +14,41 @@ class TermSerializer(serializers.ModelSerializer):
             'term_type',
             'value'
         )
-        extra_kwargs = {
-            'term_type': {'read_only': True},
-            'value': {'read_only': True},
-        }
 
 
 class SynonymSerializer(serializers.ModelSerializer):
-    source = TermSerializer(many=False, read_only=False)
-    target = TermSerializer(many=False, read_only=False)
+    source_info = TermSerializer(
+        many=False,
+        read_only=True,
+        label='Source of synonym',
+        help_text='Source of synonym',
+        source='source')
+    target_info = TermSerializer(
+        many=False,
+        read_only=True,
+        label='Target of Synonym',
+        help_text='Target of synonym',
+        source='target')
+
+    queryset = db.Term.objects.all()
+    source = serializers.PrimaryKeyRelatedField(
+        many=False,
+        write_only=True,
+        label='source',
+        queryset=queryset)
+    target = serializers.PrimaryKeyRelatedField(
+        many=False,
+        write_only=True,
+        label='target',
+        queryset=queryset)
 
     class Meta:
         model = db.Synonym
         fields = (
             'url',
+            'metadata',
             'source',
             'target',
-            'metadata'
+            'source_info',
+            'target_info',
         )

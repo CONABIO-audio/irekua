@@ -13,23 +13,28 @@ from .utils import (
     create_permission_mapping_from_lists
 )
 
+
 class SynonymTestCase(BaseTestCase, APITestCase):
     serializer = SynonymSerializer
     permissions = create_permission_mapping_from_lists({
         Actions.LIST: Users.ALL_AUTHENTICATED_USERS,
         Actions.CREATE: [
             Users.ADMIN,
+            Users.CURATOR,
         ],
         Actions.RETRIEVE: Users.ALL_AUTHENTICATED_USERS,
         Actions.UPDATE: [
             Users.ADMIN,
-            ],
+            Users.CURATOR,
+        ],
         Actions.PARTIAL_UPDATE: [
             Users.ADMIN,
-            ],
+            Users.CURATOR,
+        ],
         Actions.DESTROY: [
             Users.ADMIN,
-            ],
+            Users.CURATOR
+        ],
         })
 
     def setUp(self):

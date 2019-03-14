@@ -3,6 +3,7 @@ from uuid import uuid4
 from six import add_metaclass
 
 from rest_framework import status
+from rest_framework import serializers
 from rest_framework.permissions import SAFE_METHODS
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -254,9 +255,14 @@ class BaseTestCase(object):
     def create_random_object(self):
         context = self.get_serializer_context()
         data = self.generate_random_json_data()
-        serializer_instance = self.serializer(context=context)
-        random_object = serializer_instance.create(data)
-        return random_object
+        serializer_instance = self.serializer(
+            data=data,
+            context=context)
+        if serializer_instance.is_valid():
+            random_object = serializer_instance.save()
+            return random_object
+        else:
+            raise serializers.ValidationError(serializer_instance.errors)
 
     def get_class_name(self):
         return self.serializer.Meta.model.__name__.lower()
