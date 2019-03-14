@@ -5,15 +5,24 @@ from rest_framework import serializers
 import database.models as db
 
 
-class SynonymSerializer(serializers.HyperlinkedModelSerializer):
-    source = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='term-detail')
-    target = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='term-detail')
+class TermSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = db.Term
+        fields = (
+            'url',
+            'id',
+            'term_type',
+            'value'
+        )
+        extra_kwargs = {
+            'term_type': {'read_only': True},
+            'value': {'read_only': True},
+        }
+
+
+class SynonymSerializer(serializers.ModelSerializer):
+    source = TermSerializer(many=False, read_only=False)
+    target = TermSerializer(many=False, read_only=False)
 
     class Meta:
         model = db.Synonym

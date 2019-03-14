@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
@@ -13,7 +14,7 @@ class Synonym(models.Model):
         related_name='synonym_source',
         on_delete=models.CASCADE,
         db_column='source_id',
-        verbose_name=_('source id'),
+        verbose_name=_('source'),
         help_text=_('Reference to the source of synonym'),
         blank=False)
     target = models.ForeignKey(
@@ -21,7 +22,7 @@ class Synonym(models.Model):
         related_name='synonym_target',
         on_delete=models.CASCADE,
         db_column='target_id',
-        verbose_name=_('target id'),
+        verbose_name=_('target'),
         help_text=_('Reference to the target of the synonym'),
         blank=False)
     metadata = JSONField(

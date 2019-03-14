@@ -40,9 +40,9 @@ router.register(r'sampling_event_types', views.SamplingEventTypeViewSet)
 router.register(r'sites', views.SiteViewSet)
 router.register(r'site_types', views.SiteTypeViewSet)
 # router.register(r'sources', views.SourceViewSet) # No view
-# router.register(r'synonyms', views.SynonymViewSet) # Admin | Curator | ReadOnly
+router.register(r'synonyms', views.SynonymViewSet) # Admin | Curator | ReadOnly
 # router.register(r'synonym_suggestions', views.SynonymSuggestionViewSet) # Admin | ReadOrCreate
-# router.register(r'tags', views.TagViewSet) # Admin | ReadOrCreate
+router.register(r'tags', views.TagViewSet) # Admin | ReadOrCreate
 router.register(r'terms', views.TermViewSet)
 router.register(r'term_types', views.TermTypeViewSet)
 # router.register(r'term_suggestions', views.TermSuggestionViewSet) # Admin | ReadOrCreate
