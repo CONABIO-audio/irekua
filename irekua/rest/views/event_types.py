@@ -24,7 +24,8 @@ class TermTypeNameSerializer(serializers.ModelSerializer):
 class EventTypeViewSet(ModelViewSet):
     queryset = db.EventType.objects.all()
     serializer_class = EventTypeSerializer
-    permission_classes = (IsAdmin|ReadOnly, )
+
+    permission_classes = (IsAdmin | ReadOnly, )
     search_fields = ('name', )
     filter_fields = ('name', )
 

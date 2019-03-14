@@ -129,6 +129,11 @@ class Item(models.Model):
         verbose_name=_('tags'),
         help_text=_('Tags for item'),
         blank=True)
+    ready_event_types = models.ManyToManyField(
+        'EventType',
+        verbose_name=_('ready event types'),
+        help_text=_('Types of event for which item has been fully annotated'),
+        blank=True)
 
     class Meta:
         verbose_name = _('Item')

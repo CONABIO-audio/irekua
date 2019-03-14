@@ -61,7 +61,11 @@ class SiteViewSet(viewsets.ModelViewSet):
         return user.is_superuser
 
     def get_serializer_class(self):
-        user = self.request.user
+        try:
+            user = self.request.user
+        except:
+            return SiteSerializer
+
         if self.has_coordinate_permissions(user):
             return FullSiteSerializer
         else:
