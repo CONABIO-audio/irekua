@@ -31,21 +31,21 @@ router.register(r'institutions', views.InstitutionViewSet)
 # router.register(r'item_types', views.ItemTypeViewSet) # Admin | ReadOnly
 # router.register(r'licences', views.LicenceViewSet) # No view
 router.register(r'licence_types', views.LicenceTypeViewSet)
-# router.register(r'metacollections', views.MetaCollectionViewSet) # Admin | Developer | ReadOnly
-# router.register(r'physical_devices', views.PhysicalDeviceViewSet) # Admin | Is in Collection | Is owner
-# router.register(r'roles', views.RoleViewSet) # Admin | ReadOnly
-# router.register(r'sampling_events', views.SamplingEventViewSet) # Admin | Is in Collection | Is Owner
+router.register(r'metacollections', views.MetaCollectionViewSet) # Admin | Developer | ReadOnly
+# router.register(r'physical_devices', views.PhysicalDeviceViewSet) # Admin | Has Collection Permissions | Is owner
+router.register(r'roles', views.RoleViewSet) # Admin | ReadOnly
+# router.register(r'sampling_events', views.SamplingEventViewSet) # Admin | Has Collection Permissions | Is Owner
 router.register(r'sampling_event_types', views.SamplingEventTypeViewSet)
 # router.register(r'secondary_items', views.SecondaryItemViewSet) # Admin | Developer | Model | Is in Collection | Is Owner | Is Free
 router.register(r'sites', views.SiteViewSet)
 router.register(r'site_types', views.SiteTypeViewSet)
 # router.register(r'sources', views.SourceViewSet) # No view
 router.register(r'synonyms', views.SynonymViewSet) # Admin | Curator | ReadOnly
-# router.register(r'synonym_suggestions', views.SynonymSuggestionViewSet) # Admin | ReadOrCreate
+router.register(r'synonym_suggestions', views.SynonymSuggestionViewSet) # Admin | ReadOrCreate
 router.register(r'tags', views.TagViewSet) # Admin | ReadOrCreate
 router.register(r'terms', views.TermViewSet)
 router.register(r'term_types', views.TermTypeViewSet)
-# router.register(r'term_suggestions', views.TermSuggestionViewSet) # Admin | ReadOrCreate
+router.register(r'term_suggestions', views.TermSuggestionViewSet) # Admin | ReadOrCreate
 router.register(r'users', views.UserViewSet)
 
 

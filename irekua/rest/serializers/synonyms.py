@@ -10,7 +10,6 @@ class TermSerializer(serializers.ModelSerializer):
         model = db.Term
         fields = (
             'url',
-            'id',
             'term_type',
             'value'
         )

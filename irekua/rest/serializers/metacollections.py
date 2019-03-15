@@ -5,8 +5,12 @@ from rest_framework import serializers
 import database.models as db
 
 
-class MetaCollectionSerializer(serializers.HyperlinkedModelSerializer):
-    creator = serializers.HyperlinkedRelatedField(
+class MetaCollectionSerializer(serializers.ModelSerializer):
+    creator = serializers.SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='username')
+    creator_url = serializers.HyperlinkedRelatedField(
         many=False,
         read_only=True,
         view_name='user-detail')
@@ -22,5 +26,17 @@ class MetaCollectionSerializer(serializers.HyperlinkedModelSerializer):
             'name',
             'description',
             'creator',
+            'creator_url',
             'items',
         )
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        return db.MetaCollection.objects.create(
+            creator=user,
+            **validated_data)
+
+    def update(self, instance, validated_data):
+        instance.description = validated_data['description']
+        instance.save()
+        return instance

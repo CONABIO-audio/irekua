@@ -21,5 +21,7 @@ class Role(Group):
         verbose_name = _('Role Type')
         verbose_name_plural = _('Role Types')
 
+        ordering = ['name']
+
     def __str__(self):
         return self.name
