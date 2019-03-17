@@ -161,8 +161,9 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.IsAuthenticated',
+    # ],
     'PAGE_SIZE': 10,
+    'EXCEPTION_HANDLER': 'rest.exception_handler.custom_exception_handler'
 }

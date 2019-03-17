@@ -5,11 +5,19 @@ from rest_framework import serializers
 import database.models as db
 
 
-class ItemTypeSerializer(serializers.HyperlinkedModelSerializer):
-    event_types = serializers.HyperlinkedRelatedField(
+class EventTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = db.EventType
+        fields = (
+            'url',
+            'name',
+        )
+
+
+class ItemTypeSerializer(serializers.ModelSerializer):
+    event_types = EventTypeSerializer(
         many=True,
-        read_only=True,
-        view_name='event_type-detail')
+        read_only=True)
 
     class Meta:
         model = db.ItemType

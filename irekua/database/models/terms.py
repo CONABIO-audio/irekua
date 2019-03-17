@@ -3,6 +3,8 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import empty_JSON
+
 
 class Term(models.Model):
     term_type = models.ForeignKey(
@@ -29,6 +31,7 @@ class Term(models.Model):
         db_column='metadata',
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to term'),
+        default=empty_JSON,
         blank=True,
         null=True)
 

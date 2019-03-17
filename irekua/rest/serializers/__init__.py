@@ -8,7 +8,6 @@ from .collection_item_types import CollectionItemTypeSerializer
 from .collection_roles import CollectionRoleSerializer
 from .collection_sites import CollectionSiteSerializer
 from .collection_licences import CollectionLicenceSerializer
-from .collection_types import CollectionTypeSerializer
 from .collection_users import CollectionUserSerializer
 from .data_collections import CollectionSerializer
 from .device_brands import DeviceBrandSerializer

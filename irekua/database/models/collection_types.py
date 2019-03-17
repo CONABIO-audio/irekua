@@ -28,6 +28,13 @@ class CollectionType(models.Model):
         verbose_name=_('description'),
         help_text=_('Description of collection type'),
         blank=False)
+    logo = models.ImageField(
+        upload_to='images/collection_types/',
+        db_column='logo',
+        verbose_name=_('logo'),
+        help_text=_('Logo of collection type'),
+        blank=True,
+        null=True)
     metadata_schema = JSONField(
         db_column='metadata_schema',
         verbose_name=_('metadata schema'),
@@ -40,7 +47,9 @@ class CollectionType(models.Model):
     anyone_can_create = models.BooleanField(
         db_column='anyone_can_create',
         verbose_name=_('anyone can create'),
-        help_text=_('Boolean flag indicating wheter any user can create collections of this type'),
+        help_text=_(
+            'Boolean flag indicating wheter any user can '
+            'create collections of this type'),
         blank=True,
         default=False,
         null=False
@@ -48,55 +57,71 @@ class CollectionType(models.Model):
     administrators = models.ManyToManyField(
         User,
         verbose_name=_('administrators'),
-        help_text=_('Administrators of this collection type. Administrators can create collections of this type'),
+        help_text=_(
+            'Administrators of this collection type. Administrators can '
+            'create collections of this type'),
         blank=True)
 
     restrict_site_types = models.BooleanField(
         db_column='restrict_site_types',
         verbose_name=_('restrict site types'),
-        help_text=_('Flag indicating whether types of sites are restricted to registered ones'),
+        help_text=_(
+            'Flag indicating whether types of sites are restricted to '
+            'registered ones'),
         default=True,
         null=False,
         blank=True)
     restrict_annotation_types = models.BooleanField(
         db_column='restrict_annotation_types',
         verbose_name=_('restrict annotation types'),
-        help_text=_('Flag indicating whether types of annotations are restricted to registered ones'),
+        help_text=_(
+            'Flag indicating whether types of annotations are restricted '
+            'to registered ones'),
         default=True,
         null=False,
         blank=True)
     restrict_item_types = models.BooleanField(
         db_column='restrict_item_types',
         verbose_name=_('restrict item types'),
-        help_text=_('Flag indicating whether types of items are restricted to registered ones'),
+        help_text=_(
+            'Flag indicating whether types of items are restricted to '
+            'registered ones'),
         default=True,
         null=False,
         blank=True)
     restrict_licence_types = models.BooleanField(
         db_column='restrict_licence_types',
         verbose_name=_('restrict licence types'),
-        help_text=_('Flag indicating whether types of licences are restricted to registered ones'),
+        help_text=_(
+            'Flag indicating whether types of licences are restricted to '
+            'registered ones'),
         default=True,
         null=False,
         blank=True)
     restrict_device_types = models.BooleanField(
         db_column='restrict_device_types',
         verbose_name=_('restrict device types'),
-        help_text=_('Flag indicating whether types of devices are restricted to registered ones'),
+        help_text=_(
+            'Flag indicating whether types of devices are restricted to '
+            'registered ones'),
         default=True,
         null=False,
         blank=True)
     restrict_event_types = models.BooleanField(
         db_column='restrict_event_types',
         verbose_name=_('restrict event types'),
-        help_text=_('Flag indicating whether types of events are restricted to registered ones'),
+        help_text=_(
+            'Flag indicating whether types of events are restricted to '
+            'registered ones'),
         default=True,
         null=False,
         blank=True)
     restrict_sampling_event_types = models.BooleanField(
         db_column='restrict_sampling_event_types',
         verbose_name=_('restrict sampling event types'),
-        help_text=_('Flag indicating whether types of sampling events are restricted to registered ones'),
+        help_text=_(
+            'Flag indicating whether types of sampling events are restricted '
+            'to registered ones'),
         default=True,
         null=False,
         blank=True)
@@ -171,7 +196,9 @@ class CollectionType(models.Model):
                 schema=self.metadata_schema,
                 instance=metadata)
         except ValidationError as error:
-            msg = _('Invalid collection metadata for collection of type %(type)s. Error: %(error)s')
+            msg = _(
+                'Invalid collection metadata for collection of type %(type)s. '
+                'Error: %(error)s')
             params = dict(type=str(self), error=str(error))
             raise ValidationError(msg, params=params)
 
@@ -182,7 +209,9 @@ class CollectionType(models.Model):
         try:
             return self.site_types.get(name=site_type)
         except self.site_types.model.DoesNotExist:
-            msg = _('Site type %(site_type)s is not accepted in collection of type %(col_type)s or does not exist')
+            msg = _(
+                'Site type %(site_type)s is not accepted in collection of '
+                'type %(col_type)s or does not exist')
             params = dict(
                 site_type=site_type,
                 col_type=str(self))
@@ -195,7 +224,9 @@ class CollectionType(models.Model):
         try:
             return self.annotation_types.get(name=annotation_type)
         except self.annotation_types.model.DoesNotExist:
-            msg = _('Annotation type %(annotation_type)s is not accepted in collection of type %(col_type)s or does not exist')
+            msg = _(
+                'Annotation type %(annotation_type)s is not accepted in '
+                'collection of type %(col_type)s or does not exist')
             params = dict(
                 annotation_type=annotation_type,
                 col_type=str(self))
@@ -208,7 +239,9 @@ class CollectionType(models.Model):
         try:
             return self.licence_type.get(name=licence_type)
         except self.licence_types.model.DoesNotExist:
-            msg = _('Licence type %(licence_type)s is not accepted in collection of type %(col_type)s or does not exist')
+            msg = _(
+                'Licence type %(licence_type)s is not accepted in collection '
+                'of type %(col_type)s or does not exist')
             params = dict(
                 licence_type=licence_type,
                 col_type=str(self))
@@ -221,7 +254,9 @@ class CollectionType(models.Model):
         try:
             return self.event_types.get(name=event_type)
         except self.event_types.model.DoesNotExist:
-            msg = _('Event type %(event_type)s is not accepted in collection of type %(col_type)s or does not exist')
+            msg = _(
+                'Event type %(event_type)s is not accepted in collection of '
+                'type %(col_type)s or does not exist')
             params = dict(
                 event_type=event_type,
                 col_type=str(self))
@@ -234,7 +269,9 @@ class CollectionType(models.Model):
         try:
             return self.item_types.get(name=item_type)
         except self.item_types.model.DoesNotExist:
-            msg = _('Item type %(item_type)s is not accepted in collection of type %(col_type)s or does not exist')
+            msg = _(
+                'Item type %(item_type)s is not accepted in collection of '
+                'type %(col_type)s or does not exist')
             params = dict(
                 item_type=item_type,
                 col_type=str(self))
@@ -247,7 +284,9 @@ class CollectionType(models.Model):
         try:
             return self.device_types.get(name=device_type)
         except self.device_types.model.DoesNotExist:
-            msg = _('Item type %(device_type)s is not accepted in collection of type %(col_type)s or does not exist')
+            msg = _(
+                'Item type %(device_type)s is not accepted in collection of '
+                'type %(col_type)s or does not exist')
             params = dict(
                 device_type=device_type,
                 col_type=str(self))
@@ -260,7 +299,9 @@ class CollectionType(models.Model):
         try:
             return self.sampling_event_types.get(name=sampling_event_type)
         except self.sampling_event_types.model.DoesNotExist:
-            msg = _('Sampling Event type %(sampling_event_type)s is not accepted in collection of type %(col_type)s or does not exist')
+            msg = _(
+                'Sampling Event type %(sampling_event_type)s is not accepted '
+                'in collection of type %(col_type)s or does not exist')
             params = dict(
                 sampling_event_type=sampling_event_type,
                 col_type=str(self))
@@ -270,7 +311,9 @@ class CollectionType(models.Model):
         try:
             return self.collectionrole_set.get(role=role)
         except self.roles.model.DoesNotExist:
-            msg = _('Role type %(role)s is not accepted in collection of type %(col_type)s or does not exist')
+            msg = _(
+                'Role type %(role)s is not accepted in collection of type '
+                '%(col_type)s or does not exist')
             params = dict(
                 role=role,
                 col_type=str(self))
@@ -279,17 +322,32 @@ class CollectionType(models.Model):
     def add_site_type(self, site_type):
         self.site_types.add(site_type)
 
+    def remove_site_type(self, site_type):
+        self.site_types.remove(site_type)
+
     def add_annotation_type(self, annotation_type):
         self.annotation_types.add(annotation_type)
+
+    def remove_annotation_type(self, annotation_type):
+        self.annotation_types.remove(annotation_type)
 
     def add_licence_type(self, licence_type):
         self.licence_types.add(licence_type)
 
+    def remove_licence_type(self, licence_type):
+        self.licence_types.remove(licence_type)
+
     def add_event_type(self, event_type):
         self.event_types.add(event_type)
 
+    def remove_event_type(self, event_type):
+        self.event_types.remove(event_type)
+
     def add_sampling_event_type(self, sampling_event_type):
         self.sampling_event_types.add(sampling_event_type)
+
+    def remove_sampling_event_type(self, sampling_event_type):
+        self.sampling_event_types.remove(sampling_event_type)
 
     def add_device_type(self, device_type, metadata_schema=None):
         if metadata_schema is None:
@@ -300,6 +358,16 @@ class CollectionType(models.Model):
             device_type=device_type,
             metadata_schema=metadata_schema)
 
+    def remove_device_type(self, device_type):
+        try:
+            collection_device_type = CollectionDeviceType.objects.get(
+                collection_type=self,
+                device_type=device_type)
+        except CollectionDeviceType.DoesNotExist as error:
+            raise ValidationError(error)
+
+        collection_device_type.delete()
+
     def add_item_type(self, item_type, metadata_schema=None):
         if metadata_schema is None:
             metadata_schema = simple_JSON_schema()
@@ -309,6 +377,16 @@ class CollectionType(models.Model):
             item_type=item_type,
             metadata_schema=metadata_schema)
 
+    def remove_item_type(self, item_type):
+        try:
+            collection_item_type = CollectionItemType.objects.get(
+                collection=self,
+                item_type=item_type)
+        except CollectionItemType.DoesNotExist as error:
+            raise ValidationError(error)
+
+        collection_item_type.delete()
+
     def add_role(self, role, metadata_schema=None):
         if metadata_schema is None:
             metadata_schema = simple_JSON_schema()
@@ -317,3 +395,19 @@ class CollectionType(models.Model):
             collection_type=self,
             role=role,
             metadata_schema=metadata_schema)
+
+    def remove_role(self, role):
+        try:
+            collection_role = CollectionRole.objects.get(
+                collection=self,
+                role=role)
+        except CollectionRole.DoesNotExist as error:
+            raise ValidationError(error)
+
+        collection_role.delete()
+
+    def add_administrator(self, user):
+        self.administrators.add(user)
+
+    def remove_administrator(self, user):
+        self.administrators.remove(user)

@@ -53,13 +53,13 @@ class Entailment(models.Model):
             params = dict(
                 source_type=self.source.term_type,
                 target_type=self.target.term_type)
-            raise ValidationError({'target': msg}, params=params)
+            raise ValidationError({'target': msg % params})
 
         try:
             entailment_type.validate_metadata(self.metadata)
         except ValidationError as error:
             msg = _('Invalid entailment metadata. Error %(error)s')
             params = dict(error=str(error))
-            raise ValidationError(msg, params=params)
+            raise ValidationError({'metadata': msg % params})
 
         super(Entailment, self).clean()

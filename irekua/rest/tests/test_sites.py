@@ -38,6 +38,7 @@ class SiteTestCase(BaseTestCase, APITestCase):
             password=str(uuid4()))
         self.site_type = SiteType.objects.create(
             name=str(uuid4()),
+            description='Random Site Type',
             metadata_schema=simple_JSON_schema())
 
     def get_serializer_context(self):
