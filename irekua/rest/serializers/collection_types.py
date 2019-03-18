@@ -50,6 +50,11 @@ class SiteTypeSerializer(serializers.ModelSerializer):
 
 
 class AnnotationTypeSerializer(serializers.ModelSerializer):
+    name = serializers.PrimaryKeyRelatedField(
+        many=False,
+        read_only=False,
+        queryset=db.AnnotationType.objects.all())
+
     class Meta:
         model = db.AnnotationType
         fields = (
@@ -79,15 +84,6 @@ class ItemTypeSerializer(serializers.ModelSerializer):
         )
 
 
-class TermTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = db.TermType
-        fields = (
-            'url',
-            'name'
-        )
-
-
 class EventTypeSerializer(serializers.ModelSerializer):
     name = serializers.PrimaryKeyRelatedField(
         many=False,
@@ -103,6 +99,11 @@ class EventTypeSerializer(serializers.ModelSerializer):
 
 
 class LicenceTypeSerializer(serializers.ModelSerializer):
+    name = serializers.PrimaryKeyRelatedField(
+        many=False,
+        read_only=False,
+        queryset=db.LicenceType.objects.all())
+
     class Meta:
         model = db.LicenceType
         fields = (
@@ -133,6 +134,11 @@ class DeviceTypeSerializer(serializers.ModelSerializer):
 
 
 class SamplingEventTypeSerializer(serializers.ModelSerializer):
+    name = serializers.PrimaryKeyRelatedField(
+        many=False,
+        read_only=False,
+        queryset=db.SamplingEventType.objects.all())
+
     class Meta:
         model = db.SamplingEventType
         fields = (
