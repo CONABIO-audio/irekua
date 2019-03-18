@@ -80,6 +80,19 @@ class Site(models.Model):
         verbose_name=_('creator'),
         help_text=_('Creator of site'))
 
+    created_on = models.DateTimeField(
+        db_column='created_on',
+        verbose_name=_('created on'),
+        help_text=_('Date of entry creation'),
+        auto_now_add=True,
+        editable=False)
+    modified_on = models.DateTimeField(
+        db_column='modified_on',
+        verbose_name=_('modified on'),
+        help_text=_('Date of last modification'),
+        auto_now=True,
+        editable=False)
+
     class Meta:
         verbose_name = _('Site')
         verbose_name_plural = _('Sites')
@@ -122,7 +135,3 @@ class Site(models.Model):
             raise ValidationError({'metadata': error})
 
         super(Site, self).clean()
-
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super(Site, self).save(*args, **kwargs)

@@ -33,6 +33,7 @@ class AnnotationVote(models.Model):
         on_delete=models.SET_NULL,
         blank=True,
         null=True)
+
     created_on = models.DateTimeField(
         db_column='created_on',
         verbose_name=_('created on'),

@@ -106,7 +106,7 @@ class CollectionTypeViewSet(viewsets.ModelViewSet, AdditionalActions):
     @action(
         detail=True,
         methods=['POST'],
-        serializer_class=serializers.SamplingEventTypeSerializer)
+        serializer_class=serializers.sampling_event_types.CreateSerializer)
     def create_sampling_event_type(self, request, pk=None):
         return self.create_related_object_view(
             db.SamplingEventType,

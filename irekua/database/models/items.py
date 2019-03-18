@@ -93,11 +93,6 @@ class Item(models.Model):
         help_text=_('Date on which item was produced'),
         blank=True,
         null=True)
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date on which item was uploaded to database'),
-        auto_now_add=True)
     collection = models.ForeignKey(
         'Collection',
         db_column='collection_id',
@@ -134,6 +129,19 @@ class Item(models.Model):
         verbose_name=_('ready event types'),
         help_text=_('Types of event for which item has been fully annotated'),
         blank=True)
+
+    created_on = models.DateTimeField(
+        db_column='created_on',
+        verbose_name=_('created on'),
+        help_text=_('Date of entry creation'),
+        auto_now_add=True,
+        editable=False)
+    modified_on = models.DateTimeField(
+        db_column='modified_on',
+        verbose_name=_('modified on'),
+        help_text=_('Date of last modification'),
+        auto_now=True,
+        editable=False)
 
     class Meta:
         verbose_name = _('Item')

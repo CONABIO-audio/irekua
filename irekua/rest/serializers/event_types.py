@@ -5,7 +5,12 @@ from rest_framework import serializers
 import database.models as db
 
 
-class LabelTermSerializer(serializers.HyperlinkedModelSerializer):
+class LabelTermSerializer(serializers.ModelSerializer):
+    name = serializers.PrimaryKeyRelatedField(
+        many=False,
+        read_only=False,
+        queryset=db.TermType.objects.all())
+
     class Meta:
         model = db.TermType
         fields = ('url', 'name')

@@ -22,10 +22,7 @@ from .items import ItemSerializer
 from .licence_types import LicenceTypeSerializer
 from .licences import LicenceSerializer
 from .metacollections import MetaCollectionSerializer
-from .physical_devices import PhysicalDeviceSerializer
 from .roles import RoleSerializer
-from .sampling_events import SamplingEventSerializer
-from .sampling_event_types import SamplingEventTypeSerializer
 from .secondary_items import SecondaryItemSerializer
 from .site_types import SiteTypeSerializer
 from .sites import SiteSerializer
@@ -37,6 +34,8 @@ from .term_suggestions import TermSuggestionSerializer
 from .term_types import TermTypeSerializer
 from .terms import TermSerializer
 from .users import UserSerializer
+
+from . import sampling_event_types
 
 
 __all__ = [
@@ -51,7 +50,6 @@ __all__ = [
     'CollectionRoleSerializer',
     'CollectionSiteSerializer',
     'CollectionLicenceSerializer',
-    'CollectionTypeSerializer',
     'CollectionUserSerializer',
     'DeviceSerializer',
     'DeviceBrandSerializer',
@@ -65,10 +63,7 @@ __all__ = [
     'LicenceSerializer',
     'LicenceTypeSerializer',
     'MetaCollectionSerializer',
-    'PhysicalDeviceSerializer',
     'RoleSerializer',
-    'SamplingEventSerializer',
-    'SamplingEventTypeSerializer',
     'SecondaryItemSerializer',
     'SiteSerializer',
     'SiteTypeSerializer',
@@ -80,4 +75,5 @@ __all__ = [
     'TermSuggestionSerializer',
     'TermTypeSerializer',
     'UserSerializer',
+    'sampling_event_types',
 ]

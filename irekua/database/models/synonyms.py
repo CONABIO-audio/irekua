@@ -33,6 +33,19 @@ class Synonym(models.Model):
         help_text=_('Metadata associated to the synonym'),
         null=True)
 
+    created_on = models.DateTimeField(
+        db_column='created_on',
+        verbose_name=_('created on'),
+        help_text=_('Date of entry creation'),
+        auto_now_add=True,
+        editable=False)
+    modified_on = models.DateTimeField(
+        db_column='modified_on',
+        verbose_name=_('modified on'),
+        help_text=_('Date of last modification'),
+        auto_now=True,
+        editable=False)
+
     class Meta:
         verbose_name = _('Synonym')
         verbose_name_plural = _('Synonyms')

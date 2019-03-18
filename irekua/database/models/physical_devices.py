@@ -47,6 +47,19 @@ class PhysicalDevice(models.Model):
         help_text=_('Does this device possibly represents many physical devices?'),
         blank=False)
 
+    created_on = models.DateTimeField(
+        db_column='created_on',
+        verbose_name=_('created on'),
+        help_text=_('Date of entry creation'),
+        auto_now_add=True,
+        editable=False)
+    modified_on = models.DateTimeField(
+        db_column='modified_on',
+        verbose_name=_('modified on'),
+        help_text=_('Date of last modification'),
+        auto_now=True,
+        editable=False)
+
     class Meta:
         verbose_name = _('Physical Device')
         verbose_name_plural = _('Physical Devices')

@@ -85,6 +85,19 @@ class Collection(models.Model):
         help_text=_('Signed licences for items in this collection'),
         blank=True)
 
+    created_on = models.DateTimeField(
+        db_column='created_on',
+        verbose_name=_('created on'),
+        help_text=_('Date of entry creation'),
+        auto_now_add=True,
+        editable=False)
+    modified_on = models.DateTimeField(
+        db_column='modified_on',
+        verbose_name=_('modified on'),
+        help_text=_('Date of last modification'),
+        auto_now=True,
+        editable=False)
+
     class Meta:
         verbose_name = _('Collection')
         verbose_name_plural = _('Collections')

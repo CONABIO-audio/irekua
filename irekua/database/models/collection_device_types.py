@@ -39,7 +39,7 @@ class CollectionDeviceType(models.Model):
     class Meta:
         verbose_name = _('Collection Device Type')
         verbose_name_plural = _('Collection Device Types')
-        
+
 
     def __str__(self):
         msg = _('Device type %(device_type)s for collection type %(collection_type)s')

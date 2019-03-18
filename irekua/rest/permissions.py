@@ -21,12 +21,39 @@ class ReadAndCreateOnly(IsAuthenticated):
         return request.method in list(SAFE_METHODS) + ['POST']
 
 
+class ListAndCreateOnly(IsAuthenticated):
+    def has_permission(self, request, view):
+        is_auth = super(ListAndCreateOnly, self).has_permission(request, view)
+        if not is_auth:
+            return False
+        if request.method == 'POST':
+            return True
+        return view.action == 'list'
+
+
+class CreateOnly(IsAuthenticated):
+    def has_permission(self, request, view):
+        is_auth = super(CreateOnly, self).has_permission(request, view)
+        if not is_auth:
+            return False
+        return request.method == 'POST'
+
+
 class IsUser(BasePermission):
     def has_permission(self, request, view):
         try:
             viewed_user = view.get_object()
             user = request.user
             return viewed_user == user
+        except:
+            return False
+
+class IsOwner(BasePermission):
+    def has_permission(self, request, view):
+        try:
+            viewed_object = view.get_object()
+            user = request.user
+            return viewed_object.owner == user
         except:
             return False
 

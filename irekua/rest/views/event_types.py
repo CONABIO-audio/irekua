@@ -12,15 +12,6 @@ from rest.serializers import EventTypeSerializer, TermTypeSerializer
 from rest.permissions import IsAdmin, ReadOnly
 
 
-class TermTypeNameSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = db.TermType
-        fields = ('name', )
-
-    def create(self, *args, **kwargs):
-        pass
-
-
 class EventTypeViewSet(ModelViewSet):
     queryset = db.EventType.objects.all()
     serializer_class = EventTypeSerializer
@@ -46,14 +37,14 @@ class EventTypeViewSet(ModelViewSet):
         serializer = TermTypeSerializer(label_types, many=True)
         return Response(serializer.data)
 
-    @action(detail=True, methods=['POST'], serializer_class=TermTypeNameSerializer)
+    @action(detail=True, methods=['POST'], serializer_class=TermTypeSerializer)
     def add_label_type(self, request, pk=None):
         try:
             event_type = db.EventType.objects.get(pk=pk)
         except db.EventType.DoesNotExist as error:
             return Response(str(error), status=status.HTTP_404_NOT_FOUND)
 
-        serializer = TermTypeNameSerializer(data=request.data)
+        serializer = TermTypeSerializer(data=request.data)
         serializer.is_valid()
         if 'name' not in serializer.data:
             return Response('Invalid data. No term type name was provided', status=status.HTTP_400_BAD_REQUEST)
@@ -67,14 +58,14 @@ class EventTypeViewSet(ModelViewSet):
         event_type.save()
         return Response(status=status.HTTP_201_CREATED)
 
-    @action(detail=True, methods=['POST'], serializer_class=TermTypeNameSerializer)
+    @action(detail=True, methods=['POST'], serializer_class=TermTypeSerializer)
     def remove_label_type(self, request, pk=None):
         try:
             event_type = db.EventType.objects.get(pk=pk)
         except db.EventType.DoesNotExist as error:
             return Response(str(error), status=status.HTTP_404_NOT_FOUND)
 
-        serializer = TermTypeNameSerializer(data=request.data)
+        serializer = TermTypeSerializer(data=request.data)
         serializer.is_valid()
         if 'name' not in serializer.data:
             return Response('Invalid data. No term type name was provided', status=status.HTTP_400_BAD_REQUEST)

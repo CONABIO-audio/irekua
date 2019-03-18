@@ -2,14 +2,7 @@ from .annotation_tools import AnnotationToolViewSet
 from .annotation_types import AnnotationTypeViewSet
 from .annotation_votes import AnnotationVoteViewSet
 from .annotations import AnnotationViewSet
-from .collection_device_types import CollectionDeviceTypeViewSet
-from .collection_devices import CollectionDeviceViewSet
-from .collection_item_types import CollectionItemTypeViewSet
-from .collection_roles import CollectionRoleViewSet
-from .collection_sites import CollectionSiteViewSet
-from .collection_licences import CollectionLicenceViewSet
 from .collection_types import CollectionTypeViewSet
-from .collection_users import CollectionUserViewSet
 from .data_collections import CollectionViewSet
 from .device_brands import DeviceBrandViewSet
 from .device_types import DeviceTypeViewSet
@@ -46,14 +39,7 @@ __all__ = [
     'AnnotationTypeViewSet',
     'AnnotationVoteViewSet',
     'CollectionViewSet',
-    'CollectionDeviceViewSet',
-    'CollectionDeviceTypeViewSet',
-    'CollectionItemTypeViewSet',
-    'CollectionRoleViewSet',
-    'CollectionSiteViewSet',
-    'CollectionLicenceViewSet',
     'CollectionTypeViewSet',
-    'CollectionUserViewSet',
     'DeviceViewSet',
     'DeviceBrandViewSet',
     'DeviceTypeViewSet',

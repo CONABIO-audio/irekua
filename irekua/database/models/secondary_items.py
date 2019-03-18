@@ -38,12 +38,6 @@ class SecondaryItem(models.Model):
         verbose_name=_('hash function'),
         help_text=_('Hash function used to generate has of secondary file'),
         choices=HASH_FUNCTIONS)
-    created_on = models.DateTimeField(
-        editable=False,
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of creation of secondary item'),
-        auto_now_add=True)
     item_type = models.ForeignKey(
         'ItemType',
         on_delete=models.PROTECT,
@@ -67,6 +61,19 @@ class SecondaryItem(models.Model):
         default=empty_JSON,
         blank=True,
         null=True)
+
+    created_on = models.DateTimeField(
+        db_column='created_on',
+        verbose_name=_('created on'),
+        help_text=_('Date of entry creation'),
+        auto_now_add=True,
+        editable=False)
+    modified_on = models.DateTimeField(
+        db_column='modified_on',
+        verbose_name=_('modified on'),
+        help_text=_('Date of last modification'),
+        auto_now=True,
+        editable=False)
 
     class Meta:
         verbose_name = _('Secondary Item')
