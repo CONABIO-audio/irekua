@@ -90,7 +90,9 @@ class ItemType(models.Model):
                 schema=self.media_info_schema,
                 instance=media_info)
         except ValidationError as error:
-            msg = _('Invalid media info for item of type %(type)s. Error %(error)s')
+            msg = _(
+                'Invalid media info for item of type %(type)s. '
+                'Error %(error)s')
             params = dict(type=str(self), error=str(error))
             raise ValidationError(msg, params=params)
 
@@ -98,6 +100,14 @@ class ItemType(models.Model):
         try:
             return self.event_types.get(name=event_type.name)
         except self.event_types.model.DoesNotExist:
-            msg = _('Event type %(event_type)s is invalid for item type %(item_type)s')
+            msg = _(
+                'Event type %(event_type)s is invalid for item '
+                'type %(item_type)s')
             params = dict(even_type=str(event_type), item_type=str(self))
             raise ValidationError(msg, params=params)
+
+    def add_event_type(self, event_type):
+        self.event_types.add(event_type)
+
+    def remove_event_type(self, event_type):
+        self.event_types.remove(event_type)

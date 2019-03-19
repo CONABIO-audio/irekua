@@ -71,7 +71,9 @@ class Annotation(models.Model):
     certainty = models.FloatField(
         db_column='certainty',
         verbose_name=_('certainty'),
-        help_text=_('Level of certainty of location or labelling of annotation'),
+        help_text=_(
+            'Level of certainty of location or labelling '
+            'of annotation'),
         blank=True,
         null=True)
     quality = models.CharField(
@@ -156,7 +158,8 @@ class Annotation(models.Model):
             raise ValidationError({'annotation': error})
 
         try:
-            self.annotation_tool.validate_configuration(self.annotation_configuration)
+            self.annotation_tool.validate_configuration(
+                self.annotation_configuration)
         except ValidationError as error:
             raise ValidationError({'annotation_configuration': error})
 
@@ -172,7 +175,9 @@ class Annotation(models.Model):
             try:
                 term_type = self.event_type.validate_and_get_term_type(key)
             except ValidationError:
-                msg = _('Label contains a term (of type %(type)s) that is not valid for the event type or does not exist')
+                msg = _(
+                    'Label contains a term (of type %(type)s) that is not '
+                    'valid for the event type or does not exist')
                 params = dict(type=key)
                 raise ValidationError(msg, params=params)
 

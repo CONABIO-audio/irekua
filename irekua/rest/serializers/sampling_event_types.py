@@ -3,32 +3,22 @@ from __future__ import unicode_literals
 
 from rest_framework import serializers
 import database.models as db
+from . import device_types
+from . import site_types
 
 
-class DeviceTypeSerializer(serializers.ModelSerializer):
+class SelectSerializer(serializers.ModelSerializer):
     name = serializers.PrimaryKeyRelatedField(
         many=False,
         read_only=False,
-        queryset=db.DeviceType.objects.all())
+        queryset=db.SamplingEventType.objects.all())
 
     class Meta:
-        model = db.DeviceType
+        model = db.SamplingEventType
         fields = (
             'url',
-            'name')
-
-
-class SiteTypeSerializer(serializers.ModelSerializer):
-    name = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.DeviceType.objects.all())
-
-    class Meta:
-        model = db.SiteType
-        fields = (
-            'url',
-            'name')
+            'name'
+        )
 
 
 class ListSerializer(serializers.HyperlinkedModelSerializer):
@@ -40,11 +30,12 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
             'icon',
         )
 
+
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    device_types = DeviceTypeSerializer(
+    device_types = device_types.SelectSerializer(
         many=True,
         read_only=True)
-    site_types = SiteTypeSerializer(
+    site_types = site_types.SelectSerializer(
         many=True,
         read_only=True)
 
@@ -59,14 +50,16 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'restrict_device_types',
             'restrict_site_types',
             'device_types',
-            'site_types'
+            'site_types',
+            'created_on',
+            'modified_on',
         )
 
-class CreateSerializer(serializers.HyperlinkedModelSerializer):
+
+class CreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = db.SamplingEventType
         fields = (
-            'url',
             'name',
             'description',
             'icon',

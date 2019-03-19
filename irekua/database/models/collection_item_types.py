@@ -42,7 +42,9 @@ class CollectionItemType(models.Model):
 
     def __str__(self):
         msg = _('Item type %(item)s for collection %(collection)s')
-        params = dict(role=str(self.item_type), collection=str(self.collection_type))
+        params = dict(
+            item=str(self.item_type),
+            collection=str(self.collection_type))
         return msg % params
 
     def validate_metadata(self, metadata):
@@ -51,7 +53,9 @@ class CollectionItemType(models.Model):
                 schema=self.metadata_schema,
                 instance=metadata)
         except ValidationError as error:
-            msg = _('Invalid metadata for item type %(type)s in collection %(collection). Error: %(error)')
+            msg = _(
+                'Invalid metadata for item type %(type)s in collection '
+                '%(collection). Error: %(error)')
             params = dict(
                 type=str(self.item_type),
                 collection_type=str(self.collection_type),

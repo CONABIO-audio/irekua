@@ -1,10 +1,36 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.db.models import Model
 from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
+from rest_framework import mixins
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
+
+
+class NoCreateViewSet(mixins.ListModelMixin,
+                      mixins.UpdateModelMixin,
+                      mixins.DestroyModelMixin,
+                      mixins.RetrieveModelMixin,
+                      viewsets.GenericViewSet):
+    @property
+    def serializer_module(self):
+        raise NotImplementedError
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return self.serializer_module.ListSerializer
+        if self.action == 'retrieve':
+            return self.serializer_module.DetailSerializer
+        if self.action in ['create', 'update', 'partial_update']:
+            return self.serializer_module.CreateSerializer
+        return super().get_serializer_class()
+
+
+class BaseViewSet(mixins.CreateModelMixin, NoCreateViewSet):
+    pass
 
 
 class AdditionalActions(object):
@@ -45,9 +71,10 @@ class AdditionalActions(object):
 
         _, pk = serializer.validated_data.popitem()
 
-        query = {
-            pk_field: pk
-        }
+        if isinstance(pk, Model):
+            return pk, extra_dict
+
+        query = {pk_field: pk}
         related_object = get_object_or_404(
             model_class,
             **query)
@@ -84,10 +111,12 @@ class AdditionalActions(object):
             model,
             name,
             pk_field='pk',
-            extra=None):
+            extra=None,
+            through_model=False):
         request = self.request
         view_object = self.get_object()
         serializer = self.get_serializer_class()
+
         related_object, extra_dict = self.get_related_object(
             request,
             serializer,

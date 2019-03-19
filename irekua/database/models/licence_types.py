@@ -41,7 +41,9 @@ class LicenceType(models.Model):
     years_valid_for = models.IntegerField(
         db_column='years_valid_for',
         verbose_name=_('years valid for'),
-        help_text=_('Number of years for which licences of this type are valid'),
+        help_text=_(
+            'Number of years for which licences of this type '
+            'are valid'),
         blank=False,
         null=False)
     icon = models.ImageField(
@@ -106,7 +108,9 @@ class LicenceType(models.Model):
 
     def validate_metadata(self, metadata):
         try:
-            self.metadata_schema.validate_instance(metadata)
+            validate_JSON_instance(
+                schema=self.metadata_schema,
+                instance=metadata)
         except ValidationError as error:
             msg = _('Invalid licence metadata. Error: %(error)s')
             params = dict(error=str(error))

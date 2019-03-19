@@ -2,6 +2,12 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
+from .annotation_types import SelectSerializer as AnnotationTypeSerializer
+from .event_types import SelectSerializer as EventTypeSerializer
+from .site_types import SelectSerializer as SiteTypeSerializer
+from .licence_types import SelectSerializer as LicenceTypeSerializer
+from .sampling_event_types import SelectSerializer as SamplingEventTypeSerializer
+from .users import SelectSerializer as UserSerializer
 import database.models as db
 
 
@@ -16,11 +22,10 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class CreateAndUpdateSerializer(serializers.HyperlinkedModelSerializer):
+class CreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = db.CollectionType
         fields = (
-            'url',
             'name',
             'logo',
             'description',
@@ -33,82 +38,6 @@ class CreateAndUpdateSerializer(serializers.HyperlinkedModelSerializer):
             'restrict_device_types',
             'restrict_event_types',
             'restrict_sampling_event_types',
-        )
-
-
-class SiteTypeSerializer(serializers.ModelSerializer):
-    name = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.SiteType.objects.all())
-
-    class Meta:
-        model = db.SiteType
-        fields = (
-            'url',
-            'name')
-
-
-class AnnotationTypeSerializer(serializers.ModelSerializer):
-    name = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.AnnotationType.objects.all())
-
-    class Meta:
-        model = db.AnnotationType
-        fields = (
-            'url',
-            'name',
-        )
-
-
-class ItemTypeSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='rest-api:itemtype-detail',
-        source='item_type')
-    item_type = serializers.SlugRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.ItemType.objects.all(),
-        slug_field='name')
-
-    class Meta:
-        model = db.CollectionItemType
-        fields = (
-            'url',
-            'item_type',
-            'metadata_schema',
-        )
-
-
-class EventTypeSerializer(serializers.ModelSerializer):
-    name = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.EventType.objects.all())
-
-    class Meta:
-        model = db.EventType
-        fields = (
-            'url',
-            'name',
-        )
-
-
-class LicenceTypeSerializer(serializers.ModelSerializer):
-    name = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.LicenceType.objects.all())
-
-    class Meta:
-        model = db.LicenceType
-        fields = (
-            'url',
-            'name',
         )
 
 
@@ -133,17 +62,24 @@ class DeviceTypeSerializer(serializers.ModelSerializer):
         )
 
 
-class SamplingEventTypeSerializer(serializers.ModelSerializer):
+class ItemTypeSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedRelatedField(
+        many=False,
+        read_only=True,
+        view_name='rest-api:itemtype-detail',
+        source='item_type')
     name = serializers.PrimaryKeyRelatedField(
         many=False,
         read_only=False,
-        queryset=db.SamplingEventType.objects.all())
+        queryset=db.ItemType.objects.all(),
+        source='item_type')
 
     class Meta:
-        model = db.SamplingEventType
+        model = db.CollectionItemType
         fields = (
             'url',
             'name',
+            'metadata_schema',
         )
 
 
@@ -165,21 +101,7 @@ class RoleSerializer(serializers.ModelSerializer):
         fields = (
             'url',
             'name',
-            'metadata_schema'
-        )
-
-
-class UserSerializer(serializers.ModelSerializer):
-    username = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.User.objects.all())
-
-    class Meta:
-        model = db.User
-        fields = (
-            'url',
-            'username',
+            'metadata_schema',
         )
 
 
@@ -239,4 +161,6 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'sampling_event_types',
             'roles',
             'administrators',
+            'created_on',
+            'modified_on',
         )

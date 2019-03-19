@@ -5,54 +5,66 @@ from rest_framework import serializers
 import database.models as db
 
 
-class ItemSerializer(serializers.HyperlinkedModelSerializer):
-    item_type = serializers.HyperlinkedRelatedField(
+class SelectSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = db.Item
+        fields = (
+            'url',
+            'id',
+        )
+
+
+class ListSerializer(serializers.HyperlinkedModelSerializer):
+    item_type = serializers.PrimaryKeyRelatedField(
+        many=False,
+        read_only=True)
+    collection = serializers.SlugRelatedField(
         many=False,
         read_only=True,
-        view_name='item_type-detail')
-    sampling_event = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='sampling_event-detail')
-    source = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='source-detail')
-    collection = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='collection-detail')
-    owner = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='user-detail')
-    licence = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='licence-detail')
-    tags = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='tag-detail')
+        slug_field='name')
 
     class Meta:
         model = db.Item
         fields = (
             'url',
-            'path',
-            'filesize',
-            'hash',
-            'hash_function',
             'item_type',
-            'source_foreign_key',
-            'media_info',
-            'sampling_event',
-            'source',
-            'metadata',
             'captured_on',
-            'created_on',
+            'collection',
+        )
+
+
+class DetailSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = db.Item
+        fields = (
+            'url',
+            'id',
+            'hash',
+            'path',
+            'item_type',
+            'media_info',
+            'metadata',
+            'sampling_event',
+            'captured_on',
             'collection',
             'owner',
             'licence',
-            'is_uploaded',
-            'tags')
+            'tags',
+            'ready_event_types',
+            'created_on',
+            'modified_on',
+        )
+
+
+class CreateSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = db.Item
+        fields = (
+            'hash',
+            'item_file',
+            'item_type',
+            'media_info',
+            'metadata',
+            'captured_on',
+            'licence',
+        )

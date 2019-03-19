@@ -135,3 +135,12 @@ class Site(models.Model):
             raise ValidationError({'metadata': error})
 
         super(Site, self).clean()
+
+    def has_coordinate_permission(self, user):
+        if user.is_superuser:
+            return True
+
+        if self.creator == user:
+            return True
+
+        return False

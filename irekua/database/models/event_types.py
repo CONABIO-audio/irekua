@@ -24,13 +24,14 @@ class EventType(models.Model):
         blank=True,
         null=True)
 
-    label_term_types = models.ManyToManyField(
+    term_types = models.ManyToManyField(
         'TermType',
-        db_column='label_term_types',
-        verbose_name=_('label term types'),
-        help_text=_('Valid term types with which to label this type of events'),
+        db_column='term_types',
+        verbose_name=_('term types'),
+        help_text=_(
+            'Valid term types with which to label this type '
+            'of events'),
         blank=True)
-
 
     created_on = models.DateTimeField(
         db_column='created_on',
@@ -58,6 +59,14 @@ class EventType(models.Model):
         try:
             return self.label_term_types.get(name=term_type)
         except self.label_term_types.model.DoesNotExist:
-            msg = _('Term type %(term_type)s is invalid for event type %(event_type)s')
+            msg = _(
+                'Term type %(term_type)s is invalid for event '
+                'type %(event_type)s')
             params = dict(term_type=str(term_type), event_type=str(self))
             raise ValidationError(msg, params=params)
+
+    def add_term_type(self, term_type):
+        self.term_types.add(term_type)
+
+    def remove_term_type(self, term_type):
+        self.term_types.remove(term_type)

@@ -1,79 +1,52 @@
-from .annotation_tools import AnnotationToolSerializer
-from .annotation_types import AnnotationTypeSerializer
-from .annotation_votes import AnnotationVoteSerializer
-from .annotations import AnnotationSerializer
-from .collection_device_types import CollectionDeviceTypeSerializer
-from .collection_devices import CollectionDeviceSerializer
-from .collection_item_types import CollectionItemTypeSerializer
-from .collection_roles import CollectionRoleSerializer
-from .collection_sites import CollectionSiteSerializer
-from .collection_licences import CollectionLicenceSerializer
-from .collection_users import CollectionUserSerializer
-from .data_collections import CollectionSerializer
-from .device_brands import DeviceBrandSerializer
-from .device_types import DeviceTypeSerializer
-from .devices import DeviceSerializer
-from .entailments import EntailmentSerializer
-from .entailment_types import EntailmentTypeSerializer
-from .event_types import EventTypeSerializer
-from .institutions import InstitutionSerializer
-from .item_types import ItemTypeSerializer
-from .items import ItemSerializer
-from .licence_types import LicenceTypeSerializer
-from .licences import LicenceSerializer
-from .metacollections import MetaCollectionSerializer
-from .roles import RoleSerializer
-from .secondary_items import SecondaryItemSerializer
-from .site_types import SiteTypeSerializer
-from .sites import SiteSerializer
-from .sources import SourceSerializer
-from .synonym_suggestions import SynonymSuggestionSerializer
-from .synonyms import SynonymSerializer
-from .tags import TagSerializer
-from .term_suggestions import TermSuggestionSerializer
-from .term_types import TermTypeSerializer
-from .terms import TermSerializer
-from .users import UserSerializer
-
+from . import annotation_tools
+from . import annotation_types
+from . import collection_types
+from . import device_brands
+from . import device_types
+from . import devices
+from . import entailment_types
+from . import entailments
+from . import event_types
+from . import institutions
+from . import item_types
+from . import licence_types
+from . import metacollections
+from . import roles
 from . import sampling_event_types
+from . import site_types
+from . import sites
+from . import synonym_suggestions
+from . import synonyms
+from . import tags
+from . import term_suggestions
+from . import term_types
+from . import terms
+from . import users
 
 
 __all__ = [
-    'AnnotationSerializer',
-    'AnnotationToolSerializer',
-    'AnnotationTypeSerializer',
-    'AnnotationVoteSerializer',
-    'CollectionSerializer',
-    'CollectionDeviceSerializer',
-    'CollectionDeviceTypeSerializer',
-    'CollectionItemTypeSerializer',
-    'CollectionRoleSerializer',
-    'CollectionSiteSerializer',
-    'CollectionLicenceSerializer',
-    'CollectionUserSerializer',
-    'DeviceSerializer',
-    'DeviceBrandSerializer',
-    'DeviceTypeSerializer',
-    'EntailmentSerializer',
-    'EntailmentTypeSerializer',
-    'EventTypeSerializer',
-    'InstitutionSerializer',
-    'ItemSerializer',
-    'ItemTypeSerializer',
-    'LicenceSerializer',
-    'LicenceTypeSerializer',
-    'MetaCollectionSerializer',
-    'RoleSerializer',
-    'SecondaryItemSerializer',
-    'SiteSerializer',
-    'SiteTypeSerializer',
-    'SourceSerializer',
-    'SynonymSerializer',
-    'SynonymSuggestionSerializer',
-    'TagSerializer',
-    'TermSerializer',
-    'TermSuggestionSerializer',
-    'TermTypeSerializer',
-    'UserSerializer',
+    'annotation_tools',
+    'annotation_types',
+    'collection_types',
+    'device_brands',
+    'device_types',
+    'devices',
+    'entailment_types',
+    'entailments',
+    'event_types',
+    'institutions',
+    'item_types',
+    'licence_types',
+    'metacollections',
+    'roles',
     'sampling_event_types',
+    'site_types',
+    'sites',
+    'synonym_suggestions',
+    'synonyms',
+    'tags',
+    'term_suggestions',
+    'term_types',
+    'terms',
+    'users',
 ]

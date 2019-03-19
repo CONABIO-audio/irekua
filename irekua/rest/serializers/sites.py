@@ -3,23 +3,26 @@ from __future__ import unicode_literals
 
 from rest_framework import serializers
 import database.models as db
+from . import site_types
+from . import users
 
 
-class SiteSerializer(serializers.ModelSerializer):
-    site_type_url = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='rest-api:sitetype-detail',
-        source='site_type')
-    creator_url = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='rest-api:user-detail',
-        source='creator')
-    creator = serializers.SlugRelatedField(
-        many=False,
-        read_only=True,
-        slug_field='username')
+class ListSerializer(serializers.HyperlinkedModelSerializer):
+    site_type = site_types.ListSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = db.Site
+        fields = (
+            'url',
+            'name',
+            'locality',
+            'site_type',
+        )
+
+
+class DetailSerializer(serializers.HyperlinkedModelSerializer):
+    site_type = site_types.DetailSerializer(many=False, read_only=True)
+    creator = users.ListSerializer(many=False, read_only=True)
 
     class Meta:
         model = db.Site
@@ -29,18 +32,44 @@ class SiteSerializer(serializers.ModelSerializer):
             'name',
             'locality',
             'site_type',
-            'site_type_url',
+            'metadata',
+            'creator',
+        )
+
+
+class FullDetailSerializer(serializers.HyperlinkedModelSerializer):
+    site_type = site_types.DetailSerializer(many=False, read_only=True)
+    creator = users.ListSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = db.Site
+        fields = (
+            'url',
+            'id',
+            'name',
+            'locality',
+            'site_type',
+            'latitude',
+            'longitude',
+            'geo_ref',
+            'altitude',
+            'metadata',
+            'creator',
+        )
+
+
+class CreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = db.Site
+        fields = (
+            'name',
+            'locality',
+            'site_type',
             'latitude',
             'longitude',
             'altitude',
             'metadata',
-            'creator',
-            'creator_url'
         )
-        extra_kwargs = {
-            'latitude': {'write_only': True},
-            'longitude': {'write_only': True},
-        }
 
     def create(self, validated_data):
         site_type = db.SiteType.objects.get(
@@ -48,44 +77,3 @@ class SiteSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         validated_data['creator'] = user
         return db.Site.objects.create(site_type=site_type, **validated_data)
-
-
-class FullSiteSerializer(serializers.ModelSerializer):
-    site_type_url = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='rest-api:sitetype-detail',
-        source='site_type')
-    creator_url = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='rest-api:user-detail',
-        source='creator')
-    creator = serializers.SlugRelatedField(
-        many=False,
-        read_only=True,
-        slug_field='username')
-
-    class Meta:
-        model = db.Site
-        fields = (
-            'url',
-            'id',
-            'name',
-            'locality',
-            'site_type',
-            'site_type_url',
-            'latitude',
-            'longitude',
-            'geo_ref',
-            'altitude',
-            'metadata',
-            'creator',
-            'creator_url'
-        )
-        extra_kwargs = {'geo_ref': {'read_only': True}}
-
-    def create(self, validated_data):
-        user = self.context['request'].user
-        validated_data['creator'] = user
-        return db.Site.objects.create(**validated_data)

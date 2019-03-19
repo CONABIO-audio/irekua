@@ -1,20 +1,26 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework import viewsets
-
 import database.models as db
-from rest.serializers import DeviceSerializer
+from rest.serializers import devices
 from rest.permissions import IsAdmin, ReadAndCreateOnly
+from rest.filters import BaseFilter
+from .utils import BaseViewSet
 
 
-class DeviceViewSet(viewsets.ModelViewSet):
+class Filter(BaseFilter):
+    class Meta:
+        model = db.Device
+        fields = (
+            'brand__name',
+            'model',
+            'device_type__name',
+        )
+
+
+class DeviceViewSet(BaseViewSet):
     queryset = db.Device.objects.all()
-    serializer_class = DeviceSerializer
+    serializer_module = devices
     permission_classes = (IsAdmin | ReadAndCreateOnly, )
     search_fields = ('brand__name', 'model')
-    filter_fields = (
-        'brand__name',
-        'model',
-        'device_type__name'
-    )
+    filterset_class = Filter

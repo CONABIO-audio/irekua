@@ -5,11 +5,48 @@ from rest_framework import serializers
 import database.models as db
 
 
-class TagSerializer(serializers.HyperlinkedModelSerializer):
+class SelectSerializer(serializers.ModelSerializer):
+    name = serializers.PrimaryKeyRelatedField(
+        many=False,
+        read_only=False,
+        queryset=db.Tag.objects.all())
+
     class Meta:
         model = db.Tag
         fields = (
             'url',
+            'name',
+        )
+
+
+class ListSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = db.Tag
+        fields = (
+            'url',
+            'name',
+            'description',
+            'icon'
+        )
+
+
+class DetailSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = db.Tag
+        fields = (
+            'url',
+            'name',
+            'description',
+            'icon',
+            'created_on',
+            'modified_on'
+        )
+
+
+class CreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = db.Tag
+        fields = (
             'name',
             'description',
             'icon'

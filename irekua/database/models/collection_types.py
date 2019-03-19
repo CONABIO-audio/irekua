@@ -250,7 +250,7 @@ class CollectionType(models.Model):
             return
 
         try:
-            return self.licence_type.get(name=licence_type)
+            return self.licence_types.get(pk=licence_type.pk)
         except self.licence_types.model.DoesNotExist:
             msg = _(
                 'Licence type %(licence_type)s is not accepted in collection '
@@ -280,8 +280,10 @@ class CollectionType(models.Model):
             return
 
         try:
-            return self.item_types.get(name=item_type)
-        except self.item_types.model.DoesNotExist:
+            return CollectionItemType.objects.get(
+                collection_type=self,
+                item_type=item_type)
+        except CollectionItemType.DoesNotExist:
             msg = _(
                 'Item type %(item_type)s is not accepted in collection of '
                 'type %(col_type)s or does not exist')
@@ -295,8 +297,10 @@ class CollectionType(models.Model):
             return
 
         try:
-            return self.device_types.get(name=device_type)
-        except self.device_types.model.DoesNotExist:
+            return CollectionDeviceType.objects.get(
+                collection_type=self,
+                device_type=device_type)
+        except CollectionDeviceType.DoesNotExist:
             msg = _(
                 'Item type %(device_type)s is not accepted in collection of '
                 'type %(col_type)s or does not exist')
@@ -322,8 +326,10 @@ class CollectionType(models.Model):
 
     def validate_and_get_role(self, role):
         try:
-            return self.collectionrole_set.get(role=role)
-        except self.roles.model.DoesNotExist:
+            return CollectionRole.objects.get(
+                collection_type=self,
+                role=role)
+        except CollectionRole.DoesNotExist:
             msg = _(
                 'Role type %(role)s is not accepted in collection of type '
                 '%(col_type)s or does not exist')
@@ -334,33 +340,43 @@ class CollectionType(models.Model):
 
     def add_site_type(self, site_type):
         self.site_types.add(site_type)
+        self.save()
 
     def remove_site_type(self, site_type):
         self.site_types.remove(site_type)
+        self.save()
 
     def add_annotation_type(self, annotation_type):
         self.annotation_types.add(annotation_type)
+        self.save()
 
     def remove_annotation_type(self, annotation_type):
         self.annotation_types.remove(annotation_type)
+        self.save()
 
     def add_licence_type(self, licence_type):
         self.licence_types.add(licence_type)
+        self.save()
 
     def remove_licence_type(self, licence_type):
         self.licence_types.remove(licence_type)
+        self.save()
 
     def add_event_type(self, event_type):
         self.event_types.add(event_type)
+        self.save()
 
     def remove_event_type(self, event_type):
         self.event_types.remove(event_type)
+        self.save()
 
     def add_sampling_event_type(self, sampling_event_type):
         self.sampling_event_types.add(sampling_event_type)
+        self.save()
 
     def remove_sampling_event_type(self, sampling_event_type):
         self.sampling_event_types.remove(sampling_event_type)
+        self.save()
 
     def add_device_type(self, device_type, metadata_schema=None):
         if metadata_schema is None:
@@ -370,6 +386,7 @@ class CollectionType(models.Model):
             collection_type=self,
             device_type=device_type,
             metadata_schema=metadata_schema)
+        self.save()
 
     def remove_device_type(self, device_type):
         try:
@@ -380,6 +397,7 @@ class CollectionType(models.Model):
             raise ValidationError(error)
 
         collection_device_type.delete()
+        self.save()
 
     def add_item_type(self, item_type, metadata_schema=None):
         if metadata_schema is None:
@@ -389,16 +407,18 @@ class CollectionType(models.Model):
             collection_type=self,
             item_type=item_type,
             metadata_schema=metadata_schema)
+        self.save()
 
     def remove_item_type(self, item_type):
         try:
             collection_item_type = CollectionItemType.objects.get(
-                collection=self,
+                collection_type=self,
                 item_type=item_type)
         except CollectionItemType.DoesNotExist as error:
             raise ValidationError(error)
 
         collection_item_type.delete()
+        self.save()
 
     def add_role(self, role, metadata_schema=None):
         if metadata_schema is None:
@@ -408,19 +428,23 @@ class CollectionType(models.Model):
             collection_type=self,
             role=role,
             metadata_schema=metadata_schema)
+        self.save()
 
     def remove_role(self, role):
         try:
             collection_role = CollectionRole.objects.get(
-                collection=self,
+                collection_type=self,
                 role=role)
         except CollectionRole.DoesNotExist as error:
             raise ValidationError(error)
 
         collection_role.delete()
+        self.save()
 
     def add_administrator(self, user):
         self.administrators.add(user)
+        self.save()
 
     def remove_administrator(self, user):
         self.administrators.remove(user)
+        self.save()

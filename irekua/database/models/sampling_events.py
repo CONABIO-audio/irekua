@@ -5,7 +5,6 @@ from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
     empty_JSON,
-    GENERIC_SAMPLING_EVENT,
 )
 
 
@@ -17,12 +16,11 @@ class SamplingEvent(models.Model):
         verbose_name=_('sampling event type'),
         help_text=_('Type of sampling event'),
         blank=False,
-        null=False,
-        default=GENERIC_SAMPLING_EVENT)
+        null=False)
     site = models.ForeignKey(
         'Site',
         db_column='site_id',
-        verbose_name=_('site id'),
+        verbose_name=_('site'),
         help_text=_('Reference to site at which sampling took place'),
         on_delete=models.PROTECT,
         blank=True,
@@ -30,10 +28,11 @@ class SamplingEvent(models.Model):
     device = models.ForeignKey(
         'PhysicalDevice',
         db_column='device_id',
-        verbose_name=_('device id'),
+        verbose_name=_('device'),
         help_text=_('Reference to device used on sampling event'),
         on_delete=models.PROTECT,
-        blank=False)
+        blank=True,
+        null=True)
     configuration = JSONField(
         db_column='configuration',
         verbose_name=_('configuration'),
@@ -65,6 +64,22 @@ class SamplingEvent(models.Model):
         help_text=_('Date at which sampling stoped'),
         blank=True,
         null=True)
+    collection = models.ForeignKey(
+        'Collection',
+        on_delete=models.PROTECT,
+        db_column='collection_id',
+        verbose_name=_('collection'),
+        help_text=_('Collection to which sampling event belongs'),
+        blank=False,
+        null=False)
+    licence = models.ForeignKey(
+        'Licence',
+        on_delete=models.PROTECT,
+        db_column='licence_id',
+        verbose_name=_('licence'),
+        help_text=_('Licence for all items in sampling event'),
+        blank=True,
+        null=True)
 
     created_on = models.DateTimeField(
         db_column='created_on',
@@ -88,10 +103,10 @@ class SamplingEvent(models.Model):
     def __str__(self):
         msg = _('Sampling event {id} on site {site}: {start} - {end}')
         msg = msg.format(
-            id=self.id,
+            id=str(self.id),
             site=str(self.site),
-            start=self.started_on,
-            end=self.ended_on)
+            start=str(self.started_on),
+            end=str(self.ended_on))
         return msg
 
     def clean(self):
@@ -101,7 +116,8 @@ class SamplingEvent(models.Model):
             raise ValidationError({'metadata': error})
 
         try:
-            self.sampling_event_type.validate_device_type(self.device.device.device_type)
+            self.sampling_event_type.validate_device_type(
+                self.device.device.device_type)
         except ValidationError as error:
             raise ValidationError({'device': error})
 

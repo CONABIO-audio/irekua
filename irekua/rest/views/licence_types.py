@@ -1,24 +1,30 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework import viewsets
 import database.models as db
-
-from rest.serializers import LicenceTypeSerializer
+from rest.serializers import licence_types
 from rest.permissions import IsAdmin, ReadOnly
+from rest.filters import BaseFilter
+from .utils import BaseViewSet
 
 
-# Create your views here.
-class LicenceTypeViewSet(viewsets.ModelViewSet):
+class Filter(BaseFilter):
+    class Meta:
+        model = db.LicenceType
+        fields = (
+            'name',
+            'years_valid_for',
+            'can_view',
+            'can_download',
+            'can_view_annotations',
+            'can_annotate',
+            'can_vote_annotations'
+        )
+
+
+class LicenceTypeViewSet(BaseViewSet):
     queryset = db.LicenceType.objects.all()
-    serializer_class = LicenceTypeSerializer
+    serializer_module = licence_types
     permission_classes = (IsAdmin | ReadOnly, )
     search_fields = ('name', )
-    filter_fields = (
-        'name',
-        'years_valid_for',
-        'can_view',
-        'can_download',
-        'can_view_annotations',
-        'can_annotate',
-        'can_vote_annotations')
+    filterset_class = Filter

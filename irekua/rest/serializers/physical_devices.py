@@ -3,37 +3,27 @@ from __future__ import unicode_literals
 
 from rest_framework import serializers
 import database.models as db
+from . import devices
+from . import users
 
 
-class ListDeviceSerializer(serializers.ModelSerializer):
+class SelectSerializer(serializers.ModelSerializer):
+    physical_device = serializers.PrimaryKeyRelatedField(
+        many=False,
+        read_only=False,
+        queryset=db.PhysicalDevice.objects.all(),
+        source='id')
+
     class Meta:
-        model = db.Device
-        fields = (
-            'device_type',
-            'brand',
-            'model')
-
-
-class DeviceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = db.Device
-        fields = (
-            'url',
-            'device_type',
-            'brand',
-            'model')
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = db.User
+        model = db.PhysicalDevice
         fields = (
             'url',
-            'username')
+            'physical_device'
+        )
 
 
 class ListSerializer(serializers.HyperlinkedModelSerializer):
-    device = ListDeviceSerializer(many=False, read_only=True)
+    device = devices.ListSerializer(many=False, read_only=True)
 
     class Meta:
         model = db.PhysicalDevice
@@ -45,8 +35,8 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    device = DeviceSerializer(many=False, read_only=True)
-    owner = UserSerializer(many=False, read_only=True)
+    device = devices.DetailSerializer(many=False, read_only=True)
+    owner = users.SelectSerializer(many=False, read_only=True)
 
     class Meta:
         model = db.PhysicalDevice
@@ -57,18 +47,15 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'metadata',
             'bundle',
             'device',
+            'created_on',
+            'modified_on',
         )
 
-class CreateSerializer(serializers.HyperlinkedModelSerializer):
-    device = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.Device.objects.all())
 
+class CreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = db.PhysicalDevice
         fields = (
-            'url',
             'serial_number',
             'device',
             'metadata',

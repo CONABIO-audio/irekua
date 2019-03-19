@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework import viewsets
 from rest_framework.permissions import BasePermission
 import django_filters
 
 import database.models as db
-from rest.serializers import TermSuggestionSerializer
+from rest.serializers import term_suggestions
 from rest.permissions import IsAdmin, ReadAndCreateOnly
+from .utils import BaseViewSet
 
 
-class SuggestionFilter(django_filters.FilterSet):
+class Filter(django_filters.FilterSet):
     suggested_on__gt = django_filters.DateTimeFilter(
         field_name='suggested_on',
         lookup_expr='gt')
@@ -29,6 +29,7 @@ class SuggestionFilter(django_filters.FilterSet):
             'suggested_by__userdata__is_curator'
         )
 
+
 class IsOwnSuggestion(BasePermission):
     def has_permission(self, request, view):
         try:
@@ -39,9 +40,9 @@ class IsOwnSuggestion(BasePermission):
             return False
 
 
-class TermSuggestionViewSet(viewsets.ModelViewSet):
+class TermSuggestionViewSet(BaseViewSet):
     queryset = db.TermSuggestion.objects.all()
-    serializer_class = TermSuggestionSerializer
+    serializer_module = term_suggestions
     permission_classes = (IsAdmin | IsOwnSuggestion | ReadAndCreateOnly, )
     search_fields = ('term_type__name, value')
-    filter_class = SuggestionFilter
+    filter_class = Filter

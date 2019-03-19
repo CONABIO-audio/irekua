@@ -1,16 +1,25 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework.viewsets import ModelViewSet
-
 import database.models as db
-from rest.serializers import TermSerializer
+from rest.serializers import terms
 from rest.permissions import IsAdmin, IsDeveloper, ReadOnly
+from rest.filters import BaseFilter
+from .utils import BaseViewSet
 
 
-class TermViewSet(ModelViewSet):
+class Filter(BaseFilter):
+    class Meta:
+        model = db.Term
+        fields = (
+            'term_type__name',
+            'value'
+        )
+
+
+class TermViewSet(BaseViewSet):
     queryset = db.Term.objects.all()
-    serializer_class = TermSerializer
+    serializer_module = terms
     permission_classes = (IsAdmin | IsDeveloper | ReadOnly, )
     search_fields = ('term_type__name', 'value')
-    filter_fields = ('term_type__name', 'value')
+    filterset_class = Filter

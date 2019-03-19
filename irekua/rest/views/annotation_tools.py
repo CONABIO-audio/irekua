@@ -1,16 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework.viewsets import ModelViewSet
-
 import database.models as db
-from rest.serializers import AnnotationToolSerializer
+from rest.serializers import annotation_tools
 from rest.permissions import IsDeveloper, IsAdmin, ReadOnly
+from rest.filters import BaseFilter
+from .utils import BaseViewSet
 
 
-class AnnotationToolViewSet(ModelViewSet):
+class Filter(BaseFilter):
+    class Meta:
+        model = db.AnnotationTool
+        fields = (
+            'name',
+            'version')
+
+
+class AnnotationToolViewSet(BaseViewSet):
     queryset = db.AnnotationTool.objects.all()
-    serializer_class = AnnotationToolSerializer
     permission_classes = (IsAdmin | IsDeveloper | ReadOnly, )
     search_fields = ('name', )
-    filter_fields = ('name', 'version', )
+    filterset_class = Filter
+    serializer_module = annotation_tools

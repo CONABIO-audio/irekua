@@ -102,6 +102,14 @@ class Collection(models.Model):
         verbose_name = _('Collection')
         verbose_name_plural = _('Collections')
 
+        permissions = (
+            ("add_collection_site", _("Can add site to collection")),
+            ("add_collection_item", _("Can add item to collection")),
+            ("add_collection_device", _("Can add device to collection")),
+            ("add_collection_user", _("Can add user to collection")),
+            ("add_collection_licence", _("Can add licence to collection")),
+        )
+
         ordering = ['name']
 
     def __str__(self):
@@ -111,7 +119,9 @@ class Collection(models.Model):
         try:
             self.collection_type.validate_metadata(self.metadata)
         except ValidationError as error:
-            msg = _('Invalid metadata for collection of type {type}. Error: {error}')
+            msg = _(
+                'Invalid metadata for collection of type {type}. '
+                'Error: {error}')
             msg = msg.format(
                 type=str(self.collection_type),
                 error=str(error))
@@ -131,14 +141,14 @@ class Collection(models.Model):
 
     def add_site(self, site, internal_id, metadata):
         CollectionSite.objects.create(
-            collection=collection,
+            collection=self,
             site=site,
             internal_id=internal_id,
             metadata=metadata)
 
     def add_device(self, device, internal_id, metadata):
         CollectionDevice.objects.create(
-            collection=collection,
+            collection=self,
             device=device,
             internal_id=internal_id,
             metadata=metadata)
@@ -164,7 +174,7 @@ class Collection(models.Model):
             sampling_event_type)
 
     def validate_and_get_licence_type(self, licence_type):
-        return self.collection_type.validate_and_get_site_type(licence_type)
+        return self.collection_type.validate_and_get_licence_type(licence_type)
 
     def validate_and_get_role(self, role):
         return self.collection_type.validate_and_get_role(role)
@@ -173,7 +183,9 @@ class Collection(models.Model):
         try:
             licence = self.licences.get(pk=licence.pk)
         except self.licences.model.DoesNotExist:
-            msg = _('Licence %(licence)s is not part of collection %(collection)s.')
+            msg = _(
+                'Licence %(licence)s is not part of collection '
+                '%(collection)s.')
             params = dict(
                 licence=str(licence),
                 collection=str(self))

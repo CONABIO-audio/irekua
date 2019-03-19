@@ -3,50 +3,65 @@ from __future__ import unicode_literals
 
 from rest_framework import serializers
 import database.models as db
+from . import term_types
+from . import users
 
 
-class TermSuggestionSerializer(serializers.ModelSerializer):
-    term_type_url = serializers.HyperlinkedRelatedField(
+class SelectSerializer(serializers.ModelSerializer):
+    suggestion = serializers.PrimaryKeyRelatedField(
         many=False,
-        read_only=True,
-        view_name='rest-api:termtype-detail',
-        source='term_type')
-    suggested_by_url = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='rest-api:user-detail')
-    suggested_by = serializers.SlugRelatedField(
-        many=False,
-        read_only=True,
-        slug_field='username')
+        read_only=False,
+        queryset=db.TermSuggestion.objects.all(),
+        source='id')
+
+    class Meta:
+        model = db.TermSuggestion
+        fields = (
+            'url',
+            'suggestion',
+        )
+
+
+class ListSerializer(serializers.HyperlinkedModelSerializer):
+    term_type = term_types.ListSerializer(many=False, read_only=True)
 
     class Meta:
         model = db.TermSuggestion
         fields = (
             'url',
             'term_type',
-            'term_type_url',
+            'value',
+        )
+
+
+class DetailSerializer(serializers.HyperlinkedModelSerializer):
+    term_type = term_types.DetailSerializer(many=False, read_only=True)
+    suggested_by = users.ListSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = db.TermSuggestion
+        fields = (
+            'url',
+            'term_type',
             'value',
             'description',
             'metadata',
             'suggested_by',
-            'suggested_by_url',
             'suggested_on',
         )
-        extra_kwargs = {
-            'suggested_on': {'read_only': True},
-        }
+
+
+class CreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = db.TermSuggestion
+        fields = (
+            'term_type',
+            'value',
+            'description',
+            'metadata',
+        )
 
     def create(self, validated_data):
         user = self.context['request'].user
-        term_suggestion = db.TermSuggestion.objects.create(
-            suggested_by=user,
-            **validated_data)
-        return term_suggestion
-
-    def update(self, instance, validated_data):
-        instance.value = validated_data['value']
-        instance.description = validated_data['description']
-        instance.metadata = validated_data['metadata']
-        instance.save()
-        return instance
+        validated_data['suggested_by'] = user
+        return super().create(validated_data)

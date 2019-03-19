@@ -3,21 +3,28 @@ from __future__ import unicode_literals
 
 from rest_framework import serializers
 import database.models as db
+from .users import SelectSerializer as UserSerializer
+from .items import SelectSerializer as ItemSerializer
 
 
-class MetaCollectionSerializer(serializers.ModelSerializer):
-    creator = serializers.SlugRelatedField(
+class ListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = db.MetaCollection
+        fields = (
+            'url',
+            'name',
+            'description',
+        )
+
+
+class DetailSerializer(serializers.ModelSerializer):
+    creator = UserSerializer(
         many=False,
-        read_only=True,
-        slug_field='username')
-    creator_url = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='user-detail')
+        read_only=True)
     items = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
-        view_name='item-detail')
+        view_name='api-rest:item-detail')
 
     class Meta:
         model = db.MetaCollection
@@ -26,8 +33,18 @@ class MetaCollectionSerializer(serializers.ModelSerializer):
             'name',
             'description',
             'creator',
-            'creator_url',
             'items',
+            'created_on',
+            'modified_on',
+        )
+
+
+class CreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = db.MetaCollection
+        fields = (
+            'name',
+            'description',
         )
 
     def create(self, validated_data):
@@ -35,8 +52,3 @@ class MetaCollectionSerializer(serializers.ModelSerializer):
         return db.MetaCollection.objects.create(
             creator=user,
             **validated_data)
-
-    def update(self, instance, validated_data):
-        instance.description = validated_data['description']
-        instance.save()
-        return instance

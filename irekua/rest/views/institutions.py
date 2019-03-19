@@ -1,31 +1,36 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated
-
 import database.models as db
-from rest.serializers import InstitutionSerializer
-from rest.permissions import IsAdmin, IsFromInstitution, ReadOnly
+from rest.serializers import institutions
+from rest.permissions import IsAdmin, IsFromInstitution, ReadAndCreateOnly
+from rest.filters import BaseFilter
+from .utils import BaseViewSet
 
 
-# Create your views here.
-class InstitutionViewSet(ModelViewSet):
+class Filter(BaseFilter):
+    class Meta:
+        model = db.Institution
+        fields = (
+            'institution_name',
+            'institution_code',
+            'subdependency',
+            'country'
+        )
+
+
+class InstitutionViewSet(BaseViewSet):
     queryset = db.Institution.objects.all()
-    serializer_class = InstitutionSerializer
+    serializer_module = institutions
     search_fields = (
         'institution_name',
         'institution_code',
         'subdependency')
-    filter_fields = (
-        'institution_name',
-        'institution_code',
-        'subdependency',
-        'country')
+    filterset_class = Filter
 
     def get_permissions(self):
         if self.action in ('update', 'partial_update', 'destroy'):
             permission_classes = [IsFromInstitution]
         else:
-            permission_classes = [IsAuthenticated]
+            permission_classes = [IsAdmin | ReadAndCreateOnly]
         return [permission() for permission in permission_classes]

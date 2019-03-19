@@ -1,37 +1,36 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework import viewsets
 from rest_framework.decorators import action
 
 import database.models as db
 from rest.serializers import sampling_event_types
 from rest.permissions import IsAdmin, ReadOnly
-from .utils import AdditionalActions
+from rest.filters import BaseFilter
+from .utils import BaseViewSet, AdditionalActions
 
 
-class SamplingEventTypeViewSet(viewsets.ModelViewSet, AdditionalActions):
+class Filter(BaseFilter):
+    class Meta:
+        model = db.SamplingEventType
+        fields = (
+            'name',
+            'restrict_device_types',
+            'restrict_site_types',
+        )
+
+
+class SamplingEventTypeViewSet(BaseViewSet, AdditionalActions):
     queryset = db.SamplingEventType.objects.all()
-    serializer_class = sampling_event_types.CreateSerializer
+    serializer_module = sampling_event_types
     permission_classes = (IsAdmin | ReadOnly, )
     search_fields = ('name', )
-    filter_fields = (
-        'name',
-        'restrict_device_types',
-        'restrict_site_types')
-
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return sampling_event_types.ListSerializer
-        if self.action == 'retrieve':
-            return sampling_event_types.DetailSerializer
-
-        return super().get_serializer_class()
+    filterset_class = Filter
 
     @action(
         detail=True,
         methods=['POST'],
-        serializer_class=sampling_event_types.DeviceTypeSerializer)
+        serializer_class=sampling_event_types.SelectSerializer)
     def add_device_types(self, request, pk=None):
         return self.add_related_object_view(
             db.DeviceType,
@@ -40,7 +39,7 @@ class SamplingEventTypeViewSet(viewsets.ModelViewSet, AdditionalActions):
     @action(
         detail=True,
         methods=['POST'],
-        serializer_class=sampling_event_types.DeviceTypeSerializer)
+        serializer_class=sampling_event_types.SelectSerializer)
     def remove_device_type(self, request, pk=None):
         return self.remove_related_object_view(
             'device_type')
@@ -48,7 +47,7 @@ class SamplingEventTypeViewSet(viewsets.ModelViewSet, AdditionalActions):
     @action(
         detail=True,
         methods=['POST'],
-        serializer_class=sampling_event_types.SiteTypeSerializer)
+        serializer_class=sampling_event_types.SelectSerializer)
     def add_site_types(self, request, pk=None):
         return self.add_related_object_view(
             db.SiteType,
@@ -57,7 +56,7 @@ class SamplingEventTypeViewSet(viewsets.ModelViewSet, AdditionalActions):
     @action(
         detail=True,
         methods=['POST'],
-        serializer_class=sampling_event_types.SiteTypeSerializer)
+        serializer_class=sampling_event_types.SelectSerializer)
     def remove_site_type(self, request, pk=None):
         return self.remove_related_object_view(
             'site_type')

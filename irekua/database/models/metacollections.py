@@ -52,3 +52,11 @@ class MetaCollection(models.Model):
 
     def __str__(self):
         return self.name
+
+    def add_item(self, item):
+        self.items.add(item)
+        self.save()
+
+    def remove_item(self, item):
+        self.items.remove(item)
+        self.save()

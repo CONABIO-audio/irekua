@@ -3,58 +3,66 @@ from __future__ import unicode_literals
 
 from rest_framework import serializers
 import database.models as db
+from . import terms
+from . import users
 
 
-class TermSerializer(serializers.ModelSerializer):
+class SelectSerializer(serializers.ModelSerializer):
+    suggestion = serializers.PrimaryKeyRelatedField(
+        many=False,
+        read_only=False,
+        queryset=db.SynonymSuggestion.objects.all(),
+        source='id')
+
     class Meta:
-        model = db.Term
+        model = db.SynonymSuggestion
         fields = (
             'url',
-            'term_type',
-            'value'
+            'suggestion'
         )
 
 
-class SynonymSuggestionSerializer(serializers.ModelSerializer):
-    source_info = TermSerializer(many=False, read_only=True, source='source')
-    suggested_by_url = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='user-detail',
-        source='suggested_by')
-    suggested_by = serializers.SlugRelatedField(
-        many=False,
-        read_only=True,
-        slug_field='username')
+class ListSerializer(serializers.HyperlinkedModelSerializer):
+    source = terms.ListSerializer(many=False, read_only=True)
 
     class Meta:
         model = db.SynonymSuggestion
         fields = (
             'url',
             'source',
-            'source_info',
+            'synonym',
+        )
+
+
+class DetailSerializer(serializers.HyperlinkedModelSerializer):
+    source = terms.ListSerializer(many=False, read_only=True)
+    suggested_by = users.ListSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = db.SynonymSuggestion
+        fields = (
+            'url',
+            'id',
+            'source',
             'synonym',
             'description',
             'metadata',
             'suggested_by',
-            'suggested_by_url',
             'suggested_on',
         )
-        extra_kwargs = {
-            'suggested_on': {'read_only': True},
-            'source': {'write_only': True}
-        }
+
+
+class CreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = db.SynonymSuggestion
+        fields = (
+            'source',
+            'synonym',
+            'description',
+            'metadata',
+        )
 
     def create(self, validated_data):
         user = self.context['request'].user
-        term_suggestion = db.SynonymSuggestion.objects.create(
-            suggested_by=user,
-            **validated_data)
-        return term_suggestion
-
-    def update(self, instance, validated_data):
-        instance.synonym = validated_data['synonym']
-        instance.description = validated_data['description']
-        instance.metadata = validated_data['metadata']
-        instance.save()
-        return instance
+        validated_data['suggested_by'] = user
+        return super().create(validated_data)

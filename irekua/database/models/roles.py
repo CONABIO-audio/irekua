@@ -3,6 +3,13 @@ from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
 
 
+RESTRICT_PERMISSIONS_TO_MODELS = [
+    'collection',
+    'item',
+    'annotation',
+]
+
+
 class Role(Group):
     description = models.TextField(
         db_column='description',
@@ -38,3 +45,11 @@ class Role(Group):
 
     def __str__(self):
         return self.name
+
+    def add_permission(self, permission):
+        self.permissions.add(permission)
+        self.save()
+
+    def remove_permission(self, permission):
+        self.permissions.remove(permission)
+        self.save()

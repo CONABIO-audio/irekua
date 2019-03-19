@@ -1,37 +1,57 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework import viewsets
-
 from database.models import User
-from rest.serializers.users import UserSerializer, FullUserSerializer
+from rest.serializers import users
 from rest.permissions import IsAdmin, ReadOnly, IsUser, IsUnauthenticated
+from rest.filters import BaseFilter
+from .utils import BaseViewSet
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
+class Filter(BaseFilter):
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'first_name',
+            'last_name',
+            'userdata__institution__institution_name',
+            'userdata__institution__institution_code',
+            'userdata__institution__subdependency',
+        )
+
+
+class UserViewSet(BaseViewSet):
     queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
-    permission_classes = (IsAdmin | IsUser | ReadOnly,)
+    serializer_module = users
+    filterset_class = Filter
+    search_fields = (
+        'username',
+        'first_name',
+        'last_name',
+    )
+    permission_classes = (IsAdmin | IsUser | ReadOnly, )
 
     def get_permissions(self):
         if self.action == 'create':
-            permission_classes = [IsUnauthenticated]
+            permission_classes = [IsAdmin | IsUnauthenticated]
         else:
             permission_classes = self.permission_classes
 
         return [permission() for permission in permission_classes]
 
     def get_serializer_class(self):
-        try:
-            user = self.request.user
-            viewed_user = self.get_object()
+        if self.action == 'retrieve':
+            try:
+                user = self.request.user
+                viewed_user = self.get_object()
 
-            if user == viewed_user or user.is_superuser:
-                return FullUserSerializer
-        except:
-            pass
+                if user == viewed_user or user.is_superuser:
+                    return users.FullDetailSerializer
+            except:
+                return users.DetailSerializer
 
-        return UserSerializer
+        if self.action in ['update', 'partial_update']:
+            return users.UpdateSerializer
+
+        return super().get_serializer_class()

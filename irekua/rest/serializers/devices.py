@@ -4,35 +4,31 @@ from __future__ import unicode_literals
 from rest_framework import serializers
 import database.models as db
 
+from . import device_brands
+from . import device_types
 
-class BrandSerializer(serializers.ModelSerializer):
+
+class SelectSerializer(serializers.ModelSerializer):
+    device = serializers.PrimaryKeyRelatedField(
+        many=False,
+        read_only=False,
+        queryset=db.Device.objects.all())
+
     class Meta:
-        model = db.DeviceBrand
+        model = db.Device
         fields = (
             'url',
-            'name',
-            'logo'
+            'device',
         )
 
 
-class DeviceTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = db.DeviceType
-        fields = (
-            'url',
-            'name',
-        )
-
-
-class DeviceSerializer(serializers.ModelSerializer):
-    device_type_info = DeviceTypeSerializer(
+class DetailSerializer(serializers.ModelSerializer):
+    device_type = device_types.ListSerializer(
         many=False,
-        read_only=True,
-        source='device_type')
-    brand_info = BrandSerializer(
+        read_only=True)
+    brand = device_brands.ListSerializer(
         many=False,
-        read_only=True,
-        source='brand')
+        read_only=True)
 
     class Meta:
         model = db.Device
@@ -40,14 +36,40 @@ class DeviceSerializer(serializers.ModelSerializer):
             'url',
             'id',
             'device_type',
-            'device_type_info',
             'brand',
-            'brand_info',
+            'model',
+            'metadata_schema',
+            'configuration_schema',
+            'created_on',
+            'modified_on',
+        )
+
+
+class ListSerializer(serializers.ModelSerializer):
+    device_type = device_types.ListSerializer(
+        many=False,
+        read_only=True)
+    brand = device_brands.ListSerializer(
+        many=False,
+        read_only=True)
+
+    class Meta:
+        model = db.Device
+        fields = (
+            'url',
+            'device_type',
+            'brand',
+            'model',
+        )
+
+
+class CreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = db.Device
+        fields = (
+            'device_type',
+            'brand',
             'model',
             'metadata_schema',
             'configuration_schema',
         )
-        extra_kwargs = {
-            'device_type': {'write_only': True},
-            'brand': {'write_only': True},
-        }

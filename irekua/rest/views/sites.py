@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 import django_filters
 
 import database.models as db
-from rest.serializers.sites import SiteSerializer, FullSiteSerializer
+from rest.serializers import sites
 from rest.permissions import IsAdmin, ReadOnly
+from rest.filters import BaseFilter
+from .utils import BaseViewSet
 
 
-class SiteFilter(django_filters.FilterSet):
+class Filter(BaseFilter):
     latitude__gt = django_filters.NumberFilter(
         field_name='latitude',
         lookup_expr='gt')
@@ -42,12 +43,12 @@ class SiteFilter(django_filters.FilterSet):
         )
 
 
-class SiteViewSet(viewsets.ModelViewSet):
+class SiteViewSet(BaseViewSet):
     queryset = db.Site.objects.all()
-    serializer_class = SiteSerializer
+    serializer_module = sites
     permission_classes = (IsAdmin | ReadOnly, )
     search_fields = ('name', 'locality')
-    filterset_class = SiteFilter
+    filterset_class = Filter
 
     def get_permissions(self):
         if self.action == 'create':
@@ -57,16 +58,14 @@ class SiteViewSet(viewsets.ModelViewSet):
 
         return [permission() for permission in permission_classes]
 
-    def has_coordinate_permissions(self, user):
-        return user.is_superuser
-
     def get_serializer_class(self):
-        try:
+        if self.action == 'retrieve':
             user = self.request.user
-        except:
-            return SiteSerializer
+            site = self.get_object()
 
-        if self.has_coordinate_permissions(user):
-            return FullSiteSerializer
-        else:
-            return SiteSerializer
+            if site.has_coordinate_permission(user):
+                return sites.FullDetailSerializer
+            else:
+                return sites.DetailSerializer
+
+        return super().get_serializer_class()
