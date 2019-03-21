@@ -25,15 +25,15 @@ class AnnotationVote(models.Model):
         help_text=_('Labels associated to annotation vote'),
         blank=False,
         null=False)
+
     created_by = models.ForeignKey(
         User,
         db_column='created_by',
         verbose_name=_('created by'),
         help_text=_('Creator of annotation vote'),
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         blank=True,
         null=True)
-
     created_on = models.DateTimeField(
         db_column='created_on',
         verbose_name=_('created on'),

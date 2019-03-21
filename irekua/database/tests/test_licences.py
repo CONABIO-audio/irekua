@@ -3,16 +3,21 @@ from django.test import TestCase
 from database.models import Licence
 
 from .test_licence_types import create_simple_licence_type
+from .test_data_collections import create_simple_collection
 from . import sample
 
 
-def create_simple_licence():
+def create_simple_licence(collection=None):
+    if collection is None:
+        collection = create_simple_collection()
+
     licence_type = create_simple_licence_type()
     metadata = sample.VALID_INSTANCE
 
     licence = Licence.objects.create(
         licence_type=licence_type,
-        metadata=metadata)
+        metadata=metadata,
+        collection=collection)
 
     return licence
 

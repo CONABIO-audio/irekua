@@ -1,7 +1,7 @@
 from uuid import uuid4
 
 from rest_framework.test import APITestCase
-from rest.serializers import TagSerializer
+from rest.serializers import tags
 from .utils import (
     BaseTestCase,
     Users,
@@ -11,7 +11,7 @@ from .utils import (
 
 
 class TagTestCase(BaseTestCase, APITestCase):
-    serializer = TagSerializer
+    serializer = tags.CreateSerializer
     permissions = create_permission_mapping_from_lists({
         Actions.LIST: Users.ALL_AUTHENTICATED_USERS,
         Actions.CREATE: Users.ALL_AUTHENTICATED_USERS,

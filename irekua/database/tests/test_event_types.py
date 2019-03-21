@@ -13,7 +13,7 @@ def create_simple_event_type():
     )
 
     term_type = create_simple_term_type()
-    event_type.label_term_types.add(term_type)
+    event_type.term_types.add(term_type)
 
     return event_type
 

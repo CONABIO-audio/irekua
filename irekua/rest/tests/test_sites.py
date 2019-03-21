@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase
 
 from database.models import SiteType, User
 from database.utils import simple_JSON_schema
-from rest.serializers import SiteSerializer
+from rest.serializers import sites
 from .utils import (
     BaseTestCase,
     Users,
@@ -14,7 +14,7 @@ from .utils import (
 
 
 class SiteTestCase(BaseTestCase, APITestCase):
-    serializer = SiteSerializer
+    serializer = sites.CreateSerializer
     permissions = create_permission_mapping_from_lists({
         Actions.LIST: Users.ALL_AUTHENTICATED_USERS,
         Actions.CREATE: Users.ALL_AUTHENTICATED_USERS,

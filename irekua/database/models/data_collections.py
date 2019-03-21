@@ -9,7 +9,6 @@ from database.utils import (
     empty_JSON,
 )
 
-from .collection_licences import CollectionLicence
 from .collection_users import CollectionUser
 from .collection_devices import CollectionDevice
 from .collection_sites import CollectionSite
@@ -77,13 +76,6 @@ class Collection(models.Model):
         through='CollectionUser',
         through_fields=('collection', 'user'),
         blank=True)
-    licences = models.ManyToManyField(
-        'Licence',
-        through='CollectionLicence',
-        through_fields=('collection', 'licence'),
-        verbose_name=_('licences'),
-        help_text=_('Signed licences for items in this collection'),
-        blank=True)
 
     created_on = models.DateTimeField(
         db_column='created_on',
@@ -127,9 +119,6 @@ class Collection(models.Model):
                 error=str(error))
             raise ValidationError({'metadata': msg})
         super(Collection, self).clean()
-
-    def add_licence(self, licence):
-        CollectionLicence.objects.create(collection=self, licence=licence)
 
     def add_user(self, user, role, metadata, is_admin=False):
         CollectionUser.objects.create(
@@ -181,7 +170,7 @@ class Collection(models.Model):
 
     def validate_and_get_licence(self, licence):
         try:
-            licence = self.licences.get(pk=licence.pk)
+            licence = self.licence_set.get(pk=licence.pk)
         except self.licences.model.DoesNotExist:
             msg = _(
                 'Licence %(licence)s is not part of collection '

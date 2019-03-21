@@ -4,7 +4,7 @@ from random import sample
 from rest_framework.test import APITestCase
 from database.utils import simple_JSON_schema
 from database.models import TermType
-from rest.serializers import EntailmentTypeSerializer
+from rest.serializers import entailment_types
 from .utils import (
     BaseTestCase,
     Users,
@@ -14,7 +14,7 @@ from .utils import (
 
 
 class EntailmentTypeTestCase(BaseTestCase, APITestCase):
-    serializer = EntailmentTypeSerializer
+    serializer = entailment_types.CreateSerializer
     permissions = create_permission_mapping_from_lists({
         Actions.LIST: Users.ALL_AUTHENTICATED_USERS,
         Actions.CREATE: [

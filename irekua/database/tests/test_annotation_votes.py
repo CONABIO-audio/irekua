@@ -59,7 +59,7 @@ class AnnotationVoteTestCase(TestCase):
             defaults={
                 'description': 'Sample invalid term type',
                 'is_categorical': True,
-                'metadata_schema': schema,
+                'metadata_schema': sample.SCHEMA,
                 'synonym_metadata_schema': sample.SCHEMA
             })
 
@@ -68,7 +68,7 @@ class AnnotationVoteTestCase(TestCase):
             value='Sample Invalid Term Value',
             metadata=sample.VALID_INSTANCE)
 
-        annotation.event_type.label_term_types.add(term_type)
+        annotation.event_type.term_types.add(term_type)
         annotation.save()
 
         try:

@@ -9,12 +9,16 @@ from .entailments import EntailmentViewSet
 from .event_types import EventTypeViewSet
 from .institutions import InstitutionViewSet
 from .item_types import ItemTypeViewSet
+from .items import ItemViewSet
 from .licence_types import LicenceTypeViewSet
+from .licences import LicenceViewSet
 from .metacollections import MetaCollectionViewSet
 from .physical_devices import PhysicalDeviceViewSet
 from .roles import RoleViewSet
 from .sampling_event_types import SamplingEventTypeViewSet
-from .sampling_events import SamplingEventViewSet
+from .sampling_events import (
+    SamplingEventViewSet,
+    CollectionSamplingEventViewSet)
 from .site_types import SiteTypeViewSet
 from .sites import SiteViewSet
 from .synonym_suggestions import SynonymSuggestionViewSet
@@ -24,12 +28,14 @@ from .term_suggestions import TermSuggestionViewSet
 from .term_types import TermTypeViewSet
 from .terms import TermViewSet
 from .users import UserViewSet
+from .data_collections import CollectionViewSet
 
 
 __all__ = [
     'AnnotationToolViewSet',
     'AnnotationTypeViewSet',
     'CollectionTypeViewSet',
+    'CollectionSamplingEventViewSet',
     'DeviceBrandViewSet',
     'DeviceTypeViewSet',
     'DeviceViewSet',
@@ -38,7 +44,9 @@ __all__ = [
     'EventTypeViewSet',
     'InstitutionViewSet',
     'ItemTypeViewSet',
+    'ItemViewSet',
     'LicenceTypeViewSet',
+    'LicenceViewSet',
     'MetaCollectionViewSet',
     'PhysicalDeviceViewSet',
     'RoleViewSet',
@@ -52,5 +60,6 @@ __all__ = [
     'TermSuggestionViewSet',
     'TermTypeViewSet',
     'TermViewSet',
+    'CollectionViewSet',
     'UserViewSet',
 ]

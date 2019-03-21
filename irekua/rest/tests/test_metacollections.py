@@ -3,7 +3,7 @@ from uuid import uuid4
 from rest_framework.test import APITestCase
 
 from database.models import User
-from rest.serializers import MetaCollectionSerializer
+from rest.serializers import metacollections
 from .utils import (
     BaseTestCase,
     Users,
@@ -18,7 +18,7 @@ class DummyRequest(object):
 
 
 class MetaCollectionTestCase(BaseTestCase, APITestCase):
-    serializer = MetaCollectionSerializer
+    serializer = metacollections.CreateSerializer
     permissions = create_permission_mapping_from_lists({
         Actions.LIST: Users.ALL_AUTHENTICATED_USERS,
         Actions.CREATE: [

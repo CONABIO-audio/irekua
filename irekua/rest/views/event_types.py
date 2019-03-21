@@ -4,7 +4,8 @@ from __future__ import unicode_literals
 from rest_framework.decorators import action
 
 import database.models as db
-from rest.serializers import event_types, term_types
+from rest.serializers import event_types
+from rest.serializers import term_types
 from rest.permissions import IsAdmin, ReadOnly
 from rest.filters import BaseFilter
 from .utils import BaseViewSet, AdditionalActions
@@ -27,7 +28,7 @@ class EventTypeViewSet(BaseViewSet, AdditionalActions):
         detail=True,
         methods=['POST'],
         serializer_class=term_types.SelectSerializer)
-    def add_label_types(self, request, pk=None):
+    def add_term_types(self, request, pk=None):
         return self.add_related_object_view(
             db.TermType,
             'term_type')
@@ -36,7 +37,7 @@ class EventTypeViewSet(BaseViewSet, AdditionalActions):
         detail=True,
         methods=['POST'],
         serializer_class=term_types.SelectSerializer)
-    def remove_label_types(self, request, pk=None):
+    def remove_term_types(self, request, pk=None):
         return self.remove_related_object_view(
             'term_type')
 
@@ -44,7 +45,7 @@ class EventTypeViewSet(BaseViewSet, AdditionalActions):
         detail=True,
         methods=['POST'],
         serializer_class=term_types.CreateSerializer)
-    def create_label_type(self, request, pk=None):
+    def create_term_type(self, request, pk=None):
         return self.create_related_object_view(
             db.TermType,
             'term_type')

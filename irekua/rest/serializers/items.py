@@ -21,7 +21,8 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
     collection = serializers.SlugRelatedField(
         many=False,
         read_only=True,
-        slug_field='name')
+        slug_field='name',
+        source='sampling_event.collection')
 
     class Meta:
         model = db.Item
@@ -40,13 +41,12 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'id',
             'hash',
-            'path',
+            'item_file',
             'item_type',
             'media_info',
             'metadata',
             'sampling_event',
             'captured_on',
-            'collection',
             'owner',
             'licence',
             'tags',

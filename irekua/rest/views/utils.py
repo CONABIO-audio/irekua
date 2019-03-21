@@ -10,11 +10,20 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
 
+_CREATE_ACTIONS = [
+    'create',
+    'update',
+    'partial_update',
+    'options'
+]
+
+
 class NoCreateViewSet(mixins.ListModelMixin,
                       mixins.UpdateModelMixin,
                       mixins.DestroyModelMixin,
                       mixins.RetrieveModelMixin,
                       viewsets.GenericViewSet):
+
     @property
     def serializer_module(self):
         raise NotImplementedError
@@ -24,7 +33,7 @@ class NoCreateViewSet(mixins.ListModelMixin,
             return self.serializer_module.ListSerializer
         if self.action == 'retrieve':
             return self.serializer_module.DetailSerializer
-        if self.action in ['create', 'update', 'partial_update']:
+        if self.action in _CREATE_ACTIONS:
             return self.serializer_module.CreateSerializer
         return super().get_serializer_class()
 

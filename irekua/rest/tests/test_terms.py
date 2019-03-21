@@ -1,9 +1,8 @@
 from uuid import uuid4
 
 from rest_framework.test import APITestCase
-from database.utils import simple_JSON_schema
 from database.models import TermType
-from rest.serializers import TermSerializer
+from rest.serializers import terms
 from .utils import (
     BaseTestCase,
     Users,
@@ -13,7 +12,7 @@ from .utils import (
 
 
 class TermTestCase(BaseTestCase, APITestCase):
-    serializer = TermSerializer
+    serializer = terms.CreateSerializer
     permissions = create_permission_mapping_from_lists({
         Actions.LIST: Users.ALL_AUTHENTICATED_USERS,
         Actions.CREATE: [

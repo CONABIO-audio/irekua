@@ -1,7 +1,7 @@
 from uuid import uuid4
 
 from rest_framework.test import APITestCase
-from rest.serializers.users import UserSerializer, FullUserSerializer
+from rest.serializers import users
 from .utils import (
     BaseTestCase,
     Users,
@@ -11,11 +11,12 @@ from .utils import (
 
 
 class UserTestCase(BaseTestCase, APITestCase):
-    serializer = UserSerializer
+    serializer = users.CreateSerializer
     permissions = create_permission_mapping_from_lists({
         Actions.LIST: Users.ALL_AUTHENTICATED_USERS,
         Actions.CREATE: [
             Users.NON_AUTHENTICATED,
+            Users.ADMIN,
         ],
         Actions.RETRIEVE: Users.ALL_AUTHENTICATED_USERS,
         Actions.UPDATE: [

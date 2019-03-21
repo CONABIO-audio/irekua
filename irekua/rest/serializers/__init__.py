@@ -10,6 +10,7 @@ from . import event_types
 from . import institutions
 from . import item_types
 from . import licence_types
+from . import licences
 from . import metacollections
 from . import roles
 from . import sampling_event_types
@@ -22,6 +23,7 @@ from . import term_suggestions
 from . import term_types
 from . import terms
 from . import users
+from . import data_collections
 
 
 __all__ = [
@@ -49,4 +51,6 @@ __all__ = [
     'term_types',
     'terms',
     'users',
+    'licences',
+    'data_collections',
 ]

@@ -88,6 +88,7 @@ class Annotation(models.Model):
         verbose_name=_('commentaries'),
         help_text=_('Commentaries of annotator'),
         blank=True)
+
     created_on = models.DateTimeField(
         db_column='created_on',
         verbose_name=_('created on'),
@@ -109,12 +110,12 @@ class Annotation(models.Model):
         on_delete=models.PROTECT,
         blank=True,
         null=True)
-    last_modified_by = models.ForeignKey(
+    modified_by = models.ForeignKey(
         User,
         editable=False,
-        related_name='annotation_last_modified_by',
-        db_column='last_modified_by',
-        verbose_name=_('last modified by'),
+        related_name='annotation_modified_by',
+        db_column='modified_by',
+        verbose_name=_('modified by'),
         help_text=_('User that modified the annotation last'),
         on_delete=models.PROTECT,
         blank=True,
@@ -141,7 +142,7 @@ class Annotation(models.Model):
         except ValidationError as error:
             raise ValidationError({'event_type': error})
 
-        collection = self.item.collection
+        collection = self.item.sampling_event.collection
         try:
             collection.validate_and_get_event_type(self.event_type)
         except ValidationError as error:

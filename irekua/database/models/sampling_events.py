@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
@@ -81,6 +82,15 @@ class SamplingEvent(models.Model):
         blank=True,
         null=True)
 
+    created_by = models.ForeignKey(
+        User,
+        related_name='sampling_event_created_by',
+        on_delete=models.PROTECT,
+        db_column='created_by',
+        verbose_name=_('create by'),
+        help_text=_('Creator of sampling event'),
+        blank=False,
+        null=False)
     created_on = models.DateTimeField(
         db_column='created_on',
         verbose_name=_('created on'),
@@ -93,6 +103,15 @@ class SamplingEvent(models.Model):
         help_text=_('Date of last modification'),
         auto_now=True,
         editable=False)
+    modified_by = models.ForeignKey(
+        User,
+        related_name='sampling_event_modified_by',
+        on_delete=models.PROTECT,
+        db_column='modified_by',
+        verbose_name=_('modified by'),
+        help_text=_('Last modifier'),
+        blank=True,
+        null=True)
 
     class Meta:
         verbose_name = _('Sampling Event')

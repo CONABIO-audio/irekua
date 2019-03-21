@@ -3,7 +3,7 @@ from uuid import uuid4
 from django.urls import reverse
 from rest_framework.test import APITestCase
 
-from rest.serializers import InstitutionSerializer
+from rest.serializers import institutions
 from .utils import (
     BaseTestCase,
     Users,
@@ -13,17 +13,20 @@ from .utils import (
 
 
 class InstitutionTestCase(BaseTestCase, APITestCase):
-    serializer = InstitutionSerializer
+    serializer = institutions.CreateSerializer
     permissions = create_permission_mapping_from_lists({
         Actions.LIST: Users.ALL_AUTHENTICATED_USERS,
         Actions.CREATE: Users.ALL_AUTHENTICATED_USERS,
         Actions.RETRIEVE: Users.ALL_AUTHENTICATED_USERS,
         Actions.UPDATE: [
-            Users.ADMIN,],
+            Users.ADMIN,
+        ],
         Actions.PARTIAL_UPDATE: [
-            Users.ADMIN,],
+            Users.ADMIN,
+        ],
         Actions.DESTROY: [
-            Users.ADMIN,],
+            Users.ADMIN,
+        ],
     })
 
     @staticmethod
@@ -54,19 +57,35 @@ class InstitutionTestCase(BaseTestCase, APITestCase):
         url_name = self.get_url_name(Actions.UPDATE)
         url = reverse(url_name, args=[institution.pk])
         response = self.client.put(url, new_data, format='json')
-        self.check_response(Actions.UPDATE, response, False, 'User not from institution')
+        self.check_response(
+            Actions.UPDATE,
+            response,
+            False,
+            'User not from institution')
 
         url_name = self.get_url_name(Actions.PARTIAL_UPDATE)
         url = reverse(url_name, args=[institution.pk])
         response = self.client.patch(url, new_data, format='json')
-        self.check_response(Actions.PARTIAL_UPDATE, response, False, 'User not from institution')
+        self.check_response(
+            Actions.PARTIAL_UPDATE,
+            response,
+            False,
+            'User not from institution')
 
         url_name = self.get_url_name(Actions.UPDATE)
         url = reverse(url_name, args=[other_institution.pk])
         response = self.client.put(url, new_data, format='json')
-        self.check_response(Actions.UPDATE, response, True, 'User from institution')
+        self.check_response(
+            Actions.UPDATE,
+            response,
+            True,
+            'User from institution')
 
         url_name = self.get_url_name(Actions.PARTIAL_UPDATE)
         url = reverse(url_name, args=[other_institution.pk])
         response = self.client.patch(url, new_data, format='json')
-        self.check_response(Actions.PARTIAL_UPDATE, response, True, 'User from institution')
+        self.check_response(
+            Actions.PARTIAL_UPDATE,
+            response,
+            True,
+            'User from institution')

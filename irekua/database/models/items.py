@@ -119,15 +119,6 @@ class Item(models.Model):
         help_text=_('Date on which item was produced'),
         blank=True,
         null=True)
-    owner = models.ForeignKey(
-        User,
-        db_column='owner_id',
-        verbose_name=_('owner'),
-        help_text=_('Owner of item'),
-        related_name='owner',
-        on_delete=models.PROTECT,
-        blank=False,
-        null=False)
     licence = models.ForeignKey(
         'Licence',
         db_column='licence_id',
@@ -160,6 +151,14 @@ class Item(models.Model):
         help_text=_('Date of last modification'),
         auto_now=True,
         editable=False)
+    modified_by = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        db_column='modified_by',
+        verbose_name=_('modified by'),
+        help_text=_('Last user that modified this item info'),
+        blank=True,
+        null=True)
 
     class Meta:
         verbose_name = _('Item')
@@ -188,17 +187,19 @@ class Item(models.Model):
         has_hash_and_filesize = (
             (self.hash is not None) and
             (self.filesize is not None))
-        if self.item_file is None and not has_hash_and_filesize:
+        if self.item_file.name is None and not has_hash_and_filesize:
             msg = _(
                 'If no file is provided, a hash and filesize must be given')
             raise ValidationError({'hash': msg})
+
+        if self.item_file.name is None:
+            return
 
         if not self.hash_string:
             self.item_file.open()
             self.hash_string = hash_file(self.item_file)
             self.item_size = self.item_file.size
 
-        if not has_hash_and_filesize:
             self.hash = self.hash_string
             self.filesize = self.item_size
 

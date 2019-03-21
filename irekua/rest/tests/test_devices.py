@@ -3,7 +3,7 @@ from uuid import uuid4
 from rest_framework.test import APITestCase
 from database.utils import simple_JSON_schema
 from database.models import DeviceType, DeviceBrand
-from rest.serializers import DeviceSerializer
+from rest.serializers import devices
 from .utils import (
     BaseTestCase,
     Users,
@@ -13,7 +13,7 @@ from .utils import (
 
 
 class DeviceTestCase(BaseTestCase, APITestCase):
-    serializer = DeviceSerializer
+    serializer = devices.CreateSerializer
     permissions = create_permission_mapping_from_lists({
         Actions.LIST: Users.ALL_AUTHENTICATED_USERS,
         Actions.CREATE: Users.ALL_AUTHENTICATED_USERS,

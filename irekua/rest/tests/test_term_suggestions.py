@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase
 
 from database.models import User, TermType
 from database.utils import simple_JSON_schema
-from rest.serializers import TermSuggestionSerializer
+from rest.serializers import term_suggestions
 from .utils import (
     BaseTestCase,
     Users,
@@ -19,7 +19,7 @@ class DummyRequest(object):
 
 
 class TermSuggestionTestCase(BaseTestCase, APITestCase):
-    serializer = TermSuggestionSerializer
+    serializer = term_suggestions.CreateSerializer
     permissions = create_permission_mapping_from_lists({
         Actions.LIST: Users.ALL_AUTHENTICATED_USERS,
         Actions.CREATE: Users.ALL_AUTHENTICATED_USERS,

@@ -6,7 +6,7 @@ import django_filters
 import database.models as db
 from rest.serializers import sampling_events
 from rest.filters import BaseFilter
-from .utils import NoCreateViewSet
+from .utils import BaseViewSet, NoCreateViewSet
 
 
 class Filter(BaseFilter):
@@ -64,3 +64,11 @@ class SamplingEventViewSet(NoCreateViewSet):
     serializer_module = sampling_events
     search_fields = ('sampling_event_type__name',)
     filterset_class = Filter
+
+
+class CollectionSamplingEventViewSet(BaseViewSet):
+    serializer_module = sampling_events
+
+    def get_queryset(self):
+        collection = self.kwargs['collection_pk']
+        return db.SamplingEvent.objects.filter(collection=collection)

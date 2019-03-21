@@ -1,8 +1,7 @@
 from uuid import uuid4
 
 from rest_framework.test import APITestCase
-from database.utils import simple_JSON_schema
-from rest.serializers import DeviceTypeSerializer
+from rest.serializers import device_types
 from .utils import (
     BaseTestCase,
     Users,
@@ -12,7 +11,7 @@ from .utils import (
 
 
 class DeviceTypeTestCase(BaseTestCase, APITestCase):
-    serializer = DeviceTypeSerializer
+    serializer = device_types.CreateSerializer
     permissions = create_permission_mapping_from_lists({
         Actions.LIST: Users.ALL_AUTHENTICATED_USERS,
         Actions.CREATE: [
