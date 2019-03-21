@@ -120,3 +120,19 @@ class SamplingEventType(models.Model):
             msg = _('Site type %(site_type) is not valid for sampling event of type %(type)s')
             params = dict(site_type=str(site_type), type=str(self))
             raise ValidationError(msg, params=params)
+
+    def add_device_type(self, device_type):
+        self.device_types.add(device_type)
+        self.save()
+
+    def add_site_type(self, site_type):
+        self.site_types.add(site_type)
+        self.save()
+
+    def remove_device_type(self, device_type):
+        self.device_types.remove(device_type)
+        self.save()
+
+    def remove_site_type(self, site_type):
+        self.site_types.remove(site_type)
+        self.save()

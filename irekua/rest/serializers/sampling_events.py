@@ -5,6 +5,10 @@ from rest_framework import serializers
 import database.models as db
 from . import sites
 from . import physical_devices
+from . import users
+from . import sampling_events
+from . import data_collections
+from . import licences
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -38,6 +42,11 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
+    created_by = users.ListSerializer(many=False, read_only=True)
+    sampling_event_type = sampling_events.ListSerializer(many=False, read_only=True)
+    collection = data_collections.ListSerializer(many=False, read_only=True)
+    licence = licences.DetailSerializer(many=False, read_only=True)
+
     class Meta:
         model = db.SamplingEvent
         fields = (
@@ -52,6 +61,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'licence',
             'started_on',
             'ended_on',
+            'created_by',
         )
 
 
@@ -68,3 +78,11 @@ class CreateSerializer(serializers.ModelSerializer):
             'started_on',
             'ended_on',
         )
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        collection = self.context['collection']
+
+        validated_data['created_by'] = user
+        validated_data['collection'] = collection
+        return super().create(validated_data)

@@ -5,6 +5,8 @@ from rest_framework.decorators import action
 
 import database.models as db
 from rest.serializers import sampling_event_types
+from rest.serializers import device_types
+from rest.serializers import site_types
 from rest.permissions import IsAdmin, ReadOnly
 from rest.filters import BaseFilter
 from .utils import BaseViewSet, AdditionalActions
@@ -30,7 +32,7 @@ class SamplingEventTypeViewSet(BaseViewSet, AdditionalActions):
     @action(
         detail=True,
         methods=['POST'],
-        serializer_class=sampling_event_types.SelectSerializer)
+        serializer_class=device_types.SelectSerializer)
     def add_device_types(self, request, pk=None):
         return self.add_related_object_view(
             db.DeviceType,
@@ -39,7 +41,7 @@ class SamplingEventTypeViewSet(BaseViewSet, AdditionalActions):
     @action(
         detail=True,
         methods=['POST'],
-        serializer_class=sampling_event_types.SelectSerializer)
+        serializer_class=device_types.SelectSerializer)
     def remove_device_type(self, request, pk=None):
         return self.remove_related_object_view(
             'device_type')
@@ -47,7 +49,7 @@ class SamplingEventTypeViewSet(BaseViewSet, AdditionalActions):
     @action(
         detail=True,
         methods=['POST'],
-        serializer_class=sampling_event_types.SelectSerializer)
+        serializer_class=site_types.SelectSerializer)
     def add_site_types(self, request, pk=None):
         return self.add_related_object_view(
             db.SiteType,
@@ -56,7 +58,7 @@ class SamplingEventTypeViewSet(BaseViewSet, AdditionalActions):
     @action(
         detail=True,
         methods=['POST'],
-        serializer_class=sampling_event_types.SelectSerializer)
+        serializer_class=site_types.SelectSerializer)
     def remove_site_type(self, request, pk=None):
         return self.remove_related_object_view(
             'site_type')

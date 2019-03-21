@@ -9,7 +9,9 @@ from .entailments import EntailmentViewSet
 from .event_types import EventTypeViewSet
 from .institutions import InstitutionViewSet
 from .item_types import ItemTypeViewSet
-from .items import ItemViewSet
+from .items import (
+    ItemViewSet,
+    CollectionItemViewSet)
 from .licence_types import LicenceTypeViewSet
 from .licences import LicenceViewSet
 from .metacollections import MetaCollectionViewSet
@@ -35,6 +37,7 @@ __all__ = [
     'AnnotationToolViewSet',
     'AnnotationTypeViewSet',
     'CollectionTypeViewSet',
+    'CollectionItemViewSet',
     'CollectionSamplingEventViewSet',
     'DeviceBrandViewSet',
     'DeviceTypeViewSet',

@@ -20,7 +20,7 @@ router.register(r'entailments', views.EntailmentViewSet)
 router.register(r'event_types', views.EventTypeViewSet)
 router.register(r'institutions', views.InstitutionViewSet)
 router.register(r'item_types', views.ItemTypeViewSet)
-router.register(r'items', views.ItemViewSet)
+router.register(r'items', views.ItemViewSet, base_name='items')
 router.register(r'licence_types', views.LicenceTypeViewSet)
 router.register(r'licences', views.LicenceViewSet)
 router.register(r'metacollections', views.MetaCollectionViewSet)
@@ -46,6 +46,10 @@ collections_router.register(
     r'sampling_events',
     views.CollectionSamplingEventViewSet,
     base_name='collection-samplingevents')
+collections_router.register(
+    r'items',
+    views.CollectionItemViewSet,
+    base_name='collection-items')
 
 
 urlpatterns = [

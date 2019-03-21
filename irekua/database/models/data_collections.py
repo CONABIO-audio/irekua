@@ -100,6 +100,17 @@ class Collection(models.Model):
             ("add_collection_device", _("Can add device to collection")),
             ("add_collection_user", _("Can add user to collection")),
             ("add_collection_licence", _("Can add licence to collection")),
+            ("add_collection_annotation", _("Can annotate items in collection")),
+            ("add_collection_annotation_vote", _("Can vote on annotations of items in collection")),
+            ("view_collection_sites", _("Can view sites in collection")),
+            ("view_collection_items", _("Can view items in collection")),
+            ("view_collection_devices", _("Can view devices in collection")),
+            ("view_collection_annotations", _("Can view annotations of items in collection")),
+            ("change_collection_sites", _("Can change sites in collection")),
+            ("change_collection_items", _("Can change items in collection")),
+            ("change_collection_devices", _("Can change devices in collection")),
+            ("change_collection_annotations", _("Can change annotations of items in collection")),
+            ("download_collection_items", _("Can download annotation items")),
         )
 
         ordering = ['name']

@@ -35,15 +35,15 @@ class Filter(BaseFilter):
         field_name='started_on',
         lookup_expr='gt')
     started_on__lt = django_filters.NumberFilter(
-            field_name='started_on',
-            lookup_expr='lt')
+        field_name='started_on',
+        lookup_expr='lt')
 
     ended_on__gt = django_filters.NumberFilter(
-            field_name='ended_on',
-            lookup_expr='gt')
+        field_name='ended_on',
+        lookup_expr='gt')
     ended_on__lt = django_filters.NumberFilter(
-            field_name='ended_on',
-            lookup_expr='lt')
+        field_name='ended_on',
+        lookup_expr='lt')
 
     class Meta:
         model = db.SamplingEvent
@@ -72,3 +72,10 @@ class CollectionSamplingEventViewSet(BaseViewSet):
     def get_queryset(self):
         collection = self.kwargs['collection_pk']
         return db.SamplingEvent.objects.filter(collection=collection)
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        collection_pk = self.kwargs['collection_pk']
+        collection = db.Collection.objects.get(pk=collection_pk)
+        context['collection'] = collection
+        return context

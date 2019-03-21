@@ -61,7 +61,7 @@ class CollectionViewSet(BaseViewSet):
             raise ValidationError(serializer.errors)
 
         serializer.save()
-        return Response(serializer.validated_data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(
         detail=True,

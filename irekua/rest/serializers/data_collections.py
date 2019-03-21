@@ -40,9 +40,9 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
     sampling_events = serializers.HyperlinkedIdentityField(
         view_name='rest-api:collection-samplingevents-list',
         lookup_url_kwarg='collection_pk')
-    # items = serializers.HyperlinkedIdentityField(
-        # view_name='rest-api:collection-items-list',
-        # lookup_url_kwarg='collection_pk')
+    items = serializers.HyperlinkedIdentityField(
+        view_name='rest-api:collection-items-list',
+        lookup_url_kwarg='collection_pk')
 
     class Meta:
         model = db.Collection
@@ -61,7 +61,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             # 'devices',
             # 'sites',
             'sampling_events',
-            # 'items',
+            'items',
         )
 
 
@@ -69,6 +69,7 @@ class CreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = db.Collection
         fields = (
+            'name',
             'collection_type',
             'description',
             'logo',
