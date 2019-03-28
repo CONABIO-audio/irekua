@@ -7,7 +7,6 @@ from . import physical_devices
 from . import data_collections
 
 
-
 class SelectSerializer(data_collections.CollectionSerializer):
     device = serializers.PrimaryKeyRelatedField(
         many=False,
@@ -19,7 +18,7 @@ class SelectSerializer(data_collections.CollectionSerializer):
         model = db.CollectionDevice
         fields = (
             'url',
-            'physical_device'
+            'device'
         )
 
     def update_querysets(self):
@@ -33,27 +32,23 @@ class SelectSerializer(data_collections.CollectionSerializer):
 
 class ListSerializer(serializers.HyperlinkedModelSerializer):
     device = physical_devices.ListSerializer(many=False, read_only=True)
-    collection = data_collections.ListSerializer(many=False, read_only=True)
 
     class Meta:
         model = db.CollectionDevice
         fields = (
             'url',
             'device',
-            'collection',
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
     device = physical_devices.DetailSerializer(many=False, read_only=True)
-    collection = data_collections.DetailSerializer(many=False, read_only=True)
 
     class Meta:
         model = db.CollectionDevice
         fields = (
             'url',
             'device',
-            'collection',
             'internal_id',
             'metadata',
             'created_on',

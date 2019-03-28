@@ -58,7 +58,9 @@ class CollectionDevice(models.Model):
 
     def __str__(self):
         msg = 'Device %(device_id)s from collection %(collection_id)s'
-        params = dict(device_id=str(self.device), collection_id=str(self.collection))
+        params = dict(
+            device_id=str(self.device),
+            collection_id=str(self.collection))
         return msg % params
 
     def clean(self):

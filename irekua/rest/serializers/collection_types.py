@@ -6,7 +6,8 @@ from .annotation_types import SelectSerializer as AnnotationTypeSerializer
 from .event_types import SelectSerializer as EventTypeSerializer
 from .site_types import SelectSerializer as SiteTypeSerializer
 from .licence_types import SelectSerializer as LicenceTypeSerializer
-from .sampling_event_types import SelectSerializer as SamplingEventTypeSerializer
+from .sampling_event_types import (
+        SelectSerializer as SamplingEventTypeSerializer)
 from .users import SelectSerializer as UserSerializer
 import database.models as db
 
@@ -131,7 +132,8 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
         source='collectionitemtype_set')
     roles = RoleSerializer(
         many=True,
-        read_only=True)
+        read_only=True,
+        source='collectionrole_set')
     administrators = UserSerializer(
         many=True,
         read_only=False)

@@ -58,8 +58,8 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'licence_set',
             'created_on',
             'modified_on',
-            # 'devices',
-            # 'sites',
+            'devices',
+            'sites',
             'sampling_events',
             'items',
         )

@@ -1,6 +1,7 @@
 from .annotation_tools import AnnotationToolViewSet
 from .annotation_types import AnnotationTypeViewSet
 from .collection_types import CollectionTypeViewSet
+from .collection_devices import CollectionDeviceViewSet
 from .device_brands import DeviceBrandViewSet
 from .device_types import DeviceTypeViewSet
 from .devices import DeviceViewSet
@@ -15,9 +16,7 @@ from .items import (
 from .licence_types import LicenceTypeViewSet
 from .licences import LicenceViewSet
 from .metacollections import MetaCollectionViewSet
-from .physical_devices import (
-    PhysicalDeviceViewSet,
-    CollectionDeviceViewSet)
+from .physical_devices import PhysicalDeviceViewSet
 from .roles import RoleViewSet
 from .sampling_event_types import SamplingEventTypeViewSet
 from .sampling_events import (

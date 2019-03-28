@@ -1,5 +1,4 @@
 from django.contrib.postgres.fields import JSONField
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -16,8 +15,7 @@ class PhysicalDevice(models.Model):
         verbose_name=_('serial number'),
         help_text=_('Serial number of device'),
         blank=True,
-        null=True,
-        unique=True)
+        null=True)
     device = models.ForeignKey(
         'Device',
         on_delete=models.PROTECT,
@@ -44,7 +42,9 @@ class PhysicalDevice(models.Model):
     bundle = models.BooleanField(
         db_column='bundle',
         verbose_name=_('bundle'),
-        help_text=_('Does this device possibly represents many physical devices?'),
+        help_text=_(
+            'Does this device possibly represents many '
+            'physical devices?'),
         blank=False)
 
     created_on = models.DateTimeField(
@@ -63,6 +63,9 @@ class PhysicalDevice(models.Model):
     class Meta:
         verbose_name = _('Physical Device')
         verbose_name_plural = _('Physical Devices')
+        unique_together = (
+            ('serial_number', 'device'),
+        )
 
         ordering = ['device']
 

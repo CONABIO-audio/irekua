@@ -42,7 +42,9 @@ class CollectionRole(models.Model):
 
     def __str__(self):
         msg = _('Role %(role)s for collections of type %(collection)s')
-        params = dict(role=str(self.role), collection=str(self.collection_type))
+        params = dict(
+            role=str(self.role),
+            collection=str(self.collection_type))
         return msg % params
 
     def validate_metadata(self, metadata):
@@ -51,7 +53,9 @@ class CollectionRole(models.Model):
                 schema=self.metadata_schema,
                 instance=metadata)
         except ValidationError as error:
-            msg = _('Invalid metadata for user of role type %(type)s in collection %(collection)s. Error: %(error)s')
+            msg = _(
+                'Invalid metadata for user of role type %(type)s '
+                'in collection %(collection)s. Error: %(error)s')
             params = dict(
                 type=str(self.role),
                 collection=str(self.collection_type),
