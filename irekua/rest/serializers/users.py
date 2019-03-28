@@ -3,47 +3,8 @@ from __future__ import unicode_literals
 
 from rest_framework import serializers
 
-from database.models import UserData, User
+from database.models import User
 from . import institutions
-
-
-class UserDataSerializer(serializers.ModelSerializer):
-    institution = institutions.DetailSerializer(
-        many=False,
-        read_only=True)
-
-    class Meta:
-        model = UserData
-        fields = (
-            'institution',
-        )
-
-
-class FullUserDataSerializer(serializers.ModelSerializer):
-    institution = institutions.DetailSerializer(
-        many=False,
-        read_only=True)
-
-    class Meta:
-        model = UserData
-        fields = (
-            'institution',
-            'is_curator',
-            'is_developer',
-            'is_model',
-        )
-
-
-class CreateUserDataSerializer(serializers.ModelSerializer):
-    institution = institutions.SelectSerializer(
-        many=False,
-        read_only=False)
-
-    class Meta:
-        model = UserData
-        fields = (
-            'institution',
-        )
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -61,9 +22,7 @@ class SelectSerializer(serializers.ModelSerializer):
 
 
 class ListSerializer(serializers.HyperlinkedModelSerializer):
-    institution = serializers.CharField(
-        read_only=True,
-        source='userdata.institution.institution_code')
+    institution = institutions.ListSerializer(many=False, read_only=True)
 
     class Meta:
         model = User
@@ -75,7 +34,7 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    userdata = UserDataSerializer(many=False, read_only=True)
+    institution = institutions.DetailSerializer(many=False, read_only=True)
 
     class Meta:
         model = User
@@ -84,14 +43,12 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'username',
             'first_name',
             'last_name',
-            'userdata'
+            'institution',
         )
 
 
 class FullDetailSerializer(serializers.HyperlinkedModelSerializer):
-    userdata = FullUserDataSerializer(
-        many=False,
-        read_only=True)
+    institution = institutions.DetailSerializer(many=False, read_only=True)
 
     class Meta:
         model = User
@@ -102,19 +59,17 @@ class FullDetailSerializer(serializers.HyperlinkedModelSerializer):
             'email',
             'first_name',
             'last_name',
-            'userdata',
-            'is_superuser',
+            'institution',
             'last_login',
             'date_joined',
+            'is_superuser',
+            'is_curator',
+            'is_developer',
+            'is_model',
         )
 
 
 class CreateSerializer(serializers.ModelSerializer):
-    userdata = CreateUserDataSerializer(
-        many=False,
-        read_only=False,
-        required=False)
-
     class Meta:
         model = User
         fields = (
@@ -123,21 +78,16 @@ class CreateSerializer(serializers.ModelSerializer):
             'password',
             'first_name',
             'last_name',
-            'userdata',
+            'institution',
         )
 
 
 class UpdateSerializer(serializers.ModelSerializer):
-    userdata = CreateUserDataSerializer(
-        many=False,
-        read_only=False,
-        required=False)
-
     class Meta:
         model = User
         fields = (
             'email',
             'first_name',
             'last_name',
-            'userdata',
+            'institution',
         )

@@ -24,6 +24,7 @@ from . import term_types
 from . import terms
 from . import users
 from . import data_collections
+from . import collection_devices
 
 
 __all__ = [
@@ -53,4 +54,5 @@ __all__ = [
     'users',
     'licences',
     'data_collections',
+    'collection_devices'
 ]

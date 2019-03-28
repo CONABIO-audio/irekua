@@ -75,7 +75,10 @@ class CollectionSamplingEventViewSet(BaseViewSet):
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        collection_pk = self.kwargs['collection_pk']
-        collection = db.Collection.objects.get(pk=collection_pk)
-        context['collection'] = collection
+        try:
+            collection_pk = self.kwargs['collection_pk']
+            collection = db.Collection.objects.get(pk=collection_pk)
+            context['collection'] = collection
+        except:
+            pass
         return context

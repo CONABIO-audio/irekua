@@ -1,6 +1,6 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
@@ -83,7 +83,7 @@ class SamplingEvent(models.Model):
         null=True)
 
     created_by = models.ForeignKey(
-        User,
+        'User',
         related_name='sampling_event_created_by',
         on_delete=models.PROTECT,
         db_column='created_by',
@@ -104,7 +104,7 @@ class SamplingEvent(models.Model):
         auto_now=True,
         editable=False)
     modified_by = models.ForeignKey(
-        User,
+        'User',
         related_name='sampling_event_modified_by',
         on_delete=models.PROTECT,
         db_column='modified_by',

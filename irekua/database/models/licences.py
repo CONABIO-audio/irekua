@@ -1,6 +1,6 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
@@ -41,7 +41,7 @@ class Licence(models.Model):
         blank=True,
         null=True)
     signed_by = models.ForeignKey(
-        User,
+        'User',
         on_delete=models.PROTECT,
         db_column='signed_by',
         verbose_name=_('signed by'),

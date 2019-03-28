@@ -9,6 +9,7 @@ from rest_framework.response import Response
 import database.models as db
 from rest.serializers import data_collections
 from rest.serializers import licences
+from rest.serializers import devices
 from rest.permissions import IsDeveloper, IsAdmin, ReadOnly
 from rest.filters import BaseFilter
 from .utils import BaseViewSet
@@ -38,7 +39,7 @@ class CollectionViewSet(BaseViewSet):
         try:
             collection = self.get_object()
             context['collection'] = collection
-        except AssertionError:
+        except:
             pass
         return context
 
@@ -62,10 +63,3 @@ class CollectionViewSet(BaseViewSet):
 
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=licences.SelectSerializer)
-    def delete_licence(self, request, pk=None):
-        pass

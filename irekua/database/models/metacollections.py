@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 
@@ -18,7 +18,7 @@ class MetaCollection(models.Model):
         help_text=_('Description of Meta Collection'),
         blank=False)
     creator = models.ForeignKey(
-        User,
+        'User',
         on_delete=models.CASCADE,
         db_column='creator_id',
         verbose_name=_('creator'),

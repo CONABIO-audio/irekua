@@ -39,6 +39,19 @@ class CollectionDevice(models.Model):
         help_text=_('Metadata associated with device within collection'),
         null=True)
 
+    created_on = models.DateTimeField(
+        db_column='created_on',
+        verbose_name=_('created on'),
+        help_text=_('Date of creation of annotation'),
+        editable=False,
+        auto_now_add=True)
+    modified_on = models.DateTimeField(
+        db_column='modified_on',
+        verbose_name=_('modified on'),
+        help_text=_('Date of last modification'),
+        editable=False,
+        auto_now=True)
+
     class Meta:
         verbose_name = _('Collection Device')
         verbose_name_plural = _('Collection Devices')

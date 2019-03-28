@@ -45,11 +45,7 @@ class InstitutionTestCase(BaseTestCase, APITestCase):
         new_data = self.generate_random_json_data()
         new_data['country'] = 'MX'
 
-        userdata = self.regular_user.userdata
-        userdata.institution = other_institution
-        userdata.save()
-
-        self.regular_user.userdata = userdata
+        self.regular_user.institution = other_institution
         self.regular_user.save()
 
         self.client.force_authenticate(user=self.regular_user)

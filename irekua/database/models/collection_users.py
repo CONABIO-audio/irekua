@@ -1,5 +1,5 @@
 from django.contrib.postgres.fields import JSONField
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -18,7 +18,7 @@ class CollectionUser(models.Model):
         on_delete=models.CASCADE,
         blank=False)
     user = models.ForeignKey(
-        User,
+        'User',
         db_column='user_id',
         verbose_name=_('user'),
         help_text=_('User of collection'),
@@ -45,6 +45,19 @@ class CollectionUser(models.Model):
         null=False,
         blank=False,
         default=False)
+
+    created_on = models.DateTimeField(
+        db_column='created_on',
+        verbose_name=   _('created on'),
+        help_text=_('Date of creation of annotation'),
+        editable=False,
+        auto_now_add=True)
+    modified_on = models.DateTimeField(
+        db_column='modified_on',
+        verbose_name=_('modified on'),
+        help_text=_('Date of last modification'),
+        editable=False,
+        auto_now=True)
 
     class Meta:
         verbose_name = _('Collection User')
@@ -73,4 +86,4 @@ class CollectionUser(models.Model):
                 collection=str(self.collection),
                 error=str(error))
             raise ValidationError({'metadata': msg}, params=params)
-        super(CollectionUser, self).clean()
+        super().clean()

@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 from .annotation_tools import AnnotationTool
 from .annotation_types import AnnotationType
 from .annotation_votes import AnnotationVote
@@ -37,7 +37,7 @@ from .tags import Tag
 from .term_suggestions import TermSuggestion
 from .term_types import TermType
 from .terms import Term
-from .users import UserData
+from .users import User
 
 
 __all__ = [
@@ -79,7 +79,6 @@ __all__ = [
     'Term',
     'TermSuggestion',
     'TermType',
-    'UserData',
     'User',
     'Group',
 ]

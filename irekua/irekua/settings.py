@@ -38,6 +38,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+AUTH_USER_MODEL = 'database.User'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -52,7 +54,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest',
     'database',
-    # 'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -161,9 +162,9 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
-    # 'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.IsAuthenticated',
-    # ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
     'PAGE_SIZE': 10,
     'EXCEPTION_HANDLER': 'rest.exception_handler.custom_exception_handler'
 }

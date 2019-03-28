@@ -43,13 +43,12 @@ class ItemViewSet(NoCreateViewSet):
         user = self.request.user
 
         is_special_user = (
-            hasattr(user, 'userdata') & (
-                user.userdata.is_curator |
-                user.userdata.is_model |
-                user.userdata.is_developer
-            )
+            user.is_superuser |
+            user.is_curator |
+            user.is_model |
+            user.is_developer
         )
-        if user.is_superuser | is_special_user:
+        if is_special_user:
             return self.get_full_queryset()
 
         return self.get_normal_queryset(user)

@@ -1,16 +1,9 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-class UserData(models.Model):
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE,
-        db_column='user_id',
-        verbose_name=_('user'),
-        help_text=_('Reference to user'),
-        blank=False)
+class User(AbstractUser):
     institution = models.ForeignKey(
         'Institution',
         on_delete=models.PROTECT,
@@ -42,8 +35,5 @@ class UserData(models.Model):
         default=False)
 
     class Meta:
-        verbose_name = _('User Data')
-        verbose_name_plural = _('Users Data')
-
-    def __str__(self):
-        return str(self.user)
+        verbose_name = _('User')
+        verbose_name_plural = _('Users')

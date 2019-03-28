@@ -1,7 +1,7 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
@@ -37,7 +37,7 @@ class TermSuggestion(models.Model):
         help_text=_('Metadata associated to term'),
         null=True)
     suggested_by = models.ForeignKey(
-        User,
+        'User',
         on_delete=models.CASCADE,
         db_column='suggested_by',
         verbose_name=_('suggested by'),

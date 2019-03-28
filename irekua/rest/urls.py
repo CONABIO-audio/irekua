@@ -50,6 +50,14 @@ collections_router.register(
     r'items',
     views.CollectionItemViewSet,
     base_name='collection-items')
+collections_router.register(
+    r'devices',
+    views.CollectionDeviceViewSet,
+    base_name='collection-devices')
+collections_router.register(
+    r'sites',
+    views.CollectionSiteViewSet,
+    base_name='collection-sites')
 
 
 urlpatterns = [

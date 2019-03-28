@@ -2,7 +2,7 @@ import mimetypes
 from hashlib import sha256
 
 from django.contrib.postgres.fields import JSONField
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -152,7 +152,7 @@ class Item(models.Model):
         auto_now=True,
         editable=False)
     modified_by = models.ForeignKey(
-        User,
+        'User',
         on_delete=models.PROTECT,
         db_column='modified_by',
         verbose_name=_('modified by'),

@@ -26,7 +26,7 @@ class Filter(django_filters.FilterSet):
             'suggested_by__username',
             'suggested_by__first_name',
             'suggested_by__is_superuser',
-            'suggested_by__userdata__is_curator'
+            'suggested_by__is_curator'
         )
 
 

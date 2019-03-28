@@ -77,7 +77,7 @@ class IsDeveloper(BasePermission):
     def has_permission(self, request, view):
         user = request.user
         try:
-            return user.userdata.is_developer
+            return user.is_developer
         except AttributeError:
             return False
 
@@ -86,7 +86,7 @@ class IsModel(BasePermission):
     def has_permission(self, request, view):
         user = request.user
         try:
-            return user.userdata.is_model
+            return user.is_model
         except AttributeError:
             return False
 
@@ -95,7 +95,7 @@ class IsCurator(BasePermission):
     def has_permission(self, request, view):
         user = request.user
         try:
-            return user.userdata.is_curator
+            return user.is_curator
         except AttributeError:
             return False
 
@@ -118,10 +118,7 @@ class IsFromInstitution(IsAuthenticated):
         if user.is_superuser:
             return True
 
-        if user.userdata is None:
+        if user.institution is None:
             return False
 
-        if user.userdata.institution is None:
-            return False
-
-        return user.userdata.institution == obj
+        return user.institution == obj

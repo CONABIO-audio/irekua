@@ -15,9 +15,13 @@ class Filter(BaseFilter):
             'username',
             'first_name',
             'last_name',
-            'userdata__institution__institution_name',
-            'userdata__institution__institution_code',
-            'userdata__institution__subdependency',
+            'institution__institution_name',
+            'institution__institution_code',
+            'institution__subdependency',
+            'is_superuser',
+            'is_curator',
+            'is_model',
+            'is_developer',
         )
 
 

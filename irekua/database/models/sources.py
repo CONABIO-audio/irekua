@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 
@@ -30,7 +30,7 @@ class Source(models.Model):
         help_text=_('Date on which files in source where parsed and uploaded to database'),
         auto_now_add=True)
     uploader = models.ForeignKey(
-        User,
+        'User',
         on_delete=models.PROTECT,
         db_column='uploader_id',
         verbose_name=_('uploader id'),

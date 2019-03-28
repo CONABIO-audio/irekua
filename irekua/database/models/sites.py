@@ -3,7 +3,7 @@ from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models import PointField
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import (
@@ -72,7 +72,7 @@ class Site(models.Model):
         blank=True,
         null=True)
     creator = models.ForeignKey(
-        User,
+        'User',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,

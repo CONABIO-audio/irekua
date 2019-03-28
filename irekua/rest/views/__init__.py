@@ -15,14 +15,18 @@ from .items import (
 from .licence_types import LicenceTypeViewSet
 from .licences import LicenceViewSet
 from .metacollections import MetaCollectionViewSet
-from .physical_devices import PhysicalDeviceViewSet
+from .physical_devices import (
+    PhysicalDeviceViewSet,
+    CollectionDeviceViewSet)
 from .roles import RoleViewSet
 from .sampling_event_types import SamplingEventTypeViewSet
 from .sampling_events import (
     SamplingEventViewSet,
     CollectionSamplingEventViewSet)
 from .site_types import SiteTypeViewSet
-from .sites import SiteViewSet
+from .sites import (
+    SiteViewSet,
+    CollectionSiteViewSet)
 from .synonym_suggestions import SynonymSuggestionViewSet
 from .synonyms import SynonymViewSet
 from .tags import TagViewSet
@@ -39,6 +43,8 @@ __all__ = [
     'CollectionTypeViewSet',
     'CollectionItemViewSet',
     'CollectionSamplingEventViewSet',
+    'CollectionDeviceViewSet',
+    'CollectionSiteViewSet',
     'DeviceBrandViewSet',
     'DeviceTypeViewSet',
     'DeviceViewSet',

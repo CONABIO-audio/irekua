@@ -1,5 +1,5 @@
 from django.contrib.postgres.fields import JSONField, HStoreField
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -102,7 +102,7 @@ class Annotation(models.Model):
         editable=False,
         auto_now=True)
     created_by = models.ForeignKey(
-        User,
+        'User',
         related_name='annotation_created_by',
         db_column='created_by',
         verbose_name=_('created by'),
@@ -111,7 +111,7 @@ class Annotation(models.Model):
         blank=True,
         null=True)
     modified_by = models.ForeignKey(
-        User,
+        'User',
         editable=False,
         related_name='annotation_modified_by',
         db_column='modified_by',

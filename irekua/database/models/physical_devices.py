@@ -1,5 +1,5 @@
 from django.contrib.postgres.fields import JSONField
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -27,7 +27,7 @@ class PhysicalDevice(models.Model):
         blank=False,
         null=False)
     owner = models.ForeignKey(
-        User,
+        'User',
         on_delete=models.SET_NULL,
         db_column='owner_id',
         verbose_name=_('owner'),

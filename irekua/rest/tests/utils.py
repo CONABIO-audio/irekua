@@ -8,13 +8,12 @@ from rest_framework.permissions import SAFE_METHODS
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-from database.models import UserData
+from database.models import User
 from database.tests.test_data_collections import create_simple_collection
 from database.tests.test_collection_roles import create_simple_role
 
 
 def create_or_get_user(
-        is_staff=None,
         is_superuser=None,
         is_developer=None,
         is_curator=None,
@@ -24,13 +23,7 @@ def create_or_get_user(
         username=uuid4(),
         defaults=dict(
             password=uuid4(),
-            is_staff=is_staff,
-            is_superuser=is_superuser)
-    )
-
-    UserData.objects.get_or_create(
-        user=user,
-        defaults=dict(
+            is_superuser=is_superuser,
             is_developer=is_developer,
             is_curator=is_curator,
             is_model=is_model)
@@ -144,35 +137,30 @@ class BaseTestCase(object):
     def setUp(self):
         self.admin_user = create_or_get_user(
             is_superuser=True,
-            is_staff=True,
             is_developer=False,
             is_curator=False,
             is_model=False)
 
         self.regular_user = create_or_get_user(
             is_superuser=False,
-            is_staff=False,
             is_developer=False,
             is_curator=False,
             is_model=False)
 
         self.model_user = create_or_get_user(
             is_superuser=False,
-            is_staff=False,
             is_developer=False,
             is_curator=False,
             is_model=True)
 
         self.developer_user = create_or_get_user(
             is_superuser=False,
-            is_staff=False,
             is_developer=True,
             is_curator=False,
             is_model=False)
 
         self.curator_user = create_or_get_user(
             is_superuser=False,
-            is_staff=False,
             is_developer=False,
             is_curator=True,
             is_model=False)
@@ -183,7 +171,6 @@ class BaseTestCase(object):
 
         self.collection_user = create_or_get_user(
             is_superuser=False,
-            is_staff=False,
             is_developer=False,
             is_curator=False,
             is_model=False)
