@@ -3,44 +3,50 @@ from __future__ import unicode_literals
 
 from rest_framework import serializers
 import database.models as db
-from . import physical_devices
+from . import users
+from . import roles
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    device = serializers.PrimaryKeyRelatedField(
+    user = serializers.PrimaryKeyRelatedField(
         many=False,
         read_only=False,
-        queryset=db.CollectionDevice.objects.all(),
+        queryset=db.CollectionUser.objects.all(),
         source='id')
 
     class Meta:
-        model = db.CollectionDevice
+        model = db.CollectionUser
         fields = (
             'url',
-            'device'
+            'user',
         )
 
 
 class ListSerializer(serializers.HyperlinkedModelSerializer):
+    user = users.ListSerializer(
+        many=False,
+        read_only=True)
+
     class Meta:
         model = db.CollectionDevice
         fields = (
             'url',
-            'id',
-            'internal_id',
+            'user',
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    device = physical_devices.ListSerializer(many=False, read_only=True)
+    user = users.DetailSerializer(many=False, read_only=True)
+    role = roles.DetailSerializer(many=False, read_only=True)
 
     class Meta:
         model = db.CollectionDevice
         fields = (
             'url',
-            'device',
-            'internal_id',
+            'user',
+            'role',
             'metadata',
+            'is_admin',
             'created_on',
             'modified_on',
         )
@@ -50,12 +56,7 @@ class CreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = db.CollectionDevice
         fields = (
-            'device',
+            'user',
+            'role',
             'metadata',
-            'internal_id',
         )
-
-    def create(self, validated_data):
-        collection = self.context['collection']
-        validated_data['collection'] = collection
-        return super().create(validated_data)

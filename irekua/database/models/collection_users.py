@@ -1,5 +1,4 @@
 from django.contrib.postgres.fields import JSONField
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -41,14 +40,16 @@ class CollectionUser(models.Model):
     is_admin = models.BooleanField(
         db_column='is_admin',
         verbose_name=_('is admin'),
-        help_text=_('Flag that indicates if user is administrator of the collection'),
+        help_text=_(
+            'Flag that indicates if user is administrator of '
+            'the collection'),
         null=False,
         blank=False,
         default=False)
 
     created_on = models.DateTimeField(
         db_column='created_on',
-        verbose_name=   _('created on'),
+        verbose_name=_('created on'),
         help_text=_('Date of creation of annotation'),
         editable=False,
         auto_now_add=True)
@@ -80,7 +81,9 @@ class CollectionUser(models.Model):
         try:
             collection_role.validate_metadata(self.metadata)
         except ValidationError as error:
-            msg = _('Invalid metadata for user of role type %(role)s in collection %(collection)s. Error: %(error)s')
+            msg = _(
+                'Invalid metadata for user of role type %(role)s '
+                'in collection %(collection)s. Error: %(error)s')
             params = dict(
                 role=str(self.role),
                 collection=str(self.collection),

@@ -43,15 +43,18 @@ class BaseViewSet(mixins.CreateModelMixin, NoCreateViewSet):
 
 
 class AdditionalActions(object):
-    related_objects = []
-
-    def return_related_object_list(self, request, queryset, serializer_class):
+    def return_related_object_list(
+            self,
+            request,
+            queryset,
+            serializer_class):
         page = self.paginate_queryset(queryset)
         if page is not None:
+            context = self.get_serializer_context()
             serializer = serializer_class(
                 page,
                 many=True,
-                context={'request': request})
+                context=context)
             return self.get_paginated_response(serializer.data)
 
         serializer = serializer_class(queryset, many=True)
@@ -65,9 +68,10 @@ class AdditionalActions(object):
             pk_field='pk',
             extra=None):
 
+        context = self.get_serializer_context()
         serializer = serializer_class(
             data=request.data,
-            context={'request': request})
+            context=context)
 
         if not serializer.is_valid():
             raise ValidationError(serializer.errors)
@@ -94,12 +98,12 @@ class AdditionalActions(object):
             self,
             request,
             serializer_class,
-            model_class,
             extra=None):
 
+        context = self.get_serializer_context()
         serializer = serializer_class(
             data=request.data,
-            context={'request': request})
+            context=context)
 
         if not serializer.is_valid():
             raise ValidationError(serializer.errors)
@@ -110,10 +114,18 @@ class AdditionalActions(object):
                 extra_dict[extra_value] = (
                         serializer.validated_data.pop(extra_value))
 
-        related_object = model_class.objects.create(
-            **serializer.validated_data)
-
+        related_object = serializer.save()
         return related_object, extra_dict
+
+    def list_related_object_view(
+            self,
+            queryset):
+        request = self.request
+        serializer = self.get_serializer_class()
+        return self.return_related_object_list(
+            request,
+            queryset,
+            serializer)
 
     def add_related_object_view(
             self,
@@ -164,23 +176,15 @@ class AdditionalActions(object):
 
     def create_related_object_view(
             self,
-            model,
             name,
             prefix='add',
             extra=None):
         request = self.request
-        view_object = self.get_object()
         serializer = self.get_serializer_class()
 
         related_object, extra_dict = self.create_related_object(
             request,
             serializer,
-            model,
             extra=extra)
 
-        method_name = '{prefix}_{name}'.format(
-            prefix=prefix,
-            name=name)
-        method = getattr(view_object, method_name)
-        method(related_object, **extra_dict)
         return Response(status=status.HTTP_201_CREATED)

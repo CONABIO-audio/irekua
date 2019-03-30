@@ -20,10 +20,7 @@ class Filter(BaseFilter):
 
 
 class CollectionDeviceViewSet(BaseViewSet):
+    queryset = db.CollectionDevice.objects.all()
     serializer_module = collection_devices
     search_fields = ('device__brand__name', 'device__model')
     filterset_class = Filter
-
-    def get_queryset(self):
-        collection = self.kwargs['collection_pk']
-        return db.CollectionDevice.objects.filter(collection=collection)

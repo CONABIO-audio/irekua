@@ -3,42 +3,56 @@ from __future__ import unicode_literals
 
 from rest_framework import serializers
 import database.models as db
-from . import physical_devices
+from . import data_collections
+from . import sites
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    device = serializers.PrimaryKeyRelatedField(
+    site = serializers.PrimaryKeyRelatedField(
         many=False,
         read_only=False,
-        queryset=db.CollectionDevice.objects.all(),
+        queryset=db.CollectionSite.objects.all(),
         source='id')
 
     class Meta:
-        model = db.CollectionDevice
+        model = db.CollectionSite
         fields = (
             'url',
-            'device'
+            'site'
         )
 
 
 class ListSerializer(serializers.HyperlinkedModelSerializer):
+    site = sites.ListSerializer(
+        many=False,
+        read_only=True)
+    collection = sites.ListSerializer(
+        many=False,
+        read_only=True)
+
     class Meta:
-        model = db.CollectionDevice
+        model = db.CollectionSite
         fields = (
             'url',
-            'id',
-            'internal_id',
+            'site',
+            'collection',
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    device = physical_devices.ListSerializer(many=False, read_only=True)
+    site = sites.DetailSerializer(
+        many=False,
+        read_only=True)
+    collection = data_collections.ListSerializer(
+        many=False,
+        read_only=True)
 
     class Meta:
-        model = db.CollectionDevice
+        model = db.CollectionSite
         fields = (
             'url',
-            'device',
+            'collection',
+            'site',
             'internal_id',
             'metadata',
             'created_on',
@@ -48,14 +62,8 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.CollectionDevice
+        model = db.CollectionSite
         fields = (
-            'device',
+            'site',
             'metadata',
-            'internal_id',
         )
-
-    def create(self, validated_data):
-        collection = self.context['collection']
-        validated_data['collection'] = collection
-        return super().create(validated_data)

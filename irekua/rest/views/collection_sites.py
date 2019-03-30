@@ -43,7 +43,7 @@ class Filter(BaseFilter):
         )
 
 
-class SiteViewSet(BaseViewSet):
+class CollectionSiteViewSet(BaseViewSet):
     queryset = db.Site.objects.all()
     serializer_module = sites
     permission_classes = (IsAdmin | ReadOnly, )

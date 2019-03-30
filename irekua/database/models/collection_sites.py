@@ -66,7 +66,8 @@ class CollectionSite(models.Model):
 
     def clean(self):
         try:
-            site_type = self.collection.validate_and_get_site_type(self.site.site_type)
+            site_type = self.collection.validate_and_get_site_type(
+                self.site.site_type)
         except ValidationError as error:
             raise ValidationError({'site': error})
 
