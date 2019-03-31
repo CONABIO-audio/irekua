@@ -27,6 +27,9 @@ from . import data_collections
 from . import collection_devices
 from . import collection_users
 from . import collection_sites
+from . import annotations
+from . import annotation_votes
+from . import secondary_items
 
 
 __all__ = [
@@ -59,4 +62,7 @@ __all__ = [
     'collection_devices',
     'collection_users',
     'collection_sites',
+    'annotations',
+    'annotation_votes',
+    'secondary_items',
 ]

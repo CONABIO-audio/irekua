@@ -56,6 +56,10 @@ class CollectionDevice(models.Model):
         verbose_name = _('Collection Device')
         verbose_name_plural = _('Collection Devices')
 
+        unique_together = (
+            ('device', 'collection'),
+        )
+
     def __str__(self):
         msg = 'Device %(device_id)s from collection %(collection_id)s'
         params = dict(

@@ -2,11 +2,13 @@
 from __future__ import unicode_literals
 
 import django_filters
+from rest_framework.decorators import action
 
 import database.models as db
 from rest.serializers import sampling_events
+from rest.serializers import items as item_serializers
 from rest.filters import BaseFilter
-from .utils import NoCreateViewSet
+from .utils import NoCreateViewSet, AdditionalActions
 
 
 class Filter(BaseFilter):
@@ -59,8 +61,35 @@ class Filter(BaseFilter):
         )
 
 
-class SamplingEventViewSet(NoCreateViewSet):
+class SamplingEventViewSet(NoCreateViewSet, AdditionalActions):
     queryset = db.SamplingEvent.objects.all()
     serializer_module = sampling_events
     search_fields = ('sampling_event_type__name',)
     filterset_class = Filter
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+
+        try:
+            sampling_event = self.get_object()
+        except AssertionError:
+            sampling_event = None
+
+        context['sampling_event'] = sampling_event
+        return context
+
+    @action(
+        detail=True,
+        methods=['POST'],
+        serializer_class=item_serializers.CreateSerializer)
+    def add_item(self, request, pk=None):
+        return self.create_related_object_view()
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        serializer_class=item_serializers.ListSerializer)
+    def items(self, request, pk=None):
+        sampling_event = self.get_object()
+        queryset = sampling_event.item_set.all()
+        return self.list_related_object_view(queryset)

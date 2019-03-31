@@ -41,13 +41,11 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'id',
             'hash',
-            'item_file',
             'item_type',
             'media_info',
             'metadata',
             'sampling_event',
             'captured_on',
-            'owner',
             'licence',
             'tags',
             'ready_event_types',
@@ -56,11 +54,12 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class CreateSerializer(serializers.HyperlinkedModelSerializer):
+class CreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = db.Item
         fields = (
             'hash',
+            'filesize',
             'item_file',
             'item_type',
             'media_info',
@@ -68,3 +67,29 @@ class CreateSerializer(serializers.HyperlinkedModelSerializer):
             'captured_on',
             'licence',
         )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        licences = self.fields['licence']
+        item_types = self.fields['item_type']
+
+        try:
+            sampling_event = self.context['sampling_event']
+            collection = sampling_event.collection
+            collection_type = collection.collection_type
+
+            licences.queryset = collection.licence_set
+
+            if collection_type.restrict_item_types:
+                item_types.queryset = (
+                    collection_type.item_types.all()
+                )
+
+        except (KeyError, AttributeError):
+            pass
+
+    def create(self, validated_data):
+        sampling_event = self.context['sampling_event']
+        validated_data['sampling_event'] = sampling_event
+        return super().create(validated_data)

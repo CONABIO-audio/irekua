@@ -6,7 +6,7 @@ import database.models as db
 from . import sites
 from . import physical_devices
 from . import users
-from . import sampling_events
+from . import sampling_event_types
 from . import data_collections
 from . import licences
 
@@ -42,10 +42,18 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    created_by = users.ListSerializer(many=False, read_only=True)
-    sampling_event_type = sampling_events.ListSerializer(many=False, read_only=True)
-    collection = data_collections.ListSerializer(many=False, read_only=True)
-    licence = licences.DetailSerializer(many=False, read_only=True)
+    created_by = users.ListSerializer(
+        many=False,
+        read_only=True)
+    sampling_event_type = sampling_event_types.ListSerializer(
+        many=False,
+        read_only=True)
+    collection = data_collections.ListSerializer(
+        many=False,
+        read_only=True)
+    licence = licences.DetailSerializer(
+        many=False,
+        read_only=True)
 
     class Meta:
         model = db.SamplingEvent
@@ -77,7 +85,23 @@ class CreateSerializer(serializers.ModelSerializer):
             'metadata',
             'started_on',
             'ended_on',
+            'licence',
         )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        try:
+            collection = self.context['collection']
+            sites = self.fields['site']
+            devices = self.fields['device']
+            licences = self.fields['licence']
+
+            sites.queryset = collection.sites.all()
+            devices.queryset = collection.devices.all()
+            licences.queryset = collection.licence_set.all()
+        except (KeyError, AttributeError):
+            pass
 
     def create(self, validated_data):
         user = self.context['request'].user

@@ -64,6 +64,10 @@ class CollectionUser(models.Model):
         verbose_name = _('Collection User')
         verbose_name_plural = _('Collection Users')
 
+        unique_together = (
+            ('collection', 'user'),
+        )
+
     def __str__(self):
         msg = _('User %(user)s of collection %(collection)s')
         params = dict(

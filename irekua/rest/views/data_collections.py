@@ -7,6 +7,8 @@ import database.models as db
 
 from rest.serializers import data_collections
 from rest.serializers import licences
+from rest.serializers import items as item_serializers
+from rest.serializers import sampling_events as sampling_event_serializers
 from rest.serializers import collection_devices
 from rest.serializers import collection_sites
 from rest.serializers import collection_users
@@ -98,3 +100,29 @@ class CollectionViewSet(BaseViewSet, AdditionalActions):
         serializer_class=collection_users.CreateSerializer)
     def add_user(self, request, pk=None):
         return self.create_related_object_view()
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        serializer_class=sampling_event_serializers.ListSerializer)
+    def sampling_events(self, request, pk=None):
+        collection = self.get_object()
+        queryset = collection.samplingevent_set.all()
+        return self.list_related_object_view(queryset)
+
+    @action(
+        detail=True,
+        methods=['POST'],
+        serializer_class=sampling_event_serializers.CreateSerializer)
+    def add_sampling_event(self, request, pk=None):
+        return self.create_related_object_view()
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        serializer_class=item_serializers.ListSerializer)
+    def items(self, request, pk=None):
+        collection = self.get_object()
+        queryset = db.Item.objects.filter(
+            sampling_event__collection=collection)
+        return self.list_related_object_view(queryset)

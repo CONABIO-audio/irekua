@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework import viewsets
-import database.models as db
+from rest_framework import mixins
 
-from rest.serializers import SecondaryItemSerializer
+from database import models as db
+from rest.serializers import secondary_items
+from .utils import CustomViewSet
 
 
-# Create your views here.
-class SecondaryItemViewSet(viewsets.ModelViewSet):
+class SecondaryItemViewSet(mixins.UpdateModelMixin,
+                           mixins.RetrieveModelMixin,
+                           mixins.DestroyModelMixin,
+                           mixins.ListModelMixin,
+                           CustomViewSet):
     queryset = db.SecondaryItem.objects.all()
-    serializer_class = SecondaryItemSerializer
+    serializer_module = secondary_items

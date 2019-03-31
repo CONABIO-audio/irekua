@@ -40,9 +40,14 @@ class CollectionDeviceType(models.Model):
         verbose_name = _('Collection Device Type')
         verbose_name_plural = _('Collection Device Types')
 
+        unique_together = (
+            ('collection_type', 'device_type'),
+        )
 
     def __str__(self):
-        msg = _('Device type %(device_type)s for collection type %(collection_type)s')
+        msg = _(
+            'Device type %(device_type)s for collection '
+            'type %(collection_type)s')
         params = dict(
             device_type=str(self.device_type),
             collection_type=str(self.collection_type))

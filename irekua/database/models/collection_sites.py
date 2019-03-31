@@ -1,11 +1,6 @@
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-
-from database.utils import (
-    empty_JSON,
-)
 
 
 class CollectionSite(models.Model):
@@ -48,7 +43,10 @@ class CollectionSite(models.Model):
     class Meta:
         verbose_name = _('Collection Site')
         verbose_name_plural = _('Collection Sites')
-        unique_together = (('collection', 'internal_id'))
+
+        unique_together = (
+            ('collection', 'internal_id'),
+        )
 
     def __str__(self):
         msg = _('Site %(site)s of collection %(collection)')
@@ -59,7 +57,7 @@ class CollectionSite(models.Model):
 
     def clean(self):
         try:
-            site_type = self.collection.validate_and_get_site_type(
+            self.collection.validate_and_get_site_type(
                 self.site.site_type)
         except ValidationError as error:
             raise ValidationError({'site': error})

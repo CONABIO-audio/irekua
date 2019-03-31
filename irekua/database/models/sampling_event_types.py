@@ -42,14 +42,18 @@ class SamplingEventType(models.Model):
     restrict_device_types = models.BooleanField(
         db_column='restrict_device_types',
         verbose_name=_('restrict device types'),
-        help_text=_('Flag indicating whether to restrict device types associated with this sampling event type'),
+        help_text=_(
+            'Flag indicating whether to restrict device types '
+            'associated with this sampling event type'),
         default=False,
         blank=False,
         null=False)
     restrict_site_types = models.BooleanField(
         db_column='restrict_site_types',
         verbose_name=_('restrict site types'),
-        help_text=_('Flag indicating whether to restrict site types associated with this sampling event type'),
+        help_text=_(
+            'Flag indicating whether to restrict site '
+            'types associated with this sampling event type'),
         default=False,
         blank=False,
         null=False)
@@ -95,7 +99,9 @@ class SamplingEventType(models.Model):
                 schema=self.metadata_schema,
                 instance=metadata)
         except ValidationError as error:
-            msg = _('Invalid metadata for sampling event of type %(type)s. Error: %(error)')
+            msg = _(
+                'Invalid metadata for sampling event of type '
+                '%(type)s. Error: %(error)')
             params = dict(type=str(self), error=str(error))
             raise ValidationError(msg, params=params)
 
@@ -106,7 +112,9 @@ class SamplingEventType(models.Model):
         try:
             self.device_types.get(name=device_type.name)
         except self.device_types.model.DoesNotExist:
-            msg = _('Device type %(device_type) is not valid for sampling event of type %(type)s')
+            msg = _(
+                'Device type %(device_type) is not valid for sampling '
+                'event of type %(type)s')
             params = dict(device_type=str(device_type), type=str(self))
             raise ValidationError(msg, params=params)
 
@@ -117,7 +125,9 @@ class SamplingEventType(models.Model):
         try:
             self.site_types.get(name=site_type.name)
         except self.site_types.model.DoesNotExist:
-            msg = _('Site type %(site_type) is not valid for sampling event of type %(type)s')
+            msg = _(
+                'Site type %(site_type) is not valid for '
+                'sampling event of type %(type)s')
             params = dict(site_type=str(site_type), type=str(self))
             raise ValidationError(msg, params=params)
 

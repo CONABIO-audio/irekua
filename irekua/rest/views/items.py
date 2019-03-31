@@ -3,12 +3,14 @@ from __future__ import unicode_literals
 
 from django.db.models import Q
 from django.contrib.auth.models import Permission
+from rest_framework.decorators import action
 import django_filters
 
 import database.models as db
 from rest.serializers import items
+from rest.serializers import annotations as annotation_serializers
 from rest.filters import BaseFilter
-from .utils import NoCreateViewSet
+from .utils import NoCreateViewSet, AdditionalActions
 
 
 class Filter(BaseFilter):
@@ -34,7 +36,7 @@ class Filter(BaseFilter):
         )
 
 
-class ItemViewSet(NoCreateViewSet):
+class ItemViewSet(NoCreateViewSet, AdditionalActions):
     serializer_module = items
     filterset_class = Filter
     search_fields = ('item_type__name', )
@@ -82,3 +84,19 @@ class ItemViewSet(NoCreateViewSet):
 
     def get_full_queryset(self):
         return db.Item.objects.all()
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        serializer_class=annotation_serializers.ListSerializer)
+    def annotations(self, request, pk=None):
+        item = self.get_object()
+        queryset = item.annotation_set.all()
+        return self.list_related_object_view(queryset)
+
+    @action(
+        detail=True,
+        methods=['POST'],
+        serializer_class=annotation_serializers.CreateSerializer)
+    def add_annotation(self, request, pk=None):
+        return self.create_related_object_view()

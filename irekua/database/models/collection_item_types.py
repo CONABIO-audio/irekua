@@ -40,6 +40,10 @@ class CollectionItemType(models.Model):
         verbose_name = _('Collection Item Type')
         verbose_name_plural = _('Collection Item Types')
 
+        unique_together = (
+            ('collection_type', 'item_type'),
+        )
+
     def __str__(self):
         msg = _('Item type %(item)s for collection %(collection)s')
         params = dict(

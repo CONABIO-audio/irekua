@@ -1,13 +1,21 @@
 from django.conf.urls import url, include
-from rest_framework_nested import routers
-# from rest_framework import routers
+from rest_framework import routers
 from rest import views
 
 
 router = routers.DefaultRouter()
-# router.register(r'annotations', views.AnnotationViewSet)
-# router.register(r'annotation_votes', views.AnnotationVoteViewSet)
-# router.register(r'secondary_items', views.SecondaryItemViewSet)
+router.register(
+    r'annotations',
+    views.AnnotationViewSet,
+    basename='annotation')
+router.register(
+    r'annotation_votes',
+    views.AnnotationVoteViewSet,
+    basename='annotationvote')
+router.register(
+    r'secondary_items',
+    views.SecondaryItemViewSet,
+    basename='secondaryitem')
 router.register(
     r'annotation_tools',
     views.AnnotationToolViewSet,

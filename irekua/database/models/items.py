@@ -2,7 +2,6 @@ import mimetypes
 from hashlib import sha256
 
 from django.contrib.postgres.fields import JSONField
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -174,6 +173,64 @@ class Item(models.Model):
     def __str__(self):
         return str(self.id)
 
+    def clean(self):
+        self.validate_licence()
+        self.validate_hash_and_filesize()
+
+        try:
+            self.item_type.validate_media_info(self.media_info)
+        except ValidationError as error:
+            raise ValidationError({'media_info': error})
+
+        collection = self.sampling_event.collection
+
+        try:
+            collection.validate_and_get_sampling_event_type(
+                self.sampling_event.sampling_event_type)
+        except ValidationError as error:
+            raise ValidationError({'sampling': error})
+
+        try:
+            collection_item_type = collection.validate_and_get_item_type(
+                self.item_type)
+        except ValidationError as error:
+            raise ValidationError({'item_type': error})
+
+        if collection_item_type is not None:
+            try:
+                collection_item_type.validate_metadata(self.metadata)
+            except ValidationError as error:
+                raise ValidationError({'metadata': error})
+
+        try:
+            collection.validate_and_get_licence(self.licence)
+        except ValidationError as error:
+            raise ValidationError({'licence': error})
+
+        try:
+            self.validate_mime_type()
+        except ValidationError as error:
+            raise ValidationError({'item_file': error})
+
+        super(Item, self).clean()
+
+    def validate_mime_type(self):
+        if self.item_file.name is None:
+            return
+
+        file_mime_type, enc = mimetypes.guess_type(self.item_file.name)
+        if self.item_type.media_type != file_mime_type:
+            msg = _(
+                'File MIME type does not coincide with declared item type '
+                '(file: {file_type} != {item_type} :item_type)')
+            msg = msg.format(
+                file_type=file_mime_type,
+                item_type=self.item_type.media_type)
+            raise ValidationError(msg)
+
+    def validate_and_get_event_type(self, event_type):
+        return self.item_type.validate_and_get_event_type(event_type)
+
     def validate_licence(self):
         if not self.licence and self.sampling_event.licence is None:
             msg = _(
@@ -215,45 +272,6 @@ class Item(models.Model):
                 raise ValidationError({'filesize': msg})
 
             return None
-
-    def clean(self):
-        self.validate_licence()
-        self.validate_hash_and_filesize()
-
-        try:
-            self.item_type.validate_media_info(self.media_info)
-        except ValidationError as error:
-            raise ValidationError({'media_info': error})
-
-        collection = self.sampling_event.collection
-
-        try:
-            collection.validate_and_get_sampling_event_type(
-                self.sampling_event.sampling_event_type)
-        except ValidationError as error:
-            raise ValidationError({'sampling': error})
-
-        try:
-            collection_item_type = collection.validate_and_get_item_type(
-                self.item_type)
-        except ValidationError as error:
-            raise ValidationError({'item_type': error})
-
-        if collection_item_type is not None:
-            try:
-                collection_item_type.validate_metadata(self.metadata)
-            except ValidationError as error:
-                raise ValidationError({'metadata': error})
-
-        try:
-            collection.validate_and_get_licence(self.licence)
-        except ValidationError as error:
-            raise ValidationError({'licence': error})
-
-        super(Item, self).clean()
-
-    def validate_and_get_event_type(self, event_type):
-        return self.item_type.validate_and_get_event_type(event_type)
 
     def add_ready_event_type(self, event_type):
         self.ready_event_types.add(event_type)

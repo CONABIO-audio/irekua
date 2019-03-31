@@ -31,6 +31,9 @@ from .term_types import TermTypeViewSet
 from .terms import TermViewSet
 from .users import UserViewSet
 from .data_collections import CollectionViewSet
+from .secondary_items import SecondaryItemViewSet
+from .annotations import AnnotationViewSet
+from .annotation_votes import AnnotationVoteViewSet
 
 
 __all__ = [
@@ -67,4 +70,7 @@ __all__ = [
     'TermViewSet',
     'CollectionViewSet',
     'UserViewSet',
+    'SecondaryItemViewSet',
+    'AnnotationViewSet',
+    'AnnotationVoteViewSet',
 ]

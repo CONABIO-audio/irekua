@@ -40,6 +40,10 @@ class CollectionRole(models.Model):
         verbose_name = _('Collection Role')
         verbose_name_plural = _('Collection Roles')
 
+        unique_together = (
+            ('collection_type', 'role'),
+        )
+
     def __str__(self):
         msg = _('Role %(role)s for collections of type %(collection)s')
         params = dict(
