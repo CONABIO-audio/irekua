@@ -79,7 +79,10 @@ class Institution(models.Model):
         unique_together = (('institution_name', 'subdependency'))
 
     def __str__(self):
-        msg = self.institution_code
-        if self.subdependency != '':
-            msg += ' - ' + self.subdependency
-        return msg
+        name = self.institution_code
+        if name is None or name == '':
+            name = self.institution_name
+
+        if self.subdependency is not None and self.subdependency != '':
+            name += ' - ' + self.subdependency
+        return name

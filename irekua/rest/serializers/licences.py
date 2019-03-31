@@ -55,6 +55,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'metadata',
             'signed_by',
             'collection',
+            'is_active',
         )
 
 

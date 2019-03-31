@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.exceptions import ValidationError
-from rest_framework.response import Response
 
 import database.models as db
+
 from rest.serializers import data_collections
 from rest.serializers import licences
 from rest.serializers import collection_devices
+from rest.serializers import collection_sites
+from rest.serializers import collection_users
+
 from rest.permissions import IsDeveloper, IsAdmin, ReadOnly
 from rest.filters import BaseFilter
 from .utils import BaseViewSet, AdditionalActions
@@ -38,7 +39,7 @@ class CollectionViewSet(BaseViewSet, AdditionalActions):
         context = super().get_serializer_context()
         try:
             collection = self.get_object()
-        except KeyError:
+        except (KeyError, AssertionError):
             collection = None
         context['collection'] = collection
         return context
@@ -48,18 +49,7 @@ class CollectionViewSet(BaseViewSet, AdditionalActions):
         methods=['POST'],
         serializer_class=licences.CreateSerializer)
     def create_licence(self, request, pk=None):
-        serializer_class = self.get_serializer_class()
-        context = self.get_serializer_context()
-
-        serializer = serializer_class(
-            data=request.data,
-            context=context)
-
-        if not serializer.is_valid():
-            raise ValidationError(serializer.errors)
-
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return self.create_related_object_view()
 
     @action(
         detail=True,
@@ -75,5 +65,36 @@ class CollectionViewSet(BaseViewSet, AdditionalActions):
         methods=['POST'],
         serializer_class=collection_devices.CreateSerializer)
     def add_device(self, request, pk=None):
-        return self.create_related_object_view(
-            'collection_device')
+        return self.create_related_object_view()
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        serializer_class=collection_sites.ListSerializer)
+    def sites(self, request, pk=None):
+        collection = self.get_object()
+        queryset = collection.collectionsite_set.all()
+        return self.list_related_object_view(queryset)
+
+    @action(
+        detail=True,
+        methods=['POST'],
+        serializer_class=collection_sites.CreateSerializer)
+    def add_site(self, request, pk=None):
+        return self.create_related_object_view()
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        serializer_class=collection_users.ListSerializer)
+    def users(self, request, pk=None):
+        collection = self.get_object()
+        queryset = collection.collectionuser_set.all()
+        return self.list_related_object_view(queryset)
+
+    @action(
+        detail=True,
+        methods=['POST'],
+        serializer_class=collection_users.CreateSerializer)
+    def add_user(self, request, pk=None):
+        return self.create_related_object_view()

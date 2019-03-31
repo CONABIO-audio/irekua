@@ -1,27 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from rest_framework import mixins
+
 import database.models as db
 from rest.serializers import collection_users
-from rest.permissions import IsAdmin, ReadOnly
-from rest.filters import BaseFilter
-from .utils import BaseViewSet
+from .utils import CustomViewSet
 
 
-class Filter(BaseFilter):
-    class Meta:
-        model = db.User
-        fields = (
-            'username',
-            'first_name',
-            'last_name',
-            'institution',
-        )
-
-
-class CollectionUserViewSet(BaseViewSet):
+class CollectionUserViewSet(mixins.UpdateModelMixin,
+                            mixins.RetrieveModelMixin,
+                            mixins.DestroyModelMixin,
+                            CustomViewSet):
     queryset = db.CollectionUser.objects.all()
     serializer_module = collection_users
-    permission_classes = (IsAdmin | ReadOnly, )
-    search_fields = ('name', 'locality')
-    filterset_class = Filter

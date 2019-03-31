@@ -26,12 +26,17 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
     user = users.ListSerializer(
         many=False,
         read_only=True)
+    role = serializers.SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='name')
 
     class Meta:
-        model = db.CollectionDevice
+        model = db.CollectionUser
         fields = (
             'url',
             'user',
+            'role',
         )
 
 
@@ -40,7 +45,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
     role = roles.DetailSerializer(many=False, read_only=True)
 
     class Meta:
-        model = db.CollectionDevice
+        model = db.CollectionUser
         fields = (
             'url',
             'user',
@@ -54,9 +59,14 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.CollectionDevice
+        model = db.CollectionUser
         fields = (
             'user',
             'role',
             'metadata',
         )
+
+    def create(self, validated_data):
+        collection = self.context['collection']
+        validated_data['collection'] = collection
+        return super().create(validated_data)

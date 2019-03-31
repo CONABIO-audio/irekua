@@ -18,12 +18,7 @@ _CREATE_ACTIONS = [
 ]
 
 
-class NoCreateViewSet(mixins.ListModelMixin,
-                      mixins.UpdateModelMixin,
-                      mixins.DestroyModelMixin,
-                      mixins.RetrieveModelMixin,
-                      viewsets.GenericViewSet):
-
+class CustomViewSet(viewsets.GenericViewSet):
     @property
     def serializer_module(self):
         raise NotImplementedError
@@ -36,6 +31,14 @@ class NoCreateViewSet(mixins.ListModelMixin,
         if self.action in _CREATE_ACTIONS:
             return self.serializer_module.CreateSerializer
         return super().get_serializer_class()
+
+
+class NoCreateViewSet(mixins.ListModelMixin,
+                      mixins.UpdateModelMixin,
+                      mixins.DestroyModelMixin,
+                      mixins.RetrieveModelMixin,
+                      CustomViewSet):
+    pass
 
 
 class BaseViewSet(mixins.CreateModelMixin, NoCreateViewSet):
@@ -112,10 +115,10 @@ class AdditionalActions(object):
         if extra is not None:
             for extra_value in extra:
                 extra_dict[extra_value] = (
-                        serializer.validated_data.pop(extra_value))
+                    serializer.validated_data.pop(extra_value))
 
         related_object = serializer.save()
-        return related_object, extra_dict
+        return serializer, related_object, extra_dict
 
     def list_related_object_view(
             self,
@@ -176,15 +179,13 @@ class AdditionalActions(object):
 
     def create_related_object_view(
             self,
-            name,
-            prefix='add',
             extra=None):
         request = self.request
-        serializer = self.get_serializer_class()
+        serializer_class = self.get_serializer_class()
 
-        related_object, extra_dict = self.create_related_object(
+        serializer, _, _ = self.create_related_object(
             request,
-            serializer,
+            serializer_class,
             extra=extra)
 
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

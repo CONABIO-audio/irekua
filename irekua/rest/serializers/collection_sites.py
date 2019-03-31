@@ -26,16 +26,13 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
     site = sites.ListSerializer(
         many=False,
         read_only=True)
-    collection = sites.ListSerializer(
-        many=False,
-        read_only=True)
 
     class Meta:
         model = db.CollectionSite
         fields = (
             'url',
             'site',
-            'collection',
+            'internal_id',
         )
 
 
@@ -54,7 +51,6 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'collection',
             'site',
             'internal_id',
-            'metadata',
             'created_on',
             'modified_on',
         )
@@ -65,5 +61,10 @@ class CreateSerializer(serializers.ModelSerializer):
         model = db.CollectionSite
         fields = (
             'site',
-            'metadata',
+            'internal_id',
         )
+
+    def create(self, validated_data):
+        collection = self.context['collection']
+        validated_data['collection'] = collection
+        return super().create(validated_data)

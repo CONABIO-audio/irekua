@@ -31,13 +31,6 @@ class CollectionSite(models.Model):
         verbose_name=_('internal id'),
         help_text=_('ID of site within the collection'),
         blank=True)
-    metadata = JSONField(
-        blank=True,
-        db_column='metadata',
-        default=empty_JSON,
-        verbose_name=_('metadata'),
-        help_text=_('Metadata associated with site within collection'),
-        null=True)
 
     created_on = models.DateTimeField(
         db_column='created_on',
@@ -71,9 +64,4 @@ class CollectionSite(models.Model):
         except ValidationError as error:
             raise ValidationError({'site': error})
 
-        if site_type is not None:
-            try:
-                self.collection.validate_site_metadata(self.metadata)
-            except ValidationError as error:
-                raise ValidationError({'metadata': error})
         super(CollectionSite, self).clean()
