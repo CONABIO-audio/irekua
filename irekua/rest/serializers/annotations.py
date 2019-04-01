@@ -53,10 +53,13 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CreateSerializer(serializers.ModelSerializer):
+    label = serializers.JSONField()
+
     class Meta:
         model = db.Annotation
         fields = (
             'event_type',
+            'annotation',
             'label',
             'certainty',
             'quality',
@@ -68,16 +71,16 @@ class CreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         item = self.context['item']
-        user = self.context['user']
+        user = self.context['request'].user
 
         validated_data['item'] = item
         validated_data['created_by'] = user
         validated_data['modified_by'] = user
 
-        super().create(validated_data)
+        return super().create(validated_data)
 
     def update(self, validated_data):
-        user = self.context['user']
+        user = self.context['request'].user
 
         validated_data['modified_by'] = user
-        super().update(validated_data)
+        return super().update(validated_data)

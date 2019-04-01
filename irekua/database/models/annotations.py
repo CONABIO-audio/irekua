@@ -58,14 +58,14 @@ class Annotation(models.Model):
         verbose_name=_('annotation'),
         default=empty_JSON,
         help_text=_('Information of annotation location within item'),
-        blank=False,
+        blank=True,
         null=False)
     annotation_configuration = JSONField(
         db_column='annotation_configuration',
         verbose_name=_('annotation configuration'),
         default=empty_JSON,
         help_text=_('Configuration of annotation tool'),
-        blank=False,
+        blank=True,
         null=False)
     certainty = models.FloatField(
         db_column='certainty',

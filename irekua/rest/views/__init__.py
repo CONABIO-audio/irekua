@@ -2,7 +2,6 @@ from .annotation_tools import AnnotationToolViewSet
 from .annotation_types import AnnotationTypeViewSet
 from .collection_types import CollectionTypeViewSet
 from .collection_devices import CollectionDeviceViewSet
-from .collection_items import CollectionItemViewSet
 from .collection_sites import CollectionSiteViewSet
 from .collection_users import CollectionUserViewSet
 from .device_brands import DeviceBrandViewSet
@@ -40,7 +39,6 @@ __all__ = [
     'AnnotationToolViewSet',
     'AnnotationTypeViewSet',
     'CollectionTypeViewSet',
-    'CollectionItemViewSet',
     'CollectionDeviceViewSet',
     'CollectionSiteViewSet',
     'CollectionUserViewSet',

@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from rest_framework.decorators import action
+from rest_framework.viewsets import ModelViewSet
 
 import database.models as db
 from rest.serializers import collection_types
@@ -13,178 +14,143 @@ from rest.serializers import sampling_event_types
 from rest.serializers import device_types
 from rest.serializers import site_types
 from rest.serializers import roles
+from rest.serializers import SerializerMappingMixin
+from rest.serializers import SerializerMapping
 
-from rest.filters import BaseFilter
-from .utils import AdditionalActions, BaseViewSet
-
-
-class Filter(BaseFilter):
-    class Meta:
-        model = db.CollectionType
-        fields = (
-            'name',
-            'anyone_can_create',
-        )
+from rest.filters import CollectionTypeFilter
+from .utils import AdditionalActionsMixin
 
 
-class CollectionTypeViewSet(BaseViewSet, AdditionalActions):
+
+class CollectionTypeViewSet(SerializerMappingMixin,
+                            AdditionalActionsMixin,
+                            ModelViewSet):
     queryset = db.CollectionType.objects.all()
-    serializer_module = collection_types
-    filterset_class = Filter
+    filterset_class = CollectionTypeFilter
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=annotation_types.SelectSerializer)
+    serializer_mapping = (
+        SerializerMapping
+        .from_module(collection_types)
+        .extend(
+            add_annotation_type=annotation_types.SelectSerializer,
+            remove_annotation_type=annotation_types.SelectSerializer,
+            add_licence_type=licence_types.SelectSerializer,
+            remove_licence_type=licence_types.SelectSerializer,
+            add_sampling_event_type=sampling_event_types.SelectSerializer,
+            remove_sampling_event_type=sampling_event_types.SelectSerializer,
+            add_site_type=site_types.SelectSerializer,
+            remove_site_type=site_types.SelectSerializer,
+            add_item_type=collection_types.ItemTypeSerializer,
+            remove_item_type=item_types.SelectSerializer,
+            add_event_type=event_types.SelectSerializer,
+            remove_event_type=event_types.SelectSerializer,
+            add_device_type=collection_types.DeviceTypeSerializer,
+            remove_device_type=device_types.SelectSerializer,
+            add_role=collection_types.RoleSerializer,
+            remove_role=roles.SelectSerializer,
+            add_administrator=collection_types.UserSerializer,
+            remove_administrator=collection_types.UserSerializer
+        ))
+
+    @action(detail=True, methods=['POST'])
     def add_annotation_type(self, request, pk=None):
         return self.add_related_object_view(
             db.AnnotationType,
             'annotation_type')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=annotation_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def remove_annotation_type(self, request, pk=None):
         return self.remove_related_object_view(
             'annotation_type')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=licence_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def add_licence_type(self, request, pk=None):
         return self.add_related_object_view(
             db.LicenceType,
             'licence_type')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=licence_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def remove_licence_type(self, request, pk=None):
         return self.remove_related_object_view(
             'licence_type')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=sampling_event_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def add_sampling_event_type(self, request, pk=None):
         return self.add_related_object_view(
             db.SamplingEventType,
             'sampling_event_type')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=sampling_event_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def remove_sampling_event_type(self, request, pk=None):
         return self.remove_related_object_view(
             'sampling_event_type')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=site_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def add_site_type(self, request, pk=None):
         return self.add_related_object_view(
             db.SiteType,
             'site_type')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=site_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def remove_site_type(self, request, pk=None):
         return self.remove_related_object_view(
             'site_type')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=collection_types.ItemTypeSerializer)
+    @action(detail=True, methods=['POST'])
     def add_item_type(self, request, pk=None):
         return self.add_related_object_view(
             db.ItemType,
             'item_type',
             extra=['metadata_schema'])
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=item_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def remove_item_type(self, request, pk=None):
         return self.remove_related_object_view(
             'item_type')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=event_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def add_event_type(self, request, pk=None):
         return self.add_related_object_view(
             db.EventType,
             'event_type')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=event_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def remove_event_type(self, request, pk=None):
         return self.remove_related_object_view(
             'event_type')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=collection_types.DeviceTypeSerializer)
+    @action(detail=True, methods=['POST'])
     def add_device_type(self, request, pk=None):
         return self.add_related_object_view(
             db.DeviceType,
             'device_type',
             extra=['metadata_schema'])
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=device_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def remove_device_type(self, request, pk=None):
         return self.remove_related_object_view(
             'device_type')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=collection_types.RoleSerializer)
+    @action(detail=True, methods=['POST'])
     def add_role(self, request, pk=None):
         return self.add_related_object_view(
             db.Role,
             'role',
             extra=['metadata_schema'])
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=roles.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def remove_role(self, request, pk=None):
         return self.remove_related_object_view(
             'role')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=collection_types.UserSerializer)
+    @action(detail=True, methods=['POST'])
     def add_administrator(self, request, pk=None):
         return self.add_related_object_view(
             db.User,
             'administrator',
             pk_field='username')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=collection_types.UserSerializer)
+    @action(detail=True, methods=['POST'])
     def remove_administrator(self, request, pk=None):
         return self.remove_related_object_view(
             'administrator',

@@ -2,53 +2,40 @@
 from __future__ import unicode_literals
 
 from rest_framework.decorators import action
+from rest_framework.viewsets import ModelViewSet
 
 import database.models as db
 from rest.serializers import item_types
 from rest.serializers import event_types
+from rest.serializers import SerializerMapping
+from rest.serializers import SerializerMappingMixin
 from rest.permissions import IsAdmin, ReadOnly
-from rest.filters import BaseFilter
-from .utils import BaseViewSet, AdditionalActions
+from rest.filters import ItemTypeFilter
+from .utils import AdditionalActionsMixin
 
 
-class Filter(BaseFilter):
-    class Meta:
-        model = db.ItemType
-        fields = (
-            'name',
-            'media_type'
-        )
-
-
-class ItemTypeViewSet(BaseViewSet, AdditionalActions):
+class ItemTypeViewSet(SerializerMappingMixin,
+                      AdditionalActionsMixin,
+                      ModelViewSet):
     queryset = db.ItemType.objects.all()
-    serializer_module = item_types
     permission_classes = (IsAdmin | ReadOnly, )
     search_fields = ('name', 'media_type', )
-    filterset_class = Filter
+    filterset_class = ItemTypeFilter
+    serializer_mapping = (
+        SerializerMapping
+        .from_module(item_types)
+        .extend(
+            add_event_types=event_types.SelectSerializer,
+            remove_event_types=event_types.SelectSerializer
+        ))
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=event_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def add_event_types(self, request, pk=None):
         return self.add_related_object_view(
             db.EventType,
             'event_type')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=event_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def remove_event_types(self, request, pk=None):
         return self.remove_related_object_view(
-            'event_type')
-
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=event_types.CreateSerializer)
-    def create_event_type(self, request, pk=None):
-        return self.create_related_object_view(
-            db.EventType,
             'event_type')

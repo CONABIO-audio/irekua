@@ -2,15 +2,18 @@
 from __future__ import unicode_literals
 
 from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
 
-import database.models as db
+from database.models import CollectionUser
 from rest.serializers import collection_users
-from .utils import CustomViewSet
+from rest.serializers import SerializerMappingMixin
+from rest.serializers import SerializerMapping
 
 
 class CollectionUserViewSet(mixins.UpdateModelMixin,
                             mixins.RetrieveModelMixin,
                             mixins.DestroyModelMixin,
-                            CustomViewSet):
-    queryset = db.CollectionUser.objects.all()
-    serializer_module = collection_users
+                            SerializerMappingMixin,
+                            GenericViewSet):
+    queryset = CollectionUser.objects.all()
+    serializer_mapping = SerializerMapping.from_module(collection_users)

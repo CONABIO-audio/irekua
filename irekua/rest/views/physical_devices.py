@@ -1,28 +1,20 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from rest_framework.viewsets import ModelViewSet
+
 import database.models as db
+
 from rest.serializers import physical_devices
+from rest.serializers import SerializerMapping
+from rest.serializers import SerializerMappingMixin
 from rest.permissions import IsAdmin, IsOwner, ListAndCreateOnly
-from rest.filters import BaseFilter
-from .utils import BaseViewSet
+from rest.filters import PhysicalDeviceFilter
 
 
-class Filter(BaseFilter):
-    class Meta:
-        model = db.PhysicalDevice
-        fields = (
-            'device__brand__name',
-            'device__model',
-            'device__device_type__name',
-            'owner__username',
-            'owner__first_name'
-        )
-
-
-class PhysicalDeviceViewSet(BaseViewSet):
+class PhysicalDeviceViewSet(SerializerMappingMixin, ModelViewSet):
     queryset = db.PhysicalDevice.objects.all()
-    serializer_module = physical_devices
+    serializer_mapping = SerializerMapping.from_module(physical_devices)
     permission_classes = (IsAdmin | IsOwner | ListAndCreateOnly, )
     search_fields = ('device__brand__name', 'device__model')
-    filterset_class = Filter
+    filterset_class = PhysicalDeviceFilter

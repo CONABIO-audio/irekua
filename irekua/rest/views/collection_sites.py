@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework import mixins
+from database.models import CollectionSite
 
-import database.models as db
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
+
 from rest.serializers import sites
-from .utils import CustomViewSet
+from rest.serializers import SerializerMappingMixin
+from rest.serializers import SerializerMapping
 
 
 class CollectionSiteViewSet(mixins.UpdateModelMixin,
                             mixins.RetrieveModelMixin,
                             mixins.DestroyModelMixin,
-                            CustomViewSet):
-    queryset = db.Site.objects.all()
-    serializer_module = sites
+                            SerializerMappingMixin,
+                            GenericViewSet):
+    queryset = CollectionSite.objects.all()
+    serializer_mapping = SerializerMapping.from_module(sites)

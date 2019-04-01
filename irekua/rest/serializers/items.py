@@ -59,7 +59,6 @@ class CreateSerializer(serializers.ModelSerializer):
         model = db.Item
         fields = (
             'hash',
-            'filesize',
             'item_file',
             'item_type',
             'media_info',
@@ -93,3 +92,11 @@ class CreateSerializer(serializers.ModelSerializer):
         sampling_event = self.context['sampling_event']
         validated_data['sampling_event'] = sampling_event
         return super().create(validated_data)
+
+
+class DownloadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = db.Item
+        fields = (
+            'item_file',
+        )

@@ -2,50 +2,42 @@
 from __future__ import unicode_literals
 
 from rest_framework.decorators import action
+from rest_framework.viewsets import ModelViewSet
 
 import database.models as db
+
 from rest.serializers import event_types
 from rest.serializers import term_types
+from rest.serializers import SerializerMapping
+from rest.serializers import SerializerMappingMixin
 from rest.permissions import IsAdmin, ReadOnly
-from rest.filters import BaseFilter
-from .utils import BaseViewSet, AdditionalActions
+from rest.filters import EventTypeFilter
+
+from .utils import AdditionalActionsMixin
 
 
-class Filter(BaseFilter):
-    class Meta:
-        model = db.EventType
-        fields = ('name', )
-
-
-class EventTypeViewSet(BaseViewSet, AdditionalActions):
+class EventTypeViewSet(SerializerMappingMixin,
+                       AdditionalActionsMixin,
+                       ModelViewSet):
     queryset = db.EventType.objects.all()
-    serializer_module = event_types
     permission_classes = (IsAdmin | ReadOnly, )
     search_fields = ('name', )
-    filterset_class = Filter
+    filterset_class = EventTypeFilter
+    serializer_mapping = (
+        SerializerMapping
+        .from_module(event_types)
+        .extend(
+            add_term_types=term_types.SelectSerializer,
+            remove_term_types=term_types.SelectSerializer,
+        ))
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=term_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def add_term_types(self, request, pk=None):
         return self.add_related_object_view(
             db.TermType,
             'term_type')
 
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=term_types.SelectSerializer)
+    @action(detail=True, methods=['POST'])
     def remove_term_types(self, request, pk=None):
         return self.remove_related_object_view(
-            'term_type')
-
-    @action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=term_types.CreateSerializer)
-    def create_term_type(self, request, pk=None):
-        return self.create_related_object_view(
-            db.TermType,
             'term_type')

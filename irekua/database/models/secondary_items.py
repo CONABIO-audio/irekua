@@ -9,14 +9,6 @@ from database.utils import (
 
 
 class SecondaryItem(models.Model):
-    HASH_FUNCTIONS = [
-        ('md5', 'md5'),
-        ('sha244', 'sha244'),
-        ('sha256', 'sha256'),
-        ('sha384', 'sha384'),
-        ('sha512', 'sha512'),
-    ]
-
     path = models.CharField(
         max_length=128,
         db_column='path',
@@ -31,13 +23,6 @@ class SecondaryItem(models.Model):
         verbose_name=_('hash'),
         help_text=_('Hash of secondary resource file'),
         blank=False)
-    hash_function = models.CharField(
-        max_length=16,
-        blank=False,
-        db_column='hash_function',
-        verbose_name=_('hash function'),
-        help_text=_('Hash function used to generate has of secondary file'),
-        choices=HASH_FUNCTIONS)
     item_type = models.ForeignKey(
         'ItemType',
         on_delete=models.PROTECT,

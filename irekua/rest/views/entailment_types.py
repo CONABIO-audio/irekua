@@ -5,23 +5,15 @@ from rest_framework.viewsets import ModelViewSet
 
 import database.models as db
 from rest.serializers import entailment_types
+from rest.serializers import SerializerMapping
+from rest.serializers import SerializerMappingMixin
 from rest.permissions import IsAdmin, ReadOnly, IsDeveloper
-from rest.filters import BaseFilter
-from .utils import BaseViewSet
+from rest.filters import EntailmentTypeFilter
 
 
-class Filter(BaseFilter):
-    class Meta:
-        model = db.EntailmentType
-        fields = (
-            'source_type__name',
-            'target_type__name',
-        )
-
-
-class EntailmentTypeViewSet(BaseViewSet):
+class EntailmentTypeViewSet(SerializerMappingMixin, ModelViewSet):
     queryset = db.EntailmentType.objects.all()
-    serializer_module = entailment_types
+    serializer_mapping = SerializerMapping.from_module(entailment_types)
     permission_classes = (IsAdmin | IsDeveloper | ReadOnly, )
     search_fields = ('source_type__name', 'target_type__name')
-    filterset_class = Filter
+    filterset_class = EntailmentTypeFilter

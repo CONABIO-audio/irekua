@@ -3,45 +3,54 @@ from __future__ import unicode_literals
 
 from django.db.models import Q
 from django.contrib.auth.models import Permission
+from django.shortcuts import redirect
 from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
 import django_filters
 
 import database.models as db
+
 from rest.serializers import items
 from rest.serializers import annotations as annotation_serializers
-from rest.filters import BaseFilter
-from .utils import NoCreateViewSet, AdditionalActions
+from rest.serializers import tags
+from rest.serializers import SerializerMappingMixin
+from rest.serializers import SerializerMapping
+from rest.filters import ItemFilter
+from rest.filters import AnnotationFilter
+
+from .utils import AdditionalActionsMixin
 
 
-class Filter(BaseFilter):
-    is_uploaded = django_filters.BooleanFilter(
-        field_name='item_file',
-        method='is_uploaded_filter',
-        label='is uploaded')
-
-    def is_uploaded_filter(self, queryset, name, value):
-        return queryset.filter(item_file__isnull=False)
-
-    class Meta:
-        model = db.Item
-        fields = (
-            'is_uploaded',
-            'item_type__name',
-            'sampling_event__sampling_event_type__name',
-            'sampling_event__collection__name',
-            'sampling_event__collection__collection_type',
-            'sampling_event__site__site_type__name',
-            'sampling_event__device__device__device_type__name',
-            'sampling_event__device__device__brand__name',
-        )
-
-
-class ItemViewSet(NoCreateViewSet, AdditionalActions):
-    serializer_module = items
-    filterset_class = Filter
+class ItemViewSet(mixins.UpdateModelMixin,
+                  mixins.RetrieveModelMixin,
+                  mixins.DestroyModelMixin,
+                  mixins.ListModelMixin,
+                  SerializerMappingMixin,
+                  AdditionalActionsMixin,
+                  GenericViewSet):
+    filterset_class = ItemFilter
     search_fields = ('item_type__name', )
 
+    serializer_mapping = (
+        SerializerMapping
+        .from_module(items)
+        .extend(
+            annotations=annotation_serializers.ListSerializer,
+            add_annotation=annotation_serializers.CreateSerializer,
+            download=items.DownloadSerializer,
+            upload=items.DownloadSerializer,
+            add_tag=tags.SelectSerializer,
+            remove_tag=tags.SelectSerializer
+        ))
+
     def get_queryset(self):
+        if self.action == 'annotations':
+            item = self.kwargs['pk']
+            return db.Annotation.objects.filter(item=item)
+
         user = self.request.user
 
         is_special_user = (
@@ -85,18 +94,66 @@ class ItemViewSet(NoCreateViewSet, AdditionalActions):
     def get_full_queryset(self):
         return db.Item.objects.all()
 
-    @action(
-        detail=True,
-        methods=['GET'],
-        serializer_class=annotation_serializers.ListSerializer)
-    def annotations(self, request, pk=None):
-        item = self.get_object()
-        queryset = item.annotation_set.all()
-        return self.list_related_object_view(queryset)
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+
+        try:
+            item = self.get_object()
+        except AssertionError:
+            item = None
+
+        context['item'] = item
+        return context
 
     @action(
         detail=True,
-        methods=['POST'],
-        serializer_class=annotation_serializers.CreateSerializer)
+        methods=['GET'],
+        filterset_class=AnnotationFilter)
+    def annotations(self, request, pk=None):
+        queryset = self.filter_queryset(self.get_queryset())
+        return self.list_related_object_view(queryset)
+
+    @action(detail=True, methods=['POST'])
     def add_annotation(self, request, pk=None):
         return self.create_related_object_view()
+
+    @action(detail=True, methods=['POST'])
+    def add_tag(self, request, pk=None):
+        return self.add_related_object_view(db.Tag, 'tag')
+
+    @action(detail=True, methods=['POST'])
+    def remove_tag(self, request, pk=None):
+        return self.remove_related_object_view('tag')
+
+    @action(detail=True, methods=['POST'])
+    def upload(self, request, pk=None):
+        item = self.get_object()
+
+        if item.item_file.name != '':
+            return Response(
+                'File previously uploaded',
+                status=status.HTTP_403_FORBIDDEN)
+
+        serializer = self.get_serializer(item, data=request.data, partial=True)
+
+        if not serializer.is_valid():
+            return Response('Invalid file', status=status.HTTP_400_BAD_REQUEST)
+
+        serializer.save()
+        return Response('File uploaded', status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['GET'])
+    def download(self, request, pk=None):
+        item = self.get_object()
+
+        if item.item_file.name == '':
+            return Response(
+                'File not uploaded to server',
+                status=status.HTTP_404_NOT_FOUND)
+
+        serializer_class = self.get_serializer_class()
+        context = self.get_serializer_context()
+        serializer = serializer_class(item, context=context)
+
+        url = serializer.data['item_file']
+        return redirect(url)

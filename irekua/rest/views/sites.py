@@ -2,53 +2,23 @@
 from __future__ import unicode_literals
 
 from rest_framework.permissions import IsAuthenticated
-import django_filters
+from rest_framework.viewsets import ModelViewSet
 
 import database.models as db
+
 from rest.serializers import sites
+from rest.serializers import SerializerMapping
+from rest.serializers import SerializerMappingMixin
 from rest.permissions import IsAdmin, ReadOnly
-from rest.filters import BaseFilter
-from .utils import BaseViewSet
+from rest.filters import SiteFilter
 
 
-class Filter(BaseFilter):
-    latitude__gt = django_filters.NumberFilter(
-        field_name='latitude',
-        lookup_expr='gt')
-    latitude__lt = django_filters.NumberFilter(
-        field_name='latitude',
-        lookup_expr='lt')
-
-    longitude__gt = django_filters.NumberFilter(
-        field_name='longitude',
-        lookup_expr='gt')
-    longitude__lt = django_filters.NumberFilter(
-        field_name='longitude',
-        lookup_expr='lt')
-
-    altitude__gt = django_filters.NumberFilter(
-        field_name='altitude',
-        lookup_expr='gt')
-    altitude__lt = django_filters.NumberFilter(
-        field_name='altitude',
-        lookup_expr='lt')
-
-    class Meta:
-        model = db.Site
-        fields = (
-            'name',
-            'site_type__name',
-            'locality',
-            'creator',
-        )
-
-
-class SiteViewSet(BaseViewSet):
+class SiteViewSet(SerializerMappingMixin, ModelViewSet):
     queryset = db.Site.objects.all()
-    serializer_module = sites
+    serializer_mapping = SerializerMapping.from_module(sites)
     permission_classes = (IsAdmin | ReadOnly, )
     search_fields = ('name', 'locality')
-    filterset_class = Filter
+    filterset_class = SiteFilter
 
     def get_permissions(self):
         if self.action == 'create':
@@ -65,7 +35,6 @@ class SiteViewSet(BaseViewSet):
 
             if site.has_coordinate_permission(user):
                 return sites.FullDetailSerializer
-            else:
-                return sites.DetailSerializer
+            return sites.DetailSerializer
 
         return super().get_serializer_class()

@@ -241,12 +241,9 @@ class Item(models.Model):
             self.licence = self.sampling_event.licence
 
     def validate_hash_and_filesize(self):
-        has_hash_and_filesize = (
-            (self.hash is not None) and
-            (self.filesize is not None))
-        if self.item_file.name is None and not has_hash_and_filesize:
+        if self.item_file.name is None and not self.hash is not None:
             msg = _(
-                'If no file is provided, a hash and filesize must be given')
+                'If no file is provided, a hash must be given')
             raise ValidationError({'hash': msg})
 
         if self.item_file.name is None:
@@ -266,11 +263,6 @@ class Item(models.Model):
             if self.hash != self.hash_string:
                 msg = _('Hash of file and recorded hash do not coincide')
                 raise ValidationError({'hash': msg})
-
-            if self.item_size != self.filesize:
-                msg = _('Size of file and recorded size do not coincide')
-                raise ValidationError({'filesize': msg})
-
             return None
 
     def add_ready_event_type(self, event_type):
@@ -279,4 +271,12 @@ class Item(models.Model):
 
     def remove_ready_event_type(self, event_type):
         self.ready_event_types.remove(event_type)
+        self.save()
+
+    def add_tag(self, tag):
+        self.tags.add(tag)
+        self.save()
+
+    def remove_tag(self, tag):
+        self.tags.remove(tag)
         self.save()

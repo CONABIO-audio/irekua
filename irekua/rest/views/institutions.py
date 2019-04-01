@@ -1,32 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from rest_framework.viewsets import ModelViewSet
+
 import database.models as db
 from rest.serializers import institutions
+from rest.serializers import SerializerMapping
+from rest.serializers import SerializerMappingMixin
 from rest.permissions import IsAdmin, IsFromInstitution, ReadAndCreateOnly
-from rest.filters import BaseFilter
-from .utils import BaseViewSet
+from rest.filters import InstitutionFilter
 
 
-class Filter(BaseFilter):
-    class Meta:
-        model = db.Institution
-        fields = (
-            'institution_name',
-            'institution_code',
-            'subdependency',
-            'country'
-        )
-
-
-class InstitutionViewSet(BaseViewSet):
+class InstitutionViewSet(SerializerMappingMixin, ModelViewSet):
     queryset = db.Institution.objects.all()
-    serializer_module = institutions
+    serializer_mapping = SerializerMapping.from_module(institutions)
     search_fields = (
         'institution_name',
         'institution_code',
         'subdependency')
-    filterset_class = Filter
+    filterset_class = InstitutionFilter
 
     def get_permissions(self):
         if self.action in ('update', 'partial_update', 'destroy'):

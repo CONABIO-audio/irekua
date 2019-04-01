@@ -4,80 +4,70 @@ from __future__ import unicode_literals
 from rest_framework import serializers
 import database.models as db
 
+from . import annotations
+
 
 class SelectSerializer(serializers.ModelSerializer):
-    annotation = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.Annotation.objects.all())
-
     class Meta:
-        model = db.Annotation
+        model = db.AnnotationVote
         fields = (
             'url',
-            'annotation',
+            'id',
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
+class ListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Annotation
+        model = db.AnnotationVote
         fields = (
             'url',
-            'item',
-            'event_type',
+            'id',
+            'label',
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
+    annotation = annotations.SelectSerializer(
+        many=False,
+        read_only=True)
+
     class Meta:
-        model = db.Annotation
+        model = db.AnnotationVote
         fields = (
             'url',
             'id',
-            'annotation_tool',
-            'item',
-            'event_type',
-            'label',
-            'annotation_type',
             'annotation',
-            'annotation_configuration',
-            'certainty',
-            'quality',
-            'commentaries',
+            'label',
+            'created_by',
             'created_on',
             'modified_on',
-            'created_by',
-            'modified_by',
         )
 
 
 class CreateSerializer(serializers.ModelSerializer):
+    label = serializers.JSONField()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        try:
+            annotation = self.context['annotation']
+            previous_label = annotation.label
+
+            self.fields['label'].initial = previous_label
+        except (KeyError, AttributeError):
+            pass
+
     class Meta:
-        model = db.Annotation
+        model = db.AnnotationVote
         fields = (
-            'event_type',
             'label',
-            'certainty',
-            'quality',
-            'commentaries',
-            'annotation_tool',
-            'annotation_configuration',
-            'annotation_type',
         )
 
     def create(self, validated_data):
-        item = self.context['item']
-        user = self.context['user']
+        annotation = self.context['annotation']
+        user = self.context['request'].user
 
-        validated_data['item'] = item
+        validated_data['annotation'] = annotation
         validated_data['created_by'] = user
-        validated_data['modified_by'] = user
-
-        super().create(validated_data)
-
-    def update(self, validated_data):
-        user = self.context['user']
-
-        validated_data['modified_by'] = user
-        super().update(validated_data)
+        return super().create(validated_data)

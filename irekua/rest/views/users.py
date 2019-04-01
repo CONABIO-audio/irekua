@@ -1,40 +1,43 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from database.models import User
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.decorators import action
+from rest_framework import mixins
+
+from database import models as db
+
 from rest.serializers import users
+from rest.serializers import items as item_serializers
+from rest.serializers import physical_devices as device_serializers
+from rest.serializers import sites as site_serializers
+from rest.serializers import sampling_events as sampling_event_serializers
+from rest.serializers import SerializerMapping
+from rest.serializers import SerializerMappingMixin
 from rest.permissions import IsAdmin, ReadOnly, IsUser, IsUnauthenticated
-from rest.filters import BaseFilter
-from .utils import BaseViewSet
+from rest.filters import UserFilter
+
+from .utils import AdditionalActionsMixin
 
 
-class Filter(BaseFilter):
-    class Meta:
-        model = User
-        fields = (
-            'username',
-            'first_name',
-            'last_name',
-            'institution__institution_name',
-            'institution__institution_code',
-            'institution__subdependency',
-            'is_superuser',
-            'is_curator',
-            'is_model',
-            'is_developer',
-        )
-
-
-class UserViewSet(BaseViewSet):
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_module = users
-    filterset_class = Filter
-    search_fields = (
-        'username',
-        'first_name',
-        'last_name',
-    )
+class UserViewSet(mixins.UpdateModelMixin,
+                  mixins.RetrieveModelMixin,
+                  SerializerMappingMixin,
+                  AdditionalActionsMixin,
+                  GenericViewSet):
+    queryset = db.User.objects.all()
+    filterset_class = UserFilter
     permission_classes = (IsAdmin | IsUser | ReadOnly, )
+
+    serializer_mapping = (
+        SerializerMapping
+        .from_module(users)
+        .extend(
+            items=item_serializers.ListSerializer,
+            devices=device_serializers.ListSerializer,
+            sites=site_serializers.ListSerializer,
+            sampling_events=sampling_event_serializers.ListSerializer,
+        ))
 
     def get_permissions(self):
         if self.action == 'create':
@@ -52,10 +55,35 @@ class UserViewSet(BaseViewSet):
 
                 if user == viewed_user or user.is_superuser:
                     return users.FullDetailSerializer
-            except:
+            except AssertionError:
                 return users.DetailSerializer
 
         if self.action in ['update', 'partial_update']:
             return users.UpdateSerializer
 
         return super().get_serializer_class()
+
+    @action(detail=True, methods=['GET'])
+    def items(self, request, pk=None):
+        user = self.get_object()
+        queryset = db.Item.objects.filter(
+            sampling_event__created_by=user)
+        return self.list_related_object_view(queryset)
+
+    @action(detail=True, methods=['GET'])
+    def devices(self, request, pk=None):
+        user = self.get_object()
+        queryset = user.physicaldevice_set.all()
+        return self.list_related_object_view(queryset)
+
+    @action(detail=True, methods=['GET'])
+    def sites(self, request, pk=None):
+        user = self.get_object()
+        queryset = user.site_set.all()
+        return self.list_related_object_view(queryset)
+
+    @action(detail=True, methods=['GET'])
+    def sampling_events(self, request, pk=None):
+        user = self.get_object()
+        queryset = user.sampling_event_created_by.all()
+        return self.list_related_object_view(queryset)

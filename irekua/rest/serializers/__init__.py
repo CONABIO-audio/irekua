@@ -31,6 +31,9 @@ from . import annotations
 from . import annotation_votes
 from . import secondary_items
 
+from .utils import SerializerMapping
+from .utils import SerializerMappingMixin
+
 
 __all__ = [
     'annotation_tools',
@@ -65,4 +68,6 @@ __all__ = [
     'annotations',
     'annotation_votes',
     'secondary_items',
+    'SerializerMapping',
+    'SerializerMappingMixin'
 ]
