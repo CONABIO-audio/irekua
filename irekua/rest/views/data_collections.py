@@ -49,7 +49,7 @@ class CollectionViewSet(SerializerMappingMixin,
         context = super().get_serializer_context()
         try:
             collection = self.get_object()
-        except (KeyError, AssertionError):
+        except (KeyError, AssertionError, AttributeError):
             collection = None
         context['collection'] = collection
         return context

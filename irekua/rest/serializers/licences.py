@@ -72,10 +72,16 @@ class CreateSerializer(serializers.ModelSerializer):
         super().__init__(*args, **kwargs)
 
         try:
-            self.collection = kwargs['context']['collection']
+            collection = self.context['collection']
+        except KeyError:
+            collection = None
+
+        self.collection = collection
+
+        try:
             self.fields['licence_type'].queryset = (
                 self.collection.collection_type.licence_types)
-        except KeyError:
+        except (KeyError, AttributeError):
             pass
 
     def create(self, validated_data):

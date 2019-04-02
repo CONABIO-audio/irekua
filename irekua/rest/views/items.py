@@ -51,7 +51,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
 
         try:
             item = self.get_object()
-        except AssertionError:
+        except (AssertionError, AttributeError):
             item = None
 
         context['item'] = item
@@ -121,13 +121,15 @@ class ItemViewSet(mixins.UpdateModelMixin,
         if self.action == 'annotations':
             item_pk = self.kwargs['pk']
             queryset = db.Annotation.objects.filter(item=item_pk)
-            print('initial queryset', queryset)
             return queryset
 
         return db.Item.objects.all()
 
     def get_queryset_for_default_actions(self):
-        user = self.request.user
+        try:
+            user = self.request.user
+        except AttributeError:
+            return db.Item.objects.none()
 
         is_special_user = (
             user.is_superuser |

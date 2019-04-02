@@ -35,7 +35,7 @@ class TermTypeViewSet(SerializerMappingMixin,
 
         try:
             term_type = self.get_object()
-        except AssertionError:
+        except (AssertionError, AttributeError):
             term_type = None
 
         context['term_type'] = term_type

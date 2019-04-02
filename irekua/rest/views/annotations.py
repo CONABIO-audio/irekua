@@ -52,7 +52,7 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
 
         try:
             annotation = self.get_object()
-        except AssertionError:
+        except (AssertionError, AttributeError):
             annotation = None
 
         context['annotation'] = annotation
