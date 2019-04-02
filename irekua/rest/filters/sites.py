@@ -32,5 +32,5 @@ class SiteFilter(BaseFilter):
             'name',
             'site_type__name',
             'locality',
-            'creator',
+            'created_by',
         )

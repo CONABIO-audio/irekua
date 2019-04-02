@@ -71,7 +71,7 @@ class Site(models.Model):
         default=empty_JSON,
         blank=True,
         null=True)
-    creator = models.ForeignKey(
+    created_by = models.ForeignKey(
         'User',
         blank=True,
         null=True,

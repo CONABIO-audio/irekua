@@ -10,6 +10,8 @@ from rest_framework import status
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
+from django_filters.rest_framework import DjangoFilterBackend
+
 import database.models as db
 
 from rest.serializers import items
@@ -63,7 +65,6 @@ class ItemViewSet(mixins.UpdateModelMixin,
         filterset_class=AnnotationFilter)
     def annotations(self, request, pk=None):
         queryset = self.filter_queryset(self.get_queryset())
-        print('Filtered queryset', queryset)
         return self.list_related_object_view(queryset)
 
     @action(detail=True, methods=['POST'])

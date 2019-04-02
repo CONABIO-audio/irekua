@@ -22,7 +22,7 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
     site_type = site_types.DetailSerializer(many=False, read_only=True)
-    creator = users.ListSerializer(many=False, read_only=True)
+    created_by = users.ListSerializer(many=False, read_only=True)
 
     class Meta:
         model = db.Site
@@ -33,13 +33,13 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'locality',
             'site_type',
             'metadata',
-            'creator',
+            'created_by',
         )
 
 
 class FullDetailSerializer(serializers.HyperlinkedModelSerializer):
     site_type = site_types.DetailSerializer(many=False, read_only=True)
-    creator = users.ListSerializer(many=False, read_only=True)
+    created_by = users.ListSerializer(many=False, read_only=True)
 
     class Meta:
         model = db.Site
@@ -54,7 +54,7 @@ class FullDetailSerializer(serializers.HyperlinkedModelSerializer):
             'geo_ref',
             'altitude',
             'metadata',
-            'creator',
+            'created_by',
         )
 
 
@@ -75,5 +75,5 @@ class CreateSerializer(serializers.ModelSerializer):
         site_type = db.SiteType.objects.get(
             name=validated_data.pop('site_type'))
         user = self.context['request'].user
-        validated_data['creator'] = user
+        validated_data['created_by'] = user
         return db.Site.objects.create(site_type=site_type, **validated_data)

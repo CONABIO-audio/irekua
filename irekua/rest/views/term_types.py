@@ -7,6 +7,7 @@ from rest_framework.decorators import action
 import database.models as db
 
 from rest.serializers import term_types
+from rest.serializers import term_suggestions
 from rest.serializers import terms as term_serializers
 from rest.serializers import SerializerMapping
 from rest.serializers import SerializerMappingMixin
@@ -27,7 +28,8 @@ class TermTypeViewSet(SerializerMappingMixin,
         .from_module(term_types)
         .extend(
             add_term=term_serializers.CreateSerializer,
-            terms=term_serializers.ListSerializer
+            terms=term_serializers.ListSerializer,
+            suggest_term=term_suggestions.CreateSerializer
         ))
 
     def get_serializer_context(self):
@@ -50,3 +52,7 @@ class TermTypeViewSet(SerializerMappingMixin,
         term_type = self.get_object()
         queryset = term_type.term_set.all()
         return self.list_related_object_view(queryset)
+
+    @action(detail=True, methods=['POST'])
+    def suggest_term(self, request, pk=None):
+        return self.create_related_object_view()
