@@ -1,3 +1,5 @@
+from rest_framework.permissions import IsAuthenticated
+
 from .generic import ReadOnly
 from .generic import ReadAndCreateOnly
 from .generic import ListAndCreateOnly
@@ -34,4 +36,5 @@ __all__ = [
     'IsFromInstitution',
     'PermissionMapping',
     'PermissionMappingMixin',
+    'IsAuthenticated',
 ]

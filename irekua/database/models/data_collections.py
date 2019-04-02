@@ -1,5 +1,4 @@
 from django.contrib.postgres.fields import JSONField
-from django.conf import settings
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
@@ -95,22 +94,54 @@ class Collection(models.Model):
         verbose_name_plural = _('Collections')
 
         permissions = (
-            ("add_collection_site", _("Can add site to collection")),
-            ("add_collection_item", _("Can add item to collection")),
-            ("add_collection_device", _("Can add device to collection")),
-            ("add_collection_user", _("Can add user to collection")),
-            ("add_collection_licence", _("Can add licence to collection")),
-            ("add_collection_annotation", _("Can annotate items in collection")),
-            ("add_collection_annotation_vote", _("Can vote on annotations of items in collection")),
-            ("view_collection_sites", _("Can view sites in collection")),
-            ("view_collection_items", _("Can view items in collection")),
-            ("view_collection_devices", _("Can view devices in collection")),
-            ("view_collection_annotations", _("Can view annotations of items in collection")),
-            ("change_collection_sites", _("Can change sites in collection")),
-            ("change_collection_items", _("Can change items in collection")),
-            ("change_collection_devices", _("Can change devices in collection")),
-            ("change_collection_annotations", _("Can change annotations of items in collection")),
-            ("download_collection_items", _("Can download annotation items")),
+            (
+                "add_collection_site",
+                _("Can add site to collection")),
+            (
+                "add_collection_item",
+                _("Can add item to collection")),
+            (
+                "add_collection_device",
+                _("Can add device to collection")),
+            (
+                "add_collection_user",
+                _("Can add user to collection")),
+            (
+                "add_collection_licence",
+                _("Can add licence to collection")),
+            (
+                "add_collection_annotation",
+                _("Can annotate items in collection")),
+            (
+                "add_collection_annotation_vote",
+                _("Can vote on annotations of items in collection")),
+            (
+                "view_collection_sites",
+                _("Can view sites in collection")),
+            (
+                "view_collection_items",
+                _("Can view items in collection")),
+            (
+                "view_collection_devices",
+                _("Can view devices in collection")),
+            (
+                "view_collection_annotations",
+                _("Can view annotations of items in collection")),
+            (
+                "change_collection_sites",
+                _("Can change sites in collection")),
+            (
+                "change_collection_items",
+                _("Can change items in collection")),
+            (
+                "change_collection_devices",
+                _("Can change devices in collection")),
+            (
+                "change_collection_annotations",
+                _("Can change annotations of items in collection")),
+            (
+                "download_collection_items",
+                _("Can download annotation items")),
         )
 
         ordering = ['name']

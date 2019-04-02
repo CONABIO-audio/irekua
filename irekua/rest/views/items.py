@@ -9,7 +9,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
-import django_filters
 
 import database.models as db
 
@@ -20,6 +19,7 @@ from rest.serializers import SerializerMappingMixin
 from rest.serializers import SerializerMapping
 from rest.filters import ItemFilter
 from rest.filters import AnnotationFilter
+from rest.utils import Actions
 
 from .utils import AdditionalActionsMixin
 
@@ -46,54 +46,6 @@ class ItemViewSet(mixins.UpdateModelMixin,
             remove_tag=tags.SelectSerializer
         ))
 
-    def get_queryset(self):
-        if self.action == 'annotations':
-            item = self.kwargs['pk']
-            return db.Annotation.objects.filter(item=item)
-
-        user = self.request.user
-
-        is_special_user = (
-            user.is_superuser |
-            user.is_curator |
-            user.is_model |
-            user.is_developer
-        )
-        if is_special_user:
-            return self.get_full_queryset()
-
-        return self.get_normal_queryset(user)
-
-    def get_normal_queryset(self, user):
-        is_open = (
-            Q(licence__is_active=False) |
-            Q(licence__licence_type__can_view=True)
-        )
-        is_owner = Q(sampling_event__created_by=user.pk)
-
-        perm = Permission.objects.get(codename='view_collection_items')
-        collections_with_permission = (
-            db.CollectionUser.filter(
-                user=user.pk,
-                role__in=perm.role_set.all()
-            ).select_related('collection')
-        )
-
-        is_in_allowed_collection = Q(
-            sampling_event__collection__in=collections_with_permission)
-
-        filter_query = (
-            is_open |
-            is_owner |
-            is_in_allowed_collection
-        )
-
-        queryset = db.Item.objects.filter(filter_query)
-        return queryset
-
-    def get_full_queryset(self):
-        return db.Item.objects.all()
-
     def get_serializer_context(self):
         context = super().get_serializer_context()
 
@@ -111,6 +63,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
         filterset_class=AnnotationFilter)
     def annotations(self, request, pk=None):
         queryset = self.filter_queryset(self.get_queryset())
+        print('Filtered queryset', queryset)
         return self.list_related_object_view(queryset)
 
     @action(detail=True, methods=['POST'])
@@ -157,3 +110,62 @@ class ItemViewSet(mixins.UpdateModelMixin,
 
         url = serializer.data['item_file']
         return redirect(url)
+
+    def get_queryset(self):
+        if self.action in Actions.DEFAULT_ACTIONS:
+            return self.get_queryset_for_default_actions()
+
+        return self.get_queryset_for_additional_actions()
+
+    def get_queryset_for_additional_actions(self):
+        if self.action == 'annotations':
+            item_pk = self.kwargs['pk']
+            queryset = db.Annotation.objects.filter(item=item_pk)
+            print('initial queryset', queryset)
+            return queryset
+
+        return db.Item.objects.all()
+
+    def get_queryset_for_default_actions(self):
+        user = self.request.user
+
+        is_special_user = (
+            user.is_superuser |
+            user.is_curator |
+            user.is_model |
+            user.is_developer
+        )
+        if is_special_user:
+            return self.get_full_queryset()
+
+        return self.get_normal_queryset(user)
+
+    def get_normal_queryset(self, user):
+        is_open = (
+            Q(licence__is_active=False) |
+            Q(licence__licence_type__can_view=True)
+        )
+        is_owner = Q(sampling_event__created_by=user.pk)
+
+        perm = Permission.objects.get(codename='view_collection_items')
+        collections_with_permission = (
+            db.CollectionUser.filter(
+                user=user.pk,
+                role__in=perm.role_set.all()
+            ).select_related('collection')
+        )
+
+        is_in_allowed_collection = Q(
+            sampling_event__collection__in=collections_with_permission)
+
+        filter_query = (
+            is_open |
+            is_owner |
+            is_in_allowed_collection
+        )
+
+        queryset = db.Item.objects.filter(filter_query)
+        return queryset
+
+    def get_full_queryset(self):
+        return db.Item.objects.all()

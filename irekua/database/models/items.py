@@ -53,7 +53,7 @@ class Item(models.Model):
         verbose_name=_('file size'),
         help_text=_('Size of resource in Bytes'),
         blank=True,
-        null=False)
+        null=True)
     hash = models.CharField(
         db_column='hash',
         verbose_name=_('hash'),
@@ -241,7 +241,7 @@ class Item(models.Model):
             self.licence = self.sampling_event.licence
 
     def validate_hash_and_filesize(self):
-        if self.item_file.name is None and not self.hash is not None:
+        if self.item_file.name is None and self.hash is None:
             msg = _(
                 'If no file is provided, a hash must be given')
             raise ValidationError({'hash': msg})
@@ -249,21 +249,17 @@ class Item(models.Model):
         if self.item_file.name is None:
             return
 
-        if not self.hash_string:
-            self.item_file.open()
-            self.hash_string = hash_file(self.item_file)
-            self.item_size = self.item_file.size
+        self.item_file.open()
+        hash_string = hash_file(self.item_file)
+        item_size = self.item_file.size
 
-            self.hash = self.hash_string
-            self.filesize = self.item_size
+        if self.hash is None:
+            self.hash = hash_string
+            self.item_size = item_size
 
-            return None
-
-        if self.item_file is not None:
-            if self.hash != self.hash_string:
-                msg = _('Hash of file and recorded hash do not coincide')
-                raise ValidationError({'hash': msg})
-            return None
+        if self.hash != hash_string:
+            msg = _('Hash of file and recorded hash do not coincide')
+            raise ValidationError({'hash': msg})
 
     def add_ready_event_type(self, event_type):
         self.ready_event_types.add(event_type)

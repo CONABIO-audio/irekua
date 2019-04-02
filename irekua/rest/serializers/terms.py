@@ -39,8 +39,11 @@ class CreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = db.Term
         fields = (
-            'term_type',
             'value',
             'description',
             'metadata'
         )
+
+    def create(self, validated_data):
+        validated_data['term_type'] = self.context['term_type']
+        return super().create(validated_data)

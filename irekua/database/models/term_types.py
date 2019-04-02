@@ -33,7 +33,9 @@ class TermType(models.Model):
     is_categorical = models.BooleanField(
         db_column='is_categorical',
         verbose_name=_('is categorical'),
-        help_text=_('Flag indicating whether the term type represents a categorical variable'),
+        help_text=_(
+            'Flag indicating whether the term type represents '
+            'a categorical variable'),
         blank=False,
         null=False)
     metadata_schema = JSONField(
@@ -77,17 +79,19 @@ class TermType(models.Model):
 
     def validate_non_categorical_value(self, value):
         if not isinstance(value, (int, float)):
-            msg = _('Value %(value)s is invalid for non-categorical term of type %(type)')
+            msg = _(
+                'Value %(value)s is invalid for non-categorical '
+                'term of type %(type)s')
             params = dict(value=value, type=str(self))
-            raise ValidationError(msg, params=params)
+            raise ValidationError(msg % params)
 
     def validate_categorical_value(self, value):
-        try:
-            self.term_set.get(value=value)
-        except self.term_set.model.DoesNotExist:
-            msg = _('Value %(value) is invalid for categorical term of type %(type)')
+        if not self.term_set.filter(value=value).exists():
+            msg = _(
+                'Value %(value)s is invalid for categorical term '
+                'of type %(type)s')
             params = dict(value=value, type=str(self))
-            raise ValidationError(msg, params=params)
+            raise ValidationError(msg % params)
 
     def validate_value(self, value):
         if self.is_categorical:
@@ -101,9 +105,11 @@ class TermType(models.Model):
                 schema=self.metadata_schema,
                 instance=metadata)
         except ValidationError as error:
-            msg = _('Invalid metadata for term of type %(type)s. Error: %(error)s')
+            msg = _(
+                'Invalid metadata for term of type %(type)s. '
+                'Error: %(error)s')
             params = dict(type=str(self), error=str(error))
-            raise ValidationError(msg, params=params)
+            raise ValidationError(msg % params)
 
     def validate_synonym_metadata(self, metadata):
         try:
@@ -111,6 +117,8 @@ class TermType(models.Model):
                 schema=self.synonym_metadata_schema,
                 instance=metadata)
         except ValidationError as error:
-            msg = _('Invalid metadata for synonym of terms of type %(type)s. Error: %(error)s')
+            msg = _(
+                'Invalid metadata for synonym of terms of type '
+                '%(type)s. Error: %(error)s')
             params = dict(type=str(self), error=str(error))
-            raise ValidationError(msg, params=params)
+            raise ValidationError(msg % params)

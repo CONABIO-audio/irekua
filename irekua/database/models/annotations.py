@@ -179,11 +179,11 @@ class Annotation(models.Model):
                     'Label contains a term (of type %(type)s) that is not '
                     'valid for the event type or does not exist')
                 params = dict(type=key)
-                raise ValidationError(msg, params=params)
+                raise ValidationError(msg % params)
 
             try:
                 term_type.validate_value(value)
             except ValidationError as error:
                 msg = _('Invalid label. Error: %(error)s')
                 params = dict(error=str(error))
-                raise ValidationError(msg, params=params)
+                raise ValidationError(msg % params)
