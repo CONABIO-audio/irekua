@@ -17,20 +17,20 @@ class MetaCollection(models.Model):
         verbose_name=_('description'),
         help_text=_('Description of Meta Collection'),
         blank=False)
-    creator = models.ForeignKey(
-        'User',
-        on_delete=models.CASCADE,
-        db_column='creator_id',
-        verbose_name=_('creator'),
-        help_text=_('Reference to creator of Meta Collection'),
-        null=True,
-        blank=True)
     items = models.ManyToManyField(
         'Item',
         db_column='items',
         verbose_name=_('items'),
         help_text=_('Items belonging to MetaCollection'))
 
+    created_by = models.ForeignKey(
+        'User',
+        on_delete=models.CASCADE,
+        db_column='created_by',
+        verbose_name=_('created by'),
+        help_text=_('Creator of Meta Collection'),
+        null=True,
+        blank=True)
     created_on = models.DateTimeField(
         db_column='created_on',
         verbose_name=_('created on'),

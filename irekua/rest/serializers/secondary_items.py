@@ -2,12 +2,16 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import SecondaryItem
+
+from . import item_types
+from . import items
 
 
 class SelectSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = db.SecondaryItem
+        model = SecondaryItem
         fields = (
             'url',
             'id',
@@ -15,23 +19,22 @@ class SelectSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ListSerializer(serializers.ModelSerializer):
-    item_type = serializers.SlugRelatedField(
-        many=False,
-        read_only=True,
-        slug_field='name')
-
     class Meta:
-        model = db.SecondaryItem
+        model = SecondaryItem
         fields = (
             'url',
+            'id',
             'item',
             'item_type'
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
+    item_type = item_types.SelectSerializer(many=False, read_only=True)
+    item = items.SelectSerializer(many=False, read_only=True)
+
     class Meta:
-        model = db.SecondaryItem
+        model = SecondaryItem
         fields = (
             'url',
             'id',
@@ -47,7 +50,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.SecondaryItem
+        model = SecondaryItem
         fields = (
             'hash',
             'path',

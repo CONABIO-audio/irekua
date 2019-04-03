@@ -2,15 +2,24 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import Term
+
 from . import term_types
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
-    term_type = term_types.SelectSerializer(many=False, read_only=True)
-
+class SelectSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Term
+        models = Term
+        fields = (
+            'url',
+            'id',
+        )
+
+
+class ListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Term
         fields = (
             'url',
             'term_type',
@@ -22,7 +31,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
     term_type = term_types.SelectSerializer(many=False, read_only=True)
 
     class Meta:
-        model = db.Term
+        model = Term
         fields = (
             'url',
             'id',
@@ -37,7 +46,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Term
+        model = Term
         fields = (
             'value',
             'description',

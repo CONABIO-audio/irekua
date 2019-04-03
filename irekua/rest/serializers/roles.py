@@ -4,21 +4,14 @@ from __future__ import unicode_literals
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Permission
 from rest_framework import serializers
-from database.models.roles import RESTRICT_PERMISSIONS_TO_MODELS
-import database.models as db
+
+from database.models import Role
 
 
 class PermissionSerializer(serializers.ModelSerializer):
-    content_type = serializers.SlugRelatedField(
-        many=False,
-        read_only=False,
-        slug_field='model',
-        queryset=ContentType.objects.filter(app_label='database'))
-
     class Meta:
         model = Permission
         fields = (
-            'content_type',
             'codename'
         )
 
@@ -28,9 +21,7 @@ class SelectPermissionSerializer(serializers.ModelSerializer):
         many=False,
         read_only=False,
         slug_field='codename',
-        queryset=Permission.objects.filter(
-            content_type__model__in=RESTRICT_PERMISSIONS_TO_MODELS)
-        )
+        queryset=Permission.objects.filter(content_type__model='collection'))
 
     class Meta:
         model = Permission
@@ -40,23 +31,17 @@ class SelectPermissionSerializer(serializers.ModelSerializer):
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    name = serializers.SlugRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.Role.objects.all(),
-        slug_field='name')
-
     class Meta:
-        model = db.Role
+        model = Role
         fields = (
             'url',
             'name',
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
+class ListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Role
+        model = Role
         fields = (
             'url',
             'name',
@@ -69,7 +54,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
     permissions = PermissionSerializer(many=True, read_only=True)
 
     class Meta:
-        model = db.Role
+        model = Role
         fields = (
             'url',
             'name',
@@ -83,7 +68,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Role
+        model = Role
         fields = (
             'name',
             'description',

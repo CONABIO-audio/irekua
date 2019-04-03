@@ -2,28 +2,25 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import Annotation
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    annotation = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.Annotation.objects.all())
-
     class Meta:
-        model = db.Annotation
+        model = Annotation
         fields = (
             'url',
-            'annotation',
+            'id',
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
+class ListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Annotation
+        model = Annotation
         fields = (
             'url',
+            'id',
             'item',
             'event_type',
         )
@@ -31,7 +28,7 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = db.Annotation
+        model = Annotation
         fields = (
             'url',
             'id',
@@ -56,7 +53,7 @@ class CreateSerializer(serializers.ModelSerializer):
     label = serializers.JSONField()
 
     class Meta:
-        model = db.Annotation
+        model = Annotation
         fields = (
             'event_type',
             'annotation',

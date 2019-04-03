@@ -2,6 +2,15 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
+
+from database.models import CollectionType
+from database.models import ItemType
+from database.models import CollectionItemType
+from database.models import Role
+from database.models import CollectionRole
+from database.models import DeviceType
+from database.models import CollectionDeviceType
+
 from .annotation_types import SelectSerializer as AnnotationTypeSerializer
 from .event_types import SelectSerializer as EventTypeSerializer
 from .site_types import SelectSerializer as SiteTypeSerializer
@@ -9,12 +18,21 @@ from .licence_types import SelectSerializer as LicenceTypeSerializer
 from .sampling_event_types import (
         SelectSerializer as SamplingEventTypeSerializer)
 from .users import SelectSerializer as UserSerializer
-import database.models as db
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
+
+class SelectSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.CollectionType
+        model = CollectionType
+        fields = (
+            'url',
+            'name',
+        )
+
+
+class ListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CollectionType
         fields = (
             'url',
             'name',
@@ -25,7 +43,7 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.CollectionType
+        model = CollectionType
         fields = (
             'name',
             'logo',
@@ -51,11 +69,11 @@ class DeviceTypeSerializer(serializers.ModelSerializer):
     name = serializers.PrimaryKeyRelatedField(
         many=False,
         read_only=False,
-        queryset=db.DeviceType.objects.all(),
+        queryset=DeviceType.objects.all(),
         source='device_type')
 
     class Meta:
-        model = db.CollectionDeviceType
+        model = CollectionDeviceType
         fields = (
             'url',
             'name',
@@ -72,11 +90,11 @@ class ItemTypeSerializer(serializers.ModelSerializer):
     name = serializers.PrimaryKeyRelatedField(
         many=False,
         read_only=False,
-        queryset=db.ItemType.objects.all(),
+        queryset=ItemType.objects.all(),
         source='item_type')
 
     class Meta:
-        model = db.CollectionItemType
+        model = CollectionItemType
         fields = (
             'url',
             'name',
@@ -93,12 +111,12 @@ class RoleSerializer(serializers.ModelSerializer):
     name = serializers.SlugRelatedField(
         many=False,
         read_only=False,
-        queryset=db.Role.objects.all(),
+        queryset=Role.objects.all(),
         source='role',
         slug_field='name')
 
     class Meta:
-        model = db.CollectionRole
+        model = CollectionRole
         fields = (
             'url',
             'name',
@@ -139,7 +157,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
         read_only=False)
 
     class Meta:
-        model = db.CollectionType
+        model = CollectionType
         fields = (
             'url',
             'name',

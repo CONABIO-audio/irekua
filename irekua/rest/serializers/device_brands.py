@@ -2,26 +2,22 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import DeviceBrand
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    name = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.DeviceBrand.objects.all())
-
     class Meta:
-        model = db.DeviceBrand
+        model = DeviceBrand
         fields = (
             'url',
             'name',
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
+class ListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.DeviceBrand
+        model = DeviceBrand
         fields = (
             'url',
             'name',
@@ -31,7 +27,7 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = db.DeviceBrand
+        model = DeviceBrand
         fields = (
             'url',
             'name',
@@ -44,7 +40,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.DeviceBrand
+        model = DeviceBrand
         fields = (
             'name',
             'website',

@@ -2,32 +2,31 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import Item
+
+from . import item_types
+from . import sampling_events
+from . import licences
+from . import tags
+from . import event_types
 
 
-class SelectSerializer(serializers.HyperlinkedModelSerializer):
+class SelectSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Item
+        model = Item
         fields = (
             'url',
             'id',
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
-    item_type = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=True)
-    collection = serializers.SlugRelatedField(
-        many=False,
-        read_only=True,
-        slug_field='name',
-        source='sampling_event.collection')
-
+class ListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Item
+        model = Item
         fields = (
             'url',
+            'id',
             'item_type',
             'captured_on',
             'collection',
@@ -35,8 +34,14 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
+    item_type = item_types.SelectSerializer(many=False, read_only=True)
+    sampling_event = sampling_events.SelectSerializer(many=False, read_only=True)
+    licence = licences.SelectSerializer(many=False, read_only=True)
+    tags = tags.SelectSerializer(many=True, read_only=True)
+    ready_event_types = event_types.SelectSerializer(many=False, read_only=True)
+
     class Meta:
-        model = db.Item
+        model = Item
         fields = (
             'url',
             'id',
@@ -56,7 +61,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Item
+        model = Item
         fields = (
             'hash',
             'item_file',
@@ -96,7 +101,7 @@ class CreateSerializer(serializers.ModelSerializer):
 
 class DownloadSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Item
+        model = Item
         fields = (
             'item_file',
         )

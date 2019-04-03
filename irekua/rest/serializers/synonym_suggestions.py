@@ -2,44 +2,46 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+import database.models as SynonymSuggestion
+
 from . import terms
 from . import users
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    suggestion = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.SynonymSuggestion.objects.all(),
-        source='id')
-
     class Meta:
-        model = db.SynonymSuggestion
+        model = SynonymSuggestion
         fields = (
             'url',
-            'suggestion'
+            'id'
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
-    source = terms.ListSerializer(many=False, read_only=True)
+class ListSerializer(serializers.ModelSerializer):
+    source_type = serializers.CharField(
+        read_only=True,
+        source='source.term_type.name')
+    source_value = serializers.CharField(
+        read_only=True,
+        source='source.value')
 
     class Meta:
-        model = db.SynonymSuggestion
+        model = SynonymSuggestion
         fields = (
             'url',
-            'source',
+            'source_type',
+            'source_value',
             'synonym',
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    source = terms.ListSerializer(many=False, read_only=True)
-    suggested_by = users.ListSerializer(many=False, read_only=True)
+    source = terms.SelectSerializer(many=False, read_only=True)
+    suggested_by = users.SelectSerializer(many=False, read_only=True)
 
     class Meta:
-        model = db.SynonymSuggestion
+        model = SynonymSuggestion
         fields = (
             'url',
             'id',
@@ -54,7 +56,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.SynonymSuggestion
+        model = SynonymSuggestion
         fields = (
             'source',
             'synonym',

@@ -17,7 +17,7 @@ class SelectSerializer(serializers.ModelSerializer):
         model = Collection
         fields = (
             'url',
-            'id',
+            'name',
         )
 
 
@@ -34,13 +34,13 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    collection_type = collection_types.ListSerializer(
+    collection_type = collection_types.SelectSerializer(
         many=False,
         read_only=False)
-    institution = institutions.ListSerializer(
+    institution = institutions.SelectSerializer(
         many=False,
         read_only=True)
-    licence_set = licences.ListSerializer(
+    licence_set = licences.SelectSerializer(
         many=True,
         read_only=True)
 

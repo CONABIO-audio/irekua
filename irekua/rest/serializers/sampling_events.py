@@ -2,7 +2,9 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import SamplingEvent
+
 from . import sites
 from . import physical_devices
 from . import users
@@ -12,53 +14,66 @@ from . import licences
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    sampling_event = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.SamplingEvent.objects.all())
-
     class Meta:
-        model = db.SamplingEvent
+        model = SamplingEvent
         fields = (
             'url',
-            'sampling_event',
+            'id',
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
-    site = sites.ListSerializer(many=False, read_only=True)
-    physical_device = physical_devices.SelectSerializer(many=False, read_only=True)
+class ListSerializer(serializers.ModelSerializer):
+    site = serializers.SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='name')
+    site_id = serializers.PrimaryKeyRelatedField(
+        many=False,
+        read_only=True,
+        source='site')
+    device_type = serializers.CharField(
+        read_only=True,
+        source='physical_device.device.device_type.name')
 
     class Meta:
-        model = db.SamplingEvent
+        model = SamplingEvent
         fields = (
             'url',
+            'id',
             'sampling_event_type',
             'site',
-            'physical_device',
+            'site_id',
+            'device_type',
             'started_on',
             'ended_on',
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    created_by = users.ListSerializer(
+    created_by = users.SelectSerializer(
         many=False,
         read_only=True)
-    sampling_event_type = sampling_event_types.ListSerializer(
+    sampling_event_type = sampling_event_types.SelectSerializer(
         many=False,
         read_only=True)
-    collection = data_collections.ListSerializer(
+    collection = data_collections.SelectSerializer(
         many=False,
         read_only=True)
-    licence = licences.DetailSerializer(
+    licence = licences.SelectSerializer(
+        many=False,
+        read_only=True)
+    physical_device = physical_devices.SelectSerializer(
+        many=False,
+        read_only=True)
+    site = sites.SelectSerializer(
         many=False,
         read_only=True)
 
     class Meta:
-        model = db.SamplingEvent
+        model = SamplingEvent
         fields = (
             'url',
+            'id',
             'sampling_event_type',
             'site',
             'physical_device',
@@ -75,7 +90,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.SamplingEvent
+        model = SamplingEvent
         fields = (
             'sampling_event_type',
             'site',
@@ -93,13 +108,16 @@ class CreateSerializer(serializers.ModelSerializer):
 
         try:
             collection = self.context['collection']
-            sites = self.fields['site']
-            physical_devices = self.fields['physical_device']
-            licences = self.fields['licence']
 
-            sites.queryset = collection.sites.all()
-            physical_devices.queryset = collection.physical_devices.all()
-            licences.queryset = collection.licence_set.all()
+            sites_field = self.fields['site']
+            sites_field.queryset = collection.sites.all()
+
+            physical_devices_field = self.fields['physical_device']
+            physical_devices_field.queryset = collection.physical_devices.all()
+
+            licences_field = self.fields['licence']
+            licences_field.queryset = collection.licence_set.all()
+
         except (KeyError, AttributeError):
             pass
 

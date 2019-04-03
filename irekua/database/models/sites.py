@@ -3,13 +3,9 @@ from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models import PointField
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
-from database.utils import (
-    empty_JSON,
-    GENERIC_SITE,
-)
+from database.utils import empty_JSON
 
 
 def validate_coordinates_and_geometry(geometry, latitude, longitude):
@@ -38,8 +34,6 @@ class Site(models.Model):
         db_column='site_type',
         verbose_name=_('site type'),
         help_text=_('Type of site'),
-        to_field='name',
-        default=GENERIC_SITE,
         blank=False,
         null=False)
     geo_ref = PointField(
@@ -140,7 +134,7 @@ class Site(models.Model):
         if user.is_superuser:
             return True
 
-        if self.creator == user:
+        if self.created_by == user:
             return True
 
         return False

@@ -2,14 +2,24 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
-from .users import SelectSerializer as UserSerializer
-from .items import SelectSerializer as ItemSerializer
+
+from database.models import MetaCollection
+
+from . import users
+
+
+class SelectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MetaCollection
+        fields = (
+            'url',
+            'name',
+        )
 
 
 class ListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.MetaCollection
+        model = MetaCollection
         fields = (
             'url',
             'name',
@@ -18,22 +28,17 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.ModelSerializer):
-    creator = UserSerializer(
+    created_by = users.SelectSerializer(
         many=False,
         read_only=True)
-    items = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='api-rest:item-detail')
 
     class Meta:
-        model = db.MetaCollection
+        model = MetaCollection
         fields = (
             'url',
             'name',
             'description',
-            'creator',
-            'items',
+            'created_by',
             'created_on',
             'modified_on',
         )
@@ -41,7 +46,7 @@ class DetailSerializer(serializers.ModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.MetaCollection
+        model = MetaCollection
         fields = (
             'name',
             'description',
@@ -49,6 +54,5 @@ class CreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = self.context['request'].user
-        return db.MetaCollection.objects.create(
-            creator=user,
-            **validated_data)
+        validated_data['created_by'] = user
+        super().create(validated_data)

@@ -2,39 +2,40 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import Site
+
 from . import site_types
 from . import users
 
 
 class SelectSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Site
+        model = Site
         fields = (
             'url',
             'id',
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
-    site_type = site_types.ListSerializer(many=False, read_only=True)
-
+class ListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Site
+        model = Site
         fields = (
             'url',
+            'id',
+            'site_type',
             'name',
             'locality',
-            'site_type',
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    site_type = site_types.DetailSerializer(many=False, read_only=True)
-    created_by = users.ListSerializer(many=False, read_only=True)
+    site_type = site_types.SelectSerializer(many=False, read_only=True)
+    created_by = users.SelectSerializer(many=False, read_only=True)
 
     class Meta:
-        model = db.Site
+        model = Site
         fields = (
             'url',
             'id',
@@ -43,15 +44,17 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'site_type',
             'metadata',
             'created_by',
+            'created_on',
+            'modified_on',
         )
 
 
 class FullDetailSerializer(serializers.HyperlinkedModelSerializer):
-    site_type = site_types.DetailSerializer(many=False, read_only=True)
-    created_by = users.ListSerializer(many=False, read_only=True)
+    site_type = site_types.SelectSerializer(many=False, read_only=True)
+    created_by = users.SelectSerializer(many=False, read_only=True)
 
     class Meta:
-        model = db.Site
+        model = Site
         fields = (
             'url',
             'id',
@@ -64,12 +67,14 @@ class FullDetailSerializer(serializers.HyperlinkedModelSerializer):
             'altitude',
             'metadata',
             'created_by',
+            'created_on',
+            'modified_on',
         )
 
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Site
+        model = Site
         fields = (
             'name',
             'locality',
@@ -81,8 +86,9 @@ class CreateSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
-        site_type = db.SiteType.objects.get(
-            name=validated_data.pop('site_type'))
+        site_type = self.context['site_type']
         user = self.context['request'].user
+
         validated_data['created_by'] = user
-        return db.Site.objects.create(site_type=site_type, **validated_data)
+        validated_data['site_type'] = site_type
+        return super().create(validated_data)

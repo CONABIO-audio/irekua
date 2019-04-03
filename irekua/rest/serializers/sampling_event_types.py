@@ -2,32 +2,30 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import SamplingEventType
+
 from . import device_types
 from . import site_types
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    name = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.SamplingEventType.objects.all())
-
     class Meta:
-        model = db.SamplingEventType
+        model = SamplingEventType
         fields = (
             'url',
             'name'
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
+class ListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.SamplingEventType
+        model = SamplingEventType
         fields = (
             'url',
             'name',
             'icon',
+            'description',
         )
 
 
@@ -40,7 +38,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
         read_only=True)
 
     class Meta:
-        model = db.SamplingEventType
+        model = SamplingEventType
         fields = (
             'url',
             'name',
@@ -58,7 +56,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.SamplingEventType
+        model = SamplingEventType
         fields = (
             'name',
             'description',

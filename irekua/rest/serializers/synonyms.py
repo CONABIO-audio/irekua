@@ -2,44 +2,53 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import Synonym
+
 from . import terms
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    synonym = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.Synonym.objects.all(),
-        source='id')
-
     class Meta:
-        model = db.Synonym
+        model = Synonym
         fields = (
             'url',
-            'synonym'
+            'id',
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
-    source = terms.ListSerializer(many=False, read_only=True)
-    target = terms.ListSerializer(many=False, read_only=True)
+class ListSerializer(serializers.ModelSerializer):
+    source_type = serializers.CharField(
+        read_only=True,
+        source='source.term_type.name')
+    source_value = serializers.CharField(
+        read_only=True,
+        source='source.value')
+    target_type = serializers.CharField(
+        read_only=True,
+        source='target.term_type.name')
+    target_value = serializers.CharField(
+        read_only=True,
+        source='target.value')
 
     class Meta:
-        model = db.Synonym
+        model = Synonym
         fields = (
             'url',
-            'source',
-            'target',
+            'id',
+            'source_type',
+            'source_value',
+            'target_type',
+            'target_value',
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    source = terms.DetailSerializer(many=False, read_only=True)
-    target = terms.DetailSerializer(many=False, read_only=True)
+    source = terms.SelectSerializer(many=False, read_only=True)
+    target = terms.SelectSerializer(many=False, read_only=True)
 
     class Meta:
-        model = db.Synonym
+        model = Synonym
         fields = (
             'url',
             'metadata',
@@ -52,7 +61,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Synonym
+        model = Synonym
         fields = (
             'metadata',
             'source',

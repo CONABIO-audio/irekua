@@ -2,44 +2,51 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import PhysicalDevice
+
 from . import devices
 from . import users
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    physical_device = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.PhysicalDevice.objects.all(),
-        source='id')
-
     class Meta:
-        model = db.PhysicalDevice
+        model = PhysicalDevice
         fields = (
             'url',
-            'physical_device'
+            'id',
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
-    device = devices.ListSerializer(many=False, read_only=True)
+class ListSerializer(serializers.ModelSerializer):
+    type = serializers.CharField(
+        read_only=True,
+        source='device.device_type.name')
+    brand = serializers.CharField(
+        read_only=True,
+        source='device.brand.name')
+    model = serializers.CharField(
+        read_only=True,
+        source='device.model')
 
     class Meta:
-        model = db.PhysicalDevice
+        model = PhysicalDevice
         fields = (
             'url',
+            'id',
             'serial_number',
-            'device'
+            'type',
+            'brand',
+            'model',
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    device = devices.DetailSerializer(many=False, read_only=True)
+    device = devices.SelectSerializer(many=False, read_only=True)
     owner = users.SelectSerializer(many=False, read_only=True)
 
     class Meta:
-        model = db.PhysicalDevice
+        model = PhysicalDevice
         fields = (
             'url',
             'serial_number',
@@ -54,7 +61,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.PhysicalDevice
+        model = PhysicalDevice
         fields = (
             'serial_number',
             'device',
@@ -65,4 +72,4 @@ class CreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = self.context['request'].user
         validated_data['owner'] = user
-        return db.PhysicalDevice.objects.create(**validated_data)
+        super().create(validated_data)

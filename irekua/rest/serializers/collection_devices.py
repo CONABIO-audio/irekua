@@ -2,43 +2,44 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import CollectionDevice
+
 from . import physical_devices
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    device = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.CollectionDevice.objects.all(),
-        source='id')
-
     class Meta:
-        model = db.CollectionDevice
-        fields = (
-            'url',
-            'device'
-        )
-
-
-class ListSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = db.CollectionDevice
+        model = CollectionDevice
         fields = (
             'url',
             'id',
+        )
+
+
+class ListSerializer(serializers.ModelSerializer):
+    physical_device = serializers.StringRelatedField(
+        many=False,
+        read_only=True)
+
+    class Meta:
+        model = CollectionDevice
+        fields = (
+            'url',
+            'id',
+            'physical_device',
             'internal_id',
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    device = physical_devices.ListSerializer(many=False, read_only=True)
+    physical_device = physical_devices.SelectSerializer(many=False, read_only=True)
 
     class Meta:
-        model = db.CollectionDevice
+        model = CollectionDevice
         fields = (
             'url',
-            'device',
+            'physical_device',
             'internal_id',
             'metadata',
             'created_on',
@@ -48,9 +49,9 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.CollectionDevice
+        model = CollectionDevice
         fields = (
-            'device',
+            'physical_device',
             'metadata',
             'internal_id',
         )

@@ -2,36 +2,36 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import CollectionSite
+
 from . import data_collections
 from . import sites
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    site = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.CollectionSite.objects.all(),
-        source='id')
-
     class Meta:
-        model = db.CollectionSite
+        model = CollectionSite
         fields = (
             'url',
-            'site'
+            'id',
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
-    site = sites.ListSerializer(
+class ListSerializer(serializers.ModelSerializer):
+    locality = serializers.SlugRelatedField(
         many=False,
-        read_only=True)
+        read_only=True,
+        source='site',
+        slug_field='locality')
 
     class Meta:
-        model = db.CollectionSite
+        model = CollectionSite
         fields = (
             'url',
+            'id',
             'site',
+            'locality',
             'internal_id',
         )
 
@@ -45,7 +45,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
         read_only=True)
 
     class Meta:
-        model = db.CollectionSite
+        model = CollectionSite
         fields = (
             'url',
             'id',
@@ -59,7 +59,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.CollectionSite
+        model = CollectionSite
         fields = (
             'site',
             'internal_id',

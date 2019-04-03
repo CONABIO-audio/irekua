@@ -2,32 +2,25 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import Licence
 
 from . import licence_types
 from . import users
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    licence = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.Licence.objects.all(),
-        source='id')
-
     class Meta:
-        model = db.Licence
+        model = Licence
         fields = (
             'url',
-            'licence',
+            'id',
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
-    licence_type = licence_types.ListSerializer(many=False, read_only=True)
-
+class ListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Licence
+        model = Licence
         fields = (
             'url',
             'id',
@@ -37,15 +30,11 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    licence_type = licence_types.DetailSerializer(many=False, read_only=True)
-    signed_by = users.DetailSerializer(many=False, read_only=True)
-    collection = serializers.SlugRelatedField(
-        many=False,
-        read_only=True,
-        slug_field='name')
+    licence_type = licence_types.SelectSerializer(many=False, read_only=True)
+    signed_by = users.SelectSerializer(many=False, read_only=True)
 
     class Meta:
-        model = db.Licence
+        model = Licence
         fields = (
             'url',
             'id',
@@ -54,14 +43,14 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'document',
             'metadata',
             'signed_by',
-            'collection',
             'is_active',
+            'collection'
         )
 
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Licence
+        model = Licence
         fields = (
             'licence_type',
             'document',

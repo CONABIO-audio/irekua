@@ -4,42 +4,43 @@ from __future__ import unicode_literals
 from rest_framework import serializers
 
 from database.models import User
+
 from . import institutions
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    username = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=User.objects.all())
-
     class Meta:
         model = User
         fields = (
             'url',
-            'username',
+            'id',
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
-    institution = institutions.ListSerializer(many=False, read_only=True)
+class ListSerializer(serializers.ModelSerializer):
+    institution = serializers.SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='institution_name')
 
     class Meta:
         model = User
         fields = (
             'url',
+            'id',
             'username',
             'institution'
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    institution = institutions.DetailSerializer(many=False, read_only=True)
+    institution = institutions.SelectSerializer(many=False, read_only=True)
 
     class Meta:
         model = User
         fields = (
             'url',
+            'id',
             'username',
             'first_name',
             'last_name',
@@ -86,6 +87,7 @@ class UpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
+            'username',
             'email',
             'first_name',
             'last_name',

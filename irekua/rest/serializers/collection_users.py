@@ -2,50 +2,48 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import CollectionUser
+
 from . import users
 from . import roles
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.CollectionUser.objects.all(),
-        source='id')
-
     class Meta:
-        model = db.CollectionUser
+        model = CollectionUser
         fields = (
             'url',
-            'user',
+            'id',
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
-    user = users.ListSerializer(
+class ListSerializer(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(
         many=False,
-        read_only=True)
+        read_only=True,
+        slug_field='username')
     role = serializers.SlugRelatedField(
         many=False,
         read_only=True,
         slug_field='name')
 
     class Meta:
-        model = db.CollectionUser
+        model = CollectionUser
         fields = (
             'url',
+            'id',
             'user',
             'role',
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    user = users.DetailSerializer(many=False, read_only=True)
-    role = roles.DetailSerializer(many=False, read_only=True)
+    user = users.SelectSerializer(many=False, read_only=True)
+    role = roles.SelectSerializer(many=False, read_only=True)
 
     class Meta:
-        model = db.CollectionUser
+        model = CollectionUser
         fields = (
             'url',
             'user',
@@ -59,7 +57,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.CollectionUser
+        model = CollectionUser
         fields = (
             'user',
             'role',
@@ -74,7 +72,7 @@ class CreateSerializer(serializers.ModelSerializer):
 
 class AdminSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.CollectionUser
+        model = CollectionUser
         fields = (
             'is_admin',
         )

@@ -2,27 +2,24 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
+
+from database.models import EventType
+
 from . import term_types
-import database.models as db
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    name = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.EventType.objects.all())
-
     class Meta:
-        model = db.EventType
+        model = EventType
         fields = (
             'url',
             'name',
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
+class ListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.EventType
+        model = EventType
         fields = (
             'url',
             'name',
@@ -37,7 +34,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
         read_only=True)
 
     class Meta:
-        model = db.EventType
+        model = EventType
         fields = (
             'url',
             'name',
@@ -49,9 +46,9 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class CreateSerializer(serializers.HyperlinkedModelSerializer):
+class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.EventType
+        model = EventType
         fields = (
             'name',
             'description',

@@ -5,6 +5,7 @@ from rest_framework import serializers
 import database.models as db
 
 from . import annotations
+from . import users
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -28,6 +29,9 @@ class ListSerializer(serializers.ModelSerializer):
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
     annotation = annotations.SelectSerializer(
+        many=False,
+        read_only=True)
+    created_by = users.SelectSerializer(
         many=False,
         read_only=True)
 

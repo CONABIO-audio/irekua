@@ -6,11 +6,6 @@ import database.models as db
 
 
 class SelectSerializer(serializers.ModelSerializer):
-    name = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=db.AnnotationType.objects.all())
-
     class Meta:
         model = db.AnnotationType
         fields = (
@@ -19,7 +14,7 @@ class SelectSerializer(serializers.ModelSerializer):
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
+class ListSerializer(serializers.ModelSerializer):
     class Meta:
         model = db.AnnotationType
         fields = (
