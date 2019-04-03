@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 
 import database.models as db
+
 from rest.serializers import collection_types
 from rest.serializers import event_types
 from rest.serializers import item_types
@@ -18,16 +19,24 @@ from rest.serializers import SerializerMappingMixin
 from rest.serializers import SerializerMapping
 
 from rest.filters import CollectionTypeFilter
+
+from rest.permissions import PermissionMapping
+from rest.permissions import PermissionMappingMixin
+from rest.permissions import IsAdmin
+from rest.permissions import ReadOnly
+
 from .utils import AdditionalActionsMixin
 
 
 
 class CollectionTypeViewSet(SerializerMappingMixin,
                             AdditionalActionsMixin,
+                            PermissionMappingMixin,
                             ModelViewSet):
     queryset = db.CollectionType.objects.all()
     filterset_class = CollectionTypeFilter
 
+    permission_mapping = PermissionMapping(default=IsAdmin | ReadOnly)
     serializer_mapping = (
         SerializerMapping
         .from_module(collection_types)

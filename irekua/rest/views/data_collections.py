@@ -16,16 +16,24 @@ from rest.serializers import collection_users
 from rest.serializers import SerializerMappingMixin
 from rest.serializers import SerializerMapping
 
-from rest.permissions import IsDeveloper, IsAdmin, ReadOnly
+from rest.utils import Actions
+
+from rest.permissions import PermissionMapping
+from rest.permissions import PermissionMappingMixin
+from rest.permissions import IsAuthenticated
+from rest.permissions import IsAdmin
+from rest.permissions import IsSpecialUser
+from rest.permissions import data_collections as permissions
+
 from rest.filters import CollectionFilter
 from .utils import AdditionalActionsMixin
 
 
 class CollectionViewSet(SerializerMappingMixin,
                         AdditionalActionsMixin,
+                        PermissionMappingMixin,
                         ModelViewSet):
     queryset = db.Collection.objects.all()
-    permission_classes = (IsAdmin | IsDeveloper | ReadOnly, )
     search_fields = ('name', )
     filterset_class = CollectionFilter
 
@@ -44,6 +52,104 @@ class CollectionViewSet(SerializerMappingMixin,
             add_sampling_event=sampling_event_serializers.CreateSerializer,
             items=item_serializers.ListSerializer
         ))
+
+    permission_mapping = PermissionMapping({
+        Actions.UPDATE: [
+            IsAuthenticated,
+            (
+                permissions.HasUpdatePermission |
+                permissions.IsCollectionAdmin |
+                permissions.IsCollectionTypeAdmin |
+                IsAdmin
+            )
+        ],
+        Actions.DESTROY: [
+            IsAuthenticated,
+            permissions.IsCollectionAdmin | IsAdmin
+        ],
+        'create_licence': [
+            IsAuthenticated,
+            (
+                permissions.HasAddLicencePermission |
+                permissions.IsCollectionAdmin
+            ),
+        ],
+        'devices': [
+            IsAuthenticated,
+            (
+                permissions.IsCollectionUser |
+                permissions.IsCollectionTypeAdmin |
+                IsSpecialUser
+            )
+        ],
+        'add_device': [
+            IsAuthenticated,
+            (
+                permissions.HasAddDevicePermission |
+                permissions.IsCollectionAdmin |
+                IsAdmin
+            )
+        ],
+        'sites': [
+            IsAuthenticated,
+            (
+                permissions.IsCollectionUser |
+                permissions.IsCollectionTypeAdmin |
+                IsSpecialUser
+            )
+        ],
+        'add_site': [
+            IsAuthenticated,
+            (
+                permissions.HasAddSitePermission |
+                permissions.IsCollectionAdmin |
+                permissions.IsCollectionTypeAdmin |
+                IsAdmin
+            )
+        ],
+        'users': [
+            IsAuthenticated,
+            (
+                permissions.IsCollectionUser |
+                permissions.IsCollectionTypeAdmin |
+                IsSpecialUser
+            )
+        ],
+        'add_user': [
+            IsAuthenticated,
+            (
+                permissions.HasAddUserPermission |
+                permissions.IsCollectionAdmin |
+                permissions.IsCollectionTypeAdmin |
+                IsAdmin
+            )
+        ],
+        'sampling_events': [
+            IsAuthenticated,
+            (
+                permissions.IsCollectionUser |
+                permissions.IsCollectionTypeAdmin |
+                IsSpecialUser
+            )
+        ],
+        'add_sampling_event': [
+            IsAuthenticated,
+            (
+                permissions.HasAddSamplingEventPermission |
+                permissions.IsCollectionAdmin |
+                permissions.IsCollectionTypeAdmin |
+                IsAdmin
+            )
+        ],
+        'items': [
+            IsAuthenticated,
+            (
+                permissions.IsCollectionUser |
+                permissions.IsCollectionTypeAdmin |
+                IsSpecialUser
+            )
+        ],
+    }, default=IsAuthenticated)
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

@@ -10,15 +10,27 @@ from rest_framework import status
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
-from django_filters.rest_framework import DjangoFilterBackend
-
-import database.models as db
+from database.models import CollectionUser
+from database.models import Collection
+from database.models import Tag
+from database.models import Annotation
+from database.models import Item
 
 from rest.serializers import items
 from rest.serializers import annotations as annotation_serializers
 from rest.serializers import tags
 from rest.serializers import SerializerMappingMixin
 from rest.serializers import SerializerMapping
+
+from rest.permissions import PermissionMapping
+from rest.permissions import PermissionMappingMixin
+from rest.permissions import IsAuthenticated
+from rest.permissions import IsAdmin
+from rest.permissions import IsCurator
+from rest.permissions import IsModel
+from rest.permissions import IsSpecialUser
+from rest.permissions import items as permissions
+
 from rest.filters import ItemFilter
 from rest.filters import AnnotationFilter
 from rest.utils import Actions
@@ -31,6 +43,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
                   mixins.DestroyModelMixin,
                   mixins.ListModelMixin,
                   SerializerMappingMixin,
+                  PermissionMappingMixin,
                   AdditionalActionsMixin,
                   GenericViewSet):
     filterset_class = ItemFilter
@@ -47,6 +60,93 @@ class ItemViewSet(mixins.UpdateModelMixin,
             add_tag=tags.SelectSerializer,
             remove_tag=tags.SelectSerializer
         ))
+    permission_mapping = PermissionMapping({
+        Actions.UPDATE: [
+            IsAuthenticated,
+            (
+                permissions.IsCreator |
+                permissions.HasUpdatePermission |
+                IsAdmin
+            )
+        ],
+        Actions.RETRIEVE: [
+            IsAuthenticated,
+            (
+                permissions.IsCreator |
+                permissions.HasViewPermission |
+                permissions.IsCollectionAdmin |
+                permissions.IsCollectionTypeAdmin |
+                permissions.ItemIsOpenToView |
+                IsSpecialUser
+            )
+        ],
+        Actions.DESTROY: [
+            IsAuthenticated,
+            (
+                permissions.IsCreator |
+                IsAdmin
+            )
+        ],
+        Actions.LIST: IsAuthenticated,
+        'annotations': [
+            IsAuthenticated,
+            (
+                permissions.IsCreator |
+                permissions.HasViewAnnotationsPermission |
+                permissions.IsCollectionAdmin |
+                permissions.IsCollectionTypeAdmin |
+                permissions.ItemIsOpenToViewAnnotations |
+                IsSpecialUser
+            )
+        ],
+        'add_annotation': [
+            IsAuthenticated,
+            (
+                permissions.IsCreator |
+                permissions.HasAddAnnotationPermission |
+                permissions.IsCollectionAdmin |
+                permissions.IsCollectionTypeAdmin |
+                permissions.ItemIsOpenToAnnotate |
+                IsCurator |
+                IsModel |
+                IsAdmin
+            )
+        ],
+        'add_tag': [
+            IsAuthenticated,
+            (
+                permissions.IsCreator |
+                IsCurator |
+                IsAdmin
+            )
+        ],
+        'remove_tag': [
+            IsAuthenticated,
+            (
+                permissions.IsCreator |
+                IsCurator |
+                IsAdmin
+            )
+        ],
+        'upload': [
+            IsAuthenticated,
+            (
+                permissions.IsCreator |
+                IsAdmin
+            )
+        ],
+        'download': [
+            IsAuthenticated,
+            (
+                permissions.IsCreator |
+                permissions.HasDownloadPermission |
+                permissions.IsCollectionAdmin |
+                permissions.IsCollectionTypeAdmin |
+                permissions.ItemIsOpenToDownload |
+                IsSpecialUser
+            )
+        ],
+    })
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -73,7 +173,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
 
     @action(detail=True, methods=['POST'])
     def add_tag(self, request, pk=None):
-        return self.add_related_object_view(db.Tag, 'tag')
+        return self.add_related_object_view(Tag, 'tag')
 
     @action(detail=True, methods=['POST'])
     def remove_tag(self, request, pk=None):
@@ -121,16 +221,16 @@ class ItemViewSet(mixins.UpdateModelMixin,
     def get_queryset_for_additional_actions(self):
         if self.action == 'annotations':
             item_pk = self.kwargs['pk']
-            queryset = db.Annotation.objects.filter(item=item_pk)
+            queryset = Annotation.objects.filter(item=item_pk)
             return queryset
 
-        return db.Item.objects.all()
+        return Item.objects.all()
 
     def get_queryset_for_default_actions(self):
         try:
             user = self.request.user
         except AttributeError:
-            return db.Item.objects.none()
+            return Item.objects.none()
 
         is_special_user = (
             user.is_superuser |
@@ -152,11 +252,14 @@ class ItemViewSet(mixins.UpdateModelMixin,
 
         perm = Permission.objects.get(codename='view_collection_items')
         collections_with_permission = (
-            db.CollectionUser.filter(
+            CollectionUser.objects
+            .filter(
                 user=user.pk,
                 role__in=perm.role_set.all()
-            ).select_related('collection')
+            ).values('collection')
         )
+        # TODO
+        # Check that this query is working
 
         is_in_allowed_collection = Q(
             sampling_event__collection__in=collections_with_permission)
@@ -167,8 +270,8 @@ class ItemViewSet(mixins.UpdateModelMixin,
             is_in_allowed_collection
         )
 
-        queryset = db.Item.objects.filter(filter_query)
+        queryset = Item.objects.filter(filter_query)
         return queryset
 
     def get_full_queryset(self):
-        return db.Item.objects.all()
+        return Item.objects.all()

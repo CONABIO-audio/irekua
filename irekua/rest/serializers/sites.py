@@ -7,6 +7,15 @@ from . import site_types
 from . import users
 
 
+class SelectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = db.Site
+        fields = (
+            'url',
+            'id',
+        )
+
+
 class ListSerializer(serializers.HyperlinkedModelSerializer):
     site_type = site_types.ListSerializer(many=False, read_only=True)
 

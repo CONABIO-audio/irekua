@@ -10,7 +10,11 @@ from rest.serializers import event_types
 from rest.serializers import term_types
 from rest.serializers import SerializerMapping
 from rest.serializers import SerializerMappingMixin
-from rest.permissions import IsAdmin, ReadOnly
+
+from rest.permissions import IsAdmin
+from rest.permissions import IsDeveloper
+from rest.permissions import ReadOnly
+
 from rest.filters import EventTypeFilter
 
 from .utils import AdditionalActionsMixin

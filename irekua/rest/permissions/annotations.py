@@ -1,37 +1,66 @@
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import BasePermission
 
 
-class CanUpdate(IsAuthenticated):
-    def has_permission(self, request, view):
+class IsCreator(BasePermission):
+    def has_object_permission(self, request, view, obj):
         user = request.user
-        return True
+        return obj.created_by == user
 
 
-class CanRetrieve(IsAuthenticated):
-    def has_permission(self, request, view):
+class IsCollectionAdmin(BasePermission):
+    def has_object_permission(self, request, view, obj):
         user = request.user
-        return True
+
+        item = obj.item
+        sampling_event = item.sampling_event
+        collection = sampling_event.collection
+
+        return collection.is_collection_admin(user)
 
 
-class CanDestroy(IsAuthenticated):
-    def has_permission(self, request, view):
+class IsCollectionTypeAdmin(BasePermission):
+    def has_object_permission(self, request, view, obj):
         user = request.user
-        return True
+
+        item = obj.item
+        sampling_event = item.sampling_event
+        collection = sampling_event.collection
+        collection_type = collection.collection_type
+
+        return collection_type.is_admin(user)
 
 
-class CanList(IsAuthenticated):
-    def has_permission(self, request, view):
+class HasUpdatePermission(BasePermission):
+    def has_object_permission(self, request, view, obj):
         user = request.user
-        return True
+
+        item = obj.item
+        sampling_event = item.sampling_event
+        collection = sampling_event.collection
+
+        return collection.has_permission(
+            user, 'change_collection_annotations')
 
 
-class CanListVotes(IsAuthenticated):
-    def has_permission(self, request, view):
+class HasViewPermission(BasePermission):
+    def has_object_permission(self, request, view, obj):
         user = request.user
-        return True
+
+        item = obj.item
+        sampling_event = item.sampling_event
+        collection = sampling_event.collection
+
+        return collection.has_permission(
+            user, 'view_collection_annotations')
 
 
-class CanVote(IsAuthenticated):
-    def has_permission(self, request, view):
+class HasVotePermission(BasePermission):
+    def has_object_permission(self, request, view, obj):
         user = request.user
-        return True
+
+        item = obj.item
+        sampling_event = item.sampling_event
+        collection = sampling_event.collection
+
+        return collection.has_permission(
+            user, 'add_collection_annotation_vote')

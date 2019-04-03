@@ -49,7 +49,7 @@ class CollectionSite(models.Model):
         )
 
     def __str__(self):
-        msg = _('Site %(site)s of collection %(collection)')
+        msg = _('Site %(site)s of collection %(collection)s')
         params = dict(
             site=str(self.site),
             collection=str(self.collection))

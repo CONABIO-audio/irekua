@@ -86,3 +86,7 @@ class Institution(models.Model):
         if self.subdependency is not None and self.subdependency != '':
             name += ' - ' + self.subdependency
         return name
+
+    def has_user(self, user):
+        queryset = self.user_set.filter(id=user.id)
+        return queryset.exists()

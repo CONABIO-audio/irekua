@@ -3,15 +3,27 @@ from __future__ import unicode_literals
 
 from rest_framework import serializers
 
-import database.models as db
+from database.models import Collection
+from database.models import CollectionUser
+
 from . import collection_types
 from . import institutions
 from . import licences
+from . import collection_users
+
+
+class SelectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Collection
+        fields = (
+            'url',
+            'id',
+        )
 
 
 class ListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.Collection
+        model = Collection
         fields = (
             'url',
             'name',
@@ -33,7 +45,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
         read_only=True)
 
     class Meta:
-        model = db.Collection
+        model = Collection
         fields = (
             'url',
             'name',
@@ -50,8 +62,12 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CreateSerializer(serializers.ModelSerializer):
+    user_data = collection_users.CreateSerializer(
+        many=False,
+        read_only=False)
+
     class Meta:
-        model = db.Collection
+        model = Collection
         fields = (
             'name',
             'collection_type',
@@ -59,5 +75,35 @@ class CreateSerializer(serializers.ModelSerializer):
             'logo',
             'metadata',
             'institution',
+            'user_data',
+        )
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+
+        user_data = validated_data.pop('user_data')
+        collection = Collection.objects.create(**validated_data)
+
+        user_data['user'] = user
+        user_data['collection'] = collection
+        user_data['is_admin'] = True
+        CollectionUser.objects.create(**user_data)
+
+        # Strange loading condition requires this line to be called
+        # in order to correctly return parsed data in HTTP response
+        self.data
+
+        return collection
+
+
+class UpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Collection
+        fields = (
+            'name',
+            'collection_type',
+            'description',
             'logo',
+            'metadata',
+            'institution',
         )

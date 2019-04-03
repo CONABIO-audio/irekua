@@ -131,6 +131,9 @@ class Collection(models.Model):
                 "change_collection_sites",
                 _("Can change sites in collection")),
             (
+                "change_collection_users",
+                _("Can change user info in collection")),
+            (
                 "change_collection_items",
                 _("Can change items in collection")),
             (
@@ -221,3 +224,29 @@ class Collection(models.Model):
                 licence=str(licence),
                 collection=str(self))
             raise ValidationError(msg, params=params)
+
+    def is_admin(self, user):
+        try:
+            collectionuser = CollectionUser.objects.get(
+                collection=self,
+                user=user)
+        except CollectionUser.DoesNotExist:
+            return False
+
+        return collectionuser.is_admin
+
+    def has_user(self, user):
+        return CollectionUser.objects.filter(
+            collection=self,
+            user=user).exists()
+
+    def has_permission(self, user, codename):
+        try:
+            collectionuser = CollectionUser.objects.get(
+                collection=self,
+                user=user)
+            role = collectionuser.role
+        except CollectionUser.DoesNotExist:
+            return False
+
+        return role.has_permission(codename)

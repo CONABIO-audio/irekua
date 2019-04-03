@@ -37,10 +37,10 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    site = sites.DetailSerializer(
+    site = sites.SelectSerializer(
         many=False,
         read_only=True)
-    collection = data_collections.ListSerializer(
+    collection = data_collections.SelectSerializer(
         many=False,
         read_only=True)
 
@@ -48,6 +48,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
         model = db.CollectionSite
         fields = (
             'url',
+            'id',
             'collection',
             'site',
             'internal_id',

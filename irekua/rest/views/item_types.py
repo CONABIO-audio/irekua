@@ -4,12 +4,18 @@ from __future__ import unicode_literals
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 
-import database.models as db
+from database.models import ItemType
+from database.models import EventType
+
 from rest.serializers import item_types
 from rest.serializers import event_types
 from rest.serializers import SerializerMapping
 from rest.serializers import SerializerMappingMixin
-from rest.permissions import IsAdmin, ReadOnly
+
+from rest.permissions import IsAdmin
+from rest.permissions import IsDeveloper
+from rest.permissions import ReadOnly
+
 from rest.filters import ItemTypeFilter
 from .utils import AdditionalActionsMixin
 
@@ -17,10 +23,13 @@ from .utils import AdditionalActionsMixin
 class ItemTypeViewSet(SerializerMappingMixin,
                       AdditionalActionsMixin,
                       ModelViewSet):
-    queryset = db.ItemType.objects.all()
-    permission_classes = (IsAdmin | ReadOnly, )
-    search_fields = ('name', 'media_type', )
+    queryset = ItemType.objects.all()
     filterset_class = ItemTypeFilter
+    search_fields = (
+        'name',
+        'media_type',
+    )
+
     serializer_mapping = (
         SerializerMapping
         .from_module(item_types)
@@ -28,11 +37,12 @@ class ItemTypeViewSet(SerializerMappingMixin,
             add_event_types=event_types.SelectSerializer,
             remove_event_types=event_types.SelectSerializer
         ))
+    permission_classes = (IsAdmin | IsDeveloper | ReadOnly, )
 
     @action(detail=True, methods=['POST'])
     def add_event_types(self, request, pk=None):
         return self.add_related_object_view(
-            db.EventType,
+            EventType,
             'event_type')
 
     @action(detail=True, methods=['POST'])

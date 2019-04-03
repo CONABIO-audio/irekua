@@ -8,9 +8,11 @@ import database.models as db
 from rest.serializers import annotation_types
 from rest.serializers import SerializerMappingMixin
 from rest.serializers import SerializerMapping
+
 from rest.permissions import PermissionMapping
 from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsDeveloper, IsAdmin, ReadOnly
+
 from rest.filters import AnnotationTypeFilter
 
 

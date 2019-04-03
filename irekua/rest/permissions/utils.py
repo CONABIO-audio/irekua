@@ -53,5 +53,8 @@ class PermissionMappingMixin(object):
         raise NotImplementedError
 
     def get_permissions(self):
+        if self.action is None:
+            return []
+
         permission_classes = self.permission_mapping.get_permissions(self.action)
         return [permission() for permission in permission_classes]

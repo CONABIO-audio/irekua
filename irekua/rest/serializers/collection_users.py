@@ -70,3 +70,11 @@ class CreateSerializer(serializers.ModelSerializer):
         collection = self.context['collection']
         validated_data['collection'] = collection
         return super().create(validated_data)
+
+
+class AdminSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = db.CollectionUser
+        fields = (
+            'is_admin',
+        )

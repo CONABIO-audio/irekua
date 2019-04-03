@@ -67,3 +67,7 @@ class Role(models.Model):
     def remove_permission(self, permission):
         self.permissions.remove(permission)
         self.save()
+
+    def has_permission(self, codename):
+        return self.permissions.filter(
+            codename=codename).exists()

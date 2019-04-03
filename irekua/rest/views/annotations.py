@@ -11,11 +11,17 @@ from rest.serializers import annotations
 from rest.serializers import annotation_votes
 from rest.serializers import SerializerMappingMixin
 from rest.serializers import SerializerMapping
+
 from rest.filters import AnnotationFilter
 from rest.utils import Actions
+
 from rest.permissions import PermissionMapping
 from rest.permissions import PermissionMappingMixin
-from rest.permissions import annotations as annotation_permissions
+from rest.permissions import IsAuthenticated
+from rest.permissions import IsAdmin
+from rest.permissions import IsCurator
+from rest.permissions import IsSpecialUser
+from rest.permissions import annotations as permissions
 
 from .utils import AdditionalActionsMixin
 
@@ -31,14 +37,6 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
     queryset = db.Annotation.objects.all()
     filterset_class = AnnotationFilter
 
-    permission_mapping = PermissionMapping({
-        Actions.UPDATE: annotation_permissions.CanUpdate,
-        Actions.RETRIEVE: annotation_permissions.CanRetrieve,
-        Actions.DESTROY: annotation_permissions.CanDestroy,
-        Actions.LIST: annotation_permissions.CanList,
-        'vote': annotation_permissions.CanVote,
-        'votes': annotation_permissions.CanListVotes,
-    })
     serializer_mapping = (
         SerializerMapping
         .from_module(annotations)
@@ -46,6 +44,52 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
             vote=annotation_votes.CreateSerializer,
             votes=annotation_votes.ListSerializer
         ))
+
+    permission_mapping = PermissionMapping({
+        Actions.UPDATE: [
+            IsAuthenticated,
+            (
+                permissions.IsCreator |
+                permissions.HasUpdatePermission |
+                IsCurator |
+                IsAdmin
+            ),
+        ],
+        Actions.RETRIEVE: [
+            IsAuthenticated,
+            (
+                permissions.IsCreator |
+                permissions.HasViewPermission |
+                permissions.IsCollectionAdmin |
+                permissions.IsCollectionTypeAdmin |
+                IsSpecialUser
+            ),
+        ],
+        Actions.DESTROY: [
+            IsAuthenticated,
+            permissions.IsCreator | IsAdmin,
+        ],
+        Actions.LIST: IsAuthenticated,
+        'vote': [
+            IsAuthenticated,
+            (
+                permissions.IsCreator |
+                permissions.HasVotePermission |
+                IsCurator |
+                IsAdmin
+            ),
+        ],
+        'votes': [
+            IsAuthenticated,
+            (
+                permissions.IsCreator |
+                permissions.HasViewPermission |
+                permissions.IsCollectionAdmin |
+                permissions.IsCollectionTypeAdmin |
+                IsSpecialUser
+            ),
+        ],
+    })
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

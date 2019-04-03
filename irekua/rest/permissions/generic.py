@@ -1,8 +1,6 @@
-from rest_framework.permissions import (
-    BasePermission,
-    IsAuthenticated,
-    SAFE_METHODS
-)
+from rest_framework.permissions import BasePermission
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import SAFE_METHODS
 
 
 class ReadOnly(IsAuthenticated):
@@ -63,62 +61,31 @@ class IsUnauthenticated(IsAuthenticated):
         return not super(IsUnauthenticated, self).has_permission(request, view)
 
 
-class IsCollectionUser(BasePermission):
-    def has_permission(self, request, view):
-        return True
-
-
-class IsCollectionTypeCoordinator(BasePermission):
-    def has_permission(self, request, view):
-        return True
-
-
 class IsDeveloper(BasePermission):
     def has_permission(self, request, view):
         user = request.user
-        try:
-            return user.is_developer
-        except AttributeError:
-            return False
+        return user.is_developer
 
 
 class IsModel(BasePermission):
     def has_permission(self, request, view):
         user = request.user
-        try:
-            return user.is_model
-        except AttributeError:
-            return False
+        return user.is_model
 
 
 class IsCurator(BasePermission):
     def has_permission(self, request, view):
         user = request.user
-        try:
-            return user.is_curator
-        except AttributeError:
-            return False
+        return user.is_curator
 
 
 class IsAdmin(BasePermission):
     def has_permission(self, request, view):
         user = request.user
-        try:
-            return user.is_superuser | user.is_staff
-        except AttributeError:
-            return False
+        return user.is_superuser
 
 
-class IsFromInstitution(IsAuthenticated):
-    def has_object_permission(self, request, view, obj):
-        if request.method in SAFE_METHODS:
-            return True
-
+class IsSpecialUser(BasePermission):
+    def has_permission(self, request, view):
         user = request.user
-        if user.is_superuser:
-            return True
-
-        if user.institution is None:
-            return False
-
-        return user.institution == obj
+        return user.is_superuser | user.is_curator | user.is_model | user.is_developer

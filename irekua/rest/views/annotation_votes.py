@@ -9,11 +9,14 @@ from rest_framework.viewsets import GenericViewSet
 from rest.serializers import annotation_votes
 from rest.serializers import SerializerMappingMixin
 from rest.serializers import SerializerMapping
+
 from rest.permissions import PermissionMappingMixin
 from rest.permissions import PermissionMapping
 from rest.permissions import IsAdmin
+from rest.permissions import IsSpecialUser
 from rest.permissions import IsAuthenticated
 from rest.permissions import annotation_votes as permissions
+
 from rest.utils import Actions
 
 
@@ -28,16 +31,20 @@ class AnnotationVoteViewSet(mixins.UpdateModelMixin,
     serializer_mapping = SerializerMapping.from_module(annotation_votes)
     permission_mapping = PermissionMapping({
         Actions.UPDATE: [
-            IsAdmin | permissions.IsCreator,
-            IsAuthenticated],
+            IsAuthenticated,
+            permissions.IsCreator | IsAdmin,
+        ],
         Actions.RETRIEVE: [
+            IsAuthenticated,
             (
-                IsAdmin |
                 permissions.HasViewPermission |
                 permissions.IsCreator |
-                permissions.IsOpen),
-            IsAuthenticated],
+                permissions.IsOpen |
+                IsSpecialUser
+            ),
+        ],
         Actions.DESTROY: [
-            IsAdmin | permissions.IsCreator,
-            IsAuthenticated],
+            IsAuthenticated,
+            permissions.IsCreator | IsAdmin,
+        ],
     })

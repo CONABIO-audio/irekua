@@ -4,23 +4,32 @@ from __future__ import unicode_literals
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 
-import database.models as db
+from database.models import MetaCollection
+from database.models import Item
 
 from rest.serializers import metacollections
 from rest.serializers import items as item_serializers
 from rest.serializers import SerializerMapping
 from rest.serializers import SerializerMappingMixin
-from rest.permissions import IsAdmin, IsDeveloper, IsModel, ReadOnly
+
+from rest.permissions import IsAdmin
+from rest.permissions import IsDeveloper
+from rest.permissions import IsSpecialUser
+from rest.permissions import PermissionMapping
+from rest.permissions import PermissionMappingMixin
+from rest.permissions import IsAuthenticated
+
 from rest.filters import MetaCollectionFilter
+from rest.utils import Actions
 
 from .utils import AdditionalActionsMixin
 
 
 class MetaCollectionViewSet(SerializerMappingMixin,
                             AdditionalActionsMixin,
+                            PermissionMappingMixin,
                             ModelViewSet):
-    queryset = db.MetaCollection.objects.all()
-    permission_classes = (IsAdmin | IsDeveloper | IsModel | ReadOnly, )
+    queryset = MetaCollection.objects.all()
     filterset_class = MetaCollectionFilter
     search_fields = ('name', )
 
@@ -33,10 +42,27 @@ class MetaCollectionViewSet(SerializerMappingMixin,
             remove_item=item_serializers.SelectSerializer
         ))
 
+    permission_mapping = PermissionMapping({
+        Actions.LIST: [
+            IsAuthenticated
+        ],
+        Actions.RETRIEVE: [
+            IsAuthenticated,
+            IsSpecialUser
+        ],
+        'items': [
+            IsAuthenticated,
+            IsSpecialUser
+        ],
+    }, default=[
+        IsAuthenticated,
+        IsDeveloper | IsAdmin
+    ])
+
     @action(detail=True, methods=['POST'])
     def add_item(self, request, pk=None):
         return self.add_related_object_view(
-            db.Item,
+            Item,
             'item')
 
     @action(detail=True, methods=['POST'])

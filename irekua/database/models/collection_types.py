@@ -15,6 +15,28 @@ from .collection_item_types import CollectionItemType
 
 
 class CollectionType(models.Model):
+    """
+    *Collection types* function as a templates for collection creation. Its
+    utility stems from the fact that the configuration of a collection can be
+    a tedious process and usually some preconfigured option suffices for the
+    current need. Hence a collection type contains all collection behaviour
+    configuration. This amounts to the following specifications:
+
+    1. Metadata:
+        Any collection created with this template must provide further metadata
+        as specified by the collection type metadata schema.
+
+    2. Creation Configuration:
+        Sometimes collection types can also serve to categorize collections and
+        thus creation of collections of this types must not be free. A flag
+        (anyone_can_create) has been included to indicate whether any user can
+        create a collection of this type. If creation is restricted, then
+        administrators must be specified. Administrators will have all permissions
+        on children collections, and they alone have the permissions to create
+        collections of this type.
+
+        # TODO
+    """
     name = models.CharField(
         max_length=128,
         primary_key=True,
@@ -447,3 +469,6 @@ class CollectionType(models.Model):
     def remove_administrator(self, user):
         self.administrators.remove(user)
         self.save()
+
+    def is_admin(self, user):
+        return self.administrators.filter(id=user.id).exists()
