@@ -146,6 +146,12 @@ router.register(
     basename='user')
 
 
+router.register(
+    r'full_items',
+    views.FullItemViewSet,
+    basename='full-item')
+
+
 urlpatterns = [
     url(r'^', include(router.urls)),
 ]

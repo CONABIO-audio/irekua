@@ -34,6 +34,8 @@ from .secondary_items import SecondaryItemViewSet
 from .annotations import AnnotationViewSet
 from .annotation_votes import AnnotationVoteViewSet
 
+from .full_item import FullItemViewSet
+
 
 __all__ = [
     'AnnotationToolViewSet',
@@ -71,4 +73,6 @@ __all__ = [
     'SecondaryItemViewSet',
     'AnnotationViewSet',
     'AnnotationVoteViewSet',
+
+    'FullItemViewSet',
 ]

@@ -32,13 +32,13 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    device = physical_devices.ListSerializer(many=False, read_only=True)
+    physical_device = physical_devices.ListSerializer(many=False, read_only=True)
 
     class Meta:
         model = db.CollectionDevice
         fields = (
             'url',
-            'device',
+            'physical_device',
             'internal_id',
             'metadata',
             'created_on',
@@ -50,7 +50,7 @@ class CreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = db.CollectionDevice
         fields = (
-            'device',
+            'physical_device',
             'metadata',
             'internal_id',
         )
