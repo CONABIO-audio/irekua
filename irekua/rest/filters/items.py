@@ -22,6 +22,6 @@ class ItemFilter(BaseFilter):
             'sampling_event__collection__name',
             'sampling_event__collection__collection_type',
             'sampling_event__site__site_type__name',
-            'sampling_event__device__device__device_type__name',
-            'sampling_event__device__device__brand__name',
+            'sampling_event__physical_device__device__device_type__name',
+            'sampling_event__physical_device__device__brand__name',
         )

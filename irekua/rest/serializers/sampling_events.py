@@ -27,7 +27,7 @@ class SelectSerializer(serializers.ModelSerializer):
 
 class ListSerializer(serializers.HyperlinkedModelSerializer):
     site = sites.ListSerializer(many=False, read_only=True)
-    device = physical_devices.SelectSerializer(many=False, read_only=True)
+    physical_device = physical_devices.SelectSerializer(many=False, read_only=True)
 
     class Meta:
         model = db.SamplingEvent
@@ -35,7 +35,7 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'sampling_event_type',
             'site',
-            'device',
+            'physical_device',
             'started_on',
             'ended_on',
         )
@@ -61,7 +61,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'sampling_event_type',
             'site',
-            'device',
+            'physical_device',
             'configuration',
             'commentaries',
             'metadata',
@@ -79,7 +79,7 @@ class CreateSerializer(serializers.ModelSerializer):
         fields = (
             'sampling_event_type',
             'site',
-            'device',
+            'physical_device',
             'configuration',
             'commentaries',
             'metadata',
@@ -94,11 +94,11 @@ class CreateSerializer(serializers.ModelSerializer):
         try:
             collection = self.context['collection']
             sites = self.fields['site']
-            devices = self.fields['device']
+            physical_devices = self.fields['physical_device']
             licences = self.fields['licence']
 
             sites.queryset = collection.sites.all()
-            devices.queryset = collection.devices.all()
+            physical_devices.queryset = collection.physical_devices.all()
             licences.queryset = collection.licence_set.all()
         except (KeyError, AttributeError):
             pass

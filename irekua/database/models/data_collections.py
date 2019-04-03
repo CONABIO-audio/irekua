@@ -59,10 +59,10 @@ class Collection(models.Model):
         blank=True,
         null=True)
 
-    devices = models.ManyToManyField(
+    physical_devices = models.ManyToManyField(
         'PhysicalDevice',
         through='CollectionDevice',
-        through_fields=('collection', 'device'),
+        through_fields=('collection', 'physical_device'),
         blank=True)
     sites = models.ManyToManyField(
         'Site',
@@ -180,10 +180,10 @@ class Collection(models.Model):
             internal_id=internal_id,
             metadata=metadata)
 
-    def add_device(self, device, internal_id, metadata):
+    def add_device(self, physical_device, internal_id, metadata):
         CollectionDevice.objects.create(
             collection=self,
-            device=device,
+            physical_device=physical_device,
             internal_id=internal_id,
             metadata=metadata)
 

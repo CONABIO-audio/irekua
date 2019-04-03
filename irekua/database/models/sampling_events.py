@@ -25,11 +25,11 @@ class SamplingEvent(models.Model):
         on_delete=models.PROTECT,
         blank=True,
         null=True)
-    device = models.ForeignKey(
+    physical_device = models.ForeignKey(
         'PhysicalDevice',
-        db_column='device_id',
-        verbose_name=_('device'),
-        help_text=_('Reference to device used on sampling event'),
+        db_column='physical_device_id',
+        verbose_name=_('physical device'),
+        help_text=_('Reference to physical device used on sampling event'),
         on_delete=models.PROTECT,
         blank=True,
         null=True)
@@ -145,7 +145,7 @@ class SamplingEvent(models.Model):
             raise ValidationError({'site': error})
 
         try:
-            self.device.validate_configuration(self.configuration)
+            self.physical_device.validate_configuration(self.configuration)
         except ValidationError as error:
             raise ValidationError({'configuration': error})
 

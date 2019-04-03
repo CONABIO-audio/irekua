@@ -9,11 +9,11 @@ from database.utils import (
 
 
 class CollectionDevice(models.Model):
-    device = models.ForeignKey(
+    physical_device = models.ForeignKey(
         'PhysicalDevice',
         on_delete=models.PROTECT,
-        db_column='device_id',
-        verbose_name=_('device'),
+        db_column='physical_device_id',
+        verbose_name=_('physical device'),
         help_text=_('Reference to physical device'),
         blank=False,
         null=False)
@@ -57,20 +57,20 @@ class CollectionDevice(models.Model):
         verbose_name_plural = _('Collection Devices')
 
         unique_together = (
-            ('device', 'collection'),
+            ('physical_device', 'collection'),
         )
 
     def __str__(self):
         msg = 'Device %(device_id)s from collection %(collection_id)s'
         params = dict(
-            device_id=str(self.device),
+            device_id=str(self.physical_device),
             collection_id=str(self.collection))
         return msg % params
 
     def clean(self):
         try:
             device_type = self.collection.validate_and_get_device_type(
-                self.device.device.device_type)
+                self.physical_device.device.device_type)
         except ValidationError as error:
             raise ValidationError({'device': str(error)})
 

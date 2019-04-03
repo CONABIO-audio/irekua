@@ -46,9 +46,9 @@ class SamplingEventFilter(BaseFilter):
             'sampling_event_type__name',
             'site__site_type__name',
             'site__locality',
-            'device__device__device_type__name',
-            'device__device__brand__name',
-            'device__device__model',
+            'physical_device__device__device_type__name',
+            'physical_device__device__brand__name',
+            'physical_device__device__model',
             'collection__collection_type__name',
             'collection__name',
         )

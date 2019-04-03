@@ -193,6 +193,7 @@ class CollectionType(models.Model):
         verbose_name=_('device types'),
         help_text=_('Types of devices valid for collections of type'),
         blank=True)
+
     roles = models.ManyToManyField(
         'Role',
         through='CollectionRole',
