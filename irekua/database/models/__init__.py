@@ -27,6 +27,8 @@ from .physical_devices import PhysicalDevice
 from .roles import Role
 from .sampling_events import SamplingEvent
 from .sampling_event_types import SamplingEventType
+from .sampling_event_devices import SamplingEventDevice
+from .sampling_event_type_devices import SamplingEventTypeDeviceType
 from .secondary_items import SecondaryItem
 from .site_types import SiteType
 from .sites import Site
@@ -81,4 +83,6 @@ __all__ = [
     'TermType',
     'User',
     'Group',
+    'SamplingEventDevice',
+    'SamplingEventTypeDeviceType',
 ]

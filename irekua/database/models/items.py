@@ -60,7 +60,7 @@ class Item(models.Model):
         help_text=_('Hash of resource file'),
         max_length=64,
         unique=True,
-        blank=True,
+        blank=  True,
         null=False)
     item_type = models.ForeignKey(
         'ItemType',
@@ -83,11 +83,11 @@ class Item(models.Model):
         help_text=_('Information of resource file'),
         blank=True,
         null=False)
-    sampling_event = models.ForeignKey(
-        'SamplingEvent',
-        db_column='sampling_event_id',
-        verbose_name=_('sampling event'),
-        help_text=_('Sampling event associated with item'),
+    sampling_event_device = models.ForeignKey(
+        'SamplingEventDevice',
+        db_column='sampling_event_device_id',
+        verbose_name=_('sampling event device'),
+        help_text=_('Sampling event device used to create item'),
         on_delete=models.PROTECT,
         blank=False,
         null=False)
@@ -126,9 +126,9 @@ class Item(models.Model):
         on_delete=models.PROTECT,
         blank=True,
         null=True)
+
     tags = models.ManyToManyField(
         'Tag',
-        db_column='tags',
         verbose_name=_('tags'),
         help_text=_('Tags for item'),
         blank=True)
@@ -138,6 +138,15 @@ class Item(models.Model):
         help_text=_('Types of event for which item has been fully annotated'),
         blank=True)
 
+    created_by = models.ForeignKey(
+        'User',
+        related_name='item_created_by',
+        on_delete=models.PROTECT,
+        db_column='created_by',
+        verbose_name=_('create by'),
+        help_text=_('Creator of item'),
+        blank=False,
+        null=False)
     created_on = models.DateTimeField(
         db_column='created_on',
         verbose_name=_('created on'),
@@ -153,6 +162,7 @@ class Item(models.Model):
     modified_by = models.ForeignKey(
         'User',
         on_delete=models.PROTECT,
+        related_name='item_modified_by',
         db_column='modified_by',
         verbose_name=_('modified by'),
         help_text=_('Last user that modified this item info'),
@@ -182,7 +192,9 @@ class Item(models.Model):
         except ValidationError as error:
             raise ValidationError({'media_info': error})
 
-        collection = self.sampling_event.collection
+        collection = (
+            self.sampling_event_device
+            .sampling_event.collection)
 
         try:
             collection.validate_and_get_sampling_event_type(
@@ -203,7 +215,7 @@ class Item(models.Model):
                 raise ValidationError({'metadata': error})
 
         try:
-            collection.validate_and_get_licence(self.licence)
+            self.validate_licence()
         except ValidationError as error:
             raise ValidationError({'licence': error})
 
@@ -232,13 +244,18 @@ class Item(models.Model):
         return self.item_type.validate_and_get_event_type(event_type)
 
     def validate_licence(self):
-        if not self.licence and self.sampling_event.licence is None:
+        if self.licence is not None:
+            return
+
+        if self.sampling_event_device.licence is None:
             msg = _(
                 'Licence was not provided to item nor to sampling event')
             raise ValidationError({'licence': msg})
 
-        if not self.licence:
-            self.licence = self.sampling_event.licence
+        self.licence = self.sampling_event.licence
+
+        collection = self.sampling_event_device.sampling_event.collection
+        collection.validate_and_get_licence(self.licence)
 
     def validate_hash_and_filesize(self):
         if self.item_file.name is None and self.hash is None:

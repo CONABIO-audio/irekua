@@ -3,9 +3,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from database.utils import (
-    empty_JSON,
-)
+from database.utils import empty_JSON
 
 
 class SamplingEvent(models.Model):
@@ -25,21 +23,7 @@ class SamplingEvent(models.Model):
         on_delete=models.PROTECT,
         blank=True,
         null=True)
-    physical_device = models.ForeignKey(
-        'PhysicalDevice',
-        db_column='physical_device_id',
-        verbose_name=_('physical device'),
-        help_text=_('Reference to physical device used on sampling event'),
-        on_delete=models.PROTECT,
-        blank=True,
-        null=True)
-    configuration = JSONField(
-        db_column='configuration',
-        verbose_name=_('configuration'),
-        default=empty_JSON,
-        help_text=_('Configuration on device through the sampling event'),
-        blank=True,
-        null=True)
+
     commentaries = models.TextField(
         db_column='commentaries',
         verbose_name=_('commentaries'),
@@ -119,13 +103,13 @@ class SamplingEvent(models.Model):
         ordering = ['-started_on']
 
     def __str__(self):
-        msg = _('Sampling event {id} on site {site}: {start} - {end}')
-        msg = msg.format(
+        msg = _('Sampling event %(id)s on site %(site)s: %(start)s - %(end)s')
+        params = dict(
             id=str(self.id),
             site=str(self.site),
             start=str(self.started_on),
             end=str(self.ended_on))
-        return msg
+        return msg % params
 
     def clean(self):
         try:
@@ -134,19 +118,15 @@ class SamplingEvent(models.Model):
             raise ValidationError({'metadata': error})
 
         try:
-            self.sampling_event_type.validate_device_type(
-                self.device.device.device_type)
-        except ValidationError as error:
-            raise ValidationError({'device': error})
-
-        try:
             self.sampling_event_type.validate_site_type(self.site.site_type)
         except ValidationError as error:
             raise ValidationError({'site': error})
 
-        try:
-            self.physical_device.validate_configuration(self.configuration)
-        except ValidationError as error:
-            raise ValidationError({'configuration': error})
+        if self.licence:
+            collection = self.collection
+            try:
+                collection.validate_and_get_licence(self.licence)
+            except ValidationError as error:
+                raise ValidationError({'licence': error})
 
         super(SamplingEvent, self).clean()

@@ -60,13 +60,13 @@ class SamplingEventType(models.Model):
 
     device_types = models.ManyToManyField(
         'DeviceType',
-        db_column='device_types',
+        through='SamplingEventTypeDeviceType',
+        through_fields=('sampling_event_type', 'device_type'),
         verbose_name=_('device types'),
         help_text=_('Valid device types for this sampling event type'),
         blank=True)
     site_types = models.ManyToManyField(
         'SiteType',
-        db_column='site_types',
         verbose_name=_('site types'),
         help_text=_('Valid site types for this sampling event type'),
         blank=True)
@@ -105,18 +105,20 @@ class SamplingEventType(models.Model):
             params = dict(type=str(self), error=str(error))
             raise ValidationError(msg, params=params)
 
-    def validate_device_type(self, device_type):
+    def validate_and_get_device_type(self, device_type):
         if not self.restrict_device_types:
-            return
+            return None
 
         try:
-            self.device_types.get(name=device_type.name)
+            device_type = self.device_types.get(name=device_type.name)
         except self.device_types.model.DoesNotExist:
             msg = _(
                 'Device type %(device_type) is not valid for sampling '
                 'event of type %(type)s')
             params = dict(device_type=str(device_type), type=str(self))
             raise ValidationError(msg, params=params)
+
+        return device_type
 
     def validate_site_type(self, site_type):
         if not self.restrict_site_types:

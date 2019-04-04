@@ -149,31 +149,26 @@ class CollectionType(models.Model):
 
     site_types = models.ManyToManyField(
         'SiteType',
-        db_column='site_types',
         verbose_name=_('site types'),
         help_text=_('Types of sites valid for collections of type'),
         blank=True)
     annotation_types = models.ManyToManyField(
         'AnnotationType',
-        db_column='annotation_types',
         verbose_name=_('annotation types'),
         help_text=_('Types of annotations valid for collections of type'),
         blank=True)
     licence_types = models.ManyToManyField(
         'LicenceType',
-        db_column='licence_types',
         verbose_name=_('licence types'),
         help_text=_('Types of licences valid for collections of type'),
         blank=True)
     event_types = models.ManyToManyField(
         'EventType',
-        db_column='event_types',
         verbose_name=_('event types'),
         help_text=_('Types of events valid for collections of type'),
         blank=True)
     sampling_event_types = models.ManyToManyField(
         'SamplingEventType',
-        db_column='sampling_event_types',
         verbose_name=_('sampling event types'),
         help_text=_('Types of sampling events valid for collections of type'),
         blank=True)
@@ -181,7 +176,6 @@ class CollectionType(models.Model):
         'ItemType',
         through='CollectionItemType',
         through_fields=('collection_type', 'item_type'),
-        db_column='item_types',
         verbose_name=_('item types'),
         help_text=_('Types of items valid for collections of type'),
         blank=True)
@@ -189,7 +183,6 @@ class CollectionType(models.Model):
         'DeviceType',
         through='CollectionDeviceType',
         through_fields=('collection_type', 'device_type'),
-        db_column='device_types',
         verbose_name=_('device types'),
         help_text=_('Types of devices valid for collections of type'),
         blank=True)
@@ -198,7 +191,6 @@ class CollectionType(models.Model):
         'Role',
         through='CollectionRole',
         through_fields=('collection_type', 'role'),
-        db_column='roles',
         verbose_name=_('roles'),
         help_text=_('Roles valid for collections of type'),
         blank=True)
