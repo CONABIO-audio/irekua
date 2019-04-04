@@ -1,19 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Permission
 from rest_framework import serializers
 
 from database.models import Role
-
-
-class PermissionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Permission
-        fields = (
-            'codename'
-        )
 
 
 class SelectPermissionSerializer(serializers.ModelSerializer):
@@ -51,7 +42,10 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    permissions = PermissionSerializer(many=True, read_only=True)
+    permissions = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='codename')
 
     class Meta:
         model = Role

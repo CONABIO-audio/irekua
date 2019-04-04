@@ -86,9 +86,6 @@ class CreateSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
-        site_type = self.context['site_type']
         user = self.context['request'].user
-
         validated_data['created_by'] = user
-        validated_data['site_type'] = site_type
         return super().create(validated_data)

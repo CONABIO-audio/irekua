@@ -7,6 +7,8 @@ from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
 
+from database.models import CollectionUser
+
 
 def validate_coordinates_and_geometry(geometry, latitude, longitude):
     if geometry.x != longitude or geometry.y != latitude:
@@ -131,10 +133,34 @@ class Site(models.Model):
         super(Site, self).clean()
 
     def has_coordinate_permission(self, user):
-        if user.is_superuser:
+        has_simple_permission = (
+            user.is_superuser |
+            user.is_model |
+            user.is_curator |
+            (self.created_by == user)
+        )
+        if has_simple_permission:
             return True
 
-        if self.created_by == user:
-            return True
+        collections = self.collection_set.all()
+
+        for collection in collections.prefetch_related('collection_type'):
+            collection_type = collection.collection_type
+            queryset = collection_type.administrators.filter(id=user.id)
+            if queryset.exists():
+                return True
+
+        collection_users = CollectionUser.objects.filter(
+            user=user.pk,
+            collection__in=collections)
+
+        if not collection_users.exists():
+            return False
+
+        for collectionuser in collection_users.prefetch_related('role'):
+            role = collectionuser.role
+            queryset = role.permissions.filter(codename='view_collection_sites')
+            if queryset.exists():
+                return True
 
         return False

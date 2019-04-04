@@ -61,10 +61,10 @@ class HasAddUserPermission(BasePermission):
         return obj.has_permission(user, 'add_collection_user')
 
 
-class HasAddSamplingEventPermission(BasePermission):
+class HasAddItemPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method == 'GET':
             return True
 
         user = request.user
-        return obj.has_permission(user, 'add_collection_sampling_event')
+        return obj.has_permission(user, 'add_collection_item')

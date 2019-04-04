@@ -19,7 +19,7 @@ class SelectSerializer(serializers.ModelSerializer):
 
 class ListSerializer(serializers.HyperlinkedModelSerializer):
     source_type = serializers.CharField(
-        read_only=True,
+                read_only=True,
         source='source.term_type.name')
     source_value = serializers.CharField(
         read_only=True,

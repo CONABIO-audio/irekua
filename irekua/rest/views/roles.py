@@ -5,22 +5,26 @@ from django.contrib.auth.models import Permission
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 
-import database.models as db
+from database.models import Role
 
 from rest.serializers import roles
 from rest.serializers import SerializerMapping
 from rest.serializers import SerializerMappingMixin
-from rest.permissions import IsAdmin, ReadOnly
-from rest.filters import RoleFilter
 
+from rest.permissions import PermissionMapping
+from rest.permissions import PermissionMappingMixin
+from rest.permissions import ReadOnly
+from rest.permissions import IsAdmin
+
+from rest.filters import RoleFilter
 from .utils import AdditionalActionsMixin
 
 
 class RoleViewSet(SerializerMappingMixin,
                   AdditionalActionsMixin,
+                  PermissionMappingMixin,
                   ModelViewSet):
-    queryset = db.Role.objects.all()
-    permission_classes = (IsAdmin | ReadOnly, )
+    queryset = Role.objects.all()
     search_fields = ('name', )
     filterset_class = RoleFilter
 
@@ -31,12 +35,12 @@ class RoleViewSet(SerializerMappingMixin,
             add_permission=roles.SelectPermissionSerializer,
             remove_permission=roles.SelectPermissionSerializer
         ))
+    permission_mapping = PermissionMapping(default=IsAdmin | ReadOnly)
 
     @action(detail=True, methods=['POST'])
     def add_permission(self, request, pk=None):
         return self.add_related_object_view(
-            Permission,
-            'permission')
+            Permission, 'permission')
 
     @action(detail=True, methods=['POST'])
     def remove_permission(self, request, pk=None):

@@ -135,7 +135,7 @@ class CollectionViewSet(SerializerMappingMixin,
         'add_sampling_event': [
             IsAuthenticated,
             (
-                permissions.HasAddSamplingEventPermission |
+                permissions.HasAddItemPermission |
                 permissions.IsCollectionAdmin |
                 permissions.IsCollectionTypeAdmin |
                 IsAdmin

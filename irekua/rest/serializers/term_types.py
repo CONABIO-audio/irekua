@@ -37,7 +37,6 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'is_categorical',
             'metadata_schema',
             'synonym_metadata_schema',
-            'term_set',
             'created_on',
             'modified_on',
         )

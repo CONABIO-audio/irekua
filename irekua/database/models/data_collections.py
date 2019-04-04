@@ -125,6 +125,9 @@ class Collection(models.Model):
                 "view_collection_devices",
                 _("Can view devices in collection")),
             (
+                "view_collection_sampling_events",
+                _("Can view sampling event in collection")),
+            (
                 "view_collection_annotations",
                 _("Can view annotations of items in collection")),
             (
@@ -142,6 +145,9 @@ class Collection(models.Model):
             (
                 "change_collection_annotations",
                 _("Can change annotations of items in collection")),
+            (
+                "change_collection_sampling_events",
+                _("Can change sampling events in collection")),
             (
                 "download_collection_items",
                 _("Can download annotation items")),
