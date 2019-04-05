@@ -41,7 +41,8 @@ class CollectionViewSet(SerializerMappingMixin,
         SerializerMapping
         .from_module(data_collections)
         .extend(
-            create_licence=licences.CreateSerializer,
+            licences=licences.ListSerializer,
+            add_licence=licences.CreateSerializer,
             devices=collection_devices.ListSerializer,
             add_device=collection_devices.CreateSerializer,
             sites=collection_sites.ListSerializer,
@@ -67,7 +68,14 @@ class CollectionViewSet(SerializerMappingMixin,
             IsAuthenticated,
             permissions.IsCollectionAdmin | IsAdmin
         ],
-        'create_licence': [
+        'licences': [
+            IsAuthenticated,
+            (
+                permissions.IsCollectionUser |
+                IsSpecialUser
+            ),
+        ],
+        'add_licence': [
             IsAuthenticated,
             (
                 permissions.HasAddLicencePermission |
@@ -160,8 +168,14 @@ class CollectionViewSet(SerializerMappingMixin,
         context['collection'] = collection
         return context
 
-    @action(detail=True, methods=['POST'])
-    def create_licence(self, request, pk=None):
+    @action(detail=True, methods=['GET'])
+    def licences(self, request, pk=None):
+        collection = self.get_object()
+        queryset = collection.licence_set.all()
+        return self.list_related_object_view(queryset)
+
+    @licences.mapping.post
+    def add_licence(self, request, pk=None):
         return self.create_related_object_view()
 
     @action(detail=True, methods=['GET'])
@@ -170,7 +184,7 @@ class CollectionViewSet(SerializerMappingMixin,
         queryset = collection.collectiondevice_set.all()
         return self.list_related_object_view(queryset)
 
-    @action(detail=True, methods=['POST'])
+    @devices.mapping.post
     def add_device(self, request, pk=None):
         return self.create_related_object_view()
 
@@ -180,7 +194,7 @@ class CollectionViewSet(SerializerMappingMixin,
         queryset = collection.collectionsite_set.all()
         return self.list_related_object_view(queryset)
 
-    @action(detail=True, methods=['POST'])
+    @sites.mapping.post
     def add_site(self, request, pk=None):
         return self.create_related_object_view()
 
@@ -190,7 +204,7 @@ class CollectionViewSet(SerializerMappingMixin,
         queryset = collection.collectionuser_set.all()
         return self.list_related_object_view(queryset)
 
-    @action(detail=True, methods=['POST'])
+    @users.mapping.post
     def add_user(self, request, pk=None):
         return self.create_related_object_view()
 
@@ -200,7 +214,7 @@ class CollectionViewSet(SerializerMappingMixin,
         queryset = collection.samplingevent_set.all()
         return self.list_related_object_view(queryset)
 
-    @action(detail=True, methods=['POST'])
+    @sampling_events.mapping.post
     def add_sampling_event(self, request, pk=None):
         return self.create_related_object_view()
 
@@ -208,5 +222,5 @@ class CollectionViewSet(SerializerMappingMixin,
     def items(self, request, pk=None):
         collection = self.get_object()
         queryset = db.Item.objects.filter(
-            sampling_event__collection=collection)
+            sampling_event_device__sampling_event__collection=collection)
         return self.list_related_object_view(queryset)

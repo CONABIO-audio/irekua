@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from rest_framework import serializers
 
-import database.models as SynonymSuggestion
+from database.models import SynonymSuggestion
 
 from rest.serializers.users import users
 from . import terms

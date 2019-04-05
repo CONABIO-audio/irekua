@@ -3,15 +3,15 @@ from __future__ import unicode_literals
 
 from rest_framework import serializers
 
-from database.models import CollectionDeviceType
+from database.models import CollectionRole
 
-from rest.serializers.object_types import device_types
+from rest.serializers.users import roles
 from . import collection_types
 
 
 class SelectSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CollectionDeviceType
+        model = CollectionRole
         fields = (
             'url',
             'id',
@@ -20,17 +20,17 @@ class SelectSerializer(serializers.ModelSerializer):
 
 class ListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CollectionDeviceType
+        model = CollectionRole
         fields = (
             'url',
             'id',
-            'device_type',
-            'metadata_schema',
+            'role',
+            'metadata_schema',  
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    device_type = device_types.SelectSerializer(
+    role = roles.SelectSerializer(
         many=False,
         read_only=True)
     collection_type = collection_types.SelectSerializer(
@@ -38,21 +38,21 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
         read_only=True)
 
     class Meta:
-        model = CollectionDeviceType
+        model = CollectionRole
         fields = (
             'url',
             'id',
             'collection_type',
-            'device_type',
+            'role',
             'metadata_schema',
         )
 
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CollectionDeviceType
+        model = CollectionRole
         fields = (
-            'device_type',
+            'role',
             'metadata_schema',
         )
 

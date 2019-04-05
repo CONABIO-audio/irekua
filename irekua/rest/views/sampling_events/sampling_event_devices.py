@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
+from rest_framework.decorators import action
 
 from database.models import SamplingEventDevice
 
@@ -29,7 +30,14 @@ class SamplingEventDeviceViewSet(mixins.UpdateModelMixin,
                                  GenericViewSet):
     queryset = SamplingEventDevice.objects.all()
 
-    serializer_mapping = SerializerMapping.from_module(sampling_event_devices)
+    serializer_mapping = (
+        SerializerMapping
+        .from_module(sampling_event_devices)
+        .extend(
+            items=items.ListSerializer,
+            add_item=items.CreateSerializer,
+        ))
+
     permission_mapping = PermissionMapping({
         Actions.RETRIEVE: IsAuthenticated
     }, default=[IsAuthenticated, IsAdmin])

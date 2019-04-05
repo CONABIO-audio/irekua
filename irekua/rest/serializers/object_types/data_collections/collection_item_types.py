@@ -24,19 +24,18 @@ class ListSerializer(serializers.ModelSerializer):
         fields = (
             'url',
             'id',
-            'event_type',
+            'item_type',
+            'metadata_schema',
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
     item_type = item_types.SelectSerializer(
         many=False,
-        read_only=True,
-        source='eventtype')
+        read_only=True)
     collection_type = collection_types.SelectSerializer(
         many=False,
-        read_only=True,
-        source='collectiontype')
+        read_only=True)
 
     class Meta:
         model = CollectionItemType
@@ -44,7 +43,8 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'id',
             'collection_type',
-            'event_type',
+            'item_type',
+            'metadata_schema',
         )
 
 
@@ -58,5 +58,5 @@ class CreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         collection_type = self.context['collection_type']
-        validated_data['collectiontype'] = collection_type
+        validated_data['collection_type'] = collection_type
         return super().create(validated_data)

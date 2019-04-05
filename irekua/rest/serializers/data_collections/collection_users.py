@@ -35,6 +35,7 @@ class ListSerializer(serializers.ModelSerializer):
             'id',
             'user',
             'role',
+            'metadata',
         )
 
 

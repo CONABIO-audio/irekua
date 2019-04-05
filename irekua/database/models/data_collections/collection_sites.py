@@ -45,6 +45,7 @@ class CollectionSite(models.Model):
         verbose_name_plural = _('Collection Sites')
 
         unique_together = (
+            ('collection', 'site'),
             ('collection', 'internal_id'),
         )
 

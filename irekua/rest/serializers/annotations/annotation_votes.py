@@ -2,7 +2,8 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-import database.models as db
+
+from database.models import AnnotationVote
 
 from rest.serializers.users import users
 from . import annotations
@@ -10,7 +11,7 @@ from . import annotations
 
 class SelectSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.AnnotationVote
+        model = AnnotationVote
         fields = (
             'url',
             'id',
@@ -19,7 +20,7 @@ class SelectSerializer(serializers.ModelSerializer):
 
 class ListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = db.AnnotationVote
+        model = AnnotationVote
         fields = (
             'url',
             'id',
@@ -36,7 +37,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
         read_only=True)
 
     class Meta:
-        model = db.AnnotationVote
+        model = AnnotationVote
         fields = (
             'url',
             'id',
@@ -63,7 +64,7 @@ class CreateSerializer(serializers.ModelSerializer):
             pass
 
     class Meta:
-        model = db.AnnotationVote
+        model = AnnotationVote
         fields = (
             'label',
         )

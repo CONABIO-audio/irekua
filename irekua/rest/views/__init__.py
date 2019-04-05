@@ -20,6 +20,8 @@ from .object_types.data_collections.collection_site_types import CollectionTypeS
 from .object_types.data_collections.collection_event_types import CollectionTypeEventTypeViewSet
 from .object_types.data_collections.collection_types import CollectionTypeViewSet
 from .object_types.data_collections.collection_item_types import CollectionTypeItemTypeViewSet
+from .object_types.data_collections.collection_device_types import CollectionTypeDeviceTypeViewSet
+from .object_types.data_collections.collection_roles import CollectionTypeRoleViewSet
 from .object_types.device_types import DeviceTypeViewSet
 from .object_types.entailment_types import EntailmentTypeViewSet
 from .object_types.event_types import EventTypeViewSet
@@ -94,4 +96,6 @@ __all__ = [
     'TermTypeViewSet',
     'TermViewSet',
     'UserViewSet',
+    'CollectionTypeDeviceTypeViewSet',
+    'CollectionTypeRoleViewSet',
 ]

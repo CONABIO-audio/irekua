@@ -5,11 +5,6 @@ from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 
 from database.models import CollectionType
-from database.models import ItemType
-from database.models import EventType
-from database.models import DeviceType
-from database.models import Role
-from database.models import User
 
 from rest.serializers.object_types.data_collections import collection_types
 from rest.serializers.object_types.data_collections import collection_sampling_event_types
@@ -19,8 +14,8 @@ from rest.serializers.object_types.data_collections import collection_site_types
 from rest.serializers.object_types.data_collections import collection_administrators
 from rest.serializers.object_types.data_collections import collection_event_types
 from rest.serializers.object_types.data_collections import collection_item_types
-from rest.serializers.object_types import device_types
-from rest.serializers.users import roles
+from rest.serializers.object_types.data_collections import collection_device_types
+from rest.serializers.object_types.data_collections import collection_roles
 from rest.serializers import SerializerMappingMixin
 from rest.serializers import SerializerMapping
 
@@ -67,11 +62,11 @@ class CollectionTypeViewSet(SerializerMappingMixin,
             event_types=collection_event_types.ListSerializer,
             add_event_type=collection_event_types.CreateSerializer,
 
-            add_device_type=collection_types.DeviceTypeSerializer,
-            remove_device_type=device_types.SelectSerializer,
+            device_types=collection_device_types.ListSerializer,
+            add_device_type=collection_device_types.CreateSerializer,
 
-            add_role=collection_types.RoleSerializer,
-            remove_role=roles.SelectSerializer,
+            roles=collection_roles.ListSerializer,
+            add_role=collection_roles.CreateSerializer,
         ))
 
     def get_serializer_context(self):
@@ -105,10 +100,7 @@ class CollectionTypeViewSet(SerializerMappingMixin,
 
     @administrators.mapping.post
     def add_administrator(self, request, pk=None):
-        return self.add_related_object_view(
-            User,
-            'administrator',
-            pk_field='username')
+        return self.create_related_object_view()
 
     @action(detail=True, methods=['GET'])
     def annotation_types(self, request, pk=None):
@@ -164,26 +156,22 @@ class CollectionTypeViewSet(SerializerMappingMixin,
     def add_event_type(self, request, pk=None):
         return self.create_related_object_view()
 
-    @action(detail=True, methods=['POST'])
+    @action(detail=True, methods=['GET'])
+    def device_types(self, request, pk=None):
+        collection_type = self.get_object()
+        queryset = collection_type.collectiondevicetype_set.all()
+        return self.list_related_object_view(queryset)
+
+    @device_types.mapping.post
     def add_device_type(self, request, pk=None):
-        return self.add_related_object_view(
-            DeviceType,
-            'device_type',
-            extra=['metadata_schema'])
+        return self.create_related_object_view()
 
-    @action(detail=True, methods=['POST'])
-    def remove_device_type(self, request, pk=None):
-        return self.remove_related_object_view(
-            'device_type')
+    @action(detail=True, methods=['GET'])
+    def roles(self, request, pk=None):
+        collection_type = self.get_object()
+        queryset = collection_type.collectionrole_set.all()
+        return self.list_related_object_view(queryset)
 
-    @action(detail=True, methods=['POST'])
+    @roles.mapping.post
     def add_role(self, request, pk=None):
-        return self.add_related_object_view(
-            Role,
-            'role',
-            extra=['metadata_schema'])
-
-    @action(detail=True, methods=['POST'])
-    def remove_role(self, request, pk=None):
-        return self.remove_related_object_view(
-            'role')
+        return self.create_related_object_view()

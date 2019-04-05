@@ -40,9 +40,6 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
     institution = institutions.SelectSerializer(
         many=False,
         read_only=True)
-    licence_set = licences.SelectSerializer(
-        many=True,
-        read_only=True)
 
     class Meta:
         model = Collection
@@ -55,16 +52,22 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'metadata',
             'institution',
             'logo',
-            'licence_set',
             'created_on',
             'modified_on',
         )
 
 
+class UserData(serializers.ModelSerializer):
+    class Meta:
+        model = CollectionUser
+        fields = (
+            'role',
+            'metadata'
+        )
+
+
 class CreateSerializer(serializers.ModelSerializer):
-    user_data = collection_users.CreateSerializer(
-        many=False,
-        read_only=False)
+    user_data = UserData(many=False, read_only=False)
 
     class Meta:
         model = Collection
@@ -100,8 +103,6 @@ class UpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Collection
         fields = (
-            'name',
-            'collection_type',
             'description',
             'logo',
             'metadata',

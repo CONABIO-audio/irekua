@@ -26,6 +26,7 @@ class ListSerializer(serializers.ModelSerializer):
             'id',
             'licence_type',
             'created_on',
+            'is_active',
         )
 
 

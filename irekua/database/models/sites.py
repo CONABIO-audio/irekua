@@ -118,9 +118,15 @@ class Site(models.Model):
         raise ValidationError({'geo_ref': msg})
 
     def __str__(self):
-        if self.name != '':
-            return self.name
-        return _('Site {id}').format(id=self.id)
+        name = ''
+        if self.name is not None:
+            name = ': ' + self.name
+        msg = _('Site %(id)s%(name)s of type %(type)s')
+        params = dict(
+            id=self.id,
+            name=name,
+            type=str(self.site_type))
+        return msg % params
 
     def clean(self):
         self.sync_coordinates_and_georef()
