@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from database.models import SecondaryItem
 
-from . import item_types
+from rest.serializers.object_types import item_types
 from . import items
 
 

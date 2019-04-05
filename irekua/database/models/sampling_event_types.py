@@ -67,6 +67,8 @@ class SamplingEventType(models.Model):
         blank=True)
     site_types = models.ManyToManyField(
         'SiteType',
+        through='SamplingEventTypeSiteType',
+        through_fields=('sampling_event_type', 'site_type'),
         verbose_name=_('site types'),
         help_text=_('Valid site types for this sampling event type'),
         blank=True)
@@ -133,8 +135,10 @@ class SamplingEventType(models.Model):
             params = dict(site_type=str(site_type), type=str(self))
             raise ValidationError(msg, params=params)
 
-    def add_device_type(self, device_type):
-        self.device_types.add(device_type)
+    def add_device_type(self, device_type, metadata_schema):
+        self.device_types.add(
+            device_type,
+            through_defaults={'metadata_schema': metadata_schema})
         self.save()
 
     def add_site_type(self, site_type):

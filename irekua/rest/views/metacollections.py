@@ -22,7 +22,7 @@ from rest.permissions import IsAuthenticated
 from rest.filters import MetaCollectionFilter
 from rest.utils import Actions
 
-from .utils import AdditionalActionsMixin
+from rest.views.utils import AdditionalActionsMixin
 
 
 class MetaCollectionViewSet(SerializerMappingMixin,

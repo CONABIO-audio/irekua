@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from database.models import MetaCollection
 
-from . import users
+from rest.serializers.users import users
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -56,3 +56,11 @@ class CreateSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         validated_data['created_by'] = user
         super().create(validated_data)
+
+
+class UpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MetaCollection
+        fields = (
+            'description',
+        )

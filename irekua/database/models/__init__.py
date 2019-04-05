@@ -29,6 +29,7 @@ from .sampling_events import SamplingEvent
 from .sampling_event_types import SamplingEventType
 from .sampling_event_devices import SamplingEventDevice
 from .sampling_event_type_devices import SamplingEventTypeDeviceType
+from .sampling_event_type_sites import SamplingEventTypeSiteType
 from .secondary_items import SecondaryItem
 from .site_types import SiteType
 from .sites import Site
@@ -85,4 +86,5 @@ __all__ = [
     'Group',
     'SamplingEventDevice',
     'SamplingEventTypeDeviceType',
+    'SamplingEventTypeSiteType',
 ]

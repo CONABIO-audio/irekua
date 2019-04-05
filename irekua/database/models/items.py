@@ -60,7 +60,7 @@ class Item(models.Model):
         help_text=_('Hash of resource file'),
         max_length=64,
         unique=True,
-        blank=  True,
+        blank=True,
         null=False)
     item_type = models.ForeignKey(
         'ItemType',
@@ -183,9 +183,28 @@ class Item(models.Model):
     def __str__(self):
         return str(self.id)
 
+    def validate_user(self):
+        if self.created_by is None:
+            self.created_by = self.sampling_event_device.created_by
+
+        if self.created_by is None:
+            msg = _(
+                'Item creator was not specified and is not determined '
+                'by sampling event device.')
+            raise ValidationError(msg)
+
+        # TODO: Validate User
+
     def clean(self):
-        self.validate_licence()
-        self.validate_hash_and_filesize()
+        try:
+            self.validate_hash_and_filesize()
+        except ValidationError as error:
+            raise ValidationError({'hash': error})
+
+        try:
+            self.validate_user()
+        except ValidationError as error:
+            raise ValidationError({'created_by': error})
 
         try:
             self.item_type.validate_media_info(self.media_info)
@@ -235,10 +254,10 @@ class Item(models.Model):
             msg = _(
                 'File MIME type does not coincide with declared item type '
                 '(file: {file_type} != {item_type} :item_type)')
-            msg = msg.format(
+            params = dict(
                 file_type=file_mime_type,
                 item_type=self.item_type.media_type)
-            raise ValidationError(msg)
+            raise ValidationError(msg % params)
 
     def validate_and_get_event_type(self, event_type):
         return self.item_type.validate_and_get_event_type(event_type)
@@ -261,7 +280,7 @@ class Item(models.Model):
         if self.item_file.name is None and self.hash is None:
             msg = _(
                 'If no file is provided, a hash must be given')
-            raise ValidationError({'hash': msg})
+            raise ValidationError(msg)
 
         if self.item_file.name is None:
             return
@@ -276,7 +295,7 @@ class Item(models.Model):
 
         if self.hash != hash_string:
             msg = _('Hash of file and recorded hash do not coincide')
-            raise ValidationError({'hash': msg})
+            raise ValidationError(msg)
 
     def add_ready_event_type(self, event_type):
         self.ready_event_types.add(event_type)

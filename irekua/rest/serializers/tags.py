@@ -47,3 +47,12 @@ class CreateSerializer(serializers.ModelSerializer):
             'description',
             'icon'
         )
+
+
+class UpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = (
+            'description',
+            'icon'
+        )

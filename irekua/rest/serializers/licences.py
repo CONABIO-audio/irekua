@@ -5,8 +5,8 @@ from rest_framework import serializers
 
 from database.models import Licence
 
-from . import licence_types
-from . import users
+from rest.serializers.object_types import licence_types
+from rest.serializers.users import users
 
 
 class SelectSerializer(serializers.ModelSerializer):

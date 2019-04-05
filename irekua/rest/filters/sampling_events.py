@@ -44,11 +44,8 @@ class SamplingEventFilter(BaseFilter):
         model = SamplingEvent
         fields = (
             'sampling_event_type__name',
-            'site__site_type__name',
-            'site__locality',
-            'physical_device__device__device_type__name',
-            'physical_device__device__brand__name',
-            'physical_device__device__model',
+            'collection_site__site__site_type__name',
+            'collection_site__site__locality',
             'collection__collection_type__name',
             'collection__name',
         )

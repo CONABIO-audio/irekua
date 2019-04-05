@@ -144,6 +144,34 @@ router.register(
     r'users',
     views.UserViewSet,
     basename='user')
+router.register(
+    r'sampling_event_devices',
+    views.SamplingEventDeviceViewSet,
+    basename='samplingeventdevice')
+router.register(
+    r'sampling_event_type_device_types',
+    views.SamplingEventTypeDeviceTypeViewSet,
+    basename='samplingeventtypedevicetype')
+router.register(
+    r'sampling_event_type_site_types',
+    views.SamplingEventTypeSiteTypeViewSet,
+    basename='samplingeventtypesitetype')
+
+router.register(
+    r'collection_type_site_types',
+    views.CollectionTypeSiteTypeViewSet)
+router.register(
+    r'collection_type_administrators',
+    views.CollectionTypeAdministratorViewSet)
+router.register(
+    r'collection_type_annotation_types',
+    views.CollectionTypeAnnotationTypeViewSet)
+router.register(
+    r'collection_type_licence_types',
+    views.CollectionTypeLicenceTypeViewSet)
+router.register(
+    r'collection_type_sampling_event_types',
+    views.CollectionTypeSamplingEventTypeViewSet)
 
 
 urlpatterns = [

@@ -5,8 +5,8 @@ from rest_framework import serializers
 
 from database.models import Site
 
-from . import site_types
-from . import users
+from rest.serializers.object_types import site_types
+from rest.serializers.users import users
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -89,3 +89,15 @@ class CreateSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         validated_data['created_by'] = user
         return super().create(validated_data)
+
+
+class UpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Site
+        fields = (
+            'name',
+            'locality',
+            'site_type',
+            'altitude',
+            'metadata',
+        )

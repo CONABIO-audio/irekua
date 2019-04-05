@@ -11,14 +11,13 @@ from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
 from database.models import CollectionUser
-from database.models import Collection
 from database.models import Tag
 from database.models import Annotation
 from database.models import Item
 
 from rest.serializers import items
-from rest.serializers import annotations as annotation_serializers
 from rest.serializers import tags
+from rest.serializers.annotations import annotations as annotation_serializers
 from rest.serializers import SerializerMappingMixin
 from rest.serializers import SerializerMapping
 
@@ -35,7 +34,7 @@ from rest.filters import ItemFilter
 from rest.filters import AnnotationFilter
 from rest.utils import Actions
 
-from .utils import AdditionalActionsMixin
+from rest.views.utils import AdditionalActionsMixin
 
 
 class ItemViewSet(mixins.UpdateModelMixin,

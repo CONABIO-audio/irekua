@@ -50,9 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django.contrib.gis',
     'django.contrib.admindocs',
-    # 'django_filters',
-    # 'rest_framework',
-    # 'rest',
+    'django_filters',
+    'rest_framework',
+    'rest',
     'database',
 ]
 

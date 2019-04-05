@@ -15,10 +15,10 @@ class SamplingEvent(models.Model):
         help_text=_('Type of sampling event'),
         blank=False,
         null=False)
-    site = models.ForeignKey(
-        'Site',
-        db_column='site_id',
-        verbose_name=_('site'),
+    collection_site = models.ForeignKey(
+        'CollectionSite',
+        db_column='collection_site_id',
+        verbose_name=_('collection site'),
         help_text=_('Reference to site at which sampling took place'),
         on_delete=models.PROTECT,
         blank=True,
@@ -111,22 +111,45 @@ class SamplingEvent(models.Model):
             end=str(self.ended_on))
         return msg % params
 
+    def validate_site(self):
+        collection = self.collection
+        site_collection = self.collection_site.collection
+
+        if collection != site_collection:
+            msg = _(
+                'Site does not belong to the declared collection')
+            raise ValidationError(msg)
+
     def clean(self):
+        collection = self.collection
+
+        try:
+            self.validate_site()
+        except ValidationError as error:
+            raise ValidationError({'collection_site': error})
+
         try:
             self.sampling_event_type.validate_metadata(self.metadata)
         except ValidationError as error:
             raise ValidationError({'metadata': error})
 
         try:
-            self.sampling_event_type.validate_site_type(self.site.site_type)
+            site_type = self.collection_site.site.site_type
+            self.sampling_event_type.validate_site_type(site_type)
         except ValidationError as error:
             raise ValidationError({'site': error})
 
+        try:
+            collection.validate_and_get_sampling_event_type(self.sampling_event_type)
+        except ValidationError as error:
+            raise ValidationError({'sampling_event_type': error})
+
         if self.licence:
-            collection = self.collection
             try:
                 collection.validate_and_get_licence(self.licence)
             except ValidationError as error:
                 raise ValidationError({'licence': error})
+
+        # TODO: Add user validation
 
         super(SamplingEvent, self).clean()
