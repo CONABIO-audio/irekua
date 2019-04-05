@@ -3,9 +3,8 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from database.utils import (
-    empty_JSON
-)
+from database.utils import empty_JSON
+
 
 
 class SecondaryItem(models.Model):
