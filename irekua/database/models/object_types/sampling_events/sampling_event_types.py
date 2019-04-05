@@ -65,8 +65,6 @@ class SamplingEventType(models.Model):
         blank=True)
     site_types = models.ManyToManyField(
         'SiteType',
-        through='SamplingEventTypeSiteType',
-        through_fields=('sampling_event_type', 'site_type'),
         verbose_name=_('site types'),
         help_text=_('Valid site types for this sampling event type'),
         blank=True)

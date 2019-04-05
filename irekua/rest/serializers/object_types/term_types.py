@@ -7,6 +7,11 @@ from database.models import TermType
 
 
 class SelectSerializer(serializers.ModelSerializer):
+    name = serializers.PrimaryKeyRelatedField(
+        many=False,
+        read_only=False,
+        queryset=TermType.objects.all())
+
     class Meta:
         model = TermType
         fields = (

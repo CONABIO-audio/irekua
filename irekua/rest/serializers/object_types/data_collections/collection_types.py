@@ -89,27 +89,6 @@ class DeviceTypeSerializer(serializers.ModelSerializer):
         )
 
 
-class ItemTypeSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='rest-api:itemtype-detail',
-        source='item_type')
-    name = serializers.PrimaryKeyRelatedField(
-        many=False,
-        read_only=False,
-        queryset=ItemType.objects.all(),
-        source='item_type')
-
-    class Meta:
-        model = CollectionItemType
-        fields = (
-            'url',
-            'name',
-            'metadata_schema',
-        )
-
-
 class RoleSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedRelatedField(
         many=False,
@@ -137,10 +116,6 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
         many=True,
         read_only=True,
         source='collectiondevicetype_set')
-    item_types = ItemTypeSerializer(
-        many=True,
-        read_only=True,
-        source='collectionitemtype_set')
     roles = RoleSerializer(
         many=True,
         read_only=True,
@@ -162,7 +137,6 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'restrict_device_types',
             'restrict_event_types',
             'restrict_sampling_event_types',
-            'item_types',
             'device_types',
             'roles',
             'created_on',

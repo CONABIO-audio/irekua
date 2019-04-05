@@ -22,7 +22,6 @@ from .object_types.event_types import EventType
 from .object_types.item_types import ItemType
 from .object_types.licence_types import LicenceType
 from .object_types.sampling_events.sampling_event_type_devices import SamplingEventTypeDeviceType
-from .object_types.sampling_events.sampling_event_type_sites import SamplingEventTypeSiteType
 from .object_types.sampling_events.sampling_event_types import SamplingEventType
 from .object_types.site_types import SiteType
 from .object_types.term_types import TermType
@@ -75,7 +74,6 @@ __all__ = [
     'SamplingEventDevice',
     'SamplingEventType',
     'SamplingEventTypeDeviceType',
-    'SamplingEventTypeSiteType',
     'SecondaryItem',
     'Site',
     'SiteType',

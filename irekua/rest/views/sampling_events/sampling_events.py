@@ -9,6 +9,7 @@ from database.models import SamplingEvent
 from database.models import Item
 
 from rest.serializers.sampling_events import sampling_events
+from rest.serializers.sampling_events import sampling_event_devices
 from rest.serializers import items as item_serializers
 from rest.serializers import SerializerMapping
 from rest.serializers import SerializerMappingMixin
@@ -41,8 +42,9 @@ class SamplingEventViewSet(mixins.UpdateModelMixin,
         SerializerMapping
         .from_module(sampling_events)
         .extend(
-            add_item=item_serializers.CreateSerializer,
-            items=item_serializers.ListSerializer
+            items=item_serializers.ListSerializer,
+            devices=sampling_event_devices.ListSerializer,
+            add_device=sampling_event_devices.CreateSerializer,
         ))
 
     permission_mapping = PermissionMapping({
@@ -74,13 +76,6 @@ class SamplingEventViewSet(mixins.UpdateModelMixin,
         Actions.LIST: [
             IsAuthenticated,
         ],
-        'add_item': [
-            IsAuthenticated,
-            (
-                permissions.IsCreator |
-                IsAdmin
-            )
-        ],
         'items': [
             IsAuthenticated,
             (
@@ -103,6 +98,16 @@ class SamplingEventViewSet(mixins.UpdateModelMixin,
 
         context['sampling_event'] = sampling_event
         return context
+
+    @action(detail=True, methods=['GET'])
+    def devices(self, request, pk=None):
+        sampling_event = self.get_object()
+        queryset = sampling_event.samplingeventdevice_set.all()
+        return self.list_related_object_view(queryset)
+
+    @devices.mapping.post
+    def add_device(self, request, pk=None):
+        return self.create_related_object_view()
 
     @action(detail=True, methods=['GET'])
     def items(self, request, pk=None):

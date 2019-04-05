@@ -17,8 +17,8 @@ from rest.serializers.object_types.data_collections import collection_licence_ty
 from rest.serializers.object_types.data_collections import collection_annotation_types
 from rest.serializers.object_types.data_collections import collection_site_types
 from rest.serializers.object_types.data_collections import collection_administrators
-from rest.serializers.object_types import event_types
-from rest.serializers.object_types import item_types
+from rest.serializers.object_types.data_collections import collection_event_types
+from rest.serializers.object_types.data_collections import collection_item_types
 from rest.serializers.object_types import device_types
 from rest.serializers.users import roles
 from rest.serializers import SerializerMappingMixin
@@ -61,11 +61,11 @@ class CollectionTypeViewSet(SerializerMappingMixin,
             sampling_event_types=collection_sampling_event_types.ListSerializer,
             add_sampling_event_type=collection_sampling_event_types.CreateSerializer,
 
-            add_item_type=collection_types.ItemTypeSerializer,
-            remove_item_type=item_types.SelectSerializer,
+            item_types=collection_item_types.ListSerializer,
+            add_item_type=collection_item_types.CreateSerializer,
 
-            add_event_type=event_types.SelectSerializer,
-            remove_event_type=event_types.SelectSerializer,
+            event_types=collection_event_types.ListSerializer,
+            add_event_type=collection_event_types.CreateSerializer,
 
             add_device_type=collection_types.DeviceTypeSerializer,
             remove_device_type=device_types.SelectSerializer,
@@ -143,28 +143,26 @@ class CollectionTypeViewSet(SerializerMappingMixin,
     def add_sampling_event_type(self, request, pk=None):
         return self.create_related_object_view()
 
-    @action(detail=True, methods=['POST'])
+    @action(detail=True, methods=['GET'])
+    def item_types(self, request, pk=None):
+        collection_type = self.get_object()
+        queryset = collection_type.collectionitemtype_set.all()
+        return self.list_related_object_view(queryset)
+
+    @item_types.mapping.post
     def add_item_type(self, request, pk=None):
-        return self.add_related_object_view(
-            ItemType,
-            'item_type',
-            extra=['metadata_schema'])
+        return self.create_related_object_view()
 
-    @action(detail=True, methods=['POST'])
-    def remove_item_type(self, request, pk=None):
-        return self.remove_related_object_view(
-            'item_type')
+    @action(detail=True, methods=['GET'])
+    def event_types(self, request, pk=None):
+        model = CollectionType.event_types.through
+        collection_id = self.kwargs['pk']
+        queryset = model.objects.filter(collectiontype_id=collection_id)
+        return self.list_related_object_view(queryset)
 
-    @action(detail=True, methods=['POST'])
+    @event_types.mapping.post
     def add_event_type(self, request, pk=None):
-        return self.add_related_object_view(
-            EventType,
-            'event_type')
-
-    @action(detail=True, methods=['POST'])
-    def remove_event_type(self, request, pk=None):
-        return self.remove_related_object_view(
-            'event_type')
+        return self.create_related_object_view()
 
     @action(detail=True, methods=['POST'])
     def add_device_type(self, request, pk=None):

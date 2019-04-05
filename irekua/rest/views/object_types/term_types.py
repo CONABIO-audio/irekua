@@ -45,15 +45,15 @@ class TermTypeViewSet(SerializerMappingMixin,
         context['term_type'] = term_type
         return context
 
-    @action(detail=True, methods=['POST'])
-    def add_term(self, request, pk=None):
-        return self.create_related_object_view()
-
     @action(detail=True, methods=['GET'])
     def terms(self, request, pk=None):
         term_type = self.get_object()
         queryset = term_type.term_set.all()
         return self.list_related_object_view(queryset)
+
+    @terms.mapping.post
+    def add_term(self, request, pk=None):
+        return self.create_related_object_view()
 
     @action(detail=True, methods=['POST'])
     def suggest_term(self, request, pk=None):

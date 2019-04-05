@@ -35,10 +35,9 @@ from . import models
     models.PhysicalDevice,
     models.Role,
     models.SamplingEvent,
+    models.SamplingEventDevice,
     models.SamplingEventType,
     models.SamplingEventTypeDeviceType,
-    models.SamplingEventTypeSiteType,
-    models.SamplingEventDevice,
     models.SecondaryItem,
     models.Site,
     models.SiteType,
@@ -48,7 +47,8 @@ from . import models
     models.Tag,
     models.Term,
     models.TermSuggestion,
-    models.TermType,)
+    models.TermType,
+)
 class DatabaseAdmin(admin.ModelAdmin):
     pass
 

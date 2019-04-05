@@ -24,5 +24,5 @@ class TermViewSet(mixins.UpdateModelMixin,
     queryset = Term.objects.all()
     serializer_mapping = SerializerMapping.from_module(terms)
     permission_classes = (IsAdmin | IsDeveloper | ReadOnly, )
-    search_fields = ('term_type__name', 'value')
+    search_fields = ('term_type__name', 'value',)
     filterset_class = TermFilter

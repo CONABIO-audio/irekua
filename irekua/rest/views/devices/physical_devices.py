@@ -33,7 +33,7 @@ class PhysicalDeviceViewSet(mixins.UpdateModelMixin,
     filterset_class = PhysicalDeviceFilter
 
     serializer_mapping = SerializerMapping.from_module(physical_devices)
-    permission_classes = PermissionMapping({
+    permission_mapping = PermissionMapping({
         Actions.UPDATE: [
             IsAuthenticated, IsOwner | IsAdmin
         ],

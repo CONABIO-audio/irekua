@@ -9,6 +9,11 @@ from . import term_types
 
 
 class SelectSerializer(serializers.ModelSerializer):
+    name = serializers.PrimaryKeyRelatedField(
+        many=False,
+        read_only=False,
+        queryset=EventType.objects.all())
+
     class Meta:
         model = EventType
         fields = (

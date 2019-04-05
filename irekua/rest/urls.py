@@ -146,16 +146,13 @@ router.register(
     basename='user')
 router.register(
     r'sampling_event_devices',
-    views.SamplingEventDeviceViewSet,
-    basename='samplingeventdevice')
+    views.SamplingEventDeviceViewSet)
 router.register(
     r'sampling_event_type_device_types',
-    views.SamplingEventTypeDeviceTypeViewSet,
-    basename='samplingeventtypedevicetype')
+    views.SamplingEventTypeDeviceTypeViewSet)
 router.register(
     r'sampling_event_type_site_types',
-    views.SamplingEventTypeSiteTypeViewSet,
-    basename='samplingeventtypesitetype')
+    views.SamplingEventTypeSiteTypeViewSet)
 
 router.register(
     r'collection_type_site_types',
@@ -172,6 +169,12 @@ router.register(
 router.register(
     r'collection_type_sampling_event_types',
     views.CollectionTypeSamplingEventTypeViewSet)
+router.register(
+    r'collection_type_item_types',
+    views.CollectionTypeItemTypeViewSet)
+router.register(
+    r'collection_type_event_types',
+    views.CollectionTypeEventTypeViewSet)
 
 
 urlpatterns = [

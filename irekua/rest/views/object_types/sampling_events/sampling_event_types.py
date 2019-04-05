@@ -63,8 +63,10 @@ class SamplingEventTypeViewSet(AdditionalActionsMixin,
 
     @action(detail=True, methods=['GET'])
     def site_types(self, request, pk=None):
-        sampling_event_type = self.get_object()
-        queryset = sampling_event_type.samplingeventtypesitetype_set.all()
+        model = SamplingEventType.site_types.through
+        sampling_event_type_id = self.kwargs['pk']
+        queryset = model.objects.filter(
+            samplingeventtype_id=sampling_event_type_id)
         return self.list_related_object_view(queryset)
 
     @site_types.mapping.post
