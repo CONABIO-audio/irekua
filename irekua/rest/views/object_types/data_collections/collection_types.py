@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from rest_framework import mixins
 from rest_framework.decorators import action
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import GenericViewSet
 
 from database.models import CollectionType
 
@@ -29,10 +30,13 @@ from rest.permissions import ReadOnly
 from rest.views.utils import AdditionalActionsMixin
 
 
-class CollectionTypeViewSet(SerializerMappingMixin,
+class CollectionTypeViewSet(mixins.RetrieveModelMixin,
+                            mixins.DestroyModelMixin,
+                            mixins.UpdateModelMixin,
+                            SerializerMappingMixin,
                             AdditionalActionsMixin,
                             PermissionMappingMixin,
-                            ModelViewSet):
+                            GenericViewSet):
     queryset = CollectionType.objects.all()
     filterset_class = CollectionTypeFilter
 

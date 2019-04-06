@@ -5,8 +5,10 @@ from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 
-from database import models as db
+from database.models import Annotation
+from database.models import AnnotationType
 
+from rest.serializers.object_types import annotation_types
 from rest.serializers.annotations import annotations
 from rest.serializers.annotations import annotation_votes
 from rest.serializers import SerializerMappingMixin
@@ -34,7 +36,7 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
                         PermissionMappingMixin,
                         GenericViewSet,
                         AdditionalActionsMixin):
-    queryset = db.Annotation.objects.all()
+    queryset = Annotation.objects.all()
     filterset_class = AnnotationFilter
 
     serializer_mapping = (
@@ -42,7 +44,9 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
         .from_module(annotations)
         .extend(
             vote=annotation_votes.CreateSerializer,
-            votes=annotation_votes.ListSerializer
+            votes=annotation_votes.ListSerializer,
+            types=annotation_types.ListSerializer,
+            add_type=annotation_types.CreateSerializer,
         ))
 
     permission_mapping = PermissionMapping({
@@ -89,6 +93,8 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
                 IsSpecialUser
             ),
         ],
+        'types': IsAuthenticated,
+        'add_type': [IsAuthenticated, IsAdmin],
     })
 
     def get_serializer_context(self):
@@ -107,6 +113,15 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
         queryset = self.get_object().annotationvote_set.all()
         return self.list_related_object_view(queryset)
 
-    @action(detail=True, methods=['POST'])
+    @votes.mapping.post
     def vote(self, request, pk=None):
+        return self.create_related_object_view()
+
+    @action(detail=False, methods=['GET'])
+    def types(self, request):
+        queryset = AnnotationType.objects.all()
+        return self.list_related_object_view(queryset)
+
+    @types.mapping.post
+    def add_type(self, request):
         return self.create_related_object_view()

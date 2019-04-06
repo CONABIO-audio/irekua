@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from rest_framework import mixins
 from rest_framework.decorators import action
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import GenericViewSet
 
 from database.models import SamplingEventType
 
@@ -21,10 +22,12 @@ from rest.filters import SamplingEventTypeFilter
 from rest.views.utils import AdditionalActionsMixin
 
 
-class SamplingEventTypeViewSet(AdditionalActionsMixin,
+class SamplingEventTypeViewSet(mixins.RetrieveModelMixin,
+                               mixins.DestroyModelMixin,
+                               AdditionalActionsMixin,
                                SerializerMappingMixin,
                                PermissionMappingMixin,
-                               ModelViewSet):
+                               GenericViewSet):
     queryset = SamplingEventType.objects.all()
     search_fields = ('name', )
     filterset_class = SamplingEventTypeFilter

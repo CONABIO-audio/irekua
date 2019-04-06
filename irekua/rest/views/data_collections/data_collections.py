@@ -4,10 +4,12 @@ from __future__ import unicode_literals
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 
-import database.models as db
+from database.models import Collection
+from database.models import CollectionType
 
-from rest.serializers import licences
 from rest.serializers import items as item_serializers
+from rest.serializers import licences as licence_serializers
+from rest.serializers.object_types.data_collections import collection_types
 from rest.serializers.sampling_events import sampling_events as sampling_event_serializers
 from rest.serializers.data_collections import data_collections
 from rest.serializers.data_collections import collection_devices
@@ -33,7 +35,7 @@ class CollectionViewSet(SerializerMappingMixin,
                         AdditionalActionsMixin,
                         PermissionMappingMixin,
                         ModelViewSet):
-    queryset = db.Collection.objects.all()
+    queryset = Collection.objects.all()
     search_fields = ('name', )
     filterset_class = CollectionFilter
 
@@ -41,8 +43,8 @@ class CollectionViewSet(SerializerMappingMixin,
         SerializerMapping
         .from_module(data_collections)
         .extend(
-            licences=licences.ListSerializer,
-            add_licence=licences.CreateSerializer,
+            licences=licence_serializers.ListSerializer,
+            add_licence=licence_serializers.CreateSerializer,
             devices=collection_devices.ListSerializer,
             add_device=collection_devices.CreateSerializer,
             sites=collection_sites.ListSerializer,
@@ -51,7 +53,9 @@ class CollectionViewSet(SerializerMappingMixin,
             add_user=collection_users.CreateSerializer,
             sampling_events=sampling_event_serializers.ListSerializer,
             add_sampling_event=sampling_event_serializers.CreateSerializer,
-            items=item_serializers.ListSerializer
+            types=collection_types.ListSerializer,
+            add_type=collection_types.CreateSerializer,
+            items=item_serializers.ListSerializer,
         ))
 
     permission_mapping = PermissionMapping({
@@ -157,6 +161,7 @@ class CollectionViewSet(SerializerMappingMixin,
                 IsSpecialUser
             )
         ],
+        'add_type': [IsAuthenticated, IsAdmin]
     }, default=IsAuthenticated)
 
     def get_serializer_context(self):
@@ -216,6 +221,15 @@ class CollectionViewSet(SerializerMappingMixin,
 
     @sampling_events.mapping.post
     def add_sampling_event(self, request, pk=None):
+        return self.create_related_object_view()
+
+    @action(detail=False, methods=['GET'])
+    def types(self, request):
+        queryset = CollectionType.objects.all()
+        return self.list_related_object_view(queryset)
+
+    @types.mapping.post
+    def add_type(self, request):
         return self.create_related_object_view()
 
     @action(detail=True, methods=['GET'])
