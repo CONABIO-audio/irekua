@@ -5,9 +5,10 @@ from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 
 from database.models import Collection
+from database.models import MetaCollection
 from database.models import CollectionType
 
-from rest.serializers import items as item_serializers
+from rest.serializers.items import items as item_serializers
 from rest.serializers import licences as licence_serializers
 from rest.serializers.object_types.data_collections import collection_types
 from rest.serializers.sampling_events import sampling_events as sampling_event_serializers
@@ -15,6 +16,7 @@ from rest.serializers.data_collections import data_collections
 from rest.serializers.data_collections import collection_devices
 from rest.serializers.data_collections import collection_sites
 from rest.serializers.data_collections import collection_users
+from rest.serializers.data_collections import metacollections as metacollection_serializers
 from rest.serializers import SerializerMappingMixin
 from rest.serializers import SerializerMapping
 
@@ -24,6 +26,7 @@ from rest.permissions import PermissionMapping
 from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
+from rest.permissions import IsDeveloper
 from rest.permissions import IsSpecialUser
 from rest.permissions import data_collections as permissions
 
@@ -43,6 +46,8 @@ class CollectionViewSet(SerializerMappingMixin,
         SerializerMapping
         .from_module(data_collections)
         .extend(
+            metacollection=metacollection_serializers.ListSerializer,
+            add_metacollection=metacollection_serializers.CreateSerializer,
             licences=licence_serializers.ListSerializer,
             add_licence=licence_serializers.CreateSerializer,
             devices=collection_devices.ListSerializer,
@@ -71,6 +76,9 @@ class CollectionViewSet(SerializerMappingMixin,
         Actions.DESTROY: [
             IsAuthenticated,
             permissions.IsCollectionAdmin | IsAdmin
+        ],
+        'add_metacollection': [
+            IsAuthenticated, IsAdmin | IsDeveloper
         ],
         'licences': [
             IsAuthenticated,
@@ -172,6 +180,15 @@ class CollectionViewSet(SerializerMappingMixin,
             collection = None
         context['collection'] = collection
         return context
+
+    @action(detail=False, methods=['GET'])
+    def metacollections(self, request, pk=None):
+        queryset = MetaCollection.objects.all()
+        return self.list_related_object_view(queryset)
+
+    @metacollections.mapping.post
+    def add_metacollection(self, request, pk=None):
+        return self.create_related_object_view()
 
     @action(detail=True, methods=['GET'])
     def licences(self, request, pk=None):

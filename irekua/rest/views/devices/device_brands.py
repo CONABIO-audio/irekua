@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
 
 from database.models import DeviceBrand
 
@@ -16,7 +17,11 @@ from rest.permissions import ReadAndCreateOnly
 from rest.filters import DeviceBrandFilter
 
 
-class DeviceBrandViewSet(SerializerMappingMixin, ModelViewSet):
+class DeviceBrandViewSet(mixins.RetrieveModelMixin,
+                         mixins.DestroyModelMixin,
+                         mixins.UpdateModelMixin,
+                         SerializerMappingMixin,
+                         GenericViewSet):
     queryset = DeviceBrand.objects.all()
     search_fields = ('name', )
     filterset_class = DeviceBrandFilter

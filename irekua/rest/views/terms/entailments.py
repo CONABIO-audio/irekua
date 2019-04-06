@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
 
 from database.models import Entailment
 
@@ -16,7 +17,11 @@ from rest.permissions import ReadOnly
 from rest.filters import EntailmentFilter
 
 
-class EntailmentViewSet(SerializerMappingMixin, ModelViewSet):
+class EntailmentViewSet(mixins.UpdateModelMixin,
+                        mixins.RetrieveModelMixin,
+                        mixins.DestroyModelMixin,
+                        SerializerMappingMixin,
+                        GenericViewSet):
     queryset = Entailment.objects.all()
     serializer_mapping = SerializerMapping.from_module(entailments)
     permission_classes = (IsAdmin | IsCurator | ReadOnly, )

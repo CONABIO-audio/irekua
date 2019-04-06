@@ -6,185 +6,150 @@ from rest import views
 router = routers.DefaultRouter()
 router.register(
     r'annotations',
-    views.AnnotationViewSet,
-    basename='annotation')
+    views.AnnotationViewSet)
 router.register(
     r'annotation_votes',
-    views.AnnotationVoteViewSet,
-    basename='annotationvote')
+    views.AnnotationVoteViewSet)
 router.register(
     r'secondary_items',
-    views.SecondaryItemViewSet,
-    basename='secondaryitem')
+    views.SecondaryItemViewSet)
 router.register(
     r'annotation_tools',
-    views.AnnotationToolViewSet,
-    basename='annotationtool')
+    views.AnnotationToolViewSet)
 router.register(
     r'collection_devices',
-    views.CollectionDeviceViewSet,
-    basename='collectiondevice')
+    views.CollectionDeviceViewSet)
 router.register(
     r'collection_sites',
-    views.CollectionSiteViewSet,
-    basename='collectionsite')
+    views.CollectionSiteViewSet)
 router.register(
     r'collection_users',
-    views.CollectionUserViewSet,
-    basename='collectionuser')
+    views.CollectionUserViewSet)
 router.register(
     r'collections',
-    views.CollectionViewSet,
-    basename='collection')
+    views.CollectionViewSet)
 router.register(
     r'device_brands',
-    views.DeviceBrandViewSet,
-    basename='devicebrand')
+    views.DeviceBrandViewSet)
 router.register(
     r'devices',
-    views.DeviceViewSet,
-    basename='device')
+    views.DeviceViewSet)
 router.register(
     r'entailments',
-    views.EntailmentViewSet,
-    basename='entailment')
+    views.EntailmentViewSet)
 router.register(
     r'institutions',
-    views.InstitutionViewSet,
-    basename='institution')
+    views.InstitutionViewSet)
 router.register(
     r'items',
-    views.ItemViewSet,
-    basename='item')
+    views.ItemViewSet)
 router.register(
     r'licences',
-    views.LicenceViewSet,
-    basename='licence')
+    views.LicenceViewSet)
 router.register(
     r'metacollections',
-    views.MetaCollectionViewSet,
-    basename='metacollection')
+    views.MetaCollectionViewSet)
 router.register(
     r'physical_devices',
-    views.PhysicalDeviceViewSet,
-    basename='physicaldevice')
+    views.PhysicalDeviceViewSet)
 router.register(
     r'roles',
-    views.RoleViewSet,
-    basename='role')
+    views.RoleViewSet)
 router.register(
     r'sampling_events',
-    views.SamplingEventViewSet,
-    basename='samplingevent')
+    views.SamplingEventViewSet)
 router.register(
     r'sites',
-    views.SiteViewSet,
-    basename='site')
+    views.SiteViewSet)
 router.register(
     r'synonym_suggestions',
-    views.SynonymSuggestionViewSet,
-    basename='synonymsuggestion')
+    views.SynonymSuggestionViewSet)
 router.register(
     r'synonyms',
-    views.SynonymViewSet,
-    basename='synonym')
+    views.SynonymViewSet)
 router.register(
     r'tags',
-    views.TagViewSet,
-    basename='tag')
+    views.TagViewSet)
 router.register(
     r'term_suggestions',
-    views.TermSuggestionViewSet,
-    basename='termsuggestion')
+    views.TermSuggestionViewSet)
 router.register(
     r'terms',
-    views.TermViewSet,
-    basename='term')
+    views.TermTypeViewSet)
+router.register(
+    r'term_instances',
+    views.TermViewSet)
 router.register(
     r'users',
-    views.UserViewSet,
-    basename='user')
+    views.UserViewSet)
 router.register(
     r'sampling_event_devices',
     views.SamplingEventDeviceViewSet)
 
-types_router = routers.DefaultRouter()
-types_router.register(
+# router = routers.DefaultRouter()
+router.register(
     r'annotation_types',
-    views.AnnotationTypeViewSet,
-    basename='annotationtype')
-types_router.register(
+    views.AnnotationTypeViewSet)
+router.register(
     r'collection_types',
-    views.CollectionTypeViewSet,
-    basename='collectiontype')
-types_router.register(
+    views.CollectionTypeViewSet)
+router.register(
     r'device_types',
-    views.DeviceTypeViewSet,
-    basename='devicetype')
-types_router.register(
+    views.DeviceTypeViewSet)
+router.register(
     r'entailment_types',
-    views.EntailmentTypeViewSet,
-    basename='entailmenttype')
-types_router.register(
+    views.EntailmentTypeViewSet)
+router.register(
     r'event_types',
-    views.EventTypeViewSet,
-    basename='eventtype')
-types_router.register(
+    views.EventTypeViewSet)
+router.register(
     r'item_types',
-    views.ItemTypeViewSet,
-    basename='itemtype')
-types_router.register(
+    views.ItemTypeViewSet)
+router.register(
     r'licence_types',
-    views.LicenceTypeViewSet,
-    basename='licencetype')
-types_router.register(
+    views.LicenceTypeViewSet)
+router.register(
     r'sampling_event_type_device_types',
     views.SamplingEventTypeDeviceTypeViewSet)
-types_router.register(
+router.register(
     r'sampling_event_type_site_types',
     views.SamplingEventTypeSiteTypeViewSet)
-types_router.register(
+router.register(
     r'sampling_event_types',
-    views.SamplingEventTypeViewSet,
-    basename='samplingeventtype')
-types_router.register(
+    views.SamplingEventTypeViewSet)
+router.register(
     r'site_types',
-    views.SiteTypeViewSet,
-    basename='sitetype')
-types_router.register(
-    r'term_types',
-    views.TermTypeViewSet,
-    basename='termtype')
-types_router.register(
+    views.SiteTypeViewSet)
+router.register(
     r'collection_type_site_types',
     views.CollectionTypeSiteTypeViewSet)
-types_router.register(
+router.register(
     r'collection_type_administrators',
     views.CollectionTypeAdministratorViewSet)
-types_router.register(
+router.register(
     r'collection_type_annotation_types',
     views.CollectionTypeAnnotationTypeViewSet)
-types_router.register(
+router.register(
     r'collection_type_licence_types',
     views.CollectionTypeLicenceTypeViewSet)
-types_router.register(
+router.register(
     r'collection_type_sampling_event_types',
     views.CollectionTypeSamplingEventTypeViewSet)
-types_router.register(
+router.register(
     r'collection_type_item_types',
     views.CollectionTypeItemTypeViewSet)
-types_router.register(
+router.register(
     r'collection_type_event_types',
     views.CollectionTypeEventTypeViewSet)
-types_router.register(
+router.register(
     r'collection_type_device_types',
     views.CollectionTypeDeviceTypeViewSet)
-types_router.register(
+router.register(
     r'collection_type_roles',
     views.CollectionTypeRoleViewSet)
 
 
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^types/', include(types_router.urls)),
+    # url(r'^types/', include(router.urls)),
 ]

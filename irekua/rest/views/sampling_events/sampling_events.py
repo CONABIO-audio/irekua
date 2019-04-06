@@ -10,7 +10,7 @@ from database.models import Item
 
 from rest.serializers.sampling_events import sampling_events
 from rest.serializers.sampling_events import sampling_event_devices
-from rest.serializers import items as item_serializers
+from rest.serializers.items import items as item_serializers
 from rest.serializers import SerializerMapping
 from rest.serializers import SerializerMappingMixin
 

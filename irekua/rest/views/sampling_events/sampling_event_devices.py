@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from database.models import SamplingEventDevice
 
 from rest.serializers.sampling_events import sampling_event_devices
-from rest.serializers import items
+from rest.serializers.items import items
 from rest.serializers import SerializerMapping
 from rest.serializers import SerializerMappingMixin
 

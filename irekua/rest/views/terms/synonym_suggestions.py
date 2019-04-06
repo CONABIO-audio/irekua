@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework.permissions import BasePermission
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
 
 from database.models import SynonymSuggestion
 
@@ -21,9 +21,13 @@ from rest.filters import SynonymSuggestionFilter
 
 
 
-class SynonymSuggestionViewSet(SerializerMappingMixin,
+class SynonymSuggestionViewSet(mixins.UpdateModelMixin,
+                               mixins.RetrieveModelMixin,
+                               mixins.DestroyModelMixin,
+                               SerializerMappingMixin,
                                PermissionMappingMixin,
-                               ModelViewSet):
+                               GenericViewSet):
+
     queryset = SynonymSuggestion.objects.all()
     search_fields = ('source__value', 'synonym')
     filter_class = SynonymSuggestionFilter
@@ -34,5 +38,6 @@ class SynonymSuggestionViewSet(SerializerMappingMixin,
         ],
         Actions.DESTROY: [
             IsAuthenticated,
+            IsAdmin
         ]
     }, default=IsAuthenticated)

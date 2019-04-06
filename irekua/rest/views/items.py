@@ -14,9 +14,11 @@ from database.models import CollectionUser
 from database.models import Tag
 from database.models import Annotation
 from database.models import Item
+from database.models import ItemType
 
-from rest.serializers import items
-from rest.serializers import tags
+from rest.serializers.items import items
+from rest.serializers.items import tags
+from rest.serializers.object_types import item_types
 from rest.serializers.annotations import annotations as annotation_serializers
 from rest.serializers import SerializerMappingMixin
 from rest.serializers import SerializerMapping
@@ -31,7 +33,6 @@ from rest.permissions import IsSpecialUser
 from rest.permissions import items as permissions
 
 from rest.filters import ItemFilter
-from rest.filters import AnnotationFilter
 from rest.utils import Actions
 
 from rest.views.utils import AdditionalActionsMixin
@@ -45,6 +46,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
                   PermissionMappingMixin,
                   AdditionalActionsMixin,
                   GenericViewSet):
+    queryset = Item.objects.all()
     filterset_class = ItemFilter
     search_fields = ('item_type__name', )
 
@@ -54,6 +56,8 @@ class ItemViewSet(mixins.UpdateModelMixin,
         .extend(
             annotations=annotation_serializers.ListSerializer,
             add_annotation=annotation_serializers.CreateSerializer,
+            types=item_types.ListSerializer,
+            add_type=item_types.CreateSerializer,
             download=items.DownloadSerializer,
             upload=items.DownloadSerializer,
             add_tag=tags.SelectSerializer,
@@ -86,7 +90,6 @@ class ItemViewSet(mixins.UpdateModelMixin,
                 IsAdmin
             )
         ],
-        Actions.LIST: IsAuthenticated,
         'annotations': [
             IsAuthenticated,
             (
@@ -111,7 +114,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
                 IsAdmin
             )
         ],
-        'add_tag': [
+        'tag_item': [
             IsAuthenticated,
             (
                 permissions.IsCreator |
@@ -145,7 +148,8 @@ class ItemViewSet(mixins.UpdateModelMixin,
                 IsSpecialUser
             )
         ],
-    })
+        'add_type': [IsAuthenticated, IsAdmin],
+    }, default=IsAuthenticated)
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -158,20 +162,35 @@ class ItemViewSet(mixins.UpdateModelMixin,
         context['item'] = item
         return context
 
-    @action(
-        detail=True,
-        methods=['GET'],
-        filterset_class=AnnotationFilter)
+    @action(detail=False, methods=['GET'])
+    def tags(self, request):
+        queryset = Tag.objects.all()
+        return self.list_related_object_view(queryset)
+
+    @tags.mapping.post
+    def add_tag(self, request):
+        return self.create_related_object_view()
+
+    @action(detail=True, methods=['GET'])
     def annotations(self, request, pk=None):
         queryset = self.filter_queryset(self.get_queryset())
         return self.list_related_object_view(queryset)
 
-    @action(detail=True, methods=['POST'])
+    @annotations.mapping.post
     def add_annotation(self, request, pk=None):
         return self.create_related_object_view()
 
+    @action(detail=False, methods=['GET'])
+    def types(self, request):
+        queryset = ItemType.objects.all()
+        return self.list_related_object_view(queryset)
+
+    @types.mapping.post
+    def add_type(self, request):
+        return self.create_related_object_view()
+
     @action(detail=True, methods=['POST'])
-    def add_tag(self, request, pk=None):
+    def tag_item(self, request, pk=None):
         return self.add_related_object_view(Tag, 'tag')
 
     @action(detail=True, methods=['POST'])

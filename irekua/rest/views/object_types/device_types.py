@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
 
 from database.models import DeviceType
 
@@ -15,7 +16,11 @@ from rest.permissions import ReadOnly
 from rest.filters import DeviceTypeFilter
 
 
-class DeviceTypeViewSet(SerializerMappingMixin, ModelViewSet):
+class DeviceTypeViewSet(mixins.RetrieveModelMixin,
+                        mixins.DestroyModelMixin,
+                        mixins.UpdateModelMixin,
+                        SerializerMappingMixin,
+                        GenericViewSet):
     queryset = DeviceType.objects.all()
     filterset_class = DeviceTypeFilter
     search_fields = ('name', )

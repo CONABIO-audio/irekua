@@ -9,7 +9,7 @@ from database.models import Item
 from database.models import User
 
 from rest.serializers.users import users
-from rest.serializers import items as item_serializers
+from rest.serializers.items  import items as item_serializers
 from rest.serializers import sites as site_serializers
 from rest.serializers.devices import physical_devices as device_serializers
 from rest.serializers.sampling_events import sampling_events as sampling_event_serializers

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from rest_framework import mixins
 from rest_framework.decorators import action
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import GenericViewSet
 
 from database.models import ItemType
 from database.models import EventType
@@ -20,9 +21,12 @@ from rest.filters import ItemTypeFilter
 from rest.views.utils import AdditionalActionsMixin
 
 
-class ItemTypeViewSet(SerializerMappingMixin,
+class ItemTypeViewSet(mixins.RetrieveModelMixin,
+                      mixins.DestroyModelMixin,
+                      mixins.UpdateModelMixin,
+                      SerializerMappingMixin,
                       AdditionalActionsMixin,
-                      ModelViewSet):
+                      GenericViewSet):
     queryset = ItemType.objects.all()
     filterset_class = ItemTypeFilter
     search_fields = (

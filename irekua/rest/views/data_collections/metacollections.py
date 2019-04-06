@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from rest_framework import mixins
 from rest_framework.decorators import action
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import GenericViewSet
 
 from database.models import MetaCollection
 from database.models import Item
 
-from rest.serializers import metacollections
-from rest.serializers import items as item_serializers
+from rest.serializers.data_collections import metacollections
+from rest.serializers.items import items as item_serializers
 from rest.serializers import SerializerMapping
 from rest.serializers import SerializerMappingMixin
 
@@ -25,10 +26,13 @@ from rest.utils import Actions
 from rest.views.utils import AdditionalActionsMixin
 
 
-class MetaCollectionViewSet(SerializerMappingMixin,
+class MetaCollectionViewSet(mixins.UpdateModelMixin,
+                            mixins.RetrieveModelMixin,
+                            mixins.DestroyModelMixin,
+                            SerializerMappingMixin,
                             AdditionalActionsMixin,
                             PermissionMappingMixin,
-                            ModelViewSet):
+                            GenericViewSet):
     queryset = MetaCollection.objects.all()
     filterset_class = MetaCollectionFilter
     search_fields = ('name', )

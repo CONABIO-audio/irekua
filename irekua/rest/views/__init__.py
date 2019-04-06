@@ -5,12 +5,12 @@ from .data_collections.collection_devices import CollectionDeviceViewSet
 from .data_collections.collection_sites import CollectionSiteViewSet
 from .data_collections.collection_users import CollectionUserViewSet
 from .data_collections.data_collections import CollectionViewSet
+from .data_collections.metacollections import MetaCollectionViewSet
 from .devices.device_brands import DeviceBrandViewSet
 from .devices.devices import DeviceViewSet
 from .devices.physical_devices import PhysicalDeviceViewSet
 from .items import ItemViewSet
 from .licences import LicenceViewSet
-from .metacollections import MetaCollectionViewSet
 from .object_types.annotation_types import AnnotationTypeViewSet
 from .object_types.data_collections.collection_administrators import CollectionTypeAdministratorViewSet
 from .object_types.data_collections.collection_annotation_types import CollectionTypeAnnotationTypeViewSet

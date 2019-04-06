@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
 
 import database.models as db
 
@@ -16,9 +17,12 @@ from rest.permissions import IsDeveloper, IsAdmin, ReadOnly
 from rest.filters import AnnotationTypeFilter
 
 
-class AnnotationTypeViewSet(SerializerMappingMixin,
+class AnnotationTypeViewSet(mixins.RetrieveModelMixin,
+                            mixins.DestroyModelMixin,
+                            mixins.UpdateModelMixin,
+                            SerializerMappingMixin,
                             PermissionMappingMixin,
-                            ModelViewSet):
+                            GenericViewSet):
     queryset = db.AnnotationType.objects.all()
     search_fields = ('name', )
     filterset_class = AnnotationTypeFilter

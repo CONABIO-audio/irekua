@@ -10,19 +10,29 @@ from rest.serializers.terms import terms
 from rest.serializers import SerializerMapping
 from rest.serializers import SerializerMappingMixin
 
-from rest.permissions import IsAdmin, IsDeveloper, ReadOnly
+from rest.permissions import IsAdmin
+from rest.permissions import IsDeveloper
+from rest.permissions import IsAuthenticated
+from rest.permissions import PermissionMapping
+from rest.permissions import PermissionMappingMixin
 
 from rest.filters import TermFilter
+from rest.utils import Actions
 
 
 class TermViewSet(mixins.UpdateModelMixin,
                   mixins.RetrieveModelMixin,
                   mixins.DestroyModelMixin,
-                  mixins.ListModelMixin,
                   SerializerMappingMixin,
+                  PermissionMappingMixin,
                   GenericViewSet):
     queryset = Term.objects.all()
-    serializer_mapping = SerializerMapping.from_module(terms)
-    permission_classes = (IsAdmin | IsDeveloper | ReadOnly, )
     search_fields = ('term_type__name', 'value',)
     filterset_class = TermFilter
+
+    serializer_mapping = SerializerMapping.from_module(terms)
+
+    permission_mapping = PermissionMapping({
+        Actions.UPDATE: [IsAuthenticated, IsAdmin | IsDeveloper],
+        Actions.DESTROY: [IsAuthenticated, IsAdmin | IsDeveloper],
+    }, default=IsAuthenticated)

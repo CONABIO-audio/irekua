@@ -2,7 +2,8 @@
 from __future__ import unicode_literals
 
 from rest_framework.permissions import BasePermission
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
 
 from database.models import TermSuggestion
 
@@ -23,7 +24,11 @@ class IsOwnSuggestion(BasePermission):
             return False
 
 
-class TermSuggestionViewSet(SerializerMappingMixin, ModelViewSet):
+class TermSuggestionViewSet(mixins.UpdateModelMixin,
+                            mixins.RetrieveModelMixin,
+                            mixins.DestroyModelMixin,
+                            SerializerMappingMixin,
+                            GenericViewSet):
     queryset = TermSuggestion.objects.all()
     serializer_mapping = SerializerMapping.from_module(term_suggestions)
     permission_classes = (IsAdmin | IsOwnSuggestion | ReadAndCreateOnly, )

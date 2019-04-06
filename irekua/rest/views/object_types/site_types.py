@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
 
-import database.models as db
+from database.models import SiteType
 
 from rest.serializers.object_types import site_types
 from rest.serializers import SerializerMapping
@@ -17,12 +18,15 @@ from rest.permissions import IsAdmin
 from rest.filters import SiteTypeFilter
 
 
-class SiteTypeViewSet(SerializerMappingMixin,
+class SiteTypeViewSet(mixins.RetrieveModelMixin,
+                      mixins.DestroyModelMixin,
+                      mixins.UpdateModelMixin,
+                      SerializerMappingMixin,
                       PermissionMappingMixin,
-                      ModelViewSet):
-    queryset = db.SiteType.objects.all()
-    serializer_mapping = SerializerMapping.from_module(site_types)
+                      GenericViewSet):
+    queryset = SiteType.objects.all()
     search_fields = ('name', )
     filterset_class = SiteTypeFilter
 
+    serializer_mapping = SerializerMapping.from_module(site_types)
     permission_mapping = PermissionMapping(default=IsAdmin | ReadOnly)

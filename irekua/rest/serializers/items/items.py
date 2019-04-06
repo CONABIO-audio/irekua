@@ -8,7 +8,7 @@ from database.models import Item
 from rest.serializers.object_types import item_types
 from rest.serializers.object_types import event_types
 from rest.serializers.sampling_events import sampling_event_devices
-from . import licences
+from rest.serializers import licences
 from . import tags
 
 
