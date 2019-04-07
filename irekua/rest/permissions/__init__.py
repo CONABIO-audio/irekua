@@ -5,6 +5,7 @@ from .generic import IsDeveloper
 from .generic import IsModel
 from .generic import IsCurator
 from .generic import IsAdmin
+from .generic import ReadOnly
 from .generic import IsSpecialUser
 
 from .utils import PermissionMapping
@@ -21,4 +22,5 @@ __all__ = [
     'PermissionMapping',
     'PermissionMappingMixin',
     'IsAuthenticated',
+    'ReadOnly',
 ]

@@ -1,5 +1,15 @@
 from rest_framework.permissions import BasePermission
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import SAFE_METHODS
+
+
+class ReadOnly(IsAuthenticated):
+    def has_permission(self, request, view):
+        is_auth = super().has_permission(request, view)
+        if not is_auth:
+            return False
+
+        return request.method in SAFE_METHODS
 
 
 class IsUnauthenticated(IsAuthenticated):
