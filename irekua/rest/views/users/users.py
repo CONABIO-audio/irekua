@@ -18,15 +18,11 @@ from rest.serializers.users import roles as role_serializers
 from rest.serializers.items  import items as item_serializers
 from rest.serializers import sites as site_serializers
 from rest.serializers.devices import physical_devices as device_serializers
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
 from rest.permissions import IsAdmin
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsUnauthenticated
 from rest.permissions import users as permissions
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 
 from rest.filters import UserFilter
 from rest.filters import RoleFilter
@@ -34,17 +30,18 @@ from rest.filters import ItemFilter
 from rest.filters import PhysicalDeviceFilter
 from rest.filters import SiteFilter
 from rest.filters import InstitutionFilter
+
 from rest.utils import Actions
-from rest.views.utils import AdditionalActionsMixin
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class UserViewSet(mixins.ListModelMixin,
                   mixins.UpdateModelMixin,
                   mixins.CreateModelMixin,
                   mixins.RetrieveModelMixin,
-                  SerializerMappingMixin,
-                  AdditionalActionsMixin,
-                  PermissionMappingMixin,
+                  CustomViewSetMixin,
                   GenericViewSet):
     queryset = User.objects.all()
     filterset_class = UserFilter
@@ -54,7 +51,7 @@ class UserViewSet(mixins.ListModelMixin,
         Actions.UPDATE: [
             IsAuthenticated,
             permissions.IsSelf | IsAdmin
-        ]
+        ], # TODO: Fix permissions 
     }, default=IsAuthenticated)
 
     serializer_mapping = (

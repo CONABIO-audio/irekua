@@ -10,35 +10,32 @@ from database.models import TermType
 
 from rest.serializers.object_types import event_types
 from rest.serializers.object_types import term_types
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
 from rest.permissions import IsAdmin
 from rest.permissions import IsDeveloper
 from rest.permissions import IsAuthenticated
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 
-from rest.filters import EventTypeFilter
 from rest.utils import Actions
-from rest.views.utils import AdditionalActionsMixin
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class EventTypeViewSet(mixins.RetrieveModelMixin,
                        mixins.DestroyModelMixin,
                        mixins.UpdateModelMixin,
-                       SerializerMappingMixin,
-                       AdditionalActionsMixin,
-                       PermissionMappingMixin,
+                       CustomViewSetMixin,
                        GenericViewSet):
     queryset = EventType.objects.all()
-    filterset_class = EventTypeFilter
-    search_fields = ('name', )
 
     permission_mapping = PermissionMapping({
-        Actions.DESTROY: [IsAuthenticated, IsAdmin],
-        Actions.UPDATE: [IsAuthenticated, IsDeveloper | IsAdmin],
-    }, default=IsAuthenticated)
+        Actions.RETRIEVE: IsAuthenticated,
+        Actions.UPDATE: [
+            IsAuthenticated,
+            IsDeveloper | IsAdmin
+        ],
+    }, default=IsDeveloper | IsAdmin)
+
     serializer_mapping = (
         SerializerMapping
         .from_module(event_types)

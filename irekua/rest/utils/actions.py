@@ -8,6 +8,26 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
 
+class Actions(object):
+    LIST = 'list'
+    UPDATE = 'update'
+    PARTIAL_UPDATE = 'partial_update'
+    METADATA = 'metadata'
+    CREATE = 'create'
+    DESTROY = 'destroy'
+    RETRIEVE = 'retrieve'
+
+    DEFAULT_ACTIONS = [
+        LIST,
+        UPDATE,
+        PARTIAL_UPDATE,
+        METADATA,
+        CREATE,
+        RETRIEVE,
+        DESTROY,
+    ]
+
+
 class AdditionalActionsMixin(object):
     def list_related_object_view(self, queryset):
         page = self.paginate_queryset(queryset)

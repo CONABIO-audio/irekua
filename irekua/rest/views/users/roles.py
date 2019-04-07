@@ -10,28 +10,21 @@ from rest_framework.viewsets import GenericViewSet
 from database.models import Role
 
 from rest.serializers.users import roles
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 from rest.permissions import ReadOnly
 from rest.permissions import IsAdmin
 
-from rest.filters import RoleFilter
-from rest.views.utils import AdditionalActionsMixin
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class RoleViewSet(mixins.UpdateModelMixin,
                   mixins.DestroyModelMixin,
                   mixins.RetrieveModelMixin,
-                  SerializerMappingMixin,
-                  AdditionalActionsMixin,
-                  PermissionMappingMixin,
+                  CustomViewSetMixin,
                   GenericViewSet):
     queryset = Role.objects.all()
-    search_fields = ('name', )
-    filterset_class = RoleFilter
 
     serializer_mapping = (
         SerializerMapping

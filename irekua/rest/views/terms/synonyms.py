@@ -7,21 +7,24 @@ from rest_framework.viewsets import GenericViewSet
 from database.models import Synonym
 
 from rest.serializers.terms import synonyms
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
-from rest.permissions import IsAdmin, IsCurator, ReadOnly
+from rest.permissions import IsAdmin
+from rest.permissions import IsCurator
+from rest.permissions import ReadOnly
 
-from rest.filters import SynonymFilter
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class SynonymViewSet(mixins.UpdateModelMixin,
                      mixins.RetrieveModelMixin,
                      mixins.DestroyModelMixin,
-                     SerializerMappingMixin,
+                     CustomViewSetMixin,
                      GenericViewSet):
     queryset = Synonym.objects.all()
+
     serializer_mapping = SerializerMapping.from_module(synonyms)
-    search_fields = ('source__value', 'target__value')
-    filterset_class = SynonymFilter
-    permission_classes = (IsAdmin | IsCurator | ReadOnly, )
+
+    permission_classes = PermissionMapping(
+        default=IsAdmin | IsCurator | ReadOnly)

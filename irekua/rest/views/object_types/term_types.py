@@ -18,23 +18,19 @@ from rest.serializers.terms import synonym_suggestions as synonym_suggestion_ser
 from rest.serializers.terms import entailments as entailment_serializers
 from rest.serializers.terms import synonyms as synonym_serializers
 from rest.serializers.terms import terms as term_serializers
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
 from rest.permissions import IsAdmin
 from rest.permissions import IsAuthenticated
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 
 from rest.filters import TermTypeFilter
+
 from rest.utils import Actions
-from rest.views.utils import AdditionalActionsMixin
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
-class TermTypeViewSet(SerializerMappingMixin,
-                      AdditionalActionsMixin,
-                      PermissionMappingMixin,
-                      ModelViewSet):
+class TermTypeViewSet(CustomViewSetMixin, ModelViewSet):
     queryset = TermType.objects.all()
     search_fields = ('name', )
     filterset_class = TermTypeFilter

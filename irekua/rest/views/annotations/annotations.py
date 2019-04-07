@@ -13,31 +13,27 @@ from rest.serializers.object_types import annotation_types
 from rest.serializers.annotations import annotations
 from rest.serializers.annotations import annotation_votes
 from rest.serializers.annotations import annotation_tools as annotation_tool_serializers
-from rest.serializers import SerializerMappingMixin
-from rest.serializers import SerializerMapping
 
 from rest.filters import AnnotationFilter
-from rest.utils import Actions
 
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 from rest.permissions import IsCurator
 from rest.permissions import IsSpecialUser
 from rest.permissions import annotations as permissions
 
-from rest.views.utils import AdditionalActionsMixin
+from rest.utils import Actions
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class AnnotationViewSet(mixins.UpdateModelMixin,
                         mixins.RetrieveModelMixin,
                         mixins.DestroyModelMixin,
                         mixins.ListModelMixin,
-                        SerializerMappingMixin,
-                        PermissionMappingMixin,
-                        GenericViewSet,
-                        AdditionalActionsMixin):
+                        CustomViewSetMixin,
+                        GenericViewSet):
     queryset = Annotation.objects.all()
     filterset_class = AnnotationFilter
 

@@ -7,31 +7,23 @@ from rest_framework.viewsets import GenericViewSet
 from database.models import Institution
 
 from rest.serializers.users import institutions
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 from rest.permissions import institutions as permissions
 
-from rest.filters import InstitutionFilter
 from rest.utils import Actions
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class InstitutionViewSet(mixins.UpdateModelMixin,
                          mixins.RetrieveModelMixin,
                          mixins.DestroyModelMixin,
-                         SerializerMappingMixin,
-                         PermissionMappingMixin,
+                         CustomViewSetMixin,
                          GenericViewSet):
     queryset = Institution.objects.all()
-    filterset_class = InstitutionFilter
-    search_fields = (
-        'institution_name',
-        'institution_code',
-        'subdependency')
 
     serializer_mapping = SerializerMapping.from_module(institutions)
     permission_mapping = PermissionMapping({

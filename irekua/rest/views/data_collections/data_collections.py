@@ -19,13 +19,7 @@ from rest.serializers.data_collections import collection_devices
 from rest.serializers.data_collections import collection_sites
 from rest.serializers.data_collections import collection_users
 from rest.serializers.data_collections import metacollections as metacollection_serializers
-from rest.serializers import SerializerMappingMixin
-from rest.serializers import SerializerMapping
 
-from rest.utils import Actions
-
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 from rest.permissions import IsDeveloper
@@ -33,13 +27,14 @@ from rest.permissions import IsSpecialUser
 from rest.permissions import data_collections as permissions
 
 from rest.filters import CollectionFilter
-from rest.views.utils import AdditionalActionsMixin
+
+from rest.utils import Actions
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
-class CollectionViewSet(SerializerMappingMixin,
-                        AdditionalActionsMixin,
-                        PermissionMappingMixin,
-                        ModelViewSet):
+class CollectionViewSet(CustomViewSetMixin, ModelViewSet):
     queryset = Collection.objects.all()
     search_fields = ('name', )
     filterset_class = CollectionFilter

@@ -10,28 +10,24 @@ from database.models import Item
 
 from rest.serializers.data_collections import metacollections
 from rest.serializers.items import items as item_serializers
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
 from rest.permissions import IsAdmin
 from rest.permissions import IsDeveloper
 from rest.permissions import IsSpecialUser
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsAuthenticated
 
 from rest.filters import MetaCollectionFilter
-from rest.utils import Actions
 
-from rest.views.utils import AdditionalActionsMixin
+from rest.utils import Actions
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class MetaCollectionViewSet(mixins.UpdateModelMixin,
                             mixins.RetrieveModelMixin,
                             mixins.DestroyModelMixin,
-                            SerializerMappingMixin,
-                            AdditionalActionsMixin,
-                            PermissionMappingMixin,
+                            CustomViewSetMixin,
                             GenericViewSet):
     queryset = MetaCollection.objects.all()
     filterset_class = MetaCollectionFilter

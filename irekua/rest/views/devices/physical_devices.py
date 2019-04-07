@@ -7,38 +7,28 @@ from rest_framework import mixins
 from database.models import PhysicalDevice
 
 from rest.serializers.devices import physical_devices
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsAdmin
 from rest.permissions import physical_devices as permissions
-from rest.permissions import IsAuthenticated
+from rest.permissions import ReadOnly
 
 from rest.filters import PhysicalDeviceFilter
-from rest.utils import Actions
+
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class PhysicalDeviceViewSet(mixins.UpdateModelMixin,
                             mixins.RetrieveModelMixin,
                             mixins.DestroyModelMixin,
-                            SerializerMappingMixin,
-                            PermissionMappingMixin,
+                            CustomViewSetMixin,
                             GenericViewSet):
 
     queryset = PhysicalDevice.objects.all()
-    search_fields = ('device__brand__name', 'device__model')
     filterset_class = PhysicalDeviceFilter
+    search_fields = ('device__brand__name', 'device__model')
 
     serializer_mapping = SerializerMapping.from_module(physical_devices)
-    permission_mapping = PermissionMapping({
-        Actions.UPDATE: [
-            IsAuthenticated,
-            permissions.IsOwner | IsAdmin
-        ],
-        Actions.DESTROY: [
-            IsAuthenticated,
-            permissions.IsOwner | IsAdmin
-        ]
-    }, default=IsAuthenticated)
+    permission_mapping = PermissionMapping(
+        default=permissions.IsOwner | IsAdmin | ReadOnly)

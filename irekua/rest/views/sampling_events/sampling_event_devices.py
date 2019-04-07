@@ -9,24 +9,20 @@ from database.models import SamplingEventDevice
 
 from rest.serializers.sampling_events import sampling_event_devices
 from rest.serializers.items import items as item_serializers
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 
 from rest.utils import Actions
-from rest.views.utils import AdditionalActionsMixin
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class SamplingEventDeviceViewSet(mixins.UpdateModelMixin,
                                  mixins.RetrieveModelMixin,
                                  mixins.DestroyModelMixin,
-                                 SerializerMappingMixin,
-                                 AdditionalActionsMixin,
-                                 PermissionMappingMixin,
+                                 CustomViewSetMixin,
                                  GenericViewSet):
     queryset = SamplingEventDevice.objects.all()
 
@@ -39,7 +35,7 @@ class SamplingEventDeviceViewSet(mixins.UpdateModelMixin,
         ))
 
     permission_mapping = PermissionMapping({
-        Actions.RETRIEVE: IsAuthenticated
+        Actions.RETRIEVE: IsAuthenticated # TODO: Fix permissions
     }, default=[IsAuthenticated, IsAdmin])
 
     def get_serializer_context(self):

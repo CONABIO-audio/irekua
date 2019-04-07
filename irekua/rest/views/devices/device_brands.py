@@ -7,30 +7,21 @@ from rest_framework.viewsets import GenericViewSet
 from database.models import DeviceBrand
 
 from rest.serializers.devices import device_brands
-from rest.serializers import SerializerMappingMixin
-from rest.serializers import SerializerMapping
 
 from rest.permissions import IsAdmin
-from rest.permissions import IsAuthenticated
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
+from rest.permissions import ReadOnly
 
-from rest.filters import DeviceBrandFilter
-from rest.utils import Actions
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class DeviceBrandViewSet(mixins.RetrieveModelMixin,
                          mixins.DestroyModelMixin,
                          mixins.UpdateModelMixin,
-                         SerializerMappingMixin,
-                         PermissionMappingMixin,
+                         CustomViewSetMixin,
                          GenericViewSet):
     queryset = DeviceBrand.objects.all()
-    search_fields = ('name', )
-    filterset_class = DeviceBrandFilter
 
-    permission_mapping = PermissionMapping({
-        Actions.DESTROY: [IsAuthenticated, IsAdmin],
-        Actions.UPDATE: [IsAuthenticated, IsAdmin],
-    }, default=IsAuthenticated)
+    permission_mapping = PermissionMapping(default=IsAdmin | ReadOnly)
     serializer_mapping = SerializerMapping.from_module(device_brands)

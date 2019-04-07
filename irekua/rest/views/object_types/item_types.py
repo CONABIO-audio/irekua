@@ -10,33 +10,23 @@ from database.models import EventType
 
 from rest.serializers.object_types import item_types
 from rest.serializers.object_types import event_types
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
 from rest.permissions import IsAdmin
 from rest.permissions import IsDeveloper
 from rest.permissions import IsAuthenticated
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 
-from rest.filters import ItemTypeFilter
 from rest.utils import Actions
-from rest.views.utils import AdditionalActionsMixin
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class ItemTypeViewSet(mixins.RetrieveModelMixin,
                       mixins.DestroyModelMixin,
                       mixins.UpdateModelMixin,
-                      SerializerMappingMixin,
-                      AdditionalActionsMixin,
-                      PermissionMappingMixin,
+                      CustomViewSetMixin,
                       GenericViewSet):
     queryset = ItemType.objects.all()
-    filterset_class = ItemTypeFilter
-    search_fields = (
-        'name',
-        'media_type',
-    )
 
     serializer_mapping = (
         SerializerMapping
@@ -46,9 +36,9 @@ class ItemTypeViewSet(mixins.RetrieveModelMixin,
             remove_event_types=event_types.SelectSerializer
         ))
     permission_classes = PermissionMapping({
-        Actions.DESTROY: [IsAuthenticated, IsAdmin],
-        Actions.UPDATE: [IsAuthenticated, IsDeveloper | IsAdmin],
-    }, default=IsAuthenticated)
+        Actions.RETRIEVE: IsAuthenticated,
+        Actions.DESTROY: IsAdmin,
+    }, default=IsDeveloper | IsAdmin)
 
     @action(detail=True, methods=['POST'])
     def add_event_types(self, request, pk=None):

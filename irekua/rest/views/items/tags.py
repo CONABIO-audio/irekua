@@ -7,29 +7,21 @@ from rest_framework.viewsets import GenericViewSet
 from database.models import Tag
 
 from rest.serializers.items import tags
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
 from rest.permissions import IsAdmin
-from rest.permissions import IsAuthenticated
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
+from rest.permissions import ReadOnly
 
-from rest.utils import Actions
-from rest.filters import TagFilter
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class TagViewSet(mixins.UpdateModelMixin,
                  mixins.RetrieveModelMixin,
                  mixins.DestroyModelMixin,
-                 SerializerMappingMixin,
-                 PermissionMappingMixin,
+                 CustomViewSetMixin,
                  GenericViewSet):
     queryset = Tag.objects.all()
+
     serializer_mapping = SerializerMapping.from_module(tags)
-    search_fields = ('name', )
-    filterset_class = TagFilter
-    permission_classes = PermissionMapping({
-        Actions.UPDATE: [IsAuthenticated, IsAdmin],
-        Actions.DESTROY: [IsAuthenticated, IsAdmin],
-    }, default=IsAuthenticated)
+    permission_classes = PermissionMapping(default=IsAdmin | ReadOnly)

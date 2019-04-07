@@ -7,34 +7,29 @@ from rest_framework.viewsets import GenericViewSet
 from database.models import SynonymSuggestion
 
 from rest.serializers.terms import synonym_suggestions
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 import rest.permissions.synonym_suggestions as permissions
 
 from rest.utils import Actions
-from rest.filters import SynonymSuggestionFilter
-
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class SynonymSuggestionViewSet(mixins.UpdateModelMixin,
                                mixins.RetrieveModelMixin,
                                mixins.DestroyModelMixin,
-                               SerializerMappingMixin,
-                               PermissionMappingMixin,
+                               CustomViewSetMixin,
                                GenericViewSet):
 
     queryset = SynonymSuggestion.objects.all()
-    search_fields = ('source__value', 'synonym')
-    filter_class = SynonymSuggestionFilter
+
     serializer_mapping = SerializerMapping.from_module(synonym_suggestions)
     permission_mapping = PermissionMapping({
         Actions.UPDATE: [
-            IsAuthenticated,
+            IsAuthenticated, # TODO: Fix permissions
         ],
         Actions.DESTROY: [
             IsAuthenticated,

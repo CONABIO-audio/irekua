@@ -1,4 +1,5 @@
-from rest.utils import Actions
+from .actions import Actions
+
 
 class SerializerMapping(object):
     DEFAULT_ACTION = Actions.CREATE

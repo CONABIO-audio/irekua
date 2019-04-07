@@ -13,23 +13,19 @@ from rest.serializers.object_types import device_types
 from rest.serializers.devices import devices
 from rest.serializers.devices import device_brands
 from rest.serializers.devices import physical_devices as physical_device_serializers
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
 from rest.permissions import IsAdmin
 from rest.permissions import IsAuthenticated
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 
 from rest.filters import DeviceFilter
+
 from rest.utils import Actions
-from rest.views.utils import AdditionalActionsMixin
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
-class DeviceViewSet(AdditionalActionsMixin,
-                    SerializerMappingMixin,
-                    PermissionMappingMixin,
-                    ModelViewSet):
+class DeviceViewSet(CustomViewSetMixin, ModelViewSet):
     queryset = Device.objects.all()
     search_fields = ('brand__name', 'model')
     filterset_class = DeviceFilter

@@ -7,25 +7,20 @@ from rest_framework.viewsets import GenericViewSet
 from database.models import CollectionType
 
 from rest.serializers.object_types.data_collections import collection_site_types
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
-from rest.permissions import IsAuthenticated
+from rest.permissions import ReadOnly
 from rest.permissions import IsAdmin
 
-from rest.utils import Actions
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class CollectionTypeSiteTypeViewSet(mixins.RetrieveModelMixin,
                                     mixins.DestroyModelMixin,
-                                    SerializerMappingMixin,
-                                    PermissionMappingMixin,
+                                    CustomViewSetMixin,
                                     GenericViewSet):
     queryset = CollectionType.site_types.through.objects.all()
     serializer_mapping = SerializerMapping.from_module(collection_site_types)
 
-    permission_mapping = PermissionMapping({
-        Actions.RETRIEVE: IsAuthenticated,
-    }, default=[IsAuthenticated, IsAdmin])
+    permission_mapping = PermissionMapping(default=IsAdmin | ReadOnly)

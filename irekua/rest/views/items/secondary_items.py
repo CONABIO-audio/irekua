@@ -7,14 +7,21 @@ from rest_framework.viewsets import GenericViewSet
 from database.models import SecondaryItem
 
 from rest.serializers.items import secondary_items
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
+
+from rest.permissions import IsAuthenticated
+
+# from rest.utils import Actions
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class SecondaryItemViewSet(mixins.UpdateModelMixin,
                            mixins.RetrieveModelMixin,
                            mixins.DestroyModelMixin,
-                           SerializerMappingMixin,
+                           CustomViewSetMixin,
                            GenericViewSet):
     queryset = SecondaryItem.objects.all()
+
+    permission_mapping = PermissionMapping(default=IsAuthenticated) # TODO: Fix permissions
     serializer_mapping = SerializerMapping.from_module(secondary_items)

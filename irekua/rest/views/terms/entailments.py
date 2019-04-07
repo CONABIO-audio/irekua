@@ -7,23 +7,23 @@ from rest_framework.viewsets import GenericViewSet
 from database.models import Entailment
 
 from rest.serializers.terms import entailments
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
 from rest.permissions import IsAdmin
 from rest.permissions import IsCurator
 from rest.permissions import ReadOnly
 
-from rest.filters import EntailmentFilter
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class EntailmentViewSet(mixins.UpdateModelMixin,
                         mixins.RetrieveModelMixin,
                         mixins.DestroyModelMixin,
-                        SerializerMappingMixin,
+                        CustomViewSetMixin,
                         GenericViewSet):
     queryset = Entailment.objects.all()
+
     serializer_mapping = SerializerMapping.from_module(entailments)
-    permission_classes = (IsAdmin | IsCurator | ReadOnly, )
-    search_fields = ('source__value', 'target__value')
-    filterset_class = EntailmentFilter
+    permission_mapping = PermissionMapping(
+        default=IsAdmin | IsCurator | ReadOnly)

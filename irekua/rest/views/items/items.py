@@ -25,11 +25,7 @@ from rest.serializers.object_types import item_types
 from rest.serializers.object_types import event_types as event_type_serializers
 from rest.serializers.object_types import annotation_types as annotation_type_serializers
 from rest.serializers.annotations import annotations as annotation_serializers
-from rest.serializers import SerializerMappingMixin
-from rest.serializers import SerializerMapping
 
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 from rest.permissions import IsCurator
@@ -39,18 +35,18 @@ from rest.permissions import IsSpecialUser
 from rest.permissions import items as permissions
 
 from rest.filters import ItemFilter
-from rest.utils import Actions
 
-from rest.views.utils import AdditionalActionsMixin
+from rest.utils import Actions
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class ItemViewSet(mixins.UpdateModelMixin,
                   mixins.RetrieveModelMixin,
                   mixins.DestroyModelMixin,
                   mixins.ListModelMixin,
-                  SerializerMappingMixin,
-                  PermissionMappingMixin,
-                  AdditionalActionsMixin,
+                  CustomViewSetMixin,
                   GenericViewSet):
     queryset = Item.objects.all()
     filterset_class = ItemFilter

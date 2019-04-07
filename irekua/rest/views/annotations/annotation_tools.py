@@ -7,37 +7,23 @@ from rest_framework.viewsets import GenericViewSet
 from database.models import AnnotationTool
 
 from rest.serializers.annotations import annotation_tools
-from rest.serializers import SerializerMappingMixin
-from rest.serializers import SerializerMapping
 
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsDeveloper
 from rest.permissions import IsAdmin
-from rest.permissions import IsAuthenticated
+from rest.permissions import ReadOnly
 
-from rest.filters import AnnotationToolFilter
-from rest.utils import Actions
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class AnnotationToolViewSet(mixins.UpdateModelMixin,
                             mixins.RetrieveModelMixin,
                             mixins.DestroyModelMixin,
-                            SerializerMappingMixin,
-                            PermissionMappingMixin,
+                            CustomViewSetMixin,
                             GenericViewSet):
     queryset = AnnotationTool.objects.all()
-    search_fields = ('name', )
-    filterset_class = AnnotationToolFilter
 
-    permission_mapping = PermissionMapping({
-        Actions.UPDATE: [
-            IsAuthenticated,
-            IsDeveloper | IsAdmin,
-        ],
-        Actions.DESTROY: [
-            IsAuthenticated,
-            IsDeveloper | IsAdmin,
-        ]
-    }, default=IsAuthenticated)
+    permission_mapping = PermissionMapping(
+        default=IsAdmin | IsDeveloper | ReadOnly)
     serializer_mapping = SerializerMapping.from_module(annotation_tools)

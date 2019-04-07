@@ -9,24 +9,20 @@ from database.models import SiteType
 
 from rest.serializers import sites
 from rest.serializers.object_types import site_types
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 import rest.permissions.sites as permissions
 
 from rest.filters import SiteFilter
+
 from rest.utils import Actions
-from rest.views.utils import AdditionalActionsMixin
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
-class SiteViewSet(SerializerMappingMixin,
-                  PermissionMappingMixin,
-                  AdditionalActionsMixin,
-                  ModelViewSet):
+class SiteViewSet(CustomViewSetMixin, ModelViewSet):
     queryset = Site.objects.all()
     filterset_class = SiteFilter
     search_fields = ('name', 'locality')

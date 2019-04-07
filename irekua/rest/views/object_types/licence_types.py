@@ -7,27 +7,22 @@ from rest_framework.viewsets import GenericViewSet
 from database.models import LicenceType
 
 from rest.serializers.object_types import licence_types
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
 from rest.permissions import IsAdmin
 from rest.permissions import IsAuthenticated
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 
 from rest.utils import Actions
-from rest.filters import LicenceTypeFilter
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class LicenceTypeViewSet(mixins.RetrieveModelMixin,
                          mixins.DestroyModelMixin,
                          mixins.UpdateModelMixin,
-                         SerializerMappingMixin,
-                         PermissionMappingMixin,
+                         CustomViewSetMixin,
                          GenericViewSet):
     queryset = LicenceType.objects.all()
-    filterset_class = LicenceTypeFilter
-    search_fields = ('name', )
 
     serializer_mapping = SerializerMapping.from_module(licence_types)
     permission_mapping = PermissionMapping({

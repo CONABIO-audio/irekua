@@ -17,34 +17,23 @@ from rest.serializers.object_types.data_collections import collection_event_type
 from rest.serializers.object_types.data_collections import collection_item_types
 from rest.serializers.object_types.data_collections import collection_device_types
 from rest.serializers.object_types.data_collections import collection_roles
-from rest.serializers import SerializerMappingMixin
-from rest.serializers import SerializerMapping
 
-from rest.filters import CollectionTypeFilter
-
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsAdmin
-from rest.permissions import IsAuthenticated
+from rest.permissions import ReadOnly
 
-from rest.utils import Actions
-from rest.views.utils import AdditionalActionsMixin
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class CollectionTypeViewSet(mixins.RetrieveModelMixin,
                             mixins.DestroyModelMixin,
                             mixins.UpdateModelMixin,
-                            SerializerMappingMixin,
-                            AdditionalActionsMixin,
-                            PermissionMappingMixin,
+                            CustomViewSetMixin,
                             GenericViewSet):
     queryset = CollectionType.objects.all()
-    filterset_class = CollectionTypeFilter
 
-    permission_mapping = PermissionMapping({
-        Actions.UPDATE: [IsAuthenticated, IsAdmin],
-        Actions.DESTROY: [IsAuthenticated, IsAdmin]
-    }, default=IsAuthenticated)
+    permission_mapping = PermissionMapping(default=IsAdmin | ReadOnly)
 
     serializer_mapping = (
         SerializerMapping

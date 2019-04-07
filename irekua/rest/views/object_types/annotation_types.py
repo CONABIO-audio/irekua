@@ -7,28 +7,23 @@ from rest_framework.viewsets import GenericViewSet
 from database.models import AnnotationType
 
 from rest.serializers.object_types import annotation_types
-from rest.serializers import SerializerMappingMixin
-from rest.serializers import SerializerMapping
 
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsDeveloper
 from rest.permissions import IsAdmin
 from rest.permissions import IsAuthenticated
 
 from rest.utils import Actions
-from rest.filters import AnnotationTypeFilter
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class AnnotationTypeViewSet(mixins.RetrieveModelMixin,
                             mixins.DestroyModelMixin,
                             mixins.UpdateModelMixin,
-                            SerializerMappingMixin,
-                            PermissionMappingMixin,
+                            CustomViewSetMixin,
                             GenericViewSet):
     queryset = AnnotationType.objects.all()
-    filterset_class = AnnotationTypeFilter
-    search_fields = ('name', )
 
     permission_mapping = PermissionMapping({
         Actions.UPDATE: [

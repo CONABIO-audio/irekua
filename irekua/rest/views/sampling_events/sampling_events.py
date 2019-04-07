@@ -11,28 +11,25 @@ from database.models import Item
 from rest.serializers.sampling_events import sampling_events
 from rest.serializers.sampling_events import sampling_event_devices
 from rest.serializers.items import items as item_serializers
-from rest.serializers import SerializerMapping
-from rest.serializers import SerializerMappingMixin
 
-from rest.permissions import PermissionMapping
-from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 from rest.permissions import IsSpecialUser
 import rest.permissions.sampling_events as permissions
 
 from rest.filters import SamplingEventFilter
+
 from rest.utils import Actions
-from rest.views.utils import AdditionalActionsMixin
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class SamplingEventViewSet(mixins.UpdateModelMixin,
                            mixins.RetrieveModelMixin,
                            mixins.DestroyModelMixin,
                            mixins.ListModelMixin,
-                           SerializerMappingMixin,
-                           AdditionalActionsMixin,
-                           PermissionMappingMixin,
+                           CustomViewSetMixin,
                            GenericViewSet):
     queryset = SamplingEvent.objects.all()
     search_fields = ('sampling_event_type__name',)

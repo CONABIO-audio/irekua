@@ -8,9 +8,6 @@ from .generic import IsAdmin
 from .generic import ReadOnly
 from .generic import IsSpecialUser
 
-from .utils import PermissionMapping
-from .utils import PermissionMappingMixin
-
 
 __all__ = [
     'IsUnauthenticated',
@@ -19,8 +16,6 @@ __all__ = [
     'IsCurator',
     'IsAdmin',
     'IsSpecialUser',
-    'PermissionMapping',
-    'PermissionMappingMixin',
     'IsAuthenticated',
     'ReadOnly',
 ]

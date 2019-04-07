@@ -7,24 +7,22 @@ from rest_framework.viewsets import GenericViewSet
 from database.models import AnnotationVote
 
 from rest.serializers.annotations import annotation_votes
-from rest.serializers import SerializerMappingMixin
-from rest.serializers import SerializerMapping
 
-from rest.permissions import PermissionMappingMixin
-from rest.permissions import PermissionMapping
 from rest.permissions import IsAdmin
 from rest.permissions import IsSpecialUser
 from rest.permissions import IsAuthenticated
 from rest.permissions import annotation_votes as permissions
 
 from rest.utils import Actions
+from rest.utils import CustomViewSetMixin
+from rest.utils import SerializerMapping
+from rest.utils import PermissionMapping
 
 
 class AnnotationVoteViewSet(mixins.UpdateModelMixin,
                             mixins.RetrieveModelMixin,
                             mixins.DestroyModelMixin,
-                            SerializerMappingMixin,
-                            PermissionMappingMixin,
+                            CustomViewSetMixin,
                             GenericViewSet):
     queryset = AnnotationVote.objects.all()
 
