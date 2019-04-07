@@ -5,9 +5,15 @@ from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 
 from database.models import Collection
+from database.models import SamplingEvent
 from database.models import MetaCollection
 from database.models import CollectionType
+from database.models import CollectionDevice
+from database.models import CollectionSite
+from database.models import CollectionUser
 from database.models import LicenceType
+from database.models import Licence
+from database.models import Item
 
 from rest.serializers.items import items as item_serializers
 from rest.serializers import licences as licence_serializers
@@ -26,7 +32,7 @@ from rest.permissions import IsDeveloper
 from rest.permissions import IsSpecialUser
 from rest.permissions import data_collections as permissions
 
-from rest.filters import CollectionFilter
+from rest import filters
 
 from rest.utils import Actions
 from rest.utils import CustomViewSetMixin
@@ -36,8 +42,8 @@ from rest.utils import PermissionMapping
 
 class CollectionViewSet(CustomViewSetMixin, ModelViewSet):
     queryset = Collection.objects.all()
-    search_fields = ('name', )
-    filterset_class = CollectionFilter
+    search_fields = filters.data_collections.search_fields
+    filterset_class = filters.data_collections.Filter
 
     serializer_mapping = (
         SerializerMapping
@@ -183,86 +189,143 @@ class CollectionViewSet(CustomViewSetMixin, ModelViewSet):
         context['collection'] = collection
         return context
 
-    @action(detail=False, methods=['GET'])
+    def get_queryset(self):
+        if self.action == 'metacollections':
+            return MetaCollection.objects.all()
+
+        if self.action == 'licences':
+            collection_id = self.kwargs['pk']
+            return Licence.objects.filter(collection=collection_id)
+
+        if self.action == 'devices':
+            collection_id = self.kwargs['pk']
+            return CollectionDevice.objects.filter(collection=collection_id)
+
+        if self.action == 'sites':
+            collection_id = self.kwargs['pk']
+            return CollectionSite.objects.filter(collection=collection_id)
+
+        if self.action == 'users':
+            collection_id = self.kwargs['pk']
+            return CollectionUser.objects.filter(collection=collection_id)
+
+        if self.action == 'sampling_events':
+            collection_id = self.kwargs['pk']
+            return SamplingEvent.objects.filter(collection=collection_id)
+
+        if self.action == 'types':
+            return CollectionType.objects.all()
+
+        if self.action == 'licence_types':
+            return LicenceType.objects.all()
+
+        if self.action == 'items':
+            collection_id = self.kwargs['pk']
+            return Item.objects.filter(
+                sampling_event_device__sampling_event__collection=collection_id)
+
+        return super().get_queryset()
+
+    @action(
+        detail=False,
+        methods=['GET'],
+        filterset_class=filters.metacollections.Filter,
+        search_fields=filters.metacollections.search_fields)
     def metacollections(self, request, pk=None):
-        queryset = MetaCollection.objects.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @metacollections.mapping.post
     def add_metacollection(self, request, pk=None):
         return self.create_related_object_view()
 
-    @action(detail=True, methods=['GET'])
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.licences.Filter,
+        search_fields=filters.licences.search_fields)
     def licences(self, request, pk=None):
-        collection = self.get_object()
-        queryset = collection.licence_set.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @licences.mapping.post
     def add_licence(self, request, pk=None):
         return self.create_related_object_view()
 
-    @action(detail=True, methods=['GET'])
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.collection_devices.Filter,
+        search_fields=filters.collection_devices.search_fields)
     def devices(self, request, pk=None):
-        collection = self.get_object()
-        queryset = collection.collectiondevice_set.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @devices.mapping.post
     def add_device(self, request, pk=None):
         return self.create_related_object_view()
 
-    @action(detail=True, methods=['GET'])
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.collection_sites.Filter,
+        search_fields=filters.collection_sites.search_fields)
     def sites(self, request, pk=None):
-        collection = self.get_object()
-        queryset = collection.collectionsite_set.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @sites.mapping.post
     def add_site(self, request, pk=None):
         return self.create_related_object_view()
 
-    @action(detail=True, methods=['GET'])
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.collection_users.Filter,
+        search_fields=filters.collection_users.search_fields)
     def users(self, request, pk=None):
-        collection = self.get_object()
-        queryset = collection.collectionuser_set.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @users.mapping.post
     def add_user(self, request, pk=None):
         return self.create_related_object_view()
 
-    @action(detail=True, methods=['GET'])
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.sampling_events.Filter,
+        search_fields=filters.sampling_events.search_fields)
     def sampling_events(self, request, pk=None):
-        collection = self.get_object()
-        queryset = collection.samplingevent_set.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @sampling_events.mapping.post
     def add_sampling_event(self, request, pk=None):
         return self.create_related_object_view()
 
-    @action(detail=False, methods=['GET'])
+    @action(
+        detail=False,
+        methods=['GET'],
+        filterset_class=filters.collection_types.Filter,
+        search_fields=filters.collection_types.search_fields)
     def types(self, request):
-        queryset = CollectionType.objects.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @types.mapping.post
     def add_type(self, request):
         return self.create_related_object_view()
 
-    @action(detail=False, methods=['GET'])
+    @action(
+        detail=False,
+        methods=['GET'],
+        filterset_class=filters.licence_types.Filter,
+        search_fields=filters.licence_types.search_fields)
     def licence_types(self, request):
-        queryset = LicenceType.objects.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @licence_types.mapping.post
     def add_licence_type(self, request):
         return self.create_related_object_view()
 
-    @action(detail=True, methods=['GET'])
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.items.Filter,
+        search_fields=filters.items.search_fields)
     def items(self, request, pk=None):
-        collection = self.get_object()
-        queryset = db.Item.objects.filter(
-            sampling_event_device__sampling_event__collection=collection)
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()

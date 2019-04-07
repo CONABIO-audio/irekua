@@ -2,7 +2,12 @@ from database.models import EventType
 from .utils import BaseFilter
 
 
-class EventTypeFilter(BaseFilter):
+search_fields = (
+    'name',
+)
+
+
+class Filter(BaseFilter):
     class Meta:
         model = EventType
         fields = ('name', )

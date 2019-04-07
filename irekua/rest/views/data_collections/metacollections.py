@@ -16,7 +16,7 @@ from rest.permissions import IsDeveloper
 from rest.permissions import IsSpecialUser
 from rest.permissions import IsAuthenticated
 
-from rest.filters import MetaCollectionFilter
+from rest import filters
 
 from rest.utils import Actions
 from rest.utils import CustomViewSetMixin
@@ -30,8 +30,8 @@ class MetaCollectionViewSet(mixins.UpdateModelMixin,
                             CustomViewSetMixin,
                             GenericViewSet):
     queryset = MetaCollection.objects.all()
-    filterset_class = MetaCollectionFilter
-    search_fields = ('name', )
+    filterset_class = filters.metacollections.Filter
+    search_fields = filters.metacollections.search_fields
 
     serializer_mapping = (
         SerializerMapping
@@ -59,19 +59,26 @@ class MetaCollectionViewSet(mixins.UpdateModelMixin,
         IsDeveloper | IsAdmin
     ])
 
+    def get_queryset(self):
+        if self.action == 'items':
+            metacollection_id = self.kwargs['pk']
+            metacollection = MetaCollection.objects.get(pk=metacollection_id)
+            return metacollection.item_set.all()
+
+        return super().get_queryset()
+
     @action(detail=True, methods=['POST'])
     def add_item(self, request, pk=None):
-        return self.add_related_object_view(
-            Item,
-            'item')
+        return self.add_related_object_view(Item, 'item')
 
     @action(detail=True, methods=['POST'])
     def remove_item(self, request, pk=None):
-        return self.remove_related_object_view(
-            'item')
+        return self.remove_related_object_view('item')
 
-    @action(detail=True, methods=['GET'])
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.items.Filter,
+        search_fields=filters.items.search_fields)
     def items(self, request, pk=None):
-        metacollection = self.get_object()
-        queryset = metacollection.item_set.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()

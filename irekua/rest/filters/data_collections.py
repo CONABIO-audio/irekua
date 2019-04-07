@@ -2,7 +2,13 @@ from database.models import Collection
 from .utils import BaseFilter
 
 
-class CollectionFilter(BaseFilter):
+search_fields = (
+    'name',
+    'collection_type__name',
+)
+
+
+class Filter(BaseFilter):
     class Meta:
         model = Collection
         fields = (

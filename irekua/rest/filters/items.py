@@ -4,7 +4,12 @@ from database.models import Item
 from .utils import BaseFilter
 
 
-class ItemFilter(BaseFilter):
+search_fields = (
+    'item_type__name',
+)
+
+
+class Filter(BaseFilter):
     is_uploaded = django_filters.BooleanFilter(
         field_name='item_file',
         method='is_uploaded_filter',
@@ -18,6 +23,7 @@ class ItemFilter(BaseFilter):
         fields = (
             'is_uploaded',
             'item_type__name',
+            'item_type__media_type',
             'sampling_event_device__sampling_event__sampling_event_type__name',
             'sampling_event_device__sampling_event__collection__name',
             'sampling_event_device__sampling_event__collection__collection_type',

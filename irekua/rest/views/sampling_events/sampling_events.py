@@ -6,6 +6,7 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 
 from database.models import SamplingEvent
+from database.models import SamplingEventDevice
 from database.models import Item
 
 from rest.serializers.sampling_events import sampling_events
@@ -17,7 +18,7 @@ from rest.permissions import IsAdmin
 from rest.permissions import IsSpecialUser
 import rest.permissions.sampling_events as permissions
 
-from rest.filters import SamplingEventFilter
+from rest import filters
 
 from rest.utils import Actions
 from rest.utils import CustomViewSetMixin
@@ -32,8 +33,8 @@ class SamplingEventViewSet(mixins.UpdateModelMixin,
                            CustomViewSetMixin,
                            GenericViewSet):
     queryset = SamplingEvent.objects.all()
-    search_fields = ('sampling_event_type__name',)
-    filterset_class = SamplingEventFilter
+    search_fields = filters.sampling_events.search_fields
+    filterset_class = filters.sampling_events.Filter
 
     serializer_mapping = (
         SerializerMapping
@@ -96,19 +97,34 @@ class SamplingEventViewSet(mixins.UpdateModelMixin,
         context['sampling_event'] = sampling_event
         return context
 
-    @action(detail=True, methods=['GET'])
+    def get_queryset(self):
+        if self.action == 'devices':
+            object_id = self.kwargs['pk']
+            return SamplingEventDevice.objects.filter(sampling_event=object_id)
+
+        if self.action == 'items':
+            object_id = self.kwargs['pk']
+            return Item.objects.filter(
+                sampling_event_device__sampling_event=object_id)
+
+        return super().get_queryset()
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.sampling_event_devices.Filter,
+        search_fields=filters.sampling_event_devices.search_fields)
     def devices(self, request, pk=None):
-        sampling_event = self.get_object()
-        queryset = sampling_event.samplingeventdevice_set.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @devices.mapping.post
     def add_device(self, request, pk=None):
         return self.create_related_object_view()
 
-    @action(detail=True, methods=['GET'])
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.items.Filter,
+        search_fields=filters.items.search_fields)
     def items(self, request, pk=None):
-        queryset = Item.objects.filter(
-            sampling_event_device__sampling_event=self.kwargs['pk']
-        )
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()

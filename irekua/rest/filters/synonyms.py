@@ -2,12 +2,16 @@ from database.models import Synonym
 from .utils import BaseFilter
 
 
-class SynonymFilter(BaseFilter):
+search_fields = (
+    'source__value',
+    'target__value',
+)
+
+
+class Filter(BaseFilter):
     class Meta:
         model = Synonym
         fields = (
-            'source__term_type__name',
             'source__value',
-            'target__term_type__name',
             'target__value'
         )

@@ -14,9 +14,9 @@ from database.models import CollectionUser
 from database.models import Tag
 from database.models import Annotation
 from database.models import Item
+from database.models import SecondaryItem
 from database.models import ItemType
 from database.models import EventType
-from database.models import AnnotationType
 
 from rest.serializers.items import items
 from rest.serializers.items import tags as tag_serializers
@@ -34,7 +34,7 @@ from rest.permissions import IsModel
 from rest.permissions import IsSpecialUser
 from rest.permissions import items as permissions
 
-from rest.filters import ItemFilter
+from rest import filters
 
 from rest.utils import Actions
 from rest.utils import CustomViewSetMixin
@@ -49,8 +49,8 @@ class ItemViewSet(mixins.UpdateModelMixin,
                   CustomViewSetMixin,
                   GenericViewSet):
     queryset = Item.objects.all()
-    filterset_class = ItemFilter
-    search_fields = ('item_type__name', )
+    filterset_class = filters.items.Filter
+    search_fields = filters.items.search_fields
 
     serializer_mapping = (
         SerializerMapping
@@ -68,8 +68,6 @@ class ItemViewSet(mixins.UpdateModelMixin,
             untag_item=tag_serializers.SelectSerializer,
             event_types=event_type_serializers.ListSerializer,
             add_event_type=event_type_serializers.CreateSerializer,
-            annotation_types=annotation_type_serializers.ListSerializer,
-            add_annotation_type=annotation_type_serializers.CreateSerializer,
             secondary_items=secondary_item_serializers.ListSerializer,
             add_secondary_item=secondary_item_serializers.CreateSerializer,
         ))
@@ -160,7 +158,6 @@ class ItemViewSet(mixins.UpdateModelMixin,
         ],
         'add_type': [IsAuthenticated, IsAdmin],
         'add_event_type': [IsAuthenticated, IsAdmin],
-        'add_annotation_type': [IsAuthenticated, IsAdmin | IsDeveloper],
         'secondary_items': [
             IsAuthenticated,
             (
@@ -192,10 +189,32 @@ class ItemViewSet(mixins.UpdateModelMixin,
         context['item'] = item
         return context
 
+    def get_queryset(self):
+        if self.action == 'list':
+            return self.get_list_queryset()
+
+        if self.action == 'tags':
+            return Tag.objects.all()
+
+        if self.action == 'annotations':
+            item_id = self.kwargs['pk']
+            return Annotation.objects.filter(item=item_id)
+
+        if self.action == 'secondary_items':
+            item_id = self.kwargs['pk']
+            return SecondaryItem.objects.filter(item=item_id)
+
+        if self.action == 'types':
+            return ItemType.objects.all()
+
+        if self.action == 'event_types':
+            return EventType.objects.all()
+
+        return super().get_queryset()
+
     @action(detail=False, methods=['GET'])
     def tags(self, request):
-        queryset = Tag.objects.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @tags.mapping.post
     def add_tag(self, request):
@@ -203,8 +222,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
 
     @action(detail=True, methods=['GET'])
     def annotations(self, request, pk=None):
-        queryset = self.filter_queryset(self.get_queryset())
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @annotations.mapping.post
     def add_annotation(self, request, pk=None):
@@ -212,9 +230,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
 
     @action(detail=True, methods=['GET'])
     def secondary_items(self, request, pk=None):
-        item = self.get_object()
-        queryset = item.secondaryitem_set.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @secondary_items.mapping.post
     def add_secondary_item(self, request, pk=None):
@@ -222,8 +238,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
 
     @action(detail=False, methods=['GET'])
     def types(self, request):
-        queryset = ItemType.objects.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @types.mapping.post
     def add_type(self, request):
@@ -231,29 +246,10 @@ class ItemViewSet(mixins.UpdateModelMixin,
 
     @action(detail=False, methods=['GET'])
     def event_types(self, request):
-        queryset = EventType.objects.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @event_types.mapping.post
     def add_event_type(self, request):
-        return self.create_related_object_view()
-
-    @action(detail=False, methods=['GET'])
-    def event_types(self, request):
-        queryset = EventType.objects.all()
-        return self.list_related_object_view(queryset)
-
-    @event_types.mapping.post
-    def add_event_type(self, request):
-        return self.create_related_object_view()
-
-    @action(detail=False, methods=['GET'])
-    def annotation_types(self, request):
-        queryset = AnnotationType.objects.all()
-        return self.list_related_object_view(queryset)
-
-    @annotation_types.mapping.post
-    def add_annotation_type(self, request):
         return self.create_related_object_view()
 
     @action(detail=True, methods=['POST'])
@@ -297,21 +293,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
         url = serializer.data['item_file']
         return redirect(url)
 
-    def get_queryset(self):
-        if self.action in Actions.DEFAULT_ACTIONS:
-            return self.get_queryset_for_default_actions()
-
-        return self.get_queryset_for_additional_actions()
-
-    def get_queryset_for_additional_actions(self):
-        if self.action == 'annotations':
-            item_pk = self.kwargs['pk']
-            queryset = Annotation.objects.filter(item=item_pk)
-            return queryset
-
-        return Item.objects.all()
-
-    def get_queryset_for_default_actions(self):
+    def get_list_queryset(self):
         try:
             user = self.request.user
         except AttributeError:

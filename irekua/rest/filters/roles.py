@@ -2,7 +2,12 @@ from database.models import Role
 from .utils import BaseFilter
 
 
-class RoleFilter(BaseFilter):
+search_fields = (
+    'name',
+)
+
+
+class Filter(BaseFilter):
     class Meta:
         model = Role
         fields = (

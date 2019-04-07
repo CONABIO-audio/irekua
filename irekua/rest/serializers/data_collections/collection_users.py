@@ -71,9 +71,18 @@ class CreateSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
-class AdminSerializer(serializers.ModelSerializer):
+class UpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = CollectionUser
         fields = (
+            'metadata',
+        )
+
+
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CollectionUser
+        fields = (
+            'role',
             'is_admin',
         )

@@ -2,7 +2,12 @@ from database.models import SamplingEventType
 from .utils import BaseFilter
 
 
-class SamplingEventTypeFilter(BaseFilter):
+search_fields = (
+    'name',
+)
+
+
+class Filter(BaseFilter):
     class Meta:
         model = SamplingEventType
         fields = (

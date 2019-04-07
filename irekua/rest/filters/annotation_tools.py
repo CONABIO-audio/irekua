@@ -2,7 +2,12 @@ from database.models import AnnotationTool
 from .utils import BaseFilter
 
 
-class AnnotationToolFilter(BaseFilter):
+search_fields = (
+    'name',
+)
+
+
+class Filter(BaseFilter):
     class Meta:
         model = AnnotationTool
         fields = (

@@ -2,7 +2,12 @@ from database.models import LicenceType
 from .utils import BaseFilter
 
 
-class LicenceTypeFilter(BaseFilter):
+search_fields = (
+    'name',
+)
+
+
+class Filter(BaseFilter):
     class Meta:
         model = LicenceType
         fields = (

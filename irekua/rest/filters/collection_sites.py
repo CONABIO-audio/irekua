@@ -1,43 +1,44 @@
 import django_filters
 
-from database.models import Site
+from database.models import CollectionSite
 from .utils import BaseFilter
 
 
 search_fields = (
-    'name',
-    'site_type__name',
-    'locality',
+    'site__name',
+    'site__site_type__name',
+    'site__locality',
 )
 
 
 class Filter(BaseFilter):
     latitude__gt = django_filters.NumberFilter(
-        field_name='latitude',
+        field_name='site__latitude',
         lookup_expr='gt')
     latitude__lt = django_filters.NumberFilter(
-        field_name='latitude',
+        field_name='site__latitude',
         lookup_expr='lt')
 
     longitude__gt = django_filters.NumberFilter(
-        field_name='longitude',
+        field_name='site__longitude',
         lookup_expr='gt')
     longitude__lt = django_filters.NumberFilter(
-        field_name='longitude',
+        field_name='site__longitude',
         lookup_expr='lt')
 
     altitude__gt = django_filters.NumberFilter(
-        field_name='altitude',
+        field_name='site__altitude',
         lookup_expr='gt')
     altitude__lt = django_filters.NumberFilter(
-        field_name='altitude',
+        field_name='site__altitude',
         lookup_expr='lt')
 
     class Meta:
-        model = Site
+        model = CollectionSite
         fields = (
-            'name',
-            'site_type__name',
-            'locality',
-            'created_by',
+            'site__name',
+            'site__site_type__name',
+            'site__locality',
+            'site__created_by',
+            'internal_id',
         )

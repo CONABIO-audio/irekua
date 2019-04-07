@@ -46,11 +46,8 @@ class EventTypeViewSet(mixins.RetrieveModelMixin,
 
     @action(detail=True, methods=['POST'])
     def add_term_types(self, request, pk=None):
-        return self.add_related_object_view(
-            TermType,
-            'term_type')
+        return self.add_related_object_view(TermType, 'term_type')
 
     @action(detail=True, methods=['POST'])
     def remove_term_types(self, request, pk=None):
-        return self.remove_related_object_view(
-            'term_type')
+        return self.remove_related_object_view('term_type')

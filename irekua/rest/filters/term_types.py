@@ -2,7 +2,12 @@ from database.models import TermType
 from .utils import BaseFilter
 
 
-class TermTypeFilter(BaseFilter):
+search_fields = (
+    'name',
+)
+
+
+class Filter(BaseFilter):
     class Meta:
         model = TermType
         fields = ('name', )

@@ -17,7 +17,7 @@ from rest.serializers.devices import physical_devices as physical_device_seriali
 from rest.permissions import IsAdmin
 from rest.permissions import IsAuthenticated
 
-from rest.filters import DeviceFilter
+from rest import filters
 
 from rest.utils import Actions
 from rest.utils import CustomViewSetMixin
@@ -27,8 +27,8 @@ from rest.utils import PermissionMapping
 
 class DeviceViewSet(CustomViewSetMixin, ModelViewSet):
     queryset = Device.objects.all()
-    search_fields = ('brand__name', 'model')
-    filterset_class = DeviceFilter
+    filterset_class = filters.devices.Filter
+    search_fields = filters.devices.search_fields
 
     serializer_mapping = (
         SerializerMapping
@@ -48,28 +48,49 @@ class DeviceViewSet(CustomViewSetMixin, ModelViewSet):
         'add_type': IsAdmin,
     }, default=IsAuthenticated)
 
-    @action(detail=False, methods=['GET'])
+    def get_queryset(self):
+        if self.action == 'types':
+            return DeviceType.objects.all()
+
+        if self.action == 'brands':
+            return DeviceBrand.objects.all()
+
+        if self.action == 'physical_devices':
+            return PhysicalDevice.objects.all() # TODO: set adequate queryset for user
+
+        return super().get_queryset()
+
+    @action(
+        detail=False,
+        methods=['GET'],
+        filterset_class=filters.device_types.Filter,
+        search_fields=filters.device_types.search_fields)
     def types(self, request):
-        queryset = DeviceType.objects.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @types.mapping.post
     def add_type(self, request):
         return self.create_related_object_view()
 
-    @action(detail=False, methods=['GET'])
+    @action(
+        detail=False,
+        methods=['GET'],
+        filterset_class=filters.device_brands.Filter,
+        search_fields=filters.device_brands.search_fields)
     def brands(self, request):
-        queryset = DeviceBrand.objects.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @brands.mapping.post
     def add_brand(self, request):
         return self.create_related_object_view()
 
-    @action(detail=False, methods=['GET'])
+    @action(
+        detail=False,
+        methods=['GET'],
+        filterset_class=filters.physical_devices.Filter,
+        search_fields=filters.physical_devices.search_fields)
     def physical_devices(self, request):
-        queryset = PhysicalDevice.objects.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @physical_devices.mapping.post
     def add_physical_device(self, request):

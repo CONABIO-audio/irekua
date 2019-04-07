@@ -33,7 +33,7 @@ class CollectionUserViewSet(mixins.UpdateModelMixin,
         SerializerMapping
         .from_module(collection_users)
         .extend(
-            change_admin_status=collection_users.AdminSerializer
+            change_role=collection_users.RoleSerializer
         ))
 
     permission_mapping = PermissionMapping({
@@ -64,7 +64,7 @@ class CollectionUserViewSet(mixins.UpdateModelMixin,
                 IsAdmin
             ),
         ],
-        'change_admin_status': [
+        'change_role': [
             (
                 permissions.IsCollectionAdmin |
                 permissions.IsCollectionTypeAdmin |
@@ -74,7 +74,7 @@ class CollectionUserViewSet(mixins.UpdateModelMixin,
     })
 
     @action(detail=True, methods=['POST'])
-    def change_admin_status(self, request, pk=None):
+    def change_role(self, request, pk=None):
         instance = self.get_object()
         serializer = self.get_serializer(
             instance,

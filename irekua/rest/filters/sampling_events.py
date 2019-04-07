@@ -4,7 +4,14 @@ from database.models import SamplingEvent
 from .utils import BaseFilter
 
 
-class SamplingEventFilter(BaseFilter):
+search_fields = (
+    'sampling_event_type__name',
+    'collection_site__site__site_type__name',
+    'collection_site__site__locality',
+)
+
+
+class Filter(BaseFilter):
     latitude__gt = django_filters.NumberFilter(
         field_name='site.latitude',
         lookup_expr='gt')

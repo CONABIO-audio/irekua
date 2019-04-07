@@ -42,11 +42,8 @@ class ItemTypeViewSet(mixins.RetrieveModelMixin,
 
     @action(detail=True, methods=['POST'])
     def add_event_types(self, request, pk=None):
-        return self.add_related_object_view(
-            EventType,
-            'event_type')
+        return self.add_related_object_view(EventType, 'event_type')
 
     @action(detail=True, methods=['POST'])
     def remove_event_types(self, request, pk=None):
-        return self.remove_related_object_view(
-            'event_type')
+        return self.remove_related_object_view('event_type')

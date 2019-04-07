@@ -1,64 +1,77 @@
-from .annotation_tools import AnnotationToolFilter
-from .annotation_types import AnnotationTypeFilter
-from .annotations import AnnotationFilter
-from .collection_types import CollectionTypeFilter
-from .data_collections import CollectionFilter
-from .device_brands import DeviceBrandFilter
-from .device_types import DeviceTypeFilter
-from .devices import DeviceFilter
-from .entailment_types import EntailmentTypeFilter
-from .entailments import EntailmentFilter
-from .event_types import EventTypeFilter
-from .institutions import InstitutionFilter
-from .item_types import ItemTypeFilter
-from .items import ItemFilter
-from .licence_types import LicenceTypeFilter
-from .metacollections import MetaCollectionFilter
-from .physical_devices import PhysicalDeviceFilter
-from .roles import RoleFilter
-from .sampling_event_types import SamplingEventTypeFilter
-from .sampling_events import SamplingEventFilter
-from .site_types import SiteTypeFilter
-from .sites import SiteFilter
-from .synonym_suggestions import SynonymSuggestionFilter
-from .synonyms import SynonymFilter
-from .tags import TagFilter
-from .term_suggestions import TermSuggestionFilter
-from .term_types import TermTypeFilter
-from .terms import TermFilter
-from .users import UserFilter
+from . import annotation_tools
+from . import annotation_votes
+from . import annotation_types
+from . import annotations
+from . import collection_types
+from . import data_collections
+from . import device_brands
+from . import device_types
+from . import devices
+from . import entailment_types
+from . import entailments
+from . import event_types
+from . import institutions
+from . import item_types
+from . import items
+from . import licence_types
+from . import metacollections
+from . import physical_devices
+from . import roles
+from . import sampling_event_types
+from . import sampling_events
+from . import site_types
+from . import sites
+from . import synonym_suggestions
+from . import synonyms
+from . import tags
+from . import term_suggestions
+from . import term_types
+from . import terms
+from . import users
+from . import collection_devices
+from . import collection_users
+from . import collection_sites
+from . import licences
+from . import sampling_event_devices
 
 from .utils import BaseFilter
 
 
 __all__ = [
     'BaseFilter',
-    'AnnotationToolFilter',
-    'AnnotationTypeFilter',
-    'AnnotationFilter',
-    'CollectionTypeFilter',
-    'CollectionFilter',
-    'DeviceBrandFilter',
-    'DeviceTypeFilter',
-    'DeviceFilter',
-    'EntailmentTypeFilter',
-    'EntailmentFilter',
-    'EventTypeFilter',
-    'InstitutionFilter',
-    'ItemTypeFilter',
-    'ItemFilter',
-    'LicenceTypeFilter',
-    'MetaCollectionFilter',
-    'PhysicalDeviceFilter',
-    'RoleFilter',
-    'SamplingEventTypeFilter',
-    'SiteTypeFilter',
-    'SiteFilter',
-    'SynonymSuggestionFilter',
-    'SynonymFilter',
-    'TagFilter',
-    'TermSuggestionFilter',
-    'TermTypeFilter',
-    'TermFilter',
-    'UserFilter'
+    'annotation_tools',
+    'annotation_types',
+    'annotation_votes',
+    'annotations',
+    'collection_types',
+    'data_collections',
+    'device_brands',
+    'device_types',
+    'devices',
+    'entailment_types',
+    'entailments',
+    'event_types',
+    'institutions',
+    'item_types',
+    'items',
+    'licence_types',
+    'metacollections',
+    'physical_devices',
+    'roles',
+    'sampling_event_types',
+    'sampling_events',
+    'site_types',
+    'sites',
+    'synonym_suggestions',
+    'synonyms',
+    'tags',
+    'term_suggestions',
+    'term_types',
+    'terms',
+    'users',
+    'collection_users',
+    'collection_sites',
+    'collection_devices',
+    'licences',
+    'sampling_event_devices',
 ]

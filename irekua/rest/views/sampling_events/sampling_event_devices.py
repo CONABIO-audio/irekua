@@ -6,12 +6,15 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 
 from database.models import SamplingEventDevice
+from database.models import Item
 
 from rest.serializers.sampling_events import sampling_event_devices
 from rest.serializers.items import items as item_serializers
 
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
+
+from rest import filters
 
 from rest.utils import Actions
 from rest.utils import CustomViewSetMixin
@@ -25,6 +28,8 @@ class SamplingEventDeviceViewSet(mixins.UpdateModelMixin,
                                  CustomViewSetMixin,
                                  GenericViewSet):
     queryset = SamplingEventDevice.objects.all()
+    filterset_class = filters.sampling_event_devices.Filter
+    search_fields = filters.sampling_event_devices.search_fields
 
     serializer_mapping = (
         SerializerMapping
@@ -49,11 +54,20 @@ class SamplingEventDeviceViewSet(mixins.UpdateModelMixin,
         context['sampling_event_device'] = sampling_event_device
         return context
 
-    @action(detail=True, methods=['GET'])
+    def get_queryset(self):
+        if self.action == 'items':
+            object_id = self.kwargs['pk']
+            return Item.objects.filter(sampling_event_device=object_id)
+
+        return super().get_queryset()
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.items.Filter,
+        search_fields=filters.items.search_fields)
     def items(self, request, pk=None):
-        sampling_event_device = self.get_object()
-        queryset = sampling_event_device.item_set.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @items.mapping.post
     def add_item(self, request, pk=None):

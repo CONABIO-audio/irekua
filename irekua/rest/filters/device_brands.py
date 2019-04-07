@@ -2,7 +2,12 @@ from database.models import DeviceBrand
 from .utils import BaseFilter
 
 
-class DeviceBrandFilter(BaseFilter):
+search_fields = (
+    'name',
+)
+
+
+class Filter(BaseFilter):
     class Meta:
         model = DeviceBrand
         fields = ('name', )

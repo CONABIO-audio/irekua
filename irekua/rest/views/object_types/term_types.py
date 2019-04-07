@@ -5,6 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 
 from database.models import TermType
+from database.models import Term
 from database.models import TermSuggestion
 from database.models import Synonym
 from database.models import SynonymSuggestion
@@ -22,7 +23,7 @@ from rest.serializers.terms import terms as term_serializers
 from rest.permissions import IsAdmin
 from rest.permissions import IsAuthenticated
 
-from rest.filters import TermTypeFilter
+from rest import filters
 
 from rest.utils import Actions
 from rest.utils import CustomViewSetMixin
@@ -32,8 +33,8 @@ from rest.utils import PermissionMapping
 
 class TermTypeViewSet(CustomViewSetMixin, ModelViewSet):
     queryset = TermType.objects.all()
-    search_fields = ('name', )
-    filterset_class = TermTypeFilter
+    search_fields = filters.term_types.search_fields
+    filterset_class = filters.term_types.Filter
 
     serializer_mapping = (
         SerializerMapping
@@ -74,59 +75,97 @@ class TermTypeViewSet(CustomViewSetMixin, ModelViewSet):
         context['term_type'] = term_type
         return context
 
-    @action(detail=False, methods=['GET'])
+    def get_queryset(self):
+        if self.action == 'entailments':
+            return Entailment.objects.all()
+
+        if self.action == 'entailment_types':
+            return EntailmentType.objects.all()
+
+        if self.action == 'terms':
+            term_type_id = self.kwargs['pk']
+            return Term.objects.filter(term_type=term_type_id)
+
+        if self.action == 'synonyms':
+            term_type_id = self.kwargs['pk']
+            return Synonym.objects.filter(source__term_type=term_type_id)
+
+        if self.action == 'suggestions':
+            term_type_id = self.kwargs['pk']
+            return TermSuggestion.objects.filter(term_type=term_type_id)
+
+        if self.action == 'synonym_suggestions':
+            term_type_id = self.kwargs['pk']
+            return SynonymSuggestion.objects.filter(source__term_type=term_type_id)
+
+        return super().get_queryset()
+
+    @action(detail=False,
+            methods=['GET'],
+            filterset_class=filters.entailments.Filter,
+            search_fields=filters.entailments.search_fields)
     def entailments(self, request):
-        queryset = Entailment.objects.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @entailments.mapping.post
     def add_entailment(self, request):
         self.create_related_object_view()
 
-    @action(detail=False, methods=['GET'])
+    @action(
+        detail=False,
+        methods=['GET'],
+        filterset_class=filters.entailment_types.Filter,
+        search_fields=filters.entailment_types.search_fields)
     def entailment_types(self, request):
-        queryset = EntailmentType.objects.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @entailment_types.mapping.post
     def add_entailment_type(self, request):
         self.create_related_object_view()
 
-    @action(detail=True, methods=['GET'])
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.terms.Filter,
+        search_fields=filters.terms.search_fields)
     def terms(self, request, pk=None):
-        term_type = self.get_object()
-        queryset = term_type.term_set.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @terms.mapping.post
     def add_term(self, request, pk=None):
         return self.create_related_object_view()
 
-    @action(detail=True, methods=['GET'])
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.synonyms.Filter,
+        search_fields=filters.synonyms.search_fields)
     def synonyms(self, request, pk=None):
-        type_id = self.kwargs['pk']
-        queryset = Synonym.objects.filter(source__term_type=type_id)
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @synonyms.mapping.post
     def add_synonym(self, request, pk=None):
         self.create_related_object_view()
 
-    @action(detail=True, methods=['GET'])
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.term_suggestions.Filter,
+        search_fields=filters.term_suggestions.search_fields)
     def suggestions(self, request, pk=None):
-        type_id = self.kwargs['pk']
-        queryset = TermSuggestion.objects.filter(term_type=type_id)
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @suggestions.mapping.post
     def suggest_term(self, request, pk=None):
         self.create_related_object_view()
 
-    @action(detail=True, methods=['GET'])
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.synonym_suggestions.Filter,
+        search_fields=filters.synonym_suggestions.search_fields)
     def synonym_suggestions(self, request, pk=None):
-        type_id = self.kwargs['pk']
-        queryset = SynonymSuggestion.objects.filter(source__term_type=type_id)
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @synonym_suggestions.mapping.post
     def suggest_synonym(self, request, pk=None):

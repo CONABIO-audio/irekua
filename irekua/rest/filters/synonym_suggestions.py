@@ -3,7 +3,13 @@ import django_filters
 from database.models import SynonymSuggestion
 
 
-class SynonymSuggestionFilter(django_filters.FilterSet):
+search_fields = (
+    'source__value',
+    'synonym',
+)
+
+
+class Filter(django_filters.FilterSet):
     suggested_on__gt = django_filters.DateTimeFilter(
         field_name='suggested_on',
         lookup_expr='gt')
@@ -14,7 +20,6 @@ class SynonymSuggestionFilter(django_filters.FilterSet):
     class Meta:
         model = SynonymSuggestion
         fields = (
-            'source__term_type__name',
             'source__value',
             'synonym',
             'suggested_by__username',

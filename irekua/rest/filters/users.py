@@ -2,7 +2,14 @@ from database.models import User
 from .utils import BaseFilter
 
 
-class UserFilter(BaseFilter):
+search_fields = (
+    'username',
+    'first_name',
+    'last_name',
+)
+
+
+class Filter(BaseFilter):
     class Meta:
         model = User
         fields = (

@@ -2,7 +2,13 @@ from database.models import Institution
 from .utils import BaseFilter
 
 
-class InstitutionFilter(BaseFilter):
+search_fields = (
+    'institution_name',
+    'institution_code',
+)
+
+
+class Filter(BaseFilter):
     class Meta:
         model = Institution
         fields = (

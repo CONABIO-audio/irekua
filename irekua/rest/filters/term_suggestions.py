@@ -3,7 +3,12 @@ import django_filters
 from database.models import TermSuggestion
 
 
-class TermSuggestionFilter(django_filters.FilterSet):
+search_fields = (
+    'value',
+)
+
+
+class Filter(django_filters.FilterSet):
     suggested_on__gt = django_filters.DateTimeFilter(
         field_name='suggested_on',
         lookup_expr='gt')
@@ -14,7 +19,6 @@ class TermSuggestionFilter(django_filters.FilterSet):
     class Meta:
         model = TermSuggestion
         fields = (
-            'term_type__name',
             'value',
             'suggested_by__username',
             'suggested_by__first_name',

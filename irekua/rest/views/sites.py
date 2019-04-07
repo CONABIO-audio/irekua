@@ -14,7 +14,7 @@ from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 import rest.permissions.sites as permissions
 
-from rest.filters import SiteFilter
+from rest import filters
 
 from rest.utils import Actions
 from rest.utils import CustomViewSetMixin
@@ -24,8 +24,8 @@ from rest.utils import PermissionMapping
 
 class SiteViewSet(CustomViewSetMixin, ModelViewSet):
     queryset = Site.objects.all()
-    filterset_class = SiteFilter
-    search_fields = ('name', 'locality')
+    filterset_class = filters.sites.Filter
+    search_fields = filters.sites.search_fields
 
     serializer_mapping = (
         SerializerMapping
@@ -64,10 +64,19 @@ class SiteViewSet(CustomViewSetMixin, ModelViewSet):
 
         return super().get_serializer_class()
 
-    @action(detail=False, methods=['GET'])
+    def get_queryset(self):
+        if self.action == 'types':
+            return SiteType.objects.all()
+
+        return super().get_queryset()
+
+    @action(
+        detail=False,
+        methods=['GET'],
+        filterset_class=filters.site_types.Filter,
+        search_fields=filters.site_types.search_fields)
     def types(self, request):
-        queryset = SiteType.objects.all()
-        return self.list_related_object_view(queryset)
+        return self.list_related_object_view()
 
     @types.mapping.post
     def add_type(self, request):

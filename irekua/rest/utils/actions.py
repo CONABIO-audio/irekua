@@ -29,7 +29,10 @@ class Actions(object):
 
 
 class AdditionalActionsMixin(object):
-    def list_related_object_view(self, queryset):
+    def list_related_object_view(self, queryset=None):
+        if queryset is None:
+            queryset = self.filter_queryset(self.get_queryset())
+
         page = self.paginate_queryset(queryset)
 
         if page is not None:
