@@ -7,10 +7,12 @@ from rest_framework.decorators import action
 
 from database.models import Annotation
 from database.models import AnnotationType
+from database.models import AnnotationTool
 
 from rest.serializers.object_types import annotation_types
 from rest.serializers.annotations import annotations
 from rest.serializers.annotations import annotation_votes
+from rest.serializers.annotations import annotation_tools as annotation_tool_serializers
 from rest.serializers import SerializerMappingMixin
 from rest.serializers import SerializerMapping
 
@@ -47,6 +49,8 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
             votes=annotation_votes.ListSerializer,
             types=annotation_types.ListSerializer,
             add_type=annotation_types.CreateSerializer,
+            tools=annotation_tool_serializers.ListSerializer,
+            add_tool=annotation_tool_serializers.CreateSerializer,
         ))
 
     permission_mapping = PermissionMapping({
@@ -123,5 +127,14 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
         return self.list_related_object_view(queryset)
 
     @types.mapping.post
+    def add_type(self, request):
+        return self.create_related_object_view()
+
+    @action(detail=False, methods=['GET'])
+    def tools(self, request):
+        queryset = AnnotationTool.objects.all()
+        return self.list_related_object_view(queryset)
+
+    @tools.mapping.post
     def add_type(self, request):
         return self.create_related_object_view()

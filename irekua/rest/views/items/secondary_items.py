@@ -14,7 +14,6 @@ from rest.serializers import SerializerMappingMixin
 class SecondaryItemViewSet(mixins.UpdateModelMixin,
                            mixins.RetrieveModelMixin,
                            mixins.DestroyModelMixin,
-                           mixins.ListModelMixin,
                            SerializerMappingMixin,
                            GenericViewSet):
     queryset = SecondaryItem.objects.all()

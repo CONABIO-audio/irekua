@@ -15,10 +15,15 @@ from database.models import Tag
 from database.models import Annotation
 from database.models import Item
 from database.models import ItemType
+from database.models import EventType
+from database.models import AnnotationType
 
 from rest.serializers.items import items
-from rest.serializers.items import tags
+from rest.serializers.items import tags as tag_serializers
+from rest.serializers.items import secondary_items as secondary_item_serializers
 from rest.serializers.object_types import item_types
+from rest.serializers.object_types import event_types as event_type_serializers
+from rest.serializers.object_types import annotation_types as annotation_type_serializers
 from rest.serializers.annotations import annotations as annotation_serializers
 from rest.serializers import SerializerMappingMixin
 from rest.serializers import SerializerMapping
@@ -28,6 +33,7 @@ from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 from rest.permissions import IsCurator
+from rest.permissions import IsDeveloper
 from rest.permissions import IsModel
 from rest.permissions import IsSpecialUser
 from rest.permissions import items as permissions
@@ -60,8 +66,16 @@ class ItemViewSet(mixins.UpdateModelMixin,
             add_type=item_types.CreateSerializer,
             download=items.DownloadSerializer,
             upload=items.DownloadSerializer,
-            add_tag=tags.SelectSerializer,
-            remove_tag=tags.SelectSerializer
+            tags=tag_serializers.ListSerializer,
+            add_tag=tag_serializers.CreateSerializer,
+            tag_item=tag_serializers.SelectSerializer,
+            untag_item=tag_serializers.SelectSerializer,
+            event_types=event_type_serializers.ListSerializer,
+            add_event_type=event_type_serializers.CreateSerializer,
+            annotation_types=annotation_type_serializers.ListSerializer,
+            add_annotation_type=annotation_type_serializers.CreateSerializer,
+            secondary_items=secondary_item_serializers.ListSerializer,
+            add_secondary_item=secondary_item_serializers.CreateSerializer,
         ))
     permission_mapping = PermissionMapping({
         Actions.UPDATE: [
@@ -149,6 +163,26 @@ class ItemViewSet(mixins.UpdateModelMixin,
             )
         ],
         'add_type': [IsAuthenticated, IsAdmin],
+        'add_event_type': [IsAuthenticated, IsAdmin],
+        'add_annotation_type': [IsAuthenticated, IsAdmin | IsDeveloper],
+        'secondary_items': [
+            IsAuthenticated,
+            (
+                permissions.IsCreator |
+                permissions.HasViewPermission |
+                permissions.IsCollectionAdmin |
+                permissions.IsCollectionTypeAdmin |
+                permissions.ItemIsOpenToView |
+                IsSpecialUser
+            )
+        ],
+        'add_secondary_item': [
+            IsAuthenticated,
+            (
+                permissions.IsCreator | # TODO: Add correct permissions
+                IsSpecialUser
+            )
+        ]
     }, default=IsAuthenticated)
 
     def get_serializer_context(self):
@@ -180,6 +214,16 @@ class ItemViewSet(mixins.UpdateModelMixin,
     def add_annotation(self, request, pk=None):
         return self.create_related_object_view()
 
+    @action(detail=True, methods=['GET'])
+    def secondary_items(self, request, pk=None):
+        item = self.get_object()
+        queryset = item.secondaryitem_set.all()
+        return self.list_related_object_view(queryset)
+
+    @secondary_items.mapping.post
+    def add_secondary_item(self, request, pk=None):
+        return self.create_related_object_view()
+
     @action(detail=False, methods=['GET'])
     def types(self, request):
         queryset = ItemType.objects.all()
@@ -189,12 +233,39 @@ class ItemViewSet(mixins.UpdateModelMixin,
     def add_type(self, request):
         return self.create_related_object_view()
 
+    @action(detail=False, methods=['GET'])
+    def event_types(self, request):
+        queryset = EventType.objects.all()
+        return self.list_related_object_view(queryset)
+
+    @event_types.mapping.post
+    def add_event_type(self, request):
+        return self.create_related_object_view()
+
+    @action(detail=False, methods=['GET'])
+    def event_types(self, request):
+        queryset = EventType.objects.all()
+        return self.list_related_object_view(queryset)
+
+    @event_types.mapping.post
+    def add_event_type(self, request):
+        return self.create_related_object_view()
+
+    @action(detail=False, methods=['GET'])
+    def annotation_types(self, request):
+        queryset = AnnotationType.objects.all()
+        return self.list_related_object_view(queryset)
+
+    @annotation_types.mapping.post
+    def add_annotation_type(self, request):
+        return self.create_related_object_view()
+
     @action(detail=True, methods=['POST'])
     def tag_item(self, request, pk=None):
         return self.add_related_object_view(Tag, 'tag')
 
     @action(detail=True, methods=['POST'])
-    def remove_tag(self, request, pk=None):
+    def untag_item(self, request, pk=None):
         return self.remove_related_object_view('tag')
 
     @action(detail=True, methods=['POST'])

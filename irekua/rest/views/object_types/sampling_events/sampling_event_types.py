@@ -15,10 +15,11 @@ from rest.serializers import SerializerMappingMixin
 
 from rest.permissions import PermissionMapping
 from rest.permissions import PermissionMappingMixin
-from rest.permissions import ReadOnly
+from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 
 from rest.filters import SamplingEventTypeFilter
+from rest.utils import Actions
 from rest.views.utils import AdditionalActionsMixin
 
 
@@ -41,7 +42,9 @@ class SamplingEventTypeViewSet(mixins.RetrieveModelMixin,
             site_types=sampling_event_type_site_types.ListSerializer,
             add_site_types=sampling_event_type_site_types.CreateSerializer,
         ))
-    permission_mapping = PermissionMapping(default=IsAdmin | ReadOnly)
+    permission_mapping = PermissionMapping({
+        Actions.DESTROY: [IsAuthenticated, IsAdmin],
+    }, default=IsAuthenticated)
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

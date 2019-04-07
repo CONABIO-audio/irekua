@@ -11,8 +11,11 @@ from rest.serializers import SerializerMapping
 from rest.serializers import SerializerMappingMixin
 
 from rest.permissions import IsAdmin
-from rest.permissions import ReadOnly
+from rest.permissions import IsAuthenticated
+from rest.permissions import PermissionMapping
+from rest.permissions import PermissionMappingMixin
 
+from rest.utils import Actions
 from rest.filters import DeviceTypeFilter
 
 
@@ -20,9 +23,14 @@ class DeviceTypeViewSet(mixins.RetrieveModelMixin,
                         mixins.DestroyModelMixin,
                         mixins.UpdateModelMixin,
                         SerializerMappingMixin,
+                        PermissionMappingMixin,
                         GenericViewSet):
     queryset = DeviceType.objects.all()
     filterset_class = DeviceTypeFilter
     search_fields = ('name', )
-    permission_classes = (IsAdmin | ReadOnly, )
+
+    permission_mapping = PermissionMapping({
+        Actions.DESTROY: [IsAuthenticated, IsAdmin],
+        Actions.UPDATE: [IsAuthenticated, IsAdmin],
+    }, default=IsAuthenticated)
     serializer_mapping = SerializerMapping.from_module(device_types)

@@ -15,9 +15,12 @@ from rest.serializers import SerializerMappingMixin
 
 from rest.permissions import IsAdmin
 from rest.permissions import IsDeveloper
-from rest.permissions import ReadOnly
+from rest.permissions import IsAuthenticated
+from rest.permissions import PermissionMapping
+from rest.permissions import PermissionMappingMixin
 
 from rest.filters import ItemTypeFilter
+from rest.utils import Actions
 from rest.views.utils import AdditionalActionsMixin
 
 
@@ -26,6 +29,7 @@ class ItemTypeViewSet(mixins.RetrieveModelMixin,
                       mixins.UpdateModelMixin,
                       SerializerMappingMixin,
                       AdditionalActionsMixin,
+                      PermissionMappingMixin,
                       GenericViewSet):
     queryset = ItemType.objects.all()
     filterset_class = ItemTypeFilter
@@ -41,7 +45,10 @@ class ItemTypeViewSet(mixins.RetrieveModelMixin,
             add_event_types=event_types.SelectSerializer,
             remove_event_types=event_types.SelectSerializer
         ))
-    permission_classes = (IsAdmin | IsDeveloper | ReadOnly, )
+    permission_classes = PermissionMapping({
+        Actions.DESTROY: [IsAuthenticated, IsAdmin],
+        Actions.UPDATE: [IsAuthenticated, IsDeveloper | IsAdmin],
+    }, default=IsAuthenticated)
 
     @action(detail=True, methods=['POST'])
     def add_event_types(self, request, pk=None):

@@ -9,7 +9,7 @@ from .data_collections.metacollections import MetaCollectionViewSet
 from .devices.device_brands import DeviceBrandViewSet
 from .devices.devices import DeviceViewSet
 from .devices.physical_devices import PhysicalDeviceViewSet
-from .items import ItemViewSet
+from .items.items import ItemViewSet
 from .licences import LicenceViewSet
 from .object_types.annotation_types import AnnotationTypeViewSet
 from .object_types.data_collections.collection_administrators import CollectionTypeAdministratorViewSet
@@ -34,9 +34,9 @@ from .object_types.site_types import SiteTypeViewSet
 from .object_types.term_types import TermTypeViewSet
 from .sampling_events.sampling_event_devices import SamplingEventDeviceViewSet
 from .sampling_events.sampling_events import SamplingEventViewSet
-from .secondary_items import SecondaryItemViewSet
+from .items.secondary_items import SecondaryItemViewSet
 from .sites import SiteViewSet
-from .tags import TagViewSet
+from .items.tags import TagViewSet
 from .terms.entailments import EntailmentViewSet
 from .terms.synonym_suggestions import SynonymSuggestionViewSet
 from .terms.synonyms import SynonymViewSet

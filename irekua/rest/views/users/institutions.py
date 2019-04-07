@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
 
 from database.models import Institution
 
@@ -19,9 +20,12 @@ from rest.filters import InstitutionFilter
 from rest.utils import Actions
 
 
-class InstitutionViewSet(SerializerMappingMixin,
+class InstitutionViewSet(mixins.UpdateModelMixin,
+                         mixins.RetrieveModelMixin,
+                         mixins.DestroyModelMixin,
+                         SerializerMappingMixin,
                          PermissionMappingMixin,
-                         ModelViewSet):
+                         GenericViewSet):
     queryset = Institution.objects.all()
     filterset_class = InstitutionFilter
     search_fields = (

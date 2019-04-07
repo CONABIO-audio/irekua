@@ -7,10 +7,12 @@ from rest_framework.viewsets import ModelViewSet
 from database.models import Collection
 from database.models import MetaCollection
 from database.models import CollectionType
+from database.models import LicenceType
 
 from rest.serializers.items import items as item_serializers
 from rest.serializers import licences as licence_serializers
 from rest.serializers.object_types.data_collections import collection_types
+from rest.serializers.object_types import licence_types as licence_type_serializers
 from rest.serializers.sampling_events import sampling_events as sampling_event_serializers
 from rest.serializers.data_collections import data_collections
 from rest.serializers.data_collections import collection_devices
@@ -60,6 +62,8 @@ class CollectionViewSet(SerializerMappingMixin,
             add_sampling_event=sampling_event_serializers.CreateSerializer,
             types=collection_types.ListSerializer,
             add_type=collection_types.CreateSerializer,
+            licence_types=licence_type_serializers.ListSerializer,
+            add_licence_type=licence_type_serializers.CreateSerializer,
             items=item_serializers.ListSerializer,
         ))
 
@@ -76,6 +80,9 @@ class CollectionViewSet(SerializerMappingMixin,
         Actions.DESTROY: [
             IsAuthenticated,
             permissions.IsCollectionAdmin | IsAdmin
+        ],
+        'add_licence_type': [
+            IsAuthenticated, IsAdmin
         ],
         'add_metacollection': [
             IsAuthenticated, IsAdmin | IsDeveloper
@@ -247,6 +254,15 @@ class CollectionViewSet(SerializerMappingMixin,
 
     @types.mapping.post
     def add_type(self, request):
+        return self.create_related_object_view()
+
+    @action(detail=False, methods=['GET'])
+    def licence_types(self, request):
+        queryset = LicenceType.objects.all()
+        return self.list_related_object_view(queryset)
+
+    @licence_types.mapping.post
+    def add_licence_type(self, request):
         return self.create_related_object_view()
 
     @action(detail=True, methods=['GET'])

@@ -25,8 +25,9 @@ from rest.filters import CollectionTypeFilter
 from rest.permissions import PermissionMapping
 from rest.permissions import PermissionMappingMixin
 from rest.permissions import IsAdmin
-from rest.permissions import ReadOnly
+from rest.permissions import IsAuthenticated
 
+from rest.utils import Actions
 from rest.views.utils import AdditionalActionsMixin
 
 
@@ -40,7 +41,11 @@ class CollectionTypeViewSet(mixins.RetrieveModelMixin,
     queryset = CollectionType.objects.all()
     filterset_class = CollectionTypeFilter
 
-    permission_mapping = PermissionMapping(default=IsAdmin | ReadOnly)
+    permission_mapping = PermissionMapping({
+        Actions.UPDATE: [IsAuthenticated, IsAdmin],
+        Actions.DESTROY: [IsAuthenticated, IsAdmin]
+    }, default=IsAuthenticated)
+
     serializer_mapping = (
         SerializerMapping
         .from_module(collection_types)

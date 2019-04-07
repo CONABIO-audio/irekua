@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group
 from .annotations.annotation_tools import AnnotationTool
 from .annotations.annotation_votes import AnnotationVote
 from .annotations.annotations import Annotation
@@ -8,9 +9,9 @@ from .data_collections.data_collections import Collection
 from .devices.device_brands import DeviceBrand
 from .devices.devices import Device
 from .devices.physical_devices import PhysicalDevice
-from .items import Item
+from .items.items import Item
 from .licences import Licence
-from .metacollections import MetaCollection
+from .data_collections.metacollections import MetaCollection
 from .object_types.annotation_types import AnnotationType
 from .object_types.data_collections.collection_device_types import CollectionDeviceType
 from .object_types.data_collections.collection_item_types import CollectionItemType
@@ -27,10 +28,10 @@ from .object_types.site_types import SiteType
 from .object_types.term_types import TermType
 from .sampling_events.sampling_event_devices import SamplingEventDevice
 from .sampling_events.sampling_events import SamplingEvent
-from .secondary_items import SecondaryItem
+from .items.secondary_items import SecondaryItem
 from .sites import Site
-from .sources import Source
-from .tags import Tag
+from .items.sources import Source
+from .items.tags import Tag
 from .terms.entailments import Entailment
 from .terms.synonym_suggestions import SynonymSuggestion
 from .terms.synonyms import Synonym
@@ -39,7 +40,6 @@ from .terms.terms import Term
 from .users.institutions import Institution
 from .users.roles import Role
 from .users.users import User
-from django.contrib.auth.models import Group
 
 
 __all__ = [

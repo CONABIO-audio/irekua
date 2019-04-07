@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from database.models import SamplingEventDevice
 
 from rest.serializers.sampling_events import sampling_event_devices
-from rest.serializers.items import items
+from rest.serializers.items import items as item_serializers
 from rest.serializers import SerializerMapping
 from rest.serializers import SerializerMappingMixin
 
@@ -34,8 +34,8 @@ class SamplingEventDeviceViewSet(mixins.UpdateModelMixin,
         SerializerMapping
         .from_module(sampling_event_devices)
         .extend(
-            items=items.ListSerializer,
-            add_item=items.CreateSerializer,
+            items=item_serializers.ListSerializer,
+            add_item=item_serializers.CreateSerializer,
         ))
 
     permission_mapping = PermissionMapping({

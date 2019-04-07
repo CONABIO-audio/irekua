@@ -8,6 +8,7 @@ from database.models import Site
 from database.models import SiteType
 
 from rest.serializers import sites
+from rest.serializers.object_types import site_types
 from rest.serializers import SerializerMapping
 from rest.serializers import SerializerMappingMixin
 
@@ -34,7 +35,8 @@ class SiteViewSet(SerializerMappingMixin,
         SerializerMapping
         .from_module(sites)
         .extend(
-
+            types=site_types.ListSerializer,
+            add_type=site_types.CreateSerializer,
         ))
 
     permission_mapping = PermissionMapping({

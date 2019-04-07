@@ -2,8 +2,10 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import Permission
+
+from rest_framework import mixins
 from rest_framework.decorators import action
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import GenericViewSet
 
 from database.models import Role
 
@@ -20,10 +22,13 @@ from rest.filters import RoleFilter
 from rest.views.utils import AdditionalActionsMixin
 
 
-class RoleViewSet(SerializerMappingMixin,
+class RoleViewSet(mixins.UpdateModelMixin,
+                  mixins.DestroyModelMixin,
+                  mixins.RetrieveModelMixin,
+                  SerializerMappingMixin,
                   AdditionalActionsMixin,
                   PermissionMappingMixin,
-                  ModelViewSet):
+                  GenericViewSet):
     queryset = Role.objects.all()
     search_fields = ('name', )
     filterset_class = RoleFilter

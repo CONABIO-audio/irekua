@@ -12,9 +12,10 @@ from rest.serializers import SerializerMappingMixin
 
 from rest.permissions import PermissionMapping
 from rest.permissions import PermissionMappingMixin
-from rest.permissions import ReadOnly
+from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 
+from rest.utils import Actions
 from rest.filters import SiteTypeFilter
 
 
@@ -29,4 +30,7 @@ class SiteTypeViewSet(mixins.RetrieveModelMixin,
     filterset_class = SiteTypeFilter
 
     serializer_mapping = SerializerMapping.from_module(site_types)
-    permission_mapping = PermissionMapping(default=IsAdmin | ReadOnly)
+    permission_mapping = PermissionMapping({
+        Actions.DESTROY: [IsAuthenticated | IsAdmin],
+        Actions.UPDATE: [IsAuthenticated | IsAdmin],
+    }, default=IsAuthenticated)
