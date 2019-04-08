@@ -190,23 +190,23 @@ class CollectionViewSet(utils.CustomViewSetMixin, ModelViewSet):
 
         if self.action == 'licences':
             collection_id = self.kwargs['pk']
-            return models.Licence.objects.filter(collection__name=collection_id)  # pylint: disable=E1101
+            return models.Licence.objects.filter(collection=collection_id)  # pylint: disable=E1101
 
         if self.action == 'devices':
             collection_id = self.kwargs['pk']
-            return models.CollectionDevice.objects.filter(collection__name=collection_id)  # pylint: disable=E1101
+            return models.CollectionDevice.objects.filter(collection=collection_id)  # pylint: disable=E1101
 
         if self.action == 'sites':
             collection_id = self.kwargs['pk']
-            return models.CollectionSite.objects.filter(collection__name=collection_id)  # pylint: disable=E1101
+            return models.CollectionSite.objects.filter(collection=collection_id)  # pylint: disable=E1101
 
         if self.action == 'users':
             collection_id = self.kwargs['pk']
-            return models.CollectionUser.objects.filter(collection__name=collection_id)  # pylint: disable=E1101
+            return models.CollectionUser.objects.filter(collection=collection_id)  # pylint: disable=E1101
 
         if self.action == 'sampling_events':
             collection_id = self.kwargs['pk']
-            return models.SamplingEvent.objects.filter(collection__name=collection_id)  # pylint: disable=E1101
+            return models.SamplingEvent.objects.filter(collection=collection_id)  # pylint: disable=E1101
 
         if self.action == 'types':
             return models.CollectionType.objects.all()  # pylint: disable=E1101
@@ -220,11 +220,9 @@ class CollectionViewSet(utils.CustomViewSetMixin, ModelViewSet):
                 sampling_event_device__sampling_event__collection=collection_id)
 
         if self.action == 'administrators':
+            model = models.Collection.administrators.through
             collection_id = self.kwargs['pk']
-            collection = get_object_or_404(
-                models.Collection,
-                pk=collection_id)
-            return collection.administrators.all()
+            return model.objects.filter(collection=collection_id)
 
         return super().get_queryset()
 
@@ -325,13 +323,15 @@ class CollectionViewSet(utils.CustomViewSetMixin, ModelViewSet):
         return self.create_related_object_view()
 
     @action(
-        detail=False,
-        methods=['GET'])
-    def administrators(self, request):
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.collection_administrators.Filter,
+        search_fields=filters.collection_administrators.search_fields)
+    def administrators(self, request, pk=None):
         return self.list_related_object_view()
 
     @administrators.mapping.post
-    def add_administrator(self, request):
+    def add_administrator(self, request, pk=None):
         return self.create_related_object_view()
 
     @action(

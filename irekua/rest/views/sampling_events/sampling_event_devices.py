@@ -48,7 +48,7 @@ class SamplingEventDeviceViewSet(mixins.UpdateModelMixin,
 
         try:
             sampling_event_device = self.get_object()
-        except (AttributeError, AssertionError):
+        except (KeyError, AttributeError, AssertionError):
             sampling_event_device = None
 
         context['sampling_event_device'] = sampling_event_device

@@ -56,7 +56,7 @@ class CollectionTypeViewSet(mixins.RetrieveModelMixin,
 
         try:
             collection_type = self.get_object()
-        except (AttributeError, AssertionError):
+        except (KeyError, AttributeError, AssertionError):
             collection_type = None
 
         context['collection_type'] = collection_type

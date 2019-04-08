@@ -43,7 +43,7 @@ class SamplingEventTypeViewSet(mixins.RetrieveModelMixin,
 
         try:
             sampling_event_type = self.get_object()
-        except (AttributeError, AssertionError):
+        except (KeyError, AttributeError, AssertionError):
             sampling_event_type = None
 
         context['sampling_event_type'] = sampling_event_type

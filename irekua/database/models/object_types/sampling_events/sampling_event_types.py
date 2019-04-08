@@ -108,7 +108,8 @@ class SamplingEventType(models.Model):
             return None
 
         try:
-            device_type = self.device_types.get(name=device_type.name)
+            device_type = self.samplingeventtypedevicetype_set.get(
+                device_type=device_type.name)
         except self.device_types.model.DoesNotExist:
             msg = _(
                 'Device type %(device_type) is not valid for sampling '

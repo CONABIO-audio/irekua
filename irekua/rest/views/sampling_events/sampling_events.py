@@ -91,7 +91,7 @@ class SamplingEventViewSet(mixins.UpdateModelMixin,
 
         try:
             sampling_event = self.get_object()
-        except (AssertionError, AttributeError):
+        except (KeyError, AssertionError, AttributeError):
             sampling_event = None
 
         context['sampling_event'] = sampling_event

@@ -172,7 +172,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
 
         try:
             item = self.get_object()
-        except (AssertionError, AttributeError):
+        except (KeyError, AssertionError, AttributeError):
             item = None
 
         context['item'] = item

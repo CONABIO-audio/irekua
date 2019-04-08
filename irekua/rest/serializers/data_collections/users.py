@@ -50,7 +50,6 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'user',
             'role',
             'metadata',
-            'is_admin',
             'created_on',
             'modified_on',
         )
