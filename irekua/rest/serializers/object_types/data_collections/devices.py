@@ -5,8 +5,8 @@ from rest_framework import serializers
 
 from database.models import CollectionDeviceType
 
-from rest.serializers.object_types import device_types
-from . import collection_types
+from rest.serializers.object_types import devices
+from . import types
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -30,10 +30,10 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    device_type = device_types.SelectSerializer(
+    device_type = devices.SelectSerializer(
         many=False,
         read_only=True)
-    collection_type = collection_types.SelectSerializer(
+    collection_type = types.SelectSerializer(
         many=False,
         read_only=True)
 

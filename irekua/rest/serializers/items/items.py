@@ -5,9 +5,9 @@ from rest_framework import serializers
 
 from database.models import Item
 
-from rest.serializers.object_types import item_types
-from rest.serializers.object_types import event_types
-from rest.serializers.sampling_events import sampling_event_devices
+from rest.serializers.object_types import items
+from rest.serializers.object_types import events
+from rest.serializers.sampling_events import devices
 from rest.serializers import licences
 from . import tags
 
@@ -16,7 +16,7 @@ class SelectSerializer(serializers.ModelSerializer):
     id = serializers.PrimaryKeyRelatedField(
         many=False,
         read_only=False,
-        queryset=Item.objects.all())
+        queryset=Item.objects.all())  # pylint: disable=E1101
 
     class Meta:
         model = Item
@@ -39,11 +39,11 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    item_type = item_types.SelectSerializer(many=False, read_only=True)
-    sampling_event_device = sampling_event_devices.SelectSerializer(many=False, read_only=True)
+    item_type = items.SelectSerializer(many=False, read_only=True)
+    sampling_event_device = devices.SelectSerializer(many=False, read_only=True)
     licence = licences.SelectSerializer(many=False, read_only=True)
     tags = tags.SelectSerializer(many=True, read_only=True)
-    ready_event_types = event_types.SelectSerializer(many=False, read_only=True)
+    ready_event_types = events.SelectSerializer(many=False, read_only=True)
 
     class Meta:
         model = Item

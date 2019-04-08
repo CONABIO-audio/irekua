@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from database.models import EventType
 
-from . import term_types
+from . import terms
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -34,7 +34,7 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    term_types = term_types.SelectSerializer(
+    term_types = terms.SelectSerializer(
         many=True,
         read_only=True)
 

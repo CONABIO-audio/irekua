@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from database.models import SecondaryItem
 
-from rest.serializers.object_types import item_types
+from rest.serializers import object_types
 from . import items
 
 
@@ -30,7 +30,7 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    item_type = item_types.SelectSerializer(many=False, read_only=True)
+    item_type = object_types.items.SelectSerializer(many=False, read_only=True)
     item = items.SelectSerializer(many=False, read_only=True)
 
     class Meta:
@@ -39,7 +39,6 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'id',
             'hash',
-            'path',
             'item_type',
             'item',
             'media_info',
@@ -53,7 +52,7 @@ class CreateSerializer(serializers.ModelSerializer):
         model = SecondaryItem
         fields = (
             'hash',
-            'path',
+            'item_file',
             'item_type',
             'item',
             'media_info',
@@ -63,3 +62,11 @@ class CreateSerializer(serializers.ModelSerializer):
         item = self.context['item']
         validated_data['item'] = item
         return super().create(validated_data)
+
+
+class DownloadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SecondaryItem
+        fields = (
+            'item_file',
+        )

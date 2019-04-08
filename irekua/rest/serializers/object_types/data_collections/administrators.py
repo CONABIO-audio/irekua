@@ -6,10 +6,10 @@ from rest_framework import serializers
 from database.models import CollectionType
 
 from rest.serializers.users import users
-from . import collection_types
+from . import types
 
 
-MODEL = CollectionType.administrators.through
+MODEL = CollectionType.administrators.through  # pylint: disable=E1101
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -39,7 +39,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
     user = users.SelectSerializer(
         many=False,
         read_only=True)
-    collection_type = collection_types.SelectSerializer(
+    collection_type = types.SelectSerializer(
         many=False,
         read_only=True,
         source='collectiontype')

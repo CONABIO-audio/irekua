@@ -6,11 +6,11 @@ from rest_framework import serializers
 from database.models import CollectionType
 from database.models import EventType
 
-from rest.serializers.object_types import event_types
-from . import collection_types
+from rest.serializers.object_types import events
+from . import types
 
 
-MODEL = CollectionType.event_types.through
+MODEL = CollectionType.event_types.through  # pylint: disable=E1101
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -38,11 +38,11 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    event_type = event_types.SelectSerializer(
+    event_type = events.SelectSerializer(
         many=False,
         read_only=True,
         source='eventtype')
-    collection_type = collection_types.SelectSerializer(
+    collection_type = types.SelectSerializer(
         many=False,
         read_only=True,
         source='collectiontype')
@@ -61,7 +61,7 @@ class CreateSerializer(serializers.ModelSerializer):
     event_type = serializers.PrimaryKeyRelatedField(
         many=False,
         read_only=False,
-        queryset=EventType.objects.all(),
+        queryset=EventType.objects.all(),  # pylint: disable=E1101
         source='eventtype')
 
     class Meta:

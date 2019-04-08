@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from database.models import EntailmentType
 
-from rest.serializers.object_types import term_types
+from rest.serializers.object_types import terms
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -25,8 +25,8 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    source_type = term_types.SelectSerializer(many=False, read_only=True)
-    target_type = term_types.SelectSerializer(many=False, read_only=True)
+    source_type = terms.SelectSerializer(many=False, read_only=True)
+    target_type = terms.SelectSerializer(many=False, read_only=True)
 
     class Meta:
         model = EntailmentType

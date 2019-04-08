@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from database.models import TermSuggestion
 
-from rest.serializers.object_types import term_types
+from rest.serializers.object_types import terms
 from rest.serializers.users import users
 
 
@@ -30,7 +30,7 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    term_type = term_types.SelectSerializer(many=False, read_only=True)
+    term_type = terms.SelectSerializer(many=False, read_only=True)
     suggested_by = users.SelectSerializer(many=False, read_only=True)
 
     class Meta:

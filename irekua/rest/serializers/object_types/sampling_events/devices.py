@@ -5,8 +5,8 @@ from rest_framework import serializers
 
 from database.models import SamplingEventTypeDeviceType
 
-from rest.serializers.object_types import device_types
-from . import sampling_event_types
+from rest.serializers.object_types import devices
+from . import types
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -30,10 +30,10 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    device_type = device_types.SelectSerializer(
+    device_type = devices.SelectSerializer(
         many=False,
         read_only=True)
-    sampling_event_type = sampling_event_types.SelectSerializer(
+    sampling_event_type = types.SelectSerializer(
         many=False,
         read_only=True)
 

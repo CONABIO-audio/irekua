@@ -1,4 +1,5 @@
 import mimetypes
+import os
 from hashlib import sha256
 
 from django.contrib.postgres.fields import JSONField
@@ -23,21 +24,27 @@ def hash_file(item_file, block_size=65536):
 
 
 def get_item_path(instance, filename):
-    path_fmt = 'items/{collection}/{item_type}/{sampling_event}/{hash}{ext}'
+    path_fmt = os.path.join(
+        'items',
+        '{collection}',
+        '{sampling_event}',
+        '{sampling_event_device}',
+        '{hash}{ext}')
+
     extension = mimetypes.guess_extension(
         instance.item_type.media_type)
-    collection = instance.sampling_event.collection
+    sampling_event_device = instance.sampling_event_device
+    sampling_event = sampling_event_device.sampling_event
+    collection = sampling_event.collection
 
     instance.item_file.open()
-    if not instance.hash_string:
-        instance.hash_string = hash_file(instance.item_file)
-        instance.item_size = instance.item_file.size
+    hash_string = hash_file(instance.item_file)
 
     path = path_fmt.format(
-        item_type=instance.item_type.pk,
         collection=collection.pk,
-        sampling_event=instance.sampling_event.pk,
-        hash=instance.hash_string,
+        sampling_event=sampling_event.pk,
+        sampling_event_device=sampling_event_device.pk,
+        hash=hash_string,
         ext=extension)
     return path
 
@@ -179,11 +186,11 @@ class Item(models.Model):
         )
 
     def __str__(self):
-        return str(self.id)
+        return str(self.id)  # pylint: disable=E1101
 
     def validate_user(self):
         if self.created_by is None:
-            self.created_by = self.sampling_event_device.created_by
+            self.created_by = self.sampling_event_device.created_by  # pylint: disable=E1101
 
         if self.created_by is None:
             msg = _(
@@ -205,17 +212,17 @@ class Item(models.Model):
             raise ValidationError({'created_by': error})
 
         try:
-            self.item_type.validate_media_info(self.media_info)
+            self.item_type.validate_media_info(self.media_info)  # pylint: disable=E1101
         except ValidationError as error:
             raise ValidationError({'media_info': error})
 
         collection = (
-            self.sampling_event_device
+            self.sampling_event_device  # pylint: disable=E1101
             .sampling_event.collection)
 
         try:
             collection.validate_and_get_sampling_event_type(
-                self.sampling_event.sampling_event_type)
+                self.sampling_event.sampling_event_type)  # pylint: disable=E1101
         except ValidationError as error:
             raise ValidationError({'sampling': error})
 
@@ -248,30 +255,30 @@ class Item(models.Model):
             return
 
         file_mime_type, enc = mimetypes.guess_type(self.item_file.name)
-        if self.item_type.media_type != file_mime_type:
+        if self.item_type.media_type != file_mime_type:  # pylint: disable=E1101
             msg = _(
                 'File MIME type does not coincide with declared item type '
                 '(file: {file_type} != {item_type} :item_type)')
             params = dict(
                 file_type=file_mime_type,
-                item_type=self.item_type.media_type)
+                item_type=self.item_type.media_type)  # pylint: disable=E1101
             raise ValidationError(msg % params)
 
     def validate_and_get_event_type(self, event_type):
-        return self.item_type.validate_and_get_event_type(event_type)
+        return self.item_type.validate_and_get_event_type(event_type)  # pylint: disable=E1101
 
     def validate_licence(self):
         if self.licence is not None:
             return
 
-        if self.sampling_event_device.licence is None:
+        if self.sampling_event_device.licence is None:  # pylint: disable=E1101
             msg = _(
                 'Licence was not provided to item nor to sampling event')
             raise ValidationError({'licence': msg})
 
-        self.licence = self.sampling_event.licence
+        self.licence = self.sampling_event.licence  # pylint: disable=E1101
 
-        collection = self.sampling_event_device.sampling_event.collection
+        collection = self.sampling_event_device.sampling_event.collection  # pylint: disable=E1101
         collection.validate_and_get_licence(self.licence)
 
     def validate_hash_and_filesize(self):
@@ -283,9 +290,9 @@ class Item(models.Model):
         if self.item_file.name is None:
             return
 
-        self.item_file.open()
+        self.item_file.open() # pylint: disable=E1101
         hash_string = hash_file(self.item_file)
-        item_size = self.item_file.size
+        item_size = self.item_file.size  # pylint: disable=E1101
 
         if self.hash is None:
             self.hash = hash_string
@@ -296,17 +303,17 @@ class Item(models.Model):
             raise ValidationError(msg)
 
     def add_ready_event_type(self, event_type):
-        self.ready_event_types.add(event_type)
+        self.ready_event_types.add(event_type)  # pylint: disable=E1101
         self.save()
 
     def remove_ready_event_type(self, event_type):
-        self.ready_event_types.remove(event_type)
+        self.ready_event_types.remove(event_type)  # pylint: disable=E1101
         self.save()
 
     def add_tag(self, tag):
-        self.tags.add(tag)
+        self.tags.add(tag)  # pylint: disable=E1101
         self.save()
 
     def remove_tag(self, tag):
-        self.tags.remove(tag)
+        self.tags.remove(tag)  # pylint: disable=E1101
         self.save()

@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from database.models import SamplingEventDevice
 
-from rest.serializers.data_collections import collection_devices
+from rest.serializers.data_collections import devices
 from rest.serializers import licences
 from rest.serializers.users import users
 from . import sampling_events
@@ -40,7 +40,7 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    collection_device = collection_devices.SelectSerializer(
+    collection_device = devices.SelectSerializer(
         many=False,
         read_only=True)
     sampling_event = sampling_events.SelectSerializer(

@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from database.models import Site
 
-from rest.serializers.object_types import site_types
+from rest.serializers.object_types import sites
 from rest.serializers.users import users
 
 
@@ -31,7 +31,7 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    site_type = site_types.SelectSerializer(many=False, read_only=True)
+    site_type = sites.SelectSerializer(many=False, read_only=True)
     created_by = users.SelectSerializer(many=False, read_only=True)
 
     class Meta:
@@ -50,7 +50,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class FullDetailSerializer(serializers.HyperlinkedModelSerializer):
-    site_type = site_types.SelectSerializer(many=False, read_only=True)
+    site_type = sites.SelectSerializer(many=False, read_only=True)
     created_by = users.SelectSerializer(many=False, read_only=True)
 
     class Meta:

@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from database.models import Licence
 
-from rest.serializers.object_types import licence_types
+from rest.serializers.object_types import licences
 from rest.serializers.users import users
 
 
@@ -31,7 +31,7 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    licence_type = licence_types.SelectSerializer(many=False, read_only=True)
+    licence_type = licences.SelectSerializer(many=False, read_only=True)
     signed_by = users.SelectSerializer(many=False, read_only=True)
 
     class Meta:

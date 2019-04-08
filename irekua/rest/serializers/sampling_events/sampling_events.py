@@ -5,9 +5,9 @@ from rest_framework import serializers
 
 from database.models import SamplingEvent
 
-from rest.serializers.data_collections import collection_sites
+from rest.serializers.data_collections import sites
 from rest.serializers.users import users
-from rest.serializers.object_types.sampling_events import sampling_event_types
+from rest.serializers.object_types.sampling_events import types
 from rest.serializers.data_collections import data_collections
 from rest.serializers import licences
 
@@ -49,7 +49,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
     modified_by = users.SelectSerializer(
         many=False,
         read_only=True)
-    sampling_event_type = sampling_event_types.SelectSerializer(
+    sampling_event_type = types.SelectSerializer(
         many=False,
         read_only=True)
     collection = data_collections.SelectSerializer(
@@ -58,7 +58,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
     licence = licences.SelectSerializer(
         many=False,
         read_only=True)
-    collection_site = collection_sites.SelectSerializer(
+    collection_site = sites.SelectSerializer(
         many=False,
         read_only=True)
 

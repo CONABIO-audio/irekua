@@ -6,11 +6,11 @@ from rest_framework import serializers
 from database.models import CollectionType
 from database.models import AnnotationType
 
-from rest.serializers.object_types import annotation_types
-from . import collection_types
+from rest.serializers.object_types import annotations
+from . import types
 
 
-MODEL = CollectionType.annotation_types.through
+MODEL = CollectionType.annotation_types.through  # pylint: disable=E1101
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -38,11 +38,11 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    annotation_type = annotation_types.SelectSerializer(
+    annotation_type = annotations.SelectSerializer(
         many=False,
         read_only=True,
         source='annotationtype')
-    collection_type = collection_types.SelectSerializer(
+    collection_type = types.SelectSerializer(
         many=False,
         read_only=True,
         source='collectiontype')
@@ -61,7 +61,7 @@ class CreateSerializer(serializers.ModelSerializer):
     annotation_type = serializers.PrimaryKeyRelatedField(
         many=False,
         read_only=False,
-        queryset=AnnotationType.objects.all(),
+        queryset=AnnotationType.objects.all(),  # pylint: disable=E1101
         source='annotationtype')
 
     class Meta:

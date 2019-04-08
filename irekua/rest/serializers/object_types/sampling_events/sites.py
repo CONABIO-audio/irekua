@@ -6,11 +6,11 @@ from rest_framework import serializers
 from database.models import SamplingEventType
 from database.models import SiteType
 
-from rest.serializers.object_types import site_types
-from . import sampling_event_types
+from rest.serializers.object_types import sites
+from . import types
 
 
-MODEL = SamplingEventType.site_types.through
+MODEL = SamplingEventType.site_types.through  # pylint: disable=E1101
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -38,11 +38,11 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    site_type = site_types.SelectSerializer(
+    site_type = sites.SelectSerializer(
         many=False,
         read_only=True,
         source='sitetype')
-    sampling_event_type = sampling_event_types.SelectSerializer(
+    sampling_event_type = types.SelectSerializer(
         many=False,
         read_only=True,
         source='samplingeventtype')
@@ -61,7 +61,7 @@ class CreateSerializer(serializers.ModelSerializer):
     site_type = serializers.PrimaryKeyRelatedField(
         many=False,
         read_only=False,
-        queryset=SiteType.objects.all(),
+        queryset=SiteType.objects.all(),  # pylint: disable=E1101
         source='sitetype')
 
     class Meta:

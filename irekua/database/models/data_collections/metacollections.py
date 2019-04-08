@@ -25,12 +25,14 @@ class MetaCollection(models.Model):
         blank=True)
     curators = models.ManyToManyField(
         'User',
+        related_name='metacollection_curators',
         verbose_name='curators',
         help_text=_('Curators of metacollection'),
         blank=True)
 
     created_by = models.ForeignKey(
         'User',
+        related_name='metacollection_created_by',
         on_delete=models.CASCADE,
         db_column='created_by',
         verbose_name=_('created by'),

@@ -6,11 +6,11 @@ from rest_framework import serializers
 from database.models import CollectionType
 from database.models import LicenceType
 
-from rest.serializers.object_types import licence_types
-from . import collection_types
+from rest.serializers.object_types import licences
+from . import types
 
 
-MODEL = CollectionType.licence_types.through
+MODEL = CollectionType.licence_types.through  # pylint: disable=E1101
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -38,11 +38,11 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    licence_type = licence_types.SelectSerializer(
+    licence_type = licences.SelectSerializer(
         many=False,
         read_only=True,
         source='licencetype')
-    collection_type = collection_types.SelectSerializer(
+    collection_type = types.SelectSerializer(
         many=False,
         read_only=True,
         source='collectiontype')
@@ -61,7 +61,7 @@ class CreateSerializer(serializers.ModelSerializer):
     licence_type = serializers.PrimaryKeyRelatedField(
         many=False,
         read_only=False,
-        queryset=LicenceType.objects.all(),
+        queryset=LicenceType.objects.all(),  # pylint: disable=E1101
         source='licencetype')
 
     class Meta:

@@ -6,7 +6,7 @@ from rest_framework import serializers
 from database.models import CollectionRole
 
 from rest.serializers.users import roles
-from . import collection_types
+from . import types
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -25,7 +25,7 @@ class ListSerializer(serializers.ModelSerializer):
             'url',
             'id',
             'role',
-            'metadata_schema',  
+            'metadata_schema',
         )
 
 
@@ -33,7 +33,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
     role = roles.SelectSerializer(
         many=False,
         read_only=True)
-    collection_type = collection_types.SelectSerializer(
+    collection_type = types.SelectSerializer(
         many=False,
         read_only=True)
 

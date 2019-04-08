@@ -24,5 +24,4 @@ class Filter(BaseFilter):
             'user__is_model',
             'user__is_developer',
             'role',
-            'is_admin',
         )
