@@ -23,7 +23,6 @@ from rest.serializers.items import tags as tag_serializers
 from rest.serializers.items import secondary_items as secondary_item_serializers
 from rest.serializers.object_types import item_types
 from rest.serializers.object_types import event_types as event_type_serializers
-from rest.serializers.object_types import annotation_types as annotation_type_serializers
 from rest.serializers.annotations import annotations as annotation_serializers
 
 from rest.permissions import IsAuthenticated
@@ -212,7 +211,11 @@ class ItemViewSet(mixins.UpdateModelMixin,
 
         return super().get_queryset()
 
-    @action(detail=False, methods=['GET'])
+    @action(
+        detail=False,
+        methods=['GET'],
+        filterset_class=filters.tags.Filter,
+        search_fields=filters.tags.search_fields)
     def tags(self, request):
         return self.list_related_object_view()
 
@@ -220,7 +223,11 @@ class ItemViewSet(mixins.UpdateModelMixin,
     def add_tag(self, request):
         return self.create_related_object_view()
 
-    @action(detail=True, methods=['GET'])
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.annotations.Filter,
+        search_fields=filters.annotations.search_fields)
     def annotations(self, request, pk=None):
         return self.list_related_object_view()
 
@@ -228,7 +235,11 @@ class ItemViewSet(mixins.UpdateModelMixin,
     def add_annotation(self, request, pk=None):
         return self.create_related_object_view()
 
-    @action(detail=True, methods=['GET'])
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.secondary_items.Filter,
+        search_fields=filters.secondary_items.search_fields)
     def secondary_items(self, request, pk=None):
         return self.list_related_object_view()
 
@@ -236,7 +247,11 @@ class ItemViewSet(mixins.UpdateModelMixin,
     def add_secondary_item(self, request, pk=None):
         return self.create_related_object_view()
 
-    @action(detail=False, methods=['GET'])
+    @action(
+        detail=False,
+        methods=['GET'],
+        filterset_class=filters.item_types.Filter,
+        search_fields=filters.item_types.search_fields)
     def types(self, request):
         return self.list_related_object_view()
 
@@ -244,7 +259,11 @@ class ItemViewSet(mixins.UpdateModelMixin,
     def add_type(self, request):
         return self.create_related_object_view()
 
-    @action(detail=False, methods=['GET'])
+    @action(
+        detail=False,
+        methods=['GET'],
+        filterset_class=filters.event_types.Filter,
+        search_fields=filters.event_types.search_fields)
     def event_types(self, request):
         return self.list_related_object_view()
 

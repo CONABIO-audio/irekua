@@ -38,8 +38,8 @@ class MetaCollectionViewSet(mixins.UpdateModelMixin,
         .from_module(metacollections)
         .extend(
             items=item_serializers.ListSerializer,
-            add_items=item_serializers.SelectSerializer,
-            remove_item=item_serializers.SelectSerializer
+            add_item=item_serializers.SelectSerializer,
+            remove_item=item_serializers.SelectSerializer,
         ))
 
     permission_mapping = PermissionMapping({
@@ -63,7 +63,7 @@ class MetaCollectionViewSet(mixins.UpdateModelMixin,
         if self.action == 'items':
             metacollection_id = self.kwargs['pk']
             metacollection = MetaCollection.objects.get(pk=metacollection_id)
-            return metacollection.item_set.all()
+            return metacollection.items.all()
 
         return super().get_queryset()
 

@@ -166,5 +166,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'PAGE_SIZE': 10,
-    'EXCEPTION_HANDLER': 'rest.exception_handler.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'rest.exception_handler.custom_exception_handler',
+    'DEFAULT_SCHEMA_CLASS': 'rest.utils.schemas.CustomSchema'
 }

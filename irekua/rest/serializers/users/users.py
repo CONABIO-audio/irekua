@@ -14,6 +14,7 @@ class SelectSerializer(serializers.ModelSerializer):
         fields = (
             'url',
             'id',
+            'username',
         )
 
 

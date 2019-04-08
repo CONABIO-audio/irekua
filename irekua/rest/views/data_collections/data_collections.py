@@ -49,7 +49,7 @@ class CollectionViewSet(CustomViewSetMixin, ModelViewSet):
         SerializerMapping
         .from_module(data_collections)
         .extend(
-            metacollection=metacollection_serializers.ListSerializer,
+            metacollections=metacollection_serializers.ListSerializer,
             add_metacollection=metacollection_serializers.CreateSerializer,
             licences=licence_serializers.ListSerializer,
             add_licence=licence_serializers.CreateSerializer,
@@ -231,11 +231,11 @@ class CollectionViewSet(CustomViewSetMixin, ModelViewSet):
         methods=['GET'],
         filterset_class=filters.metacollections.Filter,
         search_fields=filters.metacollections.search_fields)
-    def metacollections(self, request, pk=None):
+    def metacollections(self, request):
         return self.list_related_object_view()
 
     @metacollections.mapping.post
-    def add_metacollection(self, request, pk=None):
+    def add_metacollection(self, request):
         return self.create_related_object_view()
 
     @action(

@@ -1,13 +1,11 @@
 from rest_framework.permissions import BasePermission
 
-
-class Deny(BasePermission):
-    def has_permission(self, request, view):
-        return False
+from rest.permissions import IsAdmin
+from rest.permissions import ReadOnly
 
 
 class PermissionMapping(object):
-    DEFAULT_PERMISSION = [Deny]
+    DEFAULT_PERMISSION = IsAdmin | ReadOnly
 
     def __init__(self, mapping=None, default=None):
         if mapping is None:

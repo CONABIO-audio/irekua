@@ -13,6 +13,11 @@ from . import tags
 
 
 class SelectSerializer(serializers.ModelSerializer):
+    id = serializers.PrimaryKeyRelatedField(
+        many=False,
+        read_only=False,
+        queryset=Item.objects.all())
+
     class Meta:
         model = Item
         fields = (
