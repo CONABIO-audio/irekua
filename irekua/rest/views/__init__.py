@@ -1,3 +1,4 @@
+# pylint: disable=C0301
 from .annotations.annotation_tools import AnnotationToolViewSet
 from .annotations.annotation_votes import AnnotationVoteViewSet
 from .annotations.annotations import AnnotationViewSet
@@ -6,6 +7,7 @@ from .data_collections.collection_sites import CollectionSiteViewSet
 from .data_collections.collection_users import CollectionUserViewSet
 from .data_collections.data_collections import CollectionViewSet
 from .data_collections.metacollections import MetaCollectionViewSet
+from .data_collections.administrators import CollectionAdministratorViewSet
 from .devices.device_brands import DeviceBrandViewSet
 from .devices.devices import DeviceViewSet
 from .devices.physical_devices import PhysicalDeviceViewSet
@@ -98,4 +100,5 @@ __all__ = [
     'UserViewSet',
     'CollectionTypeDeviceTypeViewSet',
     'CollectionTypeRoleViewSet',
+    'CollectionAdministratorViewSet',
 ]

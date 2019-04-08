@@ -14,6 +14,7 @@ class CollectionTypeRoleViewSet(mixins.RetrieveModelMixin,
                                 utils.CustomViewSetMixin,
                                 GenericViewSet):
     queryset = models.CollectionRole.objects.all()  # pylint: disable=E1101
+
     serializer_mapping = utils.SerializerMapping.from_module(
         serializers.object_types.data_collections.roles)
 

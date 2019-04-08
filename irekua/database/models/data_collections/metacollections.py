@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 
@@ -62,17 +61,17 @@ class MetaCollection(models.Model):
         return self.name
 
     def add_item(self, item):
-        self.items.add(item)
+        self.items.add(item)  # pylint: disable=E1101
         self.save()
 
     def remove_item(self, item):
-        self.items.remove(item)
+        self.items.remove(item)  # pylint: disable=E1101
         self.save()
 
     def add_curator(self, user):
-        self.curators.add(user)
+        self.curators.add(user)  # pylint: disable=E1101
         self.save()
 
     def remove_curator(self, user):
-        self.curators.remove(user)
+        self.curators.remove(user)  # pylint: disable=E1101
         self.save()

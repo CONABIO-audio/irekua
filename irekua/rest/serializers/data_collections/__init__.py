@@ -3,6 +3,7 @@ from . import sites
 from . import users
 from . import data_collections
 from . import metacollections
+from . import administrators
 
 
 __all__ = [
@@ -11,4 +12,5 @@ __all__ = [
     'users',
     'data_collections',
     'metacollections',
+    'administrators',
 ]

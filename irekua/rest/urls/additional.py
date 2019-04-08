@@ -22,6 +22,9 @@ additional_router.register(
     r'collection_users',
     views.CollectionUserViewSet)
 additional_router.register(
+    r'collection_administrators',
+    views.CollectionAdministratorViewSet)
+additional_router.register(
     r'device_brands',
     views.DeviceBrandViewSet)
 additional_router.register(

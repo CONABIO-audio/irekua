@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.shortcuts import get_object_or_404
 from rest_framework import mixins
 from rest_framework.decorators import action
 from rest_framework.viewsets import GenericViewSet
@@ -42,6 +43,13 @@ class CollectionTypeViewSet(mixins.RetrieveModelMixin,
             roles=serializers.object_types.data_collections.roles.ListSerializer,  # noqa pylint: disable=C0301
             add_role=serializers.object_types.data_collections.roles.CreateSerializer,  # noqa pylint: disable=C0301
         ))
+
+    def get_object(self):
+        type_pk = self.kwargs['pk']
+        type = get_object_or_404(models.CollectionType, pk=type_pk)
+
+        self.check_object_permissions(self.request, type)
+        return type
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.shortcuts import get_object_or_404
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
@@ -85,11 +86,18 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
         'add_type': [IsAuthenticated, IsAdmin],
     }, default=IsAuthenticated)
 
+    def get_object(self):
+        annotation_id = self.kwargs['pk']
+        annotation = get_object_or_404(models.Annotation, pk=annotation_id)
+
+        self.check_object_permissions(self.request, annotation)
+        return annotation
+
     def get_serializer_context(self):
         context = super().get_serializer_context()
 
         try:
-            annotation = self.get_object()
+            annotation_id = self.get_object()
         except (AssertionError, AttributeError):
             annotation = None
 

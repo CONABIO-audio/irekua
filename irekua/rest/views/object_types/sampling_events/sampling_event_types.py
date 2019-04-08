@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.shortcuts import get_object_or_404
 from rest_framework import mixins
 from rest_framework.decorators import action
 from rest_framework.viewsets import GenericViewSet
@@ -27,6 +28,15 @@ class SamplingEventTypeViewSet(mixins.RetrieveModelMixin,
         ))
 
     permission_mapping = utils.PermissionMapping()
+
+    def get_object(self):
+        sampling_event_pk = self.kwargs['pk']
+        sampling_event = get_object_or_404(
+            models.SamplingEventType,
+            pk=sampling_event_pk)
+
+        self.check_object_permissions(self.request, sampling_event)
+        return sampling_event
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

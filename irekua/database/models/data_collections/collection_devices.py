@@ -54,6 +54,8 @@ class CollectionDevice(models.Model):
         verbose_name = _('Collection Device')
         verbose_name_plural = _('Collection Devices')
 
+        ordering = ['-modified_on']
+
         unique_together = (
             ('physical_device', 'collection'),
         )

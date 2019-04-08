@@ -84,5 +84,4 @@ class RoleSerializer(serializers.ModelSerializer):
         model = CollectionUser
         fields = (
             'role',
-            'is_admin',
         )

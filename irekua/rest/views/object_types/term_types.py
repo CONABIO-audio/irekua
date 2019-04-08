@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 
@@ -46,6 +47,13 @@ class TermTypeViewSet(utils.CustomViewSetMixin, ModelViewSet):
         'add_entailment': [IsAuthenticated, IsAdmin],
         'add_synonym': [IsAuthenticated, IsAdmin],
     }, default=IsAuthenticated)
+
+    def get_object(self):
+        type_pk = self.kwargs['pk']
+        term_type = get_object_or_404(models.TermType, pk=type_pk)
+
+        self.check_object_permissions(self.request, term_type)
+        return term_type
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

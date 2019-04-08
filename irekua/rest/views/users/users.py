@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework import mixins
@@ -46,6 +47,13 @@ class UserViewSet(mixins.ListModelMixin,
             institutions=serializers.users.institutions.ListSerializer,
             add_institution=serializers.users.institutions.CreateSerializer,
         ))
+
+    def get_object(self):
+        user_pk = self.kwargs['pk']
+        user = get_object_or_404(models.User, pk=user_pk)
+
+        self.check_object_permissions(self.request, user)
+        return user
 
     def get_serializer_class(self):
         if self.action == 'retrieve':

@@ -161,19 +161,19 @@ class Collection(models.Model):
 
     def clean(self):
         try:
-            self.collection_type.validate_metadata(self.metadata)
+            self.collection_type.validate_metadata(self.metadata)  # pylint: disable=E1101
         except ValidationError as error:
             msg = _(
                 'Invalid metadata for collection of type {type}. '
                 'Error: {error}')
-            msg = msg.format(
+            msg = msg.format(  # pylint: disable=E1101
                 type=str(self.collection_type),
                 error=str(error))
             raise ValidationError({'metadata': msg})
         super(Collection, self).clean()
 
     def add_user(self, user, role, metadata, is_admin=False):
-        CollectionUser.objects.create(
+        CollectionUser.objects.create(  # pylint: disable=E1101
             collection=self,
             user=user,
             role=role,
@@ -181,49 +181,49 @@ class Collection(models.Model):
             is_admin=is_admin)
 
     def add_site(self, site, internal_id, metadata):
-        CollectionSite.objects.create(
+        CollectionSite.objects.create(  # pylint: disable=E1101
             collection=self,
             site=site,
             internal_id=internal_id,
             metadata=metadata)
 
     def add_device(self, physical_device, internal_id, metadata):
-        CollectionDevice.objects.create(
+        CollectionDevice.objects.create(  # pylint: disable=E1101
             collection=self,
             physical_device=physical_device,
             internal_id=internal_id,
             metadata=metadata)
 
     def validate_and_get_annotation_type(self, annotation_type):
-        return self.collection_type.validate_and_get_annotation_type(
+        return self.collection_type.validate_and_get_annotation_type(  # pylint: disable=E1101
             annotation_type)
 
     def validate_and_get_event_type(self, event_type):
-        return self.collection_type.validate_and_get_event_type(event_type)
+        return self.collection_type.validate_and_get_event_type(event_type)  # pylint: disable=E1101
 
     def validate_and_get_site_type(self, site_type):
-        return self.collection_type.validate_and_get_site_type(site_type)
+        return self.collection_type.validate_and_get_site_type(site_type)  # pylint: disable=E1101
 
     def validate_and_get_device_type(self, device_type):
-        return self.collection_type.validate_and_get_device_type(device_type)
+        return self.collection_type.validate_and_get_device_type(device_type)  # pylint: disable=E1101
 
     def validate_and_get_item_type(self, item_type):
-        return self.collection_type.validate_and_get_item_type(item_type)
+        return self.collection_type.validate_and_get_item_type(item_type)  # pylint: disable=E1101
 
     def validate_and_get_sampling_event_type(self, sampling_event_type):
-        return self.collection_type.validate_and_get_sampling_event_type(
+        return self.collection_type.validate_and_get_sampling_event_type(  # pylint: disable=E1101
             sampling_event_type)
 
     def validate_and_get_licence_type(self, licence_type):
-        return self.collection_type.validate_and_get_licence_type(licence_type)
+        return self.collection_type.validate_and_get_licence_type(licence_type)  # pylint: disable=E1101
 
     def validate_and_get_role(self, role):
-        return self.collection_type.validate_and_get_role(role)
+        return self.collection_type.validate_and_get_role(role)  # pylint: disable=E1101
 
     def validate_and_get_licence(self, licence):
         try:
-            licence = self.licence_set.get(pk=licence.pk)
-        except self.licences.model.DoesNotExist:
+            licence = self.licence_set.get(pk=licence.pk)  # pylint: disable=E1101
+        except self.licences.model.DoesNotExist:  # pylint: disable=E1101
             msg = _(
                 'Licence %(licence)s is not part of collection '
                 '%(collection)s.')
@@ -233,21 +233,21 @@ class Collection(models.Model):
             raise ValidationError(msg, params=params)
 
     def is_admin(self, user):
-        queryset = self.administrators.filter(user=user)
+        queryset = self.administrators.filter(id=user.id)  # pylint: disable=E1101
         return queryset.exists()
 
     def has_user(self, user):
-        return CollectionUser.objects.filter(
+        return CollectionUser.objects.filter(  # pylint: disable=E1101
             collection=self,
             user=user).exists()
 
     def has_permission(self, user, codename):
         try:
-            collectionuser = CollectionUser.objects.get(
+            collectionuser = CollectionUser.objects.get(  # pylint: disable=E1101
                 collection=self,
                 user=user)
             role = collectionuser.role
-        except CollectionUser.DoesNotExist:
+        except CollectionUser.DoesNotExist:  # pylint: disable=E1101
             return False
 
         return role.has_permission(codename)

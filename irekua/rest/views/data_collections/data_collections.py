@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 
@@ -42,6 +43,8 @@ class CollectionViewSet(utils.CustomViewSetMixin, ModelViewSet):
             licence_types=serializers.object_types.licences.ListSerializer,
             add_licence_type=serializers.object_types.licences.CreateSerializer,
             items=serializers.items.items.ListSerializer,
+            administrators=serializers.data_collections.administrators.ListSerializer,
+            add_administrator=serializers.data_collections.administrators.CreateSerializer,
         ))
 
     permission_mapping = utils.PermissionMapping({
@@ -153,8 +156,23 @@ class CollectionViewSet(utils.CustomViewSetMixin, ModelViewSet):
                 IsSpecialUser
             )
         ],
-        'add_type': [IsAuthenticated, IsAdmin]
-    }, default=IsAuthenticated)
+        'add_type': [IsAuthenticated, IsAdmin],
+        'add_administrator': [
+            IsAuthenticated,
+            (
+                permissions.IsCollectionAdmin |
+                permissions.IsCollectionTypeAdmin |
+                IsAdmin
+            )
+        ],
+    })
+
+    def get_object(self):
+        collection_id = self.kwargs['pk']
+        collection = get_object_or_404(models.Collection, pk=collection_id)
+
+        self.check_object_permissions(self.request, collection)
+        return collection
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -162,6 +180,7 @@ class CollectionViewSet(utils.CustomViewSetMixin, ModelViewSet):
             collection = self.get_object()
         except (KeyError, AssertionError, AttributeError):
             collection = None
+
         context['collection'] = collection
         return context
 
@@ -171,23 +190,23 @@ class CollectionViewSet(utils.CustomViewSetMixin, ModelViewSet):
 
         if self.action == 'licences':
             collection_id = self.kwargs['pk']
-            return models.Licence.objects.filter(collection=collection_id)  # pylint: disable=E1101
+            return models.Licence.objects.filter(collection__name=collection_id)  # pylint: disable=E1101
 
         if self.action == 'devices':
             collection_id = self.kwargs['pk']
-            return models.CollectionDevice.objects.filter(collection=collection_id)  # pylint: disable=E1101
+            return models.CollectionDevice.objects.filter(collection__name=collection_id)  # pylint: disable=E1101
 
         if self.action == 'sites':
             collection_id = self.kwargs['pk']
-            return models.CollectionSite.objects.filter(collection=collection_id)  # pylint: disable=E1101
+            return models.CollectionSite.objects.filter(collection__name=collection_id)  # pylint: disable=E1101
 
         if self.action == 'users':
             collection_id = self.kwargs['pk']
-            return models.CollectionUser.objects.filter(collection=collection_id)  # pylint: disable=E1101
+            return models.CollectionUser.objects.filter(collection__name=collection_id)  # pylint: disable=E1101
 
         if self.action == 'sampling_events':
             collection_id = self.kwargs['pk']
-            return models.SamplingEvent.objects.filter(collection=collection_id)  # pylint: disable=E1101
+            return models.SamplingEvent.objects.filter(collection__name=collection_id)  # pylint: disable=E1101
 
         if self.action == 'types':
             return models.CollectionType.objects.all()  # pylint: disable=E1101
@@ -199,6 +218,13 @@ class CollectionViewSet(utils.CustomViewSetMixin, ModelViewSet):
             collection_id = self.kwargs['pk']
             return models.Item.objects.filter(  # pylint: disable=E1101
                 sampling_event_device__sampling_event__collection=collection_id)
+
+        if self.action == 'administrators':
+            collection_id = self.kwargs['pk']
+            collection = get_object_or_404(
+                models.Collection,
+                pk=collection_id)
+            return collection.administrators.all()
 
         return super().get_queryset()
 
@@ -296,6 +322,16 @@ class CollectionViewSet(utils.CustomViewSetMixin, ModelViewSet):
 
     @licence_types.mapping.post
     def add_licence_type(self, request):
+        return self.create_related_object_view()
+
+    @action(
+        detail=False,
+        methods=['GET'])
+    def administrators(self, request):
+        return self.list_related_object_view()
+
+    @administrators.mapping.post
+    def add_administrator(self, request):
         return self.create_related_object_view()
 
     @action(

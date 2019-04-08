@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.contrib.auth.models import Permission
 from django.shortcuts import redirect
@@ -158,6 +159,13 @@ class ItemViewSet(mixins.UpdateModelMixin,
             )
         ]
     }, default=IsAuthenticated)
+
+    def get_object(self):
+        item_id = self.kwargs['pk']
+        item = get_object_or_404(models.Item, pk=item_id)
+
+        self.check_object_permissions(self.request, item)
+        return item
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
