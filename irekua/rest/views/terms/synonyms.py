@@ -26,5 +26,5 @@ class SynonymViewSet(mixins.UpdateModelMixin,
 
     serializer_mapping = SerializerMapping.from_module(synonyms)
 
-    permission_classes = PermissionMapping(
+    permission_mapping = PermissionMapping(
         default=IsAdmin | IsCurator | ReadOnly)

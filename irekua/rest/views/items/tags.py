@@ -24,4 +24,4 @@ class TagViewSet(mixins.UpdateModelMixin,
     queryset = Tag.objects.all()
 
     serializer_mapping = SerializerMapping.from_module(tags)
-    permission_classes = PermissionMapping(default=IsAdmin | ReadOnly)
+    permission_mapping = PermissionMapping(default=IsAdmin | ReadOnly)

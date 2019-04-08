@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest',
     'database',
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [

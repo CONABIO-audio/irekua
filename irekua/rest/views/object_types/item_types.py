@@ -35,7 +35,7 @@ class ItemTypeViewSet(mixins.RetrieveModelMixin,
             add_event_types=event_types.SelectSerializer,
             remove_event_types=event_types.SelectSerializer
         ))
-    permission_classes = PermissionMapping({
+    permission_mapping = PermissionMapping({
         Actions.RETRIEVE: IsAuthenticated,
         Actions.DESTROY: IsAdmin,
     }, default=IsDeveloper | IsAdmin)
