@@ -5,62 +5,46 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework import mixins
 
-from database.models import Item
-from database.models import PhysicalDevice
-from database.models import Site
-from database.models import User
-from database.models import Role
-from database.models import Institution
-
-from rest.serializers.users import users
-from rest.serializers.users import institutions as institution_serializers
-from rest.serializers.users import roles as role_serializers
-from rest.serializers.items  import items as item_serializers
-from rest.serializers import sites as site_serializers
-from rest.serializers.devices import physical_devices as device_serializers
+from database import models
+from rest import serializers
+from rest import filters
+from rest import utils
 
 from rest.permissions import IsAdmin
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsUnauthenticated
 from rest.permissions import users as permissions
 
-from rest import filters
-
-from rest.utils import Actions
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
-
 
 class UserViewSet(mixins.ListModelMixin,
                   mixins.UpdateModelMixin,
                   mixins.CreateModelMixin,
                   mixins.RetrieveModelMixin,
-                  CustomViewSetMixin,
+                  utils.CustomViewSetMixin,
                   GenericViewSet):
-    queryset = User.objects.all()
+    queryset = models.User.objects.all()  # pylint: disable=E1101
     filterset_class = filters.users.Filter
     search_fields = filters.users.search_fields
 
-    permission_mapping = PermissionMapping({
-        Actions.CREATE: IsUnauthenticated,
-        Actions.UPDATE: [
+    permission_mapping = utils.PermissionMapping({
+        utils.Actions.CREATE: IsUnauthenticated,
+        utils.Actions.UPDATE: [
             IsAuthenticated,
             permissions.IsSelf | IsAdmin
         ], # TODO: Fix permissions
     }, default=IsAuthenticated)
 
     serializer_mapping = (
-        SerializerMapping
-        .from_module(users)
+        utils.SerializerMapping
+        .from_module(serializers.users.users)
         .extend(
-            items=item_serializers.ListSerializer,
-            devices=device_serializers.ListSerializer,
-            sites=site_serializers.ListSerializer,
-            roles=role_serializers.ListSerializer,
-            add_role=role_serializers.CreateSerializer,
-            institutions=institution_serializers.ListSerializer,
-            add_institution=institution_serializers.CreateSerializer,
+            items=serializers.items.items.ListSerializer,
+            devices=serializers.devices.physical_devices.ListSerializer,
+            sites=serializers.sites.ListSerializer,
+            roles=serializers.users.roles.ListSerializer,
+            add_role=serializers.users.roles.CreateSerializer,
+            institutions=serializers.users.institutions.ListSerializer,
+            add_institution=serializers.users.institutions.CreateSerializer,
         ))
 
     def get_serializer_class(self):
@@ -70,29 +54,29 @@ class UserViewSet(mixins.ListModelMixin,
                 viewed_user = self.get_object()
 
                 if user == viewed_user or user.is_superuser:
-                    return users.FullDetailSerializer
+                    return serializers.users.users.FullDetailSerializer
             except (AssertionError, AttributeError):
-                return users.DetailSerializer
+                return serializers.users.users.DetailSerializer
         return super().get_serializer_class()
 
     def get_queryset(self):
         if self.action == 'roles':
-            return Role.objects.all()
+            return models.Role.objects.all()  # pylint: disable=E1101
 
         if self.action == 'institutions':
-            return Institution.objects.all()
+            return models.Institution.objects.all()  # pylint: disable=E1101
 
         if self.action == 'items':
             user_id = self.kwargs['pk']
-            return Item.objects.filter(created_by=user_id)
+            return models.Item.objects.filter(created_by=user_id)  # pylint: disable=E1101
 
         if self.action == 'devices':
             user_id = self.kwargs['pk']
-            return PhysicalDevice.objects.filter(owner=user_id)
+            return models.PhysicalDevice.objects.filter(owner=user_id)  # pylint: disable=E1101
 
         if self.action == 'sites':
             user_id = self.kwargs['pk']
-            return Site.objects.filter(created_by=user_id)
+            return models.Site.objects.filter(created_by=user_id)  # pylint: disable=E1101
 
         return super().get_queryset()
 

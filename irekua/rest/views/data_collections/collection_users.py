@@ -7,37 +7,33 @@ from rest_framework import status
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 
-from database.models import CollectionUser
-
-from rest.serializers.data_collections import collection_users
+from database import models
+from rest import utils
+from rest import serializers
 
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 from rest.permissions import IsSpecialUser
 from rest.permissions import collection_users as permissions
 
-from rest.utils import Actions
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
-
 
 class CollectionUserViewSet(mixins.UpdateModelMixin,
                             mixins.RetrieveModelMixin,
                             mixins.DestroyModelMixin,
-                            CustomViewSetMixin,
+                            utils.CustomViewSetMixin,
                             GenericViewSet):
-    queryset = CollectionUser.objects.all()
+    queryset = models.CollectionUser.objects.all()  # pylint: disable=E1101
 
     serializer_mapping = (
-        SerializerMapping
-        .from_module(collection_users)
+        utils.SerializerMapping
+        .from_module(
+            serializers.data_collections.users)
         .extend(
-            change_role=collection_users.RoleSerializer
+            change_role=serializers.data_collections.users.RoleSerializer
         ))
 
-    permission_mapping = PermissionMapping({
-        Actions.UPDATE: [
+    permission_mapping = utils.PermissionMapping({
+        utils.Actions.UPDATE: [
             IsAuthenticated,
             (
                 permissions.IsSelf |
@@ -47,7 +43,7 @@ class CollectionUserViewSet(mixins.UpdateModelMixin,
                 IsAdmin
             ),
         ],
-        Actions.RETRIEVE: [
+        utils.Actions.RETRIEVE: [
             IsAuthenticated,
             (
                 permissions.IsSelf |
@@ -57,7 +53,7 @@ class CollectionUserViewSet(mixins.UpdateModelMixin,
                 IsSpecialUser
             ),
         ],
-        Actions.DESTROY: [
+        utils.Actions.DESTROY: [
             IsAuthenticated,
             (
                 permissions.IsSelf |

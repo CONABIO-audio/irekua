@@ -37,3 +37,6 @@ class User(AbstractUser):
     class Meta:
         verbose_name = _('User')
         verbose_name_plural = _('Users')
+
+    def is_special(self):
+        return self.is_developer | self.is_curator | self.is_model | self.is_superuser

@@ -70,6 +70,12 @@ class Collection(models.Model):
         through='CollectionUser',
         through_fields=('collection', 'user'),
         blank=True)
+    administrators = models.ManyToManyField(
+        'User',
+        related_name='collection_administrators',
+        verbose_name=_('administrators'),
+        help_text=_('Administrators of collection'),
+        blank=True)
 
     created_on = models.DateTimeField(
         db_column='created_on',
@@ -227,14 +233,8 @@ class Collection(models.Model):
             raise ValidationError(msg, params=params)
 
     def is_admin(self, user):
-        try:
-            collectionuser = CollectionUser.objects.get(
-                collection=self,
-                user=user)
-        except CollectionUser.DoesNotExist:
-            return False
-
-        return collectionuser.is_admin
+        queryset = self.administrators.filter(user=user)
+        return queryset.exists()
 
     def has_user(self, user):
         return CollectionUser.objects.filter(

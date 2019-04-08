@@ -4,24 +4,17 @@ from __future__ import unicode_literals
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
-from database.models import CollectionRole
-
-from rest.serializers.object_types.data_collections import collection_roles
-
-from rest.permissions import ReadOnly
-from rest.permissions import IsAdmin
-
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
+from database import models
+from rest import serializers
+from rest import utils
 
 
 class CollectionTypeRoleViewSet(mixins.RetrieveModelMixin,
                                 mixins.DestroyModelMixin,
-                                CustomViewSetMixin,
+                                utils.CustomViewSetMixin,
                                 GenericViewSet):
-    queryset = CollectionRole.objects.all()
-    serializer_mapping = SerializerMapping.from_module(
-        collection_roles)
+    queryset = models.CollectionRole.objects.all()  # pylint: disable=E1101
+    serializer_mapping = utils.SerializerMapping.from_module(
+        serializers.object_types.data_collections.roles)
 
-    permission_mapping = PermissionMapping(default=IsAdmin | ReadOnly)
+    permission_mapping = utils.PermissionMapping()

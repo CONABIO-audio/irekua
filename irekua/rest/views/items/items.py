@@ -10,68 +10,50 @@ from rest_framework import status
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
-from database.models import CollectionUser
-from database.models import Tag
-from database.models import Annotation
-from database.models import Item
-from database.models import SecondaryItem
-from database.models import ItemType
-from database.models import EventType
-
-from rest.serializers.items import items
-from rest.serializers.items import tags as tag_serializers
-from rest.serializers.items import secondary_items as secondary_item_serializers
-from rest.serializers.object_types import item_types
-from rest.serializers.object_types import event_types as event_type_serializers
-from rest.serializers.annotations import annotations as annotation_serializers
+from database import models
+from rest import serializers
+from rest import filters
+from rest import utils
 
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 from rest.permissions import IsCurator
-from rest.permissions import IsDeveloper
 from rest.permissions import IsModel
 from rest.permissions import IsSpecialUser
 from rest.permissions import items as permissions
-
-from rest import filters
-
-from rest.utils import Actions
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
 
 
 class ItemViewSet(mixins.UpdateModelMixin,
                   mixins.RetrieveModelMixin,
                   mixins.DestroyModelMixin,
                   mixins.ListModelMixin,
-                  CustomViewSetMixin,
+                  utils.CustomViewSetMixin,
                   GenericViewSet):
-    queryset = Item.objects.all()
+    queryset = models.Item.objects.all()  # pylint: disable=E1101
     filterset_class = filters.items.Filter
     search_fields = filters.items.search_fields
 
     serializer_mapping = (
-        SerializerMapping
-        .from_module(items)
+        utils.SerializerMapping
+        .from_module(serializers.items.items)
         .extend(
-            annotations=annotation_serializers.ListSerializer,
-            add_annotation=annotation_serializers.CreateSerializer,
-            types=item_types.ListSerializer,
-            add_type=item_types.CreateSerializer,
-            download=items.DownloadSerializer,
-            upload=items.DownloadSerializer,
-            tags=tag_serializers.ListSerializer,
-            add_tag=tag_serializers.CreateSerializer,
-            tag_item=tag_serializers.SelectSerializer,
-            untag_item=tag_serializers.SelectSerializer,
-            event_types=event_type_serializers.ListSerializer,
-            add_event_type=event_type_serializers.CreateSerializer,
-            secondary_items=secondary_item_serializers.ListSerializer,
-            add_secondary_item=secondary_item_serializers.CreateSerializer,
+            annotations=serializers.annotations.annotations.ListSerializer,
+            add_annotation=serializers.annotations.annotations.CreateSerializer,
+            types=serializers.object_types.items.ListSerializer,
+            add_type=serializers.object_types.items.CreateSerializer,
+            download=serializers.items.items.DownloadSerializer,
+            upload=serializers.items.items.DownloadSerializer,
+            tags=serializers.items.tags.ListSerializer,
+            add_tag=serializers.items.tags.CreateSerializer,
+            tag_item=serializers.items.tags.SelectSerializer,
+            untag_item=serializers.items.tags.SelectSerializer,
+            event_types=serializers.object_types.events.ListSerializer,
+            add_event_type=serializers.object_types.events.CreateSerializer,
+            secondary_items=serializers.items.secondary_items.ListSerializer,
+            add_secondary_item=serializers.items.secondary_items.CreateSerializer,
         ))
-    permission_mapping = PermissionMapping({
-        Actions.UPDATE: [
+    permission_mapping = utils.PermissionMapping({
+        utils.Actions.UPDATE: [
             IsAuthenticated,
             (
                 permissions.IsCreator |
@@ -79,7 +61,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
                 IsAdmin
             )
         ],
-        Actions.RETRIEVE: [
+        utils.Actions.RETRIEVE: [
             IsAuthenticated,
             (
                 permissions.IsCreator |
@@ -90,7 +72,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
                 IsSpecialUser
             )
         ],
-        Actions.DESTROY: [
+        utils.Actions.DESTROY: [
             IsAuthenticated,
             (
                 permissions.IsCreator |
@@ -193,21 +175,21 @@ class ItemViewSet(mixins.UpdateModelMixin,
             return self.get_list_queryset()
 
         if self.action == 'tags':
-            return Tag.objects.all()
+            return models.Tag.objects.all()  # pylint: disable=E1101
 
         if self.action == 'annotations':
             item_id = self.kwargs['pk']
-            return Annotation.objects.filter(item=item_id)
+            return models.Annotation.objects.filter(item=item_id)  # pylint: disable=E1101
 
         if self.action == 'secondary_items':
             item_id = self.kwargs['pk']
-            return SecondaryItem.objects.filter(item=item_id)
+            return models.SecondaryItem.objects.filter(item=item_id)  # pylint: disable=E1101
 
         if self.action == 'types':
-            return ItemType.objects.all()
+            return models.ItemType.objects.all()  # pylint: disable=E1101
 
         if self.action == 'event_types':
-            return EventType.objects.all()
+            return models.EventType.objects.all()  # pylint: disable=E1101
 
         return super().get_queryset()
 
@@ -273,7 +255,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
 
     @action(detail=True, methods=['POST'])
     def tag_item(self, request, pk=None):
-        return self.add_related_object_view(Tag, 'tag')
+        return self.add_related_object_view(models.Tag, 'tag')
 
     @action(detail=True, methods=['POST'])
     def untag_item(self, request, pk=None):
@@ -316,7 +298,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
         try:
             user = self.request.user
         except AttributeError:
-            return Item.objects.none()
+            return models.Item.objects.none()  # pylint: disable=E1101
 
         is_special_user = (
             user.is_superuser |
@@ -338,7 +320,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
 
         perm = Permission.objects.get(codename='view_collection_items')
         collections_with_permission = (
-            CollectionUser.objects
+            models.CollectionUser.objects  # pylint: disable=E1101
             .filter(
                 user=user.pk,
                 role__in=perm.role_set.all()
@@ -356,8 +338,8 @@ class ItemViewSet(mixins.UpdateModelMixin,
             is_in_allowed_collection
         )
 
-        queryset = Item.objects.filter(filter_query)
+        queryset = models.Item.objects.filter(filter_query)  # pylint: disable=E1101
         return queryset
 
     def get_full_queryset(self):
-        return Item.objects.all()
+        return models.Item.objects.all()  # pylint: disable=E1101

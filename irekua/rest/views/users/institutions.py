@@ -4,37 +4,34 @@ from __future__ import unicode_literals
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
-from database.models import Institution
-
-from rest.serializers.users import institutions
+from database import models
+from rest import serializers
+from rest import utils
 
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 from rest.permissions import institutions as permissions
 
-from rest.utils import Actions
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
-
 
 class InstitutionViewSet(mixins.UpdateModelMixin,
                          mixins.RetrieveModelMixin,
                          mixins.DestroyModelMixin,
-                         CustomViewSetMixin,
+                         utils.CustomViewSetMixin,
                          GenericViewSet):
-    queryset = Institution.objects.all()
+    queryset = models.Institution.objects.all()  # pylint: disable=E1101
 
-    serializer_mapping = SerializerMapping.from_module(institutions)
-    permission_mapping = PermissionMapping({
-        Actions.UPDATE: [
+    serializer_mapping = utils.SerializerMapping.from_module(
+        serializers.users.institutions)
+
+    permission_mapping = utils.PermissionMapping({
+        utils.Actions.UPDATE: [
             IsAuthenticated,
             (
                 permissions.IsFromInstitution |
                 IsAdmin
             )
         ],
-        Actions.DESTROY: [
+        utils.Actions.DESTROY: [
             IsAuthenticated,
             IsAdmin
         ],

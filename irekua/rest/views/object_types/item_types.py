@@ -5,44 +5,38 @@ from rest_framework import mixins
 from rest_framework.decorators import action
 from rest_framework.viewsets import GenericViewSet
 
-from database.models import ItemType
-from database.models import EventType
-
-from rest.serializers.object_types import item_types
-from rest.serializers.object_types import event_types
+from database import models
+from rest import serializers
+from rest import utils
 
 from rest.permissions import IsAdmin
 from rest.permissions import IsDeveloper
 from rest.permissions import IsAuthenticated
 
-from rest.utils import Actions
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
-
 
 class ItemTypeViewSet(mixins.RetrieveModelMixin,
                       mixins.DestroyModelMixin,
                       mixins.UpdateModelMixin,
-                      CustomViewSetMixin,
+                      utils.CustomViewSetMixin,
                       GenericViewSet):
-    queryset = ItemType.objects.all()
+    queryset = models.ItemType.objects.all()  # pylint: disable=E1101
 
     serializer_mapping = (
-        SerializerMapping
-        .from_module(item_types)
+        utils.SerializerMapping
+        .from_module(serializers.object_types.items)
         .extend(
-            add_event_types=event_types.SelectSerializer,
-            remove_event_types=event_types.SelectSerializer
+            add_event_types=serializers.object_types.events.SelectSerializer,
+            remove_event_types=serializers.object_types.events.SelectSerializer
         ))
-    permission_mapping = PermissionMapping({
-        Actions.RETRIEVE: IsAuthenticated,
-        Actions.DESTROY: IsAdmin,
+
+    permission_mapping = utils.PermissionMapping({
+        utils.Actions.RETRIEVE: IsAuthenticated,
+        utils.Actions.DESTROY: IsAdmin,
     }, default=IsDeveloper | IsAdmin)
 
     @action(detail=True, methods=['POST'])
     def add_event_types(self, request, pk=None):
-        return self.add_related_object_view(EventType, 'event_type')
+        return self.add_related_object_view(models.EventType, 'event_type')
 
     @action(detail=True, methods=['POST'])
     def remove_event_types(self, request, pk=None):

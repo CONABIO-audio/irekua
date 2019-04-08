@@ -17,11 +17,17 @@ class MetaCollection(models.Model):
         verbose_name=_('description'),
         help_text=_('Description of Meta Collection'),
         blank=False)
+
     items = models.ManyToManyField(
         'Item',
-        db_column='items',
         verbose_name=_('items'),
-        help_text=_('Items belonging to MetaCollection'))
+        help_text=_('Items belonging to MetaCollection'),
+        blank=True)
+    curators = models.ManyToManyField(
+        'User',
+        verbose_name='curators',
+        help_text=_('Curators of metacollection'),
+        blank=True)
 
     created_by = models.ForeignKey(
         'User',
@@ -59,4 +65,12 @@ class MetaCollection(models.Model):
 
     def remove_item(self, item):
         self.items.remove(item)
+        self.save()
+
+    def add_curator(self, user):
+        self.curators.add(user)
+        self.save()
+
+    def remove_curator(self, user):
+        self.curators.remove(user)
         self.save()

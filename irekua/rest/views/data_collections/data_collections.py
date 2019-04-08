@@ -4,27 +4,10 @@ from __future__ import unicode_literals
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 
-from database.models import Collection
-from database.models import SamplingEvent
-from database.models import MetaCollection
-from database.models import CollectionType
-from database.models import CollectionDevice
-from database.models import CollectionSite
-from database.models import CollectionUser
-from database.models import LicenceType
-from database.models import Licence
-from database.models import Item
-
-from rest.serializers.items import items as item_serializers
-from rest.serializers import licences as licence_serializers
-from rest.serializers.object_types.data_collections import collection_types
-from rest.serializers.object_types import licence_types as licence_type_serializers
-from rest.serializers.sampling_events import sampling_events as sampling_event_serializers
-from rest.serializers.data_collections import data_collections
-from rest.serializers.data_collections import collection_devices
-from rest.serializers.data_collections import collection_sites
-from rest.serializers.data_collections import collection_users
-from rest.serializers.data_collections import metacollections as metacollection_serializers
+from database import models
+from rest import filters
+from rest import utils
+from rest import serializers
 
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
@@ -32,44 +15,37 @@ from rest.permissions import IsDeveloper
 from rest.permissions import IsSpecialUser
 from rest.permissions import data_collections as permissions
 
-from rest import filters
 
-from rest.utils import Actions
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
-
-
-class CollectionViewSet(CustomViewSetMixin, ModelViewSet):
-    queryset = Collection.objects.all()
+class CollectionViewSet(utils.CustomViewSetMixin, ModelViewSet):
+    queryset = models.Collection.objects.all()  # pylint: disable=E1101
     search_fields = filters.data_collections.search_fields
     filterset_class = filters.data_collections.Filter
 
     serializer_mapping = (
-        SerializerMapping
-        .from_module(data_collections)
+        utils.SerializerMapping
+        .from_module(serializers.data_collections.data_collections)
         .extend(
-            metacollections=metacollection_serializers.ListSerializer,
-            add_metacollection=metacollection_serializers.CreateSerializer,
-            licences=licence_serializers.ListSerializer,
-            add_licence=licence_serializers.CreateSerializer,
-            devices=collection_devices.ListSerializer,
-            add_device=collection_devices.CreateSerializer,
-            sites=collection_sites.ListSerializer,
-            add_site=collection_sites.CreateSerializer,
-            users=collection_users.ListSerializer,
-            add_user=collection_users.CreateSerializer,
-            sampling_events=sampling_event_serializers.ListSerializer,
-            add_sampling_event=sampling_event_serializers.CreateSerializer,
-            types=collection_types.ListSerializer,
-            add_type=collection_types.CreateSerializer,
-            licence_types=licence_type_serializers.ListSerializer,
-            add_licence_type=licence_type_serializers.CreateSerializer,
-            items=item_serializers.ListSerializer,
+            metacollections=serializers.data_collections.metacollections.ListSerializer,
+            add_metacollection=serializers.data_collections.metacollections.CreateSerializer,
+            licences=serializers.licences.ListSerializer,
+            add_licence=serializers.licences.CreateSerializer,
+            devices=serializers.data_collections.devices.ListSerializer,
+            add_device=serializers.data_collections.devices.CreateSerializer,
+            sites=serializers.data_collections.sites.ListSerializer,
+            add_site=serializers.data_collections.sites.CreateSerializer,
+            users=serializers.data_collections.users.ListSerializer,
+            add_user=serializers.data_collections.users.CreateSerializer,
+            sampling_events=serializers.sampling_events.sampling_events.ListSerializer,
+            add_sampling_event=serializers.sampling_events.sampling_events.CreateSerializer,
+            types=serializers.object_types.data_collections.types.ListSerializer,
+            add_type=serializers.object_types.data_collections.types.CreateSerializer,
+            licence_types=serializers.object_types.licences.ListSerializer,
+            add_licence_type=serializers.object_types.licences.CreateSerializer,
+            items=serializers.items.items.ListSerializer,
         ))
 
-    permission_mapping = PermissionMapping({
-        Actions.UPDATE: [
+    permission_mapping = utils.PermissionMapping({
+        utils.Actions.UPDATE: [
             IsAuthenticated,
             (
                 permissions.HasUpdatePermission |
@@ -78,7 +54,7 @@ class CollectionViewSet(CustomViewSetMixin, ModelViewSet):
                 IsAdmin
             )
         ],
-        Actions.DESTROY: [
+        utils.Actions.DESTROY: [
             IsAuthenticated,
             permissions.IsCollectionAdmin | IsAdmin
         ],
@@ -191,37 +167,37 @@ class CollectionViewSet(CustomViewSetMixin, ModelViewSet):
 
     def get_queryset(self):
         if self.action == 'metacollections':
-            return MetaCollection.objects.all()
+            return models.MetaCollection.objects.all()  # pylint: disable=E1101
 
         if self.action == 'licences':
             collection_id = self.kwargs['pk']
-            return Licence.objects.filter(collection=collection_id)
+            return models.Licence.objects.filter(collection=collection_id)  # pylint: disable=E1101
 
         if self.action == 'devices':
             collection_id = self.kwargs['pk']
-            return CollectionDevice.objects.filter(collection=collection_id)
+            return models.CollectionDevice.objects.filter(collection=collection_id)  # pylint: disable=E1101
 
         if self.action == 'sites':
             collection_id = self.kwargs['pk']
-            return CollectionSite.objects.filter(collection=collection_id)
+            return models.CollectionSite.objects.filter(collection=collection_id)  # pylint: disable=E1101
 
         if self.action == 'users':
             collection_id = self.kwargs['pk']
-            return CollectionUser.objects.filter(collection=collection_id)
+            return models.CollectionUser.objects.filter(collection=collection_id)  # pylint: disable=E1101
 
         if self.action == 'sampling_events':
             collection_id = self.kwargs['pk']
-            return SamplingEvent.objects.filter(collection=collection_id)
+            return models.SamplingEvent.objects.filter(collection=collection_id)  # pylint: disable=E1101
 
         if self.action == 'types':
-            return CollectionType.objects.all()
+            return models.CollectionType.objects.all()  # pylint: disable=E1101
 
         if self.action == 'licence_types':
-            return LicenceType.objects.all()
+            return models.LicenceType.objects.all()  # pylint: disable=E1101
 
         if self.action == 'items':
             collection_id = self.kwargs['pk']
-            return Item.objects.filter(
+            return models.Item.objects.filter(  # pylint: disable=E1101
                 sampling_event_device__sampling_event__collection=collection_id)
 
         return super().get_queryset()

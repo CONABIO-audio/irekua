@@ -5,54 +5,54 @@ from rest_framework import mixins
 from rest_framework.decorators import action
 from rest_framework.viewsets import GenericViewSet
 
-from database.models import MetaCollection
-from database.models import Item
-
-from rest.serializers.data_collections import metacollections
-from rest.serializers.items import items as item_serializers
+from database import models
+from rest import filters
+from rest import utils
+from rest import serializers
 
 from rest.permissions import IsAdmin
 from rest.permissions import IsDeveloper
 from rest.permissions import IsSpecialUser
 from rest.permissions import IsAuthenticated
 
-from rest import filters
-
-from rest.utils import Actions
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
-
 
 class MetaCollectionViewSet(mixins.UpdateModelMixin,
                             mixins.RetrieveModelMixin,
                             mixins.DestroyModelMixin,
-                            CustomViewSetMixin,
+                            utils.CustomViewSetMixin,
                             GenericViewSet):
-    queryset = MetaCollection.objects.all()
+    queryset = models.MetaCollection.objects.all()  # pylint: disable=E1101
     filterset_class = filters.metacollections.Filter
     search_fields = filters.metacollections.search_fields
 
     serializer_mapping = (
-        SerializerMapping
-        .from_module(metacollections)
+        utils.SerializerMapping
+        .from_module(serializers.data_collections.metacollections)
         .extend(
-            items=item_serializers.ListSerializer,
-            add_item=item_serializers.SelectSerializer,
-            remove_item=item_serializers.SelectSerializer,
+            items=serializers.items.items.ListSerializer,
+            add_item=serializers.items.items.SelectSerializer,
+            remove_item=serializers.items.items.SelectSerializer,
+            add_curator=serializers.users.users.SelectSerializer,
+            remove_curator=serializers.users.users.SelectSerializer,
         ))
 
-    permission_mapping = PermissionMapping({
-        Actions.LIST: [
+    permission_mapping = utils.PermissionMapping({
+        utils.Actions.LIST: [
             IsAuthenticated
         ],
-        Actions.RETRIEVE: [
+        utils.Actions.RETRIEVE: [
             IsAuthenticated,
             IsSpecialUser
         ],
         'items': [
             IsAuthenticated,
             IsSpecialUser
+        ],
+        'add_curator': [
+            IsAuthenticated, IsAdmin
+        ],
+        'remove_curator': [
+            IsAuthenticated, IsAdmin
         ],
     }, default=[
         IsAuthenticated,
@@ -62,18 +62,26 @@ class MetaCollectionViewSet(mixins.UpdateModelMixin,
     def get_queryset(self):
         if self.action == 'items':
             metacollection_id = self.kwargs['pk']
-            metacollection = MetaCollection.objects.get(pk=metacollection_id)
+            metacollection = models.MetaCollection.objects.get(pk=metacollection_id)  # pylint: disable=E1101
             return metacollection.items.all()
 
         return super().get_queryset()
 
     @action(detail=True, methods=['POST'])
     def add_item(self, request, pk=None):
-        return self.add_related_object_view(Item, 'item')
+        return self.add_related_object_view(models.Item, 'item')
 
     @action(detail=True, methods=['POST'])
     def remove_item(self, request, pk=None):
         return self.remove_related_object_view('item')
+
+    @action(detail=True, methods=['POST'])
+    def add_curator(self, request, pk=None):
+        return self.add_related_object_view(models.User, 'curator')
+
+    @action(detail=True, methods=['POST'])
+    def remove_curator(self, request, pk=None):
+        return self.remove_related_object_view('curator')
 
     @action(
         detail=True,

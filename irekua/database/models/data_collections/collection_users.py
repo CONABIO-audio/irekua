@@ -35,15 +35,6 @@ class CollectionUser(models.Model):
         default=empty_JSON,
         help_text=_('Metadata associated to user in collection'),
         null=True)
-    is_admin = models.BooleanField(
-        db_column='is_admin',
-        verbose_name=_('is admin'),
-        help_text=_(
-            'Flag that indicates if user is administrator of '
-            'the collection'),
-        null=False,
-        blank=False,
-        default=False)
 
     created_on = models.DateTimeField(
         db_column='created_on',

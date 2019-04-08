@@ -4,46 +4,38 @@ from __future__ import unicode_literals
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 
-from database.models import Site
-from database.models import SiteType
-
-from rest.serializers import sites
-from rest.serializers.object_types import site_types
+from database import models
+from rest import serializers
+from rest import filters
+from rest import utils
 
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 import rest.permissions.sites as permissions
 
-from rest import filters
 
-from rest.utils import Actions
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
-
-
-class SiteViewSet(CustomViewSetMixin, ModelViewSet):
-    queryset = Site.objects.all()
+class SiteViewSet(utils.CustomViewSetMixin, ModelViewSet):
+    queryset = models.Site.objects.all()  # pylint: disable=E1101
     filterset_class = filters.sites.Filter
     search_fields = filters.sites.search_fields
 
     serializer_mapping = (
-        SerializerMapping
-        .from_module(sites)
+        utils.SerializerMapping
+        .from_module(serializers.sites)
         .extend(
-            types=site_types.ListSerializer,
-            add_type=site_types.CreateSerializer,
+            types=serializers.object_types.sites.ListSerializer,
+            add_type=serializers.object_types.sites.CreateSerializer,
         ))
 
-    permission_mapping = PermissionMapping({
-        Actions.UPDATE: [
+    permission_mapping = utils.PermissionMapping({
+        utils.Actions.UPDATE: [
             IsAuthenticated,
             (
                 permissions.IsCreator |
                 IsAdmin
             )
         ],
-        Actions.DESTROY: [
+        utils.Actions.DESTROY: [
             IsAuthenticated,
             (
                 permissions.IsCreator |
@@ -54,19 +46,19 @@ class SiteViewSet(CustomViewSetMixin, ModelViewSet):
     }, default=IsAuthenticated)
 
     def get_serializer_class(self):
-        if self.action == Actions.RETRIEVE:
+        if self.action == utils.Actions.RETRIEVE:
             user = self.request.user
             site = self.get_object()
 
             if site.has_coordinate_permission(user):
-                return sites.FullDetailSerializer
-            return sites.DetailSerializer
+                return serializers.sites.FullDetailSerializer
+            return serializers.sites.DetailSerializer
 
         return super().get_serializer_class()
 
     def get_queryset(self):
         if self.action == 'types':
-            return SiteType.objects.all()
+            return models.SiteType.objects.all()  # pylint: disable=E1101
 
         return super().get_queryset()
 

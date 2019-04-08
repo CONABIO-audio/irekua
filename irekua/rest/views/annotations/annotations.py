@@ -5,16 +5,9 @@ from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 
-from database.models import Annotation
-from database.models import AnnotationVote
-from database.models import AnnotationType
-from database.models import AnnotationTool
-
-from rest.serializers.object_types import annotation_types
-from rest.serializers.annotations import annotations
-from rest.serializers.annotations import annotation_votes
-from rest.serializers.annotations import annotation_tools as annotation_tool_serializers
-
+from database import models
+from rest import utils
+from rest import serializers
 from rest import filters
 
 from rest.permissions import IsAuthenticated
@@ -23,36 +16,31 @@ from rest.permissions import IsCurator
 from rest.permissions import IsSpecialUser
 from rest.permissions import annotations as permissions
 
-from rest.utils import Actions
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
-
 
 class AnnotationViewSet(mixins.UpdateModelMixin,
                         mixins.RetrieveModelMixin,
                         mixins.DestroyModelMixin,
                         mixins.ListModelMixin,
-                        CustomViewSetMixin,
+                        utils.CustomViewSetMixin,
                         GenericViewSet):
-    queryset = Annotation.objects.all()
+    queryset = models.Annotation.objects.all()  # pylint: disable=E1101
     filterset_class = filters.annotations.Filter
     search_fields = filters.annotations.search_fields
 
     serializer_mapping = (
-        SerializerMapping
-        .from_module(annotations)
+        utils.SerializerMapping
+        .from_module(serializers.annotations.annotations)
         .extend(
-            vote=annotation_votes.CreateSerializer,
-            votes=annotation_votes.ListSerializer,
-            types=annotation_types.ListSerializer,
-            add_type=annotation_types.CreateSerializer,
-            tools=annotation_tool_serializers.ListSerializer,
-            add_tool=annotation_tool_serializers.CreateSerializer,
+            vote=serializers.annotations.votes.CreateSerializer,
+            votes=serializers.annotations.votes.ListSerializer,
+            types=serializers.object_types.annotations.ListSerializer,
+            add_type=serializers.object_types.annotations.CreateSerializer,
+            tools=serializers.annotations.tools.ListSerializer,
+            add_tool=serializers.annotations.tools.CreateSerializer,
         ))
 
-    permission_mapping = PermissionMapping({
-        Actions.UPDATE: [
+    permission_mapping = utils.PermissionMapping({
+        utils.Actions.UPDATE: [
             IsAuthenticated,
             (
                 permissions.IsCreator |
@@ -61,7 +49,7 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
                 IsAdmin
             ),
         ],
-        Actions.RETRIEVE: [
+        utils.Actions.RETRIEVE: [
             IsAuthenticated,
             (
                 permissions.IsCreator |
@@ -71,7 +59,7 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
                 IsSpecialUser
             ),
         ],
-        Actions.DESTROY: [
+        utils.Actions.DESTROY: [
             IsAuthenticated,
             permissions.IsCreator | IsAdmin,
         ],
@@ -111,13 +99,17 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
     def get_queryset(self):
         if self.action == 'votes':
             annotation_id = self.kwargs['pk']
-            return AnnotationVote.objects.filter(annotation=annotation_id)
+            return models.AnnotationVote.objects.filter(
+                annotation=annotation_id)
 
         if self.action == 'types':
-            return AnnotationType.objects.all()
+            return models.AnnotationType.objects.all()
 
         if self.action == 'tools':
-            return AnnotationTool.objects.all()
+            return models.AnnotationTool.objects.all()
+
+        if self.action == utils.Actions.LIST:
+            return self.get_list_queryset()
 
         return super().get_queryset()
 
@@ -156,3 +148,30 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
     @tools.mapping.post
     def add_tool(self, request):
         return self.create_related_object_view()
+
+    def get_list_queryset(self):
+        user = self.request.user
+
+        if user.is_special():
+            return models.Annotation.objects.all()
+
+        collection_type_queryset = self.get_collection_type_admin_queryset(user)
+        collection_admin_queryset = self.get_collection_admin_queryset(user)
+        view_pemission_queryset = self.get_view_permission_queryset(user)
+        open_queryset = self.get_open_queryset()
+
+        return open_queryset.union(collection_type_queryset,
+                                   collection_admin_queryset,
+                                   view_pemission_queryset)
+
+    def get_collection_type_admin_queryset(self, user):
+        return models.Annotation.objects.none()
+
+    def get_collection_admin_queryset(self, user):
+        return models.Annotation.objects.none()
+
+    def get_view_permission_queryset(self, user):
+        return models.Annotation.objects.none()
+
+    def get_open_queryset(self):
+        return models.Annotation.objects.none()

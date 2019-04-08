@@ -7,33 +7,30 @@ from rest_framework import mixins
 from rest_framework.decorators import action
 from rest_framework.viewsets import GenericViewSet
 
-from database.models import Role
-
-from rest.serializers.users import roles
+from database import models
+from rest import serializers
+from rest import utils
 
 from rest.permissions import ReadOnly
 from rest.permissions import IsAdmin
-
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
 
 
 class RoleViewSet(mixins.UpdateModelMixin,
                   mixins.DestroyModelMixin,
                   mixins.RetrieveModelMixin,
-                  CustomViewSetMixin,
+                  utils.CustomViewSetMixin,
                   GenericViewSet):
-    queryset = Role.objects.all()
+    queryset = models.Role.objects.all()  # pylint: disable=E1101
 
     serializer_mapping = (
-        SerializerMapping
-        .from_module(roles)
+        utils.SerializerMapping
+        .from_module(serializers.users.roles)
         .extend(
-            add_permission=roles.SelectPermissionSerializer,
-            remove_permission=roles.SelectPermissionSerializer
+            add_permission=serializers.users.roles.SelectPermissionSerializer,
+            remove_permission=serializers.users.roles.SelectPermissionSerializer
         ))
-    permission_mapping = PermissionMapping(default=IsAdmin | ReadOnly)
+
+    permission_mapping = utils.PermissionMapping(default=IsAdmin | ReadOnly)
 
     @action(detail=True, methods=['POST'])
     def add_permission(self, request, pk=None):

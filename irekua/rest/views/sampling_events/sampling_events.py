@@ -5,48 +5,38 @@ from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 
-from database.models import SamplingEvent
-from database.models import SamplingEventDevice
-from database.models import Item
-
-from rest.serializers.sampling_events import sampling_events
-from rest.serializers.sampling_events import sampling_event_devices
-from rest.serializers.items import items as item_serializers
+from database import models
+from rest import serializers
+from rest import filters
+from rest import utils
 
 from rest.permissions import IsAuthenticated
 from rest.permissions import IsAdmin
 from rest.permissions import IsSpecialUser
 import rest.permissions.sampling_events as permissions
 
-from rest import filters
-
-from rest.utils import Actions
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
-
 
 class SamplingEventViewSet(mixins.UpdateModelMixin,
                            mixins.RetrieveModelMixin,
                            mixins.DestroyModelMixin,
                            mixins.ListModelMixin,
-                           CustomViewSetMixin,
+                           utils.CustomViewSetMixin,
                            GenericViewSet):
-    queryset = SamplingEvent.objects.all()
+    queryset = models.SamplingEvent.objects.all()  # pylint: disable=E1101
     search_fields = filters.sampling_events.search_fields
     filterset_class = filters.sampling_events.Filter
 
     serializer_mapping = (
-        SerializerMapping
-        .from_module(sampling_events)
+        utils.SerializerMapping
+        .from_module(serializers.sampling_events.sampling_events)
         .extend(
-            items=item_serializers.ListSerializer,
-            devices=sampling_event_devices.ListSerializer,
-            add_device=sampling_event_devices.CreateSerializer,
+            items=serializers.items.items.ListSerializer,
+            devices=serializers.sampling_events.devices.ListSerializer,
+            add_device=serializers.sampling_events.devices.CreateSerializer,
         ))
 
-    permission_mapping = PermissionMapping({
-        Actions.UPDATE: [
+    permission_mapping = utils.PermissionMapping({
+        utils.Actions.UPDATE: [
             IsAuthenticated,
             (
                 permissions.IsCreator |
@@ -54,7 +44,7 @@ class SamplingEventViewSet(mixins.UpdateModelMixin,
                 IsAdmin
             )
         ],
-        Actions.RETRIEVE: [
+        utils.Actions.RETRIEVE: [
             IsAuthenticated,
             (
                 permissions.IsCreator |
@@ -64,14 +54,14 @@ class SamplingEventViewSet(mixins.UpdateModelMixin,
                 IsSpecialUser
             )
         ],
-        Actions.DESTROY: [
+        utils.Actions.DESTROY: [
             IsAuthenticated,
             (
                 permissions.IsCreator |
                 IsAdmin
             )
         ],
-        Actions.LIST: [
+        utils.Actions.LIST: [
             IsAuthenticated,
         ],
         'items': [
@@ -100,11 +90,11 @@ class SamplingEventViewSet(mixins.UpdateModelMixin,
     def get_queryset(self):
         if self.action == 'devices':
             object_id = self.kwargs['pk']
-            return SamplingEventDevice.objects.filter(sampling_event=object_id)
+            return models.SamplingEventDevice.objects.filter(sampling_event=object_id)  # pylint: disable=E1101
 
         if self.action == 'items':
             object_id = self.kwargs['pk']
-            return Item.objects.filter(
+            return models.Item.objects.filter(  # pylint: disable=E1101
                 sampling_event_device__sampling_event=object_id)
 
         return super().get_queryset()

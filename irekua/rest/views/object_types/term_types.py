@@ -4,60 +4,43 @@ from __future__ import unicode_literals
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 
-from database.models import TermType
-from database.models import Term
-from database.models import TermSuggestion
-from database.models import Synonym
-from database.models import SynonymSuggestion
-from database.models import Entailment
-from database.models import EntailmentType
-
-from rest.serializers.object_types import term_types
-from rest.serializers.object_types import entailment_types as entailment_type_serializers
-from rest.serializers.terms import term_suggestions
-from rest.serializers.terms import synonym_suggestions as synonym_suggestion_serializers
-from rest.serializers.terms import entailments as entailment_serializers
-from rest.serializers.terms import synonyms as synonym_serializers
-from rest.serializers.terms import terms as term_serializers
+from database import models
+from rest import serializers
+from rest import filters
+from rest import utils
 
 from rest.permissions import IsAdmin
 from rest.permissions import IsAuthenticated
 
-from rest import filters
-
-from rest.utils import Actions
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
 
 
-class TermTypeViewSet(CustomViewSetMixin, ModelViewSet):
-    queryset = TermType.objects.all()
+class TermTypeViewSet(utils.CustomViewSetMixin, ModelViewSet):
+    queryset = models.TermType.objects.all()  # pylint: disable=E1101
     search_fields = filters.term_types.search_fields
     filterset_class = filters.term_types.Filter
 
     serializer_mapping = (
-        SerializerMapping
-        .from_module(term_types)
+        utils.SerializerMapping
+        .from_module(serializers.object_types.terms)
         .extend(
-            terms=term_serializers.ListSerializer,
-            add_term=term_serializers.CreateSerializer,
-            suggestions=term_suggestions.ListSerializer,
-            suggest_term=term_suggestions.CreateSerializer,
-            entailment_types=entailment_type_serializers.ListSerializer,
-            add_entailment_type=entailment_type_serializers.CreateSerializer,
-            entailments=entailment_serializers.ListSerializer,
-            add_entailment=entailment_serializers.CreateSerializer,
-            synonyms=synonym_serializers.ListSerializer,
-            add_synonym=synonym_serializers.CreateSerializer,
-            synonym_suggestions=synonym_suggestion_serializers.ListSerializer,
-            suggest_synonym=synonym_suggestion_serializers.CreateSerializer,
+            terms=serializers.terms.terms.ListSerializer,
+            add_term=serializers.terms.terms.CreateSerializer,
+            suggestions=serializers.terms.suggestions.ListSerializer,
+            suggest_term=serializers.terms.suggestions.CreateSerializer,
+            entailment_types=serializers.object_types.entailments.ListSerializer,
+            add_entailment_type=serializers.object_types.entailments.CreateSerializer,
+            entailments=serializers.terms.entailments.ListSerializer,
+            add_entailment=serializers.terms.entailments.CreateSerializer,
+            synonyms=serializers.terms.synonyms.ListSerializer,
+            add_synonym=serializers.terms.synonyms.CreateSerializer,
+            synonym_suggestions=serializers.terms.synonym_suggestions.ListSerializer,
+            suggest_synonym=serializers.terms.synonym_suggestions.CreateSerializer,
         ))
 
-    permission_mapping = PermissionMapping({
-        Actions.DESTROY: [IsAuthenticated, IsAdmin],
-        Actions.CREATE: [IsAuthenticated, IsAdmin],
-        Actions.UPDATE: [IsAuthenticated, IsAdmin],
+    permission_mapping = utils.PermissionMapping({
+        utils.Actions.DESTROY: [IsAuthenticated, IsAdmin],
+        utils.Actions.CREATE: [IsAuthenticated, IsAdmin],
+        utils.Actions.UPDATE: [IsAuthenticated, IsAdmin],
         'add_term': [IsAuthenticated, IsAdmin],
         'add_entailment_type': [IsAuthenticated, IsAdmin],
         'add_entailment': [IsAuthenticated, IsAdmin],
@@ -77,26 +60,26 @@ class TermTypeViewSet(CustomViewSetMixin, ModelViewSet):
 
     def get_queryset(self):
         if self.action == 'entailments':
-            return Entailment.objects.all()
+            return models.Entailment.objects.all()  # pylint: disable=E1101
 
         if self.action == 'entailment_types':
-            return EntailmentType.objects.all()
+            return models.EntailmentType.objects.all()  # pylint: disable=E1101
 
         if self.action == 'terms':
             term_type_id = self.kwargs['pk']
-            return Term.objects.filter(term_type=term_type_id)
+            return models.Term.objects.filter(term_type=term_type_id)  # pylint: disable=E1101
 
         if self.action == 'synonyms':
             term_type_id = self.kwargs['pk']
-            return Synonym.objects.filter(source__term_type=term_type_id)
+            return models.Synonym.objects.filter(source__term_type=term_type_id)  # pylint: disable=E1101
 
         if self.action == 'suggestions':
             term_type_id = self.kwargs['pk']
-            return TermSuggestion.objects.filter(term_type=term_type_id)
+            return models.TermSuggestion.objects.filter(term_type=term_type_id)  # pylint: disable=E1101
 
         if self.action == 'synonym_suggestions':
             term_type_id = self.kwargs['pk']
-            return SynonymSuggestion.objects.filter(source__term_type=term_type_id)
+            return models.SynonymSuggestion.objects.filter(source__term_type=term_type_id)  # pylint: disable=E1101
 
         return super().get_queryset()
 

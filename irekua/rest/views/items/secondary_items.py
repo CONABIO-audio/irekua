@@ -4,24 +4,20 @@ from __future__ import unicode_literals
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
-from database.models import SecondaryItem
-
-from rest.serializers.items import secondary_items
+from database import models
+from rest import utils
+from rest import serializers
 
 from rest.permissions import IsAuthenticated
-
-# from rest.utils import Actions
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
 
 
 class SecondaryItemViewSet(mixins.UpdateModelMixin,
                            mixins.RetrieveModelMixin,
                            mixins.DestroyModelMixin,
-                           CustomViewSetMixin,
+                           utils.CustomViewSetMixin,
                            GenericViewSet):
-    queryset = SecondaryItem.objects.all()
+    queryset = models.SecondaryItem.objects.all()  # pylint: disable=E1101
 
-    permission_mapping = PermissionMapping(default=IsAuthenticated) # TODO: Fix permissions
-    serializer_mapping = SerializerMapping.from_module(secondary_items)
+    permission_mapping = utils.PermissionMapping(default=IsAuthenticated) # TODO: Fix permissions
+    serializer_mapping = utils.SerializerMapping.from_module(
+        serializers.items.secondary_items)

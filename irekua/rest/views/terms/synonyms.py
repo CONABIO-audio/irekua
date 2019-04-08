@@ -4,27 +4,24 @@ from __future__ import unicode_literals
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
-from database.models import Synonym
-
-from rest.serializers.terms import synonyms
+from database import models
+from rest import serializers
+from rest import utils
 
 from rest.permissions import IsAdmin
 from rest.permissions import IsCurator
 from rest.permissions import ReadOnly
 
-from rest.utils import CustomViewSetMixin
-from rest.utils import SerializerMapping
-from rest.utils import PermissionMapping
-
 
 class SynonymViewSet(mixins.UpdateModelMixin,
                      mixins.RetrieveModelMixin,
                      mixins.DestroyModelMixin,
-                     CustomViewSetMixin,
+                     utils.CustomViewSetMixin,
                      GenericViewSet):
-    queryset = Synonym.objects.all()
+    queryset = models.Synonym.objects.all()  # pylint: disable=E1101
 
-    serializer_mapping = SerializerMapping.from_module(synonyms)
+    serializer_mapping = utils.SerializerMapping.from_module(
+        serializers.terms.synonyms)
 
-    permission_mapping = PermissionMapping(
+    permission_mapping = utils.PermissionMapping(
         default=IsAdmin | IsCurator | ReadOnly)
