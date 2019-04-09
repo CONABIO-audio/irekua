@@ -44,6 +44,7 @@ class UserViewSet(mixins.ListModelMixin,
             sites=serializers.sites.ListSerializer,
             roles=serializers.users.roles.ListSerializer,
             add_role=serializers.users.roles.CreateSerializer,
+            collections=serializers.data_collections.data_collections.ListSerializer,
             institutions=serializers.users.institutions.ListSerializer,
             add_institution=serializers.users.institutions.CreateSerializer,
         ))
@@ -85,6 +86,10 @@ class UserViewSet(mixins.ListModelMixin,
         if self.action == 'sites':
             user_id = self.kwargs['pk']
             return models.Site.objects.filter(created_by=user_id)  # pylint: disable=E1101
+
+        if self.action == 'collections':
+            user = self.get_object()
+            return user.collection_set.all()
 
         return super().get_queryset()
 
@@ -134,4 +139,12 @@ class UserViewSet(mixins.ListModelMixin,
         filterset_class=filters.sites.Filter,
         search_fields=filters.sites.search_fields)
     def sites(self, request, pk=None):
+        return self.list_related_object_view()
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.data_collections.Filter,
+        search_fields=filters.data_collections.search_fields)
+    def collections(self, request, pk=None):
         return self.list_related_object_view()

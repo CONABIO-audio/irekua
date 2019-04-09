@@ -91,7 +91,7 @@ class CollectionTypeViewSet(mixins.RetrieveModelMixin,
         if self.action == 'item_types':
             collection_id = self.kwargs['pk']
             return models.CollectionItemType.objects.filter(  # pylint: disable=E1101
-                collection=collection_id)
+                collection_type=collection_id)
 
         if self.action == 'event_types':
             model = models.CollectionType.event_types.through  # pylint: disable=E1101
@@ -101,12 +101,12 @@ class CollectionTypeViewSet(mixins.RetrieveModelMixin,
         if self.action == 'device_types':
             collection_id = self.kwargs['pk']
             return models.CollectionDeviceType.objects.filter(  # pylint: disable=E1101
-                collection=collection_id)
+                collection_type=collection_id)
 
         if self.action == 'roles':
             collection_id = self.kwargs['pk']
             return models.CollectionRole.objects.filter(  # pylint: disable=E1101
-                collection=collection_id)
+                collection_type=collection_id)
 
         return super().get_queryset()
 

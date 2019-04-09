@@ -72,4 +72,4 @@ class SiteViewSet(utils.CustomViewSetMixin, ModelViewSet):
 
     @types.mapping.post
     def add_type(self, request):
-        self.create_related_object_view()
+        return self.create_related_object_view()
