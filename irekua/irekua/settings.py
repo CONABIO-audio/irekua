@@ -12,13 +12,16 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
-from .db_config import (
-    DB_NAME,
-    DB_USER,
-    DB_PASSWORD,
-    DB_HOST,
-    DB_PORT,
-)
+from .server_config import DB_NAME
+from .server_config import DB_USER
+from .server_config import DB_PASSWORD
+from .server_config import DB_HOST
+from .server_config import DB_PORT
+
+from .server_config import MEDIA_URL
+from .server_config import MEDIA_ROOT
+from .server_config import STATIC_URL
+from .server_config import STATIC_ROOT
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -139,14 +142,17 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
+if STATIC_ROOT is None:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+if STATIC_URL is None:
+    STATIC_URL = '/static/'
 
+if MEDIA_URL is None:
+    MEDIA_URL = '/media/'
 
-# Media files
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+if MEDIA_ROOT is None:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
 # Locale files
