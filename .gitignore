@@ -85,6 +85,7 @@ target/
 __pycache__/
 **/db_config.py
 **/server_config.py
+**/static_config.py
 **/media/
 irekua/static/
 

@@ -12,17 +12,6 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
-from .server_config import DB_NAME
-from .server_config import DB_USER
-from .server_config import DB_PASSWORD
-from .server_config import DB_HOST
-from .server_config import DB_PORT
-
-from .server_config import MEDIA_URL
-from .server_config import MEDIA_ROOT
-from .server_config import STATIC_URL
-from .server_config import STATIC_ROOT
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -94,15 +83,20 @@ WSGI_APPLICATION = 'irekua.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+try:
+    from .db_config import db_config
+except ImportError:
+    db_config = {}
+
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST': DB_HOST,
-        'PORT': DB_PORT,
+        'NAME': os.environ.get('DB_NAME', db_config.get('DB_NAME', 'irekua')),
+        'USER': os.environ.get('DB_USER', db_config.get('DB_USER', 'irekua')),
+        'PASSWORD': os.environ.get('DB_PASSWORD', db_config.get('DB_PASSWORD', 'password')),
+        'HOST': os.environ.get('DB_HOST', db_config.get('DB_HOST', 'localhost')),
+        'PORT': os.environ.get('DB_PORT', db_config.get('DB_PORT', '5432')),
     }
 }
 
@@ -142,18 +136,24 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-if STATIC_ROOT is None:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+try:
+    from .static_config import static_config
+except ImportError:
+    static_config = {}
 
-if STATIC_URL is None:
-    STATIC_URL = '/static/'
+STATIC_URL = os.environ.get(
+    'STATIC_URL',
+    static_config.get('STATIC_URL', '/static/'))
+STATIC_ROOT = os.environ.get(
+    'STATIC_ROOT',
+    static_config.get('STATIC_ROOT', os.path.join(BASE_DIR, 'static/')))
 
-if MEDIA_URL is None:
-    MEDIA_URL = '/media/'
-
-if MEDIA_ROOT is None:
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
+MEDIA_URL = os.environ.get(
+    'MEDIA_URL',
+    static_config.get('MEDIA_URL', '/media/'))
+MEDIA_ROOT = os.environ.get(
+    'MEDIA_ROOT',
+    static_config.get('MEDIA_ROOT', os.path.join(BASE_DIR, 'media/')))
 
 # Locale files
 LOCALE_PATHS = (
