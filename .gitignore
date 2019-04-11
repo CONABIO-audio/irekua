@@ -85,6 +85,7 @@ target/
 __pycache__/
 **/db_config.py
 **/media/
+irekua/static/
 
 .env
 db.sqlite3
