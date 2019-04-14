@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.admindocs',
     'django_filters',
     'rest_framework',
+    'rest_framework.authtoken',
     'rest',
     'database',
     'rest_framework_swagger',
@@ -160,6 +161,11 @@ LOCALE_PATHS = (
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
     'DEFAULT_FILTER_BACKENDS': [
         'rest_framework.filters.SearchFilter',
         'django_filters.rest_framework.DjangoFilterBackend',
