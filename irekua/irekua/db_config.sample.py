@@ -1,5 +1,7 @@
-DB_NAME = 'irekua'
-DB_USER = 'dbuser'
-DB_HOST = 'dbhost'
-DB_PASSWORD = 'dbpassword'
-DB_PORT = 5432
+db_config = {
+    'DB_NAME': 'irekua',
+    'DB_USER': 'dbuser',
+    'DB_HOST': 'dbhost',
+    'DB_PASSWORD': 'dbpassword',
+    'DB_PORT': 5432,
+}
