@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest',
     'database',
     'rest_framework_swagger',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -137,24 +138,22 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-try:
-    from .static_config import static_config
-except ImportError:
-    static_config = {}
+from .s3_config import AWS_ACCESS_KEY_ID
+from .s3_config import AWS_SECRET_ACCESS_KEY
+from .s3_config import AWS_STORAGE_BUCKET_NAME
 
-STATIC_URL = os.environ.get(
-    'STATIC_URL',
-    static_config.get('STATIC_URL', '/static/'))
-STATIC_ROOT = os.environ.get(
-    'STATIC_ROOT',
-    static_config.get('STATIC_ROOT', os.path.join(BASE_DIR, 'static/')))
 
-MEDIA_URL = os.environ.get(
-    'MEDIA_URL',
-    static_config.get('MEDIA_URL', '/media/'))
-MEDIA_ROOT = os.environ.get(
-    'MEDIA_ROOT',
-    static_config.get('MEDIA_ROOT', os.path.join(BASE_DIR, 'media/')))
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, 'media')
+DEFAULT_FILE_STORAGE = 'irekua.storage.MediaStorage'
 
 # Locale files
 LOCALE_PATHS = (
