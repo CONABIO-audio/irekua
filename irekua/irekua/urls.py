@@ -18,6 +18,9 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 from rest_framework.documentation import include_docs_urls
+from django.views.generic.base import TemplateView
+from django.urls import path, include, re_path
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -25,4 +28,6 @@ urlpatterns = [
     url(r'^api/v1/', include(('rest.urls', 'rest-api'), namespace='v1')),
     url(r'^api/v1/docs/', include_docs_urls(title='Irekua REST API documentation')),
     url(r'^api/auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('', TemplateView.as_view(template_name='home.html'), name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
