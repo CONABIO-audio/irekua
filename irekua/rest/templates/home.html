@@ -1,14 +1,132 @@
 <!-- templates/home.html-->
 {% extends 'base.html' %}
+{% load static %}<!DOCTYPE html>
 
-{% block title %}Home{% endblock %}
+{% block title %}:: SELIA - Home::{% endblock %}
 
 {% block content %}
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p><a href="{% url 'logout' %}">logout</a></p>
+  <br />
+  <img src="{% static 'irekua/img/selia2.png' %}"  width="9%" />
+  <br /><br />
+  <b>{{ user.username }}</b> bienvenido a :: SELIA ::
 {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">login</a>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">:: SELIA ::</a>
+      <img src="https://monitoreo.conabio.gob.mx/images/Conanp.PNG" style="max-width: 40px">
+      &nbsp; &nbsp; &nbsp;
+      <img src="https://monitoreo.conabio.gob.mx/images/1099-original.png" style="width: 6%">
+      &nbsp; &nbsp; &nbsp;
+      <img src="https://monitoreo.conabio.gob.mx/images/logo-pnud.png" style="max-width: 30px">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'login' %}">Entrar
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <!-- Heading Row -->
+    <div class="row align-items-center my-5">
+      <div class="col-lg-7">
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="https://coati.conabio.gob.mx/archivos/fotos_porintegrar/702b591a3ae523c0b4a99ac85e5e0a0d.JPG" alt="SNMB" width="60%">
+      </div>
+      <!-- /.col-lg-8 -->
+      <div class="col-lg-5">
+        <h1 class="font-weight-light">Selia: Admitir - Recibir</h1>
+        <p>
+	Selia es una herramienta para la captura y administración de fotografías de cámara trampa.
+</p>
+        <a class="btn btn-primary" href="{% url 'login' %}">Entrar</a>
+      </div>
+      <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+
+    
+
+    <!-- Content Row -->
+    <div class="row">
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">¿Qué es?</h2>
+            <p class="card-text">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+            </p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-primary btn-sm">Más Info</a>
+          </div>
+        </div>
+      </div>
+      <!-- /.col-md-4 -->
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">¿Cómo se usa?</h2>
+            <p class="card-text">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+            </p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-primary btn-sm">Más Info</a>
+          </div>
+        </div>
+      </div>
+      <!-- /.col-md-4 -->
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">Sección Prorest</h2>
+            <p class="card-text">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+		    </p>
+          </div>
+          <div class="card-footer">
+            <a href="{% url 'login' %}" class="btn btn-primary btn-sm">Entrar</a>
+          </div>
+        </div>
+      </div>
+      <!-- /.col-md-4 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+<p class="m-0 text-center text-white">
+Copyright &copy; CONABIO 2019
+</p>
+      <p class="m-0 text-center text-white">Liga Periférico - Insurgentes Sur 4903,
+Parques del Pedregal, Alcaldía de Tlalpan, Ciudad de México. C.P. 14010
+Teléfono: 5004.5000</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
 {% endif %}
 {% endblock %}
