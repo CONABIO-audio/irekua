@@ -1,0 +1,26 @@
+{% extends 'irekua/base' %}
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html>
+
+{% block title %} SELIA {% endblock %}
+
+{% block header %}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">SELIA</a>
+
+      {% block navigation %}
+      {% endblock navigation %}
+    </div>
+  </nav>
+{% endblock header %}
+
+{% block footer_logos_extra %}
+&nbsp; &nbsp; &nbsp;
+<img src="https://monitoreo.conabio.gob.mx/images/Conanp.PNG" style="max-height: 70px">
+&nbsp; &nbsp; &nbsp;
+<img src="https://monitoreo.conabio.gob.mx/images/logo-pnud.png" style="max-height: 70px">
+&nbsp; &nbsp; &nbsp;
+{% endblock footer_logos_extra %}

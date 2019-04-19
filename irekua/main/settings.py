@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Load private configurations
 PRIVATE_CONFIGS = configparser.ConfigParser()
 PRIVATE_CONFIGS.read(
-    os.path.join(BASE_DIR, 'irekua', 'config', 'db.ini'),
+    os.path.join(BASE_DIR, 'main', 'config', 'db.ini'),
 )
 
 
@@ -35,12 +35,11 @@ SECRET_KEY = '_!(-2l6l2(d#pjv^efr^@#x+8rz9q36wmm7#uucup42bvv=9%s'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
 
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Application definition
-
 AUTH_USER_MODEL = 'database.User'
 
 INSTALLED_APPS = [
@@ -55,12 +54,16 @@ INSTALLED_APPS = [
     'django.contrib.admindocs',
     'django_filters',
     'rest_framework',
-    'rest',
-    'database',
     'rest_framework_swagger',
     'widget_tweaks',
     'bootstrap4',
     'crispy_forms',
+
+    'rest',
+    'selia',
+    'database',
+    'registration',
+    'irekua',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -77,12 +80,12 @@ MIDDLEWARE = [
     'django.contrib.admindocs.middleware.XViewMiddleware',
 ]
 
-ROOT_URLCONF = 'irekua.urls'
+ROOT_URLCONF = 'main.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join('rest', 'templates')],
+        # 'DIRS': [os.path.join('rest', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -95,7 +98,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'irekua.wsgi.application'
+WSGI_APPLICATION = 'main.wsgi.application'
 
 
 # Database
@@ -165,7 +168,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Locale files
 LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'irekua', 'locale'),
+    os.path.join(BASE_DIR, 'main', 'locale'),
 )
 
 

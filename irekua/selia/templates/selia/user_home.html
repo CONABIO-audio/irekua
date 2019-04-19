@@ -1,0 +1,100 @@
+{% extends 'selia/base.html' %}
+{% load static from staticfiles %}
+
+
+{% block navigation %}
+<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+<div id="navbarNavDropdown" class="navbar-collapse collapse">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-fw fa-table"></i>
+        Colecciones
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+        <a class="dropdown-item" href="/selia/a_1">Submenu a1</a>
+        <a class="dropdown-item" href="/selia/a_1">Submenu a2</a>
+      </div>
+    </li>
+  </ul>
+
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-fw fa-chart-area"></i>
+        Entregas
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <a class="dropdown-item" href="/selia/b_1">Submenu b1</a>
+        <a class="dropdown-item" href="/selia/b_2">Submenu b2</a>
+      </div>
+    </li>
+  </ul>
+
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        Tablero
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <a class="dropdown-item" href="/selia/c_1">Submenu c1</a>
+        <a class="dropdown-item" href="/selia/c_2">Submenu c2</a>
+      </div>
+    </li>
+  </ul>
+
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle fa-fw"></i>
+        {{ user.first_name }} {{ user.last_name }}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <a class="dropdown-item" href="#">Configuración</a>
+        <a class="dropdown-item" href="#">Bitácora de actividades</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Salir</a>
+      </div>
+    </li>
+  </ul>
+
+</div>
+{% endblock navigation %}
+
+
+{% block modals %}
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">¿Quieres Salir?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">Selecciona "Salir" si estas listo para cerrar tu sesión.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+        <a class="btn btn-selia" href="{% url 'registration:logout' %}">Salir</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock modals %}
+
+
+{% block custom_scripts %}
+<!-- Page level plugin JavaScript-->
+<script src="{% static 'irekua/vendor/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'irekua/vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+<script src="{% static 'irekua/js/sb-admin.min.js' %}"></script>
+<script src="{% static 'irekua/vendor/chart.js/Chart.min.js' %}"></script>
+
+<!-- Custom selia scripts for all pages-->
+<script src="{% static 'irekua/js/lodash/lodash@4(lodash.min.js+lodash.fp.min.js)' %}"></script>
+<script src="{% static 'irekua/js/modal.js' %}"></script>
+{% endblock custom_scripts %}
