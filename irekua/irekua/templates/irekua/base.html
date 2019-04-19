@@ -39,10 +39,36 @@
   {% block header %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div class="container">
+        {% block nav-brand %}
         <a class="navbar-brand" href="#">Irekua</a>
+        {% endblock nav-brand %}
 
         {% block navigation %}
         {% endblock navigation %}
+
+        {% block user_navigation %}
+          <ul class="navbar-nav mr-auto">
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle fa-fw"></i>
+                {{ user.first_name }} {{ user.last_name }}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">Configuración</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Salir</a>
+              </div>
+            </li>
+            {% else %}
+            <li class="nav-item mr-auto">
+              <a class="nav-link" href={% url 'registration:login' %} id="navbarLogin">
+                <i class="fas fa-user-circle fa-fw"></i>
+                Ingresar
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        {% endblock user_navigation %}
       </div>
     </nav>
   {% endblock header %}
@@ -64,30 +90,47 @@
 
   <!-- Modals -->
   {% block modals %}
+  {% if user.is_authenticated %}
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¿Quieres Salir?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-selia" href="{% url 'registration:logout' %}">Salir</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% block modals_extra %}
+  {% endblock modals_extra %}
+
   {% endblock modals %}
 
   <!-- Footer -->
   <footer>
-    <div class="container-fluid bg-secondary h-100">
+    <div class="container-fluid bg-light h-100">
       {% block footer %}
         <div class="row p-1">
           <div class="col-sm">
           </div>
           <div class="col-sm align-middle">
             <img src="https://monitoreo.conabio.gob.mx/images/1099-original.png" style="max-height: 70px">
-
             {% block footer_logos_extra %}
-            &nbsp; &nbsp; &nbsp;
-            <img src="https://monitoreo.conabio.gob.mx/images/Conanp.PNG" style="max-height: 70px">
-            &nbsp; &nbsp; &nbsp;
-            <img src="https://monitoreo.conabio.gob.mx/images/logo-pnud.png" style="max-height: 70px">
-            &nbsp; &nbsp; &nbsp;
             {% endblock footer_logos_extra %}
           </div>
-          <div class="col-sm text-light text-center align-middle">
+          <div class="col-sm text-dark text-center align-middle">
             Copyright &copy; CONABIO 2019
           </div>
-          <div class="col-sm text-light text-center align-middle">
+          <div class="col-sm text-dark text-center align-middle">
             {% block footer_extras %}
             {% endblock footer_extras %}
           </div>
