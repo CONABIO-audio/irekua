@@ -84,10 +84,10 @@ target/
 *.pyc
 __pycache__/
 
-irekua/irekua/config/*.ini
-!irekua/irekua/config/db.default.ini
+irekua/main/config/*.ini
+!irekua/main/config/db.default.ini
 
-**/media/
+irekua/media/
 irekua/static/
 
 .env
