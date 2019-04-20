@@ -2,12 +2,11 @@ from django.shortcuts import render
 
 
 def home(request):
-    template = 'selia/home.html'
+    return render(request, 'selia/home.html')
 
-    if request.user.is_authenticated:
-        template = 'selia/user_home.html'
 
-    return render(request, template)
+def user_home(request):
+    return render(request, 'selia/user_home.html')
 
 
 def about(request):

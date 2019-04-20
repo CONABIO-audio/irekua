@@ -2,14 +2,64 @@
 {% load static from staticfiles %}
 
 
-{% block custom_scripts %}
-<!-- Page level plugin JavaScript-->
-<script src="{% static 'irekua/vendor/datatables/jquery.dataTables.js' %}"></script>
-<script src="{% static 'irekua/vendor/datatables/dataTables.bootstrap4.js' %}"></script>
-<script src="{% static 'irekua/js/sb-admin.min.js' %}"></script>
-<script src="{% static 'irekua/vendor/chart.js/Chart.min.js' %}"></script>
+{% block navigation-items %}
+<li class="nav-item">
+  <a class="nav-link" href={% url 'irekua:home' %}>Irekua</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href={% url 'selia:home' %}>Selia</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href={% url 'selia:about' %}>Acerca</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link active" href={% url 'selia:user_home' %}>Mi Hogar</a>
+</li>
+{% endblock navigation-items %}
 
-<!-- Custom selia scripts for all pages-->
-<script src="{% static 'irekua/js/lodash/lodash@4(lodash.min.js+lodash.fp.min.js)' %}"></script>
-<script src="{% static 'irekua/js/modal.js' %}"></script>
-{% endblock custom_scripts %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2 d-none d-md-block bg-light sidebar">
+      {% block sidebar %}
+      <nav class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              Mi Información
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Colecciones
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Sitios
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Dispositivos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="bar-chart-2"></span>
+              Items
+            </a>
+          </li>
+        </ul>
+      </nav>
+      {% endblock sidebar %}
+    </div>
+    <div class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      {% block main-content %}
+      {% endblock main-content %}
+    </div>
+  </div>
+
+</div>
+{% endblock content %}

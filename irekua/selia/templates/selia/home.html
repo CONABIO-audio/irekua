@@ -1,6 +1,23 @@
 {% extends 'selia/base.html' %}
 
-{% block main_content %}
+{% block navigation-items %}
+<li class="nav-item">
+  <a class="nav-link" href={% url 'irekua:home' %}>Irekua</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link active" href={% url 'selia:home' %}>Selia</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href={% url 'selia:about' %}>Acerca</a>
+</li>
+{% if user.is_authenticated %}
+<li class="nav-item">
+  <a class="nav-link" href={% url 'selia:user_home' %}>Mi Hogar</a>
+</li>
+{% endif %}
+{% endblock navigation-items %}
+
+{% block main-content %}
 <!-- Heading Row -->
 <div class="row align-items-center my-5">
   <div class="col-lg-7">
@@ -23,7 +40,7 @@
       <div class="card-body">
         <h2 class="card-title">¿Qué es?</h2>
         <p class="card-text">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
         </p>
       </div>
       <div class="card-footer">
@@ -31,13 +48,13 @@
       </div>
     </div>
   </div>
-  <!-- /.col-md-4 -->
+
   <div class="col-md-4 mb-5">
     <div class="card h-100">
       <div class="card-body">
         <h2 class="card-title">¿Cómo se usa?</h2>
         <p class="card-text">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
         </p>
       </div>
       <div class="card-footer">
@@ -50,8 +67,8 @@
       <div class="card-body">
         <h2 class="card-title">Sección Prorest</h2>
         <p class="card-text">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-    </p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+        </p>
       </div>
       <div class="card-footer">
         <a href="{% url 'registration:login' %}" class="btn btn-primary btn-sm">Entrar</a>
@@ -59,4 +76,4 @@
     </div>
   </div>
 </div>
-{% endblock main_content %}
+{% endblock main-content %}

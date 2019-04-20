@@ -1,36 +1,25 @@
 {% extends 'irekua/base.html' %}
 {% load static from staticfiles %}
 
-<!DOCTYPE html>
-<html>
 
 {% block title %} SELIA {% endblock %}
 
 
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'selia/css/main.css' %}">
+{% endblock stylesheet %}
+
+
 {% block nav-brand %}
-<a class="navbar-brand" href="#">SELIA</a>
+<a class="navbar-brand" href="#">Selia</a>
 {% endblock nav-brand %}
 
 
-{% block navigation %}
-<ul class="nav">
-  <li class="nav-item">
-    <a class="nav-link active" href={% url 'irekua:home' %}>Irekua</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href={% url 'selia:about' %}>Acerca</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="https://www.gob.mx/conabio">Conabio</a>
-  </li>
-</ul>
-{% endblock navigation %}
-
-
-{% block footer_logos_extra %}
-&nbsp; &nbsp; &nbsp;
-<img src="https://monitoreo.conabio.gob.mx/images/Conanp.PNG" style="max-height: 70px">
-&nbsp; &nbsp; &nbsp;
-<img src="https://monitoreo.conabio.gob.mx/images/logo-pnud.png" style="max-height: 70px">
-&nbsp; &nbsp; &nbsp;
-{% endblock footer_logos_extra %}
+{% block footer-logos-extra %}
+<div class="col h-100">
+  <img src="https://monitoreo.conabio.gob.mx/images/Conanp.PNG">
+</div>
+<div class="col h-100">
+  <img src="https://monitoreo.conabio.gob.mx/images/logo-pnud.png">
+</div>
+{% endblock footer-logos-extra %}
