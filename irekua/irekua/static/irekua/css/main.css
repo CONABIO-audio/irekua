@@ -1,10 +1,10 @@
+:root {
+  --footer-height: 100px;
+  --header-height: 60px;
+}
+
 footer {
-  bottom: 0;
-  position: absolute;
-  width: 100%;
-  height: 100px;
-  padding: 5px;
-  margin-bottom: 0;
+  height: var(--footer-height);
 }
 
 .footer-logos > div > div > img {
@@ -12,11 +12,24 @@ footer {
 }
 
 html, body {
-  padding: 0;
-  margin: 0;
+  overflow-x: hidden;
 }
 
-header {
+.navbar {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
-  z-index: 1;
+  z-index: 10;  
+}
+
+.navbar {
+  height: var(--header-height);
+}
+
+.content {
+  height: calc(100vh - var(--footer-height) - var(--header-height));
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.main-content {
+  overflow: auto;
 }

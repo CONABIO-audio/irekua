@@ -1,7 +1,7 @@
 {% load static from staticfiles %}
 
 <!DOCTYPE html>
-<html>
+<html class="h-100">
 
 <head>
   <meta charset="utf-8">
@@ -10,6 +10,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>{% block title %} IREKUA {% endblock %}</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="{% static 'irekua/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
 
   <!-- Custom styles for this template-->
   <link rel="stylesheet" href="{% static 'irekua/css/main.css' %}">
@@ -24,7 +27,7 @@
   <!-- HERE -->
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
   {% block body %}
 
   <header>
@@ -55,7 +58,7 @@
                   {{ user.first_name }} {{ user.last_name }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Configuración</a>
+                  <a class="dropdown-item" href={% url 'selia:user_home' %}>Perfil</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Salir</a>
                 </div>
@@ -76,11 +79,11 @@
   {% endblock header %}
   </header>
 
-  <main role="main" class="container-fluid content">
+  <main role="main" class="container-fluid content p-0">
     {% block content %}
 
       <!-- Page Content -->
-      <div class="container-fluid main-content">
+      <div class="container-fluid p-0">
         {% block main-content %}
         {% endblock main-content %}
       </div>
@@ -110,14 +113,14 @@
   </div>
   {% endif %}
 
-  {% block modals_extra %}
-  {% endblock modals_extra %}
+  {% block modals-extra %}
+  {% endblock modals-extra %}
 
   {% endblock modals %}
 
   <!-- Footer -->
-  <footer>
-    <div class="container-fluid bg-light h-100">
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container h-100">
       {% block footer %}
         <div class="row align-items-center p-1 h-100">
           <div class="col-2 h-100">

@@ -18,60 +18,62 @@
 {% endblock navigation-items %}
 
 {% block main-content %}
-<!-- Heading Row -->
-<div class="row align-items-center my-5">
-  <div class="col-lg-7">
-    <img class="img-fluid rounded mb-4 mb-lg-0" src="https://coati.conabio.gob.mx/archivos/fotos_porintegrar/702b591a3ae523c0b4a99ac85e5e0a0d.JPG" alt="SNMB" width="60%">
-  </div>
+<div class="container">
+  <!-- Heading Row -->
+  <div class="row align-items-center my-5">
+    <div class="col-lg-7">
+      <img class="img-fluid rounded mb-4 mb-lg-0" src="https://coati.conabio.gob.mx/archivos/fotos_porintegrar/702b591a3ae523c0b4a99ac85e5e0a0d.JPG" alt="SNMB" width="60%">
+    </div>
 
-  <div class="col-lg-5">
-    <h1 class="font-weight-light">Selia: Admitir - Recibir</h1>
-    <p>
-      Selia es una herramienta para la captura y administración de fotografías de cámara trampa.
-    </p>
-    <a class="btn btn-primary" href="{% url 'registration:login' %}">Entrar</a>
-  </div>
-</div>
-
-<!-- Content Row -->
-<div class="row">
-  <div class="col-md-4 mb-5">
-    <div class="card h-100">
-      <div class="card-body">
-        <h2 class="card-title">¿Qué es?</h2>
-        <p class="card-text">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-        </p>
-      </div>
-      <div class="card-footer">
-        <a href="#" class="btn btn-primary btn-sm">Más Info</a>
-      </div>
+    <div class="col-lg-5">
+      <h1 class="font-weight-light">Selia: Admitir - Recibir</h1>
+      <p>
+        Selia es una herramienta para la captura y administración de fotografías de cámara trampa.
+      </p>
+      <a class="btn btn-primary" href="{% url 'registration:login' %}">Entrar</a>
     </div>
   </div>
 
-  <div class="col-md-4 mb-5">
-    <div class="card h-100">
-      <div class="card-body">
-        <h2 class="card-title">¿Cómo se usa?</h2>
-        <p class="card-text">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-        </p>
-      </div>
-      <div class="card-footer">
-        <a href="#" class="btn btn-primary btn-sm">Más Info</a>
+  <!-- Content Row -->
+  <div class="row">
+    <div class="col-md-4 mb-5">
+      <div class="card h-100">
+        <div class="card-body">
+          <h2 class="card-title">¿Qué es?</h2>
+          <p class="card-text">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+          </p>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="btn btn-primary btn-sm">Más Info</a>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-md-4 mb-5">
-    <div class="card h-100">
-      <div class="card-body">
-        <h2 class="card-title">Sección Prorest</h2>
-        <p class="card-text">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-        </p>
+
+    <div class="col-md-4 mb-5">
+      <div class="card h-100">
+        <div class="card-body">
+          <h2 class="card-title">¿Cómo se usa?</h2>
+          <p class="card-text">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+          </p>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="btn btn-primary btn-sm">Más Info</a>
+        </div>
       </div>
-      <div class="card-footer">
-        <a href="{% url 'registration:login' %}" class="btn btn-primary btn-sm">Entrar</a>
+    </div>
+    <div class="col-md-4 mb-5">
+      <div class="card h-100">
+        <div class="card-body">
+          <h2 class="card-title">Sección Prorest</h2>
+          <p class="card-text">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+          </p>
+        </div>
+        <div class="card-footer">
+          <a href="{% url 'registration:login' %}" class="btn btn-primary btn-sm">Entrar</a>
+        </div>
       </div>
     </div>
   </div>

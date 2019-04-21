@@ -34,7 +34,7 @@ SECRET_KEY = '_!(-2l6l2(d#pjv^efr^@#x+8rz9q36wmm7#uucup42bvv=9%s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 LOGIN_REDIRECT_URL = '/selia/'
 LOGOUT_REDIRECT_URL = '/'
