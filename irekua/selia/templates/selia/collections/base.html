@@ -1,0 +1,87 @@
+{% extends 'selia/user/base.html' %}
+
+
+{% block sidebar-links %}
+<li class="nav-item text-center text-muted">
+  Usuario
+</li>
+<li class="nav-item">
+  <a class="nav-link" href={% url 'selia:user_collections' %}>
+    <i class="fas fa-archive"></i>
+    Colecciones
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href={% url 'selia:user_sites' %}>
+    <i class="fas fa-map-marked-alt"></i>
+    Sitios
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href={% url 'selia:user_devices' %}>
+    <i class="fas fa-wrench"></i>
+    Dispositivos
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href={% url 'selia:user_sampling_events' %}>
+    <i class="fas fa-calendar-week"></i>
+    Eventos de Muestreo
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href={% url 'selia:user_items' %}>
+    <i class="far fa-file"></i>
+    Items
+  </a>
+</li>
+<li class="nav-item text-center text-muted">
+  {{ collection_name }}
+</li>
+{% block extra-sidebar-links %}
+<li class="nav-item">
+  <a class="nav-link" href={% url 'selia:collection_home' collection_name %}>
+    <i class="fas fa-info"></i>
+    Info
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href={% url 'selia:collection_devices' collection_name %}>
+    <i class="fas fa-wrench"></i>
+    Dispositivos
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href={% url 'selia:collection_sampling_events' collection_name %}>
+    <i class="fas fa-calendar-week"></i>
+    Eventos de Muestreo
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href={% url 'selia:collection_items' collection_name %}>
+    <i class="far fa-file"></i>
+    Items
+  </a>
+</li>
+{% endblock extra-sidebar-links %}
+{% endblock sidebar-links %}
+
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb" class="container-fluid mt-2">
+  <ol class="breadcrumb w-100">
+    <li class="breadcrumb-item active" aria-current="page">
+      <a href={% url 'selia:user_home' %} class="btn btn-link">
+        Mi Hogar
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      <a href={% url 'selia:collection_home' collection_name %} class="btn btn-link">
+        {{ collection_name }}
+      </a>
+    </li>
+    {% block extra-breadcrumb %}
+    {% endblock extra-breadcrumb %}
+  </ol>
+</nav>
+{% endblock breadcrumb %}

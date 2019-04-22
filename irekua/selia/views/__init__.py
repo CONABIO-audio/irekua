@@ -18,5 +18,5 @@ from .data_collections.items import collection_items
 from .data_collections.sampling_events import collection_sampling_events
 from .data_collections.sites import collection_sites
 
-from .sampling_event_devices.item_detail import item
-from .sampling_event_devices.home import sampling_event_device
+from .sampling_devices.item_detail import item
+from .sampling_devices.home import sampling_event_device

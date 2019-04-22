@@ -23,8 +23,8 @@
   <div class="row h-100">
     <div class="col-md-2 bg-light sidebar pl-4 pr-3 pt-4 h-100 l-0">
       {% block sidebar %}
-      <nav class="sidebar-sticky">
-        <ul class="nav flex-column">
+      <nav class="sidebar-sticky sidebar-container">
+        <ul class="nav d-flex flex-column justify-content-center">
           <li class="nav-item">
             {% block sidebar-user-info %}
             <div class="card">
@@ -41,11 +41,9 @@
             {% endblock sidebar-user-info %}
           </li>
 
-          <hr />
-
-          {% block sidebar-links %}
-          <li class="nav-item">
-            <ul class="nav flex-column">
+          <li class="nav-item align-self-stretch">
+            <ul class="nav flex-column sidebar-links">
+              {% block sidebar-links %}
               <li class="nav-item text-center text-muted">
                   Usuario
               </li>
@@ -79,9 +77,9 @@
                   Items
                 </a>
               </li>
+              {% endblock sidebar-links %}
             </ul>
           </li>
-          {% endblock sidebar-links %}
 
         </ul>
       </nav>

@@ -1,3 +1,11 @@
 .navbar {
   background-color: var(--info)!important;
 }
+
+.sidebar-links {
+  overflow-y: visible;
+}
+
+.sidebar-container {
+  height: 100%;
+}
