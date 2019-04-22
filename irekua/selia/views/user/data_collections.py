@@ -6,6 +6,10 @@ from selia.utils import ModelTable
 
 
 class CollectionTable(ModelTable):
+    with_link = True
+    detail_view = 'selia:collection_home'
+    url_args = ['name']
+
     class Meta:
         model = Collection
         fields = ['name', 'created_on', 'logo']
