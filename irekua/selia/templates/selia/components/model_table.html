@@ -1,0 +1,26 @@
+<div class="container">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        {% for row in header  %}
+          <th scope="col"> {{row}} </th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for object in data %}
+      <tr>
+        {% for key, value in object.items %}
+        <td>
+          {% if key == "logo" or key == "icon" %}
+          <img src={{value}} alt={{key}} height="50">
+          {% else %}
+          {{ value }}
+          {% endif %}
+        </td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

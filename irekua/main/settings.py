@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'django.contrib.admindocs',
     'django_filters',
     'rest_framework',
-    'rest_framework_swagger',
     'widget_tweaks',
     'bootstrap4',
     'crispy_forms',
@@ -85,7 +84,6 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 'DIRS': [os.path.join('rest', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
