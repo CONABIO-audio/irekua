@@ -1,16 +1,27 @@
-{% extends 'selia/components/toolbar.html' %}
+{% extends 'selia/components/secondary_navbar.html' %}
 
-{% block toolbar-brand %}
+{% block navbar-brand %}
 <a class="navbar-brand" href={% url 'selia:user_home' %}>Usuario</a>
-{% endblock toolbar-brand %}
+{% endblock navbar-brand %}
 
-{% block toolbar-items %}
+{% block navbar-items %}
 
+{% url 'selia:user_home' as home_url %}
 {% url 'selia:user_sites' as sites_url %}
 {% url 'selia:user_devices' as devices_url %}
 {% url 'selia:user_sampling_events' as events_url %}
 {% url 'selia:user_items' as items_url %}
 
+<li class="nav-item">
+  {% if home_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ home_url }}>
+  {% else %}
+  <a class="nav-link" href={{ home_url }}>
+  {% endif %}
+    <i class="fas fa-home"></i>
+    Resumen
+  </a>
+</li>
 <li class="nav-item">
   {% if sites_url == request.path|urlencode %}
   <a class="nav-link active" href={{ sites_url }}>
@@ -51,4 +62,4 @@
     Mis Items
   </a>
 </li>
-{% endblock toolbar-items %}
+{% endblock navbar-items %}

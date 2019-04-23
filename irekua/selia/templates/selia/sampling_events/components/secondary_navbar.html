@@ -1,6 +1,6 @@
-{% extends 'selia/components/toolbar.html' %}
+{% extends 'selia/components/secondary_navbar.html' %}
 
-{% block toolbar-brand %}
+{% block navbar-brand %}
 <ul class="breadcrumb bg-transparent m-0 p-0">
   <li class="breadcrumb-item">
     <a class="navbar-brand" href={% url 'selia:collection_home' collection_name %}>{{ collection_name }}</a>
@@ -9,10 +9,10 @@
     <a class="navbar-brand" href={% url 'selia:sampling_event_home' collection_name sampling_event_id %}>Evento de Muestreo {{ sampling_event_id }}</a>
   </li>
 </ul>
-{% endblock toolbar-brand %}
+{% endblock navbar-brand %}
 
 
-{% block toolbar-items %}
+{% block navbar-items %}
 
 {% url 'selia:sampling_event_home' collection_name sampling_event_id as home_url %}
 {% url 'selia:sampling_event_devices' collection_name sampling_event_id as devices_url %}
@@ -50,4 +50,4 @@
     </a>
   </li>
 </ul>
-{% endblock toolbar-items %}
+{% endblock navbar-items %}

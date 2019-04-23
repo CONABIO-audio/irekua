@@ -1,10 +1,10 @@
-{% extends 'selia/components/toolbar.html' %}
+{% extends 'selia/components/secondary_navbar.html' %}
 
-{% block toolbar-brand %}
+{% block navbar-brand %}
 <a class="navbar-brand" href={% url 'selia:collection_home' collection_name %}>{{ collection_name }}</a>
-{% endblock toolbar-brand %}
+{% endblock navbar-brand %}
 
-{% block toolbar-items %}
+{% block navbar-items %}
 
 {% url 'selia:collection_home' collection_name as home_url %}
 {% url 'selia:collection_sites' collection_name as sites_url %}
@@ -62,4 +62,4 @@
     Eventos de Muestreo
   </a>
 </li>
-{% endblock toolbar-items %}
+{% endblock navbar-items %}
