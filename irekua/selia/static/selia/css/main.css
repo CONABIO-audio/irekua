@@ -16,10 +16,6 @@
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.19);
 }
 
-.nav-tabs {
-  margin-bottom: -2.7px;
-}
-
 .collapsed {
   /* hide it for small displays*/
   display: none;

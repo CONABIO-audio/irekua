@@ -1,6 +1,9 @@
 {% extends 'selia/components/secondary_navbar.html' %}
 
 {% block navbar-brand %}
+{% if collection_image %}
+<img src={{ collection_image }} alt="Collection Logo" style="max-height: 60px;">
+{% endif %}
 <a class="navbar-brand" href={% url 'selia:collection_home' collection_name %}>{{ collection_name }}</a>
 {% endblock navbar-brand %}
 

@@ -222,7 +222,7 @@ class Item(models.Model):
 
         try:
             collection.validate_and_get_sampling_event_type(
-                self.sampling_event.sampling_event_type)  # pylint: disable=E1101
+                self.sampling_event_device.sampling_event.sampling_event_type)  # pylint: disable=E1101
         except ValidationError as error:
             raise ValidationError({'sampling': error})
 
@@ -276,7 +276,7 @@ class Item(models.Model):
                 'Licence was not provided to item nor to sampling event')
             raise ValidationError({'licence': msg})
 
-        self.licence = self.sampling_event.licence  # pylint: disable=E1101
+        self.licence = self.sampling_event_device.licence  # pylint: disable=E1101
 
         collection = self.sampling_event_device.sampling_event.collection  # pylint: disable=E1101
         collection.validate_and_get_licence(self.licence)
@@ -294,7 +294,7 @@ class Item(models.Model):
         hash_string = hash_file(self.item_file)
         item_size = self.item_file.size  # pylint: disable=E1101
 
-        if self.hash is None:
+        if self.hash is '':
             self.hash = hash_string
             self.item_size = item_size
 

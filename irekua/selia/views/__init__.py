@@ -24,3 +24,5 @@ from .sampling_devices.item_detail import item
 from .sampling_devices.home import sampling_event_device
 
 from .update_session import update_session
+
+from .test import file_upload

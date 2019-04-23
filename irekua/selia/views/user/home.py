@@ -60,8 +60,6 @@ def get_summary_context(user):
 
 @login_required(login_url='registration:login')
 def user_home(request):
-    print(request.session["expanded"])
-
     if request.method == "POST":
         form = UserForm(request.POST, instance=request.user)
         if form.is_valid():
