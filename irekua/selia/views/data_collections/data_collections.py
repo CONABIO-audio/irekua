@@ -22,4 +22,4 @@ def user_collections(request):
 
     table = CollectionTable(collections, many=True)
     context = {'table': table}
-    return render(request, 'selia/user/collections.html', context)
+    return render(request, 'selia/collections/collections.html', context)

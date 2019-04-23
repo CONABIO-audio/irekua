@@ -20,4 +20,4 @@ def collection_devices(request, collection_name):
     table = DevicesTable(queryset, many=True)
 
     context = {'collection_name': collection_name, 'table': table}
-    return render(request, 'selia/collections/devices.html', context)
+    return render(request, 'selia/collections/detail/devices.html', context)

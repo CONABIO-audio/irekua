@@ -24,4 +24,4 @@ def collection_sampling_events(request, collection_name):
     table = SamplingEventTable(queryset, many=True, pre_args=[collection_name])
 
     context = {'collection_name': collection_name, 'table': table}
-    return render(request, 'selia/collections/sampling_events.html', context)
+    return render(request, 'selia/collections/detail/sampling_events.html', context)

@@ -1,0 +1,43 @@
+{% url 'irekua:home' as irekua_home %}
+{% url 'selia:home' as selia_home %}
+{% url 'selia:about' as selia_about %}
+{% url 'selia:user_home' as user_home %}
+{% url 'selia:collections' as collections %}
+
+<li class="nav-item">
+  {% if irekua_home == request.path %}
+  <a class="nav-link active" href={{ irekua_home|urlencode }}>Irekua</a>
+  {% else %}
+  <a class="nav-link" href={{ irekua_home|urlencode }}>Irekua</a>
+  {% endif %}
+</li>
+<li class="nav-item">
+  {% if selia_home == request.path %}
+  <a class="nav-link active" href={{ selia_home|urlencode }}>Selia</a>
+  {% else %}
+  <a class="nav-link" href={{ selia_home|urlencode }}>Selia</a>
+  {% endif %}
+</li>
+<li class="nav-item">
+  {% if selia_about == request.path %}
+  <a class="nav-link active" href={{ selia_about|urlencode }}>Acerca</a>
+  {% else %}
+  <a class="nav-link" href={{ selia_about|urlencode }}>Acerca</a>
+  {% endif %}
+</li>
+{% if user.is_authenticated %}
+<li class="nav-item">
+  {% if user_home in request.path %}
+  <a class="nav-link active" href={{ user_home|urlencode }}>Mi Hogar</a>
+  {% else %}
+  <a class="nav-link" href={{ user_home|urlencode }}>Mi Hogar</a>
+  {% endif %}
+</li>
+<li class="nav-item">
+  {% if collections in request.path %}
+  <a class="nav-link active" href={{ collections|urlencode }}>Colecciones</a>
+  {% else %}
+  <a class="nav-link" href={{ collections|urlencode }}>Colecciones</a>
+  {% endif %}
+</li>
+{% endif %}

@@ -2,32 +2,24 @@
 {% load static from staticfiles %}
 
 
-{% block navigation-items %}
-<li class="nav-item">
-  <a class="nav-link" href={% url 'irekua:home' %}>Irekua</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href={% url 'selia:home' %}>Selia</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href={% url 'selia:about' %}>Acerca</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link active" href={% url 'selia:user_home' %}>Mi Hogar</a>
-</li>
-{% endblock navigation-items %}
-
-
 {% block content %}
 <div class="container-fluid p-0 h-100">
   <div class="row h-100" id="row-main">
-      <div class="col-md-2 container-fluid bg-light sidebar pl-4 pr-3 pt-4 h-100 l-0" id="sidebar">
-        {% block sidebar %}
-        {% include 'selia/user/components/sidebar.html' %}
-        {% endblock sidebar %}
+    {% if request.session.expanded == 'true' %}
+    <div class="col-md-2 container-fluid bg-light sidebar pl-4 pr-3 pt-4 h-100 l-0" id="sidebar">
+    {% else %}
+    <div class="col-md-2 container-fluid bg-light sidebar pl-4 pr-3 pt-4 h-100 l-0 collapsed" id="sidebar">
+    {% endif %}
+      {% block sidebar %}
+      {% include 'selia/user/components/sidebar.html' %}
+      {% endblock sidebar %}
     </div>
 
+    {% if request.session.expanded == 'true' %}
     <div class="col-md-10 container-fluid main-content h-100 p-0" id="content">
+    {% else %}
+    <div class="col-md-12 container-fluid main-content h-100 p-0" id="content">
+    {% endif %}
       <nav class="navbar navbar-expand navbar-light bg-light tool-bar p-0 box-shadow">
         {% block toolbar %}
         {% include 'selia/user/components/toolbar.html' %}

@@ -4,6 +4,10 @@
 
 {% block title %} SELIA {% endblock %}
 
+{% block navigation-items %}
+{% include 'selia/components/navbar_items.html' %}
+{% endblock navigation-items %}
+
 
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'selia/css/main.css' %}">

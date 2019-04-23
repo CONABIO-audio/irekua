@@ -1,42 +1,12 @@
-<li class="nav-item text-center text-muted">
-    Usuario
-</li>
-
 <li class="nav-item">
-  <a class="nav-link" href={% url 'selia:user_sites' %}>
-    <i class="fas fa-map-marked-alt"></i>
-    Mis Sitios
+  <a class="nav-link" href={% url 'selia:user_home' %}>
+    <i class="fas fa-home"></i>
+    Mi Hogar
   </a>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href={% url 'selia:user_devices' %}>
-    <i class="fas fa-wrench"></i>
-    Mis Dispositivos
-  </a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href={% url 'selia:user_sampling_events' %}>
-    <i class="fas fa-calendar-week"></i>
-    Mis Eventos de Muestreo
-  </a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href={% url 'selia:user_items' %}>
-    <i class="far fa-file"></i>
-    Mis Items
-  </a>
-</li>
-
-<li class="nav-item text-center text-muted">
-    Colecciones
-</li>
-
 <li class="nav-item">
   <a class="nav-link" href={% url 'selia:collections' %}>
     <i class="fas fa-archive"></i>
     Colecciones
   </a>
-
-  {% block collection-sidebar-links %}
-  {% endblock collection-sidebar-links %}
 </li>

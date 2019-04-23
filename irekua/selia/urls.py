@@ -12,6 +12,9 @@ urlpatterns = [
     path('user/sampling_events/', views.user_sampling_events, name='user_sampling_events'),
 
     path('collections/', views.user_collections, name='collections'),
+    path('collections/open/', views.open_collections, name='open_collections'),
+    path('collections/create/', views.create_collection, name='create_collection'),
+
     path(
         'collections/<str:collection_name>/',
         views.collection_home,
@@ -56,4 +59,6 @@ urlpatterns = [
         name='item'),
 
     path('about/', views.about, name='about'),
+
+    path('update_session/', views.update_session, name='update_session')
 ]

@@ -1,0 +1,65 @@
+{% extends 'selia/components/toolbar.html' %}
+
+{% block toolbar-brand %}
+<a class="navbar-brand" href={% url 'selia:collection_home' collection_name %}>{{ collection_name }}</a>
+{% endblock toolbar-brand %}
+
+{% block toolbar-items %}
+
+{% url 'selia:collection_home' collection_name as home_url %}
+{% url 'selia:collection_sites' collection_name as sites_url %}
+{% url 'selia:collection_devices' collection_name as devices_url %}
+{% url 'selia:collection_items' collection_name as items_url %}
+{% url 'selia:collection_sampling_events' collection_name as events_url %}
+
+<li class="nav-item">
+  {% if home_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ home_url }}>
+  {% else %}
+  <a class="nav-link" href={{ home_url }}>
+  {% endif %}
+    <i class="fas fa-info"></i>
+    Info
+  </a>
+</li>
+<li class="nav-item">
+  {% if sites_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ sites_url }}>
+  {% else %}
+  <a class="nav-link" href={{ sites_url }}>
+  {% endif %}
+    <i class="fas fa-map-marked-alt"></i>
+    Sitios
+  </a>
+</li>
+<li class="nav-item">
+  {% if devices_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ devices_url }}>
+  {% else %}
+  <a class="nav-link" href={{ devices_url }}>
+  {% endif %}
+    <i class="fas fa-wrench"></i>
+    Dispositivos
+  </a>
+</li>
+<li class="nav-item">
+  {% if items_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ items_url }}>
+  {% else %}
+  <a class="nav-link" href={{ items_url }}>
+  {% endif %}
+    <i class="far fa-file"></i>
+    Items
+  </a>
+</li>
+<li class="nav-item">
+  {% if events_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ events_url }}>
+  {% else %}
+  <a class="nav-link" href={{ events_url }}>
+  {% endif %}
+    <i class="fas fa-calendar-week"></i>
+    Eventos de Muestreo
+  </a>
+</li>
+{% endblock toolbar-items %}

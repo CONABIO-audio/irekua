@@ -21,19 +21,21 @@ function setCookie(cname, cvalue, exdays) {
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
-$(document).ready(checkCollapse);
-
-
 function updateCookie() {
 	var expanded = getCookie("expanded");
 
 	if (expanded == "") {
 		setCookie("expanded", true, 1);
+    expanded = false;
 	} else if (expanded == 'true') {
 		setCookie("expanded", false, 1);
+    expanded = false;
 	} else {
 		setCookie("expanded", true, 1);
+    expanded = true;
 	}
+
+  $.post('/selia/update_session/', {expanded: expanded});
 
 	checkCollapse()
 
@@ -52,6 +54,12 @@ function checkCollapse() {
 	}
 
 }
+
+$(function () {
+    $.ajaxSetup({
+        headers: { "X-CSRFToken": getCookie("csrftoken") }
+    });
+});
 
 $(document).ready(function () {
 	$(".toggle-sidebar").click(updateCookie);
