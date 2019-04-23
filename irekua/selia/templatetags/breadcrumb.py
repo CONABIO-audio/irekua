@@ -32,7 +32,9 @@ MAPPING = {
 @register.inclusion_tag('selia/components/breadcrumb.html')
 def breadcrumb(request):
     path_components = request.path.split('/')[1:-1]
-    data, current = get_paths(path_components)
+    # data, current = get_paths(path_components)
+    data = []
+    current = ['Current']
     return {'data': data, 'current': current[0]}
 
 

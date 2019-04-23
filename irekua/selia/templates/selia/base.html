@@ -11,6 +11,9 @@
 
 
 {% block nav-brand %}
+<button class="toggle-sidebar btn btn-default bg-transparent">
+  <span class="navbar-toggler-icon"></span>
+</button>
 <a class="navbar-brand" href="#">Selia</a>
 {% endblock nav-brand %}
 
@@ -23,3 +26,7 @@
   <img src="https://monitoreo.conabio.gob.mx/images/logo-pnud.png">
 </div>
 {% endblock footer-logos-extra %}
+
+{% block scripts-extra %}
+<script src="{% static 'selia/js/sidebar.js' %}"></script>
+{% endblock scripts-extra %}

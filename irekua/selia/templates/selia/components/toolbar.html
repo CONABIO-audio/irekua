@@ -1,15 +1,14 @@
 {% load breadcrumb %}
 
-<div class="container-fluid">
-  <div class="row w-100">
-    <div class="col">
+<div class="container-fluid h-100">
+  <div class="row h-100 w-100 m-0 pb-1">
+    <div class="col-4 h-100 align-self-end">
+      {% block toolbar-brand %}
+      {% endblock toolbar-brand %}
+    </div>
+    <div class="col-8 h-100 align-self-end">
       {% block toolbar-items %}
       {% endblock toolbar-items %}
-    </div>
-    <div class="col float-right align-self-end">
-      {% block breadcrumb %}
-      {% breadcrumb request %}
-      {% endblock breadcrumb %}
     </div>
   </div>
 </div>

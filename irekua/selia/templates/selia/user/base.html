@@ -20,18 +20,18 @@
 
 {% block content %}
 <div class="container-fluid p-0 h-100">
-  <div class="row h-100">
-    <div class="col-2 bg-light sidebar pl-4 pr-3 pt-4 h-100 l-0">
-      {% block sidebar %}
-      {% include 'selia/user/components/sidebar.html' %}
-      {% endblock sidebar %}
+  <div class="row h-100" id="row-main">
+      <div class="col-md-2 container-fluid bg-light sidebar pl-4 pr-3 pt-4 h-100 l-0" id="sidebar">
+        {% block sidebar %}
+        {% include 'selia/user/components/sidebar.html' %}
+        {% endblock sidebar %}
     </div>
 
-    <div class="ml-sm-auto col-10 main-content h-100 p-0">
-      <nav class="navbar navbar-expand navbar-dark bg-dark tool-bar p-0">
-        {% block tool-bar %}
-        {% include 'selia/components/toolbar.html' %}
-        {% endblock tool-bar %}
+    <div class="col-md-10 container-fluid main-content h-100 p-0" id="content">
+      <nav class="navbar navbar-expand navbar-light bg-light tool-bar p-0 box-shadow">
+        {% block toolbar %}
+        {% include 'selia/user/components/toolbar.html' %}
+        {% endblock toolbar %}
       </nav>
 
       {% block main-content %}

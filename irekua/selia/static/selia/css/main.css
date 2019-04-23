@@ -2,14 +2,33 @@
   background-color: var(--info)!important;
 }
 
-.sidebar-links {
-  overflow-y: visible;
-}
-
-.sidebar-container {
-  height: 100%;
-}
-
 .tool-bar {
-  height: 60px;
+  /* height: 40px; */
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+}
+
+.sidebar {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.19);
+}
+
+.collapsed {
+  /* hide it for small displays*/
+  display: none;
+}
+
+#sidebar {
+  /* for the animation */
+  transition: margin 0.5s ease;
+  -webkit-transition: margin 0.5s ease;
+}
+
+#row-main {
+  /* necessary to hide collapsed sidebar */
+  overflow-x: hidden;
+}
+
+#content {
+  /* for the animation */
+  transition: width 0.5s ease;
+  -webkit-transition: width 0.5s ease;
 }

@@ -1,7 +1,5 @@
-{% extends 'selia/collections/base.html' %}
+{% extends 'selia/user/base.html' %}
 
-{% block sidebar-links %}
-{% include 'selia/user/sidebar_links.html' %}
-{% include 'selia/collections/sidebar_links.html' %}
-{% include 'selia/sampling_events/sidebar_links.html' %}
-{% endblock sidebar-links %}
+{% block toolbar %}
+{% include 'selia/sampling_events/components/toolbar.html' %}
+{% endblock toolbar %}
