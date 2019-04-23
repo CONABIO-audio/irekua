@@ -1,0 +1,8 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb bg-dark float-right">
+    {% for tag, link in data %}
+    <li class="breadcrumb-item"><a href={{ link|urlencode }}>{{ tag }}</a></li>
+    {% endfor %}
+    <li class="breadcrumb-item active" aria-current="page">{{ current }}</li>
+  </ol>
+</nav>

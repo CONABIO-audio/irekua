@@ -1,0 +1,17 @@
+<nav class="sidebar-sticky sidebar-container">
+  <ul class="nav d-flex flex-column justify-content-center">
+    <li class="nav-item">
+      {% block sidebar-user-info %}
+      {% include 'selia/components/user_card.html' %}
+      {% endblock sidebar-user-info %}
+    </li>
+
+    <li class="nav-item align-self-stretch">
+      <ul class="nav flex-column sidebar-links">
+        {% block sidebar-links %}
+        {% endblock sidebar-links %}
+      </ul>
+    </li>
+
+  </ul>
+</nav>

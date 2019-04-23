@@ -15,14 +15,12 @@ html, body {
   overflow-x: hidden;
 }
 
-.navbar {
+.main-navbar {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
-  z-index: 10;  
+  height: var(--header-height);
+  z-index: 10;
 }
 
-.navbar {
-  height: var(--header-height);
-}
 
 .content {
   height: calc(100vh - var(--footer-height) - var(--header-height));

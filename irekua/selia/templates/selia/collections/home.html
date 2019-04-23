@@ -1,19 +1,1 @@
 {% extends 'selia/collections/base.html' %}
-
-
-{% block breadcrumb %}
-<nav aria-label="breadcrumb" class="container-fluid mt-2">
-  <ol class="breadcrumb w-100">
-    <li class="breadcrumb-item active">
-      <a href={% url 'selia:user_home' %} class="btn btn-link">
-        Mi Hogar
-      </a>
-    </li>
-    <li class="breadcrumb-item active" aria-current="page">
-      <a href={% url 'selia:collection_home' collection_name %} class="btn btn-link disabled">
-        {{ collection_name }}
-      </a>
-    </li>
-  </ol>
-</nav>
-{% endblock breadcrumb %}

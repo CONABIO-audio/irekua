@@ -21,51 +21,18 @@
 {% block content %}
 <div class="container-fluid p-0 h-100">
   <div class="row h-100">
-    <div class="col-md-2 bg-light sidebar pl-4 pr-3 pt-4 h-100 l-0">
+    <div class="col-2 bg-light sidebar pl-4 pr-3 pt-4 h-100 l-0">
       {% block sidebar %}
-      <nav class="sidebar-sticky sidebar-container">
-        <ul class="nav d-flex flex-column justify-content-center">
-          <li class="nav-item">
-            {% block sidebar-user-info %}
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">{{user.username}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{ user.first_name }} {{ user.last_name  }}</h6>
-                {% if user.institution is not None %}
-                <h6 class="card-subtitle mb-2 text-muted">{{ user.institution }}</h6>
-                {% endif %}
-
-                <a href={% url 'selia:user_home' %} class="card-link">Perfil</a>
-              </div>
-            </div>
-            {% endblock sidebar-user-info %}
-          </li>
-
-          <li class="nav-item align-self-stretch">
-            <ul class="nav flex-column sidebar-links">
-              {% block sidebar-links %}
-              {% include 'selia/user/sidebar_links.html' %}
-              {% endblock sidebar-links %}
-            </ul>
-          </li>
-
-        </ul>
-      </nav>
+      {% include 'selia/user/components/sidebar.html' %}
       {% endblock sidebar %}
     </div>
 
-    <div class="col-md-9 ml-sm-auto col-lg-10 main-content h-100">
-      {% block breadcrumb %}
-      <nav aria-label="breadcrumb" class="container-fluid mt-2">
-        <ol class="breadcrumb w-100">
-          <li class="breadcrumb-item active" aria-current="page">
-            <a href="#" class="btn btn-link disabled">
-              Mi Hogar
-            </a>
-          </li>
-        </ol>
+    <div class="ml-sm-auto col-10 main-content h-100 p-0">
+      <nav class="navbar navbar-expand navbar-dark bg-dark tool-bar p-0">
+        {% block tool-bar %}
+        {% include 'selia/components/toolbar.html' %}
+        {% endblock tool-bar %}
       </nav>
-      {% endblock breadcrumb %}
 
       {% block main-content %}
       {% endblock main-content %}

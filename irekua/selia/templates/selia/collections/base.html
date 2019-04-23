@@ -1,27 +1,5 @@
 {% extends 'selia/user/base.html' %}
 
-
-{% block sidebar-links %}
-{% include 'selia/user/sidebar_links.html' %}
-{% include 'selia/collections/sidebar_links.html' with collection_name=collection_name %}
-{% endblock sidebar-links %}
-
-
-{% block breadcrumb %}
-<nav aria-label="breadcrumb" class="container-fluid mt-2">
-  <ol class="breadcrumb w-100">
-    <li class="breadcrumb-item active" aria-current="page">
-      <a href={% url 'selia:user_home' %} class="btn btn-link">
-        Mi Hogar
-      </a>
-    </li>
-    <li class="breadcrumb-item active" aria-current="page">
-      <a href={% url 'selia:collection_home' collection_name %} class="btn btn-link">
-        {{ collection_name }}
-      </a>
-    </li>
-    {% block extra-breadcrumb %}
-    {% endblock extra-breadcrumb %}
-  </ol>
-</nav>
-{% endblock breadcrumb %}
+{% block sidebar %}
+{% include 'selia/collections/components/sidebar.html' %}
+{% endblock sidebar %}

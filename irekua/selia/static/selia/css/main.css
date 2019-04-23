@@ -1,4 +1,4 @@
-.navbar {
+.main-navbar {
   background-color: var(--info)!important;
 }
 
@@ -8,4 +8,8 @@
 
 .sidebar-container {
   height: 100%;
+}
+
+.tool-bar {
+  height: 60px;
 }
