@@ -1,11 +1,13 @@
 from django.urls import path
-
 from . import views
+
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.home, name='home'),
 
-    path('test/', views.file_upload, name='test'),
+    path('upload/', views.file_upload, name='upload'),
 
     path('user/', views.user_home, name='user_home'),
     path('user/sites/', views.user_sites, name='user_sites'),
@@ -64,3 +66,6 @@ urlpatterns = [
 
     path('update_session/', views.update_session, name='update_session')
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
