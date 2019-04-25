@@ -1,11 +1,25 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.views.generic.detail import DetailView
+
+from selia.utils import ModelSerializer
+from database.models import SamplingEvent
 
 
-@login_required(login_url='registration:login')
-def sampling_event_home(request, collection_name, sampling_event_id):
-    context = {
-        'collection_name': collection_name,
-        'sampling_event_id': sampling_event_id
-    }
-    return render(request, 'selia/sampling_events/home.html', context)
+class SamplingEventSerializer(ModelSerializer):
+    class Meta:
+        model = SamplingEvent
+        fields = '__all__'
+
+
+class SamplingEventHome(DetailView):
+    template_name = 'selia/sampling_events/home.html'
+    model = SamplingEvent
+    pk_url_kwarg = 'sampling_event_id'
+
+    serializer_class = SamplingEventSerializer
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(self.kwargs)
+
+        context['serialized_object'] = self.serializer_class(self.get_object(), many=False)
+        return context

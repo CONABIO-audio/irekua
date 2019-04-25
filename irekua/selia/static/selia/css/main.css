@@ -37,3 +37,20 @@
   transition: width 0.5s ease;
   -webkit-transition: width 0.5s ease;
 }
+
+.panel-container {
+  overflow: hidden;
+  height: calc(100% - var(--footer-height));
+}
+
+.panel {
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0!important;
+  margin: 0;
+}
+
+.panel-header {
+  position: fixed;
+  width: inherit;
+}

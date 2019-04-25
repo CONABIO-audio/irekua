@@ -40,7 +40,7 @@ urlpatterns = [
 
     path(
         'collections/<str:collection_name>/sampling_events/<int:sampling_event_id>/',
-        views.sampling_event_home,
+        views.SamplingEventHome.as_view(),
         name='sampling_event_home'),
     path(
         'collections/<str:collection_name>/sampling_events/<int:sampling_event_id>/devices/',

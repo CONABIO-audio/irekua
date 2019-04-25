@@ -4,10 +4,10 @@ from django.contrib.auth.decorators import login_required
 from rest_framework import serializers
 
 from database.models import PhysicalDevice
-from selia.utils import ModelTable
+from selia.utils import ModelSerializer
 
 
-class PhysicalDeviceTable(ModelTable):
+class PhysicalDeviceTable(ModelSerializer):
     device_type = serializers.CharField(
         source='device.device_type')
     brand = serializers.CharField(

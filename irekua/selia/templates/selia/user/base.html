@@ -1,6 +1,11 @@
 {% extends 'selia/base.html' %}
 {% load static from staticfiles %}
+{% load leaflet_tags %}
 
+{% block head-extra %}
+{% leaflet_js %}
+{% leaflet_css %}
+{% endblock head-extra %}
 
 {% block content %}
 <div class="container-fluid p-0 h-100">

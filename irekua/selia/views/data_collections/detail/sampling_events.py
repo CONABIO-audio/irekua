@@ -3,10 +3,10 @@ from django.contrib.auth.decorators import login_required
 
 from database.models import Collection
 from database.models import SamplingEvent
-from selia.utils import ModelTable
+from selia.utils import ModelSerializer
 
 
-class SamplingEventTable(ModelTable):
+class SamplingEventTable(ModelSerializer):
     with_link = True
     detail_view = 'selia:sampling_event_home'
     url_args = ['id']

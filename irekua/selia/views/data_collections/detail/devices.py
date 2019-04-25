@@ -3,10 +3,10 @@ from django.contrib.auth.decorators import login_required
 
 from database.models import Collection
 from database.models import CollectionDevice
-from selia.utils import ModelTable
+from selia.utils import ModelSerializer
 
 
-class DevicesTable(ModelTable):
+class DevicesTable(ModelSerializer):
     class Meta:
         model = CollectionDevice
         fields = ['id', 'physical_device', 'internal_id']

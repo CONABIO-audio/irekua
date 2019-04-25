@@ -1,1 +1,21 @@
 {% extends 'selia/sampling_events/base.html' %}
+{% load leaflet_tags %}
+{% load generic_detail %}
+
+{% block main-content %}
+<div class="fluid-container panel-container">
+  <div class="row ml-0 mr-0 h-100">
+    <div class="col h-100 panel">
+      {% generic_detail serialized_object%}
+    </div>
+    <div class="col h-100 p-0">
+      <div class="row panel">
+        {% leaflet_map "yourmap" %}
+      </div>
+      <div class="row panel">
+          holA
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock main-content %}
