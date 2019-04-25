@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from database.models import Site
-from selia.utils import ModelTable
+from selia.utils import ModelSerializer
 
 
-class SiteTable(ModelTable):
+class SiteTable(ModelSerializer):
     class Meta:
         model = Site
         fields = ['id', 'name', 'locality']

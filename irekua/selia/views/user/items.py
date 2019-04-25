@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from database.models import Item
-from selia.utils import ModelTable
+from selia.utils import ModelSerializer
 
 
-class ItemTable(ModelTable):
+class ItemTable(ModelSerializer):
     class Meta:
         model = Item
         fields = ['id', 'item_type', 'captured_on', 'licence']

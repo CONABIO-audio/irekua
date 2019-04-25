@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from database.models import SamplingEvent
-from selia.utils import ModelTable
+from selia.utils import ModelSerializer
 
 
-class SamplingEventTable(ModelTable):
+class SamplingEventTable(ModelSerializer):
     class Meta:
         model = SamplingEvent
         fields = ['id', 'collection', 'started_on', 'ended_on']

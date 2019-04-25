@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'bootstrap4',
     'crispy_forms',
+    'leaflet',
 
     'rest',
     'selia',

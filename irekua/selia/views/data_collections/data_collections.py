@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from database.models import Collection
-from selia.utils import ModelTable
+from selia.utils import ModelSerializer
 
 
-class CollectionTable(ModelTable):
+class CollectionTable(ModelSerializer):
     with_link = True
     detail_view = 'selia:collection_home'
     url_args = ['name']

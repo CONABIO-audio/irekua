@@ -7,7 +7,7 @@ from .user.devices import user_devices
 from .user.items import user_items
 from .user.sampling_events import user_sampling_events
 
-from .sampling_events.home import sampling_event_home
+from .sampling_events.home import SamplingEventHome
 from .sampling_events.items import sampling_event_items
 from .sampling_events.devices import sampling_event_devices
 
