@@ -25,4 +25,6 @@ from .sampling_devices.home import sampling_event_device
 
 from .update_session import update_session
 
-from .upload import file_upload
+from .upload import upload
+from .upload import photo_list
+from .upload import upload_photo

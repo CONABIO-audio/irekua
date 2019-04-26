@@ -1,0 +1,10 @@
+{% extends 'selia/base.html' %}
+{% load static %}
+{% block content %}
+<h2>Upload Photos</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn bnt-primary">Upload Photos</button>
+</form>
+{% endblock %}
