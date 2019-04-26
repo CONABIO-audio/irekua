@@ -18,8 +18,8 @@ class ModelSerializer(serializers.ModelSerializer):
     def get_fields(self):
         fields = super().get_fields()
 
-        for x in fields.values():
-            print(self.Meta.model._meta.get_field(field_name))
+        # for x in fields.values():
+            # print(self.Meta.model._meta.get_field(field_name))
         return fields
 
     def get_object_url(self, datum):

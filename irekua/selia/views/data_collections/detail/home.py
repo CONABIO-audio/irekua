@@ -9,7 +9,9 @@ def collection_home(request, collection_name):
     context = {'collection_name': collection_name}
     collection = Collection.objects.get(name=collection_name)
 
-    if collection.logo is not None:
+    try:
         context['collection_image'] = collection.logo.url
+    except ValueError:
+        pass
 
     return render(request, 'selia/collections/detail/home.html', context)

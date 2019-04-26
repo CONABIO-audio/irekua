@@ -35,7 +35,7 @@ def validate_JSON_instance(schema=None, instance=None):
 
 
 def simple_JSON_schema():
-    return SIMPLE_JSON_SCHEMA
+    return SIMPLE_JSON_SCHEMA.copy()
 
 
 def empty_JSON():

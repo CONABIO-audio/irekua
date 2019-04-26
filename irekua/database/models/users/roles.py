@@ -53,6 +53,17 @@ class Role(models.Model):
     def __str__(self):
         return self.name
 
+    def add_permission_from_codename(self, codename):
+        if not isinstance(codename, (tuple, list)):
+            codename = [codename]
+
+        for code in codename:
+            try:
+                permission = Permission.objects.get(codename=code)
+                self.add_permission(permission)
+            except:
+                pass
+
     def add_permission(self, permission):
         self.permissions.add(permission)
         self.save()

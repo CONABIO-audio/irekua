@@ -68,6 +68,3 @@ urlpatterns = [
 
     path('update_session/', views.update_session, name='update_session')
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
