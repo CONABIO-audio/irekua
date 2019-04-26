@@ -10,7 +10,7 @@
     <tbody>
       {% for object, link in data %}
       {% if with_link %}
-      <tr onclick="window.location='{{ link }}';">
+      <tr>
       {% else %}
       <tr>
       {% endif %}
@@ -23,6 +23,9 @@
           {% endif %}
         </td>
         {% endfor %}
+        <td>
+          <a href={{ link }}>ver</a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
