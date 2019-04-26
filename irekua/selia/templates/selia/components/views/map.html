@@ -1,0 +1,10 @@
+{% extends 'selia/components/views/base.html' %}
+{% load leaflet_tags %}
+
+{% block card-header %}
+<div class="card-img-top w-100" style="height: var(--card-head); background-color: var(--map-color);"></div>
+{% endblock %}
+
+{% block content %}
+{% leaflet_map "my_map" %}
+{% endblock%}

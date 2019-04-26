@@ -66,5 +66,7 @@ urlpatterns = [
 
     path('about/', views.about, name='about'),
 
-    path('update_session/', views.update_session, name='update_session')
+    path('update_session/', views.update_session, name='update_session'),
+
+    path('test/', views.test, name='test')
 ]

@@ -1,0 +1,37 @@
+{% load table %}
+{% load detail %}
+{% load map_view %}
+{% load summary %}
+
+<div class="fluid-container panel-container">
+  <div class="row ml-0 mr-0 h-100">
+    {% if include_table or include_detail %}
+    <div class="col-sm-6 h-100 p-0">
+      {% if include_table %}
+      <div class="row m-2">
+        {% table table_info %}
+      </div>
+      {% endif %}
+      {% if include_detail %}
+      <div class="row m-2">
+        {% detail detail_info %}
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% if include_map or include_summary%}
+    <div class="col-sm-6 h-100 p-0">
+      {% if include_map %}
+      <div class="row m-2">
+        {% map_view map_info %}
+      </div>
+      {% endif %}
+      {% if include_summary %}
+      <div class="row m-2">
+        {% summary summary_info %}
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</div>

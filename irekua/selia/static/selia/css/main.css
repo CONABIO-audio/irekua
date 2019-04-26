@@ -1,8 +1,9 @@
 :root {
-  --panel-header: 5px;
+  --card-head: 15px;
   --detail-color: #D8DDEF;
   --map-color: #A0A4B8;
   --summary-color: #7293A0;
+  --table-color: #7293A0;
 }
 
 .main-navbar {
