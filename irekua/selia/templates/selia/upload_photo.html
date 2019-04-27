@@ -3,12 +3,22 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h2>Upload Photos</h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn bnt-primary">Upload Photos</button>
-</form>
+<div class="container">
+ <div class="row justify-content-md-center">
+  <div class="col align-self-center">
+  	<br />
+	<h2>Upload Photos
+		<i class="fas fa-images"></i> 
+		<i class="fas fa-sd-card"></i> 
+		<i class="fas fa-camera"></i>
+	</h2>
 
-
+	<form method="post" enctype="multipart/form-data">
+	    {% csrf_token %}
+	    {{ form|crispy }}
+	    <button type="submit" class="btn btn-primary">Upload Photos <i class="fas fa-upload"></i></button>    
+	</form>
+  </div>
+ </div>
+</div>
 {% endblock %}

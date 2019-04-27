@@ -60,15 +60,17 @@
   </header>
 
   <main role="main" class="container-fluid content p-0">
+    <div class="row h-100" id="row-main">
     {% block content %}
 
       <!-- Page Content -->
-      <div class="container-fluid p-0">
+      <div class="container-fluid p-2">
         {% block main-content %}
         {% endblock main-content %}
       </div>
 
       {% endblock content %}
+  </div>
   </main>
 
   <!-- Modals -->
@@ -90,6 +92,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
   {% endif %}
 
