@@ -128,8 +128,12 @@ def treeview(request):
     path = request.path
     view = resolve(path)
 
-    tree = TREE.get_subtree(view.url_name)
-    tree_data = [
-        (node.get_name(view), node.get_url(view), range(node.depth)) for node in tree.values()
-    ]
+    try:
+        tree = TREE.get_subtree(view.url_name)
+        tree_data = [
+            (node.get_name(view), node.get_url(view), range(node.depth)) for node in tree.values()
+        ]
+    except:
+        tree_data = []
+
     return {'tree': tree_data, 'request': request}

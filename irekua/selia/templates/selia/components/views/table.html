@@ -1,5 +1,38 @@
 {% extends 'selia/components/views/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block card-header %}
 <div class="card-img-top w-100" style="height: var(--card-head); background-color: var(--table-color);"></div>
 {% endblock %}
+
+{% block content %}
+<div class="container-fluid h-10">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filterModal">
+    Filtrar
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="filterModalLabel">Filtros</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="#" method="post">
+        {% csrf_token %}
+        <div class="modal-body">
+          {{ filter.form | crispy }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary">Filtrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

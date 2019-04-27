@@ -13,7 +13,6 @@ from .sampling_events.devices import sampling_event_devices
 
 from .data_collections.data_collections import user_collections
 from .data_collections.open_collections import open_collections
-from .data_collections.create_collection import create_collection
 from .data_collections.detail.home import collection_home
 from .data_collections.detail.devices import collection_devices
 from .data_collections.detail.items import collection_items
@@ -29,4 +28,4 @@ from .upload import upload
 from .upload import photo_list
 from .upload import upload_photo
 
-from .test import test
+from .test import TestView

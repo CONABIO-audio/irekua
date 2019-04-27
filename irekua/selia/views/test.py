@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from selia.views.components.grid import GridView
+from rest.filters.physical_devices import Filter
 
 
-def test(request):
-    return render(request, 'selia/test.html')
+class TestView(GridView):
+    filter_class = Filter

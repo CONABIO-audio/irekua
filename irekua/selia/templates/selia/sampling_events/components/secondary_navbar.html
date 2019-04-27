@@ -3,9 +3,6 @@
 {% block navbar-brand %}
 <ul class="breadcrumb bg-transparent m-0 p-0">
   <li class="breadcrumb-item">
-    <a class="navbar-brand" href={% url 'selia:collection_home' collection_name %}>{{ collection_name }}</a>
-  </li>
-  <li class="breadcrumb-item">
     <a class="navbar-brand" href={% url 'selia:sampling_event_home' collection_name sampling_event_id %}>Evento de Muestreo {{ sampling_event_id }}</a>
   </li>
 </ul>

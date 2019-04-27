@@ -19,7 +19,6 @@ urlpatterns = [
 
     path('collections/', views.user_collections, name='collections'),
     path('collections/open/', views.open_collections, name='open_collections'),
-    path('collections/create/', views.create_collection, name='create_collection'),
 
     path(
         'collections/<str:collection_name>/',
@@ -68,5 +67,5 @@ urlpatterns = [
 
     path('update_session/', views.update_session, name='update_session'),
 
-    path('test/', views.test, name='test')
+    path('test/', views.TestView.as_view(), name='test')
 ]
