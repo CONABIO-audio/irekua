@@ -5,6 +5,8 @@
 <div class="card-img-top w-100" style="height: var(--card-head); background-color: var(--map-color);"></div>
 {% endblock %}
 
-{% block content %}
-{% leaflet_map "my_map" %}
-{% endblock%}
+{% block card-body %}
+<div class="card-body container-fluid card-content p-0">
+  {% leaflet_map "my_map" %}
+</div>
+{% endblock %}

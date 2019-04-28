@@ -25,26 +25,12 @@ function loadConfiguration() {
 
 function createTable() {
   if (tableElement === undefined) {
-    tableElement = document.createElement('table');
-    tableElement.className = "table";
-
-    tableHead = document.createElement('thead');
-    tableElement.appendChild(tableHead);
-
-    tableBody = document.createElement('tbody');
-    tableBody.className = "table-body"
-    tableElement.appendChild(tableBody);
-
-    tableFoot = document.createElement('tfoot');
-    tableElement.appendChild(tableFoot);
-
-
-
-    $('#tableContainer').append(tableElement);
-
+    tableElement = document.getElementById('table');
+    tableHead = document.getElementById('tableHead');
+    tableBody = document.getElementById('tableBody');
+    tableFoot = document.getElementById('tableFoot');
   }
 }
-
 
 
 function createPaginator() {
