@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework import mixins
+from rest_framework.response import Response
 
 from database import models
 from rest import serializers
@@ -76,7 +77,7 @@ class UserViewSet(mixins.ListModelMixin,
         if self.action == 'institutions':
             return models.Institution.objects.all()  # pylint: disable=E1101
 
-        if self.action == 'items':
+        if self.action == 'items' or self.action == 'item_locations':
             user_id = self.kwargs['pk']
             return models.Item.objects.filter(created_by=user_id)  # pylint: disable=E1101
 
@@ -84,7 +85,7 @@ class UserViewSet(mixins.ListModelMixin,
             user_id = self.kwargs['pk']
             return models.PhysicalDevice.objects.filter(owner=user_id)  # pylint: disable=E1101
 
-        if self.action == 'sites':
+        if self.action == 'sites' or self.action == 'site_locations':
             user_id = self.kwargs['pk']
             return models.Site.objects.filter(created_by=user_id)  # pylint: disable=E1101
 
@@ -92,7 +93,7 @@ class UserViewSet(mixins.ListModelMixin,
             user = self.get_object()
             return user.collection_set.all()
 
-        if self.action == 'sampling_events':
+        if self.action == 'sampling_events' or self.action == 'sampling_event_locations':
             user = self.get_object()
             return user.sampling_event_created_by.all()
 
@@ -161,3 +162,45 @@ class UserViewSet(mixins.ListModelMixin,
         search_fields=filters.data_collections.search_fields)
     def collections(self, request, pk=None):
         return self.list_related_object_view()
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.sites.Filter,
+        search_fields=filters.sites.search_fields)
+    def site_locations(self, request, pk=None):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        serializer = serializers.sites.SiteLocationSerializer(
+            queryset,
+            many=True,
+            read_only=True)
+        return Response(serializer.data)
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.items.Filter,
+        search_fields=filters.items.search_fields)
+    def item_locations(self, request, pk=None):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        serializer = serializers.sites.ItemLocationSerializer(
+            queryset,
+            many=True,
+            read_only=True)
+        return Response(serializer.data)
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.sampling_events.Filter,
+        search_fields=filters.sampling_events.search_fields)
+    def sampling_event_locations(self, request, pk=None):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        serializer = serializers.sites.SamplingEventLocationSerializer(
+            queryset,
+            many=True,
+            read_only=True)
+        return Response(serializer.data)

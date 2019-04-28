@@ -46,11 +46,18 @@ class GridView(TemplateView):
             return None
 
     def get_table_url_kwrags(self):
-        raise NotImplementedError
+        return None
 
     def get_table_url(self):
         kwargs = self.get_table_url_kwrags()
         return reverse(self.table_view_name, kwargs=kwargs)
+
+    def get_map_url_kwargs(self):
+        return None
+
+    def get_map_url(self):
+        kwargs = self.get_map_url_kwargs()
+        return reverse(self.map_view_name, kwargs=kwargs)
 
     def get_table_context_data(self):
         filter_instance = self.get_filter()
@@ -61,17 +68,29 @@ class GridView(TemplateView):
             'with_table_links': self.with_table_links
         }
 
+    def get_map_context_data(self):
+        map_context = {
+            'map_url': self.get_map_url()
+        }
+        return map_context
+
     def get_grid_context_data(self):
-        context = {
+        grid_context = {
             'include_map': self.include_map,
             'include_detail': self.include_detail,
             'include_table': self.include_table,
             'include_summary': self.include_summary,
         }
-        return context
+        return grid_context
 
     def get_context_data(self):
-        context = {}
-        context['grid_config'] = self.get_grid_context_data()
-        context['table_info'] = self.get_table_context_data()
+        context = {
+            'grid_config': self.get_grid_context_data()
+        }
+
+        if self.include_map:
+            context['map_info'] = self.get_map_context_data()
+
+        if self.include_table:
+            context['table_info'] = self.get_table_context_data()
         return context

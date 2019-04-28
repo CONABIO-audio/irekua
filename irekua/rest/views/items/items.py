@@ -302,6 +302,16 @@ class ItemViewSet(mixins.UpdateModelMixin,
         url = serializer.data['item_file']
         return redirect(url)
 
+    @action(
+        detail=True,
+        methods=['GET'])
+    def location(self, request, pk=None):
+        item = self.get_object()
+        serializer = serializers.sites.ItemLocationSerializer(
+            [item],
+            many=True)
+        return Response(serializer.data)
+
     def get_list_queryset(self):
         try:
             user = self.request.user
