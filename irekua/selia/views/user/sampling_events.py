@@ -1,21 +1,12 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-
-from database.models import SamplingEvent
-from selia.utils import ModelSerializer
+from selia.views.components.grid import GridView
+from rest.filters.sampling_events import Filter
 
 
-class SamplingEventTable(ModelSerializer):
-    class Meta:
-        model = SamplingEvent
-        fields = ['id', 'collection', 'started_on', 'ended_on']
+class UserSamplingEvents(GridView):
+    template_name = 'selia/user/grid.html'
+    table_view_name = 'rest-api:user-sampling-events'
+    filter_class = Filter
 
-
-@login_required(login_url='registration:login')
-def user_sampling_events(request):
-    user = request.user
-    sampling_events = user.sampling_event_created_by.all()
-
-    table = SamplingEventTable(sampling_events, many=True)
-    context = {'table': table}
-    return render(request, 'selia/user/sampling_events.html', context)
+    def get_table_url_kwrags(self):
+        user = self.request.user
+        return {"pk": user.pk}

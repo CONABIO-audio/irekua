@@ -5,11 +5,8 @@ register = template.Library()
 
 
 @register.inclusion_tag('selia/components/grid.html')
-def grid(filter_form):
+def grid(grid_config, table_info):
     return {
-        'include_map': True,
-        'include_table': True,
-        'include_detail': True,
-        'include_summary': True,
-        'filter_form': filter_form,
+        'grid_config': grid_config,
+        'table_info': table_info,
     }

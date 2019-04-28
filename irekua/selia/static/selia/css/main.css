@@ -48,13 +48,21 @@
 
 .panel-container {
   overflow: hidden;
+  padding-left: 1em;
+  padding-right: 1em;
   height: calc(100% - var(--footer-height));
 }
 
 .panel {
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   padding: 0!important;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+  min-height: 30%;
+}
+
+.table-body {
+  overflow-y: auto;
 }
 
 .panel-header {

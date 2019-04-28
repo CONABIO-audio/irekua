@@ -14,6 +14,7 @@ search_fields = (
 class Filter(BaseFilter):
     latitude__gt = django_filters.NumberFilter(
         field_name='latitude',
+        label='latitude >',
         lookup_expr='gt')
     latitude__lt = django_filters.NumberFilter(
         field_name='latitude',

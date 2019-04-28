@@ -12,10 +12,10 @@ urlpatterns = [
     path('photos/upload', views.upload_photo, name='upload_photo'),
 
     path('user/', views.user_home, name='user_home'),
-    path('user/sites/', views.user_sites, name='user_sites'),
-    path('user/devices/', views.user_devices, name='user_devices'),
-    path('user/items/', views.user_items, name='user_items'),
-    path('user/sampling_events/', views.user_sampling_events, name='user_sampling_events'),
+    path('user/sites/', views.UserSites.as_view(), name='user_sites'),
+    path('user/devices/', views.UserDevices.as_view(), name='user_devices'),
+    path('user/items/', views.UserItems.as_view(), name='user_items'),
+    path('user/sampling_events/', views.UserSamplingEvents.as_view(), name='user_sampling_events'),
 
     path('collections/', views.user_collections, name='collections'),
     path('collections/open/', views.open_collections, name='open_collections'),

@@ -5,29 +5,29 @@
 
 <div class="fluid-container panel-container">
   <div class="row ml-0 mr-0 h-100">
-    {% if include_table or include_detail %}
+    {% if grid_config.include_table or grid_config.include_detail %}
     <div class="col-sm-6 h-100 p-0">
-      {% if include_table %}
-      <div class="row m-2">
-        {% table filter_form %}
+      {% if grid_config.include_table %}
+      <div class="row m-2 panel">
+        {% table table_info %}
       </div>
       {% endif %}
-      {% if include_detail %}
-      <div class="row m-2">
+      {% if grid_config.include_detail %}
+      <div class="row m-2 panel">
         {% detail %}
       </div>
       {% endif %}
     </div>
     {% endif %}
-    {% if include_map or include_summary%}
+    {% if grid_config.include_map or grid_config.include_summary%}
     <div class="col-sm-6 h-100 p-0">
-      {% if include_map %}
-      <div class="row m-2">
+      {% if grid_config.include_map %}
+      <div class="row m-2 panel">
         {% map_view map_info %}
       </div>
       {% endif %}
-      {% if include_summary %}
-      <div class="row m-2">
+      {% if grid_config.include_summary %}
+      <div class="row m-2 panel">
         {% summary summary_info %}
       </div>
       {% endif %}

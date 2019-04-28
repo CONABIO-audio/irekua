@@ -2,10 +2,10 @@ from .about import about
 from .home import home
 from .user.home import user_home
 
-from .user.sites import user_sites
-from .user.devices import user_devices
-from .user.items import user_items
-from .user.sampling_events import user_sampling_events
+from .user.sites import UserSites
+from .user.devices import UserDevices
+from .user.items import UserItems
+from .user.sampling_events import UserSamplingEvents
 
 from .sampling_events.home import SamplingEventHome
 from .sampling_events.items import sampling_event_items

@@ -1,4 +1,5 @@
 {% extends 'selia/components/views/base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block card-header %}
@@ -6,15 +7,36 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid h-10">
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filterModal">
+<div class="container-fluid flex-row d-flex justify-content-end h-10">
+  <form class="form-inline django-form m-2" action="#" method="post" id="pageSizeForm">
+    <select name="page_size">
+      <option>10</option>
+      <option>20</option>
+      <option>50</option>
+      <option>100</option>
+    </select>
+  </form>
+  <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#filterModal">
     Filtrar
   </button>
+  <form class="form-inline django-form m-2" id="searchForm">
+    <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
+  </form>
+</div>
+<div class="container-fluid h-100 p-0 mt-3" id="tableContainer">
+</div>
+
+<div id="tableUrl" style="display: none">
+  {{ table_url }}
+</div>
+<div id="withTableLinks" style="display: none">
+  {{ with_table_links }}
 </div>
 
 <!-- Modal -->
 <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="filterModalLabel">Filtros</h5>
@@ -22,17 +44,20 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="#" method="post">
-        {% csrf_token %}
         <div class="modal-body">
-          {{ filter.form | crispy }}
+          <form action="#" method="post" class="django-form" id="filterForm">
+            {{ filter_form.form | crispy }}
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <input type="submit" class="btn btn-primary"  data-toggle="modal" data-target="#filterModal" value="Filtrar">
+          </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary">Filtrar</button>
-        </div>
-      </form>
     </div>
   </div>
 </div>
+
+<script type="text/javascript" src={% static 'selia/js/grid/table_manager.js' %}></script>
 {% endblock content %}
+
+
+
+<button type="button" class="btn btn-primary" id="filterButton">Filtrar</button>

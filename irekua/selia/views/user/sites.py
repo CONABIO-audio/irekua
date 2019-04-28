@@ -1,21 +1,12 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-
-from database.models import Site
-from selia.utils import ModelSerializer
+from selia.views.components.grid import GridView
+from rest.filters.sites import Filter
 
 
-class SiteTable(ModelSerializer):
-    class Meta:
-        model = Site
-        fields = ['id', 'name', 'locality']
+class UserSites(GridView):
+    template_name = 'selia/user/grid.html'
+    table_view_name = 'rest-api:user-sites'
+    filter_class = Filter
 
-
-@login_required(login_url='registration:login')
-def user_sites(request):
-    user = request.user
-    sites = user.site_set.all()
-
-    table = SiteTable(sites, many=True)
-    context = {'table': table}
-    return render(request, 'selia/user/sites.html', context)
+    def get_table_url_kwrags(self):
+        user = self.request.user
+        return {"pk": user.pk}

@@ -1,30 +1,14 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-
-from rest_framework import serializers
-
-from database.models import PhysicalDevice
-from selia.utils import ModelSerializer
+from selia.views.components.grid import GridView
+from rest.filters.physical_devices import Filter
 
 
-class PhysicalDeviceTable(ModelSerializer):
-    device_type = serializers.CharField(
-        source='device.device_type')
-    brand = serializers.CharField(
-        source='device.brand')
-    model = serializers.CharField(
-        source='device.model')
+class UserDevices(GridView):
+    template_name = 'selia/user/grid.html'
+    table_view_name = 'rest-api:user-devices'
+    filter_class = Filter
 
-    class Meta:
-        model = PhysicalDevice
-        fields = ['id', 'device_type', 'brand', 'model', 'serial_number']
+    include_map = False
 
-
-@login_required(login_url='registration:login')
-def user_devices(request):
-    user = request.user
-    devices = user.physicaldevice_set.all()
-
-    table = PhysicalDeviceTable(devices, many=True)
-    context = {'table': table}
-    return render(request, 'selia/user/devices.html', context)
+    def get_table_url_kwrags(self):
+        user = self.request.user
+        return {"pk": user.pk}

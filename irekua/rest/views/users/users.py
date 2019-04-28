@@ -43,6 +43,7 @@ class UserViewSet(mixins.ListModelMixin,
             devices=serializers.devices.physical_devices.ListSerializer,
             sites=serializers.sites.ListSerializer,
             roles=serializers.users.roles.ListSerializer,
+            sampling_events=serializers.sampling_events.sampling_events.ListSerializer,
             add_role=serializers.users.roles.CreateSerializer,
             collections=serializers.data_collections.data_collections.ListSerializer,
             institutions=serializers.users.institutions.ListSerializer,
@@ -90,6 +91,10 @@ class UserViewSet(mixins.ListModelMixin,
         if self.action == 'collections':
             user = self.get_object()
             return user.collection_set.all()
+
+        if self.action == 'sampling_events':
+            user = self.get_object()
+            return user.sampling_event_created_by.all()
 
         return super().get_queryset()
 
@@ -139,6 +144,14 @@ class UserViewSet(mixins.ListModelMixin,
         filterset_class=filters.sites.Filter,
         search_fields=filters.sites.search_fields)
     def sites(self, request, pk=None):
+        return self.list_related_object_view()
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.sampling_events.Filter,
+        search_fields=filters.sampling_events.search_fields)
+    def sampling_events(self, request, pk=None):
         return self.list_related_object_view()
 
     @action(
