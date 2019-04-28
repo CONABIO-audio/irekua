@@ -1,7 +1,14 @@
 from django.views.generic.detail import DetailView
+from django import forms
 
 from selia.utils import ModelSerializer
 from database.models import SamplingEvent
+
+
+class SamplingEventForm(forms.ModelForm):
+    class Meta:
+        model = SamplingEvent
+        fields = '__all__'
 
 
 class SamplingEventSerializer(ModelSerializer):
