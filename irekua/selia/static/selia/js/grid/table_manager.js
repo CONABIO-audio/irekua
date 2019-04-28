@@ -74,7 +74,18 @@ function updateTableBody() {
 
   tableData.results.forEach(function(datum) {
     var tr = tableBody.insertRow();
+
+    var pk;
+    if ('id' in datum) {
+      pk = datum['id'];
+    } else {
+      pk = datum['name'];
+    }
+
     tr.setAttribute('url', datum['url']);
+    tr.onclick = function() {
+      setCurrentSelection(datum[pk], datum['url'])
+    }
 
     for (var key in datum) {
       if (key.toLowerCase() == 'url') continue;
@@ -85,13 +96,7 @@ function updateTableBody() {
 
     if (tableConfiguration['withTableLinks']) {
       var td = tr.insertCell();
-      var pk;
 
-      if ('id' in datum) {
-        pk = datum['id'];
-      } else {
-        pk = datum['name'];
-      }
 
       var link = document.createElement('a');
       link.className = "btn btn-link"
