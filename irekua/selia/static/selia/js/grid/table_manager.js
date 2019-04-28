@@ -38,7 +38,6 @@ function createTable() {
     tableFoot = document.createElement('tfoot');
     tableElement.appendChild(tableFoot);
 
-    tableBody.onclick = onBodyClick;
 
 
     $('#tableContainer').append(tableElement);
@@ -46,11 +45,7 @@ function createTable() {
   }
 }
 
-function onBodyClick(event) {
-    // asdfasdfasdfas
-    var elementId = parseInt(event.target.parentElement.firstChild.innerHTML);
-    setCurrentSelection(elementId,"TABLE_SELECTION")
-}
+
 
 function createPaginator() {
   if (tablePagination === undefined) {
@@ -96,7 +91,7 @@ function updateTableBody() {
 
     tr.setAttribute('url', datum['url']);
     tr.onclick = function() {
-      setCurrentSelection(datum[pk], datum['url'])
+      setCurrentSelection(pk, datum['url'])
     }
 
     for (var key in datum) {

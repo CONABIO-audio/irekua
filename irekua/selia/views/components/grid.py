@@ -45,11 +45,11 @@ class GridView(TemplateView):
         except AttributeError:
             return None
 
-    def get_table_url_kwrags(self):
+    def get_table_url_kwargs(self):
         return None
 
     def get_table_url(self):
-        kwargs = self.get_table_url_kwrags()
+        kwargs = self.get_table_url_kwargs()
         return reverse(self.table_view_name, kwargs=kwargs)
 
     def get_map_url_kwargs(self):

@@ -1,9 +1,12 @@
 {% extends 'selia/components/views/base.html' %}
+{% load static %}
 
 {% block card-header %}
 <div class="card-img-top w-100" style="height: var(--card-head); background-color: var(--detail-color);"></div>
 {% endblock %}
 
 {% block content %}
-DETALLE
+<div class="container-fluid h-100 p-0 mt-3" id="detailContainer">
+</div>
+<script type="text/javascript" src={% static 'selia/js/grid/detail_manager.js' %}></script>
 {% endblock content %}
