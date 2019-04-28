@@ -38,8 +38,18 @@ function createTable() {
     tableFoot = document.createElement('tfoot');
     tableElement.appendChild(tableFoot);
 
+    tableBody.onclick = onBodyClick;
+
+
     $('#tableContainer').append(tableElement);
+
   }
+}
+
+function onBodyClick(event) {
+    // asdfasdfasdfas
+    var elementId = parseInt(event.target.parentElement.firstChild.innerHTML);
+    setCurrentSelection(elementId,"TABLE_SELECTION")
 }
 
 function createPaginator() {
@@ -65,6 +75,8 @@ function updateTableHead() {
     th.appendChild(document.createTextNode("acciones"));
     tr.appendChild(th);
   }
+
+
 }
 
 function updateTableBody() {

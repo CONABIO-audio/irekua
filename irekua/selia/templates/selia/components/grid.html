@@ -2,7 +2,9 @@
 {% load detail %}
 {% load map_view %}
 {% load summary %}
+{% load static %}
 
+<script type="text/javascript" src={% static 'selia/js/grid/grid_manager.js' %}></script>
 <div class="fluid-container panel-container">
   <div class="row ml-0 mr-0 h-100">
     {% if grid_config.include_table or grid_config.include_detail %}
