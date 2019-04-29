@@ -1,5 +1,6 @@
 {% extends 'selia/base.html' %}
 {% load static from staticfiles %}
+{% load grid %}
 {% load leaflet_tags %}
 
 {% block head-extra %}
@@ -11,9 +12,9 @@
 <div class="container-fluid p-0 h-100">
   <div class="row h-100" id="row-main">
     {% if request.session.expanded == 'true' %}
-    <div class="col-md-2 container-fluid bg-light sidebar pl-4 pr-3 pt-4 h-100 l-0" id="sidebar">
+    <div class="col-md-3 container-fluid bg-light sidebar pl-4 pr-3 pt-4 h-100 l-0" id="sidebar">
     {% else %}
-    <div class="col-md-2 container-fluid bg-light sidebar pl-4 pr-3 pt-4 h-100 l-0 collapsed" id="sidebar">
+    <div class="col-md-3 container-fluid bg-light sidebar pl-4 pr-3 pt-4 h-100 l-0 collapsed" id="sidebar">
     {% endif %}
       {% block sidebar %}
       {% include 'selia/user/components/sidebar.html' %}
@@ -21,17 +22,19 @@
     </div>
 
     {% if request.session.expanded == 'true' %}
-    <div class="col-md-10 container-fluid main-content h-100 p-0" id="content">
+    <div class="col-md-9 container-fluid main-content h-100 p-0" id="content">
     {% else %}
     <div class="col-md-12 container-fluid main-content h-100 p-0" id="content">
     {% endif %}
-      <nav class="navbar navbar-expand navbar-light bg-light secondary-navbar p-1 box-shadow">
+      <nav class="navbar navbar-expand navbar-light bg-light secondary-navbar p-1">
         {% block secondary-navbar %}
         {% include 'selia/user/components/secondary_navbar.html' %}
         {% endblock secondary-navbar %}
       </nav>
       {% block toolbar %}
-      <nav class="navbar navbar-expand navbar-dark bg-dark tool-bar p-0 box-shadow">
+      <nav class="navbar navbar-expand navbar-light bg-light tool-bar pl-5 p-0">
+        <a class="navbar-brand" href="#">{% block toolbar-title %}{% endblock %}</a>
+
         <div class="container">
           <ul class="nav">
             {% block toolbar-items %}
@@ -42,6 +45,7 @@
       {% endblock toolbar %}
 
       {% block main-content %}
+      {% grid grid_config table_info map_info detail_info%}
       {% endblock main-content %}
     </div>
   </div>

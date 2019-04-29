@@ -317,3 +317,8 @@ class Item(models.Model):
     def remove_tag(self, tag):
         self.tags.remove(tag)  # pylint: disable=E1101
         self.save()
+
+    def delete(self, *args, **kwargs):
+        self.item_file.delete()
+        super().delete(*args, **kwargs)
+

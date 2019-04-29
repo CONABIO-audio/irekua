@@ -1,11 +1,36 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django import forms
+
+from database.models import SamplingEventDevice
+from selia.views.components.grid import GridView
+from rest.filters.sampling_event_devices import Filter
 
 
-@login_required(login_url='registration:login')
-def sampling_event_devices(request, collection_name, sampling_event_id):
-    context = {
-        'collection_name': collection_name,
-        'sampling_event_id': sampling_event_id,
-    }
-    return render(request, 'selia/sampling_events/devices.html', context)
+class UpdateForm(forms.ModelForm):
+    class Meta:
+        model = SamplingEventDevice
+        fields = [
+            "commentaries",
+            "metadata",
+            "configuration",
+        ]
+
+
+class SamplingEventDevices(GridView):
+    template_name = 'selia/sampling_events/devices.html'
+    table_view_name = 'rest-api:samplingevent-devices'
+    filter_class = Filter
+    update_form = UpdateForm
+
+    include_map = False
+    with_table_links = True
+    child_view_name = 'selia:sampling_event_device_home'
+
+    def get_table_url_kwargs(self):
+        sampling_event_id = self.kwargs['sampling_event_id']
+        return {"pk": sampling_event_id}
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data()
+        context['collection_name'] = kwargs['collection_name']
+        context['sampling_event_id'] = kwargs['sampling_event_id']
+        return context

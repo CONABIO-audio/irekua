@@ -1,21 +1,25 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from selia.views.components.grid import GridView
+from rest.filters.items import Filter
+from django import forms
 
 from database.models import Item
-from selia.utils import ModelSerializer
 
-
-class ItemTable(ModelSerializer):
+class ItemUpdateForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ['id', 'item_type', 'captured_on', 'licence']
+        fields = ['metadata']
 
+class UserItems(GridView):
+    template_name = 'selia/user/items.html'
+    table_view_name = 'rest-api:user-items'
+    map_view_name = 'rest-api:user-item-locations'
+    update_form = ItemUpdateForm
+    filter_class = Filter
 
-@login_required(login_url='registration:login')
-def user_items(request):
-    user = request.user
-    items = user.item_created_by.all()
+    def get_table_url_kwargs(self):
+        user = self.request.user
+        return {"pk": user.pk}
 
-    table = ItemTable(items, many=True)
-    context = {'table': table}
-    return render(request, 'selia/user/items.html', context)
+    def get_map_url_kwargs(self):
+        user = self.request.user
+        return {"pk": user.pk}

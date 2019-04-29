@@ -5,7 +5,7 @@ class IsOwner(BasePermission):
     def has_object_permission(self, request, view, obj):
         user = request.user
 
-        device = obj.device
+        device = obj.physical_device
         owner = device.owner
 
         return user == owner
@@ -34,7 +34,7 @@ class IsCollectionAdmin(BasePermission):
         user = request.user
         collection = obj.collection
 
-        return collection.is_collection_admin(user)
+        return collection.is_admin(user)
 
 
 class IsCollectionTypeAdmin(BasePermission):

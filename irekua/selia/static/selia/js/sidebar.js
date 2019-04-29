@@ -47,10 +47,10 @@ function checkCollapse() {
 
 	if (expanded == "true") {
 		$("#sidebar").removeClass("collapsed");
-		$("#content").removeClass("col-md-12").addClass("col-md-10");
+		$("#content").removeClass("col-md-12").addClass("col-md-9");
 	} else {
 		$("#sidebar").addClass("collapsed");
-		$("#content").removeClass("col-md-10").addClass("col-md-12");
+		$("#content").removeClass("col-md-9").addClass("col-md-12");
 	}
 
 }

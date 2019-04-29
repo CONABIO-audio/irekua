@@ -1,25 +1,38 @@
-from django.views.generic.detail import DetailView
+from django import forms
 
-from selia.utils import ModelSerializer
 from database.models import SamplingEvent
+from selia.views.components.grid import GridView
 
 
-class SamplingEventSerializer(ModelSerializer):
+class UpdateForm(forms.ModelForm):
     class Meta:
         model = SamplingEvent
-        fields = '__all__'
+        fields = [
+            'commentaries',
+            'metadata',
+            'started_on',
+            'ended_on',
+        ]
 
 
-class SamplingEventHome(DetailView):
+class SamplingEventHome(GridView):
     template_name = 'selia/sampling_events/home.html'
-    model = SamplingEvent
-    pk_url_kwarg = 'sampling_event_id'
+    map_view_name = 'rest-api:samplingevent-location'
+    detail_view_name = 'rest-api:samplingevent-detail'
+    update_form = UpdateForm
 
-    serializer_class = SamplingEventSerializer
+    include_table = False
+    detail = True
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update(self.kwargs)
+    def get_object_pk(self):
+        return self.kwargs['sampling_event_id']
 
-        context['serialized_object'] = self.serializer_class(self.get_object(), many=False)
+    def get_map_url_kwargs(self):
+        collection_name = self.kwargs['sampling_event_id']
+        return {"pk": collection_name}
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data()
+        context['collection_name'] = kwargs['collection_name']
+        context['sampling_event_id'] = kwargs['sampling_event_id']
         return context

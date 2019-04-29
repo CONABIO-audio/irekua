@@ -1,0 +1,17 @@
+<ul class="w-100" style="list-style: none; padding-left: 0;">
+  {% for name, link, depth in tree %}
+  <li class="text-truncate">
+    <span class="d-inline">
+      {% for _ in depth%}&emsp;{% endfor %}
+    </span>
+    <span class="d-inline">
+      {% if link == request.path|urlencode %}
+      <a href={{ link }} class='text-muted'>{{ name }}</a>
+      {% else %}
+      <a href={{ link }} class=''>{{ name }}</a>
+      {% endif %}
+    </span>
+  </li>
+  {% endfor %}
+  {{ debug }}
+</ul>

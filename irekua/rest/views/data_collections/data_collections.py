@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.response import Response
 
 from database import models
 from rest import filters
@@ -224,7 +225,32 @@ class CollectionViewSet(utils.CustomViewSetMixin, ModelViewSet):
             collection_id = self.kwargs['pk']
             return model.objects.filter(collection=collection_id)
 
+        if self.action == 'item_locations':
+            collection_id = self.kwargs['pk']
+            return self.get_item_locations_queryset(collection_id)
+
+        if self.action == 'site_locations':
+            collection_id = self.kwargs['pk']
+            return self.get_site_locations_queryset(collection_id)
+
+        if self.action == 'sampling_event_locations':
+            collection_id = self.kwargs['pk']
+            return self.get_sampling_event_locations_queryset(collection_id)
+
         return super().get_queryset()
+
+    def get_item_locations_queryset(self, collection_id):
+        # TODO: Fix queryset filtering for user
+        return models.Item.objects.filter(  # pylint: disable=E1101
+            sampling_event_device__sampling_event__collection=collection_id)
+
+    def get_site_locations_queryset(self, collection_id):
+        # TODO: Fix queryset filtering for user
+        return models.CollectionSite.objects.filter(collection=collection_id) # pylint: disable=E1101
+
+    def get_sampling_event_locations_queryset(self, collection_id):
+        # TODO: Fix queryset filtering for user
+        return models.SamplingEvent.objects.filter(collection=collection_id) # pylint: disable=E1101
 
     @action(
         detail=False,
@@ -341,3 +367,45 @@ class CollectionViewSet(utils.CustomViewSetMixin, ModelViewSet):
         search_fields=filters.items.search_fields)
     def items(self, request, pk=None):
         return self.list_related_object_view()
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.collection_sites.Filter,
+        search_fields=filters.collection_sites.search_fields)
+    def site_locations(self, request, pk=None):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        serializer = serializers.sites.CollectionSiteLocationSerializer(
+            queryset,
+            many=True,
+            read_only=True)
+        return Response(serializer.data)
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.items.Filter,
+        search_fields=filters.items.search_fields)
+    def item_locations(self, request, pk=None):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        serializer = serializers.sites.ItemLocationSerializer(
+            queryset,
+            many=True,
+            read_only=True)
+        return Response(serializer.data)
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.sampling_events.Filter,
+        search_fields=filters.sampling_events.search_fields)
+    def sampling_event_locations(self, request, pk=None):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        serializer = serializers.sites.SamplingEventLocationSerializer(
+            queryset,
+            many=True,
+            read_only=True)
+        return Response(serializer.data)

@@ -1,0 +1,18 @@
+{% extends 'selia/components/views/base.html' %}
+{% load leaflet_tags %}
+{% load static %}
+
+{% block card-header %}
+<div class="card-img-top w-100" style="height: var(--card-head); background-color: var(--map-color);"></div>
+{% endblock %}
+
+{% block card-body %}
+<div class="card-body container-fluid card-content p-0">
+  {% leaflet_map "my_map" %}
+</div>
+
+<script type="text/javascript">
+  var mapUrl = "{{ map_url }}";
+</script>
+<script type="text/javascript" src={% static 'selia/js/grid/map_manager.js' %}></script>
+{% endblock %}

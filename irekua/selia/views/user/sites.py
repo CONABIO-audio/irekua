@@ -1,21 +1,43 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django import forms
 
 from database.models import Site
-from selia.utils import ModelSerializer
+from selia.views.components.grid import GridView
+from rest.filters.sites import UserFilter
+from django import forms
+
+from database.models import Site
 
 
-class SiteTable(ModelSerializer):
+class SiteUpdateForm(forms.ModelForm):
     class Meta:
         model = Site
-        fields = ['id', 'name', 'locality']
+        fields = ['name','locality','site_type','altitude','metadata']
+
+class UpdateForm(forms.ModelForm):
+    class Meta:
+        model = Site
+        fields = [
+            'name',
+            'locality',
+            'latitude',
+            'longitude',
+            'altitude',
+            'metadata'
+        ]
 
 
-@login_required(login_url='registration:login')
-def user_sites(request):
-    user = request.user
-    sites = user.site_set.all()
+class UserSites(GridView):
+    template_name = 'selia/user/sites.html'
+    table_view_name = 'rest-api:user-sites'
+    map_view_name = 'rest-api:user-site-locations'
+    update_form = SiteUpdateForm
+    filter_class = UserFilter
+    update_form = UpdateForm
 
-    table = SiteTable(sites, many=True)
-    context = {'table': table}
-    return render(request, 'selia/user/sites.html', context)
+    def get_table_url_kwargs(self):
+        user = self.request.user
+        return {"pk": user.pk}
+
+    def get_map_url_kwargs(self):
+        user = self.request.user
+        return {"pk": user.pk}

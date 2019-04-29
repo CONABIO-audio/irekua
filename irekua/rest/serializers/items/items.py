@@ -34,7 +34,21 @@ class ListSerializer(serializers.ModelSerializer):
             'id',
             'item_type',
             'captured_on',
-            'collection',
+        )
+
+class ListCollectionSerializer(serializers.ModelSerializer):
+    collection = serializers.CharField(
+        source='sampling_event_device.sampling_event.collection',
+        read_only=True,
+        label="collection")
+
+    class Meta:
+        model = Item
+        fields = (
+            'url',
+            'id',
+            'item_type',
+            'captured_on',
         )
 
 

@@ -1,23 +1,42 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django import forms
 
-from database.models import Collection
 from database.models import CollectionDevice
-from selia.utils import ModelSerializer
+from selia.views.components.grid import GridView
+from rest.filters.collection_devices import Filter
 
 
-class DevicesTable(ModelSerializer):
+class AddDeviceForm(forms.ModelForm):
     class Meta:
         model = CollectionDevice
-        fields = ['id', 'physical_device', 'internal_id']
+        fields = [
+            'physical_device',
+            'internal_id',
+            'metadata',
+        ]
+
+class UpdateForm(forms.ModelForm):
+    class Meta:
+        model = CollectionDevice
+        fields = [
+            'internal_id',
+            'metadata',
+        ]
 
 
-@login_required(login_url='registration:login')
-def collection_devices(request, collection_name):
-    collection = Collection.objects.get(pk=collection_name)
-    queryset = collection.collectiondevice_set.all()
+class CollectionDevices(GridView):
+    template_name = 'selia/collections/detail/devices.html'
+    table_view_name = 'rest-api:collection-devices'
+    filter_class = Filter
+    update_form = UpdateForm
 
-    table = DevicesTable(queryset, many=True)
+    include_map = False
 
-    context = {'collection_name': collection_name, 'table': table}
-    return render(request, 'selia/collections/detail/devices.html', context)
+    def get_table_url_kwargs(self):
+        collection_name = self.kwargs['collection_name']
+        return {"pk": collection_name}
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data()
+        context['collection_name'] = kwargs['collection_name']
+        context['create_form'] = AddDeviceForm()
+        return context
