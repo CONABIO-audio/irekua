@@ -71,5 +71,5 @@ urlpatterns = [
 
     path('update_session/', views.update_session, name='update_session'),
 
-    path('test/', views.TestView.as_view(), name='test')
+    # path('test/', views.TestView.as_view(), name='test')
 ]
