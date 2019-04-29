@@ -100,7 +100,7 @@ function configTableTreeView() {
     };
 }
 
-function addTreeNode(node,nodeKey,nodeName,nodeId,parent,level){
+function addTreeNode(node,nodeKey,nodeName,nodeSpec,nodeId,parent,level){
 
     var tr = detailBody.insertRow();
     var strId = nodeId.toString();
@@ -128,7 +128,17 @@ function addTreeNode(node,nodeKey,nodeName,nodeId,parent,level){
 
         for (var key in node){
             if (key != "url"){
-                nodeId = addTreeNode(node[key],key,selectionLabels.actions.GET[nodeKey].children[key]["label"],nodeId,strId,level+1)
+                var childSpec = null;
+                if (nodeSpec != null){
+                    if (nodeSpec["type"] === "field"){
+                        nodeId = addTreeNode(node[key],key,key,childSpec,nodeId,strId,level+1)
+                    }else{
+                        nodeId = addTreeNode(node[key],key,nodeSpec.children[key]["label"],nodeSpec.children[key],nodeId,strId,level+1)
+                    }
+                }else{
+                        nodeId = addTreeNode(node[key],key,key,childSpec,nodeId,strId,level+1)
+                }
+                
             }
         }
 
@@ -153,7 +163,7 @@ function updateDetailBody() {
         for (var key in selectionMeta){
             if (key != "url"){
 
-                nextId = addTreeNode(selectionMeta[key],key,selectionLabels.actions.GET[key]["label"],nextId,"0",1)
+                nextId = addTreeNode(selectionMeta[key],key,selectionLabels.actions.GET[key]["label"],selectionLabels.actions.GET[key],nextId,"0",1)
             }
         }
     }
@@ -172,7 +182,7 @@ function loadFormValues(){
         var newText = $("#detail_"+key).text();
         var input_field = $("#id_"+key);
         if ($("#detail_"+key).attr("isNested") && newText == ""){
-            input_field.val("{}");
+            input_field.val(JSON.stringify(selectionMeta[key]));
         }else{
             input_field.val(newText);
         }
