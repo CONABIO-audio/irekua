@@ -101,6 +101,7 @@ function configTableTreeView() {
 }
 
 function addTreeNode(node,nodeKey,nodeName,nodeId,parent,level){
+
     var tr = detailBody.insertRow();
     var strId = nodeId.toString();
 
