@@ -1,9 +1,22 @@
+from django import forms
+
+from database.models import CollectionDevice
 from selia.views.components.grid import GridView
 from rest.filters.collection_devices import Filter
 
 
+class AddDeviceForm(forms.ModelForm):
+    class Meta:
+        model = CollectionDevice
+        fields = [
+            'physical_device',
+            'internal_id',
+            'metadata',
+        ]
+
+
 class CollectionDevices(GridView):
-    template_name = 'selia/collections/detail/base.html'
+    template_name = 'selia/collections/detail/devices.html'
     table_view_name = 'rest-api:collection-devices'
     filter_class = Filter
 
@@ -16,4 +29,5 @@ class CollectionDevices(GridView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data()
         context['collection_name'] = kwargs['collection_name']
+        context['create_form'] = AddDeviceForm()
         return context

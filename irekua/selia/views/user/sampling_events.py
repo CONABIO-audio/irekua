@@ -3,7 +3,7 @@ from rest.filters.sampling_events import Filter
 
 
 class UserSamplingEvents(GridView):
-    template_name = 'selia/user/grid.html'
+    template_name = 'selia/user/sampling_events.html'
     table_view_name = 'rest-api:user-sampling-events'
     map_view_name = 'rest-api:user-sampling-event-locations'
 

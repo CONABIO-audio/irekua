@@ -3,7 +3,7 @@ from rest.filters.data_collections import Filter
 
 
 class UserCollections(GridView):
-    template_name = 'selia/collections/base.html'
+    template_name = 'selia/collections/collections.html'
     table_view_name = 'rest-api:user-collections'
     filter_class = Filter
 

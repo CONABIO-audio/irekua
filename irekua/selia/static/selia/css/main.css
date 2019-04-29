@@ -4,6 +4,7 @@
   --map-color: #B49594;
   --summary-color: #8CC7A1;
   --table-color: #CADBC8;
+  --toolbar-color: #CC8B86;
 }
 
 .main-navbar {
@@ -11,13 +12,12 @@
 }
 
 .secondary-navbar {
-  /* height: 40px; */
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+  /* background-color: var(--toolbar-color); */
 }
 
 .tool-bar {
-  /* height: 40px; */
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+  /* background-color: var(--toolbar-color); */
+  box-shadow: 0 2px 2px 0px rgba(0, 0, 0, 0.19);
 }
 
 .sidebar {

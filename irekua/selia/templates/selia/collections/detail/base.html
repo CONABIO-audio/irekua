@@ -1,10 +1,5 @@
 {% extends 'selia/user/base.html' %}
-{% load grid %}
 
 {% block secondary-navbar %}
 {% include 'selia/collections/detail/components/secondary_navbar.html' %}
 {% endblock secondary-navbar %}
-
-{% block main-content %}
-{% grid grid_config table_info map_info %}
-{% endblock main-content %}

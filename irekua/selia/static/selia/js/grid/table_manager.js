@@ -288,7 +288,8 @@ $(document).ready(function() {
   $('#searchForm').submit(function(event) {
     event.preventDefault();
 
-    searchQueryStr = $(this).serialize()
+    searchQueryStr = $(this).serialize();
+    page = 1;
     getTableData();
   });
 

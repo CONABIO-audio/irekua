@@ -2,7 +2,7 @@ from selia.views.components.grid import GridView
 
 
 class SamplingEventHome(GridView):
-    template_name = 'selia/sampling_events/base.html'
+    template_name = 'selia/sampling_events/home.html'
     map_view_name = 'rest-api:samplingevent-location'
 
     include_table = False

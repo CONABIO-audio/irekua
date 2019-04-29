@@ -3,7 +3,7 @@ from rest.filters.items import Filter
 
 
 class UserItems(GridView):
-    template_name = 'selia/user/grid.html'
+    template_name = 'selia/user/items.html'
     table_view_name = 'rest-api:user-items'
     map_view_name = 'rest-api:user-item-locations'
     filter_class = Filter

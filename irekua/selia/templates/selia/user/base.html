@@ -1,5 +1,6 @@
 {% extends 'selia/base.html' %}
 {% load static from staticfiles %}
+{% load grid %}
 {% load leaflet_tags %}
 
 {% block head-extra %}
@@ -25,13 +26,15 @@
     {% else %}
     <div class="col-md-12 container-fluid main-content h-100 p-0" id="content">
     {% endif %}
-      <nav class="navbar navbar-expand navbar-light bg-light secondary-navbar p-1 box-shadow">
+      <nav class="navbar navbar-expand navbar-light bg-light secondary-navbar p-1">
         {% block secondary-navbar %}
         {% include 'selia/user/components/secondary_navbar.html' %}
         {% endblock secondary-navbar %}
       </nav>
       {% block toolbar %}
-      <nav class="navbar navbar-expand navbar-dark bg-dark tool-bar p-0 box-shadow">
+      <nav class="navbar navbar-expand navbar-light bg-light tool-bar pl-5 p-0">
+        <a class="navbar-brand" href="#">{% block toolbar-title %}{% endblock %}</a>
+
         <div class="container">
           <ul class="nav">
             {% block toolbar-items %}
@@ -42,6 +45,7 @@
       {% endblock toolbar %}
 
       {% block main-content %}
+      {% grid grid_config table_info map_info %}
       {% endblock main-content %}
     </div>
   </div>

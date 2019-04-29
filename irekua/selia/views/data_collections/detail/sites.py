@@ -3,7 +3,7 @@ from rest.filters.sites import Filter
 
 
 class CollectionSites(GridView):
-    template_name = 'selia/collections/detail/base.html'
+    template_name = 'selia/collections/detail/sites.html'
     table_view_name = 'rest-api:collection-sites'
     map_view_name = 'rest-api:collection-site-locations'
     filter_class = Filter
