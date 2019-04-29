@@ -17,6 +17,19 @@ var pageSize = 5;
 var page = 1;
 
 
+function getFormatedDatum(datum, key) {
+  var data = datum[key];
+  var metadata = tableHeadData.actions.GET[key];
+
+  if (metadata.type == "datetime") {
+    var date = new Date(data);
+    return date.toLocaleString('es-es');
+  }
+
+  return data;
+}
+
+
 function loadConfiguration() {
   var text = $('#withTableLinks').text().trim();
   var withTableLinks = text.toLowerCase() == "true";
@@ -169,6 +182,7 @@ function updateTableBody() {
     }
 
     tr.setAttribute('url', datum['url']);
+    tr.className = (pk == currentSelection) ? "table-warning": "";
     tr.onclick = function() {
       setCurrentSelection(pk, datum['url'])
     }
@@ -177,7 +191,8 @@ function updateTableBody() {
       if (key.toLowerCase() == 'url') continue;
 
       var td = tr.insertCell();
-      td.appendChild(document.createTextNode(datum[key]));
+      var data = getFormatedDatum(datum, key);
+      td.appendChild(document.createTextNode(data));
     }
 
     if (tableConfiguration['withTableLinks']) {
@@ -215,7 +230,6 @@ function getTableData() {
   }
 
   var url = getTableUrl();
-  console.log(url);
 
   $.ajax({
     type: 'GET',
@@ -249,6 +263,8 @@ function tableInit() {
   updatePageSizeSelectionMenu();
   getTableData();
   getTableHeadData();
+
+  registerUpdater('selection', updateTableBody);
 }
 
 
@@ -258,7 +274,9 @@ $(document).ready(function() {
     getTableData();
   });
 
-  $('#searchForm').submit(function() {
+  $('#searchForm').submit(function(event) {
+    event.preventDefault();
+
     searchQueryStr = $(this).serialize()
     getTableData();
   });
@@ -267,22 +285,6 @@ $(document).ready(function() {
     pageSize = $(this).serialize()
     getTableData();
   });
-
-  $('.django-form').submit(function() {
-    var data = `${$(this).serialize()}&action=${$(this).attr('id')}`;
-    $.ajax({
-      data: data,
-      type: $(this).attr('method'),
-      url: $(this).attr('action'),
-      success: function(response) {
-          $(this).parent().html(response);
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.log({jqXHR, textStatus, errorThrown})
-      }
-    });
-    return false;
-  })
 
   tableInit();
 });

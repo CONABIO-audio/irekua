@@ -42,6 +42,28 @@ class ListSerializer(serializers.ModelSerializer):
         )
 
 
+class UserListSerializer(serializers.ModelSerializer):
+    collection_site = serializers.CharField(
+        read_only=True,
+        source='collection_site.site.name')
+    site_internal_id = serializers.PrimaryKeyRelatedField(
+        read_only=True,
+        source='collection_site.internal_id')
+
+    class Meta:
+        model = SamplingEvent
+        fields = (
+            'url',
+            'id',
+            'collection',
+            'sampling_event_type',
+            'collection_site',
+            'site_internal_id',
+            'started_on',
+            'ended_on',
+        )
+
+
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
     created_by = users.SelectSerializer(
         many=False,
