@@ -28,3 +28,4 @@ from .update_session import update_session
 from .upload import upload
 from .upload import photo_list
 from .upload import upload_photo
+from .upload import delete_photo

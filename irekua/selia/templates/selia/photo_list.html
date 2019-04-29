@@ -43,7 +43,12 @@
 					<i class="fas fa-file-download"></i>
 				</a>
 			</td>
-			<td><i class="fas fa-trash-alt"></i></td>
+			<td>
+				<form method="post" action="{% url 'selia:delete_photo' photo.pk %}">
+					{% csrf_token %}
+					<button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+				</form>
+			</td>
 			<td><i class="fas fa-edit"></i></td>
 		</tr>
 		{% endfor %}

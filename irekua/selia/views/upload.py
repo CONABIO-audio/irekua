@@ -39,3 +39,11 @@ def upload_photo(request):
     return render(request, 'selia/upload_photo.html',{
         'form': form
     })
+
+def delete_photo(request, pk):
+    if request.method == 'POST':
+        photo = Item.objects.get(pk=pk)
+        photo.delete()
+    return redirect('selia:photo_list')
+
+

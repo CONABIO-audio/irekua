@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.urls import path
 from . import views
 
@@ -10,6 +11,7 @@ urlpatterns = [
     path('upload/', views.upload, name='upload'),
     path('photos/', views.photo_list, name='photo_list'),
     path('photos/upload', views.upload_photo, name='upload_photo'),
+    path('photos/<int:pk>/', views.delete_photo, name='delete_photo'),
 
     path('user/', views.user_home, name='user_home'),
     path('user/sites/', views.user_sites, name='user_sites'),
