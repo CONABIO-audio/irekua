@@ -6,6 +6,11 @@
 {% endblock %}
 
 {% block content %}
+<div class="container-fluid flex-row d-flex justify-content-end h-10">
+  <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#filterModal">
+    Modificar
+  </button>
+</div>
 <div class="container-fluid h-100 p-0 mt-3" id="detailContainer">
 </div>
 <script type="text/javascript" src={% static 'selia/js/grid/detail_manager.js' %}></script>
