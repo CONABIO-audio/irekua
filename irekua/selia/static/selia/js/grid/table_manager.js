@@ -1,4 +1,3 @@
-var tableUrl;
 var tableElement;
 var tableData;
 var tableHeadData;
@@ -40,14 +39,6 @@ function getFormatedDatum(datum, key) {
 
   return document.createTextNode(data);
 }
-
-
-function loadConfiguration() {
-  var text = $('#withTableLinks').text().trim();
-  var withTableLinks = text.toLowerCase() == "true";
-  tableConfiguration['withTableLinks'] = withTableLinks;
-}
-
 
 function linkElements() {
   if (tableElement === undefined) {
@@ -172,7 +163,7 @@ function updateTableHead() {
     tr.appendChild(th);
   }
 
-  if (tableConfiguration['withTableLinks']) {
+  if (withTableLinks) {
     var th = document.createElement('th');
     th.appendChild(document.createTextNode("acciones"));
     tr.appendChild(th);
@@ -206,7 +197,7 @@ function updateTableBody() {
       td.appendChild(getFormatedDatum(datum, key));
     }
 
-    if (tableConfiguration['withTableLinks']) {
+    if (withTableLinks) {
       var td = tr.insertCell();
 
       var link = document.createElement('a');
@@ -269,13 +260,13 @@ function getTableHeadData() {
 }
 
 function tableInit() {
-  loadConfiguration()
   linkElements();
   updatePageSizeSelectionMenu();
   getTableData();
   getTableHeadData();
 
   registerUpdater('selection', updateTableBody);
+  registerUpdater('update', updateTableBody);
 }
 
 

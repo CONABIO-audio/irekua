@@ -41,13 +41,6 @@
   </div>
 </div>
 
-<div id="tableUrl" style="display: none">
-  {{ table_url }}
-</div>
-<div id="withTableLinks" style="display: none">
-  {{ with_table_links }}
-</div>
-
 <!-- Modal -->
 <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -68,7 +61,13 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  var tableUrl = "{{ table_url }}";
+  var withTableLinks = {{ with_table_links|yesno:"true,false" }};
+</script>
 <script type="text/javascript" src={% static 'selia/js/grid/table_manager.js' %}></script>
+
 
 {% endblock content %}
 

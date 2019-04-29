@@ -1,9 +1,9 @@
-var hoverSelection = null;
-var currentSelection = null;
-var selectionUrl = null;
-var selectionMeta = null;
-var selectionLabels = null;
-var updateResponse = null;
+var hoverSelection;
+var currentSelection;
+var selectionUrl;
+var selectionMeta;
+var selectionLabels;
+var updateResponse;
 var updaters = {};
 
 function registerUpdater(actionName, updater) {
@@ -50,7 +50,7 @@ function setCurrentSelection(uId, url) {
 }
 
 function afterUpdate(updateRes) {
-	newMeta = Object.assign(selectionMeta,updateRes);
+	newMeta = Object.assign(selectionMeta, updateRes);
 	selectionMeta = newMeta;
 	refreshViews('update');
 }

@@ -4,11 +4,22 @@
 {% load summary %}
 {% load static %}
 
+
 <script type="text/javascript" src={% static 'selia/js/grid/grid_manager.js' %}></script>
+{% if grid_config.detail %}
+<script type="text/javascript">
+  currentSelection = "{{ grid_config.selection_pk }}";
+  selectionUrl = "{{ grid_config.selection_url }}";
+
+  $(document).ready(function() {
+    getSelectionMetadata(successCallback=function(){refreshViews('selection');});
+  })
+</script>
+{% endif %}
 <div class="fluid-container panel-container">
   <div class="row ml-0 mr-0 h-100">
-    {% if grid_config.include_table or grid_config.include_detail %}
-    {% if grid_config.include_map or grid_config.include_summary%}
+    {% if grid_config.include_table or grid_config.include_map %}
+    {% if grid_config.include_detail or grid_config.include_summary%}
     <div class="col-sm-6 h-100 p-0">
     {% else %}
     <div class="col h-100 p-0">
@@ -18,18 +29,22 @@
         {% table table_info %}
       </div>
       {% endif %}
-      {% if grid_config.include_detail %}
+      {% if grid_config.include_map %}
       <div class="row p-2 m-0 panel">
-        {% detail detail_info %}
+        {% map_view map_info %}
       </div>
       {% endif %}
     </div>
     {% endif %}
-    {% if grid_config.include_map or grid_config.include_summary%}
+    {% if grid_config.include_detail or grid_config.include_summary%}
+    {% if grid_config.include_table or grid_config.include_map %}
     <div class="col-sm-6 h-100 p-0">
-      {% if grid_config.include_map %}
+    {% else %}
+    <div class="col h-100 p-0">
+    {% endif %}
+      {% if grid_config.include_detail %}
       <div class="row p-2 m-0 panel">
-        {% map_view map_info %}
+        {% detail detail_info %}
       </div>
       {% endif %}
       {% if grid_config.include_summary %}

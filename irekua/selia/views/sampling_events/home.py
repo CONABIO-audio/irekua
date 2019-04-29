@@ -18,9 +18,14 @@ class UpdateForm(forms.ModelForm):
 class SamplingEventHome(GridView):
     template_name = 'selia/sampling_events/home.html'
     map_view_name = 'rest-api:samplingevent-location'
+    detail_view_name = 'rest-api:samplingevent-detail'
     update_form = UpdateForm
 
     include_table = False
+    detail = True
+
+    def get_object_pk(self):
+        return self.kwargs['sampling_event_id']
 
     def get_map_url_kwargs(self):
         collection_name = self.kwargs['sampling_event_id']

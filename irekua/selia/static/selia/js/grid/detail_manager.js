@@ -113,7 +113,7 @@ function addTreeNode(node,nodeKey,nodeName,nodeId,parent,level){
     var val_col = document.createElement('td');
 
     val_col.setAttribute("id","detail_"+nodeKey);
-    
+
 
     name_col.appendChild(document.createTextNode(nodeName));
     name_col.setAttribute("data-column","name")
@@ -125,7 +125,7 @@ function addTreeNode(node,nodeKey,nodeName,nodeId,parent,level){
         val_col.appendChild(document.createTextNode(""));
         tr.appendChild(name_col);
         tr.appendChild(val_col);
-        
+
         for (var key in node){
             if (key != "url"){
                 nodeId = addTreeNode(node[key],key,selectionLabels.actions.GET[nodeKey].children[key]["label"],nodeId,strId,level+1)
@@ -176,7 +176,7 @@ function loadFormValues(){
         }else{
             input_field.val(newText);
         }
-        
+
         formChanged = false;
       }
 }

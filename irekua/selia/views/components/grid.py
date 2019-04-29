@@ -8,10 +8,11 @@ class GridView(TemplateView):
     template_name = "selia/test.html"
     with_table_links = False
 
+    detail = False
     include_table = True
     include_map = True
     include_detail = True
-    include_summary = True
+    include_summary = False
 
     def enter_child(self, data):
         args = list(self.kwargs.values()) + [data['pk']]
@@ -79,15 +80,29 @@ class GridView(TemplateView):
     def get_detail_context_data(self):
         return {'update_form' : self.update_form()}
 
+    def get_object_pk(self):
+        return list(self.kwargs.values())[0]
+
+    def get_object_url(self):
+        if self.detail:
+            pk = self.get_object_pk()
+            return pk, reverse(self.detail_view_name, args=[pk])
+
+        return None, None
+
     def get_grid_context_data(self):
+        selection_pk, selection_url = self.get_object_url()
+
         grid_context = {
             'include_map': self.include_map,
             'include_detail': self.include_detail,
             'include_table': self.include_table,
             'include_summary': self.include_summary,
+            'detail': self.detail,
+            'selection_url': selection_url,
+            'selection_pk': selection_pk,
         }
         return grid_context
-
 
     def get_context_data(self, *args, **kwargs):
         context = {
