@@ -6,14 +6,15 @@ var tableBody;
 var tableHead;
 var tableFoot;
 var tablePagination;
+var tablePageSizeMenu;
 
 var tableConfiguration = {};
 
 var filterQueryStr = "";
 var searchQueryStr = "";
-var pageSizeStr = "";
-
-var defaultPageSize = 10;
+var pageSizeOptions = [5, 10, 20, 50, 100];
+var pageSize = 5;
+var page = 1;
 
 
 function loadConfiguration() {
@@ -23,21 +24,116 @@ function loadConfiguration() {
 }
 
 
-function createTable() {
+function linkElements() {
   if (tableElement === undefined) {
     tableElement = document.getElementById('table');
+  }
+
+  if (tableHead === undefined) {
     tableHead = document.getElementById('tableHead');
+  }
+
+  if (tableBody === undefined) {
     tableBody = document.getElementById('tableBody');
+  }
+
+  if (tableFoot === undefined) {
     tableFoot = document.getElementById('tableFoot');
+  }
+
+  if (tablePagination === undefined) {
+    tablePagination = document.getElementById('pagination');
+  }
+
+  if (tablePageSizeMenu === undefined) {
+    tablePageSizeMenu = document.getElementById('pageSizeSelector');
+  }
+}
+
+function pageSizeMenuOnClickFactory(pageSizeOption) {
+  return function() {
+    pageSize = pageSizeOption;
+    getTableData();
+    updatePageSizeSelectionMenu();
   }
 }
 
 
-function createPaginator() {
-  if (tablePagination === undefined) {
+function updatePageSizeSelectionMenu() {
+  clearElement(tablePageSizeMenu);
 
+  for (var i = 0; i < pageSizeOptions.length; i++) {
+    var pageSizeOption = pageSizeOptions[i];
+    var a = document.createElement('a');
+    a.className = (pageSizeOption == pageSize) ? "dropdown-item active" : "dropdown-item";
+    a.href = "#";
+    a.onclick = pageSizeMenuOnClickFactory(pageSizeOption);
+    a.appendChild(document.createTextNode(pageSizeOption));
+
+    tablePageSizeMenu.appendChild(a);
+  }
+}
+
+
+function clearElement(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+
+
+function paginationOnClickFactory(index) {
+  return function() {
+    page = index;
+    getTableData();
+  }
+}
+
+function updatePagination() {
+  clearElement(tablePagination);
+
+  var li = document.createElement('li');
+  li.className = "page-item";
+  var a = document.createElement('a');
+  a.className = "page-link";
+  a.setAttribute("aria-label", "Previous");
+  var span = document.createElement('span');
+  span.setAttribute("aria-hidden", "true");
+
+  span.appendChild(document.createTextNode('\u00AB'));
+  a.appendChild(span);
+  li.appendChild(a);
+  tablePagination.appendChild(li);
+
+  var count = tableData.count;
+  var pages = Math.ceil(parseInt(count) / parseInt(pageSize));
+  var reference = document.getElementById('next');
+  for (var i = 1; i <= pages; i++) {
+    var li = document.createElement('li');
+    li.className = (page === i) ? "page-item active" : "page-item";
+
+    var a = document.createElement('a');
+    a.className = "page-link";
+    a.href = "#";
+    a.onclick = paginationOnClickFactory(i)
+    a.appendChild(document.createTextNode(i));
+
+    li.appendChild(a);
+    tablePagination.appendChild(li);
   }
 
+  li = document.createElement('li');
+  li.className = "page-item";
+  a = document.createElement('a');
+  a.className = "page-link";
+  a.setAttribute("aria-label", "Next");
+  span = document.createElement('span');
+  span.setAttribute("aria-hidden", "true");
+
+  span.appendChild(document.createTextNode('\u00BB'));
+  a.appendChild(span);
+  li.appendChild(a);
+  tablePagination.appendChild(li);
 }
 
 function updateTableHead() {
@@ -56,14 +152,11 @@ function updateTableHead() {
     th.appendChild(document.createTextNode("acciones"));
     tr.appendChild(th);
   }
-
-
 }
 
+
 function updateTableBody() {
-  while (tableBody.firstChild) {
-    tableBody.removeChild(tableBody.firstChild);
-  }
+  clearElement(tableBody)
 
   tableData.results.forEach(function(datum) {
     var tr = tableBody.insertRow();
@@ -90,7 +183,6 @@ function updateTableBody() {
     if (tableConfiguration['withTableLinks']) {
       var td = tr.insertCell();
 
-
       var link = document.createElement('a');
       link.className = "btn btn-link"
       link.appendChild(document.createTextNode("Entrar"))
@@ -107,7 +199,13 @@ function updateTableBody() {
 
 
 function setTableUrl() {
-  tableUrl = $('#tableUrl').text();
+  tableUrl = $('#tableUrl').text().trim();
+}
+
+function getTableUrl() {
+  var searchStr = (searchQueryStr === "") ? "" : "&" + searchQueryStr;
+  var queryStr = (filterQueryStr === "") ? "" : "&" + filterQueryStr;
+  return `${tableUrl}?page=${page}&page_size=${pageSize}${searchStr}${queryStr}`;
 }
 
 
@@ -116,7 +214,8 @@ function getTableData() {
     setTableUrl();
   }
 
-  var url = `${tableUrl}?${filterQueryStr}`;
+  var url = getTableUrl();
+  console.log(url);
 
   $.ajax({
     type: 'GET',
@@ -124,6 +223,7 @@ function getTableData() {
     success: function(response) {
       tableData = response;
       updateTableBody();
+      updatePagination();
     }
   });
 }
@@ -143,13 +243,14 @@ function getTableHeadData() {
   });
 }
 
-
-function init() {
+function tableInit() {
   loadConfiguration()
-  createTable();
+  linkElements();
+  updatePageSizeSelectionMenu();
   getTableData();
   getTableHeadData();
 }
+
 
 $(document).ready(function() {
   $('#filterForm').submit(function() {
@@ -163,7 +264,7 @@ $(document).ready(function() {
   });
 
   $('#pageSizeForm').submit(function() {
-    pageSizeStr = $(this).serialize()
+    pageSize = $(this).serialize()
     getTableData();
   });
 
@@ -183,5 +284,5 @@ $(document).ready(function() {
     return false;
   })
 
-  init();
+  tableInit();
 });

@@ -7,25 +7,28 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid flex-row d-flex justify-content-end h-10">
-  <form class="form-inline django-form m-2" action="#" method="post" id="pageSizeForm">
-    <select name="page_size">
-      <option>10</option>
-      <option>20</option>
-      <option>50</option>
-      <option>100</option>
-    </select>
-  </form>
-  <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#filterModal">
-    Filtrar
+<div class="container-fluid flex-row d-flex justify-content-between h-10">
+  <div aria-label="table pagination" class="mt-2">
+    <ul class="pagination" id="pagination">
+    </ul>
+  </div>
+  <div class="dropdown btn">
+    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Registros por hoja
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="pageSizeSelector">
+    </div>
+  </div>
+  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#filterModal">
+    Filtrar <i class="fas fa-filter"></i>
   </button>
-  <form class="form-inline django-form m-2" id="searchForm">
-    <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
+  <form class="form-inline django-form" id="searchForm">
+    <input class="form-control mr-sm-2" name="search" type="search" placeholder="Buscar" aria-label="Search">
+    <button class="btn btn-link my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
   </form>
 </div>
 <div class="container-fluid p-0 mt-3" id="tableContainer">
-  <table class="table" id="table">
+  <table class="table table-hover" id="table">
     <thead id="tableHead">
     </thead>
     <tbody class="table-body" id="tableBody">

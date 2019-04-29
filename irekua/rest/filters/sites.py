@@ -1,6 +1,8 @@
+from django.utils.translation import gettext as _
 import django_filters
 
 from database.models import Site
+
 from .utils import BaseFilter
 
 
@@ -11,34 +13,65 @@ search_fields = (
 )
 
 
-class Filter(BaseFilter):
+class SiteBaseFilter(BaseFilter):
     latitude__gt = django_filters.NumberFilter(
         field_name='latitude',
-        label='latitude >',
+        label=_('Latitude greater than'),
         lookup_expr='gt')
     latitude__lt = django_filters.NumberFilter(
         field_name='latitude',
+        label=_('Latitude less than'),
         lookup_expr='lt')
 
     longitude__gt = django_filters.NumberFilter(
         field_name='longitude',
+        label=_('Longitude greater than'),
         lookup_expr='gt')
     longitude__lt = django_filters.NumberFilter(
         field_name='longitude',
+        label=_('Longitude less than'),
         lookup_expr='lt')
 
     altitude__gt = django_filters.NumberFilter(
         field_name='altitude',
+        label=_('Altitude less than'),
         lookup_expr='gt')
     altitude__lt = django_filters.NumberFilter(
         field_name='altitude',
+        label=_('Altitude less than'),
         lookup_expr='lt')
 
     class Meta:
         model = Site
         fields = (
             'name',
-            'site_type__name',
+            'site_type',
             'locality',
+        )
+        extra_kwargs = {
+            'site_type__name': {
+                'label': _('site type')
+            }
+        }
+
+
+class Filter(SiteBaseFilter):
+    class Meta:
+        model = Site
+        fields = (
             'created_by',
         )
+
+class UserFilter(SiteBaseFilter):
+    class Meta:
+        model = Site
+        fields = (
+            'name',
+            'site_type',
+            'locality',
+        )
+        extra_kwargs = {
+            'site_type__name': {
+                'label': _('site type')
+            }
+        }
