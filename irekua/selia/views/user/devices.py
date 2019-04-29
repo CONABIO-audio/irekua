@@ -9,14 +9,13 @@ from database.models import PhysicalDevice
 class PhysicalDeviceUpdateForm(forms.ModelForm):
     class Meta:
         model = PhysicalDevice
-        fields = "__all__"
-
+        fields = ['serial_number','metadata']
 
 class UserDevices(GridView):
     template_name = 'selia/user/devices.html'
     table_view_name = 'rest-api:user-devices'
     filter_class = Filter
-    #update_form = PhysicalDeviceUpdateForm
+    update_form = PhysicalDeviceUpdateForm
 
     include_map = False
 
