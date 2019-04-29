@@ -1,6 +1,4 @@
 {% extends 'selia/collections/base.html' %}
-{% load model_table %}
+{% load i18n %}
 
-{% block main-content %}
-{% model_table table %}
-{% endblock main-content %}
+{% block toolbar-title %}{% trans "My Collections" %}{% endblock %}

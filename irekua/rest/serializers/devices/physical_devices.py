@@ -79,5 +79,6 @@ class UpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = PhysicalDevice
         fields = (
+            'serial_number',
             'metadata',
         )

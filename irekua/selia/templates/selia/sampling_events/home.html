@@ -1,33 +1,4 @@
 {% extends 'selia/sampling_events/base.html' %}
-{% load leaflet_tags %}
-{% load generic_detail %}
+{% load i18n %}
 
-{% block main-content %}
-<div class="fluid-container panel-container">
-  <div class="row ml-0 mr-0 h-100">
-    <div class="col h-100 panel">
-      {% generic_detail serialized_object%}
-    </div>
-    <div class="col h-100 p-0">
-      <div class="row panel">
-        <div class="container-fluid p-0">
-          <nav class="nav bg-info navbar-sticky" style="height: var(--panel-header); background-color: var(--map-color);">
-          </nav>
-        </div>
-        <div class="container-fluid p-0">
-          {% leaflet_map "yourmap" %}
-        </div>
-      </div>
-      <div class="row panel">
-        <div class="container-fluid p-0">
-          <nav class="nav navbar-sticky" style="height: var(--panel-header); background-color: var(--summary-color);">
-          </nav>
-        </div>
-        <div class="container-fluid p-0">
-          resumen
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-{% endblock main-content %}
+{% block toolbar-title %}{% trans "Sampling Event Devices" %}{% endblock %}

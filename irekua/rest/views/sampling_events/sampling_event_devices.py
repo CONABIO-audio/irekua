@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from database import models
 from rest import serializers
@@ -34,7 +35,7 @@ class SamplingEventDeviceViewSet(mixins.UpdateModelMixin,
 
     permission_mapping = utils.PermissionMapping({
         utils.Actions.RETRIEVE: IsAuthenticated # TODO: Fix permissions
-    }, default=[IsAuthenticated, IsAdmin])
+    }, default=[IsAuthenticated])
 
     def get_object(self):
         device_pk = self.kwargs['pk']
@@ -72,3 +73,14 @@ class SamplingEventDeviceViewSet(mixins.UpdateModelMixin,
     @items.mapping.post
     def add_item(self, request, pk=None):
         self.create_related_object_view()
+
+    @action(
+        detail=True,
+        methods=['GET'])
+    def location(self, request, pk=None):
+        sampling_event_device = self.get_object()
+        serializer = serializers.sites.SamplingEventDeviceLocationSerializer(
+            [sampling_event_device],
+            many=True)
+
+        return Response(serializer.data)
