@@ -1,27 +1,25 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-
-from database.models import Collection
-from database.models import SamplingEvent
-from selia.utils import ModelSerializer
+from selia.views.components.grid import GridView
+from rest.filters.sampling_events import Filter
 
 
-class SamplingEventTable(ModelSerializer):
-    with_link = True
-    detail_view = 'selia:sampling_event_home'
-    url_args = ['id']
+class CollectionSamplingEvents(GridView):
+    template_name = 'selia/collections/detail/base.html'
+    table_view_name = 'rest-api:collection-sampling-events'
+    map_view_name = 'rest-api:collection-sampling-event-locations'
+    filter_class = Filter
 
-    class Meta:
-        model = SamplingEvent
-        fields = ['id', 'started_on', 'ended_on']
+    with_table_links = True
+    child_view_name = 'selia:sampling_event_home'
 
+    def get_table_url_kwargs(self):
+        collection_name = self.kwargs['collection_name']
+        return {"pk": collection_name}
 
-@login_required(login_url='registration:login')
-def collection_sampling_events(request, collection_name):
-    collection = Collection.objects.get(pk=collection_name)
-    queryset = collection.samplingevent_set.all()
+    def get_map_url_kwargs(self):
+        collection_name = self.kwargs['collection_name']
+        return {"pk": collection_name}
 
-    table = SamplingEventTable(queryset, many=True, pre_args=[collection_name])
-
-    context = {'collection_name': collection_name, 'table': table}
-    return render(request, 'selia/collections/detail/sampling_events.html', context)
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data()
+        context['collection_name'] = kwargs['collection_name']
+        return context

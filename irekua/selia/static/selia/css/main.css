@@ -1,9 +1,9 @@
 :root {
-  --card-head: 15px;
-  --detail-color: #D8DDEF;
-  --map-color: #A0A4B8;
-  --summary-color: #7293A0;
-  --table-color: #7293A0;
+  --card-head: 10px;
+  --detail-color: #E2D4B7;
+  --map-color: #B49594;
+  --summary-color: #8CC7A1;
+  --table-color: #CADBC8;
 }
 
 .main-navbar {
@@ -50,14 +50,17 @@
   overflow: hidden;
   padding-left: 1em;
   padding-right: 1em;
+  padding-top: 1em;
 }
 
 .panel {
   overflow-x: hidden;
   overflow-y: hidden;
-  padding: 0!important;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   min-height: 30%;
+}
+
+.card {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
 }
 
 .panel-header {
@@ -73,7 +76,7 @@
 #tableContainer {
   overflow-y: auto;
   max-height: 40vh;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.1);
 }
 
 .treegrid-indent {

@@ -27,6 +27,8 @@ TREE_DATA = OrderedDict({
         'sampling_event_home', None),
     'sampling_event_items': (_('Sampling Event Items'),
         'sampling_event_home', None),
+    'sampling_event_device_home': (None, 'sampling_event_devices', 'sampling_event_device_id'),
+    'sampling_event_device_items': (_('Sampling Event Device Items'), 'sampling_event_device_home', None),
 })
 
 

@@ -23,10 +23,22 @@ function getFormatedDatum(datum, key) {
 
   if (metadata.type == "datetime") {
     var date = new Date(data);
-    return date.toLocaleString('es-es');
+    return document.createTextNode(date.toLocaleString('es-es'));
   }
 
-  return data;
+  if (metadata.type.includes("image")) {
+    if (datum[key] == null) {
+      return document.createTextNode("")
+    }
+
+    var img = document.createElement("img");
+    img.src = datum[key];
+    img.alt = metadata.label;
+    img.style = "max-height: 70px; margin: 0;";
+    return img;
+  }
+
+  return document.createTextNode(data);
 }
 
 
@@ -191,8 +203,7 @@ function updateTableBody() {
       if (key.toLowerCase() == 'url') continue;
 
       var td = tr.insertCell();
-      var data = getFormatedDatum(datum, key);
-      td.appendChild(document.createTextNode(data));
+      td.appendChild(getFormatedDatum(datum, key));
     }
 
     if (tableConfiguration['withTableLinks']) {

@@ -91,7 +91,7 @@ class UserViewSet(mixins.ListModelMixin,
 
         if self.action == 'collections':
             user = self.get_object()
-            return user.collection_set.all()
+            return user.collection_users.all()
 
         if self.action == 'sampling_events' or self.action == 'sampling_event_locations':
             user = self.get_object()

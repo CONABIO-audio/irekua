@@ -1,25 +1,19 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-
-from database.models import Collection
-from selia.utils import ModelSerializer
+from selia.views.components.grid import GridView
+from rest.filters.data_collections import Filter
 
 
-class CollectionTable(ModelSerializer):
-    with_link = True
-    detail_view = 'selia:collection_home'
-    url_args = ['name']
+class UserCollections(GridView):
+    template_name = 'selia/collections/base.html'
+    table_view_name = 'rest-api:user-collections'
+    filter_class = Filter
 
-    class Meta:
-        model = Collection
-        fields = ['name', 'created_on', 'logo']
+    include_detail = False
+    include_map = False
+    include_summary = False
 
+    with_table_links = True
+    child_view_name = 'selia:collection_home'
 
-@login_required(login_url='registration:login')
-def user_collections(request):
-    user = request.user
-    collections = user.collection_users.all()
-
-    table = CollectionTable(collections, many=True)
-    context = {'table': table}
-    return render(request, 'selia/collections/collections.html', context)
+    def get_table_url_kwargs(self):
+        user = self.request.user
+        return {"pk": user.pk}

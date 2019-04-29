@@ -7,11 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid flex-row d-flex justify-content-between h-10">
-  <div aria-label="table pagination" class="mt-2">
-    <ul class="pagination" id="pagination">
-    </ul>
-  </div>
+<div class="container-fluid flex-row d-flex flex-wrap justify-content-between h-10">
   <div class="dropdown btn">
     <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Registros por hoja
@@ -28,7 +24,7 @@
   </form>
 </div>
 <div class="container-fluid p-0 mt-3" id="tableContainer">
-  <table class="table table-hover" id="table">
+  <table class="table table-sm table-hover" id="table">
     <thead id="tableHead">
     </thead>
     <tbody class="table-body" id="tableBody">
@@ -36,6 +32,13 @@
     <tfoot id="tableFoot">
     </tfoot>
   </table>
+</div>
+
+<div class="container-fluid flex-row d-flex flex-wrap justify-content-center">
+  <div aria-label="table pagination" class="mt-2">
+    <ul class="pagination" id="pagination">
+    </ul>
+  </div>
 </div>
 
 <div id="tableUrl" style="display: none">

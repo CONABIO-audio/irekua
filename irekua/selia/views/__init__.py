@@ -8,19 +8,20 @@ from .user.items import UserItems
 from .user.sampling_events import UserSamplingEvents
 
 from .sampling_events.home import SamplingEventHome
-from .sampling_events.items import sampling_event_items
-from .sampling_events.devices import sampling_event_devices
+from .sampling_events.items import SamplingEventItems
+from .sampling_events.devices import SamplingEventDevices
 
-from .data_collections.data_collections import user_collections
-from .data_collections.open_collections import open_collections
+from .data_collections.data_collections import UserCollections
+from .data_collections.open_collections import OpenCollections
 from .data_collections.detail.home import collection_home
-from .data_collections.detail.devices import collection_devices
-from .data_collections.detail.items import collection_items
-from .data_collections.detail.sampling_events import collection_sampling_events
-from .data_collections.detail.sites import collection_sites
+from .data_collections.detail.devices import CollectionDevices
+from .data_collections.detail.items import CollectionItems
+from .data_collections.detail.sampling_events import CollectionSamplingEvents
+from .data_collections.detail.sites import CollectionSites
 
+from .sampling_devices.home import SamplingEventDeviceHome
+from .sampling_devices.items import SamplingEventDeviceItems
 from .sampling_devices.item_detail import item
-from .sampling_devices.home import sampling_event_device
 
 from .update_session import update_session
 

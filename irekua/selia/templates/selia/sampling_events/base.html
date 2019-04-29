@@ -1,12 +1,10 @@
 {% extends 'selia/user/base.html' %}
+{% load grid %}
 
 {% block secondary-navbar %}
 {% include 'selia/sampling_events/components/secondary_navbar.html' %}
 {% endblock secondary-navbar %}
 
-
-{% block toolbar-items %}
-<li class="nav-item">
-  <a class="nav-link active" href="#">Añadir Items</a>
-</li>
-{% endblock toolbar-items %}
+{% block main-content %}
+{% grid grid_config table_info map_info %}
+{% endblock main-content %}

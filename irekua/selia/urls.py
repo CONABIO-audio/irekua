@@ -1,8 +1,6 @@
 from django.urls import path
 from . import views
 
-from django.conf import settings
-from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -17,8 +15,8 @@ urlpatterns = [
     path('user/items/', views.UserItems.as_view(), name='user_items'),
     path('user/sampling_events/', views.UserSamplingEvents.as_view(), name='user_sampling_events'),
 
-    path('collections/', views.user_collections, name='collections'),
-    path('collections/open/', views.open_collections, name='open_collections'),
+    path('collections/', views.UserCollections.as_view(), name='collections'),
+    path('collections/open/', views.OpenCollections.as_view(), name='open_collections'),
 
     path(
         'collections/<str:collection_name>/',
@@ -26,19 +24,19 @@ urlpatterns = [
         name='collection_home'),
     path(
         'collections/<str:collection_name>/items/',
-        views.collection_items,
+        views.CollectionItems.as_view(),
         name='collection_items'),
     path(
         'collections/<str:collection_name>/devices/',
-        views.collection_devices,
+        views.CollectionDevices.as_view(),
         name='collection_devices'),
     path(
         'collections/<str:collection_name>/sites/',
-        views.collection_sites,
+        views.CollectionSites.as_view(),
         name='collection_sites'),
     path(
         'collections/<str:collection_name>/sampling_events/',
-        views.collection_sampling_events,
+        views.CollectionSamplingEvents.as_view(),
         name='collection_sampling_events'),
 
     path(
@@ -47,17 +45,21 @@ urlpatterns = [
         name='sampling_event_home'),
     path(
         'collections/<str:collection_name>/sampling_events/<int:sampling_event_id>/devices/',
-        views.sampling_event_devices,
+        views.SamplingEventDevices.as_view(),
         name='sampling_event_devices'),
     path(
         'collections/<str:collection_name>/sampling_events/<int:sampling_event_id>/items/',
-        views.sampling_event_items,
+        views.SamplingEventItems.as_view(),
         name='sampling_event_items'),
 
     path(
         'collections/<str:collection_name>/sampling_events/<int:sampling_event_id>/devices/<int:sampling_event_device_id>/',
-        views.sampling_event_device,
-        name='sampling_event_device'),
+        views.SamplingEventDeviceHome.as_view(),
+        name='sampling_event_device_home'),
+    path(
+        'collections/<str:collection_name>/sampling_events/<int:sampling_event_id>/devices/<int:sampling_event_device_id>/items/',
+        views.SamplingEventDeviceItems.as_view(),
+        name='sampling_event_device_items'),
     path(
         'collections/<str:collection_name>/sampling_events/<int:sampling_event_id>/devices/<int:sampling_event_device_id>/items/<int:item_id>/',
         views.item,
