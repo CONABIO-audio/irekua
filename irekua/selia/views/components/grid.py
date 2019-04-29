@@ -68,11 +68,15 @@ class GridView(TemplateView):
             'with_table_links': self.with_table_links
         }
 
+
     def get_map_context_data(self):
         map_context = {
             'map_url': self.get_map_url()
         }
         return map_context
+
+    def get_detail_context_data(self):
+        return {'update_form' : self.update_form()}
 
     def get_grid_context_data(self):
         grid_context = {
@@ -82,6 +86,7 @@ class GridView(TemplateView):
             'include_summary': self.include_summary,
         }
         return grid_context
+
 
     def get_context_data(self):
         context = {
@@ -93,4 +98,8 @@ class GridView(TemplateView):
 
         if self.include_table:
             context['table_info'] = self.get_table_context_data()
+
+        if self.include_detail:
+            context['detail_info'] = self.get_detail_context_data()
+
         return context

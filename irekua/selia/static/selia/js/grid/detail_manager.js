@@ -1,6 +1,7 @@
 var detailElement;
 var detailHead;
 var detailBody;
+var formChanged = false;
 
 
 function createDetail() {
@@ -29,6 +30,9 @@ function createDetail() {
     tr.appendChild(at_head);
     tr.appendChild(val_head);
     registerUpdater("selection", updateDetailBody);
+    registerUpdater("update", updateDetailBody);
+
+    $('#updateForm input').change(onUpdateFormChanged)
 
   }
 }
@@ -96,7 +100,7 @@ function configTableTreeView() {
     };
 }
 
-function addTreeNode(node,name,nodeId,parent,level){
+function addTreeNode(node,nodeKey,nodeName,nodeId,parent,level){
     var tr = detailBody.insertRow();
     var strId = nodeId.toString();
 
@@ -107,21 +111,28 @@ function addTreeNode(node,name,nodeId,parent,level){
     var name_col = document.createElement('td');
     var val_col = document.createElement('td');
 
-    name_col.appendChild(document.createTextNode(name));
+    val_col.setAttribute("id","detail_"+nodeKey);
+    
+
+    name_col.appendChild(document.createTextNode(nodeName));
     name_col.setAttribute("data-column","name")
 
     nodeId = nodeId + 1;
 
     if (typeof node === 'object'){
+        val_col.setAttribute("isNested",true);
         val_col.appendChild(document.createTextNode(""));
         tr.appendChild(name_col);
         tr.appendChild(val_col);
         
         for (var key in node){
-            nodeId = addTreeNode(node[key],key,nodeId,strId,level+1)
+            if (key != "url"){
+                nodeId = addTreeNode(node[key],key,selectionLabels.actions.GET[nodeKey].children[key]["label"],nodeId,strId,level+1)
+            }
         }
 
     } else {
+        val_col.setAttribute("isNested",false);
         val_col.appendChild(document.createTextNode(node));
 
         tr.appendChild(name_col);
@@ -139,18 +150,71 @@ function updateDetailBody() {
     var nextId = 1;
     if (selectionMeta != null){
         for (var key in selectionMeta){
-            nextId = addTreeNode(selectionMeta[key],key,nextId,"0",1)
+            if (key != "url"){
+
+                nextId = addTreeNode(selectionMeta[key],key,selectionLabels.actions.GET[key]["label"],nextId,"0",1)
+            }
         }
     }
+    $("#detailLabel").text("ID:"+currentSelection);
     configTableTreeView();
+    loadFormValues();
 
+}
 
+function onUpdateFormChanged(event){
+    formChanged = true;
+}
+
+function loadFormValues(){
+      for (var key in selectionLabels.actions.PUT){
+        var newText = $("#detail_"+key).text();
+        var input_field = $("#id_"+key);
+        if ($("#detail_"+key).attr("isNested") && newText == ""){
+            input_field.val("{}");
+        }else{
+            input_field.val(newText);
+        }
+        
+        formChanged = false;
+      }
+}
+
+function getUpdateParams(){
+      var updateParams = "";
+      var first = true;
+      for (var key in selectionLabels.actions.PUT){
+        if (!first){
+            updateParams += "&"+$("#id_"+key).serialize();
+        } else {
+            updateParams += $("#id_"+key).serialize();
+            first = false;
+        }
+      }
+      return updateParams;
 }
 
 function init_detail() {
   createDetail();
 }
 
+
 $(document).ready(function() {
+  $('#updateForm').submit(function(event) {
+      event.preventDefault();
+      if (formChanged){
+          var updateParams = getUpdateParams();
+          $.ajax({url:selectionUrl,
+            type:"PUT",
+            data: updateParams,
+            success: function(result){
+                afterUpdate(result);
+            },
+            error:function(error){
+              alert("Error")
+            }
+          });
+    }
+  });
   init_detail();
 });
