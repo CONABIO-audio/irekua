@@ -14,11 +14,20 @@ class AddDeviceForm(forms.ModelForm):
             'metadata',
         ]
 
+class UpdateForm(forms.ModelForm):
+    class Meta:
+        model = CollectionDevice
+        fields = [
+            'internal_id',
+            'metadata',
+        ]
+
 
 class CollectionDevices(GridView):
     template_name = 'selia/collections/detail/devices.html'
     table_view_name = 'rest-api:collection-devices'
     filter_class = Filter
+    update_form = UpdateForm
 
     include_map = False
 

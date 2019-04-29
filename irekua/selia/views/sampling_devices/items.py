@@ -1,5 +1,18 @@
+from django import forms
+
+from database.models import Item
 from selia.views.components.grid import GridView
 from rest.filters.items import Filter
+
+
+class UpdateForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = [
+            'item_file',
+            'metadata',
+            'captured_on',
+        ]
 
 
 class SamplingEventDeviceItems(GridView):

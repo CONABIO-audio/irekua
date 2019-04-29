@@ -1,11 +1,25 @@
+from django import forms
+
+from database.models import SamplingEventDevice
 from selia.views.components.grid import GridView
 from rest.filters.sampling_event_devices import Filter
+
+
+class UpdateForm(forms.ModelForm):
+    class Meta:
+        model = SamplingEventDevice
+        fields = [
+            "commentaries",
+            "metadata",
+            "configuration",
+        ]
 
 
 class SamplingEventDevices(GridView):
     template_name = 'selia/sampling_events/devices.html'
     table_view_name = 'rest-api:samplingevent-devices'
     filter_class = Filter
+    update_form = UpdateForm
 
     include_map = False
     with_table_links = True

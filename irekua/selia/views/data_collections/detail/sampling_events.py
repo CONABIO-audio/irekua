@@ -1,5 +1,19 @@
+from django import forms
+
+from database.models import SamplingEvent
 from selia.views.components.grid import GridView
 from rest.filters.sampling_events import Filter
+
+
+class UpdateForm(forms.ModelForm):
+    class Meta:
+        model = SamplingEvent
+        fields = [
+            'commentaries',
+            'metadata',
+            'started_on',
+            'ended_on',
+        ]
 
 
 class CollectionSamplingEvents(GridView):
@@ -7,6 +21,7 @@ class CollectionSamplingEvents(GridView):
     table_view_name = 'rest-api:collection-sampling-events'
     map_view_name = 'rest-api:collection-sampling-event-locations'
     filter_class = Filter
+    update_form = UpdateForm
 
     with_table_links = True
     child_view_name = 'selia:sampling_event_home'

@@ -1,5 +1,18 @@
+from django import forms
+
+from database.models import Item
 from selia.views.components.grid import GridView
 from rest.filters.items import Filter
+
+
+class UpdateForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = [
+            'item_file',
+            'metadata',
+            'captured_on',
+        ]
 
 
 class CollectionItems(GridView):
@@ -7,6 +20,7 @@ class CollectionItems(GridView):
     table_view_name = 'rest-api:collection-items'
     map_view_name = 'rest-api:collection-item-locations'
     filter_class = Filter
+    update_form = UpdateForm
 
     def get_table_url_kwargs(self):
         collection_name = self.kwargs['collection_name']

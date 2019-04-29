@@ -1,5 +1,16 @@
+from django import forms
+
+from database.models import CollectionSite
 from selia.views.components.grid import GridView
 from rest.filters.sites import Filter
+
+
+class UpdateForm(forms.ModelForm):
+    class Meta:
+        model = CollectionSite
+        fields = [
+            'internal_id'
+        ]
 
 
 class CollectionSites(GridView):
@@ -7,7 +18,7 @@ class CollectionSites(GridView):
     table_view_name = 'rest-api:collection-sites'
     map_view_name = 'rest-api:collection-site-locations'
     filter_class = Filter
-
+    update_form = UpdateForm
 
     def get_table_url_kwargs(self):
         collection_name = self.kwargs['collection_name']
