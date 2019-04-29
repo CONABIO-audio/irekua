@@ -75,3 +75,19 @@
   max-height: 40vh;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
 }
+
+.treegrid-indent {
+    width: 0px;
+    height: 16px;
+    display: inline-block;
+    position: relative;
+}
+
+.treegrid-expander {
+    width: 0px;
+    height: 16px;
+    display: inline-block;
+    position: relative;
+    left:-17px;
+    cursor: pointer;
+}

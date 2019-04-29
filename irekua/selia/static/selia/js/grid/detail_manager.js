@@ -48,7 +48,7 @@ function configTableTreeView() {
 
         if (children.length) {
             var expander = $columnName.prepend('' +
-                '<span class="treegrid-expander glyphicon glyphicon-chevron-right"></span>' +
+                '<span class="treegrid-expander fa fa-chevron-right"></span>' +
                 '');
 
             children.hide();
@@ -58,9 +58,9 @@ function configTableTreeView() {
                 if (! $(children).is(':visible') ){
                     var $element = $($row);
                     $element
-                        .find('.glyphicon-chevron-right')
-                        .removeClass('glyphicon-chevron-right')
-                        .addClass('glyphicon-chevron-down');
+                        .find('.fa-chevron-right')
+                        .removeClass('fa-chevron-right')
+                        .addClass('fa-chevron-down');
                     children.show();
                 } else {
 
@@ -87,9 +87,9 @@ function configTableTreeView() {
             });
 
             $element
-                .find('.glyphicon-chevron-down')
-                .removeClass('glyphicon-chevron-down')
-                .addClass('glyphicon-chevron-right');
+                .find('.fa-chevron-down')
+                .removeClass('fa-chevron-down')
+                .addClass('fa-chevron-right');
 
             children.hide();
         }
