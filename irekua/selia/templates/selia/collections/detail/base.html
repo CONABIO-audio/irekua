@@ -1,21 +1,10 @@
 {% extends 'selia/user/base.html' %}
+{% load grid %}
 
 {% block secondary-navbar %}
 {% include 'selia/collections/detail/components/secondary_navbar.html' %}
 {% endblock secondary-navbar %}
 
-{% block toolbar-items %}
-<li class="nav-item">
-  <a class="nav-link active" href="#"><i class="fas fa-plus"></i> Items</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link active" href="#"><i class="fas fa-plus"></i> Dispositivo</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link active" href="#"><i class="fas fa-plus"></i> Sitio</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link active" href="#"><i class="fas fa-plus"></i> Evento de Muestreo</a>
-</li>
-
-{% endblock toolbar-items %}
+{% block main-content %}
+{% grid grid_config table_info map_info %}
+{% endblock main-content %}

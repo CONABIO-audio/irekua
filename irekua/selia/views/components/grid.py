@@ -14,7 +14,7 @@ class GridView(TemplateView):
     include_summary = True
 
     def enter_child(self, data):
-        args = list(self.args) + [data['pk']]
+        args = list(self.kwargs.values()) + [data['pk']]
         content = json.dumps({'url': reverse(self.child_view_name, args=args)})
         return HttpResponse(content, content_type='application/json')
 
@@ -22,8 +22,9 @@ class GridView(TemplateView):
         if action == 'enter':
             return self.enter_child
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         action = request.POST.get('action', None)
+
         if action is not None:
             handler = self.get_handler(action)
             return handler(request.POST)
@@ -83,7 +84,7 @@ class GridView(TemplateView):
         }
         return grid_context
 
-    def get_context_data(self):
+    def get_context_data(self, *args, **kwargs):
         context = {
             'grid_config': self.get_grid_context_data()
         }
