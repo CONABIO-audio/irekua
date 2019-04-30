@@ -23,7 +23,7 @@ class UserSites(GridView):
     table_view_name = 'rest-api:user-sites'
     map_view_name = 'rest-api:user-site-locations'
     filter_class = UserFilter
-    update_form = UpdateForm
+    update_form_url = '/selia/widgets/update_form/Site/'
 
     update_form_url = '/selia/widgets/update_form/Site/'
 

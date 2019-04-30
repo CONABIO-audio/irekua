@@ -15,7 +15,7 @@ class UserDevices(GridView):
     template_name = 'selia/user/devices.html'
     table_view_name = 'rest-api:user-devices'
     filter_class = Filter
-    update_form = PhysicalDeviceUpdateForm
+    update_form_url = '/selia/widgets/update_form/PhysicalDevice/'
 
     update_form_url = '/selia/widgets/update_form/PhysicalDevice/'
 

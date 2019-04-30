@@ -15,7 +15,8 @@ def handle_files(files, sampling_event_device):
         queryset = models.ItemType.objects.all()
 
     for tempfile in files:
-        print(vars(tempfile))
+        possible_types = queryset.filter(media_type=tempfile.content_type)
+        print(possible_types.count())
 
 
 class FileFieldForm(forms.Form):
