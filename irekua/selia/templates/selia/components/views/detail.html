@@ -7,15 +7,18 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid flex-row d-flex justify-content-end h-10" id="detailToolbar">
-  <div id="detailLabel"></div>
-  <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#updateModal">
+<div class="container-fluid flex-row d-flex justify-content-around h-10" id="detailToolbar">
+  <div id="detailLabel" class="navbar-brand float-left"></div>
+</div>
+
+<div class="container-fluid p-0 mt-3" id="detailContainer">
+</div>
+
+<div class="container">
+  <button type="button" class="btn btn-link card-link float-right" data-toggle="modal" data-target="#updateModal">
     Modificar
   </button>
 </div>
-<div class="container-fluid h-100 p-0 mt-3" id="detailContainer">
-</div>
-
 
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -29,7 +32,7 @@
         <div class="modal-body">
           <form action="#" method="post" class="django-form" id="updateForm">
           	{% csrf_token %}
-			{{ update_form | crispy }}
+			      {{ update_form | crispy }}
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
             <input type="submit" class="btn btn-primary"  data-toggle="modal" data-target="#updateModal" value="Actualizar">
           </form>

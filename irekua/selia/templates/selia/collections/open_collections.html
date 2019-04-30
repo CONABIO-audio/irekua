@@ -2,3 +2,9 @@
 {% load i18n %}
 
 {% block toolbar-title %}{% trans "Open Collections" %}{% endblock %}
+
+{% block toolbar-items %}
+<li class="navbar-item ">
+  <button type="button" class="btn btn-link">{% trans "Help" %} <i class="fas fa-question"></i></button>
+</li>
+{% endblock toolbar-items %}

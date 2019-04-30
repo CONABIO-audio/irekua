@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.urls import path
 from . import views
 
@@ -22,7 +21,7 @@ urlpatterns = [
 
     path(
         'collections/<str:collection_name>/',
-        views.collection_home,
+        views.CollectionHome.as_view(),
         name='collection_home'),
     path(
         'collections/<str:collection_name>/items/',
@@ -67,9 +66,11 @@ urlpatterns = [
         views.item,
         name='item'),
 
+    path('admin/', views.admin_home, name='admin_home'),
+
     path('about/', views.about, name='about'),
 
     path('update_session/', views.update_session, name='update_session'),
 
-    # path('test/', views.TestView.as_view(), name='test')
+    path('test/', views.TestView.as_view(), name='test')
 ]
