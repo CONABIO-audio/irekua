@@ -7,16 +7,46 @@
 {% endblock %}
 
 {% block card-body %}
+<script type="text/javascript">
+var mapMarkers = {};
+var geoResults = null;
+
+function mapGatherData(map,options,callback){
+    $.ajax({url:mapUrl,
+      type:"GET",
+      success: function(result){
+          geoResults = result;
+          mapLoadData(map,options);
+      },
+      error:function(error){
+        alert("Error")
+      }
+    });
+}
+
+function mapLoadData(map, options){
+    var lonmean = 0;
+    var latmean = 0;
+    for (var i = 0; i < geoResults.length;i++){
+        mapMarkers[geoResults[i].id] = L.marker([geoResults[i].geometry.longitude, geoResults[i].geometry.latitude],{"icon":mapGreenIcon}).addTo(map);
+              lonmean += geoResults[i].geometry.longitude;
+      latmean += geoResults[i].geometry.latitude;
+    }
+    map.flyTo([latmean/geoResults.length, lonmean/geoResults.length], 5)
+}
+
+function mapInitCallback(map,options){
+	mapGatherData(map,options);
+}
+</script>
 <div class="card-body container-fluid card-content p-0">
-  {% leaflet_map "my_map" %}
+  {% leaflet_map "my_map" callback="window.mapInitCallback"%}
 </div>
 
 <script type="text/javascript">
   var mapUrl = "{{ map_url }}";
 </script>
 <script type="text/javascript">
-	var mapMarkers = {};
-	var geoResults = null;
 	var mapGreenIcon = new L.Icon({
 	  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
 	  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -33,28 +63,6 @@
 	  popupAnchor: [1, -34],
 	  shadowSize: [41, 41]
 	});
-    $.ajax({url:mapUrl,
-      type:"GET",
-      success: function(result){
-          geoResults = result;
-		  window.addEventListener("map:init", function (e) {
-          var detail = e.detail;
-            var lonmean = 0;
-				var latmean = 0;
-          for (var i = 0; i < geoResults.length;i++){
-              mapMarkers[geoResults[i].id] = L.marker([geoResults[i].geometry.longitude, geoResults[i].geometry.latitude],{"icon":mapGreenIcon}).addTo(detail.map);
-                    lonmean += geoResults[i].geometry.longitude;
-						latmean += geoResults[i].geometry.latitude;
-          }
-          detail.map.flyTo([latmean/geoResults.length, lonmean/geoResults.length], 5)
-
-		}, false);
-      },
-      error:function(error){
-        alert("Error")
-      }
-    });
-
 </script>
 <script type="text/javascript" src={% static 'selia/js/grid/map_manager.js' %}></script>
 
