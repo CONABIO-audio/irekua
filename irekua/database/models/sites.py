@@ -98,12 +98,12 @@ class Site(models.Model):
         unique_together = (('name', 'site_type'))
 
     def sync_coordinates_and_georef(self):
-        if self.geo_ref and self.latitude and self.longitude:
-            validate_coordinates_and_geometry(
-                self.geo_ref,
-                self.latitude,
-                self.longitude)
-            return
+        # if self.geo_ref and self.latitude and self.longitude:
+        #     validate_coordinates_and_geometry(
+        #         self.geo_ref,
+        #         self.latitude,
+        #         self.longitude)
+        #     return
 
         if self.geo_ref:
             self.latitude = self.geo_ref.y
