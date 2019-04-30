@@ -19,7 +19,7 @@ class SamplingEventDevices(GridView):
     template_name = 'selia/sampling_events/devices.html'
     table_view_name = 'rest-api:samplingevent-devices'
     filter_class = Filter
-    update_form = UpdateForm
+    update_form_url = '/selia/widgets/update_form/SamplingEventDevice/'
 
     include_map = False
     with_table_links = True

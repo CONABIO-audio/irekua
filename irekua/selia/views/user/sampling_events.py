@@ -15,7 +15,7 @@ class UserSamplingEvents(GridView):
     template_name = 'selia/user/sampling_events.html'
     table_view_name = 'rest-api:user-sampling-events'
     map_view_name = 'rest-api:user-sampling-event-locations'
-    update_form = SamplingEventUpdateForm
+    update_form_url = '/selia/widgets/update_form/SamplingEvent/'
 
     filter_class = Filter
 

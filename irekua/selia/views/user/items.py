@@ -13,7 +13,7 @@ class UserItems(GridView):
     template_name = 'selia/user/items.html'
     table_view_name = 'rest-api:user-items'
     map_view_name = 'rest-api:user-item-locations'
-    update_form = ItemUpdateForm
+    update_form_url = '/selia/widgets/update_form/Item/'
     filter_class = Filter
 
     def get_table_url_kwargs(self):
