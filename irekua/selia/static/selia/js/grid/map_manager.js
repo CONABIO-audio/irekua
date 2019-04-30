@@ -1,19 +1,13 @@
-var dataPointsRes = null;
+var formerSelection = null;
 
-function init_map(){
-    $.ajax({url:mapUrl,
-      type:"GET",
-      success: function(result){
-          dataPoints
-          alert(JSON.stringify(result));
-
-      },
-      error:function(error){
-        alert("Error")
-      }
-    });
+function selectOnMap(){
+  if (formerSelection != null && formerSelection != currentSelection){
+    mapMarkers[formerSelection].setIcon(mapGreenIcon);
+  }
+  mapMarkers[currentSelection].setIcon(mapRedIcon);
+  formerSelection = currentSelection;
 }
 
 $(document).ready(function() {
-  init_map();
+  registerUpdater("selection", selectOnMap);
 });
