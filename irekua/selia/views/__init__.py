@@ -30,6 +30,10 @@ from .upload import photo_list
 from .upload import upload_photo
 from .upload import delete_photo
 
+from .items.gallery import gallery
+from .items.upload import upload_items
+from .items.annotate import annotate
+
 from .admin.home import admin_home
 
 from .test import TestView

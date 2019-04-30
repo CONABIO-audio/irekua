@@ -66,6 +66,10 @@ urlpatterns = [
         views.item,
         name='item'),
 
+    path('items/upload_items/', views.upload_items, name='upload_items'),
+    path('items/gallery/', views.gallery, name='gallery'),
+    path('items/annotate/', views.annotate, name='annotate'),
+
     path('admin/', views.admin_home, name='admin_home'),
 
     path('about/', views.about, name='about'),
