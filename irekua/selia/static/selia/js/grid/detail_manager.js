@@ -177,6 +177,7 @@ function loadUpdateForm(){
                             type:"POST",
                             data: updateParams,
                             success: function(result){
+                                alert(result)
                                 afterUpdate(JSON.parse(result)[0]["fields"]);
                             },
                             error:function(error){
