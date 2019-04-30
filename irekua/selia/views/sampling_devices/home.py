@@ -24,6 +24,8 @@ class SamplingEventDeviceHome(GridView):
     include_table = False
     detail = True
 
+    update_form_url = '/selia/widgets/update_form/SamplingEventDevice/'
+
     def get_object_pk(self):
         pk = self.kwargs['sampling_event_device_id']
         return pk

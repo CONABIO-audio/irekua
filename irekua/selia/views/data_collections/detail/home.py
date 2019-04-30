@@ -18,6 +18,7 @@ class UpdateForm(forms.ModelForm):
 class CollectionHome(GridView):
     template_name = 'selia/collections/detail/home.html'
     detail_view_name = 'rest-api:collection-detail'
+    update_form_url = '/selia/widgets/update_form/Collection/'
     update_form = UpdateForm
     detail = True
 

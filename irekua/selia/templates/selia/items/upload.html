@@ -1,16 +1,10 @@
-{% extends 'selia/items/base.html' %}
+{% extends 'selia/sampling_event_devices/base.html' %}
 {% load crispy_forms_tags %}
 {% load i18n %}
 
 
-{% block secondary-navbar %}
-<div class="container-fluid h-100">
-  <div class="row h-100 w-100 m-0 p-1 pl-4">
-    <div class="col-4 h-100">
-      <a class="navbar-brand" href={% url 'selia:user_home' %}>{% trans "Upload Items" %}</a>
-    </div>
-  </div>
-</div>
+{% block toolbar-title %}
+{% trans "Upload Items" %}
 {% endblock %}
 
 {% block main-content %}

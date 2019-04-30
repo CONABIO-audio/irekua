@@ -17,6 +17,8 @@ class UserDevices(GridView):
     filter_class = Filter
     update_form = PhysicalDeviceUpdateForm
 
+    update_form_url = '/selia/widgets/update_form/PhysicalDevice/'
+
     include_map = False
 
     def get_table_url_kwargs(self):

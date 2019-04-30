@@ -65,8 +65,10 @@ urlpatterns = [
         'collections/<str:collection_name>/sampling_events/<int:sampling_event_id>/devices/<int:sampling_event_device_id>/items/<int:item_id>/',
         views.item,
         name='item'),
+    path(
+        'collections/<str:collection_name>/sampling_events/<int:sampling_event_id>/devices/<int:sampling_event_device_id>/upload',
+        views.upload_items, name='upload_items'),
 
-    path('items/upload_items/', views.upload_items, name='upload_items'),
     path('items/gallery/', views.gallery, name='gallery'),
     path('items/annotate/', views.annotate, name='annotate'),
 
@@ -78,6 +80,6 @@ urlpatterns = [
 
     path('test/', views.TestView.as_view(), name='test'),
 
-    path('widgets/update_form/<str:model_name>/<int:id>/',views.UserFormCreator,
+    path('widgets/update_form/<str:model_name>/<str:id>/',views.UserFormCreator,
         name='user_form_creator')
 ]

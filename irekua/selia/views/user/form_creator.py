@@ -25,27 +25,63 @@ class ItemUpdateForm(forms.ModelForm):
         model = db_models.Item
         fields = ['metadata']
 
+class CollectionUpdateForm(forms.ModelForm):
+    class Meta:
+        model = db_models.Collection
+        fields = [
+            'metadata',
+            'description',
+            'logo',
+            'institution',
+        ]
+
+class CollectionSiteUpdateForm(forms.ModelForm):
+    class Meta:
+        model = db_models.CollectionSite
+        fields = [
+            'internal_id'
+        ]
+
+
+class CollectionDeviceUpdateForm(forms.ModelForm):
+    class Meta:
+        model = db_models.CollectionDevice
+        fields = [
+            'internal_id',
+            'metadata',
+        ]
+
+class SamplingEventDeviceUpdateForm(forms.ModelForm):
+    class Meta:
+        model = db_models.SamplingEventDevice
+        fields = [
+            "commentaries",
+            "metadata",
+            "configuration",
+        ]
+
 FORM_CLASSES = {
         "Site" : SiteUpdateForm,
         "SamplingEvent" : SamplingEventUpdateForm,
         "Item" : ItemUpdateForm,
-        "PhysicalDevice" : PhysicalDeviceUpdateForm
+        "PhysicalDevice" : PhysicalDeviceUpdateForm,
+        "CollectionSite" : CollectionSiteUpdateForm,
+        "CollectionDevice": CollectionDeviceUpdateForm,
+        "Collection": CollectionUpdateForm,
+        "SamplingEventDevice": SamplingEventDeviceUpdateForm,
 }
 
 
 def UserFormCreator(request, id, model_name):
     #if request.is_ajax():
     model = getattr(db_models, model_name)
-    instance = model.objects.get(id=id)
+    instance = model.objects.get(pk=id)
     data = {}
     for fKey in FORM_CLASSES[model_name].Meta.fields:
-        data[fKey] = getattr(instance,fKey)
+        data[fKey] = getattr(instance, fKey)
 
     form = FORM_CLASSES[model_name](initial=data)
 
     return render(request,"selia/user/components/update_form.html",{"form":form})
     #else:
     #    pass
-
-     
-

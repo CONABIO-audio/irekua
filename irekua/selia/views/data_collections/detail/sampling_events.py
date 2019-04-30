@@ -26,6 +26,8 @@ class CollectionSamplingEvents(GridView):
     with_table_links = True
     child_view_name = 'selia:sampling_event_home'
 
+    update_form_url = '/selia/widgets/update_form/SamplingEvent/'
+
     def get_table_url_kwargs(self):
         collection_name = self.kwargs['collection_name']
         return {"pk": collection_name}
