@@ -6,6 +6,8 @@ from .user.sites import UserSites
 from .user.devices import UserDevices
 from .user.items import UserItems
 from .user.sampling_events import UserSamplingEvents
+from .user.form_creator import UserFormCreator
+
 
 from .sampling_events.home import SamplingEventHome
 from .sampling_events.items import SamplingEventItems

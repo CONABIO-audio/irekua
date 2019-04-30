@@ -78,7 +78,7 @@ class GridView(TemplateView):
         return map_context
 
     def get_detail_context_data(self):
-        return {'update_form' : self.update_form()}
+        return {'update_form_url' : self.update_form_url}
 
     def get_object_pk(self):
         return list(self.kwargs.values())[0]
