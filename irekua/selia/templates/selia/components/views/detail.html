@@ -7,13 +7,14 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid flex-row d-flex justify-content-end h-10" id="detailToolbar">
-  <div id="detailLabel"></div>
-  <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#updateModal">
+<div class="container-fluid flex-row d-flex justify-content-around h-10" id="detailToolbar">
+  <div id="detailLabel" class="navbar-brand float-left"></div>
+    <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#updateModal">
     Modificar
   </button>
 </div>
-<div class="container-fluid h-100 p-0 mt-3" id="detailContainer">
+
+<div class="container-fluid p-0 mt-3" id="detailContainer">
 </div>
 <script type="text/javascript">
   var updateFormUrl = "{{ update_form_url }}";

@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.urls import path
 from . import views
 
@@ -22,7 +21,7 @@ urlpatterns = [
 
     path(
         'collections/<str:collection_name>/',
-        views.collection_home,
+        views.CollectionHome.as_view(),
         name='collection_home'),
     path(
         'collections/<str:collection_name>/items/',
@@ -66,13 +65,21 @@ urlpatterns = [
         'collections/<str:collection_name>/sampling_events/<int:sampling_event_id>/devices/<int:sampling_event_device_id>/items/<int:item_id>/',
         views.item,
         name='item'),
+    path(
+        'collections/<str:collection_name>/sampling_events/<int:sampling_event_id>/devices/<int:sampling_event_device_id>/upload',
+        views.upload_items, name='upload_items'),
+
+    path('items/gallery/', views.gallery, name='gallery'),
+    path('items/annotate/', views.annotate, name='annotate'),
+
+    path('admin/', views.admin_home, name='admin_home'),
 
     path('about/', views.about, name='about'),
 
     path('update_session/', views.update_session, name='update_session'),
 
-    path('widgets/update_form/<str:model_name>/<int:id>/',views.UserFormCreator,
-        name='user_form_creator')
+    path('test/', views.TestView.as_view(), name='test'),
 
-    # path('test/', views.TestView.as_view(), name='test')
+    path('widgets/update_form/<str:model_name>/<str:id>/',views.UserFormCreator,
+        name='user_form_creator')
 ]

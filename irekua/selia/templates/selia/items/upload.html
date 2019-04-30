@@ -1,0 +1,25 @@
+{% extends 'selia/sampling_event_devices/base.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+
+{% block toolbar-title %}
+{% trans "Upload Items" %}
+{% endblock %}
+
+{% block main-content %}
+<div class="container p-5">
+  <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Upload</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Upload multiple files</h6>
+    <form action="#" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form | crispy }}
+      <input type="submit" class="btn btn-link card-link" value="Submit">
+    </form>
+  </div>
+</div>
+
+</div>
+{% endblock main-content %}

@@ -23,6 +23,8 @@ class SamplingEventItems(GridView):
 
     include_map = False
 
+    update_form_url = '/selia/widgets/update_form/Item/'
+
     def get_table_url_kwargs(self):
         sampling_event_id = self.kwargs['sampling_event_id']
         return {"pk": sampling_event_id}

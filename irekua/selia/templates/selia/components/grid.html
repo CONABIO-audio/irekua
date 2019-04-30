@@ -25,12 +25,12 @@
     <div class="col h-100 p-0">
     {% endif %}
       {% if grid_config.include_table %}
-      <div class="row p-2 m-0 panel">
+      <div class="row p-2 m-0 panel" id="tablePanel">
         {% table table_info %}
       </div>
       {% endif %}
       {% if grid_config.include_map %}
-      <div class="row p-2 m-0 panel">
+      <div class="row p-2 m-0 panel" id="mapPanel">
         {% map_view map_info %}
       </div>
       {% endif %}
@@ -43,12 +43,12 @@
     <div class="col h-100 p-0">
     {% endif %}
       {% if grid_config.include_detail %}
-      <div class="row p-2 m-0 panel">
+      <div class="row p-2 m-0 panel" id="detailPanel">
         {% detail detail_info %}
       </div>
       {% endif %}
       {% if grid_config.include_summary %}
-      <div class="row p-2 m-0 panel">
+      <div class="row p-2 m-0 panel" id="summaryPanel">
         {% summary summary_info %}
       </div>
       {% endif %}

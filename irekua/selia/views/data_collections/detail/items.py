@@ -22,6 +22,8 @@ class CollectionItems(GridView):
     filter_class = Filter
     update_form = UpdateForm
 
+    update_form_url = '/selia/widgets/update_form/Item/'
+
     def get_table_url_kwargs(self):
         collection_name = self.kwargs['collection_name']
         return {"pk": collection_name}

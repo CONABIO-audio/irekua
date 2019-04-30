@@ -6,6 +6,7 @@ var selectionLabels;
 var updateResponse;
 var updaters = {};
 
+
 function registerUpdater(actionName, updater) {
   if (!(actionName in updaters)) {
     updaters[actionName] = [];
@@ -54,3 +55,80 @@ function afterUpdate(updateRes) {
 	selectionMeta = newMeta;
 	refreshViews('update');
 }
+
+var detailShown = true;
+var mapShown = true;
+var summaryShown = true;
+var tableShown = true;
+
+function toggleSummaryView() {
+  $('#summaryPanel').toggleClass("collapsed");
+  $('#toggleSummaryButton').toggleClass("text-muted");
+
+  if (summaryShown) {
+    document.getElementById('toggleSummaryIcon').className = "fas fa-toggle-off";
+  } else {
+    document.getElementById('toggleSummaryIcon').className = "fas fa-toggle-on";
+  }
+
+  summaryShown = !summaryShown;
+}
+
+function toggleDetailView() {
+  $('#detailPanel').toggleClass("collapsed");
+  $('#toggleDetailButton').toggleClass("text-muted");
+
+  if (detailShown) {
+    document.getElementById('toggleDetailIcon').className = "fas fa-toggle-off";
+  } else {
+    document.getElementById('toggleDetailIcon').className = "fas fa-toggle-on";
+  }
+
+  detailShown = !detailShown;
+}
+
+function toggleMapView() {
+  $('#mapPanel').toggleClass("collapsed");
+  $('#toggleMapButton').toggleClass("text-muted");
+
+  if (mapShown) {
+    document.getElementById('toggleMapIcon').className = "fas fa-toggle-off";
+  } else {
+    document.getElementById('toggleMapIcon').className = "fas fa-toggle-on";
+  }
+
+  mapShown = !mapShown;
+}
+
+function toggleTableView() {
+  $('#tablePanel').toggleClass("collapsed");
+  $('#toggleTableButton').toggleClass("text-muted");
+
+  if (tableShown) {
+    document.getElementById('toggleTableIcon').className = "fas fa-toggle-off";
+  } else {
+    document.getElementById('toggleTableIcon').className = "fas fa-toggle-on";
+  }
+
+  tableShown = !tableShown;
+}
+
+
+
+$(document).ready(function() {
+  $('#toggleTableButton').click(function() {
+    toggleTableView();
+  });
+
+  $('#toggleSummaryButton').click(function() {
+    toggleSummaryView();
+  });
+
+  $('#toggleDetailButton').click(function(event) {
+    toggleDetailView();
+  });
+
+  $('#toggleMapButton').click(function() {
+    toggleMapView();
+  });
+});

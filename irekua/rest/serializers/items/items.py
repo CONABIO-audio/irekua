@@ -36,6 +36,7 @@ class ListSerializer(serializers.ModelSerializer):
             'captured_on',
         )
 
+
 class ListCollectionSerializer(serializers.ModelSerializer):
     collection = serializers.CharField(
         source='sampling_event_device.sampling_event.collection',
