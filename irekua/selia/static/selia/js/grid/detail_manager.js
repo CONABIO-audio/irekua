@@ -166,15 +166,18 @@ function loadUpdateForm(){
             if (updateForm){
                 $("#updateModal").replaceWith(result);
             } else {
-                  $("#detailContainer").append(html);
-                  $('#updateForm').submit(function(event) {
+                $("#detailContainer").append(html);
+                  
+            }
+
+            $('#updateForm').submit(function(event) {
                           event.preventDefault();
                           var updateParams = $( this ).serialize();
                           $.ajax({url:formUrl,
                             type:"POST",
                             data: updateParams,
                             success: function(result){
-                                afterUpdate(result);
+                                afterUpdate(JSON.parse(result)[0]["fields"]);
                             },
                             error:function(error){
                               alert(JSON.stringify(error))
@@ -182,9 +185,6 @@ function loadUpdateForm(){
                           });
                     
                   });
-            }
-
-            
             
         },
         error:function(error){
