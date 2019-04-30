@@ -169,14 +169,11 @@ function loadUpdateForm(){
                   $("#detailContainer").append(html);
                   $('#updateForm').submit(function(event) {
                           event.preventDefault();
-  
-                          var updateParams = getUpdateParams();
-                          alert(updateParams);
-                          $.ajax({url:selectionUrl,
-                            type:"PUT",
+                          var updateParams = $( this ).serialize();
+                          $.ajax({url:formUrl,
+                            type:"POST",
                             data: updateParams,
                             success: function(result){
-                                alert(result);
                                 afterUpdate(result);
                             },
                             error:function(error){
@@ -222,7 +219,6 @@ function onUpdateFormChanged(event){
 function getUpdateParams(){
       alert("before")
       var formObjects = $('#updateForm').serializeArray();
-      alert(formObjects);
 
       var updateParams = "";
       var first = true;

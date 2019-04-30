@@ -1,3 +1,4 @@
+import json
 from django.http import HttpResponse
 from django import forms
 from django.shortcuts import render
@@ -34,18 +35,30 @@ FORM_CLASSES = {
 
 
 def UserFormCreator(request, id, model_name):
-    #if request.is_ajax():
     model = getattr(db_models, model_name)
-    instance = model.objects.get(id=id)
-    data = {}
-    for fKey in FORM_CLASSES[model_name].Meta.fields:
-        data[fKey] = getattr(instance,fKey)
+    fCls = FORM_CLASSES[model_name]
 
-    form = FORM_CLASSES[model_name](initial=data)
+    if request.method != "POST":
+        instance = model.objects.get(id=id)
+        data = {}
+        for fKey in fCls.Meta.fields:
+            data[fKey] = getattr(instance,fKey)
 
-    return render(request,"selia/user/components/update_form.html",{"form":form})
-    #else:
-    #    pass
+        form = fCls(initial=data)
+
+        return render(request,"selia/user/components/update_form.html",{"form":form})
+    else:
+        instance = model.objects.get(id=id)
+        form = fCls(request.POST or None, instance=instance)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse(form)
+        else:
+        	return HttpResponse(json.dumps(form.errors))
+
+        #return render(request,"selia/user/components/update_form.html",{"form":form})
+
 
      
 

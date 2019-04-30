@@ -32,7 +32,7 @@ class UserSites(GridView):
     map_view_name = 'rest-api:user-site-locations'
     update_form = SiteUpdateForm
     filter_class = UserFilter
-    update_form = UpdateForm
+    update_form_url = '/selia/widgets/update_form/Site/'
 
     def get_table_url_kwargs(self):
         user = self.request.user
