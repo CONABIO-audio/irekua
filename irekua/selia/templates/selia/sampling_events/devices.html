@@ -1,12 +1,37 @@
 {% extends 'selia/sampling_events/base.html' %}
 {% load i18n %}
+{% load crispy_forms_tags %}
 
 {% block toolbar-title %}{% trans "Sampling Event Devices" %}{% endblock %}
 
 {% block toolbar-items %}
 <li class="navbar-item ">
-  <button type="button" class="btn btn-link"><i class="fas fa-plus"></i> {% trans "Add device" %} <i class="fas fa-tools"></i></button>
+  <button type="button" data-toggle="modal" data-target="#addSamplingEventDeviceModal" class="btn btn-link"><i class="fas fa-plus"></i> {% trans "Add device" %} <i class="fas fa-tools"></i></button>
   <button type="button" class="btn btn-link">{% trans "Download Summary" %} <i class="fas fa-file-download"></i></button>
   <button type="button" class="btn btn-link">{% trans "Help" %} <i class="fas fa-question"></i></button>
 </li>
 {% endblock toolbar-items %}
+
+
+{% block modals-extra %}
+<div class="modal fade" id="addSamplingEventDeviceModal" tabindex="-1" role="dialog" aria-labelledby="addSamplingEventDeviceModalTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addSamplingEventDeviceModalTitle">{% trans "Add Device" %}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="" action="#" method="post">
+          {% csrf_token %}
+          {{ create_form | crispy }}
+        </form>
+        <input type="submit" class="btn btn-primary" value="Save changes">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock modals-extra %}

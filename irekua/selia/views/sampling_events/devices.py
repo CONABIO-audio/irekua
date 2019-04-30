@@ -4,6 +4,9 @@ from database.models import SamplingEventDevice
 from selia.views.components.grid import GridView
 from rest.filters.sampling_event_devices import Filter
 
+from database.models import Collection
+from database.models import SamplingEvent
+
 
 class UpdateForm(forms.ModelForm):
     class Meta:
@@ -13,6 +16,7 @@ class UpdateForm(forms.ModelForm):
             "metadata",
             "configuration",
         ]
+
 
 
 class SamplingEventDevices(GridView):
@@ -30,7 +34,27 @@ class SamplingEventDevices(GridView):
         return {"pk": sampling_event_id}
 
     def get_context_data(self, *args, **kwargs):
+        collection = Collection.objects.get(pk=kwargs['collection_name'])
+        sampling_events = SamplingEvent.objects.get(pk=kwargs['sampling_event_id'])
+
+        class CreateForm(forms.ModelForm):
+            licence = forms.ModelChoiceField(
+                queryset=collection.licence_set.all())
+            collection_device = forms.ModelChoiceField(
+                queryset=collection.collectiondevice_set.all())
+
+            class Meta:
+                model = SamplingEventDevice
+                fields = [
+                    "collection_device",
+                    "commentaries",
+                    "metadata",
+                    "configuration",
+                    "licence",
+                ]
+
         context = super().get_context_data()
         context['collection_name'] = kwargs['collection_name']
         context['sampling_event_id'] = kwargs['sampling_event_id']
+        context['create_form'] = CreateForm()
         return context
