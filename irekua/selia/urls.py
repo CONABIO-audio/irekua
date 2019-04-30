@@ -71,5 +71,8 @@ urlpatterns = [
 
     path('update_session/', views.update_session, name='update_session'),
 
+    path('widgets/update_form/<str:model_name>/<int:id>/',views.UserFormCreator,
+        name='user_form_creator')
+
     # path('test/', views.TestView.as_view(), name='test')
 ]

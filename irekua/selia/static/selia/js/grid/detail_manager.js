@@ -1,6 +1,7 @@
 var detailElement;
 var detailHead;
 var detailBody;
+var updateFormUrl;
 var formChanged = false;
 
 
@@ -32,7 +33,6 @@ function createDetail() {
     registerUpdater("selection", updateDetailBody);
     registerUpdater("update", updateDetailBody);
 
-    $('#updateForm input').change(onUpdateFormChanged)
 
   }
 }
@@ -138,7 +138,6 @@ function addTreeNode(node,nodeKey,nodeName,nodeSpec,nodeId,parent,level){
                 }else{
                         nodeId = addTreeNode(node[key],key,key,childSpec,nodeId,strId,level+1)
                 }
-                
             }
         }
 
@@ -154,6 +153,49 @@ function addTreeNode(node,nodeKey,nodeName,nodeSpec,nodeId,parent,level){
 
 }
 
+function loadUpdateForm(){
+
+      formUrl = updateFormUrl+currentSelection.toString()+"/"
+
+      $.ajax({url:formUrl,
+        type:"GET",
+        success: function(result){
+            var html = $.parseHTML(result);
+            var updateForm = document.getElementById("updateModal");
+
+            if (updateForm){
+                $("#updateModal").replaceWith(result);
+            } else {
+                  $("#detailContainer").append(html);
+                  $('#updateForm').submit(function(event) {
+                          event.preventDefault();
+                          var updateParams = getUpdateParams();
+                          $.ajax({url:selectionUrl,
+                            type:"PUT",
+                            data: updateParams,
+                            success: function(result){
+                                alert(result);
+                                afterUpdate(result);
+                            },
+                            error:function(error){
+                              alert(JSON.stringify(error))
+                            }
+                          });
+                    
+                  });
+            }
+
+            
+            
+        },
+        error:function(error){
+          alert("Error");
+        }
+      });
+
+      configTableTreeView();
+}
+
 function updateDetailBody() {
     while (detailBody.firstChild) {
         detailBody.removeChild(detailBody.firstChild);
@@ -162,45 +204,39 @@ function updateDetailBody() {
     if (selectionMeta != null){
         for (var key in selectionMeta){
             if (key != "url"){
-
                 nextId = addTreeNode(selectionMeta[key],key,selectionLabels.actions.GET[key]["label"],selectionLabels.actions.GET[key],nextId,"0",1)
             }
         }
     }
     $("#detailLabel").text("ID:"+currentSelection);
-    configTableTreeView();
-    loadFormValues();
-
+    loadUpdateForm()
 }
 
 function onUpdateFormChanged(event){
     formChanged = true;
 }
 
-function loadFormValues(){
-      for (var key in selectionLabels.actions.PUT){
-        var newText = $("#detail_"+key).text();
-        var input_field = $("#id_"+key);
-        if ($("#detail_"+key).attr("isNested") && newText == ""){
-            input_field.val(JSON.stringify(selectionMeta[key]));
-        }else{
-            input_field.val(newText);
-        }
-
-        formChanged = false;
-      }
-}
 
 function getUpdateParams(){
+      alert("before")
+      var formObjects = $('#updateForm').serializeArray();
+      alert(formObjects);
+
       var updateParams = "";
       var first = true;
-      for (var key in selectionLabels.actions.PUT){
-        if (!first){
-            updateParams += "&"+$("#id_"+key).serialize();
-        } else {
-            updateParams += $("#id_"+key).serialize();
-            first = false;
+      for (var i = 0; i < formObjects.length; i++ in formObjects){
+        var obj = formObjects[i]
+
+        var key = obj["name"];
+        if (key != "initial-metadata"){
+            if (!first){
+                updateParams += "&"+key+"="+obj["value"];
+            } else {
+                updateParams += key+"="+obj["value"];
+                first = false;
+            }
         }
+
       }
       return updateParams;
 }
@@ -211,21 +247,5 @@ function init_detail() {
 
 
 $(document).ready(function() {
-  $('#updateForm').submit(function(event) {
-      event.preventDefault();
-      if (formChanged){
-          var updateParams = getUpdateParams();
-          $.ajax({url:selectionUrl,
-            type:"PUT",
-            data: updateParams,
-            success: function(result){
-                afterUpdate(result);
-            },
-            error:function(error){
-              alert("Error")
-            }
-          });
-    }
-  });
   init_detail();
 });
