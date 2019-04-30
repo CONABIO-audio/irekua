@@ -180,12 +180,12 @@ function loadUpdateForm(){
                               alert(JSON.stringify(error))
                             }
                           });
-                    
+
                   });
             }
 
-            
-            
+
+
         },
         error:function(error){
           alert("Error");
@@ -207,7 +207,7 @@ function updateDetailBody() {
             }
         }
     }
-    $("#detailLabel").text("ID:"+currentSelection);
+    $("#detailLabel").text("ID: "+currentSelection);
     loadUpdateForm()
 }
 
