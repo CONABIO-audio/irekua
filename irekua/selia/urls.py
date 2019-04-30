@@ -6,7 +6,7 @@ urlpatterns = [
     path('', views.home, name='home'),
 
     path('upload/', views.upload, name='upload'),
-    path('photos/', views.photo_list, name='photo_list'),
+    path('photos/', views.photo_list, name='gallery'),
     path('photos/upload', views.upload_photo, name='upload_photo'),
     path('photos/<int:pk>/', views.delete_photo, name='delete_photo'),
 
@@ -69,7 +69,7 @@ urlpatterns = [
         'collections/<str:collection_name>/sampling_events/<int:sampling_event_id>/devices/<int:sampling_event_device_id>/upload',
         views.upload_items, name='upload_items'),
 
-    path('items/gallery/', views.gallery, name='gallery'),
+    # path('items/gallery/', views.gallery, name='gallery'),
     path('items/annotate/', views.annotate, name='annotate'),
 
     path('admin/', views.admin_home, name='admin_home'),

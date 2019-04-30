@@ -5,7 +5,7 @@ class IsCreator(BasePermission):
     def has_object_permission(self, request, view, obj):
         user = request.user
 
-        return creator == obj.created_by
+        return user == obj.created_by
 
 
 class HasUpdatePermission(BasePermission):

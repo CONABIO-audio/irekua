@@ -58,7 +58,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
     sampling_event_device = devices.SelectSerializer(many=False, read_only=True)
     licence = licences.SelectSerializer(many=False, read_only=True)
     tags = tags.SelectSerializer(many=True, read_only=True)
-    ready_event_types = events.SelectSerializer(many=False, read_only=True)
+    ready_event_types = events.SelectSerializer(many=True, read_only=True)
 
     class Meta:
         model = Item

@@ -78,7 +78,7 @@ def UserFormCreator(request, id, model_name):
     fCls = FORM_CLASSES[model_name]
 
     if request.method != "POST":
-        instance = model.objects.get(id=id)
+        instance = model.objects.get(pk=id)
         data = {}
         for fKey in fCls.Meta.fields:
             data[fKey] = getattr(instance,fKey)
@@ -87,7 +87,7 @@ def UserFormCreator(request, id, model_name):
 
         return render(request,"selia/user/components/update_form.html",{"form":form})
     else:
-        instance = model.objects.get(id=id)
+        instance = model.objects.get(pk=id)
         form = fCls(request.POST or None, instance=instance)
 
         if form.is_valid():

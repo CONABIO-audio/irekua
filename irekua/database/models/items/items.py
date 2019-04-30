@@ -148,7 +148,7 @@ class Item(models.Model):
         related_name='item_created_by',
         on_delete=models.PROTECT,
         db_column='created_by',
-        verbose_name=_('create by'),
+        verbose_name=_('created by'),
         help_text=_('Creator of item'),
         blank=False,
         null=False)
@@ -321,4 +321,3 @@ class Item(models.Model):
     def delete(self, *args, **kwargs):
         self.item_file.delete()
         super().delete(*args, **kwargs)
-
