@@ -2,6 +2,8 @@ import json
 from django.http import HttpResponse
 from django import forms
 from django.shortcuts import render
+from django.core import serializers
+
 
 
 import database.models as db_models
@@ -92,8 +94,7 @@ def UserFormCreator(request, id, model_name):
 
         if form.is_valid():
             form.save()
-            return HttpResponse(form)
-        else:
-        	return HttpResponse(json.dumps(form.errors))
 
-        #return render(request,"selia/user/components/update_form.html",{"form":form})
+            return HttpResponse(serializers.serialize('json', [model.objects.get(id=id),]))
+        else:
+            return HttpResponse(json.dumps(form.errors))

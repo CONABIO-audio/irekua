@@ -50,10 +50,8 @@ function setCurrentSelection(uId, url) {
   getSelectionMetadata(successCallback=function(){refreshViews('selection');});
 }
 
-function afterUpdate(updateRes) {
-	newMeta = Object.assign(selectionMeta, updateRes);
-	selectionMeta = newMeta;
-	refreshViews('update');
+function afterUpdate() {
+  getSelectionMetadata(successCallback=function(){refreshViews('update');});
 }
 
 var detailShown = true;
