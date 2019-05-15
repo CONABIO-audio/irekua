@@ -1,3 +1,5 @@
+from hashlib import sha256
+
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 import jsonschema
@@ -40,3 +42,13 @@ def simple_JSON_schema():
 
 def empty_JSON():
     return {}
+
+
+def hash_file(item_file, block_size=65536):
+    hasher = sha256()
+    while True:
+        data = item_file.read(block_size)
+        if not data:
+            break
+        hasher.update(data)
+    return hasher.hexdigest()
