@@ -1,0 +1,21 @@
+<ul class="navbar-nav mr-auto float-right">
+  {% if user.is_authenticated %}
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle fa-fw"></i>
+      {{ user.first_name }} {{ user.last_name }}
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      <a class="dropdown-item" href={% url 'selia:user_home' %}>Perfil</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Salir</a>
+    </div>
+  </li>
+  {% else %}
+  <li class="nav-item mr-auto">
+    <a class="nav-link" href={% url 'registration:login' %} id="navbarLogin">
+      <i class="fas fa-user-circle fa-fw"></i>
+      Ingresar
+    </a>
+  </li>
+  {% endif %}
+</ul>

@@ -1,6 +1,5 @@
 import mimetypes
 import os
-from hashlib import sha256
 
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
@@ -8,19 +7,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
+from database.utils import hash_file
 
 
 mimetypes.init()
-
-
-def hash_file(item_file, block_size=65536):
-    hasher = sha256()
-    while True:
-        data = item_file.read(block_size)
-        if not data:
-            break
-        hasher.update(data)
-    return hasher.hexdigest()
 
 
 def get_item_path(instance, filename):
@@ -148,7 +138,7 @@ class Item(models.Model):
         related_name='item_created_by',
         on_delete=models.PROTECT,
         db_column='created_by',
-        verbose_name=_('create by'),
+        verbose_name=_('created by'),
         help_text=_('Creator of item'),
         blank=False,
         null=False)
@@ -222,7 +212,7 @@ class Item(models.Model):
 
         try:
             collection.validate_and_get_sampling_event_type(
-                self.sampling_event.sampling_event_type)  # pylint: disable=E1101
+                self.sampling_event_device.sampling_event.sampling_event_type)  # pylint: disable=E1101
         except ValidationError as error:
             raise ValidationError({'sampling': error})
 
@@ -276,7 +266,7 @@ class Item(models.Model):
                 'Licence was not provided to item nor to sampling event')
             raise ValidationError({'licence': msg})
 
-        self.licence = self.sampling_event.licence  # pylint: disable=E1101
+        self.licence = self.sampling_event_device.licence  # pylint: disable=E1101
 
         collection = self.sampling_event_device.sampling_event.collection  # pylint: disable=E1101
         collection.validate_and_get_licence(self.licence)
@@ -294,7 +284,7 @@ class Item(models.Model):
         hash_string = hash_file(self.item_file)
         item_size = self.item_file.size  # pylint: disable=E1101
 
-        if self.hash is None:
+        if self.hash is '':
             self.hash = hash_string
             self.item_size = item_size
 
@@ -317,3 +307,7 @@ class Item(models.Model):
     def remove_tag(self, tag):
         self.tags.remove(tag)  # pylint: disable=E1101
         self.save()
+
+    def delete(self, *args, **kwargs):
+        self.item_file.delete()
+        super().delete(*args, **kwargs)

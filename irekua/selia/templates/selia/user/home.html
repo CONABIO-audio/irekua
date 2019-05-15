@@ -1,0 +1,183 @@
+{% extends 'selia/user/base.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+
+{% block toolbar-items %}
+<li class="navbar-item ">
+  <button type="button" class="btn btn-link">{% trans "Download Summary" %} <i class="fas fa-file-download"></i></button>
+  <button type="button" class="btn btn-link">{% trans "Help" %} <i class="fas fa-question"></i></button>
+</li>
+{% endblock toolbar-items %}
+
+
+{% block main-content %}
+<div class="container pl-3 pr-3">
+    <div class="row mt-4 mb-5">
+      <div class="col-3">
+        <div class="card panel">
+          <div class="card-img-top w-100" style="height: var(--card-head); background-color: var(--detail-color);"></div>
+          <div class="card-body">
+            <h5 class="card-title">Perfil</h5>
+            <div class="media text-muted pt-3">
+              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">Nombre de usuario</strong>
+                {{ user.username }}
+              </p>
+            </div>
+            <div class="media text-muted pt-3">
+              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">Nombre</strong>
+                {{ user.first_name }}
+              </p>
+            </div>
+            <div class="media text-muted pt-3">
+              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">Apellidos</strong>
+                {{ user.last_name }}
+              </p>
+            </div>
+            <div class="media text-muted pt-3">
+              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">Correo</strong>
+                {{ user.email }}
+              </p>
+            </div>
+            <div class="media text-muted pt-3">
+              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">Institución</strong>
+                {% if user.institution is not None %}
+                {{ user.institution }}
+                {% else %}
+                -
+                {% endif %}
+              </p>
+            </div>
+            <button type="button" class="btn btn-link card-link float-right" data-toggle="modal" data-target="#modifyUserInfo">
+              Modificar
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="card panel">
+          <div class="card-img-top w-100" style="height: var(--card-head); background-color: var(--summary-color);"></div>
+          <div class="card-body">
+            <h5 class="card-title">Resumen</h5>
+            <div class="media text-muted pt-3">
+              <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">Collecciones</strong>
+                <div class="row">
+                  <div class="col-3">
+                    Número: {{ user_collections }}
+                  </div>
+                  <div class="col-8">
+                    Último añadido: {{ latest_collection }}
+                  </div>
+                  <div class="col-1">
+                    <a href={% url 'selia:collections' %}>Ver</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="media text-muted pt-3">
+              <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">Sitios</strong>
+                <div class="row">
+                  <div class="col-3">
+                    Número: {{ user_sites }}
+                  </div>
+                  <div class="col-8">
+                    Último añadido en: {{ latest_site }}
+                  </div>
+                  <div class="col-1">
+                    <a href="#">Ver</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="media text-muted pt-3">
+              <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">Dispositivos</strong>
+                <div class="row">
+                  <div class="col-3">
+                    Número: {{ user_devices }}
+                  </div>
+                  <div class="col-8">
+                    Último añadido en: {{ latest_device }}
+                  </div>
+                  <div class="col-1">
+                    <a href="#">Ver</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="media text-muted pt-3">
+              <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">Eventos de Muestreo</strong>
+                <div class="row">
+                  <div class="col-3">
+                    Número: {{ user_sampling_events }}
+                  </div>
+                  <div class="col-8">
+                    Último añadido en: {{ latest_sampling_event }}
+                  </div>
+                  <div class="col-1">
+                    <a href="#">Ver</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="media text-muted pt-3">
+              <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">Items</strong>
+                <div class="row">
+                  <div class="col-3">
+                    Número: {{ user_items }}
+                  </div>
+                  <div class="col-8">
+                    Último añadido en: {{ latest_item }}
+                  </div>
+                  <div class="col-1">
+                    <a href="#">Ver</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <a href='#' class="card-link float-right">Descargar resumen</a>
+          </div>
+          <div class="card-footer">
+            <p class="card-text"><small class="text-muted">Actualizado {% now "SHORT_DATETIME_FORMAT" %}</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock main-content %}
+
+{% block modals-extra %}
+<!-- User Info Modal -->
+<div class="modal fade" id="modifyUserInfo" tabindex="-1" role="dialog" aria-labelledby="modifyUserInfoLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modifyUserInfoLabel">Información de Usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="post" action={% url 'selia:user_home' %}>
+        {% csrf_token %}
+        <div class="modal-body">
+            {{ user_form | crispy }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <input type="submit" class="btn btn-primary" value="Guardar Cambios">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock modals-extra %}

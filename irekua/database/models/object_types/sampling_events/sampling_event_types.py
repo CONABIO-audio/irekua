@@ -7,6 +7,8 @@ from database.utils import validate_JSON_schema
 from database.utils import validate_JSON_instance
 from database.utils import simple_JSON_schema
 
+from .sampling_event_type_devices import SamplingEventTypeDeviceType
+
 
 class SamplingEventType(models.Model):
     name = models.CharField(
@@ -133,9 +135,10 @@ class SamplingEventType(models.Model):
             raise ValidationError(msg, params=params)
 
     def add_device_type(self, device_type, metadata_schema):
-        self.device_types.add(
-            device_type,
-            through_defaults={'metadata_schema': metadata_schema})
+        SamplingEventTypeDeviceType.objects.create(
+            sampling_event_type=self,
+            device_type=device_type,
+            metadata_schema=metadata_schema)
         self.save()
 
     def add_site_type(self, site_type):

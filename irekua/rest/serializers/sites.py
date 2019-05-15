@@ -4,6 +4,10 @@ from __future__ import unicode_literals
 from rest_framework import serializers
 
 from database.models import Site
+from database.models import SamplingEvent
+from database.models import SamplingEventDevice
+from database.models import CollectionSite
+from database.models import Item
 
 from rest.serializers.object_types import sites
 from rest.serializers.users import users
@@ -100,4 +104,75 @@ class UpdateSerializer(serializers.ModelSerializer):
             'site_type',
             'altitude',
             'metadata',
+        )
+
+
+class GeometrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Site
+        fields = (
+            'latitude',
+            'longitude',
+            'altitude',
+            'geo_ref',
+        )
+
+
+class SiteLocationSerializer(serializers.ModelSerializer):
+    geometry = GeometrySerializer(read_only=True, source="*")
+
+    class Meta:
+        model = Site
+        fields = (
+            'id',
+            'geometry'
+        )
+
+class SamplingEventLocationSerializer(serializers.ModelSerializer):
+    geometry = GeometrySerializer(
+        read_only=True,
+        source="collection_site.site")
+
+    class Meta:
+        model = SamplingEvent
+        fields = (
+            'id',
+            'geometry'
+        )
+
+class SamplingEventDeviceLocationSerializer(serializers.ModelSerializer):
+    geometry = GeometrySerializer(
+        read_only=True,
+        source="sampling_event.collection_site.site")
+
+    class Meta:
+        model = SamplingEventDevice
+        fields = (
+            'id',
+            'geometry'
+        )
+
+
+class ItemLocationSerializer(serializers.ModelSerializer):
+    geometry = GeometrySerializer(
+        read_only=True,
+        source="sampling_event_device.sampling_event.collection_site.site")
+
+    class Meta:
+        model = Item
+        fields = (
+            'id',
+            'geometry'
+        )
+
+class CollectionSiteLocationSerializer(serializers.ModelSerializer):
+    geometry = GeometrySerializer(
+        read_only=True,
+        source="site")
+
+    class Meta:
+        model = CollectionSite
+        fields = (
+            'id',
+            'geometry'
         )

@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from database import models
 from rest import serializers
@@ -102,7 +103,7 @@ class SamplingEventViewSet(mixins.UpdateModelMixin,
             object_id = self.kwargs['pk']
             return models.SamplingEventDevice.objects.filter(sampling_event=object_id)  # pylint: disable=E1101
 
-        if self.action == 'items':
+        if self.action == 'items' or self.action == 'item_locations':
             object_id = self.kwargs['pk']
             return models.Item.objects.filter(  # pylint: disable=E1101
                 sampling_event_device__sampling_event=object_id)
@@ -128,3 +129,28 @@ class SamplingEventViewSet(mixins.UpdateModelMixin,
         search_fields=filters.items.search_fields)
     def items(self, request, pk=None):
         return self.list_related_object_view()
+
+    @action(
+        detail=True,
+        methods=['GET'])
+    def location(self, request, pk=None):
+        sampling_event = self.get_object()
+        serializer = serializers.sites.SamplingEventLocationSerializer(
+            [sampling_event],
+            many=True)
+
+        return Response(serializer.data)
+
+    @action(
+        detail=True,
+        methods=['GET'],
+        filterset_class=filters.items.Filter,
+        search_fields=filters.items.search_fields)
+    def item_locations(self, request, pk=None):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        serializer = serializers.sites.ItemLocationSerializer(
+            queryset,
+            many=True,
+            read_only=True)
+        return Response(serializer.data)

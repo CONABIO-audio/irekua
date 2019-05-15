@@ -1,6 +1,5 @@
 import mimetypes
 import os
-from hashlib import sha256
 
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -8,19 +7,10 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
+from database.utils import hash_file
 
 
 mimetypes.init()
-
-
-def hash_file(item_file, block_size=65536):
-    hasher = sha256()
-    while True:
-        data = item_file.read(block_size)
-        if not data:
-            break
-        hasher.update(data)
-    return hasher.hexdigest()
 
 
 def get_item_path(instance, filename):

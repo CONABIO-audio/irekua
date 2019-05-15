@@ -22,12 +22,12 @@ class Filter(BaseFilter):
         model = Item
         fields = (
             'is_uploaded',
-            'item_type__name',
+            'item_type',
             'item_type__media_type',
-            'sampling_event_device__sampling_event__sampling_event_type__name',
-            'sampling_event_device__sampling_event__collection__name',
+            'sampling_event_device__sampling_event__sampling_event_type',
+            'sampling_event_device__sampling_event__collection',
             'sampling_event_device__sampling_event__collection__collection_type',
-            'sampling_event_device__sampling_event__collection_site__site__site_type__name',
-            'sampling_event_device__collection_device__physical_device__device__device_type__name',
-            'sampling_event_device__collection_device__physical_device__device__brand__name',
+            'sampling_event_device__sampling_event__collection_site__site__site_type',
+            'sampling_event_device__collection_device__physical_device__device__device_type',
+            'sampling_event_device__collection_device__physical_device__device__brand',
         )

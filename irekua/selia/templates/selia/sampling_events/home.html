@@ -1,0 +1,11 @@
+{% extends 'selia/sampling_events/base.html' %}
+{% load i18n %}
+
+{% block toolbar-title %}{% trans "Sampling Event Devices" %}{% endblock %}
+
+{% block toolbar-items %}
+<li class="navbar-item ">
+  <button type="button" class="btn btn-link">{% trans "Download Summary" %} <i class="fas fa-file-download"></i></button>
+  <button type="button" class="btn btn-link">{% trans "Help" %} <i class="fas fa-question"></i></button>
+</li>
+{% endblock toolbar-items %}

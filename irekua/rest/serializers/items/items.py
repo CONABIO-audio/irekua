@@ -34,7 +34,22 @@ class ListSerializer(serializers.ModelSerializer):
             'id',
             'item_type',
             'captured_on',
-            'collection',
+        )
+
+
+class ListCollectionSerializer(serializers.ModelSerializer):
+    collection = serializers.CharField(
+        source='sampling_event_device.sampling_event.collection',
+        read_only=True,
+        label="collection")
+
+    class Meta:
+        model = Item
+        fields = (
+            'url',
+            'id',
+            'item_type',
+            'captured_on',
         )
 
 
@@ -43,7 +58,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
     sampling_event_device = devices.SelectSerializer(many=False, read_only=True)
     licence = licences.SelectSerializer(many=False, read_only=True)
     tags = tags.SelectSerializer(many=True, read_only=True)
-    ready_event_types = events.SelectSerializer(many=False, read_only=True)
+    ready_event_types = events.SelectSerializer(many=True, read_only=True)
 
     class Meta:
         model = Item

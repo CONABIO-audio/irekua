@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.utils.translation import gettext as _
 from rest_framework import serializers
 
 from database.models import CollectionSite
@@ -24,6 +25,10 @@ class ListSerializer(serializers.ModelSerializer):
         read_only=True,
         source='site',
         slug_field='locality')
+    site_type = serializers.CharField(
+        read_only=True,
+        source='site.site_type',
+        label=_('Site type'))
 
     class Meta:
         model = CollectionSite
@@ -31,6 +36,7 @@ class ListSerializer(serializers.ModelSerializer):
             'url',
             'id',
             'site',
+            'site_type',
             'locality',
             'internal_id',
         )

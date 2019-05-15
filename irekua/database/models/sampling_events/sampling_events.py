@@ -106,7 +106,7 @@ class SamplingEvent(models.Model):
         msg = _('Sampling event %(id)s on site %(site)s: %(start)s - %(end)s')
         params = dict(
             id=str(self.id),
-            site=str(self.site),
+            site=str(self.collection_site),
             start=str(self.started_on),
             end=str(self.ended_on))
         return msg % params

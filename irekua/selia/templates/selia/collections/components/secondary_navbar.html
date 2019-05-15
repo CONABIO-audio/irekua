@@ -1,0 +1,33 @@
+{% extends 'selia/components/secondary_navbar.html' %}
+
+{% block navbar-brand %}
+<a class="navbar-brand" href={% url 'selia:collections' %}>Colecciones</a>
+{% endblock navbar-brand %}
+
+{% block navbar-items %}
+
+{% url 'selia:collections' as home_url %}
+{% url 'selia:open_collections' as open_url %}
+{% url 'selia:create_collection' as as create_url %}
+
+<li class="nav-item">
+  {% if home_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ home_url }}>
+  {% else %}
+  <a class="nav-link" href={{ home_url }}>
+  {% endif %}
+    <i class="fas fa-archive"></i>
+    Mis Colecciones
+  </a>
+</li>
+<li class="nav-item">
+  {% if open_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ open_url }}>
+  {% else %}
+  <a class="nav-link" href={{ open_url }}>
+  {% endif %}
+    <i class="fas fa-lock-open"></i>
+    Colecciones Abiertas
+  </a>
+</li>
+{% endblock navbar-items %}

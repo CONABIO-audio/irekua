@@ -1,0 +1,36 @@
+<!-- templates/registration/login.html -->
+{% extends 'selia/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}:: SELIA - Login ::{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <h1 class="text-center logo my-4">
+      <img src="{% static 'selia/img/selia2.png' %}" width="9%"  />
+    </h1>
+    <div class="row justify-content-center">
+      <div class="col-lg-4 col-md-6 col-sm-8">
+        <div class="card">
+          <div class="card-body">
+            {# Display a form #}
+            <form method="post" novalidate>
+              <button type="submit" class="btn btn-selia btn-block">:: SELIA ::</button>
+              <br />
+              {% csrf_token %}
+              {{ form|crispy }}
+              <br />
+              <button type="submit" class="btn btn-selia btn-block">Entrar</button>
+            </form>
+          </div>
+        </div>
+        <div class="text-center py-2">
+          <small>
+            <a href={% url 'registration:password-reset' %} class="text-muted">¿Olvido su contraseña?</a>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

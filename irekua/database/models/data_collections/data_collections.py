@@ -172,20 +172,18 @@ class Collection(models.Model):
             raise ValidationError({'metadata': msg})
         super(Collection, self).clean()
 
-    def add_user(self, user, role, metadata, is_admin=False):
+    def add_user(self, user, role, metadata):
         CollectionUser.objects.create(  # pylint: disable=E1101
             collection=self,
             user=user,
             role=role,
-            metadata=metadata,
-            is_admin=is_admin)
+            metadata=metadata)
 
-    def add_site(self, site, internal_id, metadata):
+    def add_site(self, site, internal_id):
         CollectionSite.objects.create(  # pylint: disable=E1101
             collection=self,
             site=site,
-            internal_id=internal_id,
-            metadata=metadata)
+            internal_id=internal_id)
 
     def add_device(self, physical_device, internal_id, metadata):
         CollectionDevice.objects.create(  # pylint: disable=E1101

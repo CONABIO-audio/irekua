@@ -302,6 +302,16 @@ class ItemViewSet(mixins.UpdateModelMixin,
         url = serializer.data['item_file']
         return redirect(url)
 
+    @action(
+        detail=True,
+        methods=['GET'])
+    def location(self, request, pk=None):
+        item = self.get_object()
+        serializer = serializers.sites.ItemLocationSerializer(
+            [item],
+            many=True)
+        return Response(serializer.data)
+
     def get_list_queryset(self):
         try:
             user = self.request.user
@@ -324,7 +334,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
             Q(licence__is_active=False) |
             Q(licence__licence_type__can_view=True)
         )
-        is_owner = Q(sampling_event__created_by=user.pk)
+        is_owner = Q(created_by=user.pk)
 
         perm = Permission.objects.get(codename='view_collection_items')
         collections_with_permission = (
@@ -338,7 +348,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
         # Check that this query is working
 
         is_in_allowed_collection = Q(
-            sampling_event__collection__in=collections_with_permission)
+            sampling_event_device__sampling_event__collection__in=collections_with_permission)
 
         filter_query = (
             is_open |

@@ -1,0 +1,12 @@
+{% extends 'selia/collections/detail/base.html' %}
+{% load i18n %}
+
+{% block toolbar-title %}{% trans "Collection Sites" %}{% endblock %}
+
+{% block toolbar-items %}
+<li class="navbar-item ">
+  <button type="button" class="btn btn-link"><i class="fas fa-plus"></i> {% trans "Add Site" %} <i class="fas fa-map-marked-alt"></i></button>
+  <button type="button" class="btn btn-link">{% trans "Download Summary" %} <i class="fas fa-file-download"></i></button>
+  <button type="button" class="btn btn-link">{% trans "Help" %} <i class="fas fa-question"></i></button>
+</li>
+{% endblock toolbar-items %}

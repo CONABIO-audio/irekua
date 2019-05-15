@@ -1,0 +1,60 @@
+{% extends 'irekua/base.html' %}
+{% load static from staticfiles %}
+
+
+{% block title %} SELIA {% endblock %}
+
+{% block navigation-items %}
+{% include 'selia/components/navbar_items.html' %}
+{% endblock navigation-items %}
+
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'selia/css/main.css' %}">
+{% endblock stylesheet %}
+
+
+{% block nav-brand %}
+<button class="toggle-sidebar btn btn-default bg-transparent">
+  <span class="navbar-toggler-icon"></span>
+</button>
+<a class="navbar-brand" href="#">Selia</a>
+{% endblock nav-brand %}
+
+{% block content %}
+<div class="container-fluid p-0 h-100">
+  <div class="row h-100 ml-0 mr-0" id="row-main">
+    {% if request.session.expanded == 'true' %}
+    <div class="col-md-3 container-fluid bg-light sidebar pl-4 pr-3 pt-4 h-100 l-0" id="sidebar">
+    {% else %}
+    <div class="col-md-3 container-fluid bg-light sidebar pl-4 pr-3 pt-4 h-100 l-0 collapsed" id="sidebar">
+    {% endif %}
+      {% block sidebar %}
+      {% include 'selia/user/components/sidebar.html' %}
+      {% endblock sidebar %}
+    </div>
+
+    {% if request.session.expanded == 'true' %}
+    <div class="col-md-9 container-fluid main-content h-100 p-0" id="content">
+    {% else %}
+    <div class="col-md-12 container-fluid main-content h-100 p-0" id="content">
+    {% endif %}
+
+    {% block view-content %}{% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block footer-logos-extra %}
+<div class="col h-100">
+  <img src="https://monitoreo.conabio.gob.mx/images/Conanp.PNG">
+</div>
+<div class="col h-100">
+  <img src="https://monitoreo.conabio.gob.mx/images/logo-pnud.png">
+</div>
+{% endblock footer-logos-extra %}
+
+{% block scripts-extra %}
+<script src="{% static 'selia/js/sidebar.js' %}"></script>
+{% endblock scripts-extra %}

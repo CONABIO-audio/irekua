@@ -1,0 +1,106 @@
+:root {
+  --card-head: 10px;
+  --detail-color: #E2D4B7;
+  --map-color: #B49594;
+  --summary-color: #8CC7A1;
+  --table-color: #CADBC8;
+  --toolbar-color: #CC8B86;
+}
+
+.main-navbar {
+  background-color: var(--dark)!important;
+}
+
+.secondary-navbar {
+  /* background-color: var(--toolbar-color); */
+}
+
+.tool-bar {
+  /* background-color: var(--toolbar-color); */
+  box-shadow: 0 2px 2px 0px rgba(0, 0, 0, 0.19);
+}
+
+.sidebar {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.19);
+}
+
+.collapsed {
+  /* hide it for small displays*/
+  display: none;
+}
+
+#sidebar {
+  /* for the animation */
+  transition: margin 0.5s ease;
+  -webkit-transition: margin 0.5s ease;
+}
+
+#row-main {
+  /* necessary to hide collapsed sidebar */
+  overflow-x: hidden;
+}
+
+#content {
+  /* for the animation */
+  transition: width 0.5s ease;
+  -webkit-transition: width 0.5s ease;
+}
+
+.panel-container {
+  overflow: hidden;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 1em;
+}
+
+.panel {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  min-height: 30%;
+}
+
+.card {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+}
+
+.panel-header {
+  position: fixed;
+  width: inherit;
+}
+
+.leaflet-container-default {
+  height: 100%;
+  width: 100%;
+}
+
+#tableContainer {
+  overflow-y: auto;
+  max-height: 40vh;
+  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+.treegrid-indent {
+    width: 0px;
+    height: 16px;
+    display: inline-block;
+    position: relative;
+}
+
+.treegrid-expander {
+    width: 0px;
+    height: 16px;
+    display: inline-block;
+    position: relative;
+    left:-17px;
+    cursor: pointer;
+}
+
+#detailToolbar > div {
+ width: calc(100% / 6);
+ display: inline-block;
+ vertical-align: top;
+ /* border:1px solid red; */
+ text-align:center;
+ margin:2%;
+ padding:5px;
+}

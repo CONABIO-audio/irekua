@@ -1,0 +1,15 @@
+{% load treeview %}
+
+<nav class="sidebar-sticky h-100">
+  <ul class="nav d-flex flex-column justify-content-center">
+    <li class="nav-item w-100">
+      {% block sidebar-user-info %}
+      {% include 'selia/components/user_card.html' %}
+      {% endblock sidebar-user-info %}
+    </li>
+
+    <li class="nav-item align-self-stretch w-100 pt-5">
+      {% treeview request %}
+    </li>
+  </ul>
+</nav>

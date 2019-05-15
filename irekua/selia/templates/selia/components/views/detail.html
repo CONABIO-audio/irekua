@@ -1,0 +1,23 @@
+{% extends 'selia/components/views/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block card-header %}
+<div class="card-img-top w-100" style="height: var(--card-head); background-color: var(--detail-color);"></div>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid flex-row d-flex justify-content-around h-10" id="detailToolbar">
+  <div id="detailLabel" class="navbar-brand float-left"></div>
+    <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#updateModal">
+    Modificar
+  </button>
+</div>
+
+<div class="container-fluid p-0 mt-3" id="detailContainer">
+</div>
+<script type="text/javascript">
+  var updateFormUrl = "{{ update_form_url }}";
+</script>
+<script type="text/javascript" src={% static 'selia/js/grid/detail_manager.js' %}></script>
+{% endblock content %}
