@@ -21,8 +21,7 @@ def get_item_path(instance, filename):
         '{sampling_event_device}',
         '{hash}{ext}')
 
-    extension = mimetypes.guess_extension(
-        instance.item_type.media_type)
+    extension = mimetypes.guess_extension(instance.item_type.media_type)
     sampling_event_device = instance.sampling_event_device
     sampling_event = sampling_event_device.sampling_event
     collection = sampling_event.collection

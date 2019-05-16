@@ -8,7 +8,6 @@ from database.formats import get_capture_date
 
 
 def handle_files(files, sampling_event_device, user, licence):
-    print(licence)
     collection_type = sampling_event_device.sampling_event.collection.collection_type
 
     if collection_type.restrict_item_types:
@@ -85,6 +84,7 @@ def upload_items(request, collection_name, sampling_event_id, sampling_event_dev
             required=False)
         licence = forms.ModelChoiceField(
             queryset=collection.licence_set.all())
+
 
     if request.method == "POST":
         form = FileFieldForm(request.POST)

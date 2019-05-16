@@ -20,9 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Load private configurations
 PRIVATE_CONFIGS = configparser.ConfigParser()
-PRIVATE_CONFIGS.read(
-    os.path.join(BASE_DIR, 'main', 'config', 'db.ini'),
-)
+PRIVATE_CONFIGS.read(os.path.join(BASE_DIR, 'main', 'config', 'db.ini'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -103,24 +101,20 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+DB_NAME = PRIVATE_CONFIGS.get('database', 'DB_NAME', fallback='irekua')
+DB_USER = PRIVATE_CONFIGS.get('database', 'DB_USER', fallback='irekua')
+DB_PASSWORD = PRIVATE_CONFIGS.get('database', 'DB_PASSWORD', fallback='password')
+DB_HOST = PRIVATE_CONFIGS.get('database', 'DB_HOST', fallback='localhost')
+DB_PORT = PRIVATE_CONFIGS.get('database', 'DB_PORT', fallback='5432')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': os.environ.get(
-            'DB_NAME',
-            PRIVATE_CONFIGS.get('database', 'DB_NAME', fallback='irekua')),
-        'USER': os.environ.get(
-            'DB_USER',
-            PRIVATE_CONFIGS.get('database', 'DB_USER', fallback='irekua')),
-        'PASSWORD': os.environ.get(
-            'DB_PASSWORD',
-            PRIVATE_CONFIGS.get('database', 'DB_PASSWORD', fallback='password')),
-        'HOST': os.environ.get(
-            'DB_HOST',
-            PRIVATE_CONFIGS.get('database', 'DB_HOST', fallback='localhost')),
-        'PORT': os.environ.get(
-            'DB_PORT',
-            PRIVATE_CONFIGS.get('database', 'DB_PORT', fallback='5432')),
+        'NAME': os.environ.get('DB_NAME', DB_NAME),
+        'USER': os.environ.get('DB_USER', DB_USER),
+        'PASSWORD': os.environ.get('DB_PASSWORD', DB_PASSWORD),
+        'HOST': os.environ.get('DB_HOST', DB_HOST),
+        'PORT': os.environ.get('DB_PORT', DB_PORT),
     }
 }
 
@@ -160,10 +154,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-from .s3_config import AWS_ACCESS_KEY_ID
-from .s3_config import AWS_SECRET_ACCESS_KEY
-from .s3_config import AWS_STORAGE_BUCKET_NAME
+S3_CONFIGS = configparser.ConfigParser()
+S3_CONFIGS.read(os.path.join(BASE_DIR, 'main', 'config', 's3.ini'))
 
+AWS_ACCESS_KEY_ID = S3_CONFIGS.get('s3', 'AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = S3_CONFIGS.get('s3', 'AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = S3_CONFIGS.get('s3', 'AWS_STORAGE_BUCKET_NAME')
 
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {
@@ -175,7 +171,8 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
 MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, 'media')
-DEFAULT_FILE_STORAGE = 'irekua.storage.MediaStorage'
+DEFAULT_FILE_STORAGE = 'database.storage.MediaStorage'
+
 
 # Locale files
 LOCALE_PATHS = (
