@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'database',
     'registration',
     'irekua',
+    'file_handler',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

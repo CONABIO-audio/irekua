@@ -1,0 +1,33 @@
+{% extends 'selia/components/secondary_navbar.html' %}
+{% load i18n %}
+
+{% block navbar-brand %}
+<a class="navbar-brand" href={% url 'selia:user_home' %}>{% trans "Items" %}</a>
+{% endblock navbar-brand %}
+
+{% block navbar-items %}
+
+{% url 'selia:upload_items' as upload_url %}
+{% url 'selia:gallery' as gallery_url %}
+
+<li class="nav-item">
+  {% if upload_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ upload_url }}>
+  {% else %}
+  <a class="nav-link" href={{ upload_url }}>
+  {% endif %}
+    <i class="fas fa-cloud-upload-alt"></i>
+    {% trans "Upload" %}
+  </a>
+</li>
+<li class="nav-item">
+  {% if gallery_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ gallery_url }}>
+  {% else %}
+  <a class="nav-link" href={{ gallery_url }}>
+  {% endif %}
+    <i class="far fa-images"></i>
+    {% trans "Gallery" %}
+  </a>
+</li>
+{% endblock navbar-items %}

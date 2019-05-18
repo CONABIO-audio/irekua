@@ -63,7 +63,7 @@
   </header>
 
   <main role="main" class="container-fluid content p-0">
-    <div class="row h-100" id="row-main">
+    <div class="row h-100 m-0" id="row-main">
     {% block content %}
 
       <!-- Page Content -->
@@ -99,44 +99,12 @@
   </div>
   {% endif %}
 
-  {% block modals-extra %}
-  {% endblock modals-extra %}
-
+  {% block modals-extra %} {% endblock %}
   {% endblock modals %}
 
-  <!-- Footer -->
-  <footer class="mt-auto py-3 bg-light">
-    <div class="container h-100">
-      {% block footer %}
-        <div class="row align-items-center p-1 h-100">
-          <div class="col-2 h-100">
-          </div>
-          <div class="col h-100">
-            {% block footer-left %}
-            <div class="container-fluid footer-logos h-100">
-              <div class="row h-100">
-                <div class="col h-100">
-                  <img src="https://monitoreo.conabio.gob.mx/images/1099-original.png">
-                </div>
-                {% block footer-logos-extra %}
-                {% endblock footer-logos-extra %}
-              </div>
-            </div>
-            {% endblock footer-left %}
-          </div>
-          <div class="col text-dark text-center align-middle">
-            {% block footer-center %}
-            {% endblock footer-center %}
-          </div>
-          <div class="col text-dark text-center align-middle">
-            {% block footer-right %}
-            {% now "SHORT_DATE_FORMAT" %}
-            {% endblock footer-right %}
-          </div>
-        </div>
-      {% endblock footer %}
-    </div>
-  </footer>
+  {% block footer %}
+  {% include 'irekua/components/footer.html' %}
+  {% endblock footer %}
 
   {% block scripts %}
 

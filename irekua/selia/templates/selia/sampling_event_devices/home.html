@@ -5,7 +5,7 @@
 
 {% block toolbar-items %}
 <li class="navbar-item ">
-  <a href={% url 'selia:upload_items' collection_name sampling_event_id sampling_event_device_id %} class="btn btn-link"><i class="fas fa-plus"></i> {% trans "Add Items" %} <i class="far fa-file"></i></a>
+  <a href="{% url 'selia:upload_items' %}?collection={collection_name}&sampling_event={sampling_event_id}&sampling_event_device={sampling_event_device_id}" class="btn btn-link"><i class="fas fa-plus"></i> {% trans "Add Items" %} <i class="far fa-file"></i></a>
   <button type="button" class="btn btn-link">{% trans "Download Summary" %} <i class="fas fa-file-download"></i></button>
   <button type="button" class="btn btn-link">{% trans "Help" %} <i class="fas fa-question"></i></button>
 </li>

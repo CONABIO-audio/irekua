@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^api/auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^selia/', include(('selia.urls', 'selia'))),
     url(r'^registration/', include(('registration.urls', 'registration'))),
+    url(r'^file_handling/', include(('file_handler.urls', 'file_handler'))),
     url(r'', include(('irekua.urls', 'irekua'))),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

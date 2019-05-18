@@ -65,11 +65,11 @@ urlpatterns = [
         'collections/<str:collection_name>/sampling_events/<int:sampling_event_id>/devices/<int:sampling_event_device_id>/items/<int:item_id>/',
         views.item,
         name='item'),
-    path(
-        'collections/<str:collection_name>/sampling_events/<int:sampling_event_id>/devices/<int:sampling_event_device_id>/upload',
-        views.upload_items, name='upload_items'),
 
-    # path('items/gallery/', views.gallery, name='gallery'),
+
+    path('upload', views.upload_items, name='upload_items'),
+
+    path('items/gallery/', views.gallery, name='gallery'),
     path('items/annotate/', views.annotate, name='annotate'),
 
     path('admin/', views.admin_home, name='admin_home'),

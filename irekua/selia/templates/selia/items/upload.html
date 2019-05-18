@@ -1,79 +1,21 @@
-{% extends 'selia/sampling_event_devices/base.html' %}
+{% extends 'selia/items/base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% load i18n %}
+{% load selia_tags %}
 
-
-{% block toolbar-title %}
-{% trans "Upload Items" %}
-{% endblock %}
 
 {% block main-content %}
-<div class="d-flex flex-row">
-    <div class="card m-5" style="width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Upload</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Upload multiple files</h6>
-        <form action="#" method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          {{ form | crispy }}
-          <input type="submit" class="btn btn-link card-link" value="Submit">
-        </form>
-      </div>
-    </div>
+<div class="container mt-2">
 
-    {% if errors %}
-    <div class="card show fade m-5" style="width: 18rem;">
-      <div class="card-img-top bg-danger w-100" style="height: var(--card-head);;"></div>
-      <div class="card-body">
-        <h5 class="card-title">Errores</h5>
-        {% for file, error in errors.items %}
-        <h6 class="text-muted">
-          {{ file }}
-        </h6>
-        <p>
-          {{error}}
-        </p>
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
+  {% card %}
+    {% card_header %}
+      <img class="card-img-top" src="{% static 'selia/img/evento_de_muestreo.jpg' %}" alt="Card image cap" style="height:200px; widht:100%">
+    {% endcard_header %}
+    {% card_body %}
+      {% trans "Upload" %}
+    {% endcard_body %}
+  {% endcard %}
 
-    {% if warnings %}
-    <div class="card show fade m-5" style="width: 18rem;">
-      <div class="card-img-top bg-warning w-100" style="height: var(--card-head);"></div>
-      <div class="card-body">
-        <h5 class="card-title">Advertencias</h5>
-        {% for key, value in warnings.items %}
-        <h6 class="text-muted">
-          {{ key }}
-        </h6>
-        <ul>
-          {% for errorkey, error in value.items %}
-          <li>
-            {{ errorkey}}: {{ error }}
-          </li>
-          {% endfor %}
-        </ul>
-        {% endfor%}
-      </div>
-    </div>
-    {% endif %}
-
-    {% if success %}
-    <div class="card show fade m-5" style="width: 18rem;">
-      <div class="card-img-top bg-success w-100" style="height: var(--card-head);;"></div>
-      <div class="card-body">
-        <h5 class="card-title">Archivos cargados</h5>
-        <ul>
-          {% for file in success %}
-          <li>
-            {{file}}
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-      <a class="btn btn-link card-link" href={% url 'selia:gallery' %}>Ir a Galleria</a>
-    </div>
-    {% endif %}
 </div>
 {% endblock main-content %}
