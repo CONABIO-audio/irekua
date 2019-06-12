@@ -84,11 +84,10 @@ class Site(IrekuaModelBaseUser):
         name = ''
         if self.name is not None:
             name = ': ' + self.name
-        msg = _('Site %(id)s%(name)s of type %(type)s')
+        msg = _('Site %(id)s%(name)s')
         params = dict(
             id=self.id,
-            name=name,
-            type=str(self.site_type))
+            name=name)
         return msg % params
 
     def clean(self):
