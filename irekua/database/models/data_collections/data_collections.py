@@ -179,11 +179,16 @@ class Collection(models.Model):
             role=role,
             metadata=metadata)
 
-    def add_site(self, site, internal_id):
+    def add_site(self, site, internal_id, site_type=None, metadata=None):
+        if metadata is None:
+            metadata = {}
+
         CollectionSite.objects.create(  # pylint: disable=E1101
             collection=self,
             site=site,
-            internal_id=internal_id)
+            internal_id=internal_id,
+            site_type=site_type,
+            metadata=metadata)
 
     def add_device(self, physical_device, internal_id, metadata):
         CollectionDevice.objects.create(  # pylint: disable=E1101

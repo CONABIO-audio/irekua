@@ -134,7 +134,7 @@ class SamplingEvent(models.Model):
             raise ValidationError({'metadata': error})
 
         try:
-            site_type = self.collection_site.site.site_type
+            site_type = self.collection_site.site_type
             self.sampling_event_type.validate_site_type(site_type)
         except ValidationError as error:
             raise ValidationError({'site': error})

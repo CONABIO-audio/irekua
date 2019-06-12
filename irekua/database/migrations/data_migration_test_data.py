@@ -224,10 +224,8 @@ def make_test_data(apps, schema_editor):
         for n in range(9):
             site, _ = models.Site.objects.get_or_create(
                 name="Sitio {}".format(index * 10 + n),
-                site_type=procer_site,
                 latitude=10 * random(),
                 longitude=10 * random(),
-                metadata={},
                 created_by=user)
             device, _ = models.PhysicalDevice.objects.get_or_create(
                 serial_number=int(10000 * random()),
@@ -235,7 +233,8 @@ def make_test_data(apps, schema_editor):
                 owner=user,
                 metadata={},
                 bundle=False)
-            procer_collection.add_site(site, index * 10 + n)
+            procer_collection.add_site(site, index * 10 + n,
+                site_type=procer_site, metadata={})
             procer_collection.add_device(device, index * 10 + n, {})
 
 
@@ -268,7 +267,7 @@ def make_test_data(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('database', '0002_auto_20190408_0037')
+        ('database', '0002_auto_20190605_2128'),
     ]
 
     operations = [

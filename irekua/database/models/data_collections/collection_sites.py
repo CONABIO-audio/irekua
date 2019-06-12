@@ -65,8 +65,7 @@ class CollectionSite(IrekuaModelBaseUser):
 
     def clean(self):
         try:
-            self.collection.validate_and_get_site_type(
-                self.site.site_type)
+            self.collection.validate_and_get_site_type(self.site_type)
         except ValidationError as error:
             raise ValidationError({'site': error})
 
