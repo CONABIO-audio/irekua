@@ -1,5 +1,5 @@
-{% load modal %}
+{% extends 'selia/base.html' %}
 
-{% modal %}
-HOLA
-{% endmodal %}
+{% block view-content %}
+{% include 'selia/forms/sampling_event_creation.html' %}
+{% endblock %}
