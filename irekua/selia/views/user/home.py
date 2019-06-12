@@ -14,7 +14,7 @@ class UserForm(forms.ModelForm):
 
 def get_summary_context(user):
     collections = user.collection_users.order_by('-created_on')
-    sites = user.site_set.order_by('-created_on')
+    sites = user.site_created_by.order_by('-created_on')
     devices = user.physicaldevice_set.order_by('-created_on')
     sampling_events = user.sampling_event_created_by.order_by('-created_on')
     items = user.item_created_by.order_by('-created_on')
