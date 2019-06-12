@@ -92,3 +92,5 @@ irekua/static/
 
 .env
 db.sqlite3
+
+irekua/selia/templates/selia/test.html
