@@ -28,14 +28,12 @@ class ListSerializer(serializers.ModelSerializer):
         fields = (
             'url',
             'id',
-            'site_type',
             'name',
             'locality',
         )
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    site_type = sites.SelectSerializer(many=False, read_only=True)
     created_by = users.SelectSerializer(many=False, read_only=True)
 
     class Meta:
@@ -45,8 +43,6 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'id',
             'name',
             'locality',
-            'site_type',
-            'metadata',
             'created_by',
             'created_on',
             'modified_on',
@@ -54,7 +50,6 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class FullDetailSerializer(serializers.HyperlinkedModelSerializer):
-    site_type = sites.SelectSerializer(many=False, read_only=True)
     created_by = users.SelectSerializer(many=False, read_only=True)
 
     class Meta:
@@ -64,12 +59,10 @@ class FullDetailSerializer(serializers.HyperlinkedModelSerializer):
             'id',
             'name',
             'locality',
-            'site_type',
             'latitude',
             'longitude',
             'geo_ref',
             'altitude',
-            'metadata',
             'created_by',
             'created_on',
             'modified_on',
@@ -82,11 +75,9 @@ class CreateSerializer(serializers.ModelSerializer):
         fields = (
             'name',
             'locality',
-            'site_type',
             'latitude',
             'longitude',
             'altitude',
-            'metadata',
         )
 
     def create(self, validated_data):
@@ -101,9 +92,7 @@ class UpdateSerializer(serializers.ModelSerializer):
         fields = (
             'name',
             'locality',
-            'site_type',
             'altitude',
-            'metadata',
         )
 
 

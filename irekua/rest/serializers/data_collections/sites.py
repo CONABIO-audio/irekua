@@ -25,10 +25,6 @@ class ListSerializer(serializers.ModelSerializer):
         read_only=True,
         source='site',
         slug_field='locality')
-    site_type = serializers.CharField(
-        read_only=True,
-        source='site.site_type',
-        label=_('Site type'))
 
     class Meta:
         model = CollectionSite
