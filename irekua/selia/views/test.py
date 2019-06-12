@@ -29,4 +29,3 @@ class TestView(TemplateView):
             'form': form
         }
 
-
