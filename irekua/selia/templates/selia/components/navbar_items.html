@@ -1,25 +1,9 @@
-{% url 'irekua:home' as irekua_home %}
-{% url 'selia:home' as selia_home %}
 {% url 'selia:about' as selia_about %}
 {% url 'selia:user_home' as user_home %}
 {% url 'selia:collections' as collections %}
 {% url 'selia:admin_home' as admin_home %}
 {% load i18n %}
 
-<li class="nav-item">
-  {% if irekua_home == request.path %}
-  <a class="nav-link active" href={{ irekua_home|urlencode }}>Irekua</a>
-  {% else %}
-  <a class="nav-link" href={{ irekua_home|urlencode }}>Irekua</a>
-  {% endif %}
-</li>
-<li class="nav-item">
-  {% if selia_home == request.path %}
-  <a class="nav-link active" href={{ selia_home|urlencode }}>Selia</a>
-  {% else %}
-  <a class="nav-link" href={{ selia_home|urlencode }}>Selia</a>
-  {% endif %}
-</li>
 <li class="nav-item">
   {% if selia_about == request.path %}
   <a class="nav-link active" href={{ selia_about|urlencode }}>{% trans "About" %}</a>

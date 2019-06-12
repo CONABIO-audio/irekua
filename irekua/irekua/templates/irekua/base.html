@@ -35,30 +35,7 @@
 
   <header>
   {% block header %}
-    <div class="navbar navbar-expand-lg navbar-dark bg-dark box-shadow main-navbar">
-      <div class="container-fluid">
-        <div class="container float-left">
-        {% block nav-brand %}
-        <a class="navbar-brand" href="#">Irekua</a>
-        {% endblock nav-brand %}
-      </div>
-
-        <div class="container float-right">
-          {% block navigation %}
-          <ul class="navbar-nav">
-            {% block navigation-items %}
-            {% endblock navigation-items %}
-          </ul>
-          {% endblock navigation %}
-        </div>
-
-        <div class="container float-right">
-          {% block user_navigation %}
-          {% include 'irekua/components/user_menu.html' %}
-          {% endblock user_navigation %}
-        </div>
-      </div>
-    </div>
+    {% include 'irekua/components/header.html' %}
   {% endblock header %}
   </header>
 
@@ -67,7 +44,7 @@
     {% block content %}
 
       <!-- Page Content -->
-      <div class="container-fluid p-2">
+      <div class="container-fluid main-content">
         {% block main-content %}
         {% endblock main-content %}
       </div>

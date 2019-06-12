@@ -1,9 +1,22 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import empty_JSON
 
-class CollectionSite(models.Model):
+from database.models.base import IrekuaModelBaseUser
+
+
+class CollectionSite(IrekuaModelBaseUser):
+    site_type = models.ForeignKey(
+        'SiteType',
+        on_delete=models.PROTECT,
+        db_column='site_type',
+        verbose_name=_('site type'),
+        help_text=_('Type of site'),
+        blank=False,
+        null=False)
     site = models.ForeignKey(
         'Site',
         on_delete=models.PROTECT,
@@ -20,25 +33,19 @@ class CollectionSite(models.Model):
         help_text=_('Collection to which the site belongs'),
         blank=False,
         null=False)
+    metadata = JSONField(
+        db_column='metadata',
+        verbose_name=_('metadata'),
+        help_text=_('Metadata associated to site in collection'),
+        default=empty_JSON,
+        blank=True,
+        null=True)
     internal_id = models.CharField(
         max_length=64,
         db_column='internal_id',
         verbose_name=_('internal id'),
         help_text=_('ID of site within the collection'),
         blank=True)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of creation of annotation'),
-        editable=False,
-        auto_now_add=True)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        editable=False,
-        auto_now=True)
 
     class Meta:
         verbose_name = _('Collection Site')

@@ -3,19 +3,79 @@
 {% load static %}
 {% load i18n %}
 {% load selia_tags %}
+{% load crispy_forms_tags %}
+
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'selia/css/main.css' %}">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+{% endblock %}
 
 
 {% block main-content %}
 <div class="container mt-2">
 
-  {% card %}
-    {% card_header %}
-      <img class="card-img-top" src="{% static 'selia/img/evento_de_muestreo.jpg' %}" alt="Card image cap" style="height:200px; widht:100%">
-    {% endcard_header %}
-    {% card_body %}
+  {% component card %}
+  {% component card_header class="jumbotron" %}
+    <h2 class="display-7">{% trans 'Sampling Event' %}</h2>
+    <p>
+      {% blocktrans %}
+      Select the sampling event in which the data was generated. This refers to the site in which the device
+      was placed and the range of dates in which data was captured. Either select a previously registered sampling
+      event or create a new one.
+      {% endblocktrans %}
+    </p>
+    {% endcomponent %}
+
+    {% component card_body %}
+      {% if sampling_event.search.show %}
+      <form method="get" action="#">
+        {% csrf_token %}
+        {{ sampling_event.search.form | crispy }}
+      </form>
+      {% endif %}
+    {% endcomponent %}
+  {% endcomponent %}
+
+  {% if show_device %}
+  {% component card %}
+    {% component card_header class="jumbotron" %}
+    <h2 class="display-7">{% trans 'Device' %}</h2>
+    <p>
+      {% blocktrans %}
+      Select the device with which the data was generated. Either select a device previously registered for this
+      sampling event or create a new one.
+      {% endblocktrans %}
+    </p>
+    {% endcomponent %}
+
+    {% component card_body %}
+      {% trans "Device" %}
+    {% endcomponent %}
+  {% endcomponent %}
+  {% endif %}
+
+  {% if show_upload %}
+  {% component card class="w-50 m-auto"%}
+    {% component card_header class="bg-dark text-white" %}
+    <h2 class="display-7">{% trans 'Archivos' %}</h2>
+    {% endcomponent %}
+
+    {% component card_body %}
       {% trans "Upload" %}
-    {% endcard_body %}
-  {% endcard %}
+    {% endcomponent %}
+  {% endcomponent %}
+  {% endif %}
 
 </div>
 {% endblock main-content %}
+
+{% block scripts-extra %}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script>
+  $('#datepicker').daterangepicker();
+</script>
+{% endblock %}

@@ -4,22 +4,13 @@
 
 {% block title %} SELIA {% endblock %}
 
-{% block navigation-items %}
-{% include 'selia/components/navbar_items.html' %}
-{% endblock navigation-items %}
-
-
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'selia/css/main.css' %}">
 {% endblock stylesheet %}
 
-
-{% block nav-brand %}
-<button class="toggle-sidebar btn btn-default bg-transparent">
-  <span class="navbar-toggler-icon"></span>
-</button>
-<a class="navbar-brand" href="#">Selia</a>
-{% endblock nav-brand %}
+{% block header %}
+{% include 'selia/components/header.html' %}
+{% endblock header%}
 
 {% block content %}
 <div class="container-fluid p-0 h-100">
@@ -40,7 +31,7 @@
     <div class="col-md-12 container-fluid main-content h-100 p-0" id="content">
     {% endif %}
 
-    {% block view-content %}{% endblock %}
+    {% block main-content %}{% endblock %}
     </div>
   </div>
 </div>

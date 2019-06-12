@@ -4,29 +4,38 @@ from django import forms
 from django.shortcuts import render
 from django.core import serializers
 
-
-
 import database.models as db_models
+
 
 class SiteUpdateForm(forms.ModelForm):
     class Meta:
         model = db_models.Site
-        fields = ['name','locality','site_type','altitude','metadata']
+        fields = [
+            'name',
+            'locality',
+            'altitude',
+            'latitude',
+            'longitude',
+        ]
+
 
 class PhysicalDeviceUpdateForm(forms.ModelForm):
     class Meta:
         model = db_models.PhysicalDevice
         fields = ['serial_number','metadata']
 
+
 class SamplingEventUpdateForm(forms.ModelForm):
     class Meta:
         model = db_models.SamplingEvent
         fields = ['commentaries','metadata','started_on','ended_on']
 
+
 class ItemUpdateForm(forms.ModelForm):
     class Meta:
         model = db_models.Item
         fields = ['metadata']
+
 
 class CollectionUpdateForm(forms.ModelForm):
     class Meta:
@@ -37,6 +46,7 @@ class CollectionUpdateForm(forms.ModelForm):
             'logo',
             'institution',
         ]
+
 
 class CollectionSiteUpdateForm(forms.ModelForm):
     class Meta:
@@ -53,6 +63,7 @@ class CollectionDeviceUpdateForm(forms.ModelForm):
             'internal_id',
             'metadata',
         ]
+
 
 class SamplingEventDeviceUpdateForm(forms.ModelForm):
     class Meta:

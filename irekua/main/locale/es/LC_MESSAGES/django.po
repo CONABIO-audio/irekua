@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-27 21:28-0500\n"
+"POT-Creation-Date: 2019-06-05 13:49-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,7 +50,7 @@ msgstr "Permisos"
 #: database/models/object_types/licence_types.py:17
 #: database/models/object_types/sampling_events/sampling_event_types.py:18
 #: database/models/object_types/site_types.py:15
-#: database/models/object_types/term_types.py:16 database/models/sites.py:23
+#: database/models/object_types/term_types.py:16 database/models/sites.py:31
 #: database/models/users/roles.py:11
 msgid "name"
 msgstr "Nombre"
@@ -119,21 +119,21 @@ msgstr "esquema de configuración"
 
 #: database/models/annotations/annotation_tools.py:45
 msgid "JSON schema for annotation tool configuration info"
-msgstr "Esquema JSON para la información de configuración de la herramienta de anotación"
+msgstr ""
+"Esquema JSON para la información de configuración de la herramienta de "
+"anotación"
 
 #: database/models/annotations/annotation_tools.py:53
-#: database/models/annotations/annotation_votes.py:36
-#: database/models/annotations/annotations.py:91
+#: database/models/annotations/annotation_votes.py:36 database/models/base.py:8
 #: database/models/data_collections/collection_devices.py:42
-#: database/models/data_collections/collection_sites.py:32
 #: database/models/data_collections/collection_users.py:41
 #: database/models/data_collections/data_collections.py:82
 #: database/models/data_collections/metacollections.py:43
 #: database/models/devices/device_brands.py:29
 #: database/models/devices/devices.py:53
 #: database/models/devices/physical_devices.py:50
-#: database/models/items/items.py:157
-#: database/models/items/secondary_items.py:96 database/models/items/tags.py:28
+#: database/models/items/items.py:147
+#: database/models/items/secondary_items.py:86 database/models/items/tags.py:28
 #: database/models/licences.py:31
 #: database/models/object_types/annotation_types.py:41
 #: database/models/object_types/data_collections/collection_types.py:199
@@ -147,9 +147,9 @@ msgstr "Esquema JSON para la información de configuración de la herramienta de
 #: database/models/object_types/term_types.py:58
 #: database/models/sampling_events/sampling_event_devices.py:66
 #: database/models/sampling_events/sampling_events.py:79
-#: database/models/sites.py:81 database/models/terms/entailments.py:35
-#: database/models/terms/synonyms.py:36 database/models/terms/terms.py:40
-#: database/models/users/institutions.py:64 database/models/users/roles.py:36
+#: database/models/terms/entailments.py:35 database/models/terms/synonyms.py:36
+#: database/models/terms/terms.py:40 database/models/users/institutions.py:64
+#: database/models/users/roles.py:36
 msgid "created on"
 msgstr "creado en"
 
@@ -159,8 +159,8 @@ msgstr "creado en"
 #: database/models/devices/device_brands.py:30
 #: database/models/devices/devices.py:54
 #: database/models/devices/physical_devices.py:51
-#: database/models/items/items.py:158
-#: database/models/items/secondary_items.py:97 database/models/items/tags.py:29
+#: database/models/items/items.py:148
+#: database/models/items/secondary_items.py:87 database/models/items/tags.py:29
 #: database/models/object_types/annotation_types.py:42
 #: database/models/object_types/data_collections/collection_types.py:200
 #: database/models/object_types/device_types.py:29
@@ -173,26 +173,24 @@ msgstr "creado en"
 #: database/models/object_types/term_types.py:59
 #: database/models/sampling_events/sampling_event_devices.py:67
 #: database/models/sampling_events/sampling_events.py:80
-#: database/models/sites.py:82 database/models/terms/entailments.py:36
-#: database/models/terms/synonyms.py:37 database/models/terms/terms.py:41
-#: database/models/users/institutions.py:65 database/models/users/roles.py:37
+#: database/models/terms/entailments.py:36 database/models/terms/synonyms.py:37
+#: database/models/terms/terms.py:41 database/models/users/institutions.py:65
+#: database/models/users/roles.py:37
 msgid "Date of entry creation"
 msgstr "Fecha de creación del registro"
 
 #: database/models/annotations/annotation_tools.py:59
 #: database/models/annotations/annotation_votes.py:42
-#: database/models/annotations/annotations.py:97
+#: database/models/base.py:14
 #: database/models/data_collections/collection_devices.py:48
-#: database/models/data_collections/collection_sites.py:38
 #: database/models/data_collections/collection_users.py:47
 #: database/models/data_collections/data_collections.py:88
 #: database/models/data_collections/metacollections.py:49
 #: database/models/devices/device_brands.py:35
 #: database/models/devices/devices.py:59
 #: database/models/devices/physical_devices.py:56
-#: database/models/items/items.py:163
-#: database/models/items/secondary_items.py:102
-#: database/models/items/tags.py:34
+#: database/models/items/items.py:153
+#: database/models/items/secondary_items.py:92 database/models/items/tags.py:34
 #: database/models/object_types/annotation_types.py:47
 #: database/models/object_types/data_collections/collection_types.py:205
 #: database/models/object_types/device_types.py:34
@@ -205,26 +203,24 @@ msgstr "Fecha de creación del registro"
 #: database/models/object_types/term_types.py:64
 #: database/models/sampling_events/sampling_event_devices.py:72
 #: database/models/sampling_events/sampling_events.py:85
-#: database/models/sites.py:87 database/models/terms/entailments.py:41
-#: database/models/terms/synonyms.py:42 database/models/terms/terms.py:46
-#: database/models/users/institutions.py:70 database/models/users/roles.py:42
+#: database/models/terms/entailments.py:41 database/models/terms/synonyms.py:42
+#: database/models/terms/terms.py:46 database/models/users/institutions.py:70
+#: database/models/users/roles.py:42
 msgid "modified on"
 msgstr "modificado en"
 
 #: database/models/annotations/annotation_tools.py:60
 #: database/models/annotations/annotation_votes.py:43
-#: database/models/annotations/annotations.py:98
+#: database/models/base.py:15
 #: database/models/data_collections/collection_devices.py:49
-#: database/models/data_collections/collection_sites.py:39
 #: database/models/data_collections/collection_users.py:48
 #: database/models/data_collections/data_collections.py:89
 #: database/models/data_collections/metacollections.py:50
 #: database/models/devices/device_brands.py:36
 #: database/models/devices/devices.py:60
 #: database/models/devices/physical_devices.py:57
-#: database/models/items/items.py:164
-#: database/models/items/secondary_items.py:103
-#: database/models/items/tags.py:35
+#: database/models/items/items.py:154
+#: database/models/items/secondary_items.py:93 database/models/items/tags.py:35
 #: database/models/object_types/annotation_types.py:48
 #: database/models/object_types/data_collections/collection_types.py:206
 #: database/models/object_types/device_types.py:35
@@ -237,9 +233,9 @@ msgstr "modificado en"
 #: database/models/object_types/term_types.py:65
 #: database/models/sampling_events/sampling_event_devices.py:73
 #: database/models/sampling_events/sampling_events.py:86
-#: database/models/sites.py:88 database/models/terms/entailments.py:42
-#: database/models/terms/synonyms.py:43 database/models/terms/terms.py:47
-#: database/models/users/institutions.py:71 database/models/users/roles.py:43
+#: database/models/terms/entailments.py:42 database/models/terms/synonyms.py:43
+#: database/models/terms/terms.py:47 database/models/users/institutions.py:71
+#: database/models/users/roles.py:43
 msgid "Date of last modification"
 msgstr "Fecha de última modificación"
 
@@ -257,7 +253,7 @@ msgid "Invalid annotation tool configuration. Error: %(error)s"
 msgstr "Configuración de herramienta de anotación invalida. Error: %(error)s"
 
 #: database/models/annotations/annotation_votes.py:14
-#: database/models/annotations/annotations.py:56
+#: database/models/annotations/annotations.py:57
 msgid "annotation"
 msgstr "anotación"
 
@@ -266,7 +262,7 @@ msgid "Reference to annotation being voted"
 msgstr "Referencia a la anotación que se está votando"
 
 #: database/models/annotations/annotation_votes.py:20
-#: database/models/annotations/annotations.py:42
+#: database/models/annotations/annotations.py:43
 msgid "label"
 msgstr "etiqueta"
 
@@ -275,8 +271,8 @@ msgid "Labels associated to annotation vote"
 msgstr "Etiquetas asociadas al voto de anotación"
 
 #: database/models/annotations/annotation_votes.py:29
-#: database/models/annotations/annotations.py:105
 #: database/models/data_collections/metacollections.py:37
+#: database/models/items/items.py:141
 msgid "created by"
 msgstr "creado por"
 
@@ -285,9 +281,7 @@ msgid "Creator of annotation vote"
 msgstr "Creador del voto de anotación"
 
 #: database/models/annotations/annotation_votes.py:37
-#: database/models/annotations/annotations.py:92
 #: database/models/data_collections/collection_devices.py:43
-#: database/models/data_collections/collection_sites.py:33
 #: database/models/data_collections/collection_users.py:42
 msgid "Date of creation of annotation"
 msgstr "Fecha de creación de la anotación"
@@ -310,135 +304,148 @@ msgstr "Voto %(id)s de la anotación %(annotation)s"
 msgid "Invalid label for event type %(type)s. Error: %(error)s"
 msgstr "Etiqueta invalida para el tipo de evento %(type)s. Error: %(error)s"
 
-#: database/models/annotations/annotations.py:14
+#: database/models/annotations/annotations.py:15
 msgid "low"
 msgstr "baja"
 
-#: database/models/annotations/annotations.py:15
+#: database/models/annotations/annotations.py:16
 msgid "medium"
 msgstr "media"
 
-#: database/models/annotations/annotations.py:16
+#: database/models/annotations/annotations.py:17
 msgid "high"
 msgstr "alta"
 
-#: database/models/annotations/annotations.py:23
+#: database/models/annotations/annotations.py:24
 msgid "annotation tool"
 msgstr "herramienta de anotación"
 
-#: database/models/annotations/annotations.py:24
+#: database/models/annotations/annotations.py:25
 msgid "Annotation tool used"
 msgstr "Herramienta de anotación utilizada"
 
-#: database/models/annotations/annotations.py:29
+#: database/models/annotations/annotations.py:30
 msgid "item"
 msgstr "item"
 
-#: database/models/annotations/annotations.py:30
+#: database/models/annotations/annotations.py:31
 msgid "Annotated item"
 msgstr "Item anotado"
 
-#: database/models/annotations/annotations.py:37
+#: database/models/annotations/annotations.py:38
 msgid "event type"
 msgstr "tipo de evento"
 
-#: database/models/annotations/annotations.py:38
+#: database/models/annotations/annotations.py:39
 msgid "Type of event being annotated"
 msgstr "Tipo de evento que está siendo anotado"
 
-#: database/models/annotations/annotations.py:43
+#: database/models/annotations/annotations.py:44
 msgid "Labels associated to annotation"
 msgstr "Etiqueta asociada a la anotación"
 
-#: database/models/annotations/annotations.py:51
+#: database/models/annotations/annotations.py:52
 msgid "annotation type"
 msgstr "tipo de anotación"
 
-#: database/models/annotations/annotations.py:52
+#: database/models/annotations/annotations.py:53
 msgid "Type of annotation"
 msgstr "Tipo de Anotación"
 
-#: database/models/annotations/annotations.py:58
+#: database/models/annotations/annotations.py:59
 msgid "Information of annotation location within item"
 msgstr "Información de la ubicación de la anotación dentro del item"
 
-#: database/models/annotations/annotations.py:63
+#: database/models/annotations/annotations.py:64
 msgid "annotation configuration"
 msgstr "configuración de anotación"
 
-#: database/models/annotations/annotations.py:65
+#: database/models/annotations/annotations.py:66
 msgid "Configuration of annotation tool"
 msgstr "Configuración de la herramienta de anotación"
 
-#: database/models/annotations/annotations.py:70
+#: database/models/annotations/annotations.py:71
 msgid "certainty"
 msgstr "certeza"
 
-#: database/models/annotations/annotations.py:72
+#: database/models/annotations/annotations.py:73
 msgid "Level of certainty of location or labelling of annotation"
 msgstr "Nivel de certeza de la ubicación o el etiquetado de la anotación"
 
-#: database/models/annotations/annotations.py:78
+#: database/models/annotations/annotations.py:79
 msgid "quality"
 msgstr "calidad"
 
-#: database/models/annotations/annotations.py:79
+#: database/models/annotations/annotations.py:80
 msgid "Quality of item content inside annotation"
 msgstr "Calidad del contenido del item dentro de la anotación"
 
-#: database/models/annotations/annotations.py:85
+#: database/models/annotations/annotations.py:86
 #: database/models/sampling_events/sampling_event_devices.py:29
 #: database/models/sampling_events/sampling_events.py:29
 msgid "commentaries"
 msgstr "comentarios"
 
-#: database/models/annotations/annotations.py:86
+#: database/models/annotations/annotations.py:87
 msgid "Commentaries of annotator"
 msgstr "Comentarios del anotador"
 
-#: database/models/annotations/annotations.py:106
-msgid "Creator of annotation"
-msgstr "Creador de la anotación"
-
-#: database/models/annotations/annotations.py:115
-#: database/models/items/items.py:172
-#: database/models/sampling_events/sampling_event_devices.py:81
-#: database/models/sampling_events/sampling_events.py:94
-msgid "modified by"
-msgstr "modificado por"
-
-#: database/models/annotations/annotations.py:116
-msgid "User that modified the annotation last"
-msgstr "Usuario que modifico por ultima vez"
-
-#: database/models/annotations/annotations.py:122
+#: database/models/annotations/annotations.py:91
 msgid "Annotation"
 msgstr "Anotación"
 
-#: database/models/annotations/annotations.py:123
+#: database/models/annotations/annotations.py:92
 msgid "Annotations"
 msgstr "Anotaciones"
 
-#: database/models/annotations/annotations.py:128
+#: database/models/annotations/annotations.py:97
 msgid "Can vote annotation"
 msgstr "Puede votar la anotación"
 
-#: database/models/annotations/annotations.py:132
+#: database/models/annotations/annotations.py:101
 #, python-format
 msgid "Annotation %(annotation_id)s of item %(item_id)s"
 msgstr "Anotación %(annotation_id)s del item %(item_id)s"
 
-#: database/models/annotations/annotations.py:177
+#: database/models/annotations/annotations.py:146
 #, python-format
 msgid ""
 "Label contains a term (of type %(type)s) that is not valid for the event "
 "type or does not exist"
 msgstr ""
 
-#: database/models/annotations/annotations.py:185
+#: database/models/annotations/annotations.py:154
 #, python-format
 msgid "Invalid label. Error: %(error)s"
 msgstr ""
+
+#: database/models/base.py:9
+#, fuzzy
+#| msgid "Date of entry creation"
+msgid "Date of creation"
+msgstr "Fecha de creación del registro"
+
+#: database/models/base.py:29
+msgid "creator"
+msgstr ""
+
+#: database/models/base.py:32
+#, fuzzy
+#| msgid "Creator of annotation"
+msgid "Creator of object"
+msgstr "Creador de la anotación"
+
+#: database/models/base.py:39 database/models/items/items.py:162
+#: database/models/sampling_events/sampling_event_devices.py:81
+#: database/models/sampling_events/sampling_events.py:94
+msgid "modified by"
+msgstr "modificado por"
+
+#: database/models/base.py:40
+#, fuzzy
+#| msgid "User that modified the annotation last"
+msgid "User who made modifications last"
+msgstr "Usuario que modifico por ultima vez"
 
 #: database/models/data_collections/collection_devices.py:14
 msgid "physical device"
@@ -449,7 +456,7 @@ msgid "Reference to physical device"
 msgstr ""
 
 #: database/models/data_collections/collection_devices.py:22
-#: database/models/data_collections/collection_sites.py:19
+#: database/models/data_collections/collection_sites.py:32
 #: database/models/data_collections/collection_users.py:13
 #: database/models/licences.py:53
 #: database/models/sampling_events/sampling_events.py:55
@@ -461,7 +468,7 @@ msgid "Collection to which the device belongs"
 msgstr ""
 
 #: database/models/data_collections/collection_devices.py:29
-#: database/models/data_collections/collection_sites.py:26
+#: database/models/data_collections/collection_sites.py:46
 msgid "internal id"
 msgstr ""
 
@@ -470,13 +477,14 @@ msgid "ID of device within the collection"
 msgstr ""
 
 #: database/models/data_collections/collection_devices.py:36
+#: database/models/data_collections/collection_sites.py:38
 #: database/models/data_collections/collection_users.py:34
 #: database/models/data_collections/data_collections.py:36
 #: database/models/devices/physical_devices.py:35
-#: database/models/items/items.py:116 database/models/licences.py:36
+#: database/models/items/items.py:106 database/models/licences.py:36
 #: database/models/sampling_events/sampling_event_devices.py:34
 #: database/models/sampling_events/sampling_events.py:34
-#: database/models/sites.py:65 database/models/terms/entailments.py:28
+#: database/models/terms/entailments.py:28
 #: database/models/terms/synonym_suggestions.py:30
 #: database/models/terms/synonyms.py:30
 #: database/models/terms/term_suggestions.py:35
@@ -493,36 +501,52 @@ msgid "Collection Device"
 msgstr ""
 
 #: database/models/data_collections/collection_devices.py:55
+#: selia/templates/selia/collections/detail/devices.html:5
 #: selia/templatetags/treeview.py:19
 msgid "Collection Devices"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:11
+#: database/models/data_collections/collection_sites.py:16
+msgid "site type"
+msgstr ""
+
+#: database/models/data_collections/collection_sites.py:17
+msgid "Type of site"
+msgstr ""
+
+#: database/models/data_collections/collection_sites.py:24
 msgid "site"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:12
+#: database/models/data_collections/collection_sites.py:25
 msgid "Reference to Site"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:20
+#: database/models/data_collections/collection_sites.py:33
 msgid "Collection to which the site belongs"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:27
+#: database/models/data_collections/collection_sites.py:39
+#, fuzzy
+#| msgid "Labels associated to annotation"
+msgid "Metadata associated to site in collection"
+msgstr "Etiqueta asociada a la anotación"
+
+#: database/models/data_collections/collection_sites.py:47
 msgid "ID of site within the collection"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:44
+#: database/models/data_collections/collection_sites.py:51
 msgid "Collection Site"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:45
+#: database/models/data_collections/collection_sites.py:52
+#: selia/templates/selia/collections/detail/sites.html:4
 #: selia/templatetags/treeview.py:20
 msgid "Collection Sites"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:53
+#: database/models/data_collections/collection_sites.py:60
 #, python-format
 msgid "Site %(site)s of collection %(collection)s"
 msgstr ""
@@ -626,6 +650,9 @@ msgid "Collection"
 msgstr ""
 
 #: database/models/data_collections/data_collections.py:95
+#: irekua/templates/irekua/content/about.html:82
+#: selia/templates/selia/components/navbar_items.html:24
+#: selia/templates/selia/components/navbar_items.html:26
 #: selia/templatetags/treeview.py:16
 msgid "Collections"
 msgstr ""
@@ -817,10 +844,13 @@ msgid "JSON Schema for configuration info of device"
 msgstr ""
 
 #: database/models/devices/devices.py:65
+#: selia/templates/selia/items/upload.html:43
+#: selia/templates/selia/items/upload.html:53
 msgid "Device"
 msgstr ""
 
 #: database/models/devices/devices.py:66
+#: irekua/templates/irekua/content/about.html:112
 msgid "Devices"
 msgstr ""
 
@@ -883,201 +913,197 @@ msgstr ""
 msgid "Device %(id)s of type %(device)s"
 msgstr ""
 
-#: database/models/items/items.py:58
+#: database/models/items/items.py:48
 msgid "file size"
 msgstr ""
 
-#: database/models/items/items.py:59
+#: database/models/items/items.py:49
 msgid "Size of resource in Bytes"
 msgstr ""
 
-#: database/models/items/items.py:64
-#: database/models/items/secondary_items.py:60
+#: database/models/items/items.py:54
+#: database/models/items/secondary_items.py:50
 msgid "hash"
 msgstr ""
 
-#: database/models/items/items.py:65
+#: database/models/items/items.py:55
 msgid "Hash of resource file"
 msgstr ""
 
-#: database/models/items/items.py:74
-#: database/models/items/secondary_items.py:74
+#: database/models/items/items.py:64
+#: database/models/items/secondary_items.py:64
 #: database/models/object_types/data_collections/collection_item_types.py:24
 msgid "item type"
 msgstr ""
 
-#: database/models/items/items.py:75
+#: database/models/items/items.py:65
 msgid "Type of resource"
 msgstr ""
 
-#: database/models/items/items.py:80
-#: database/models/items/secondary_items.py:66
+#: database/models/items/items.py:70
+#: database/models/items/secondary_items.py:56
 msgid "item file"
 msgstr ""
 
-#: database/models/items/items.py:81
-#: database/models/items/secondary_items.py:67
+#: database/models/items/items.py:71
+#: database/models/items/secondary_items.py:57
 msgid "Upload file associated to file"
 msgstr ""
 
-#: database/models/items/items.py:87
-#: database/models/items/secondary_items.py:88
+#: database/models/items/items.py:77
+#: database/models/items/secondary_items.py:78
 msgid "media info"
 msgstr ""
 
-#: database/models/items/items.py:88
+#: database/models/items/items.py:78
 msgid "Information of resource file"
 msgstr ""
 
-#: database/models/items/items.py:94
+#: database/models/items/items.py:84
 msgid "sampling event device"
 msgstr ""
 
-#: database/models/items/items.py:95
+#: database/models/items/items.py:85
 msgid "Sampling event device used to create item"
 msgstr ""
 
-#: database/models/items/items.py:102 database/models/terms/entailments.py:14
+#: database/models/items/items.py:92 database/models/terms/entailments.py:14
 #: database/models/terms/synonyms.py:15
 msgid "source"
 msgstr ""
 
-#: database/models/items/items.py:103
+#: database/models/items/items.py:93
 msgid "Source of item (parsing function and parent directory)"
 msgstr ""
 
-#: database/models/items/items.py:109
+#: database/models/items/items.py:99
 msgid "source foreign key"
 msgstr ""
 
-#: database/models/items/items.py:110
+#: database/models/items/items.py:100
 msgid "Foreign key of file in source database"
 msgstr ""
 
-#: database/models/items/items.py:117
+#: database/models/items/items.py:107
 msgid "Metadata associated to item"
 msgstr ""
 
-#: database/models/items/items.py:122
+#: database/models/items/items.py:112
 msgid "captured on"
 msgstr ""
 
-#: database/models/items/items.py:123
+#: database/models/items/items.py:113
 msgid "Date on which item was produced"
 msgstr ""
 
-#: database/models/items/items.py:129
+#: database/models/items/items.py:119
 #: database/models/sampling_events/sampling_event_devices.py:50
 #: database/models/sampling_events/sampling_events.py:63
 msgid "licence"
 msgstr ""
 
-#: database/models/items/items.py:130
+#: database/models/items/items.py:120
 msgid "Licence of item"
 msgstr ""
 
-#: database/models/items/items.py:137
+#: database/models/items/items.py:127
 msgid "tags"
 msgstr ""
 
-#: database/models/items/items.py:138
+#: database/models/items/items.py:128
 msgid "Tags for item"
 msgstr ""
 
-#: database/models/items/items.py:142
+#: database/models/items/items.py:132
 msgid "ready event types"
 msgstr ""
 
-#: database/models/items/items.py:143
+#: database/models/items/items.py:133
 msgid "Types of event for which item has been fully annotated"
 msgstr ""
 
-#: database/models/items/items.py:151
-#: database/models/sampling_events/sampling_event_devices.py:60
-#: database/models/sampling_events/sampling_events.py:73
-msgid "create by"
-msgstr ""
-
-#: database/models/items/items.py:152
+#: database/models/items/items.py:142
 msgid "Creator of item"
 msgstr ""
 
-#: database/models/items/items.py:173
+#: database/models/items/items.py:163
 msgid "Last user that modified this item info"
 msgstr ""
 
-#: database/models/items/items.py:178
+#: database/models/items/items.py:168
 msgid "Item"
 msgstr ""
 
-#: database/models/items/items.py:179
+#: database/models/items/items.py:169
+#: irekua/templates/irekua/content/about.html:102
+#: selia/templates/selia/items/components/secondary_navbar.html:5
 msgid "Items"
 msgstr ""
 
-#: database/models/items/items.py:184
+#: database/models/items/items.py:174
 msgid "Can download item"
 msgstr ""
 
-#: database/models/items/items.py:185
+#: database/models/items/items.py:175
 msgid "Can annotate item"
 msgstr ""
 
-#: database/models/items/items.py:197
+#: database/models/items/items.py:187
 msgid ""
 "Item creator was not specified and is not determined by sampling event "
 "device."
 msgstr ""
 
-#: database/models/items/items.py:260
+#: database/models/items/items.py:250
 #, python-brace-format
 msgid ""
 "File MIME type does not coincide with declared item type (file: {file_type} !"
 "= {item_type} :item_type)"
 msgstr ""
 
-#: database/models/items/items.py:276
+#: database/models/items/items.py:266
 msgid "Licence was not provided to item nor to sampling event"
 msgstr ""
 
-#: database/models/items/items.py:287
-#: database/models/items/secondary_items.py:123
+#: database/models/items/items.py:277
+#: database/models/items/secondary_items.py:113
 msgid "If no file is provided, a hash must be given"
 msgstr ""
 
-#: database/models/items/items.py:302
-#: database/models/items/secondary_items.py:136
+#: database/models/items/items.py:292
+#: database/models/items/secondary_items.py:126
 msgid "Hash of file and recorded hash do not coincide"
 msgstr ""
 
-#: database/models/items/secondary_items.py:61
+#: database/models/items/secondary_items.py:51
 msgid "Hash of secondary resource file"
 msgstr ""
 
-#: database/models/items/secondary_items.py:75
+#: database/models/items/secondary_items.py:65
 msgid "Type of file of secondary item"
 msgstr ""
 
-#: database/models/items/secondary_items.py:81
+#: database/models/items/secondary_items.py:71
 msgid "item id"
 msgstr ""
 
-#: database/models/items/secondary_items.py:82
+#: database/models/items/secondary_items.py:72
 msgid "Reference to primary item associated to secondary item"
 msgstr ""
 
-#: database/models/items/secondary_items.py:89
+#: database/models/items/secondary_items.py:79
 msgid "Media information of secondary item file"
 msgstr ""
 
-#: database/models/items/secondary_items.py:108
+#: database/models/items/secondary_items.py:98
 msgid "Secondary Item"
 msgstr ""
 
-#: database/models/items/secondary_items.py:109
+#: database/models/items/secondary_items.py:99
 msgid "Secondary Items"
 msgstr ""
 
-#: database/models/items/secondary_items.py:114
+#: database/models/items/secondary_items.py:104
 #, python-format
 msgid "Secondary Item %(id)s derived from %(itemid)s"
 msgstr ""
@@ -2019,6 +2045,11 @@ msgstr ""
 msgid "Licence for all items in sampling event"
 msgstr ""
 
+#: database/models/sampling_events/sampling_event_devices.py:60
+#: database/models/sampling_events/sampling_events.py:73
+msgid "create by"
+msgstr ""
+
 #: database/models/sampling_events/sampling_event_devices.py:61
 msgid "Creator of sampling event device"
 msgstr ""
@@ -2033,6 +2064,8 @@ msgid "Sampling Event Device"
 msgstr ""
 
 #: database/models/sampling_events/sampling_event_devices.py:88
+#: selia/templates/selia/sampling_events/devices.html:5
+#: selia/templates/selia/sampling_events/home.html:4
 #: selia/templatetags/treeview.py:26
 msgid "Sampling Event Devices"
 msgstr ""
@@ -2083,10 +2116,12 @@ msgid "Creator of sampling event"
 msgstr ""
 
 #: database/models/sampling_events/sampling_events.py:100
+#: selia/templates/selia/items/upload.html:20
 msgid "Sampling Event"
 msgstr ""
 
 #: database/models/sampling_events/sampling_events.py:101
+#: selia/templates/selia/collections/detail/sampling_events.html:5
 msgid "Sampling Events"
 msgstr ""
 
@@ -2099,28 +2134,48 @@ msgstr ""
 msgid "Site does not belong to the declared collection"
 msgstr ""
 
-#: database/models/sites.py:15
-msgid "Georeference and longitude-latitude do not coincide"
+#: database/models/sites.py:16
+msgid ""
+"\n"
+"        Site Model\n"
+"\n"
+"        A site consists of the specification of coordinates. The datum "
+"assumed\n"
+"        is WGS-84. A name for the site can be specified for easier future\n"
+"        retrieval. Also an optional locality field is added to locate the "
+"site within a\n"
+"        larger area and provide hierarchical organization of sites.\n"
+"\n"
+"        The creator of the site is registered so that users can search "
+"within\n"
+"        their previously created sites when setting up a new monitoring "
+"event.\n"
+"    "
 msgstr ""
+"\n"
+"        Modelo de Sitio\n"
+"\n"
+"        Un sitio consiste de la especificación de coordenadas. Se asume que el datum "
+"de referencia\n"
+"        es WGS-84. Es posible asociar un nombre al sitio para facilitar la referencia futura.\n"
+"        Adicionalmente, un campo opcional de localidad posibilita localizar el sitio dentro de\n"
+"        una región y permite una organización jerárquica de sitios.\n"
+"\n"
+"        El creador del sitio es almacenado de modo que los usuarios sean capaces de buscar"
+" dentro\n"
+"        de sus sitios previamente creados al momento de planear un nuevo evento de monitoreo. \n"
+"    "
 
-#: database/models/sites.py:24
+#: database/models/sites.py:32
 msgid "Name of site"
 msgstr ""
 
-#: database/models/sites.py:30
+#: database/models/sites.py:38
 msgid "locality"
 msgstr ""
 
-#: database/models/sites.py:31
+#: database/models/sites.py:39
 msgid "Name of locality in which the site is located"
-msgstr ""
-
-#: database/models/sites.py:37
-msgid "site type"
-msgstr ""
-
-#: database/models/sites.py:38
-msgid "Type of site"
 msgstr ""
 
 #: database/models/sites.py:44
@@ -2155,31 +2210,19 @@ msgstr ""
 msgid "Altitude of site (in meters)"
 msgstr ""
 
-#: database/models/sites.py:66
-msgid "Metadata associated to site"
-msgstr ""
-
-#: database/models/sites.py:76
-msgid "creator"
-msgstr ""
-
-#: database/models/sites.py:77
-msgid "Creator of site"
-msgstr ""
-
-#: database/models/sites.py:93
+#: database/models/sites.py:65
 msgid "Site"
 msgstr ""
 
-#: database/models/sites.py:94
+#: database/models/sites.py:66
 msgid "Sites"
 msgstr ""
 
-#: database/models/sites.py:117
+#: database/models/sites.py:80
 msgid "Geo reference or longitude-latitude must be provided"
 msgstr ""
 
-#: database/models/sites.py:124
+#: database/models/sites.py:87
 #, python-format
 msgid "Site %(id)s%(name)s of type %(type)s"
 msgstr ""
@@ -2477,64 +2520,355 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: database/utils.py:6
+#: database/utils.py:8
 msgid "generic sampling event"
 msgstr ""
 
-#: database/utils.py:7
+#: database/utils.py:9
 msgid "generic site"
 msgstr ""
 
-#: database/utils.py:8
+#: database/utils.py:10
 msgid "generic collection"
 msgstr ""
 
-#: database/utils.py:13
+#: database/utils.py:15
 msgid "Free JSON Schema"
 msgstr ""
 
-#: database/utils.py:21
+#: database/utils.py:23
 #, python-format
 msgid "JSON Schema is not valid. Error: %(error)s"
 msgstr ""
 
-#: database/utils.py:32
+#: database/utils.py:34
 #, python-format
 msgid "Instance does not comply with JSON schema. Error: %(error)s"
 msgstr ""
 
-#: selia/templatetags/treeview.py:11
-msgid "Home"
+#: irekua/templates/irekua/components/tab_items.html:7
+#: irekua/templates/irekua/components/tab_items.html:9
+#: selia/templates/selia/components/navbar_items.html:9
+#: selia/templates/selia/components/navbar_items.html:11
+msgid "About"
 msgstr ""
 
-#: selia/templatetags/treeview.py:12
-msgid "My Devices"
+#: irekua/templates/irekua/components/tab_items.html:14
+#: irekua/templates/irekua/components/tab_items.html:16
+msgid "Contact"
 msgstr ""
 
-#: selia/templatetags/treeview.py:13
-msgid "My Sites"
+#: irekua/templates/irekua/components/user_menu.html:10
+msgid "Profile"
 msgstr ""
 
-#: selia/templatetags/treeview.py:14
-msgid "My Items"
+#: irekua/templates/irekua/components/user_menu.html:12
+msgid "Logout"
 msgstr ""
 
-#: selia/templatetags/treeview.py:15
-msgid "My Sampling Events"
+#: irekua/templates/irekua/components/user_menu.html:19
+msgid "Log in"
 msgstr ""
 
-#: selia/templatetags/treeview.py:17
-msgid "Open Collections"
+#: irekua/templates/irekua/content/about.html:7
+msgid ""
+"\n"
+"      Home (p'urhépecha)\n"
+"      "
 msgstr ""
 
+#: irekua/templates/irekua/content/about.html:12
+msgid ""
+"\n"
+"      A database model for data generated in biodiversity monitoring "
+"systems\n"
+"      "
+msgstr ""
+
+#: irekua/templates/irekua/content/about.html:20
+msgid ""
+"\n"
+"Irekua data model stems from the requirements of most passive monitoring "
+"systems\n"
+msgstr ""
+
+#: irekua/templates/irekua/content/about.html:30
+msgid "Distributed"
+msgstr ""
+
+#: irekua/templates/irekua/content/about.html:37
+msgid "Date Specific"
+msgstr ""
+
+#: irekua/templates/irekua/content/about.html:44
+msgid "Multi User"
+msgstr ""
+
+#: irekua/templates/irekua/content/about.html:53
+msgid "Licenced Data"
+msgstr ""
+
+#: irekua/templates/irekua/content/about.html:60
+#, fuzzy
+#| msgid "event type"
+msgid "Site Specific"
+msgstr "tipo de evento"
+
+#: irekua/templates/irekua/content/about.html:67
+msgid "Device Dependent"
+msgstr ""
+
+#: irekua/templates/irekua/content/about.html:112
+msgid "Sampling events"
+msgstr ""
+
+#: irekua/templates/irekua/content/about.html:132
+msgid "Adjustable Metadata Schemes"
+msgstr ""
+
+#: irekua/templates/irekua/content/about.html:142
+#, fuzzy
+#| msgid "Annotations"
+msgid "Item Annotations"
+msgstr "Anotaciones"
+
+#: rest/filters/sites.py:18
+msgid "Latitude greater than"
+msgstr ""
+
+#: rest/filters/sites.py:22
+msgid "Latitude less than"
+msgstr ""
+
+#: rest/filters/sites.py:27
+msgid "Longitude greater than"
+msgstr ""
+
+#: rest/filters/sites.py:31
+msgid "Longitude less than"
+msgstr ""
+
+#: rest/filters/sites.py:36 rest/filters/sites.py:40
+msgid "Altitude less than"
+msgstr ""
+
+#: rest/filters/utils.py:10
+#, fuzzy
+#| msgid "created on"
+msgid "Created before than"
+msgstr "creado en"
+
+#: rest/filters/utils.py:15
+msgid "Created after than"
+msgstr ""
+
+#: rest/filters/utils.py:20
+#, fuzzy
+#| msgid "modified on"
+msgid "Modified before than"
+msgstr "modificado en"
+
+#: rest/filters/utils.py:25
+#, fuzzy
+#| msgid "modified on"
+msgid "Modified after than"
+msgstr "modificado en"
+
+#: rest/serializers/data_collections/sites.py:31
+#, fuzzy
+#| msgid "event type"
+msgid "Site type"
+msgstr "tipo de evento"
+
+#: selia/templates/selia/collections/collections.html:4
+msgid "My Collections"
+msgstr ""
+
+#: selia/templates/selia/collections/collections.html:9
+#: selia/templates/selia/collections/detail/devices.html:11
+#: selia/templates/selia/collections/detail/home.html:10
+#: selia/templates/selia/collections/detail/items.html:11
+#: selia/templates/selia/collections/detail/sampling_events.html:11
+#: selia/templates/selia/collections/detail/sites.html:10
+#: selia/templates/selia/collections/open_collections.html:8
+#: selia/templates/selia/sampling_event_devices/home.html:10
+#: selia/templates/selia/sampling_event_devices/items.html:12
+#: selia/templates/selia/sampling_events/devices.html:11
+#: selia/templates/selia/sampling_events/home.html:9
+#: selia/templates/selia/sampling_events/items.html:10
+#: selia/templates/selia/user/devices.html:10
+#: selia/templates/selia/user/home.html:9
+#: selia/templates/selia/user/items.html:10
+#: selia/templates/selia/user/sampling_events.html:9
+#: selia/templates/selia/user/sites.html:10
+msgid "Help"
+msgstr ""
+
+#: selia/templates/selia/collections/detail/devices.html:9
+#: selia/templates/selia/sampling_events/devices.html:9
+#: selia/templates/selia/user/devices.html:8
+msgid "Add device"
+msgstr ""
+
+#: selia/templates/selia/collections/detail/devices.html:10
+#: selia/templates/selia/collections/detail/home.html:9
+#: selia/templates/selia/collections/detail/items.html:10
+#: selia/templates/selia/collections/detail/sampling_events.html:10
+#: selia/templates/selia/collections/detail/sites.html:9
+#: selia/templates/selia/sampling_event_devices/home.html:9
+#: selia/templates/selia/sampling_event_devices/items.html:11
+#: selia/templates/selia/sampling_events/devices.html:10
+#: selia/templates/selia/sampling_events/home.html:8
+#: selia/templates/selia/sampling_events/items.html:9
+#: selia/templates/selia/user/devices.html:9
+#: selia/templates/selia/user/home.html:8
+#: selia/templates/selia/user/items.html:9
+#: selia/templates/selia/user/sampling_events.html:8
+#: selia/templates/selia/user/sites.html:9
+msgid "Download Summary"
+msgstr ""
+
+#: selia/templates/selia/collections/detail/devices.html:21
+#: selia/templates/selia/sampling_events/devices.html:21
+msgid "Add Device"
+msgstr ""
+
+#: selia/templates/selia/collections/detail/home.html:4
+msgid "Collection Home"
+msgstr ""
+
+#: selia/templates/selia/collections/detail/items.html:4
 #: selia/templatetags/treeview.py:21
 msgid "Collection Items"
 msgstr ""
 
-#: selia/templatetags/treeview.py:22
-msgid "Collection Sampling Events"
+#: selia/templates/selia/collections/detail/items.html:9
+#: selia/templates/selia/items/components/secondary_navbar.html:30
+#: selia/templates/selia/items/gallery.html:5
+#: selia/templates/selia/sampling_event_devices/items.html:10
+#: selia/templates/selia/sampling_events/items.html:8
+#: selia/templates/selia/user/items.html:8
+msgid "Gallery"
 msgstr ""
 
+#: selia/templates/selia/collections/detail/sampling_events.html:9
+msgid "Create Sampling Event"
+msgstr ""
+
+#: selia/templates/selia/collections/detail/sampling_events.html:21
+msgid "Add Sampling Event"
+msgstr ""
+
+#: selia/templates/selia/collections/detail/sites.html:8
+#: selia/templates/selia/user/sites.html:8
+msgid "Add Site"
+msgstr ""
+
+#: selia/templates/selia/collections/open_collections.html:4
+#: selia/templatetags/treeview.py:17
+msgid "Open Collections"
+msgstr ""
+
+#: selia/templates/selia/components/navbar_items.html:17
+#: selia/templates/selia/components/navbar_items.html:19
+#: selia/templatetags/treeview.py:11
+msgid "Home"
+msgstr ""
+
+#: selia/templates/selia/components/navbar_items.html:32
+#: selia/templates/selia/components/navbar_items.html:34
+#, fuzzy
+#| msgid "Annotation"
+msgid "Administration"
+msgstr "Anotación"
+
+#: selia/templates/selia/components/view_buttons.html:5
+msgid "Toggle Table"
+msgstr ""
+
+#: selia/templates/selia/components/view_buttons.html:10
+msgid "Toggle Map"
+msgstr ""
+
+#: selia/templates/selia/components/view_buttons.html:15
+msgid "Toggle Detail"
+msgstr ""
+
+#: selia/templates/selia/components/view_buttons.html:20
+msgid "Toggle Summary"
+msgstr ""
+
+#: selia/templates/selia/items/annotate.html:7
+#, fuzzy
+#| msgid "Annotated item"
+msgid "Annotate Item"
+msgstr "Item anotado"
+
+#: selia/templates/selia/items/components/secondary_navbar.html:20
+#: selia/templates/selia/items/upload.html:65
+msgid "Upload"
+msgstr ""
+
+#: selia/templates/selia/items/upload.html:22
+msgid ""
+"\n"
+"      Select the sampling event in which the data was generated. This refers "
+"to the site in which the device\n"
+"      was placed and the range of dates in which data was captured. Either "
+"select a previously registered sampling\n"
+"      event or create a new one.\n"
+"      "
+msgstr ""
+
+#: selia/templates/selia/items/upload.html:45
+msgid ""
+"\n"
+"      Select the device with which the data was generated. Either select a "
+"device previously registered for this\n"
+"      sampling event or create a new one.\n"
+"      "
+msgstr ""
+
+#: selia/templates/selia/items/upload.html:61
+msgid "Archivos"
+msgstr ""
+
+#: selia/templates/selia/sampling_event_devices/home.html:4
+msgid "Sampling Event Device Home"
+msgstr ""
+
+#: selia/templates/selia/sampling_event_devices/home.html:8
+#: selia/templates/selia/sampling_event_devices/items.html:9
+msgid "Add Items"
+msgstr ""
+
+#: selia/templates/selia/sampling_event_devices/items.html:4
+#: selia/templatetags/treeview.py:31
+msgid "Sampling Event Device Items"
+msgstr ""
+
+#: selia/templates/selia/sampling_events/items.html:4
 #: selia/templatetags/treeview.py:28
 msgid "Sampling Event Items"
+msgstr ""
+
+#: selia/templates/selia/user/devices.html:4 selia/templatetags/treeview.py:12
+msgid "My Devices"
+msgstr ""
+
+#: selia/templates/selia/user/items.html:4 selia/templatetags/treeview.py:14
+msgid "My Items"
+msgstr ""
+
+#: selia/templates/selia/user/sampling_events.html:4
+#: selia/templatetags/treeview.py:15
+msgid "My Sampling Events"
+msgstr ""
+
+#: selia/templates/selia/user/sites.html:4 selia/templatetags/treeview.py:13
+msgid "My Sites"
+msgstr ""
+
+#: selia/templatetags/treeview.py:22
+msgid "Collection Sampling Events"
 msgstr ""

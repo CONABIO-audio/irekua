@@ -52,3 +52,8 @@ def hash_file(item_file, block_size=65536):
             break
         hasher.update(data)
     return hasher.hexdigest()
+
+
+def translate_doc(cls):
+    cls.__doc__ = cls.help_text
+    return cls

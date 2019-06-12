@@ -5,10 +5,10 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
 
-    path('upload/', views.upload, name='upload'),
-    path('photos/', views.photo_list, name='gallery'),
-    path('photos/upload', views.upload_photo, name='upload_photo'),
-    path('photos/<int:pk>/', views.delete_photo, name='delete_photo'),
+    # path('upload/', views.upload, name='upload'),
+    # path('photos/', views.photo_list, name='gallery'),
+    # path('photos/upload', views.upload_photo, name='upload_photo'),
+    # path('photos/<int:pk>/', views.delete_photo, name='delete_photo'),
 
     path('user/', views.user_home, name='user_home'),
     path('user/sites/', views.UserSites.as_view(), name='user_sites'),
@@ -66,8 +66,10 @@ urlpatterns = [
         views.item,
         name='item'),
 
-
-    path('upload', views.upload_items, name='upload_items'),
+    path(
+        'collections/<str:collection_name>/upload/',
+        views.UploadItems.as_view(),
+        name='upload_items'),
 
     path('items/gallery/', views.gallery, name='gallery'),
     path('items/annotate/', views.annotate, name='annotate'),

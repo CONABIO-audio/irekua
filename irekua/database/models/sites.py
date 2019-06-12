@@ -6,17 +6,25 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
-
 from database.models import CollectionUser
+from database.models.base import IrekuaModelBaseUser
+from database.utils import translate_doc
 
 
-def validate_coordinates_and_geometry(geometry, latitude, longitude):
-    if geometry.x != longitude or geometry.y != latitude:
-        msg = _('Georeference and longitude-latitude do not coincide')
-        raise ValidationError(msg)
+@translate_doc
+class Site(IrekuaModelBaseUser):
+    help_text = _('''
+        Site Model
 
+        A site consists of the specification of coordinates. The datum assumed
+        is WGS-84. A name for the site can be specified for easier future
+        retrieval. Also an optional locality field is added to locate the site within a
+        larger area and provide hierarchical organization of sites.
 
-class Site(models.Model):
+        The creator of the site is registered so that users can search within
+        their previously created sites when setting up a new monitoring event.
+    ''')
+
     name = models.CharField(
         max_length=128,
         db_column='name',
@@ -30,14 +38,6 @@ class Site(models.Model):
         verbose_name=_('locality'),
         help_text=_('Name of locality in which the site is located'),
         blank=True)
-    site_type = models.ForeignKey(
-        'SiteType',
-        on_delete=models.PROTECT,
-        db_column='site_type',
-        verbose_name=_('site type'),
-        help_text=_('Type of site'),
-        blank=False,
-        null=False)
     geo_ref = PointField(
         blank=True,
         db_column='geo_ref',
@@ -60,34 +60,6 @@ class Site(models.Model):
         verbose_name=_('altitude'),
         help_text=_('Altitude of site (in meters)'),
         null=True)
-    metadata = JSONField(
-        db_column='metadata',
-        verbose_name=_('metadata'),
-        help_text=_('Metadata associated to site'),
-        default=empty_JSON,
-        blank=True,
-        null=True)
-    created_by = models.ForeignKey(
-        'User',
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-        db_column='creator_id',
-        verbose_name=_('creator'),
-        help_text=_('Creator of site'))
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
 
     class Meta:
         verbose_name = _('Site')
@@ -95,16 +67,7 @@ class Site(models.Model):
 
         ordering = ['name']
 
-        unique_together = (('name', 'site_type'))
-
     def sync_coordinates_and_georef(self):
-        # if self.geo_ref and self.latitude and self.longitude:
-        #     validate_coordinates_and_geometry(
-        #         self.geo_ref,
-        #         self.latitude,
-        #         self.longitude)
-        #     return
-
         if self.geo_ref:
             self.latitude = self.geo_ref.y
             self.longitude = self.geo_ref.x
@@ -130,12 +93,6 @@ class Site(models.Model):
 
     def clean(self):
         self.sync_coordinates_and_georef()
-
-        try:
-            self.site_type.validate_metadata(self.metadata)
-        except ValidationError as error:
-            raise ValidationError({'metadata': error})
-
         super(Site, self).clean()
 
     def has_coordinate_permission(self, user):

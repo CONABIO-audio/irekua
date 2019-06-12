@@ -4,9 +4,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
+from database.models.base import IrekuaModelBaseUser
 
 
-class Annotation(models.Model):
+class Annotation(IrekuaModelBaseUser):
     LOW_QUALITY = 'L'
     MEDIUM_QUALITY = 'M'
     HIGH_QUALITY = 'H'
@@ -85,38 +86,6 @@ class Annotation(models.Model):
         verbose_name=_('commentaries'),
         help_text=_('Commentaries of annotator'),
         blank=True)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of creation of annotation'),
-        editable=False,
-        auto_now_add=True)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        editable=False,
-        auto_now=True)
-    created_by = models.ForeignKey(
-        'User',
-        related_name='annotation_created_by',
-        db_column='created_by',
-        verbose_name=_('created by'),
-        help_text=_('Creator of annotation'),
-        on_delete=models.PROTECT,
-        blank=True,
-        null=True)
-    modified_by = models.ForeignKey(
-        'User',
-        editable=False,
-        related_name='annotation_modified_by',
-        db_column='modified_by',
-        verbose_name=_('modified by'),
-        help_text=_('User that modified the annotation last'),
-        on_delete=models.PROTECT,
-        blank=True,
-        null=True)
 
     class Meta:
         verbose_name = _('Annotation')

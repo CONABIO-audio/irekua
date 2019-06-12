@@ -1,0 +1,18 @@
+{% url 'irekua:about' as irekua_about %}
+{% url 'irekua:contact' as irekua_contact %}
+{% load i18n %}
+
+<li class="nav-item">
+  {% if irekua_about in request.path %}
+  <a class="nav-link active" href={{ irekua_about | urlencode }}>{% trans "About" %}</a>
+  {% else %}
+  <a class="nav-link" href={{ irekua_about | urlencode }}>{% trans "About" %}</a>
+  {% endif %}
+</li>
+<li class="nav-item">
+  {% if irekua_contact in request.path %}
+  <a class="nav-link active" href={{ irekua_contact | urlencode }}>{% trans "Contact" %}</a>
+  {% else %}
+  <a class="nav-link" href={{ irekua_contact | urlencode }}>{% trans "Contact" %}</a>
+  {% endif %}
+</li>

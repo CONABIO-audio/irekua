@@ -21,7 +21,7 @@ from rest_framework.documentation import include_docs_urls
 
 
 urlpatterns = [
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/docs/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^api/v1/', include(('rest.urls', 'rest-api'), namespace='v1')),
     url(r'^api/v1/docs/', include_docs_urls(title='Irekua REST API documentation')),

@@ -1,0 +1,39 @@
+{% load i18n %}
+
+<div class="navbar navbar-expand-lg navbar-dark bg-dark box-shadow main-navbar">
+  <div class="container-fluid">
+    <div class="container col-2 float-left header-block">
+      {% block nav-brand %}
+      <a class="navbar-brand" href={% url 'irekua:home' %}>Irekua</a>
+      {% endblock nav-brand %}
+    </div>
+
+    {% block navigation %}
+    <div class="container col-2 float-left header-block">
+      <ul class="navbar-nav">
+        {% block navigation-items %}
+        <li class="nav-item">
+          <a class="nav-link" href={% url 'selia:home' %}>Selia</a>
+        </li>
+        {% endblock navigation-items %}
+      </ul>
+    </div>
+    {% endblock navigation %}
+
+    {% block tabs %}
+    <div class="container col-7 float-right header-block">
+      <ul class="navbar-nav">
+        {% block tab-items %}
+        {% include 'irekua/components/tab_items.html' %}
+        {% endblock tab-items %}
+      </ul>
+    </div>
+    {% endblock tabs %}
+
+    {% block user-menu %}
+    <div class="container float-right">
+      {% include 'irekua/components/user_menu.html' %}
+    </div>
+    {% endblock user-menu %}
+  </div>
+</div>

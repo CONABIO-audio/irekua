@@ -8,7 +8,6 @@ from .utils import BaseFilter
 
 search_fields = (
     'name',
-    'site_type__name',
     'locality',
 )
 
@@ -45,14 +44,8 @@ class SiteBaseFilter(BaseFilter):
         model = Site
         fields = (
             'name',
-            'site_type',
             'locality',
         )
-        extra_kwargs = {
-            'site_type__name': {
-                'label': _('site type')
-            }
-        }
 
 
 class Filter(SiteBaseFilter):
@@ -67,11 +60,5 @@ class UserFilter(SiteBaseFilter):
         model = Site
         fields = (
             'name',
-            'site_type',
             'locality',
         )
-        extra_kwargs = {
-            'site_type__name': {
-                'label': _('site type')
-            }
-        }

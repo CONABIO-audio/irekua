@@ -2,8 +2,24 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.utils import translate_doc
 
+
+@translate_doc
 class User(AbstractUser):
+    help_text = _('''
+    User Model
+
+    People using irekua must be previously registered and should provide
+    minimal personal information. This is to track contributions and to control
+    access to data.
+
+    Users can belong to collections (:model:`database.Collection`), possess
+    devices (:model:`database.PhysicalDevice`), sign licences
+    (:model:`database.Licence`), upload items (:model:`database.Item`),
+    annotate data (:model:`database.Annotation`), and more.
+    ''')
+
     institution = models.ForeignKey(
         'Institution',
         on_delete=models.PROTECT,

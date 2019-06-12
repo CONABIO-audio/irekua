@@ -27,13 +27,13 @@ from .sampling_devices.item_detail import item
 
 from .update_session import update_session
 
-from .upload import upload
-from .upload import photo_list
-from .upload import upload_photo
-from .upload import delete_photo
+# from .upload import upload
+# from .upload import photo_list
+# from .upload import upload_photo
+# from .upload import delete_photo
 
 from .items.gallery import gallery
-from .items.upload import upload_items
+from .items.upload import UploadItems
 from .items.annotate import annotate
 
 from .admin.home import admin_home

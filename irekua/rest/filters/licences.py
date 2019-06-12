@@ -4,7 +4,7 @@ import django_filters
 from database.models import Licence
 
 search_fields = (
-    'licence_type__name',
+    'licence_type',
 )
 
 
@@ -21,11 +21,11 @@ class Filter(django_filters.FilterSet):
     class Meta:
         model = Licence
         fields = (
-            'licence_type__name',
+            'licence_type',
             'is_active',
-            'signed_by__username',
-            'signed_by__first_name',
-            'signed_by__last_name',
+            'created_by__username',
+            'created_by__first_name',
+            'created_by__last_name',
             'licence_type__years_valid_for',
             'licence_type__can_view',
             'licence_type__can_download',

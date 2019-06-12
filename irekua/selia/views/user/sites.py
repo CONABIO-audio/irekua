@@ -11,7 +11,12 @@ from database.models import Site
 class SiteUpdateForm(forms.ModelForm):
     class Meta:
         model = Site
-        fields = ['name','locality','site_type','altitude','metadata']
+        fields = [
+            'name',
+            'locality',
+            'altitude',
+        ]
+
 
 class UpdateForm(forms.ModelForm):
     class Meta:
@@ -22,7 +27,6 @@ class UpdateForm(forms.ModelForm):
             'latitude',
             'longitude',
             'altitude',
-            'metadata'
         ]
 
 

@@ -6,7 +6,7 @@ from .utils import BaseFilter
 
 search_fields = (
     'site__name',
-    'site__site_type__name',
+    'site_type',
     'site__locality',
 )
 
@@ -37,8 +37,9 @@ class Filter(BaseFilter):
         model = CollectionSite
         fields = (
             'site__name',
-            'site__site_type__name',
+            'site_type',
             'site__locality',
             'site__created_by',
+            'created_by',
             'internal_id',
         )

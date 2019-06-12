@@ -51,7 +51,7 @@ class Filter(BaseFilter):
         model = SamplingEvent
         fields = (
             'sampling_event_type__name',
-            'collection_site__site__site_type__name',
+            'collection_site__site_type',
             'collection_site__site__locality',
             'collection__collection_type__name',
             'collection__name',

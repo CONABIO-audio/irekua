@@ -27,7 +27,7 @@ class Filter(BaseFilter):
             'sampling_event_device__sampling_event__sampling_event_type',
             'sampling_event_device__sampling_event__collection',
             'sampling_event_device__sampling_event__collection__collection_type',
-            'sampling_event_device__sampling_event__collection_site__site__site_type',
+            'sampling_event_device__sampling_event__collection_site__site_type',
             'sampling_event_device__collection_device__physical_device__device__device_type',
             'sampling_event_device__collection_device__physical_device__device__brand',
         )
