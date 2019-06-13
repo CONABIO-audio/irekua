@@ -17,8 +17,8 @@ class Filter(BaseFilter):
             'physical_device__device__brand__name',
             'physical_device__device__device_type__name',
             'physical_device__bundle',
-            'physical_device__owner__username',
-            'physical_device__owner__first_name',
-            'physical_device__owner__last_name',
+            'physical_device__created_by__username',
+            'physical_device__created_by__first_name',
+            'physical_device__created_by__last_name',
             'internal_id',
         )

@@ -16,6 +16,6 @@ class Filter(BaseFilter):
             'device__brand__name',
             'device__model',
             'device__device_type__name',
-            'owner__username',
-            'owner__first_name'
+            'created_by__username',
+            'created_by__first_name'
         )

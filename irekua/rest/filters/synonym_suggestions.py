@@ -10,11 +10,11 @@ search_fields = (
 
 
 class Filter(django_filters.FilterSet):
-    suggested_on__gt = django_filters.DateTimeFilter(
-        field_name='suggested_on',
+    created_on__gt = django_filters.DateTimeFilter(
+        field_name='created_on',
         lookup_expr='gt')
-    suggested_on__lt = django_filters.DateTimeFilter(
-        field_name='suggested_on',
+    created_on__lt = django_filters.DateTimeFilter(
+        field_name='created_on',
         lookup_expr='gt')
 
     class Meta:
@@ -22,6 +22,6 @@ class Filter(django_filters.FilterSet):
         fields = (
             'source__value',
             'synonym',
-            'suggested_by__username',
-            'suggested_by__first_name',
+            'created_by__username',
+            'created_by__first_name',
         )
