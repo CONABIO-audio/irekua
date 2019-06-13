@@ -4,9 +4,10 @@ from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
 from database.models.object_types.entailment_types import EntailmentType
+from database.models.base import IrekuaModelBase
 
 
-class Entailment(models.Model):
+class Entailment(IrekuaModelBase):
     source = models.ForeignKey(
         'Term',
         related_name='entailment_source',
@@ -29,19 +30,6 @@ class Entailment(models.Model):
         help_text=_('Metadata associated to entailment'),
         blank=True,
         null=True)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
 
     class Meta:
         verbose_name = _('Entailment')

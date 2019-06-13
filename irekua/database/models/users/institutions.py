@@ -2,9 +2,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 import pycountry
 
+from database.models.base import IrekuaModelBaseUser
 
 
-class Institution(models.Model):
+class Institution(IrekuaModelBaseUser):
     COUNTRIES = (
         (country.alpha_2, country.name) for country in pycountry.countries
     )
@@ -58,19 +59,6 @@ class Institution(models.Model):
         upload_to='images/institutions/',
         blank=True,
         null=True)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
 
     class Meta:
         ordering = ['institution_name']

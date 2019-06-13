@@ -4,9 +4,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
+from database.models.base import IrekuaModelBaseUser
 
 
-class CollectionUser(models.Model):
+class CollectionUser(IrekuaModelBaseUser):
     collection = models.ForeignKey(
         'Collection',
         db_column='collection_id',
@@ -35,19 +36,6 @@ class CollectionUser(models.Model):
         default=empty_JSON,
         help_text=_('Metadata associated to user in collection'),
         null=True)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of creation of annotation'),
-        editable=False,
-        auto_now_add=True)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        editable=False,
-        auto_now=True)
 
     class Meta:
         verbose_name = _('Collection User')

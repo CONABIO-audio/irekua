@@ -1,8 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from database.models.base import IrekuaModelBase
 
-class DeviceType(models.Model):
+
+class DeviceType(IrekuaModelBase):
     name = models.CharField(
         max_length=64,
         primary_key=True,
@@ -22,19 +24,6 @@ class DeviceType(models.Model):
         upload_to='images/device_types/',
         blank=True,
         null=True)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
 
     class Meta:
         verbose_name = _('Device Type')

@@ -54,5 +54,6 @@ class User(AbstractUser):
         verbose_name = _('User')
         verbose_name_plural = _('Users')
 
+    @property
     def is_special(self):
         return self.is_developer | self.is_curator | self.is_model | self.is_superuser

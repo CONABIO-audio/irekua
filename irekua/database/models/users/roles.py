@@ -2,8 +2,10 @@ from django.db import models
 from django.contrib.auth.models import Permission
 from django.utils.translation import gettext_lazy as _
 
+from database.models.base import IrekuaModelBase
 
-class Role(models.Model):
+
+class Role(IrekuaModelBase):
     name = models.CharField(
         max_length=64,
         primary_key=True,
@@ -30,19 +32,6 @@ class Role(models.Model):
         help_text=_('Permissions associated to role'),
         limit_choices_to=models.Q(content_type__model='collection'),
         blank=True)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
 
     class Meta:
         verbose_name = _('Role')
@@ -73,5 +62,4 @@ class Role(models.Model):
         self.save()
 
     def has_permission(self, codename):
-        return self.permissions.filter(
-            codename=codename).exists()
+        return self.permissions.filter(codename=codename).exists()

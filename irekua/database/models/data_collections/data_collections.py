@@ -4,13 +4,14 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
+from database.models.base import IrekuaModelBaseUser
 
 from .collection_users import CollectionUser
 from .collection_devices import CollectionDevice
 from .collection_sites import CollectionSite
 
 
-class Collection(models.Model):
+class Collection(IrekuaModelBaseUser):
     collection_type = models.ForeignKey(
         'CollectionType',
         on_delete=models.PROTECT,
@@ -76,19 +77,6 @@ class Collection(models.Model):
         verbose_name=_('administrators'),
         help_text=_('Administrators of collection'),
         blank=True)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
 
     class Meta:
         verbose_name = _('Collection')
@@ -254,3 +242,9 @@ class Collection(models.Model):
             return False
 
         return role.has_permission(codename)
+
+    def get_user_role(self, user):
+        collection_user = CollectionUser.objects.filter(  # pylint: disable=E1101
+            collection=self,
+            user=user).get()
+        return collection_user.role

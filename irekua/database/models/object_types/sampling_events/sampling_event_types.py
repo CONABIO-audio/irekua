@@ -6,11 +6,12 @@ from django.contrib.postgres.fields import JSONField
 from database.utils import validate_JSON_schema
 from database.utils import validate_JSON_instance
 from database.utils import simple_JSON_schema
+from database.models.base import IrekuaModelBase
 
 from .sampling_event_type_devices import SamplingEventTypeDeviceType
 
 
-class SamplingEventType(models.Model):
+class SamplingEventType(IrekuaModelBase):
     name = models.CharField(
         max_length=128,
         primary_key=True,
@@ -70,19 +71,6 @@ class SamplingEventType(models.Model):
         verbose_name=_('site types'),
         help_text=_('Valid site types for this sampling event type'),
         blank=True)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
 
     class Meta:
         verbose_name = _('Sampling Event Type')

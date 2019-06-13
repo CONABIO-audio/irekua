@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
 from database.utils import hash_file
+from database.models.base import IrekuaModelBase
 
 
 mimetypes.init()
@@ -42,7 +43,7 @@ def get_item_path(instance, filename):
     return path
 
 
-class SecondaryItem(models.Model):
+class SecondaryItem(IrekuaModelBase):
     hash = models.CharField(
         max_length=64,
         unique=True,
@@ -80,19 +81,6 @@ class SecondaryItem(models.Model):
         default=empty_JSON,
         blank=True,
         null=True)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
 
     class Meta:
         verbose_name = _('Secondary Item')

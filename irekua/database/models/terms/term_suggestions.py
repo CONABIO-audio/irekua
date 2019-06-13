@@ -5,10 +5,10 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
+from database.models.base import IrekuaModelBaseUser
 
 
-
-class TermSuggestion(models.Model):
+class TermSuggestion(IrekuaModelBaseUser):
     term_type = models.ForeignKey(
         'TermType',
         on_delete=models.CASCADE,
@@ -35,22 +35,9 @@ class TermSuggestion(models.Model):
         verbose_name=_('metadata'),
         help_text=_('Metadata associated to term'),
         null=True)
-    suggested_by = models.ForeignKey(
-        'User',
-        on_delete=models.CASCADE,
-        db_column='suggested_by',
-        verbose_name=_('suggested by'),
-        help_text=_('User who made the term suggestion'),
-        null=False,
-        blank=False)
-    suggested_on = models.DateTimeField(
-        db_column='suggested_on',
-        verbose_name=_('suggested on'),
-        help_text=_('Date of term suggestion'),
-        auto_now_add=True)
 
     class Meta:
-        ordering = ['-suggested_on']
+        ordering = ['-created_on']
         verbose_name = _('Term Suggestion')
         verbose_name = _('Term Suggestions')
 

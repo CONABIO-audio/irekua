@@ -6,8 +6,10 @@ from database.utils import validate_JSON_schema
 from database.utils import validate_JSON_instance
 from database.utils import simple_JSON_schema
 
+from database.models.base import IrekuaModelBase
 
-class SiteType(models.Model):
+
+class SiteType(IrekuaModelBase):
     name = models.CharField(
         max_length=128,
         primary_key=True,
@@ -28,19 +30,6 @@ class SiteType(models.Model):
         null=False,
         default=simple_JSON_schema,
         validators=[validate_JSON_schema])
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
 
     class Meta:
         verbose_name = _('Site Type')

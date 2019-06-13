@@ -4,9 +4,10 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
+from database.models.base import IrekuaModelBaseUser
 
 
-class SamplingEventDevice(models.Model):
+class SamplingEventDevice(IrekuaModelBaseUser):
     sampling_event = models.ForeignKey(
         'SamplingEvent',
         on_delete=models.PROTECT,
@@ -49,37 +50,6 @@ class SamplingEventDevice(models.Model):
         db_column='licence_id',
         verbose_name=_('licence'),
         help_text=_('Licence for all items in sampling event'),
-        blank=True,
-        null=True)
-
-    created_by = models.ForeignKey(
-        'User',
-        related_name='sampling_event_device_created_by',
-        on_delete=models.PROTECT,
-        db_column='created_by',
-        verbose_name=_('create by'),
-        help_text=_('Creator of sampling event device'),
-        blank=True,
-        null=True)
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
-    modified_by = models.ForeignKey(
-        'User',
-        related_name='sampling_event_device_modified_by',
-        on_delete=models.PROTECT,
-        db_column='modified_by',
-        verbose_name=_('modified by'),
-        help_text=_('Last modifier'),
         blank=True,
         null=True)
 

@@ -6,9 +6,10 @@ from django.contrib.postgres.fields import JSONField
 from database.utils import validate_JSON_schema
 from database.utils import validate_JSON_instance
 from database.utils import simple_JSON_schema
+from database.models.base import IrekuaModelBase
 
 
-class Device(models.Model):
+class Device(IrekuaModelBase):
     device_type = models.ForeignKey(
         'DeviceType',
         on_delete=models.PROTECT,
@@ -47,19 +48,6 @@ class Device(models.Model):
         null=False,
         default=simple_JSON_schema,
         validators=[validate_JSON_schema])
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
 
     class Meta:
         verbose_name = _('Device')

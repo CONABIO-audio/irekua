@@ -8,11 +8,13 @@ from database.utils import validate_JSON_schema
 from database.utils import validate_JSON_instance
 from database.utils import simple_JSON_schema
 
+from database.models.base import IrekuaModelBase
+
 
 mimetypes.init()
 
 
-class ItemType(models.Model):
+class ItemType(IrekuaModelBase):
     MIME_TYPES = [
         (value, value) for value in
         sorted(list(set(mimetypes.types_map.values())))
@@ -59,19 +61,6 @@ class ItemType(models.Model):
         verbose_name=_('event types'),
         help_text=_('Types of event for this item type'),
         blank=True)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
 
     class Meta:
         verbose_name = _('Item Type')

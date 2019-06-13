@@ -7,8 +7,10 @@ from database.utils import validate_JSON_schema
 from database.utils import validate_JSON_instance
 from database.utils import simple_JSON_schema
 
+from database.models.base import IrekuaModelBase
 
-class AnnotationTool(models.Model):
+
+class AnnotationTool(IrekuaModelBase):
     name = models.CharField(
         max_length=64,
         db_column='name',
@@ -47,19 +49,6 @@ class AnnotationTool(models.Model):
         null=False,
         validators=[validate_JSON_schema],
         default=simple_JSON_schema)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
 
     class Meta:
         verbose_name = _('Annotation Tool')

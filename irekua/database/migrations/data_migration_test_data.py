@@ -230,13 +230,12 @@ def make_test_data(apps, schema_editor):
             device, _ = models.PhysicalDevice.objects.get_or_create(
                 serial_number=int(10000 * random()),
                 device=choice([device_1, device_2]),
-                owner=user,
+                created_by=user,
                 metadata={},
                 bundle=False)
             procer_collection.add_site(site, index * 10 + n,
                 site_type=procer_site, metadata={})
             procer_collection.add_device(device, index * 10 + n, {})
-
 
     collection_sites = procer_collection.collectionsite_set.all()
     collection_devices = procer_collection.collectiondevice_set.all()
@@ -262,12 +261,12 @@ def make_test_data(apps, schema_editor):
                 collection_device=device,
                 metadata={},
                 configuration={},
-                created_by=device.physical_device.owner)
+                created_by=device.physical_device.created_by)
 
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('database', '0002_auto_20190605_2128'),
+        ('database', '0001_initial'),
     ]
 
     operations = [

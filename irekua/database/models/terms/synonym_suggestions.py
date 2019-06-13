@@ -5,9 +5,10 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
+from database.models.base import IrekuaModelBaseUser
 
 
-class SynonymSuggestion(models.Model):
+class SynonymSuggestion(IrekuaModelBaseUser):
     source = models.ForeignKey(
         'Term',
         on_delete=models.CASCADE,
@@ -31,22 +32,9 @@ class SynonymSuggestion(models.Model):
         help_text=_('Metadata associated to synonym'),
         default=empty_JSON,
         null=True)
-    suggested_by = models.ForeignKey(
-        'User',
-        on_delete=models.CASCADE,
-        db_column='suggested_by',
-        verbose_name=_('suggested by'),
-        help_text=_('User who made the synonym suggestion'),
-        null=False,
-        blank=False)
-    suggested_on = models.DateTimeField(
-        db_column='suggested_on',
-        verbose_name=_('suggested on'),
-        help_text=_('Date of synonym suggestion'),
-        auto_now_add=True)
 
     class Meta:
-        ordering = ['-suggested_on']
+        ordering = ['-created_on']
         verbose_name = _('Synonym Suggestion')
         verbose_name = _('Synonym Suggestions')
 

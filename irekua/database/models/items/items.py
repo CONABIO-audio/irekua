@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
 from database.utils import hash_file
+from database.models.base import IrekuaModelBaseUser
 
 
 mimetypes.init()
@@ -39,7 +40,7 @@ def get_item_path(instance, filename):
     return path
 
 
-class Item(models.Model):
+class Item(IrekuaModelBaseUser):
     hash_string = None
     item_size = None
 
@@ -133,37 +134,6 @@ class Item(models.Model):
         help_text=_('Types of event for which item has been fully annotated'),
         blank=True)
 
-    created_by = models.ForeignKey(
-        'User',
-        related_name='item_created_by',
-        on_delete=models.PROTECT,
-        db_column='created_by',
-        verbose_name=_('created by'),
-        help_text=_('Creator of item'),
-        blank=False,
-        null=False)
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
-    modified_by = models.ForeignKey(
-        'User',
-        on_delete=models.PROTECT,
-        related_name='item_modified_by',
-        db_column='modified_by',
-        verbose_name=_('modified by'),
-        help_text=_('Last user that modified this item info'),
-        blank=True,
-        null=True)
-
     class Meta:
         verbose_name = _('Item')
         verbose_name_plural = _('Items')
@@ -189,6 +159,10 @@ class Item(models.Model):
             raise ValidationError(msg)
 
         # TODO: Validate User
+
+    @property
+    def collection(self):
+        return self.sampling_event_device.sampling_event.collection
 
     def clean(self):
         try:

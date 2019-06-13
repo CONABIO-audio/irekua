@@ -6,14 +6,14 @@ from django.core.exceptions import ValidationError
 from database.utils import validate_JSON_schema
 from database.utils import validate_JSON_instance
 from database.utils import simple_JSON_schema
-
+from database.models.base import IrekuaModelBase
 
 from .collection_device_types import CollectionDeviceType
 from .collection_roles import CollectionRole
 from .collection_item_types import CollectionItemType
 
 
-class CollectionType(models.Model):
+class CollectionType(IrekuaModelBase):
     """
     *Collection types* function as a templates for collection creation. Its
     utility stems from the fact that the configuration of a collection can be
@@ -193,19 +193,6 @@ class CollectionType(models.Model):
         verbose_name=_('roles'),
         help_text=_('Roles valid for collections of type'),
         blank=True)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
 
     class Meta:
         verbose_name = _('Collection Type')

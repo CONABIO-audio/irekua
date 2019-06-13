@@ -2,8 +2,10 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+from database.models.base import IrekuaModelBase
 
-class EventType(models.Model):
+
+class EventType(IrekuaModelBase):
     name = models.CharField(
         max_length=64,
         primary_key=True,
@@ -32,19 +34,6 @@ class EventType(models.Model):
             'Valid term types with which to label this type '
             'of events'),
         blank=True)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of entry creation'),
-        auto_now_add=True,
-        editable=False)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        auto_now=True,
-        editable=False)
 
     class Meta:
         verbose_name = _('Event Type')

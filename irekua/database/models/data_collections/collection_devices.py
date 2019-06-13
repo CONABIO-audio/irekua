@@ -4,9 +4,10 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
+from database.models.base import IrekuaModelBaseUser
 
 
-class CollectionDevice(models.Model):
+class CollectionDevice(IrekuaModelBaseUser):
     physical_device = models.ForeignKey(
         'PhysicalDevice',
         on_delete=models.PROTECT,
@@ -36,19 +37,6 @@ class CollectionDevice(models.Model):
         verbose_name=_('metadata'),
         help_text=_('Metadata associated with device within collection'),
         null=True)
-
-    created_on = models.DateTimeField(
-        db_column='created_on',
-        verbose_name=_('created on'),
-        help_text=_('Date of creation of annotation'),
-        editable=False,
-        auto_now_add=True)
-    modified_on = models.DateTimeField(
-        db_column='modified_on',
-        verbose_name=_('modified on'),
-        help_text=_('Date of last modification'),
-        editable=False,
-        auto_now=True)
 
     class Meta:
         verbose_name = _('Collection Device')

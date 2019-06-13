@@ -2,8 +2,10 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
+from database.models.base import IrekuaModelBase
 
-class Source(models.Model):
+
+class Source(IrekuaModelBase):
     directory = models.CharField(
         max_length=64,
         unique=True,
@@ -23,12 +25,6 @@ class Source(models.Model):
         verbose_name=_('parse function'),
         help_text=_('Parse function used to insert files and metadata to database'),
         blank=False)
-    uploaded_on = models.DateTimeField(
-        editable=False,
-        db_column='uploaded_on',
-        verbose_name=_('uploaded on'),
-        help_text=_('Date on which files in source where parsed and uploaded to database'),
-        auto_now_add=True)
     uploader = models.ForeignKey(
         'User',
         on_delete=models.PROTECT,
@@ -41,8 +37,6 @@ class Source(models.Model):
     class Meta:
         verbose_name = _('Source')
         verbose_name_plural = _('Sources')
-
-        ordering = ['-uploaded_on']
 
     def __str__(self):
         msg = _('Directory %(dir)s uploaded with %(func)s')
