@@ -53,6 +53,7 @@ class LicenceType(IrekuaModelBase):
         upload_to='images/licence_types/',
         blank=True,
         null=True)
+
     can_view = models.BooleanField(
         db_column='can_view',
         verbose_name=_('can view'),

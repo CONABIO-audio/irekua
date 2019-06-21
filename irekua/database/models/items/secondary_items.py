@@ -16,7 +16,7 @@ mimetypes.init()
 
 def get_item_path(instance, filename):
     path_fmt = os.path.join(
-        'items',
+        'secondary_items',
         '{collection}',
         '{sampling_event}',
         '{sampling_event_device}',

@@ -2,6 +2,9 @@ def view(user, annotation):
     if user.is_special:
         return True
 
+    if user == annotation.created_by:
+        return True
+
     licence = annotation.item.licence
     licence_type = licence.licence_type
 
@@ -27,16 +30,16 @@ def view(user, annotation):
 
 
 def create(user, item):
-    if user.is_special:
+    if user.is_special: # No developer
         return True
 
     licence = item.licence
     licence_type = licence.licence_type
 
-    # if not licence.is_active:
-        # return True
+    if not licence.is_active:
+        return True
 
-    if licence_type.can_annotate:
+    if licence_type.can_view_item:
         return True
 
     collection = item.collection
@@ -61,8 +64,6 @@ def change(user, annotation):
     if user.is_curator:
         return True
 
-    collection = annotation.item.collection
-
     return annotation.created_by == user
 
 
@@ -71,4 +72,3 @@ def delete(user, annotation):
         return True
 
     return annotation.created_by == user
-
