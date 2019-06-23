@@ -1,0 +1,23 @@
+{% extends 'selia/collections/base.html' %}
+{% load i18n %}
+
+{% block main-content %}
+<div class="container-fluid w-100 p-4">
+  <div class="jumbotron w-100">
+    <h4>{% trans 'Open Collections' %}</h4>
+    <p>
+      {% blocktrans %}
+      Collections that can be viewed by the general public.
+      {% endblocktrans %}
+    </p>
+  </div>
+</div>
+<div class="container m-4">
+  filter
+</div>
+
+{% include 'selia/components/list.html' with template_name='selia/components/list_items/collection.html' item_list=collection_list empty_message='empty' %}
+
+<a href="?next={{ request.get_full_path }}"> PRUEBA </a>
+
+{% endblock main-content %}

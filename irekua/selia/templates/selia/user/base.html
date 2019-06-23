@@ -1,42 +1,5 @@
-{% extends 'selia/base.html' %}
-{% load static from staticfiles %}
-{% load grid %}
-{% load leaflet_tags %}
+{% extends 'selia/base_with_toolbar.html' %}
 
-{% block head-extra %}
-{% leaflet_js %}
-{% leaflet_css %}
-{% endblock head-extra %}
-
-{% block view-content %}
-<nav class="navbar navbar-expand navbar-light bg-light secondary-navbar p-1">
-  {% block secondary-navbar %}
-  {% include 'selia/user/components/secondary_navbar.html' %}
-  {% endblock secondary-navbar %}
-</nav>
-{% block toolbar %}
-<nav class="navbar navbar-expand navbar-light bg-light tool-bar d-flex justify-content-around pl-5 p-0">
-  <div class="container">
-    <a class="navbar-brand" href="#">{% block toolbar-title %}{% endblock %}</a>
-  </div>
-
-  <div class="container">
-    <ul class="nav">
-      {% block toolbar-items %}
-      {% endblock toolbar-items %}
-    </ul>
-  </div>
-
-  <div class="container">
-    <ul class="nav">
-      {% include 'selia/components/view_buttons.html' with grid_config=grid_config %}
-    </ul>
-  </div>
-</nav>
-{% endblock toolbar %}
-
-{% block main-content %}
-{% grid grid_config table_info map_info detail_info%}
-{% endblock main-content %}
-
-{% endblock view-content %}
+{% block secondary-navbar %}
+{% include 'selia/user/components/secondary_navbar.html' %}
+{% endblock secondary-navbar %}

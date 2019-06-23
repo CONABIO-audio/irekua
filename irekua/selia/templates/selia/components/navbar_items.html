@@ -1,17 +1,25 @@
-{% url 'selia:about' as selia_about %}
-{% url 'selia:user_home' as user_home %}
-{% url 'selia:collections' as collections %}
-{% url 'selia:admin_home' as admin_home %}
 {% load i18n %}
 
+{% url 'selia:about' as selia_about %}
 <li class="nav-item">
-  {% if selia_about == request.path %}
+  {% if selia_about in request.path %}
   <a class="nav-link active" href={{ selia_about|urlencode }}>{% trans "About" %}</a>
   {% else %}
   <a class="nav-link" href={{ selia_about|urlencode }}>{% trans "About" %}</a>
   {% endif %}
 </li>
+
+{% url 'selia:collections_about' as selia_collections %}
+<li class="nav-item">
+  {% if selia_collections in request.path %}
+  <a class="nav-link active" href={{ selia_collections|urlencode }}>{% trans "Collections" %}</a>
+  {% else %}
+  <a class="nav-link" href={{ selia_collections|urlencode }}>{% trans "Collections" %}</a>
+  {% endif %}
+</li>
+
 {% if user.is_authenticated %}
+{% url 'selia:user_home' as user_home %}
 <li class="nav-item">
   {% if user_home in request.path %}
   <a class="nav-link active" href={{ user_home|urlencode }}>{% trans "Home" %}</a>
@@ -19,20 +27,4 @@
   <a class="nav-link" href={{ user_home|urlencode }}>{% trans "Home" %}</a>
   {% endif %}
 </li>
-<li class="nav-item">
-  {% if collections in request.path %}
-  <a class="nav-link active" href={{ collections|urlencode }}>{% trans "Collections" %}</a>
-  {% else %}
-  <a class="nav-link" href={{ collections|urlencode }}>{% trans "Collections" %}</a>
-  {% endif %}
-</li>
-{% if user.collectiontype_set.count %}
-<li class="nav-item">
-  {% if admin_home in request.path %}
-  <a class="nav-link active" href={{ admin_home|urlencode }}>{% trans "Administration" %}</a>
-  {% else %}
-  <a class="nav-link" href={{ admin_home|urlencode }}>{% trans "Administration" %}</a>
-  {% endif %}
-</li>
-{% endif %}
 {% endif %}

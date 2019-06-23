@@ -1,0 +1,11 @@
+<div class="w-100 bg-light p-4 list-group">
+  {% for item in item_list %}
+  {% include template_name with item=item %}
+  {% empty %}
+  <p>{{ empty_message }}</p>
+  {% endfor %}
+
+  <div class="container center w-100">
+    {% include 'selia/components/pagination.html' with list=item_list %}
+  </div>
+</div>

@@ -6,6 +6,8 @@
 {% block toolbar-items %}
 <li class="navbar-item ">
   <button type="button" class="btn btn-link">{% trans "Download Summary" %} <i class="fas fa-file-download"></i></button>
+</li>
+<li class="navbar-item ">
   <button type="button" class="btn btn-link">{% trans "Help" %} <i class="fas fa-question"></i></button>
 </li>
 {% endblock toolbar-items %}
@@ -75,7 +77,7 @@
                     Último añadido: {{ latest_collection }}
                   </div>
                   <div class="col-1">
-                    <a href={% url 'selia:collections' %}>Ver</a>
+                    <a href="#">Ver</a>
                   </div>
                 </div>
               </div>

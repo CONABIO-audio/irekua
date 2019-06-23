@@ -39,18 +39,15 @@
   {% endblock header %}
   </header>
 
-  <main role="main" class="container-fluid content p-0">
-    <div class="row h-100 m-0" id="row-main">
+  <main role="main" class="container-fluid content p-0 h-100">
     {% block content %}
-
       <!-- Page Content -->
-      <div class="container-fluid main-content">
+      <div class="container-fluid scroll">
         {% block main-content %}
         {% endblock main-content %}
       </div>
 
       {% endblock content %}
-  </div>
   </main>
 
   <!-- Modals -->

@@ -1,25 +1,36 @@
 {% extends 'selia/components/secondary_navbar.html' %}
+{% load i18n %}
 
 {% block navbar-brand %}
-<a class="navbar-brand" href={% url 'selia:collections' %}>Colecciones</a>
+<a class="navbar-brand" href={% url 'selia:collections_user' %}>{% trans 'Collections' %}</a>
 {% endblock navbar-brand %}
 
 {% block navbar-items %}
-
-{% url 'selia:collections' as home_url %}
-{% url 'selia:open_collections' as open_url %}
-{% url 'selia:create_collection' as as create_url %}
-
+{% url 'selia:collections_about' as about_url %}
 <li class="nav-item">
-  {% if home_url == request.path|urlencode %}
-  <a class="nav-link active" href={{ home_url }}>
+  {% if about_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ about_url }}>
   {% else %}
-  <a class="nav-link" href={{ home_url }}>
+  <a class="nav-link" href={{ about_url }}>
   {% endif %}
-    <i class="fas fa-archive"></i>
-    Mis Colecciones
+    <i class="fas fa-info"></i>
+    {% trans 'About' %}
   </a>
 </li>
+
+{% url 'selia:collections_user' as user_url %}
+<li class="nav-item">
+  {% if user_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ user_url }}>
+  {% else %}
+  <a class="nav-link" href={{ user_url }}>
+  {% endif %}
+    <i class="fas fa-archive"></i>
+    {% trans 'My Collections' %}
+  </a>
+</li>
+
+{% url 'selia:collections_open' as open_url %}
 <li class="nav-item">
   {% if open_url == request.path|urlencode %}
   <a class="nav-link active" href={{ open_url }}>
@@ -27,7 +38,7 @@
   <a class="nav-link" href={{ open_url }}>
   {% endif %}
     <i class="fas fa-lock-open"></i>
-    Colecciones Abiertas
+    {% trans 'Open Collections' %}
   </a>
 </li>
 {% endblock navbar-items %}

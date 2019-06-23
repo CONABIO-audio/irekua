@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
 from database.models.base import IrekuaModelBaseUser
+from database.models.items.items import Item
 
 from .collection_users import CollectionUser
 from .collection_devices import CollectionDevice
@@ -77,6 +78,15 @@ class Collection(IrekuaModelBaseUser):
         verbose_name=_('administrators'),
         help_text=_('Administrators of collection'),
         blank=True)
+
+    is_open = models.BooleanField(
+        db_column='is_open',
+        verbose_name=_('is open'),
+        help_text=_(
+            'Boolean flag indicating whether contents of the collection are public.'),
+        blank=True,
+        null=False,
+        default=False)
 
     class Meta:
         verbose_name = _('Collection')
@@ -159,6 +169,12 @@ class Collection(IrekuaModelBaseUser):
                 error=str(error))
             raise ValidationError({'metadata': msg})
         super(Collection, self).clean()
+
+    @property
+    def items(self):
+        queryset = Item.objects.filter(
+            sampling_event_device__sampling_event__collection=self)
+        return queryset.count()
 
     def add_user(self, user, role, metadata):
         CollectionUser.objects.create(  # pylint: disable=E1101
@@ -248,3 +264,11 @@ class Collection(IrekuaModelBaseUser):
             collection=self,
             user=user).get()
         return collection_user.role
+
+    def update_is_open(self):
+        restrictive_licences = self.licence_set.filter(
+            is_active=True,
+            licence_type__can_view=False)
+
+        self.is_open = not restrictive_licences.exits()
+        self.save()
