@@ -8,6 +8,8 @@ class CollectionDetailView(DetailView):
     template_name = 'selia/collection_detail/detail.html'
 
     def get_context_data(self, *args, **kwargs):
+        collection = self.object
+
         context = super().get_context_data(*args, **kwargs)
-        context['collection'] = self.object
+        context['collection'] = collection
         return context

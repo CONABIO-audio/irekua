@@ -194,7 +194,8 @@ def make_test_data(apps, schema_editor):
         name='Colección Procer 1',
         description='Colección procer 1',
         metadata={},
-        institution=CONANP)
+        institution=CONANP,
+        is_open=True)
 
     procer_collection.administrators.add(conanp_user_1)
     procer_collection.add_user(conanp_user_1, collection_admin, {})
