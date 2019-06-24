@@ -34,7 +34,10 @@
   {% else %}
   <a class="nav-link" href={{ detail_url }}>
   {% endif %}
+  <i class="fas fa-calendar-week"></i>
     {% trans 'Sampling events' %}
+  </a>
+</li>
 
 {% url 'selia:collection_devices' collection.pk as devices_url %}
 <li class="nav-item">
