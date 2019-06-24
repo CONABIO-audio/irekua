@@ -1,6 +1,17 @@
 {% extends 'selia/collection_detail/base.html' %}
 {% load i18n %}
 
+{% block toolbar-title %}{% trans 'Collection Devices' %}{% endblock %}
+
+{% block toolbar-items %}
+<li class="nav-item">
+  <a class="nav-link" href="#">{% trans 'Add Device' %} <i class="fas fa-plus"></i> <i class="fas fa-tools"></i></a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="#">{% trans 'Help' %} <i class="fas fa-question"></i></a>
+</li>
+{% endblock toolbar-items %}
+
 {% block main-content %}
 <div class="container-fluid w-100 p-4">
   <div class="jumbotron w-100">
@@ -17,6 +28,6 @@
   filter
 </div>
 
-{% include 'selia/components/list.html' with template_name='selia/components/list_items/collection_device.html' item_list=device_list empty_message='empty' %}
+{% include 'selia/components/list.html' with template_name='selia/components/list_items/collection_device.html' item_list=object_list empty_message='empty' %}
 
 {% endblock main-content %}

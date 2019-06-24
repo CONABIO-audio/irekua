@@ -15,4 +15,16 @@ urlpatterns = [
         'collections/detail/<pk>/sampling_events/',
         collection_detail.CollectionSamplingEventListView.as_view(),
         name='collection_sampling_events'),
+    path(
+        'collections/detail/<pk>/sites/',
+        collection_detail.CollectionSitesListView.as_view(),
+        name='collection_sites'),
+    path(
+        'collections/detail/<pk>/items/',
+        collection_detail.CollectionItemsListView.as_view(),
+        name='collection_items'),
+    path(
+        'collections/devices/<pk>/',
+        collection_detail.CollectionDeviceDetailView.as_view(),
+        name='collection_device_detail'),
 ]

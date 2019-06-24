@@ -1,0 +1,72 @@
+{% extends 'selia/components/list_item.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block list-item-content %}
+<div class="row w-100">
+  <div class="col">
+    <div class="media">
+      {% if item.physical_device.device.brand.logo %}
+      <img class="mr-3 img-thumbnail" src="{{ item.physical_device.device.brand.logo.url }}" alt="logo">
+      {% endif %}
+      <div class="media-body mt-0">
+        <h4 class="mt-0">{{ item.physical_device.device.brand }}</h4>
+        <div class="text-muted">{{ item.physical_device.device.model }}</div>
+        <div class="text-muted"><a href="{% url 'selia:collection_device_detail' item.pk %}">{% trans 'View' %}</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+      <h6>{% trans 'Device type' %}</h6>
+      <div class="text-muted ml-4">{{ item.physical_device.device.device_type }}</div>
+    </div>
+    <div class="row">
+      <h6>{% trans 'Serial Number' %}</h6>
+      <div class="text-muted ml-4">{{ item.physical_device.serial_number }}</div>
+    </div>
+    <div class="row">
+      <h6>{% trans 'Collection Device id' %}</h6>
+      <div class="text-muted ml-4">{{ item.internal_id }}</div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+      <h6>{% trans 'Collection' %}</h6>
+      <div class="text-muted ml-4">{{ item.collection }}</div>
+    </div>
+    <div class="row">
+      <h6>{% trans 'Owner' %}</h6>
+      <div class="text-muted ml-4">{{ item.physical_device.created_by }}</div>
+    </div>
+    <div class="row">
+      <h6>{% trans 'Added on' %}</h6>
+      <div class="text-muted ml-4">{{ item.created_on }}</div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="row">
+      <div class="col-8 d-flex">
+          <h6>{% trans 'Items' %}</h6>
+          <div class="text-muted ml-4">{{ item.items.count }}</div>
+      </div>
+      <div class="col-1 d-flex">
+          <a href="#"><i class="far fa-eye"></i></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-8 d-flex">
+          <h6>{% trans 'Sampling events' %}</h6>
+          <div class="text-muted ml-4">{{ item.samplingeventdevice_set.count }}</div>
+      </div>
+      <div class="col-1 d-flex">
+          <a href="#"><i class="far fa-eye"></i></a>
+      </div>
+      <div class="col-1 d-flex">
+          <a href="#"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock list-item-content %}
