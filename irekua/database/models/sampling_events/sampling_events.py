@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
 from database.models.base import IrekuaModelBaseUser
+from database.models import Item
 
 
 class SamplingEvent(IrekuaModelBaseUser):
@@ -80,6 +81,12 @@ class SamplingEvent(IrekuaModelBaseUser):
             start=str(self.started_on),
             end=str(self.ended_on))
         return msg % params
+
+    @property
+    def items(self):
+        queryset = Item.objects.filter(
+            sampling_event_device__sampling_event=self)
+        return queryset
 
     def validate_site(self):
         collection = self.collection

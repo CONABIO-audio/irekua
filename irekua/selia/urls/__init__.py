@@ -5,11 +5,13 @@ from . import selia
 from . import user
 from . import data_collections
 from . import collections_detail
+from . import sampling_event_detail
 
 
 urlpatterns = (
     selia.urlpatterns +
     user.urlpatterns +
     data_collections.urlpatterns +
-    collections_detail.urlpatterns
+    collections_detail.urlpatterns +
+    sampling_event_detail.urlpatterns
 )

@@ -1,0 +1,52 @@
+{% load json_tags %}
+{% load i18n %}
+
+<div class="media">
+  {% if object.logo %}
+  <img class="mr-3 img-thumbnail" src="{{ object.logo.url }}" alt="logo">
+  {% endif %}
+  <div class="media-body mt-0">
+    <h4 class="mt-0">{% trans 'Sampling event ' %}{{ object.pk }}
+      {% if object.is_open %}
+      {% endif %}
+    </h4>
+    {{ object.description }}
+  </div>
+</div>
+<div class="container mt-3 mb-3">
+  <div class="row">
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Sampling event type' %}</h5>
+      <p class="text-muted">{{ object.sampling_event_type }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Collection' %}</h5>
+      <p class="text-muted">{{ object.collection }}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Collection site' %}</h5>
+      <p class="text-muted">{{ object.collection_site.site.name }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Started on' %}</h5>
+      <p class="text-muted">{{ object.started_on }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Ended on' %}</h5>
+      <p class="text-muted">{{ object.ended_on }}</p>
+    </div>
+  </div>
+
+  {% if object.metadata %}
+  <h4>{% trans 'Metadata' %}</h4>
+  <div class="d-flex flex-wrap">
+    {% show_json object.metadata %}
+  </div>
+  {% endif %}
+
+  <div href="#" class="btn btn-primary card-link">{% trans 'Edit sampling event' %}</div>
+  <div href="#" class="btn btn-danger card-link">{% trans 'Delete sampling event' %}</div>
+
+</div>
