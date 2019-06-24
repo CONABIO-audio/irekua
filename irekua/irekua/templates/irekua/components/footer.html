@@ -1,12 +1,12 @@
-<footer class="mt-auto py-3 bg-light">
+<footer class="mt-auto bg-light w-100">
   <div class="container-fluid h-100">
       <div class="row align-items-center p-1 h-100">
-        <div class="col-2 h-100">
+        <div class="col-1 h-100">
         </div>
-        <div class="col h-100">
+        <div class="col-8 h-100">
           {% block footer-left %}
-          <div class="container footer-logos h-100">
-            <div class="row h-100">
+          <div class="container footer-logos h-100 w-100">
+            <div class="row h-100 w-100">
               <div class="col h-100">
                 <img src="https://monitoreo.conabio.gob.mx/images/1099-original.png">
               </div>
@@ -16,11 +16,11 @@
           </div>
           {% endblock footer-left %}
         </div>
-        <div class="col text-dark text-center align-middle">
+        <div class="col-1 text-dark text-center align-middle">
           {% block footer-center %}
           {% endblock footer-center %}
         </div>
-        <div class="col text-dark text-center align-middle">
+        <div class="col-2 text-dark text-center align-middle">
           {% block footer-right %}
           {% now "SHORT_DATE_FORMAT" %}
           {% endblock footer-right %}

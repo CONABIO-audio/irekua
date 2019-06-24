@@ -1,1 +1,22 @@
 {% extends 'selia/collection_detail/base.html' %}
+{% load i18n %}
+
+{% block main-content %}
+<div class="container-fluid w-100 p-4">
+  <div class="jumbotron w-100">
+    <h4>{% trans 'Collection Devices' %}</h4>
+    <p>
+      {% blocktrans %}
+      Devices registered in the collection
+      {% endblocktrans %}
+    </p>
+  </div>
+</div>
+
+<div class="container m-4">
+  filter
+</div>
+
+{% include 'selia/components/list.html' with template_name='selia/components/list_items/collection_device.html' item_list=device_list empty_message='empty' %}
+
+{% endblock main-content %}

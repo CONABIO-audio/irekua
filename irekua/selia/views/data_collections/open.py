@@ -9,11 +9,7 @@ class OpenCollectionsView(ListView):
 
     def get_queryset(self):
         queryset = Collection.objects.filter(is_open=True)
-        paginator = Paginator(queryset, 1)
+        paginator = Paginator(queryset, 10)
 
-        page = self.request.GET.get('page', 1)
+        page = self.request.GET.get('page', 10)
         return paginator.get_page(page)
-
-    def get(self, *args, **kwargs):
-        print(self.request.GET)
-        return super().get(*args, **kwargs)

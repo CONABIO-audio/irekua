@@ -12,10 +12,9 @@
 {% endblock header%}
 
 {% block content %}
-<div class="container-fluid p-0 h-100">
-  {% block view-content %}{% endblock %}
-</div>
+
+{% block view-content %}
+{% include 'selia/components/footer.html' %}
+{% endblock %}
+
 {% endblock content %}
-
-
-{% block footer %} {% include 'selia/components/footer.html' %} {% endblock %}

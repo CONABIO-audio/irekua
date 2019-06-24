@@ -1,6 +1,6 @@
 {% extends 'selia/base.html' %}
 
-{% block view-content %}
+{% block navbars %}
 <nav class="navbar navbar-expand navbar-light bg-light secondary-navbar p-1">
   {% block secondary-navbar %}
   {% endblock secondary-navbar %}
@@ -16,10 +16,14 @@
   </ul>
 </nav>
 {% endblock toolbar %}
+{% endblock navbars %}
 
+{% block view-content %}
 <div class="container-fluid h-100 w-100 scroll pl-0 pr-0">
   {% block main-content %}
   {% endblock main-content %}
+
+  {% include 'selia/components/footer.html' %}
 </div>
 
 {% endblock view-content %}
