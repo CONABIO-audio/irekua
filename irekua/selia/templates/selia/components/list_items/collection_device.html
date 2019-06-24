@@ -12,7 +12,7 @@
       <div class="media-body mt-0">
         <h4 class="mt-0">{{ item.physical_device.device.brand }}</h4>
         <div class="text-muted">{{ item.physical_device.device.model }}</div>
-        <div class="text-muted"><a href="#">{% trans 'View' %}</a></div>
+        <div class="text-muted"><a href="{% url 'selia:collection_device_detail' item.pk %}">{% trans 'View' %}</a></div>
       </div>
     </div>
   </div>

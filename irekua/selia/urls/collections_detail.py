@@ -19,4 +19,8 @@ urlpatterns = [
         'collections/detail/<pk>/items/',
         collection_detail.CollectionItemsListView.as_view(),
         name='collection_items'),
+    path(
+        'collections/devices/<pk>/',
+        collection_detail.CollectionDeviceDetailView.as_view(),
+        name='collection_device_detail'),
 ]
