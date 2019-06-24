@@ -1,1 +1,33 @@
 {% extends 'selia/collection_detail/base.html' %}
+{% load i18n %}
+
+{% block toolbar-title %}{% trans 'Collection Items' %}{% endblock %}
+
+{% block toolbar-items %}
+<li class="nav-item">
+  <a class="nav-link" href="#">{% trans 'Add Items' %} <i class="fas fa-plus"></i> <i class="far fa-file"></i></a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="#">{% trans 'Help' %} <i class="fas fa-question"></i></a>
+</li>
+{% endblock toolbar-items %}
+
+{% block main-content %}
+<div class="container-fluid w-100 p-4">
+  <div class="jumbotron w-100">
+    <h4>{% trans 'Items' %}</h4>
+    <p>
+      {% blocktrans %}
+      Items contained in the collection
+      {% endblocktrans %}
+    </p>
+  </div>
+</div>
+
+<div class="container m-4">
+  filter
+</div>
+
+{% include 'selia/components/list.html' with template_name='selia/components/list_items/item.html' item_list=object_list empty_message='empty' %}
+
+{% endblock main-content %}

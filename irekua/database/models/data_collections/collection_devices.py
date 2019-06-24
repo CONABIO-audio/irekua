@@ -3,6 +3,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+from database.models.items.items import Item
 from database.utils import empty_JSON
 from database.models.base import IrekuaModelBaseUser
 
@@ -69,3 +70,8 @@ class CollectionDevice(IrekuaModelBaseUser):
                 raise ValidationError({'metadata': str(error)})
 
         super(CollectionDevice, self).clean()
+
+    @property
+    def items(self):
+        queryset = Item.objects.filter(sampling_event_device__collection_device=self)
+        return queryset
