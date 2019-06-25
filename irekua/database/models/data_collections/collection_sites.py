@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
 
+from database.models.items.items import Item
 from database.models.base import IrekuaModelBaseUser
 
 
@@ -70,3 +71,9 @@ class CollectionSite(IrekuaModelBaseUser):
             raise ValidationError({'site': error})
 
         super(CollectionSite, self).clean()
+
+    @property
+    def items(self):
+        queryset = Item.objects.filter(
+            sampling_event_device__sampling_event__collection_site=self)
+        return queryset

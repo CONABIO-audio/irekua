@@ -1,6 +1,13 @@
 {% extends 'selia/collection_detail/base.html' %}
 {% load i18n %}
 
+{% block head-extra %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.5/ol.css" type="text/css" media="all" rel="stylesheet">
+<link href="/static/gis/css/ol3.css" type="text/css" media="all" rel="stylesheet">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.5/ol.js"></script>
+<script type="text/javascript" src="/static/gis/js/OLMapWidget.js"></script>
+{% endblock head-extra %}
+
 {% block toolbar-title %}{% trans 'Collection Sites' %}{% endblock %}
 
 {% block toolbar-items %}
@@ -9,6 +16,12 @@
 </li>
 <li class="nav-item">
   <a class="nav-link" href="#">{% trans 'Help' %} <i class="fas fa-question"></i></a>
+</li>
+<li class="nav-item ml-5">
+  <a class="nav-link {% if not show_map %}active{% endif %}" href="?show=list">{% trans 'List' %} <i class="fas fa-list"></i></a>
+</li>
+<li class="nav-item">
+  <a class="nav-link {% if show_map %}active{% endif %}" href="?show=map">{% trans 'Map' %} <i class="far fa-map"></i></a>
 </li>
 {% endblock toolbar-items %}
 
@@ -28,6 +41,12 @@
   filter
 </div>
 
+{% if show_map %}
+<div class="container">
+  {{ sites_map }}
+</div>
+{% else %}
 {% include 'selia/components/list.html' with template_name='selia/components/list_items/collection_site.html' item_list=object_list empty_message='empty' %}
+{% endif %}
 
 {% endblock main-content %}

@@ -27,4 +27,8 @@ urlpatterns = [
         'collections/devices/<pk>/',
         collection_detail.CollectionDeviceDetailView.as_view(),
         name='collection_device_detail'),
+    path(
+        'collections/sites/<pk>/',
+        collection_detail.CollectionSiteDetailView.as_view(),
+        name='collection_site_detail'),
 ]

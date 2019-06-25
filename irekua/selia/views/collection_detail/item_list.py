@@ -18,7 +18,7 @@ class CollectionItemsListView(SingleObjectMixin, ListView):
             sampling_event_device__sampling_event__collection=self.object)
         paginator = Paginator(queryset, 10)
 
-        page = self.request.GET.get('page', 10)
+        page = self.request.GET.get('page', 1)
         return paginator.get_page(page)
 
     def get_context_data(self, *args, **kwargs):
