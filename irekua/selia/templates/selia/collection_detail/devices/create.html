@@ -1,0 +1,28 @@
+{% extends 'selia/collection_detail/base.html' %}
+{% load i18n %}
+
+{% block toolbar-title %}{% trans 'Add device to collection' %}{% endblock %}
+
+{% block main-content %}
+<div class="row w-100">
+  <div class="col p-4">
+    <div class="card">
+      <h5 class="card-header">{% trans 'Select from your devices' %}</h5>
+      <div class="card-body w-100 p-0">
+        <h6 class="card-title m-3"><a href="#">{% trans 'Create new device' %}</a></h6>
+        <div class="container m-3">
+          filter
+        </div>
+        <div class="container-fluid w-100 p-0">
+          {% include 'selia/components/list.html' with template_name='selia/components/list_items/devices.html' item_list=device_list %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+
+    </div>
+  </div>
+</div>
+{% endblock main-content %}
