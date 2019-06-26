@@ -3,66 +3,6 @@
 {% load i18n %}
 
 {% block list-item-content %}
-<div id="modal_calendar" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div id="calendar"></div>
-      </div>
-      <div class="modal-footer">
-      </div>
-    </div>
-  </div>
-</div>
-
-  <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
-  <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
-  <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
-  <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
-  <script>
-  $(document).ready(function () {
-  $('#calendar').fullCalendar({
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay,listWeek'
-        },
-        defaultDate: '2018-11-16',
-        navLinks: true,
-        eventLimit: true,
-        events: [{
-            title: 'Front-End Conference',
-            start: '2018-11-16',
-            end: '2018-11-18'
-        },
-        {
-            title: 'Hair stylist with Mike',
-            start: '2018-11-20',
-            allDay: true
-        },
-        {
-            title: 'Car mechanic',
-            start: '2018-11-14T09:00:00',
-            end: '2018-11-14T11:00:00'
-        },
-        {
-            title: 'Dinner with Mike',
-            start: '2018-11-21T19:00:00',
-            end: '2018-11-21T22:00:00'
-        },
-        {
-            title: 'Chillout',
-            start: '2018-11-15',
-            allDay: true
-        },
-        {
-            title: 'Vacation',
-            start: '2018-11-23',
-            end: '2018-11-29'
-        },]
-    });
-  });
-  </script>
   <div class="row w-100">
     <div class="col">
       <div class="media">
@@ -98,9 +38,6 @@
       <div class="row">
         <h6>{% trans 'Ended on' %}</h6>
         <div class="text-muted ml-4">{{ item.ended_on }}</div>
-      </div>
-      <div class="row">
-        <button type="button" class="btn" data-toggle="modal" data-target="#modal_calendar"><i class="fas fa-calendar-week"></i></button>
       </div>
     </div>
 
