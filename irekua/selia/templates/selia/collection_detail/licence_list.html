@@ -1,0 +1,22 @@
+{% extends 'selia/collection_detail/base.html' %}
+{% load i18n %}
+
+{% block main-content %}
+<div class="container-fluid w-100 p-4">
+  <div class="jumbotron w-100">
+    <h4>{% trans 'Licences' %}</h4>
+    <p>
+      {% blocktrans %}
+      Available licences for this collection
+      {% endblocktrans %}
+    </p>
+  </div>
+</div>
+
+<div class="container m-4">
+  filter
+</div>
+
+{% include 'selia/components/list.html' with template_name='selia/components/list_items/licence.html' item_list=object_list empty_message='empty' %}
+
+{% endblock main-content %}
