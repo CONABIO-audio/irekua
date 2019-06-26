@@ -5,7 +5,7 @@ from database.models import CollectionDevice
 
 class CollectionDeviceDetailView(DetailView):
     model = CollectionDevice
-    template_name = 'selia/collection_detail/device_detail.html'
+    template_name = 'selia/collection_detail/devices/detail.html'
 
     def get_context_data(self, *args, **kwargs):
         collection_device = self.object

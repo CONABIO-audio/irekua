@@ -1,11 +1,10 @@
-from django.contrib.postgres.fields import JSONField
 from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models import PointField
+from django.contrib.gis import forms
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from database.utils import empty_JSON
 from database.models import CollectionUser
 from database.models.base import IrekuaModelBaseUser
 from database.utils import translate_doc
@@ -126,3 +125,18 @@ class Site(IrekuaModelBaseUser):
                 return True
 
         return False
+
+    @property
+    def map_widget(self):
+        name = 'point_{}'.format(self.pk)
+        widget = IrekuaMapWidget(attrs={
+            'map_width': '100%',
+            'map_height': '100%',
+            'id': name,
+            'disabled': True})
+
+        return widget.render(name, self.geo_ref)
+
+
+class IrekuaMapWidget(forms.OSMWidget):
+    template_name = 'irekua/components/map_widget.html'

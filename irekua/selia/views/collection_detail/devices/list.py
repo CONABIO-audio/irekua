@@ -5,18 +5,18 @@ from django.core.paginator import Paginator
 from database.models import Collection
 
 
-class CollectionSitesListView(SingleObjectMixin, ListView):
-    template_name = 'selia/collection_detail/site_list.html'
+class CollectionDevicesListView(SingleObjectMixin, ListView):
+    template_name = 'selia/collection_detail/devices/list.html'
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(queryset=Collection.objects.all())
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
-        queryset = self.object.collectionsite_set.all()
+        queryset = self.object.collectiondevice_set.all()
         paginator = Paginator(queryset, 10)
 
-        page = self.request.GET.get('page', 10)
+        page = self.request.GET.get('page', 1)
         return paginator.get_page(page)
 
     def get_context_data(self, *args, **kwargs):

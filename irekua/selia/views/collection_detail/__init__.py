@@ -1,8 +1,11 @@
 from .detail import CollectionDetailView
-from .device_list import CollectionDevicesListView
+
 from .sampling_event_list import CollectionSamplingEventListView
-
 from .item_list import CollectionItemsListView
-from .site_list import CollectionSitesListView
 
-from .device_detail import CollectionDeviceDetailView
+from .devices.list import CollectionDevicesListView
+from .devices.detail import CollectionDeviceDetailView
+from .devices.create import CollectionDeviceCreateView
+
+from .sites.list import CollectionSitesListView
+from .sites.detail import CollectionSiteDetailView

@@ -24,7 +24,15 @@ urlpatterns = [
         collection_detail.CollectionItemsListView.as_view(),
         name='collection_items'),
     path(
-        'collections/devices/<pk>/',
+        'collections/devices/detail/<pk>/',
         collection_detail.CollectionDeviceDetailView.as_view(),
         name='collection_device_detail'),
+    path(
+        'collections/detail/<pk>/devices/add/',
+        collection_detail.CollectionDeviceCreateView.as_view(),
+        name='collection_device_create'),
+    path(
+        'collections/sites/detail/<pk>/',
+        collection_detail.CollectionSiteDetailView.as_view(),
+        name='collection_site_detail'),
 ]
