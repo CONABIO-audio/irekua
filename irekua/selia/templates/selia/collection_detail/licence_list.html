@@ -13,20 +13,9 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
-<div class="container-fluid w-100 p-4">
-  <div class="jumbotron w-100">
-    <h4>{% trans 'Licences' %}</h4>
-    <p>
-      {% blocktrans %}
-      Available licences for this collection
-      {% endblocktrans %}
-    </p>
+  <div class="container-fluid w-100 p-0">
+    {% include 'selia/components/filter.html' with filter_template='selia/components/filters/licence.html' filter=filter %}
   </div>
-</div>
-
-<div class="container m-4">
-  filter
-</div>
 
 {% include 'selia/components/list.html' with template_name='selia/components/list_items/licence.html' item_list=object_list empty_message='empty' %}
 

@@ -13,20 +13,10 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
-<div class="container-fluid w-100 p-4">
-  <div class="jumbotron w-100">
-    <h4>{% trans 'Sampling events' %}</h4>
-    <p>
-      {% blocktrans %}
-      Sampling events registered in the collection
-      {% endblocktrans %}
-    </p>
-  </div>
-</div>
 
-<div class="container m-4">
-  filter
-</div>
+  <div class="container-fluid w-100 p-0">
+    {% include 'selia/components/filter.html' with filter_template='selia/components/filters/sampling_event.html' filter=filter %}
+  </div>
 
 {% include 'selia/components/list.html' with template_name='selia/components/list_items/sampling_event.html' item_list=object_list empty_message='empty' %}
 
