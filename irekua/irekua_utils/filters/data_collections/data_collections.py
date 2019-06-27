@@ -26,6 +26,6 @@ search_fields = (
 
 
 ordering_fields = (
-    ('created_on', _('added on')),
+    ('created_on', _('created on')),
     ('name', _('name'))
 )

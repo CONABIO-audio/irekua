@@ -9,7 +9,7 @@
       </div>
       <div class="col-3">
         {% if search_form %}
-        <div class="row px-4">
+        <div class="row px-4 mt-2">
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i>&nbsp;{% trans 'Search' %}</span>
@@ -18,17 +18,17 @@
           </div>
         </div>
         {% endif %}
-        <div class="row px-2 mt-3">
+        <div class="row px-2 mt-2">
           {% if order_form %}
           <div class="col">
-            <div class="form-group">
+            <div class="form-group mb-0">
               {{ order_form.order|add_class:"btn btn-link text-light m-2"}}
             </div>
           </div>
           {% endif %}
           <div class="col">
-            <button type="submit" class="btn btn-link text-light">{% trans 'Update' %}</button>
-            <a class="btn btn-link text-light" href="?#">{% trans 'Clean' %}</a>
+            <button type="submit" class="btn btn-link text-light">{% trans 'Update' %} <i class="fas fa-sync"></i></button>
+            <a class="btn btn-link text-light" href="?#">{% trans 'Clean' %} <i class="fas fa-eraser"></i></a>
           </div>
         </div>
       </div>
