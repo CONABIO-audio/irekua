@@ -42,18 +42,15 @@
   {% block navbars %}
   {% endblock navbars %}
 
-  <main role="main" class="container-fluid content p-0 h-100">
+  <main role="main" class="container-fluid scroll p-0 h-100">
     {% block content %}
-      <!-- Page Content -->
-      <div class="container-fluid scroll">
-        {% block main-content %}
-        {% endblock main-content %}
+      {% block main-content %}
+      {% endblock main-content %}
 
-        {% block footer %}
-        {% include 'irekua/components/footer.html' %}
-        {% endblock footer %}
-      </div>
-      {% endblock content %}
+      {% block footer %}
+      {% include 'irekua/components/footer.html' %}
+      {% endblock footer %}
+    {% endblock content %}
   </main>
 
   <!-- Modals -->

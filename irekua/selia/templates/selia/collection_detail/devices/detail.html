@@ -25,4 +25,6 @@
 
 {% block modals-extra %}
   {% include 'selia/components/help.html' with help_template='selia/components/help/collection_device_detail.html' %}
+  {% include 'selia/components/update.html' with update_template='selia/components/update/collection_device.html' form=update_form %}
+  {% include 'selia/components/delete.html' %}
 {% endblock modals-extra %}

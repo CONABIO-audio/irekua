@@ -10,6 +10,7 @@ from irekua_utils.filters.data_collections import collection_sites
 
 class CollectionSitesListView(SeliaListView, SingleObjectMixin):
     template_name = 'selia/collection_detail/sites/list.html'
+
     filter_class = collection_sites.Filter
     search_fields = collection_sites.search_fields
     ordering_fields = collection_sites.ordering_fields

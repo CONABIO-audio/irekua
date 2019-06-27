@@ -1,6 +1,20 @@
+{% load i18n %}
+
 <div class="card shadow-sm">
   <div class="card-img-top w-100" style="height: var(--card-head); background-color: var(--detail-color);"></div>
   <div class="card-body">
     {% include detail_template with object=object %}
+  </div>
+  <div class="card-footer">
+    {% if True %}
+    <button type="button" class="btn btn-link text-primary" data-toggle="modal" data-target="#changeModal">
+      {% trans 'Change' %}
+    </button>
+    {% endif %}
+    {% if True %}
+    <button type="button" class="btn btn-link text-danger" data-toggle="modal" data-target="#deleteModal">
+      {% trans 'Delete '%}
+    </button>
+    {% endif %}
   </div>
 </div>

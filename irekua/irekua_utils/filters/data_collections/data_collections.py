@@ -17,6 +17,7 @@ class Filter(FilterSet):
             'is_open',
         ]
 
+
 search_fields = (
     'name',
     'collection_type__name',

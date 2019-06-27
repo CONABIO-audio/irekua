@@ -7,6 +7,7 @@ from irekua_utils.filters.data_collections import data_collections
 
 class OpenCollectionsView(SeliaListView):
     template_name = 'selia/collections/open.html'
+
     filter_class = data_collections.Filter
     search_fields = data_collections.search_fields
     ordering_fields = data_collections.ordering_fields
