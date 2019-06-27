@@ -21,7 +21,7 @@
 {% endblock navbar-brand %}
 
 {% block navbar-items %}
-{% url 'selia:sampling_event_device_detail' sampling_event_device.collection_device.pk as detail_url %}
+{% url 'selia:sampling_event_device_detail' sampling_event_device.pk as detail_url %}
 <li class="nav-item">
   {% if detail_url == request.path|urlencode %}
   <a class="nav-link active" href={{ detail_url }}>
