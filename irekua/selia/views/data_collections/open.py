@@ -1,15 +1,16 @@
-from django.views.generic import ListView
-from django.core.paginator import Paginator
 from database.models import Collection
 
+from selia.views.utils import SeliaListView
 
-class OpenCollectionsView(ListView):
+from irekua_utils.filters.data_collections import data_collections
+
+
+class OpenCollectionsView(SeliaListView):
     template_name = 'selia/collections/open.html'
-    context_object_name = 'collection_list'
 
-    def get_queryset(self):
-        queryset = Collection.objects.filter(is_open=True)
-        paginator = Paginator(queryset, 10)
+    filter_class = data_collections.Filter
+    search_fields = data_collections.search_fields
+    ordering_fields = data_collections.ordering_fields
 
-        page = self.request.GET.get('page', 10)
-        return paginator.get_page(page)
+    def get_initial_queryset(self):
+        return Collection.objects.filter(is_open=True)

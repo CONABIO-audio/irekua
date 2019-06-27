@@ -15,7 +15,7 @@
   <a class="nav-link" href="#">{% trans 'Download summary' %} <i class="fas fa-download"></i></a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="#">{% trans 'Help' %} <i class="fas fa-question"></i></a>
+  {% include 'selia/components/help_button.html' %}
 </li>
 {% endblock toolbar-items %}
 
@@ -36,3 +36,7 @@
   </div>
 </div>
 {% endblock main-content %}
+
+{% block modals-extra %}
+  {% include 'selia/components/help.html' with help_template='selia/components/help/collection_site_detail.html' %}
+{% endblock modals-extra %}

@@ -1,0 +1,85 @@
+{% load i18n %}
+
+<h5 class="card-title">{% trans 'Summary' %}</h5>
+<div class="media text-muted pt-3">
+  <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+    <strong class="d-block text-gray-dark">{% trans 'Collections' %}</strong>
+    <div class="row">
+      <div class="col-3">
+        {% trans 'Number' %}: {{ user_collections }}
+      </div>
+      <div class="col-8">
+        {% trans 'Last added' %}: {{ latest_collection }}
+      </div>
+      <div class="col-1">
+        <a href="#">{% trans 'see' %}</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="media text-muted pt-3">
+  <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+    <strong class="d-block text-gray-dark">{% trans 'Sites' %}</strong>
+    <div class="row">
+      <div class="col-3">
+        {% trans 'Number' %}: {{ user_sites }}
+      </div>
+      <div class="col-8">
+        {% trans 'Last added on' %}: {{ latest_site }}
+      </div>
+      <div class="col-1">
+        <a href="#">{% trans 'see' %}</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="media text-muted pt-3">
+  <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+    <strong class="d-block text-gray-dark">{% trans 'Devices' %}</strong>
+    <div class="row">
+      <div class="col-3">
+        {% trans 'Number' %}: {{ user_devices }}
+      </div>
+      <div class="col-8">
+        {% trans 'Last added on' %}: {{ latest_device }}
+      </div>
+      <div class="col-1">
+        <a href="#">{% trans 'see' %}</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="media text-muted pt-3">
+  <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+    <strong class="d-block text-gray-dark">{% trans 'Sampling events' %}</strong>
+    <div class="row">
+      <div class="col-3">
+        {% trans 'Number' %}: {{ user_sampling_events }}
+      </div>
+      <div class="col-8">
+        {% trans 'Last added on' %}: {{ latest_sampling_event }}
+      </div>
+      <div class="col-1">
+        <a href="#">{% trans 'see' %}</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="media text-muted pt-3">
+  <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+    <strong class="d-block text-gray-dark">{% trans 'Items' %}</strong>
+    <div class="row">
+      <div class="col-3">
+        {% trans 'Number' %}: {{ user_items }}
+      </div>
+      <div class="col-8">
+        {% trans 'Last added on' %}: {{ latest_item }}
+      </div>
+      <div class="col-1">
+        <a href="#">{% trans 'see' %}</a>
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+<a href='#' class="card-link float-right">{% trans 'Download summary' %}</a>

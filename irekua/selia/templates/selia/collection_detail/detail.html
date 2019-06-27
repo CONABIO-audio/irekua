@@ -2,24 +2,30 @@
 {% load i18n %}
 
 {% block toolbar-items %}
-<li class="nav-item">
-  <a class="nav-link" href="#">{% trans 'Add items' %} <i class="fas fa-plus"></i> <i class="far fa-file"></i></a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="#">{% trans 'Download summary' %} <i class="fas fa-download"></i></a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="#">{% trans 'Help' %} <i class="fas fa-question"></i></a>
-</li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">{% trans 'Add items' %} <i class="fas fa-plus"></i> <i class="far fa-file"></i></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">{% trans 'Download summary' %} <i class="fas fa-download"></i></a>
+  </li>
+  <li class="nav-item">
+    {% include 'selia/components/help_button.html' %}
+  </li>
 {% endblock toolbar-items %}
 
 {% block main-content %}
-<div class="row p-5">
-  <div class="col-6">
-    {% include 'selia/components/detail.html' with detail_template='selia/components/details/collection.html' object=collection %}
+  <div class="row p-5">
+    <div class="col-6">
+      {% include 'selia/components/detail.html' with detail_template='selia/components/details/collection.html' object=collection %}
+    </div>
+    <div class="col-6">
+      {% include 'selia/components/summary.html' with summary_template='selia/components/summaries/collection.html' object=collection %}
+    </div>
   </div>
-  <div class="col-6">
-    {% include 'selia/components/summary.html' with summary_template='selia/components/summaries/collection.html' object=collection %}
-  </div>
-</div>
 {% endblock main-content %}
+
+{% block modals-extra %}
+  {% include 'selia/components/help.html' with help_template='selia/components/help/collection_detail.html' %}
+  {% include 'selia/components/update.html' with update_template='selia/components/update/collection.html' form=update_form %}
+  {% include 'selia/components/delete.html' %}
+{% endblock modals-extra %}

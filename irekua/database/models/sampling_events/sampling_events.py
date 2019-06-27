@@ -127,6 +127,4 @@ class SamplingEvent(IrekuaModelBaseUser):
             except ValidationError as error:
                 raise ValidationError({'licence': error})
 
-        # TODO: Add user validation
-
         super(SamplingEvent, self).clean()

@@ -4,30 +4,22 @@
 {% block toolbar-title %}{% trans 'Collection Devices' %}{% endblock %}
 
 {% block toolbar-items %}
-<li class="nav-item">
-  <a class="nav-link" href="{% url 'selia:collection_device_create' collection.pk %}?">{% trans 'Add Device' %} <i class="fas fa-plus"></i> <i class="fas fa-tools"></i></a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="#">{% trans 'Help' %} <i class="fas fa-question"></i></a>
-</li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'selia:collection_device_create' collection.pk %}?">{% trans 'Add Device' %} <i class="fas fa-plus"></i> <i class="fas fa-tools"></i></a>
+  </li>
+  <li class="nav-item">
+    {% include 'selia/components/help_button.html' %}
+  </li>
 {% endblock toolbar-items %}
 
 {% block main-content %}
-<div class="container-fluid w-100 p-4">
-  <div class="jumbotron w-100">
-    <h4>{% trans 'Collection Devices' %}</h4>
-    <p>
-      {% blocktrans %}
-      Devices registered in the collection
-      {% endblocktrans %}
-    </p>
+  <div class="container-fluid w-100 p-0">
+    {% include 'selia/components/filter.html' with filter_template='selia/components/filters/collection_devices.html' filter=filter %}
   </div>
-</div>
 
-<div class="container m-4">
-  filter
-</div>
-
-{% include 'selia/components/list.html' with template_name='selia/components/list_items/collection_device.html' item_list=object_list empty_message='empty' %}
-
+  {% include 'selia/components/list.html' with template_name='selia/components/list_items/collection_device.html' item_list=object_list empty_message=empty_message %}
 {% endblock main-content %}
+
+{% block modals-extra %}
+  {% include 'selia/components/help.html' with help_template='selia/components/help/collection_devices.html' %}
+{% endblock modals-extra %}

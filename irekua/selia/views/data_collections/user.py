@@ -1,15 +1,14 @@
-from django.views.generic import ListView
-from django.core.paginator import Paginator
+from selia.views.utils import SeliaListView
+from irekua_utils.filters.data_collections import data_collections
+
 from database.models import Collection
 
 
-class UserCollectionsView(ListView):
+class UserCollectionsView(SeliaListView):
     template_name = 'selia/collections/user.html'
-    context_object_name = 'collection_list'
+    filter_class = data_collections.Filter
+    search_fields = data_collections.search_fields
+    ordering_fields = data_collections.ordering_fields
 
-    def get_queryset(self):
-        queryset = Collection.objects.filter(is_open=True)
-        paginator = Paginator(queryset, 10)
-
-        page = self.request.GET.get('page', 1)
-        return paginator.get_page(page)
+    def get_initial_queryset(self):
+        return self.request.user.collection_users.all()
