@@ -64,7 +64,7 @@ INSTALLED_APPS = [
     'database',
     'registration',
     'irekua',
-    'permissions',
+    'irekua_utils',
     'file_handler',
 ]
 

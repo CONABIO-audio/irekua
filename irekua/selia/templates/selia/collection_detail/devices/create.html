@@ -1,28 +1,104 @@
 {% extends 'selia/collection_detail/base.html' %}
 {% load i18n %}
+{% load widget_tweaks %}
 
 {% block toolbar-title %}{% trans 'Add device to collection' %}{% endblock %}
 
+{% block toolbar-items %}
+<li class="nav-item">
+  <a class="nav-link" href={% url 'selia:collection_devices' collection.pk %}>{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
+</li>
+{% endblock %}
+
 {% block main-content %}
-<div class="row w-100">
-  <div class="col p-4">
-    <div class="card">
-      <h5 class="card-header">{% trans 'Select from your devices' %}</h5>
-      <div class="card-body w-100 p-0">
-        <h6 class="card-title m-3"><a href="#">{% trans 'Create new device' %}</a></h6>
-        <div class="container m-3">
-          filter
-        </div>
-        <div class="container-fluid w-100 p-0">
-          {% include 'selia/components/list.html' with template_name='selia/components/list_items/devices.html' item_list=device_list %}
-        </div>
+<div class="container-fluid w-100 p-0">
+  <div class="jumbotron m-4">
+    <h1 class="display-4">{%trans 'Part' %} 1 / 2</h1>
+    <p>{% blocktrans %}
+      Please select one of your devices to register to the collection or
+      {% endblocktrans %} <a href="#"><i class="fas fa-plus"></i> {% trans 'register new device' %}</a>.
+    </p>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar"style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+  <div class="container m-3">
+    filter
+  </div>
+  <div class="container-fluid w-100 p-0">
+    <div class="w-100 bg-light p-4 list-group mb-4">
+      {% for item in device_list %}
+      {% if item.pk == request.GET.device %}
+      <a class="stretched-link btn btn-primary" href="?device={{ item.pk }}#devices">
+      {% else %}
+      <a class="stretched-link btn" href="?device={{ item.pk }}#devices">
+      {% endif %}
+      {% include 'selia/components/select_list_items/devices.html' with item=item %}
+      </a>
+      {% empty %}
+      <div class="container-fluid bg-light text-center">
+          <h4>{% trans 'All user devices are registered in the collection' %}</h4>
+          <p><a href="#"><i class="fas fa-plus"></i> {% trans 'register new device' %}</a></p>
+      </div>
+      {% endfor %}
+
+      <div class="container center w-100 p-4">
+        {% include 'selia/components/pagination.html' with list=item_list %}
       </div>
     </div>
   </div>
-  <div class="col">
-    <div class="card">
+</div>
 
+{% if request.GET.device %}
+<div class="container-fluid w-100" id="devices">
+  <div class="jumbotron m-4">
+    <h1 class="display-4">{%trans 'Part' %} 2 / 2</h1>
+    <p>{% blocktrans %}
+      Fill out the following form
+      {% endblocktrans %}
+    </p>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+<div class="container-fluid h-100 m-4 ">
+  <div class="row h-100">
+    <div class="col">
+      <h4>{% trans 'Selected device' %}</h4>
+      {% include 'selia/components/select_list_items/devices.html' with item=selected_device %}
+    </div>
+    <div class="col">
+      <form action="?device={{ request.GET.device }}#" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.internal_id.errors }}
+          <label for="internalidInput">{{ form.internal_id.label_tag }}</label>
+          {{ form.internal_id|add_class:"form-control" }}
+          <small id="emailHelp" class="form-text text-muted">{{ form.internal_id.help_text|safe }} </small>
+        </div>
+
+        <div class="collapse">
+          <div class="form-group">
+            {{ form.collection.errors }}
+            <label for="internalidInput">{{ form.collection.label_tag }}</label>
+            {{ form.collection|add_class:"form-control" }}
+            <small id="emailHelp" class="form-text text-muted">{{ form.collection.help_text|safe }} </small>
+          </div>
+
+          <div class="form-group">
+            {{ form.physical_device.errors }}
+            <label for="internalidInput">{{ form.physical_device.label_tag }}</label>
+            {{ form.physical_device | add_class:"form-control" }}
+            <small id="emailHelp" class="form-text text-muted">{{ form.physical_device.help_text|safe }} </small>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">{% trans 'Register' %}</button>
+        <a class="btn btn-danger" href="#">{% trans 'Cancel' %}</a>
+      </form>
     </div>
   </div>
 </div>
+</div>
+{% endif %}
 {% endblock main-content %}

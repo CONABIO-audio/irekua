@@ -12,7 +12,7 @@
   <a class="nav-link" href="#">{% trans 'Add Site' %} <i class="fas fa-plus"></i> <i class="fas fa-map-marked-alt"></i></a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="#">{% trans 'Help' %} <i class="fas fa-question"></i></a>
+  {% include 'selia/components/help_button.html' %}
 </li>
 <li class="nav-item ml-5">
   <a class="nav-link {% if not show_map %}active{% endif %}" href="?show=list">{% trans 'List' %} <i class="fas fa-list"></i></a>
@@ -23,27 +23,19 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
-<div class="container-fluid w-100 p-4">
-  <div class="jumbotron w-100">
-    <h4>{% trans 'Collection Sites' %}</h4>
-    <p>
-      {% blocktrans %}
-      Sites declared in the collection
-      {% endblocktrans %}
-    </p>
+  <div class="container-fluid w-100 p-0">
+    {% include 'selia/components/filter.html' with filter_template='selia/components/filters/collection_sites.html' filter=filter %}
   </div>
-</div>
 
-<div class="container m-4">
-  filter
-</div>
-
-{% if show_map %}
-<div class="container">
-  {{ sites_map }}
-</div>
-{% else %}
-{% include 'selia/components/list.html' with template_name='selia/components/list_items/collection_site.html' item_list=object_list empty_message='empty' %}
-{% endif %}
-
+  {% if show_map %}
+  <div class="container">
+    {{ sites_map }}
+  </div>
+  {% else %}
+  {% include 'selia/components/list.html' with template_name='selia/components/list_items/collection_site.html' item_list=object_list empty_message=empty_message %}
+  {% endif %}
 {% endblock main-content %}
+
+{% block modals-extra %}
+  {% include 'selia/components/help.html' with help_template='selia/components/help/collection_sites.html' %}
+{% endblock modals-extra %}

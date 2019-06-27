@@ -7,7 +7,7 @@
   <div class="col">
     <div class="media">
       {% if item.physical_device.device.brand.logo %}
-      <img class="mr-3 img-thumbnail" src="{{ item.physical_device.device.brand.logo.url }}" alt="logo">
+      <img class="img-thumbnail mr-4" src="{{ item.physical_device.device.brand.logo.url }}" alt="logo" style="max-height: 100px; max-width: 100px; object-fit: contain;">
       {% endif %}
       <div class="media-body mt-0">
         <h4 class="mt-0">{{ item.physical_device.device.brand }}</h4>
