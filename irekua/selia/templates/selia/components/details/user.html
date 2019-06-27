@@ -1,0 +1,40 @@
+{% load i18n %}
+
+<h5 class="card-title">{% trans 'Profile' %}</h5>
+<div class="media text-muted pt-3">
+  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+    <strong class="d-block text-gray-dark">{% trans 'Username' %}</strong>
+    {{ object.username }}
+  </p>
+</div>
+<div class="media text-muted pt-3">
+  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+    <strong class="d-block text-gray-dark">{% trans 'First name' %}</strong>
+    {{ object.first_name }}
+  </p>
+</div>
+<div class="media text-muted pt-3">
+  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+    <strong class="d-block text-gray-dark">{% trans 'Last name' %}</strong>
+    {{ object.last_name }}
+  </p>
+</div>
+<div class="media text-muted pt-3">
+  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+    <strong class="d-block text-gray-dark">{% trans 'Email' %}</strong>
+    {{ object.email }}
+  </p>
+</div>
+<div class="media text-muted pt-3">
+  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+    <strong class="d-block text-gray-dark">{% trans 'Institution' %}</strong>
+    {% if object.institution is not None %}
+    {{ object.institution }}
+    {% else %}
+    -
+    {% endif %}
+  </p>
+</div>
+<button type="button" class="btn btn-link card-link float-right" data-toggle="modal" data-target="#modifyUserInfo">
+  {% trans 'Modify' %}
+</button>
