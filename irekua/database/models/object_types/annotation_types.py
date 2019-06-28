@@ -25,7 +25,7 @@ class AnnotationType(IrekuaModelBase):
         db_column='annotation_schema',
         verbose_name=_('annotation schema'),
         help_text=_('JSON Schema for annotation info'),
-        blank=False,
+        blank=True,
         null=False,
         default=simple_JSON_schema,
         validators=[validate_JSON_schema])

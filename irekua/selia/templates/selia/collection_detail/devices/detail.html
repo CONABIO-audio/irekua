@@ -1,30 +1,40 @@
 {% extends 'selia/collection_detail/base.html' %}
 {% load i18n %}
+{% load selia_components %}
+{% load selia_buttons %}
+
+{% block head-extra %}
+  {% include 'selia/components/media/json_form_media.html' %}
+{% endblock head-extra %}
 
 {% block toolbar-title %}Collection device {{ object.pk }}{% endblock %}
 
 {% block toolbar-items %}
-<li class="nav-item">
-  <a class="nav-link" href="#">{% trans 'Download summary' %} <i class="fas fa-download"></i></a>
-</li>
-<li class="nav-item">
-  {% include 'selia/components/help_button.html' %}
-</li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">{% trans 'Download summary' %} <i class="fas fa-download"></i></a>
+  </li>
+  <li class="nav-item">
+    {% help_button %}
+  </li>
 {% endblock toolbar-items %}
 
 {% block main-content %}
   <div class="row p-5">
     <div class="col-6">
-      {% include 'selia/components/detail.html' with detail_template='selia/components/details/collection_device.html' object=object %}
+      {% detail_component detail_template=detail_template object=object %}
     </div>
     <div class="col-6">
-      {% include 'selia/components/summary.html' with summary_template='selia/components/summaries/collection_device.html' object=object %}
+      {% summary_component summary_template=summary_template object=object %}
     </div>
   </div>
 {% endblock main-content %}
 
 {% block modals-extra %}
-  {% include 'selia/components/help.html' with help_template='selia/components/help/collection_device_detail.html' %}
-  {% include 'selia/components/update.html' with update_template='selia/components/update/collection_device.html' form=update_form %}
-  {% include 'selia/components/delete.html' %}
+  {% help_component help_template=help_template %}
+  {% if permissions.change %}
+    {% update_component update_template=update_form_template form=form %}
+  {% endif %}
+  {% if permissions.delete %}
+    {% delete_component object=object %}
+  {% endif %}
 {% endblock modals-extra %}

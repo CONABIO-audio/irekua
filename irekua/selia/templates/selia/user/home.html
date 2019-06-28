@@ -1,55 +1,38 @@
 {% extends 'selia/user/base.html' %}
-{% load crispy_forms_tags %}
 {% load i18n %}
+{% load selia_components %}
+{% load selia_buttons %}
 
 
 {% block toolbar-items %}
-<li class="navbar-item ">
-  <button type="button" class="btn btn-link">{% trans "Download Summary" %} <i class="fas fa-file-download"></i></button>
-</li>
-<li class="navbar-item ">
-  {% include 'selia/components/help_button.html' %}
-</li>
+  <li class="navbar-item ">
+    <button type="button" class="btn btn-link">{% trans "Download Summary" %} <i class="fas fa-file-download"></i></button>
+  </li>
+  <li class="navbar-item ">
+    {% help_button %}
+  </li>
 {% endblock toolbar-items %}
 
 
 {% block main-content %}
-<div class="container pl-3 pr-3">
-    <div class="row mt-4 mb-5">
-      <div class="col-3">
-        {% include 'selia/components/detail.html' with detail_template='selia/components/details/user.html' object=user %}
+  <div class="container pl-3 pr-3">
+      <div class="row mt-4 mb-5">
+        <div class="col-3">
+          {% detail_component detail_template=detail_template object=user %}
+        </div>
+        <div class="col-9">
+          {% summary_component summary_template=summary_template object=object %}
+        </div>
       </div>
-      <div class="col-9">
-        {% include 'selia/components/summary.html' with summary_template='selia/components/summaries/user.html'%}
-      </div>
-    </div>
-</div>
+  </div>
 {% endblock main-content %}
 
 {% block modals-extra %}
-<!-- User Info Modal -->
-<div class="modal fade" id="modifyUserInfo" tabindex="-1" role="dialog" aria-labelledby="modifyUserInfoLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modifyUserInfoLabel">Información de Usuario</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="post" action={% url 'selia:user_home' %}>
-        {% csrf_token %}
-        <div class="modal-body">
-            {{ user_form | crispy }}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <input type="submit" class="btn btn-primary" value="Guardar Cambios">
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-{% include 'selia/components/help.html' with help_template='selia/components/help/user_detail.html' %}
+  {% help_component help_template=help_template %}
+  {% if permissions.change %}
+    {% update_component update_template=update_form_template form=form %}
+  {% endif %}
+  {% if permissions.delete %}
+    {% delete_component object=object %}
+  {% endif %}
 {% endblock modals-extra %}

@@ -1,0 +1,16 @@
+{% extends 'irekua/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head-extra %}
+{% include 'selia/components/metadata_media.html' %}
+{% endblock head-extra %}
+
+{% block main-content %}
+<div class="container p-5">
+  <form action="#" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input class="btn btn-primary" type="submit" value="Submit" id="formSubmit">
+  </form>
+</div>
+{% endblock main-content %}

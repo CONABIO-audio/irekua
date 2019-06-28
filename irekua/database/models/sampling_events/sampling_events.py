@@ -71,7 +71,7 @@ class SamplingEvent(IrekuaModelBaseUser):
         verbose_name = _('Sampling Event')
         verbose_name_plural = _('Sampling Events')
 
-        ordering = ['-started_on']
+        ordering = ['-created_on']
 
     def __str__(self):
         msg = _('Sampling event %(id)s on site %(site)s: %(start)s - %(end)s')

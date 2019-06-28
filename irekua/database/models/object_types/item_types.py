@@ -36,7 +36,7 @@ class ItemType(IrekuaModelBase):
         db_column='media_info_schema',
         verbose_name=_('media info schema'),
         help_text=_('JSON Schema for item type media info'),
-        blank=False,
+        blank=True,
         null=False,
         default=simple_JSON_schema,
         validators=[validate_JSON_schema])

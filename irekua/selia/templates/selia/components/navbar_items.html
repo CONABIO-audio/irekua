@@ -22,9 +22,9 @@
 {% url 'selia:user_home' as user_home %}
 <li class="nav-item">
   {% if user_home in request.path %}
-  <a class="nav-link active" href={{ user_home|urlencode }}>{% trans "Home" %}</a>
+  <a class="nav-link active" href={{ user_home|urlencode }}>{% trans "User Home" %}</a>
   {% else %}
-  <a class="nav-link" href={{ user_home|urlencode }}>{% trans "Home" %}</a>
+  <a class="nav-link" href={{ user_home|urlencode }}>{% trans "User Home" %}</a>
   {% endif %}
 </li>
 {% endif %}

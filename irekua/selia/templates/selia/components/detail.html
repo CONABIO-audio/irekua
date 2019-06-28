@@ -6,12 +6,12 @@
     {% include detail_template with object=object %}
   </div>
   <div class="card-footer">
-    {% if True %}
+    {% if permissions.change %}
     <button type="button" class="btn btn-link text-primary" data-toggle="modal" data-target="#changeModal">
       {% trans 'Change' %}
     </button>
     {% endif %}
-    {% if True %}
+    {% if permissions.delete %}
     <button type="button" class="btn btn-link text-danger" data-toggle="modal" data-target="#deleteModal">
       {% trans 'Delete '%}
     </button>

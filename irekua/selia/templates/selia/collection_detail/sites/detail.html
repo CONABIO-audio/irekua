@@ -1,42 +1,48 @@
 {% extends 'selia/collection_detail/base.html' %}
 {% load i18n %}
+{% load selia_components %}
+{% load selia_buttons %}
 
 {% block head-extra %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.5/ol.css" type="text/css" media="all" rel="stylesheet">
-<link href="/static/gis/css/ol3.css" type="text/css" media="all" rel="stylesheet">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.5/ol.js"></script>
-<script type="text/javascript" src="/static/gis/js/OLMapWidget.js"></script>
+  {% include 'selia/components/map_media.html' %}
+  {% include 'selia/components/media/json_form_media.html' %}
 {% endblock head-extra %}
 
 {% block toolbar-title %}Collection site {{ object.pk }}{% endblock %}
 
 {% block toolbar-items %}
-<li class="nav-item">
-  <a class="nav-link" href="#">{% trans 'Download summary' %} <i class="fas fa-download"></i></a>
-</li>
-<li class="nav-item">
-  {% include 'selia/components/help_button.html' %}
-</li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">{% trans 'Download summary' %} <i class="fas fa-download"></i></a>
+  </li>
+  <li class="nav-item">
+    {% help_button %}
+  </li>
 {% endblock toolbar-items %}
 
 {% block main-content %}
-<div class="row p-5 w-100">
-  <div class="col">
-    {% include 'selia/components/detail.html' with detail_template='selia/components/details/collection_site.html' object=object %}
-  </div>
-  <div class="col">
-    <div class="row w-100 mb-3" style="height: 300px;">
-      <div class="card shadow-sm w-100 h-100">
-        {{ object.site.map_widget }}
+  <div class="row p-5 w-100">
+    <div class="col">
+      {% detail_component detail_template=detail_template object=object %}
+    </div>
+    <div class="col">
+      <div class="row w-100 mb-3" style="height: 300px;">
+        <div class="card shadow-sm w-100 h-100">
+          {{ object.site.map_widget }}
+        </div>
+      </div>
+      <div class="row w-100">
+        {% summary_component with summary_template=summary_template object=object %}
       </div>
     </div>
-    <div class="row w-100">
-      {% include 'selia/components/summary.html' with summary_template='selia/components/summaries/collection_site.html' object=object %}
-    </div>
   </div>
-</div>
 {% endblock main-content %}
 
 {% block modals-extra %}
-  {% include 'selia/components/help.html' with help_template='selia/components/help/collection_site_detail.html' %}
+  {% help_component help_template=help_template %}
+  {% if permissions.change %}
+    {% update_component update_template=update_form_template form=form %}
+  {% endif %}
+  {% if permissions.delete %}
+    {% delete_component object=object %}
+  {% endif %}
 {% endblock modals-extra %}

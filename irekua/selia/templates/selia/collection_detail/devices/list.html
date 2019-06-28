@@ -1,5 +1,7 @@
 {% extends 'selia/collection_detail/base.html' %}
 {% load i18n %}
+{% load selia_components %}
+{% load selia_buttons %}
 
 {% block toolbar-title %}{% trans 'Collection Devices' %}{% endblock %}
 
@@ -8,18 +10,18 @@
     <a class="nav-link" href="{% url 'selia:collection_device_create' collection.pk %}?">{% trans 'Add Device' %} <i class="fas fa-plus"></i> <i class="fas fa-tools"></i></a>
   </li>
   <li class="nav-item">
-    {% include 'selia/components/help_button.html' %}
+    {% help_button %}
   </li>
 {% endblock toolbar-items %}
 
 {% block main-content %}
   <div class="container-fluid w-100 p-0">
-    {% include 'selia/components/filter.html' with filter_template='selia/components/filters/collection_devices.html' filter=filter %}
+    {% filter_component filter_template=filter_form_template filter=filter %}
   </div>
 
-  {% include 'selia/components/list.html' with template_name='selia/components/list_items/collection_device.html' item_list=object_list empty_message=empty_message %}
+  {% list_component template_name=list_item_template item_list=object_list empty_message=empty_message %}
 {% endblock main-content %}
 
 {% block modals-extra %}
-  {% include 'selia/components/help.html' with help_template='selia/components/help/collection_devices.html' %}
+  {% help_component help_template=help_template %}
 {% endblock modals-extra %}

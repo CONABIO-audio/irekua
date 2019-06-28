@@ -1,0 +1,58 @@
+{% extends 'selia/components/list_item.html' %}
+{% load selia_buttons %}
+{% load static %}
+{% load i18n %}
+
+{% block list-item-content %}
+  <div class="row w-100">
+    <div class="col">
+      <div class="media">
+        {% if item.device.brand.logo %}
+        <img class="img-thumbnail mr-4" src="{{ item.device.brand.logo.url }}" alt="logo" style="max-height: 100px; max-width: 100px; object-fit: contain;">
+        {% endif %}
+        <div class="media-body mt-0">
+          <h4 class="mt-0">{{ item.device.brand }}</h4>
+          <div class="text-muted">{{ item.device.model }}</div>
+          <div class="text-muted"><a href="{% url 'selia:user_device_detail' item.pk %}">{% enter_button %}</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-2 mx-5">
+      <div class="row d-flex justify-content-between">
+        <h6>{% trans 'Device type' %}</h6>
+        <div class="text-muted ml-4">{{ item.device.device_type }}</div>
+      </div>
+      <div class="row d-flex justify-content-between">
+        <h6>{% trans 'Identifier' %}</h6>
+        <div class="text-muted ml-4">{{ item.device.identifier }}</div>
+      </div>
+      <div class="row d-flex justify-content-between">
+        <h6>{% trans 'Serial Number' %}</h6>
+        <div class="text-muted ml-4">{{ item.serial_number }}</div>
+      </div>
+    </div>
+
+    <div class="col-2 mx-5">
+      <div class="row d-flex justify-content-between">
+        <h6>{% trans 'Added on' %}</h6>
+        <div class="text-muted ml-4">{{ item.created_on.date }}</div>
+      </div>
+      <div class="row d-flex justify-content-between">
+        <h6>{% trans 'Bundle' %}</h6>
+        <div class="text-muted ml-4">{{ item.bundle }}</div>
+      </div>
+    </div>
+
+    <div class="col-2 mx-5">
+      <div class="row d-flex justify-content-between">
+        <h6>{% trans 'Items captured' %}</h6>
+        <div class="text-muted ml-4">{{ item.items.count }}</div>
+      </div>
+      <div class="row d-flex justify-content-between">
+        <h6>{% trans 'Sampling events' %}</h6>
+        <div class="text-muted ml-4">{{ item.sampling_events.count }}</div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

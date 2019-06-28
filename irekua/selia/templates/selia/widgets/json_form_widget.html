@@ -1,0 +1,44 @@
+<!-- <p>{{ widget.attrs.schema }}</p> -->
+<input class="collapse" type="text" name="metadata" value="" id="metadata_input_{{ id }}">
+<div class="container-fluid h-100 w-100" id="metadata_container_{{ id }}">
+</div>
+
+<script type="text/javascript">
+  var Form = JSONSchemaForm.default;
+  var schema = {{ widget.attrs.schema|safe }};
+  var value = {{ widget.value|safe }};
+  var inputElement = document.getElementById("metadata_input_{{ id }}");
+
+  var onChange = ({ formData }) => {
+    inputElement.value = JSON.stringify(formData);
+  };
+
+  var formRef;
+  var registerRef = (form) => {formRef = form;}
+
+  window.onload = () => {
+    update = React.createElement('button', {className: "collapse"}, 'Update');
+    var jsonForm = React.createElement(Form, {
+        schema: schema,
+        onChange: onChange,
+        formData: value,
+        ref: registerRef,
+        liveValidate: true,
+      }, [ update ])
+
+    ReactDOM.render(
+      jsonForm,
+      document.getElementById('metadata_container_{{ id }}')
+    );
+
+    var submitButton = document.getElementById("formSubmit")
+
+    submitButton.onclick = (event) => {
+      formRef.submit();
+
+      if (formRef.state.errors.length !== 0) {
+        event.preventDefault();
+      }
+    }
+  }
+</script>

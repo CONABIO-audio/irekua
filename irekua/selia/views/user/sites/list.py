@@ -7,7 +7,11 @@ from selia.views.utils import SeliaListView
 
 
 class UserSitesListView(SeliaListView):
-    template_name = 'selia/user/site_list.html'
+    template_name = 'selia/user/sites/list.html'
+    list_item_template = 'selia/components/list_items/site.html'
+    help_template = 'selia/components/help/user_sites.html'
+    filter_form_template = 'selia/components/filters/sites.html'
+
     empty_message = _('User has no registered sites')
     filter_class = sites.Filter
     search_fields = sites.search_fields

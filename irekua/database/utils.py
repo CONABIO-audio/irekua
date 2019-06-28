@@ -9,11 +9,7 @@ GENERIC_SAMPLING_EVENT = _('generic sampling event')
 GENERIC_SITE = _('generic site')
 GENERIC_COLLECTION = _('generic collection')
 
-SIMPLE_JSON_SCHEMA = {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "title": _("Free JSON Schema")
-}
+SIMPLE_JSON_SCHEMA = {}
 
 
 def validate_JSON_schema(schema):

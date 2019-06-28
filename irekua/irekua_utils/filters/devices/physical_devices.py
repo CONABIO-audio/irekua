@@ -13,11 +13,13 @@ class Filter(FilterSet):
             'device__model': ['exact', 'contains'],
             'bundle': ['exact'],
             'created_on': ['gt', 'lt'],
+            'identifier': ['exact', 'contains'],
         }
 
 search_fields = (
     'device__brand__name',
     'device__model',
+    'identifier',
 )
 
 

@@ -5,9 +5,18 @@ from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
 from database.models.base import IrekuaModelBaseUser
+from database.models.items.items import Item
+from database.models.sampling_events.sampling_event_devices import SamplingEventDevice
 
 
 class PhysicalDevice(IrekuaModelBaseUser):
+    identifier = models.CharField(
+        max_length=128,
+        db_column='identifier',
+        verbose_name=_('custom id'),
+        help_text=_('Simple device identifier'),
+        blank=True,
+    )
     serial_number = models.CharField(
         max_length=128,
         db_column='serial_number',
@@ -45,7 +54,7 @@ class PhysicalDevice(IrekuaModelBaseUser):
             ('serial_number', 'device'),
         )
 
-        ordering = ['device']
+        ordering = ['-created_on']
 
     def __str__(self):
         msg = _('Device %(id)s of type %(device)s')
@@ -61,6 +70,16 @@ class PhysicalDevice(IrekuaModelBaseUser):
             raise ValidationError({'metadata': error})
 
         super(PhysicalDevice, self).clean()
+
+    @property
+    def items(self):
+        return Item.objects.filter(
+            sampling_event_device__collection_device__physical_device=self)
+
+    @property
+    def sampling_events(self):
+        return SamplingEventDevice.objects.filter(
+            collection_device__physical_device=self)
 
     def validate_configuration(self, configuration):
         self.device.validate_configuration(configuration)

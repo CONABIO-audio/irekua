@@ -1,6 +1,7 @@
 from django import forms
 from django.views.generic import ListView
 from django.utils.translation import gettext as _
+from django.shortcuts import render
 
 from .search_filter import SearchFilter
 
@@ -15,10 +16,40 @@ class SearchForm(forms.Form):
 class SeliaListView(ListView):
     paginate_by = 10
     empty_message = _('Empty list')
+    no_permission_template = 'selia/no_permission.html'
+
+    def has_view_permission(self):
+        return True
+
+    def no_permission_redirect(self):
+        return render(self.request, self.no_permission_template)
+
+    def get(self, *args, **kwargs):
+        if not self.has_view_permission():
+            return self.no_permission_redirect()
+
+        return super().get(*args, **kwargs)
+
+    def get_list_item_template(self):
+        if hasattr(self, 'list_item_template'):
+            return self.list_item_template
+
+        return NotImplementedError('No template for list item was given')
+
+    def get_filter_form_template(self):
+        if hasattr(self, 'filter_form_template'):
+            return self.filter_form_template
+
+        return NotImplementedError('No template for filter form was given')
+
+    def get_help_template(self):
+        if hasattr(self, 'help_template'):
+            return self.help_template
+
+        raise NotImplementedError('No template for help was given')
 
     def get_search_form(self):
-        form = SearchForm(self.request.GET)
-        return form
+        return SearchForm(self.request.GET)
 
     def get_ordering_choices(self):
         orderings = []
@@ -104,6 +135,7 @@ class SeliaListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         new_context = {
             'object_list': context,
             'empty_message': self.empty_message
@@ -117,5 +149,9 @@ class SeliaListView(ListView):
 
         if hasattr(self, 'order_form'):
             new_context['order_form'] = self.order_form
+
+        new_context['list_item_template'] = self.get_list_item_template()
+        new_context['help_template'] = self.get_help_template()
+        new_context['filter_form_template'] = self.get_filter_form_template()
 
         return new_context

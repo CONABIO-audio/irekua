@@ -64,7 +64,7 @@ class Site(IrekuaModelBaseUser):
         verbose_name = _('Site')
         verbose_name_plural = _('Sites')
 
-        ordering = ['name']
+        ordering = ['-created_on']
 
     def sync_coordinates_and_georef(self):
         if self.geo_ref:

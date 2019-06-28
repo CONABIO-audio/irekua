@@ -10,7 +10,16 @@
         </button>
       </div>
       <div class="modal-body">
-        <h2>{% trans 'Are you sure? '%}</h2>
+        <h4>{% trans 'Are you sure you want to delete '%} {{ object.pk }}?</h4>
+      </div>
+      <div class="modal-footer">
+        <form class="#" action="?delete=yes#" method="post">
+          {% csrf_token %}
+          <div data-dismiss="modal" class="btn btn-link text-secondary">
+            {% trans 'Cancel'%}
+          </div>
+          <input class="btn btn-danger" type="submit" name="deleteButton" value="{% trans 'Delete' %}">
+        </form>
       </div>
     </div>
   </div>

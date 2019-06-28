@@ -152,7 +152,7 @@ class Collection(IrekuaModelBaseUser):
                 _("Can download annotation items")),
         )
 
-        ordering = ['name']
+        ordering = ['-created_on']
 
     def __str__(self):
         return self.name

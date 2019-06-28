@@ -1,30 +1,32 @@
 {% extends 'selia/collection_detail/base.html' %}
 {% load i18n %}
+{% load selia_components %}
+{% load selia_buttons %}
 
 {% block head-extra %}
-{% include 'selia/components/map_media.html' %}
+  {% include 'selia/components/map_media.html' %}
 {% endblock head-extra %}
 
 {% block toolbar-title %}{% trans 'Collection Sites' %}{% endblock %}
 
 {% block toolbar-items %}
-<li class="nav-item">
-  <a class="nav-link" href="#">{% trans 'Add Site' %} <i class="fas fa-plus"></i> <i class="fas fa-map-marked-alt"></i></a>
-</li>
-<li class="nav-item">
-  {% include 'selia/components/help_button.html' %}
-</li>
-<li class="nav-item ml-5">
-  <a class="nav-link {% if not show_map %}active{% endif %}" href="?show=list">{% trans 'List' %} <i class="fas fa-list"></i></a>
-</li>
-<li class="nav-item">
-  <a class="nav-link {% if show_map %}active{% endif %}" href="?show=map">{% trans 'Map' %} <i class="far fa-map"></i></a>
-</li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">{% trans 'Add Site' %} <i class="fas fa-plus"></i> <i class="fas fa-map-marked-alt"></i></a>
+  </li>
+  <li class="nav-item">
+    {% help_button %}
+  </li>
+  <li class="nav-item ml-5">
+    <a class="nav-link {% if not show_map %}active{% endif %}" href="?show=list">{% trans 'List' %} <i class="fas fa-list"></i></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {% if show_map %}active{% endif %}" href="?show=map">{% trans 'Map' %} <i class="far fa-map"></i></a>
+  </li>
 {% endblock toolbar-items %}
 
 {% block main-content %}
   <div class="container-fluid w-100 p-0">
-    {% include 'selia/components/filter.html' with filter_template='selia/components/filters/collection_sites.html' filter=filter %}
+    {% filter_component filter_template=filter_form_template filter=filter %}
   </div>
 
   {% if show_map %}
@@ -32,10 +34,10 @@
     {{ sites_map }}
   </div>
   {% else %}
-  {% include 'selia/components/list.html' with template_name='selia/components/list_items/collection_site.html' item_list=object_list empty_message=empty_message %}
+  {% list_component template_name=list_item_template item_list=object_list empty_message=empty_message %}
   {% endif %}
 {% endblock main-content %}
 
 {% block modals-extra %}
-  {% include 'selia/components/help.html' with help_template='selia/components/help/collection_sites.html' %}
+  {% help_component help_template=help_template %}
 {% endblock modals-extra %}

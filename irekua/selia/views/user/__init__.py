@@ -1,7 +1,11 @@
-from .home import user_home
+from .home import UserHomeView
 
-from .item_list import UserItemsListView
-from .sampling_event_list import UserSamplingEventsListView
-
+from .items.list import UserItemsListView
+from .sampling_events.list import UserSamplingEventsListView
 from .sites.list import UserSitesListView
 from .devices.list import UserPhysicalDeviceListView
+
+from .items.detail import UserItemDetailView
+from .sampling_events.detail import UserSamplingEventDetailView
+from .sites.detail import UserSiteDetailView
+from .devices.detail import UserPhysicalDeviceDetailView
