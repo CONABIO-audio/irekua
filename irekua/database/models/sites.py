@@ -149,6 +149,23 @@ class Site(IrekuaModelBaseUser):
 
         return widget.render(name, self.geo_ref)
 
+    @property
+    def map_widget_no_controls(self):
+        name = 'point_{}'.format(self.pk)
+        widget = IrekuaMapWidgetNoControls(attrs={
+            'map_width': '100%',
+            'map_height': '100%',
+            'id': name,
+            'disabled': True})
+
+        return widget.render(name, self.geo_ref)
+
 
 class IrekuaMapWidget(forms.OSMWidget):
+    default_zoom = 12
     template_name = 'irekua/components/map_widget.html'
+
+
+class IrekuaMapWidgetNoControls(forms.OSMWidget):
+    default_zoom = 9
+    template_name = 'irekua/components/map_widget_no_controls.html'

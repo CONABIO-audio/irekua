@@ -1,11 +1,17 @@
 {% load i18n %}
 
-<div class="card w-100 shadow-sm">
-  <div class="card-img-top w-100" style="height: var(--card-head); background-color: var(--summary-color);"></div>
-  <div class="card-body">
-    {% include summary_template with object=object %}
-  </div>
-  <div class="card-footer">
-    <p class="card-text"><small class="text-muted">{% trans 'Updated on'%} {% now "SHORT_DATETIME_FORMAT" %}</small></p>
+<div class="container-fluid h-100 w-100">
+  <div class="col h-100 w-100">
+    <div class="row">
+      <h3>{% trans 'Summary'%}</h3>
+    </div>
+    <div class="row">
+      <div class="container-fluid h-100 w-100">
+        {% include summary_template with object=object %}
+      </div>
+    </div>
+    <div class="row">
+      <p class="card-text"><small class="text-muted">{% trans 'Updated on'%} {% now "SHORT_DATETIME_FORMAT" %}</small></p>
+    </div>
   </div>
 </div>

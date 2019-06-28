@@ -1,20 +1,27 @@
 {% load i18n %}
+{% load selia_buttons %}
 
-<div class="card shadow-sm">
-  <div class="card-img-top w-100" style="height: var(--card-head); background-color: var(--detail-color);"></div>
-  <div class="card-body">
-    {% include detail_template with object=object %}
-  </div>
-  <div class="card-footer">
-    {% if permissions.change %}
-    <button type="button" class="btn btn-link text-primary" data-toggle="modal" data-target="#changeModal">
-      {% trans 'Change' %}
-    </button>
-    {% endif %}
-    {% if permissions.delete %}
-    <button type="button" class="btn btn-link text-danger" data-toggle="modal" data-target="#deleteModal">
-      {% trans 'Delete '%}
-    </button>
-    {% endif %}
+<div class="container-fluid h-100 w-100">
+  <div class="col h-100 w-100">
+    <div class="row">
+      <h3>{% trans 'Detail'%}</h3>
+    </div>
+    <div class="row">
+      <div class="container-fluid h-100 w-100">
+        {% include detail_template with object=object %}
+      </div>
+    </div>
+    <div class="row">
+      {% if permissions.change %}
+      <button type="button" class="btn btn-link text-primary" data-toggle="modal" data-target="#changeModal">
+        {% edit_button %}
+      </button>
+      {% endif %}
+      {% if permissions.delete %}
+      <button type="button" class="btn btn-link text-danger" data-toggle="modal" data-target="#deleteModal">
+        {% trans 'Delete '%}
+      </button>
+      {% endif %}
+    </div>
   </div>
 </div>
