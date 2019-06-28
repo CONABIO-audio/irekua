@@ -16,6 +16,8 @@ class Filter(FilterSet):
             'identifier': ['exact', 'contains'],
         }
 
+
+
 search_fields = (
     'device__brand__name',
     'device__model',
@@ -27,4 +29,6 @@ ordering_fields = (
     ('created_on', _('created on')),
     ('serial_number', _('serial number')),
     ('identifier', _('custom id')),
+    ('device__brand__name', _('brand')),
+    ('device__model', _('model')),
 )

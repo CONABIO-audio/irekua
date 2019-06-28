@@ -21,6 +21,9 @@ class SeliaListView(ListView):
     def has_view_permission(self):
         return True
 
+    def has_create_permission(self):
+        return True
+
     def no_permission_redirect(self):
         return render(self.request, self.no_permission_template)
 
@@ -153,5 +156,5 @@ class SeliaListView(ListView):
         new_context['list_item_template'] = self.get_list_item_template()
         new_context['help_template'] = self.get_help_template()
         new_context['filter_form_template'] = self.get_filter_form_template()
-
+        new_context['permissions'] = {'create': self.has_create_permission()}
         return new_context

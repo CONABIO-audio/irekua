@@ -25,7 +25,7 @@
           {% detail_component detail_template=detail_template object=user %}
         </div>
         <div class="col-6">
-          {% summary_component summary_template=summary_template object=object %}
+          {% summary_component summary_template=summary_template object=user %}
         </div>
       </div>
   </div>
@@ -33,9 +33,11 @@
 
 {% block modals-extra %}
   {% help_component help_template=help_template %}
+
   {% if permissions.change %}
     {% update_component update_template=update_form_template form=form %}
   {% endif %}
+
   {% if permissions.delete %}
     {% delete_component object=object %}
   {% endif %}

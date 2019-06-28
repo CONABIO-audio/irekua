@@ -81,8 +81,6 @@ class SamplingEventDevice(IrekuaModelBaseUser):
         if self.created_by is None:
             return
 
-        # TODO: Validate user
-
     def clean(self):
         try:
             self.validate_licence()

@@ -21,7 +21,9 @@ class SiteUpdateForm(forms.ModelForm):
 
 class UserSiteDetailView(SeliaDetailView):
     model = Site
+
     form_class = SiteUpdateForm
+
     template_name = 'selia/user/sites/detail.html'
     help_template = 'selia/components/help/user_sites.html'
     detail_template = 'selia/components/details/site.html'
@@ -30,3 +32,9 @@ class UserSiteDetailView(SeliaDetailView):
 
     def has_view_permission(self):
         return self.object.created_by == self.request.user
+
+    def has_delete_permission(self):
+        return True
+
+    def has_change_permission(self):
+        return True

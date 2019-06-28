@@ -13,9 +13,13 @@ class UserSitesListView(SeliaListView):
     filter_form_template = 'selia/components/filters/sites.html'
 
     empty_message = _('User has no registered sites')
+
     filter_class = sites.Filter
     search_fields = sites.search_fields
     ordering_fields = sites.ordering_fields
 
     def get_initial_queryset(self):
         return Site.objects.filter(created_by=self.request.user)
+
+    def has_view_permission(self):
+        return True
