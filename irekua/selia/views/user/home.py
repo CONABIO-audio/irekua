@@ -1,4 +1,5 @@
 from django import forms
+from dal import autocomplete
 
 from selia.views.utils import SeliaDetailView
 from database.models import User
@@ -14,6 +15,15 @@ class UserUpdateForm(forms.ModelForm):
             'email',
             'institution'
         ]
+
+        widgets = {
+            'institution': autocomplete.ModelSelect2(
+                url='selia:institutions_autocomplete',
+                attrs={
+                    'style': 'width: 100%;'
+                }
+            )
+        }
 
 
 class UserHomeView(SeliaDetailView):

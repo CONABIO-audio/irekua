@@ -1,3 +1,36 @@
-{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 
-{{ form | crispy }}
+<div class="form-group">
+  {{ form.username.errors }}
+  {{ form.username.label_tag }}
+  {{ form.username | add_class:"form-control" }}
+  <small id="usernameHelp" class="form-text text-muted">{{ form.username.help_text }}</small>
+</div>
+<div class="form-row">
+  <div class="form-group col-md-6">
+    {{ form.first_name.errors }}
+    {{ form.first_name.label_tag }}
+    {{ form.first_name | add_class:"form-control" }}
+    <small id="firstNameHelp" class="form-text text-muted">{{ form.first_name.help_text }}</small>
+  </div>
+  <div class="form-group col-md-6">
+    {{ form.last_name.errors }}
+    {{ form.last_name.label_tag }}
+    {{ form.last_name | add_class:"form-control" }}
+    <small id="lastNameHelp" class="form-text text-muted">{{ form.last_name.help_text }}</small>
+  </div>
+</div>
+<div class="form-row">
+  <div class="form-group col-md-6">
+    {{ form.email.errors }}
+    {{ form.email.label_tag }}
+    {{ form.email | add_class:"form-control" }}
+    <small id="emailHelp" class="form-text text-muted">{{ form.email.help_text }}</small>
+  </div>
+  <div class="form-group col-md-6">
+    {{ form.institution.errors }}
+    {{ form.institution.label_tag }}
+    {{ form.institution }}
+    <!-- <small id="institutionHelp" class="form-text text-muted">{{ form.institution.help_text }}</small> -->
+  </div>
+</div>
