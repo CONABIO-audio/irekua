@@ -26,4 +26,5 @@ search_fields = (
 ordering_fields = (
     ('created_on', _('created on')),
     ('serial_number', _('serial number')),
+    ('identifier', _('custom id')),
 )

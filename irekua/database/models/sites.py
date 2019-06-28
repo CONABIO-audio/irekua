@@ -8,6 +8,8 @@ from django.utils.translation import gettext_lazy as _
 from database.models import CollectionUser
 from database.models.base import IrekuaModelBaseUser
 from database.utils import translate_doc
+from database.models.items.items import Item
+from database.models.sampling_events.sampling_events import SamplingEvent
 
 
 @translate_doc
@@ -125,6 +127,16 @@ class Site(IrekuaModelBaseUser):
                 return True
 
         return False
+
+    @property
+    def items(self):
+        return Item.objects.filter(
+            sampling_event_device__sampling_event__collection_site__site=self)
+
+    @property
+    def sampling_events(self):
+        return SamplingEvent.objects.filter(
+            collection_site__site=self)
 
     @property
     def map_widget(self):

@@ -23,7 +23,7 @@ class IrekuaModelBase(models.Model):
 class IrekuaModelBaseUser(IrekuaModelBase):
     created_by = models.ForeignKey(
         'User',
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         db_column='creator_id',
         related_name='%(class)s_created_by',
         verbose_name=_('creator'),

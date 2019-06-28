@@ -19,6 +19,7 @@ class UserUpdateForm(forms.ModelForm):
 class UserHomeView(SeliaDetailView):
     model = User
     form_class = UserUpdateForm
+
     template_name = 'selia/user/home.html'
     help_template = 'selia/components/help/user_home.html'
     detail_template = 'selia/components/details/user.html'
@@ -30,3 +31,6 @@ class UserHomeView(SeliaDetailView):
 
     def has_delete_permission(self):
         return False
+
+    def has_view_permission(self):
+        return self.request.user.is_authenticated

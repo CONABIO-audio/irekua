@@ -3,6 +3,10 @@
 {% load selia_components %}
 {% load selia_buttons %}
 
+{% block head-extra %}
+  {% include 'selia/components/media/map_media.html' %}
+{% endblock head-extra %}
+
 {% block toolbar-items %}
   <li class="nav-item">
     {% help_button %}

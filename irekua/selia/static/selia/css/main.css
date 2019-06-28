@@ -12,39 +12,19 @@
 }
 
 .secondary-navbar {
-  /* background-color: var(--toolbar-color); */
+  z-index: 3;
 }
 
-.tool-bar {
-  /* background-color: var(--toolbar-color); */
-  box-shadow: 0 2px 2px 0px rgba(0, 0, 0, 0.19);
+.toolbar {
+  z-index: 2;
 }
 
 .collapsed {
-  /* hide it for small displays*/
   display: none;
-}
-
-.panel-container {
-  overflow: hidden;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-top: 1em;
-}
-
-.panel {
-  overflow-x: hidden;
-  overflow-y: hidden;
-  min-height: 30%;
 }
 
 .card {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
-}
-
-.panel-header {
-  position: fixed;
-  width: inherit;
 }
 
 .leaflet-container-default {
@@ -52,27 +32,7 @@
   width: 100%;
 }
 
-#tableContainer {
-  overflow-y: auto;
-  max-height: 40vh;
-  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.1);
-}
-
-
-#detailToolbar > div {
- width: calc(100% / 6);
- display: inline-block;
- vertical-align: top;
- /* border:1px solid red; */
- text-align:center;
- margin:2%;
- padding:5px;
-}
-
 .img-thumbnail {
   height: 10em;
   max-width: 10em;
-}
-
-.metadata-container {
 }

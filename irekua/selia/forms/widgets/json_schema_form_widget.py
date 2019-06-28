@@ -7,4 +7,8 @@ class JsonSchemaFormWidget(Widget):
     input_type = 'text'
 
     def format_value(self, value):
-        return json.dumps(value)
+        try:
+            value = json.dumps(value)
+        except TypeError:
+            value = json.dumps({})
+        return value

@@ -21,6 +21,13 @@ class JsonField(forms.Field):
         self.widget.attrs['schema'] = json.dumps(self.schema)
 
     def clean(self, value):
+        if value is None:
+            value = '{}'
+        if value == 'undefined':
+            value = '{}'
+        if value == '':
+            value = '{}'
+
         try:
             return json.loads(value)
         except:

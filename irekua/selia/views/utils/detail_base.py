@@ -1,11 +1,14 @@
 from django.views.generic import UpdateView
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.db.models import ProtectedError
 
 
 class SeliaDetailView(UpdateView):
     success_url = '#'
     no_permission_template = 'selia/no_permission.html'
+    protected_template = 'selia/protected.html'
+
     delete_redirect_url = 'selia:home'
 
     def get_update_form_template(self):
@@ -57,10 +60,19 @@ class SeliaDetailView(UpdateView):
     def no_permission_redirect(self):
         return render(self.request, self.no_permission_template)
 
+    def protected_redirect(self):
+        return render(self.request, self.protected_template)
+
     def handle_delete(self):
-        self.get_object().delete()
-        redirect_to = self.get_delete_redirect_url()
-        return redirect(redirect_to)
+        if not self.has_delete_permission():
+            return self.no_permission_redirect()
+
+        try:
+            self.get_object().delete()
+            redirect_to = self.get_delete_redirect_url()
+            return redirect(redirect_to)
+        except ProtectedError:
+            return self.protected_redirect()
 
     def post(self, *args, **kwargs):
         if 'delete' in self.request.GET:

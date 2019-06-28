@@ -25,7 +25,7 @@
       </div>
       <div class="row d-flex justify-content-between">
         <h6>{% trans 'Identifier' %}</h6>
-        <div class="text-muted ml-4">{{ item.device.identifier }}</div>
+        <div class="text-muted ml-4">{{ item.identifier }}</div>
       </div>
       <div class="row d-flex justify-content-between">
         <h6>{% trans 'Serial Number' %}</h6>
@@ -45,6 +45,10 @@
     </div>
 
     <div class="col-2 mx-5">
+      <div class="row d-flex justify-content-between">
+        <h6>{% trans 'Collections' %}</h6>
+        <div class="text-muted ml-4">{{ item.collectiondevice_set.count }}</div>
+      </div>
       <div class="row d-flex justify-content-between">
         <h6>{% trans 'Items captured' %}</h6>
         <div class="text-muted ml-4">{{ item.items.count }}</div>
