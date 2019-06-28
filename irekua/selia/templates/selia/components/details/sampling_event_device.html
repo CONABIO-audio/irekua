@@ -1,0 +1,71 @@
+{% load json_tags %}
+{% load i18n %}
+
+<div class="media">
+  {% if object.logo %}
+  <img class="mr-3 img-thumbnail" src="{{ object.logo.url }}" alt="logo">
+  {% endif %}
+  <div class="media-body mt-0">
+    <h4 class="mt-0">{% trans 'Sampling event device ' %}{{ object.pk }}
+      {% if object.is_open %}
+      {% endif %}
+    </h4>
+    {{ object.description }}
+  </div>
+</div>
+<div class="container mt-3 mb-3">
+  <div class="row">
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Sampling event' %}</h5>
+      <p class="text-muted">{{ object.sampling_event.pk }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Collection' %}</h5>
+      <p class="text-muted">{{ object.sampling_event.collection }}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Device type' %}</h5>
+      <p class="text-muted">{{ object.collection_device.physical_device.device.device_type }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Device brand' %}</h5>
+      <p class="text-muted">{{ object.collection_device.physical_device.device.brand }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Device model' %}</h5>
+      <p class="text-muted">{{ object.collection_device.physical_device.device.model }}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Serial number' %}</h5>
+      <p class="text-muted">{{ object.collection_device.physical_device.serial_number }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Collection Device id' %}</h5>
+      <p class="text-muted">{{ object.collection_device.internal_id }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Owner' %}</h5>
+      <p class="text-muted">{{ object.collection_device.physical_device.created_by }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Added on' %}</h5>
+      <p class="text-muted">{{ object.collection_device.created_on }}</p>
+    </div>
+  </div>
+
+  {% if object.metadata %}
+  <h4>{% trans 'Metadata' %}</h4>
+  <div class="d-flex flex-wrap">
+    {% show_json object.metadata %}
+  </div>
+  {% endif %}
+
+  <div href="#" class="btn btn-primary card-link">{% trans 'Edit sampling event device' %}</div>
+  <div href="#" class="btn btn-danger card-link">{% trans 'Delete sampling event device' %}</div>
+
+</div>

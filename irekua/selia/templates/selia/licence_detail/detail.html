@@ -1,0 +1,26 @@
+{% extends 'selia/licence_detail/base.html' %}
+{% load i18n %}
+
+
+{% block toolbar-items %}
+<li class="nav-item">
+  <a class="nav-link" href="#">{% trans 'Add item' %} <i class="fas fa-plus"></i> <i class="far fa-file"></i></a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="#">{% trans 'Download summary' %} <i class="fas fa-download"></i></a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="#">{% trans 'Help' %} <i class="fas fa-question"></i></a>
+</li>
+{% endblock toolbar-items %}
+
+{% block main-content %}
+<div class="row p-5">
+  <div class="col-6">
+    {% include 'selia/components/detail.html' with detail_template='selia/components/details/licence.html' object=licence %}
+  </div>
+  <div class="col-6">
+    {% include 'selia/components/summary.html' with summary_template='selia/components/summaries/licence.html' object=licence %}
+  </div>
+</div>
+{% endblock main-content %}

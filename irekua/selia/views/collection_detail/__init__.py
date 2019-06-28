@@ -9,3 +9,5 @@ from .devices.create import CollectionDeviceCreateView
 
 from .sites.list import CollectionSitesListView
 from .sites.detail import CollectionSiteDetailView
+
+from .licence_list import CollectionLicencesListView

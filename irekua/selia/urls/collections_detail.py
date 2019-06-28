@@ -20,6 +20,10 @@ urlpatterns = [
         collection_detail.CollectionSitesListView.as_view(),
         name='collection_sites'),
     path(
+        'collections/detail/<pk>/licences/',
+        collection_detail.CollectionLicencesListView.as_view(),
+        name='collection_licences'),
+    path(
         'collections/detail/<pk>/items/',
         collection_detail.CollectionItemsListView.as_view(),
         name='collection_items'),

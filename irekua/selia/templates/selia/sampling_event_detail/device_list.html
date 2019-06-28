@@ -1,21 +1,22 @@
 {% extends 'selia/sampling_event_detail/base.html' %}
 {% load i18n %}
 
-{% block main-content %}
-<div class="container-fluid w-100 p-4">
-  <div class="jumbotron w-100">
-    <h4>{% trans 'Sampling event Devices' %}</h4>
-    <p>
-      {% blocktrans %}
-      Devices used in this sampling event
-      {% endblocktrans %}
-    </p>
-  </div>
-</div>
+{% block toolbar-title %}{% trans 'Sampling Event Devices' %}{% endblock %}
 
-<div class="container m-4">
-  filter
-</div>
+{% block toolbar-items %}
+<li class="nav-item">
+  <a class="nav-link" href="#">{% trans 'Add device' %} <i class="fas fa-plus"></i> <i class="fas fa-tools"></i></a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="#">{% trans 'Help' %} <i class="fas fa-question"></i></a>
+</li>
+{% endblock toolbar-items %}
+
+{% block main-content %}
+  <div class="container-fluid w-100 p-0">
+    {% include 'selia/components/filter.html' with filter_template='selia/components/filters/sampling_event_device.html' filter=filter %}
+  </div>
+
 
 {% include 'selia/components/list.html' with template_name='selia/components/list_items/sampling_event_device.html' item_list=object_list empty_message='empty' %}
 

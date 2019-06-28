@@ -2,23 +2,22 @@ from django.views.generic import ListView
 from django.views.generic.detail import SingleObjectMixin
 from django.core.paginator import Paginator
 
-from database.models import SamplingEvent
+from database.models import SamplingEvent, SamplingEventDevice
+from selia.views.utils import SeliaListView
+from irekua_utils.filters.sampling_events import sampling_event_devices
 
-
-class SamplingEventDevicesListView(SingleObjectMixin, ListView):
+class SamplingEventDevicesListView(SeliaListView, SingleObjectMixin):
     template_name = 'selia/sampling_event_detail/device_list.html'
+    filter_class = sampling_event_devices.Filter
+    search_fields = sampling_event_devices.search_fields
+    ordering_fields = sampling_event_devices.ordering_fields
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(queryset=SamplingEvent.objects.all())
         return super().get(request, *args, **kwargs)
 
-    def get_queryset(self):
-        sampling_event = self.object
-        queryset = sampling_event.samplingeventdevice_set.all()
-        paginator = Paginator(queryset, 10)
-
-        page = self.request.GET.get('page', 10)
-        return paginator.get_page(page)
+    def get_initial_queryset(self):
+        return SamplingEventDevice.objects.filter(sampling_event=self.object)
 
     def get_context_data(self, *args, **kwargs):
         sampling_event = self.object
