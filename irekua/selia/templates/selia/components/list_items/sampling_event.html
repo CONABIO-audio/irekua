@@ -1,4 +1,5 @@
 {% extends 'selia/components/list_item.html' %}
+{% load selia_buttons %}
 {% load static %}
 {% load i18n %}
 
@@ -10,7 +11,7 @@
         <h4 class="mt-0">
           {% trans 'Sampling event' %} {{item.pk }}
         </h4>
-        <div class="text-muted"><a href="{% url 'selia:sampling_event_detail' item.pk %}">{% trans 'View' %}</a></div>
+        <div class="text-muted"><a href="{% url 'selia:sampling_event_detail' item.pk %}">{% enter_button %}</a></div>
       </div>
     </div>
   </div>

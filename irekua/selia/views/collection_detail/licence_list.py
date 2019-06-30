@@ -8,8 +8,15 @@ from irekua_utils.filters.data_collections import collection_licences
 
 class CollectionLicencesListView(SeliaListView, SingleObjectMixin):
     template_name = 'selia/collection_detail/licence_list.html'
+    list_item_template = 'selia/components/list_items/licence.html'
+    help_template = 'selia/components/help/collection_licences.html'
+    filter_form_template = 'selia/components/filters/licence.html'
+    viewer_template = 'selia/components/viewers/licence.html'
+    
     filter_class = collection_licences.Filter
     search_fields = collection_licences.search_fields
+    ordering_fields = collection_licences.ordering_fields
+
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(queryset=Collection.objects.all())

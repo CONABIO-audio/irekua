@@ -1,4 +1,5 @@
 {% extends 'selia/components/list_item.html' %}
+{% load selia_buttons %}
 {% load static %}
 {% load i18n %}
 
@@ -12,7 +13,7 @@
       <div class="media-body mt-0">
         <h4 class="mt-0">{{ item.collection_device.physical_device.device.brand }}</h4>
         <div class="text-muted">{{ item.collection_device.physical_device.device.model }}</div>
-        <div class="text-muted"><a href="{% url 'selia:sampling_event_device_detail' item.collection_device.pk %}">{% trans 'View' %}</a></div>
+        <div class="text-muted"><a href="{% url 'selia:sampling_event_device_detail' item.collection_device.pk %}">{% enter_button %}</a></div>
       </div>
     </div>
   </div>

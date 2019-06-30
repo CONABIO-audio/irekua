@@ -29,6 +29,10 @@ class SeliaDetailView(UpdateView):
 
         return ''
 
+    def get_viewer_template(self):
+        if hasattr(self, 'viewer_template'):
+            return self.viewer_template
+
     def get_help_template(self):
         if hasattr(self, 'help_template'):
             return self.help_template
@@ -96,5 +100,6 @@ class SeliaDetailView(UpdateView):
         context['update_form_template'] = self.get_update_form_template()
         context['summary_template'] = self.get_summary_template()
         context['help_template'] = self.get_help_template()
+        context['viewer_template'] = self.get_viewer_template()
 
         return context

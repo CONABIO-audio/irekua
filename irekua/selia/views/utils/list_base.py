@@ -39,6 +39,7 @@ class SeliaListView(ListView):
 
         return NotImplementedError('No template for list item was given')
 
+
     def get_filter_form_template(self):
         if hasattr(self, 'filter_form_template'):
             return self.filter_form_template
@@ -157,4 +158,5 @@ class SeliaListView(ListView):
         new_context['help_template'] = self.get_help_template()
         new_context['filter_form_template'] = self.get_filter_form_template()
         new_context['permissions'] = {'create': self.has_create_permission()}
+
         return new_context

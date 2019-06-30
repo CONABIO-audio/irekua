@@ -49,3 +49,9 @@ def filter_component(context, filter_template, filter):
 def delete_component(context, object):
     context['object'] = object
     return context
+
+@register.inclusion_tag('selia/components/viewer.html', takes_context=True)
+def viewer_component(context, viewer_template, object):
+    context['viewer_template'] = viewer_template
+    context['object'] = object
+    return context
