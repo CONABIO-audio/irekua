@@ -14,3 +14,6 @@ class UserCollectionsView(SeliaListView):
 
     def get_initial_queryset(self):
         return self.request.user.collection_users.all()
+
+    def has_view_permission(self):
+        return self.request.user.is_authenticated

@@ -9,7 +9,7 @@ urlpatterns = [
         name='institutions_autocomplete'),
     path(
         'autocomplete/device_brands/',
-        autocomplete.DeviceBrandAutocomplete.as_view(),
+        autocomplete.DeviceBrandAutocomplete.as_view(create_field="name"),
         name='device_brands_autocomplete'),
     path(
         'autocomplete/devices/',

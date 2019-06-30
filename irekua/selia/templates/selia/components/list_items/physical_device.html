@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="col-2 mx-5">
+    <div class="col-md-2 mx-5">
       <div class="row d-flex justify-content-between">
         <h6>{% trans 'Device type' %}</h6>
         <div class="text-muted ml-4">{{ item.device.device_type }}</div>
@@ -36,11 +36,11 @@
     <div class="col-2 mx-5">
       <div class="row d-flex justify-content-between">
         <h6>{% trans 'Added on' %}</h6>
-        <div class="text-muted ml-4">{{ item.created_on.date }}</div>
+        <div class="text-muted ml-4">{{ item.created_on.date|date:"SHORT_DATE_FORMAT" }}</div>
       </div>
       <div class="row d-flex justify-content-between">
         <h6>{% trans 'Bundle' %}</h6>
-        <div class="text-muted ml-4">{{ item.bundle }}</div>
+        <div class="text-muted ml-4">{{ item.bundle|yesno }}</div>
       </div>
     </div>
 

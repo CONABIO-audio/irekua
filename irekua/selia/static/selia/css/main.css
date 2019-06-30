@@ -19,10 +19,6 @@
   z-index: 2;
 }
 
-.collapsed {
-  display: none;
-}
-
 .leaflet-container-default {
   height: 100%;
   width: 100%;

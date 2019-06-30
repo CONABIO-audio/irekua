@@ -10,7 +10,11 @@ class InstitutionAutocomplete(autocomplete.Select2QuerySetView):
         if self.q:
             institution_name_query = models.Q(institution_name__istartswith=self.q)
             institution_code_query = models.Q(institution_code__istartswith=self.q)
-            qs = qs.filter(institution_name_query | institution_code_query)
+            subdependency_query = models.Q(subdependency__istartswith=self.q)
+            qs = qs.filter(
+                institution_name_query |
+                institution_code_query |
+                subdependency_query)
 
         return qs
 

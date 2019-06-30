@@ -29,7 +29,7 @@ class PhysicalDevice(IrekuaModelBaseUser):
         on_delete=models.PROTECT,
         db_column='device_id',
         verbose_name=_('device'),
-        help_text=_('Reference to type of device'),
+        help_text=_('Brand and model of device'),
         blank=False,
         null=False)
     metadata = JSONField(
