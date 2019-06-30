@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-05 13:49-0500\n"
+"POT-Creation-Date: 2019-06-28 19:10-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,7 +28,7 @@ msgstr "Confirmación de contraseña"
 
 #: database/admin.py:74
 msgid "Passwords don't match"
-msgstr "Las Contraseñas no coinciden"
+msgstr "Las contraseñas no coinciden"
 
 #: database/admin.py:130
 msgid "Personal info"
@@ -38,268 +38,138 @@ msgstr "Información personal"
 msgid "Permissions"
 msgstr "Permisos"
 
-#: database/models/annotations/annotation_tools.py:15
-#: database/models/data_collections/data_collections.py:26
-#: database/models/data_collections/metacollections.py:10
-#: database/models/devices/device_brands.py:9 database/models/items/tags.py:10
-#: database/models/object_types/annotation_types.py:16
+#: database/models/annotations/annotation_tools.py:17
+#: database/models/data_collections/data_collections.py:28
+#: database/models/data_collections/metacollections.py:12
+#: database/models/devices/device_brands.py:11 database/models/items/tags.py:12
+#: database/models/object_types/annotation_types.py:17
 #: database/models/object_types/data_collections/collection_types.py:43
-#: database/models/object_types/device_types.py:10
-#: database/models/object_types/event_types.py:11
-#: database/models/object_types/item_types.py:24
-#: database/models/object_types/licence_types.py:17
-#: database/models/object_types/sampling_events/sampling_event_types.py:18
-#: database/models/object_types/site_types.py:15
-#: database/models/object_types/term_types.py:16 database/models/sites.py:31
-#: database/models/users/roles.py:11
+#: database/models/object_types/device_types.py:12
+#: database/models/object_types/event_types.py:13
+#: database/models/object_types/item_types.py:26
+#: database/models/object_types/licence_types.py:18
+#: database/models/object_types/sampling_events/sampling_event_types.py:19
+#: database/models/object_types/site_types.py:17
+#: database/models/object_types/term_types.py:18 database/models/sites.py:32
+#: database/models/users/roles.py:13
+#: irekua_utils/filters/data_collections/data_collections.py:31
+#: irekua_utils/filters/sites.py:27
 msgid "name"
 msgstr "Nombre"
 
-#: database/models/annotations/annotation_tools.py:16
+#: database/models/annotations/annotation_tools.py:18
 msgid "Name of annotation tool"
 msgstr "Nombre de la herramienta de anotación"
 
-#: database/models/annotations/annotation_tools.py:21
+#: database/models/annotations/annotation_tools.py:23
 msgid "version"
 msgstr "versión"
 
-#: database/models/annotations/annotation_tools.py:22
+#: database/models/annotations/annotation_tools.py:24
 msgid "Version of annotation tool"
 msgstr "Versión de la herramienta de anotación"
 
-#: database/models/annotations/annotation_tools.py:26
-#: database/models/data_collections/data_collections.py:31
-#: database/models/data_collections/metacollections.py:16
-#: database/models/items/tags.py:15
-#: database/models/object_types/annotation_types.py:21
+#: database/models/annotations/annotation_tools.py:28
+#: database/models/data_collections/data_collections.py:33
+#: database/models/data_collections/metacollections.py:18
+#: database/models/items/tags.py:17
+#: database/models/object_types/annotation_types.py:22
 #: database/models/object_types/data_collections/collection_types.py:48
-#: database/models/object_types/device_types.py:15
-#: database/models/object_types/event_types.py:16
-#: database/models/object_types/item_types.py:30
-#: database/models/object_types/licence_types.py:22
-#: database/models/object_types/sampling_events/sampling_event_types.py:23
-#: database/models/object_types/site_types.py:20
-#: database/models/object_types/term_types.py:21
-#: database/models/terms/synonym_suggestions.py:24
+#: database/models/object_types/device_types.py:17
+#: database/models/object_types/event_types.py:18
+#: database/models/object_types/item_types.py:32
+#: database/models/object_types/licence_types.py:23
+#: database/models/object_types/sampling_events/sampling_event_types.py:24
+#: database/models/object_types/site_types.py:22
+#: database/models/object_types/term_types.py:23
+#: database/models/terms/synonym_suggestions.py:25
 #: database/models/terms/term_suggestions.py:28
-#: database/models/terms/terms.py:27 database/models/users/roles.py:17
+#: database/models/terms/terms.py:28 database/models/users/roles.py:19
 msgid "description"
 msgstr "descripción"
 
-#: database/models/annotations/annotation_tools.py:27
+#: database/models/annotations/annotation_tools.py:29
 msgid "Description of annotation tool"
 msgstr "Descripción de la herramienta de anotación"
 
-#: database/models/annotations/annotation_tools.py:31
-#: database/models/data_collections/data_collections.py:51
-#: database/models/devices/device_brands.py:21
+#: database/models/annotations/annotation_tools.py:33
+#: database/models/data_collections/data_collections.py:53
+#: database/models/devices/device_brands.py:23
 #: database/models/object_types/data_collections/collection_types.py:54
-#: database/models/users/institutions.py:56
+#: database/models/users/institutions.py:57
 msgid "logo"
 msgstr "logo"
 
-#: database/models/annotations/annotation_tools.py:32
+#: database/models/annotations/annotation_tools.py:34
 msgid "Annotation tool logo"
 msgstr "Logo de herramienta de anotación"
 
-#: database/models/annotations/annotation_tools.py:38
-#: database/models/devices/device_brands.py:15
-#: database/models/users/institutions.py:52
+#: database/models/annotations/annotation_tools.py:40
+#: database/models/devices/device_brands.py:17
+#: database/models/users/institutions.py:53
 msgid "website"
 msgstr "sitio web"
 
-#: database/models/annotations/annotation_tools.py:39
+#: database/models/annotations/annotation_tools.py:41
 msgid "Annotation tool website"
 msgstr "Sitio web de la herramienta de anotación"
 
-#: database/models/annotations/annotation_tools.py:44
-#: database/models/devices/devices.py:44
+#: database/models/annotations/annotation_tools.py:46
+#: database/models/devices/devices.py:45
 msgid "configuration schema"
 msgstr "esquema de configuración"
 
-#: database/models/annotations/annotation_tools.py:45
+#: database/models/annotations/annotation_tools.py:47
 msgid "JSON schema for annotation tool configuration info"
 msgstr ""
 "Esquema JSON para la información de configuración de la herramienta de "
 "anotación"
 
-#: database/models/annotations/annotation_tools.py:53
-#: database/models/annotations/annotation_votes.py:36 database/models/base.py:8
-#: database/models/data_collections/collection_devices.py:42
-#: database/models/data_collections/collection_users.py:41
-#: database/models/data_collections/data_collections.py:82
-#: database/models/data_collections/metacollections.py:43
-#: database/models/devices/device_brands.py:29
-#: database/models/devices/devices.py:53
-#: database/models/devices/physical_devices.py:50
-#: database/models/items/items.py:147
-#: database/models/items/secondary_items.py:86 database/models/items/tags.py:28
-#: database/models/licences.py:31
-#: database/models/object_types/annotation_types.py:41
-#: database/models/object_types/data_collections/collection_types.py:199
-#: database/models/object_types/device_types.py:28
-#: database/models/object_types/entailment_types.py:41
-#: database/models/object_types/event_types.py:38
-#: database/models/object_types/item_types.py:65
-#: database/models/object_types/licence_types.py:88
-#: database/models/object_types/sampling_events/sampling_event_types.py:76
-#: database/models/object_types/site_types.py:34
-#: database/models/object_types/term_types.py:58
-#: database/models/sampling_events/sampling_event_devices.py:66
-#: database/models/sampling_events/sampling_events.py:79
-#: database/models/terms/entailments.py:35 database/models/terms/synonyms.py:36
-#: database/models/terms/terms.py:40 database/models/users/institutions.py:64
-#: database/models/users/roles.py:36
-msgid "created on"
-msgstr "creado en"
-
 #: database/models/annotations/annotation_tools.py:54
-#: database/models/data_collections/data_collections.py:83
-#: database/models/data_collections/metacollections.py:44
-#: database/models/devices/device_brands.py:30
-#: database/models/devices/devices.py:54
-#: database/models/devices/physical_devices.py:51
-#: database/models/items/items.py:148
-#: database/models/items/secondary_items.py:87 database/models/items/tags.py:29
-#: database/models/object_types/annotation_types.py:42
-#: database/models/object_types/data_collections/collection_types.py:200
-#: database/models/object_types/device_types.py:29
-#: database/models/object_types/entailment_types.py:42
-#: database/models/object_types/event_types.py:39
-#: database/models/object_types/item_types.py:66
-#: database/models/object_types/licence_types.py:89
-#: database/models/object_types/sampling_events/sampling_event_types.py:77
-#: database/models/object_types/site_types.py:35
-#: database/models/object_types/term_types.py:59
-#: database/models/sampling_events/sampling_event_devices.py:67
-#: database/models/sampling_events/sampling_events.py:80
-#: database/models/terms/entailments.py:36 database/models/terms/synonyms.py:37
-#: database/models/terms/terms.py:41 database/models/users/institutions.py:65
-#: database/models/users/roles.py:37
-msgid "Date of entry creation"
-msgstr "Fecha de creación del registro"
-
-#: database/models/annotations/annotation_tools.py:59
-#: database/models/annotations/annotation_votes.py:42
-#: database/models/base.py:14
-#: database/models/data_collections/collection_devices.py:48
-#: database/models/data_collections/collection_users.py:47
-#: database/models/data_collections/data_collections.py:88
-#: database/models/data_collections/metacollections.py:49
-#: database/models/devices/device_brands.py:35
-#: database/models/devices/devices.py:59
-#: database/models/devices/physical_devices.py:56
-#: database/models/items/items.py:153
-#: database/models/items/secondary_items.py:92 database/models/items/tags.py:34
-#: database/models/object_types/annotation_types.py:47
-#: database/models/object_types/data_collections/collection_types.py:205
-#: database/models/object_types/device_types.py:34
-#: database/models/object_types/entailment_types.py:47
-#: database/models/object_types/event_types.py:44
-#: database/models/object_types/item_types.py:71
-#: database/models/object_types/licence_types.py:94
-#: database/models/object_types/sampling_events/sampling_event_types.py:82
-#: database/models/object_types/site_types.py:40
-#: database/models/object_types/term_types.py:64
-#: database/models/sampling_events/sampling_event_devices.py:72
-#: database/models/sampling_events/sampling_events.py:85
-#: database/models/terms/entailments.py:41 database/models/terms/synonyms.py:42
-#: database/models/terms/terms.py:46 database/models/users/institutions.py:70
-#: database/models/users/roles.py:42
-msgid "modified on"
-msgstr "modificado en"
-
-#: database/models/annotations/annotation_tools.py:60
-#: database/models/annotations/annotation_votes.py:43
-#: database/models/base.py:15
-#: database/models/data_collections/collection_devices.py:49
-#: database/models/data_collections/collection_users.py:48
-#: database/models/data_collections/data_collections.py:89
-#: database/models/data_collections/metacollections.py:50
-#: database/models/devices/device_brands.py:36
-#: database/models/devices/devices.py:60
-#: database/models/devices/physical_devices.py:57
-#: database/models/items/items.py:154
-#: database/models/items/secondary_items.py:93 database/models/items/tags.py:35
-#: database/models/object_types/annotation_types.py:48
-#: database/models/object_types/data_collections/collection_types.py:206
-#: database/models/object_types/device_types.py:35
-#: database/models/object_types/entailment_types.py:48
-#: database/models/object_types/event_types.py:45
-#: database/models/object_types/item_types.py:72
-#: database/models/object_types/licence_types.py:95
-#: database/models/object_types/sampling_events/sampling_event_types.py:83
-#: database/models/object_types/site_types.py:41
-#: database/models/object_types/term_types.py:65
-#: database/models/sampling_events/sampling_event_devices.py:73
-#: database/models/sampling_events/sampling_events.py:86
-#: database/models/terms/entailments.py:42 database/models/terms/synonyms.py:43
-#: database/models/terms/terms.py:47 database/models/users/institutions.py:71
-#: database/models/users/roles.py:43
-msgid "Date of last modification"
-msgstr "Fecha de última modificación"
-
-#: database/models/annotations/annotation_tools.py:65
 msgid "Annotation Tool"
 msgstr "Herramienta de Anotación"
 
-#: database/models/annotations/annotation_tools.py:66
+#: database/models/annotations/annotation_tools.py:55
 msgid "Annotation Tools"
 msgstr "Herramientas de Anotación"
 
-#: database/models/annotations/annotation_tools.py:84
+#: database/models/annotations/annotation_tools.py:73
 #, python-format
 msgid "Invalid annotation tool configuration. Error: %(error)s"
 msgstr "Configuración de herramienta de anotación invalida. Error: %(error)s"
 
-#: database/models/annotations/annotation_votes.py:14
+#: database/models/annotations/annotation_votes.py:15
 #: database/models/annotations/annotations.py:57
 msgid "annotation"
 msgstr "anotación"
 
-#: database/models/annotations/annotation_votes.py:15
+#: database/models/annotations/annotation_votes.py:16
 msgid "Reference to annotation being voted"
 msgstr "Referencia a la anotación que se está votando"
 
-#: database/models/annotations/annotation_votes.py:20
+#: database/models/annotations/annotation_votes.py:21
 #: database/models/annotations/annotations.py:43
 msgid "label"
 msgstr "etiqueta"
 
-#: database/models/annotations/annotation_votes.py:22
+#: database/models/annotations/annotation_votes.py:23
 msgid "Labels associated to annotation vote"
 msgstr "Etiquetas asociadas al voto de anotación"
 
 #: database/models/annotations/annotation_votes.py:29
-#: database/models/data_collections/metacollections.py:37
-#: database/models/items/items.py:141
-msgid "created by"
-msgstr "creado por"
-
-#: database/models/annotations/annotation_votes.py:30
-msgid "Creator of annotation vote"
-msgstr "Creador del voto de anotación"
-
-#: database/models/annotations/annotation_votes.py:37
-#: database/models/data_collections/collection_devices.py:43
-#: database/models/data_collections/collection_users.py:42
-msgid "Date of creation of annotation"
-msgstr "Fecha de creación de la anotación"
-
-#: database/models/annotations/annotation_votes.py:49
 msgid "Annotation Vote"
 msgstr "Voto de Anotación"
 
-#: database/models/annotations/annotation_votes.py:50
+#: database/models/annotations/annotation_votes.py:30
 msgid "Annotation Votes"
 msgstr "Votos de Anotaciones"
 
-#: database/models/annotations/annotation_votes.py:53
+#: database/models/annotations/annotation_votes.py:33
 #, python-format
 msgid "Vote %(id)s on annotation %(annotation)s"
 msgstr "Voto %(id)s de la anotación %(annotation)s"
 
-#: database/models/annotations/annotation_votes.py:61
+#: database/models/annotations/annotation_votes.py:41
 #, python-format
 msgid "Invalid label for event type %(type)s. Error: %(error)s"
 msgstr "Etiqueta invalida para el tipo de evento %(type)s. Error: %(error)s"
@@ -381,8 +251,8 @@ msgid "Quality of item content inside annotation"
 msgstr "Calidad del contenido del item dentro de la anotación"
 
 #: database/models/annotations/annotations.py:86
-#: database/models/sampling_events/sampling_event_devices.py:29
-#: database/models/sampling_events/sampling_events.py:29
+#: database/models/sampling_events/sampling_event_devices.py:30
+#: database/models/sampling_events/sampling_events.py:31
 msgid "commentaries"
 msgstr "comentarios"
 
@@ -419,11 +289,28 @@ msgstr ""
 msgid "Invalid label. Error: %(error)s"
 msgstr ""
 
+#: database/models/base.py:8
+#: irekua_utils/filters/data_collections/data_collections.py:30
+#: irekua_utils/filters/devices/physical_devices.py:29
+#: irekua_utils/filters/sampling_events/sampling_events.py:25
+#: irekua_utils/filters/sites.py:26
+msgid "created on"
+msgstr "creado en"
+
 #: database/models/base.py:9
+#: selia/templates/selia/components/filters/physical_devices.html:32
 #, fuzzy
 #| msgid "Date of entry creation"
 msgid "Date of creation"
 msgstr "Fecha de creación del registro"
+
+#: database/models/base.py:14
+msgid "modified on"
+msgstr "modificado en"
+
+#: database/models/base.py:15
+msgid "Date of last modification"
+msgstr "Fecha de última modificación"
 
 #: database/models/base.py:29
 msgid "creator"
@@ -435,9 +322,7 @@ msgstr ""
 msgid "Creator of object"
 msgstr "Creador de la anotación"
 
-#: database/models/base.py:39 database/models/items/items.py:162
-#: database/models/sampling_events/sampling_event_devices.py:81
-#: database/models/sampling_events/sampling_events.py:94
+#: database/models/base.py:39
 msgid "modified by"
 msgstr "modificado por"
 
@@ -447,923 +332,963 @@ msgstr "modificado por"
 msgid "User who made modifications last"
 msgstr "Usuario que modifico por ultima vez"
 
-#: database/models/data_collections/collection_devices.py:14
+#: database/models/data_collections/collection_devices.py:16
 msgid "physical device"
 msgstr ""
 
-#: database/models/data_collections/collection_devices.py:15
+#: database/models/data_collections/collection_devices.py:17
 msgid "Reference to physical device"
 msgstr ""
 
-#: database/models/data_collections/collection_devices.py:22
-#: database/models/data_collections/collection_sites.py:32
-#: database/models/data_collections/collection_users.py:13
-#: database/models/licences.py:53
-#: database/models/sampling_events/sampling_events.py:55
+#: database/models/data_collections/collection_devices.py:24
+#: database/models/data_collections/collection_sites.py:33
+#: database/models/data_collections/collection_users.py:14
+#: database/models/licences.py:62
+#: database/models/sampling_events/sampling_events.py:57
 msgid "collection"
 msgstr ""
 
-#: database/models/data_collections/collection_devices.py:23
+#: database/models/data_collections/collection_devices.py:25
 msgid "Collection to which the device belongs"
 msgstr ""
 
-#: database/models/data_collections/collection_devices.py:29
-#: database/models/data_collections/collection_sites.py:46
+#: database/models/data_collections/collection_devices.py:31
+#: database/models/data_collections/collection_sites.py:47
+#: irekua_utils/filters/data_collections/collection_devices.py:29
+#: irekua_utils/filters/data_collections/collection_licences.py:30
+#: irekua_utils/filters/data_collections/collection_sampling_events.py:35
+#: irekua_utils/filters/data_collections/collection_sites.py:30
 msgid "internal id"
 msgstr ""
 
-#: database/models/data_collections/collection_devices.py:30
+#: database/models/data_collections/collection_devices.py:32
 msgid "ID of device within the collection"
 msgstr ""
 
-#: database/models/data_collections/collection_devices.py:36
-#: database/models/data_collections/collection_sites.py:38
-#: database/models/data_collections/collection_users.py:34
-#: database/models/data_collections/data_collections.py:36
-#: database/models/devices/physical_devices.py:35
-#: database/models/items/items.py:106 database/models/licences.py:36
-#: database/models/sampling_events/sampling_event_devices.py:34
-#: database/models/sampling_events/sampling_events.py:34
-#: database/models/terms/entailments.py:28
-#: database/models/terms/synonym_suggestions.py:30
-#: database/models/terms/synonyms.py:30
+#: database/models/data_collections/collection_devices.py:38
+#: database/models/data_collections/collection_sites.py:39
+#: database/models/data_collections/collection_users.py:35
+#: database/models/data_collections/data_collections.py:38
+#: database/models/devices/physical_devices.py:37
+#: database/models/items/items.py:107 database/models/licences.py:53
+#: database/models/sampling_events/sampling_event_devices.py:35
+#: database/models/sampling_events/sampling_events.py:36
+#: database/models/terms/entailments.py:29
+#: database/models/terms/synonym_suggestions.py:31
+#: database/models/terms/synonyms.py:31
 #: database/models/terms/term_suggestions.py:35
-#: database/models/terms/terms.py:32
+#: database/models/terms/terms.py:33
 msgid "metadata"
 msgstr ""
 
-#: database/models/data_collections/collection_devices.py:37
+#: database/models/data_collections/collection_devices.py:39
 msgid "Metadata associated with device within collection"
 msgstr ""
 
-#: database/models/data_collections/collection_devices.py:54
+#: database/models/data_collections/collection_devices.py:43
 msgid "Collection Device"
 msgstr ""
 
-#: database/models/data_collections/collection_devices.py:55
-#: selia/templates/selia/collections/detail/devices.html:5
-#: selia/templatetags/treeview.py:19
+#: database/models/data_collections/collection_devices.py:44
+#: selia/templates/selia/collection_detail/components/secondary_navbar.html:50
+#: selia/templates/selia/collection_detail/devices/list.html:6
 msgid "Collection Devices"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:16
+#: database/models/data_collections/collection_sites.py:17
 msgid "site type"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:17
+#: database/models/data_collections/collection_sites.py:18
 msgid "Type of site"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:24
+#: database/models/data_collections/collection_sites.py:25
 msgid "site"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:25
+#: database/models/data_collections/collection_sites.py:26
 msgid "Reference to Site"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:33
+#: database/models/data_collections/collection_sites.py:34
 msgid "Collection to which the site belongs"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:39
+#: database/models/data_collections/collection_sites.py:40
 #, fuzzy
 #| msgid "Labels associated to annotation"
 msgid "Metadata associated to site in collection"
 msgstr "Etiqueta asociada a la anotación"
 
-#: database/models/data_collections/collection_sites.py:47
+#: database/models/data_collections/collection_sites.py:48
 msgid "ID of site within the collection"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:51
+#: database/models/data_collections/collection_sites.py:52
 msgid "Collection Site"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:52
-#: selia/templates/selia/collections/detail/sites.html:4
-#: selia/templatetags/treeview.py:20
+#: database/models/data_collections/collection_sites.py:53
+#: selia/templates/selia/collection_detail/components/secondary_navbar.html:74
+#: selia/templates/selia/collection_detail/sites/list.html:10
 msgid "Collection Sites"
 msgstr ""
 
-#: database/models/data_collections/collection_sites.py:60
+#: database/models/data_collections/collection_sites.py:61
 #, python-format
 msgid "Site %(site)s of collection %(collection)s"
 msgstr ""
 
-#: database/models/data_collections/collection_users.py:14
+#: database/models/data_collections/collection_users.py:15
 msgid "Collection to which user belongs"
 msgstr ""
 
-#: database/models/data_collections/collection_users.py:20
+#: database/models/data_collections/collection_users.py:21
 msgid "user"
 msgstr ""
 
-#: database/models/data_collections/collection_users.py:21
+#: database/models/data_collections/collection_users.py:22
 msgid "User of collection"
 msgstr ""
 
-#: database/models/data_collections/collection_users.py:28
-#: database/models/object_types/data_collections/collection_roles.py:24
+#: database/models/data_collections/collection_users.py:29
+#: database/models/object_types/data_collections/collection_roles.py:25
 msgid "role"
 msgstr ""
 
-#: database/models/data_collections/collection_users.py:29
+#: database/models/data_collections/collection_users.py:30
 msgid "Role of user in collection"
 msgstr ""
 
-#: database/models/data_collections/collection_users.py:36
+#: database/models/data_collections/collection_users.py:37
 msgid "Metadata associated to user in collection"
 msgstr ""
 
-#: database/models/data_collections/collection_users.py:53
+#: database/models/data_collections/collection_users.py:41
 msgid "Collection User"
 msgstr ""
 
-#: database/models/data_collections/collection_users.py:54
+#: database/models/data_collections/collection_users.py:42
 msgid "Collection Users"
 msgstr ""
 
-#: database/models/data_collections/collection_users.py:61
+#: database/models/data_collections/collection_users.py:49
 #, python-format
 msgid "User %(user)s of collection %(collection)s"
 msgstr ""
 
-#: database/models/data_collections/collection_users.py:71
+#: database/models/data_collections/collection_users.py:59
 msgid "Role is not valid for this collection's type"
 msgstr ""
 
-#: database/models/data_collections/collection_users.py:78
+#: database/models/data_collections/collection_users.py:66
 #, python-format
 msgid ""
 "Invalid metadata for user of role type %(role)s in collection "
 "%(collection)s. Error: %(error)s"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:18
-#: database/models/object_types/data_collections/collection_device_types.py:16
-#: database/models/object_types/data_collections/collection_item_types.py:16
-#: database/models/object_types/data_collections/collection_roles.py:16
+#: database/models/data_collections/data_collections.py:20
+#: database/models/object_types/data_collections/collection_device_types.py:17
+#: database/models/object_types/data_collections/collection_item_types.py:17
+#: database/models/object_types/data_collections/collection_roles.py:17
 msgid "collection type"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:19
+#: database/models/data_collections/data_collections.py:21
 msgid "Type of collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:27
+#: database/models/data_collections/data_collections.py:29
 msgid "Name of collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:32
+#: database/models/data_collections/data_collections.py:34
 msgid "Description of collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:37
+#: database/models/data_collections/data_collections.py:39
 msgid "Metadata associated to collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:45
-#: database/models/users/users.py:11
+#: database/models/data_collections/data_collections.py:47
+#: database/models/users/users.py:27
 msgid "institution"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:46
+#: database/models/data_collections/data_collections.py:48
 msgid "Institution to which the collection belogs"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:52
+#: database/models/data_collections/data_collections.py:54
 msgid "Logo of data collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:76
+#: database/models/data_collections/data_collections.py:78
 #: database/models/object_types/data_collections/collection_types.py:79
 msgid "administrators"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:77
+#: database/models/data_collections/data_collections.py:79
 msgid "Administrators of collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:94
+#: database/models/data_collections/data_collections.py:84
+msgid "is open"
+msgstr ""
+
+#: database/models/data_collections/data_collections.py:86
+msgid "Boolean flag indicating whether contents of the collection are public."
+msgstr ""
+
+#: database/models/data_collections/data_collections.py:92
+#: selia/templates/selia/components/details/licence.html:23
+#: selia/templates/selia/components/details/sampling_event.html:23
+#: selia/templates/selia/components/details/sampling_event_device.html:23
+#: selia/templates/selia/components/list_items/collection_device.html:35
+#: selia/templates/selia/components/list_items/collection_site.html:41
+#: selia/templates/selia/components/list_items/licence.html:23
+#: selia/templates/selia/components/list_items/sampling_event.html:23
+#: selia/templates/selia/components/list_items/sampling_event_device.html:35
 msgid "Collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:95
+#: database/models/data_collections/data_collections.py:93
 #: irekua/templates/irekua/content/about.html:82
-#: selia/templates/selia/components/navbar_items.html:24
-#: selia/templates/selia/components/navbar_items.html:26
-#: selia/templatetags/treeview.py:16
+#: selia/templates/selia/collection_detail/components/secondary_navbar.html:11
+#: selia/templates/selia/collections/components/secondary_navbar.html:5
+#: selia/templates/selia/components/list_items/physical_device.html:49
+#: selia/templates/selia/components/list_items/site.html:51
+#: selia/templates/selia/components/navbar_items.html:15
+#: selia/templates/selia/components/navbar_items.html:17
+#: selia/templates/selia/components/summaries/user.html:6
+#: selia/templates/selia/items/components/secondary_navbar.html:5
+#: selia/templates/selia/licence_detail/components/secondary_navbar.html:12
+#: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:12
+#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:17
 msgid "Collections"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:100
+#: database/models/data_collections/data_collections.py:98
 msgid "Can add site to collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:103
+#: database/models/data_collections/data_collections.py:101
 msgid "Can add item to collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:106
+#: database/models/data_collections/data_collections.py:104
 msgid "Can add device to collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:109
+#: database/models/data_collections/data_collections.py:107
 msgid "Can add user to collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:112
+#: database/models/data_collections/data_collections.py:110
 msgid "Can add licence to collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:115
+#: database/models/data_collections/data_collections.py:113
 msgid "Can annotate items in collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:118
+#: database/models/data_collections/data_collections.py:116
 msgid "Can vote on annotations of items in collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:121
+#: database/models/data_collections/data_collections.py:119
 msgid "Can view sites in collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:124
+#: database/models/data_collections/data_collections.py:122
 msgid "Can view items in collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:127
+#: database/models/data_collections/data_collections.py:125
 msgid "Can view devices in collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:130
+#: database/models/data_collections/data_collections.py:128
 msgid "Can view sampling event in collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:133
+#: database/models/data_collections/data_collections.py:131
 msgid "Can view annotations of items in collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:136
+#: database/models/data_collections/data_collections.py:134
 msgid "Can change sites in collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:139
+#: database/models/data_collections/data_collections.py:137
 msgid "Can change user info in collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:142
+#: database/models/data_collections/data_collections.py:140
 msgid "Can change items in collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:145
+#: database/models/data_collections/data_collections.py:143
 msgid "Can change devices in collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:148
+#: database/models/data_collections/data_collections.py:146
 msgid "Can change annotations of items in collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:151
+#: database/models/data_collections/data_collections.py:149
 msgid "Can change sampling events in collection"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:154
+#: database/models/data_collections/data_collections.py:152
 msgid "Can download annotation items"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:167
+#: database/models/data_collections/data_collections.py:165
 #, python-brace-format
 msgid "Invalid metadata for collection of type {type}. Error: {error}"
 msgstr ""
 
-#: database/models/data_collections/data_collections.py:226
+#: database/models/data_collections/data_collections.py:235
 #, python-format
 msgid "Licence %(licence)s is not part of collection %(collection)s."
 msgstr ""
 
-#: database/models/data_collections/metacollections.py:11
+#: database/models/data_collections/metacollections.py:13
 msgid "Name of meta collection"
 msgstr ""
 
-#: database/models/data_collections/metacollections.py:17
+#: database/models/data_collections/metacollections.py:19
 msgid "Description of Meta Collection"
 msgstr ""
 
-#: database/models/data_collections/metacollections.py:22
+#: database/models/data_collections/metacollections.py:24
 msgid "items"
 msgstr ""
 
-#: database/models/data_collections/metacollections.py:23
+#: database/models/data_collections/metacollections.py:25
 msgid "Items belonging to MetaCollection"
 msgstr ""
 
-#: database/models/data_collections/metacollections.py:29
+#: database/models/data_collections/metacollections.py:31
 msgid "Curators of metacollection"
 msgstr ""
 
-#: database/models/data_collections/metacollections.py:38
-msgid "Creator of Meta Collection"
-msgstr ""
-
-#: database/models/data_collections/metacollections.py:55
+#: database/models/data_collections/metacollections.py:35
 msgid "Meta Collection"
 msgstr ""
 
-#: database/models/data_collections/metacollections.py:56
+#: database/models/data_collections/metacollections.py:36
 msgid "Meta Collections"
 msgstr ""
 
-#: database/models/devices/device_brands.py:10
+#: database/models/devices/device_brands.py:12
 msgid "Name of device brand"
 msgstr ""
 
-#: database/models/devices/device_brands.py:16
+#: database/models/devices/device_brands.py:18
 msgid "Brand's website"
 msgstr ""
 
-#: database/models/devices/device_brands.py:22
+#: database/models/devices/device_brands.py:24
 msgid "Logo of device brand"
 msgstr ""
 
-#: database/models/devices/device_brands.py:41
+#: database/models/devices/device_brands.py:30
 msgid "Device Brand"
 msgstr ""
 
-#: database/models/devices/device_brands.py:42
+#: database/models/devices/device_brands.py:31
 msgid "Device Brands"
 msgstr ""
 
-#: database/models/devices/devices.py:17
-#: database/models/object_types/data_collections/collection_device_types.py:24
-#: database/models/object_types/sampling_events/sampling_event_type_devices.py:26
+#: database/models/devices/devices.py:18
+#: database/models/object_types/data_collections/collection_device_types.py:25
+#: database/models/object_types/sampling_events/sampling_event_type_devices.py:27
 msgid "device type"
 msgstr ""
 
-#: database/models/devices/devices.py:18
+#: database/models/devices/devices.py:19
 msgid "Type of device"
 msgstr ""
 
-#: database/models/devices/devices.py:25
+#: database/models/devices/devices.py:26
+#: irekua_utils/filters/devices/physical_devices.py:32
 msgid "brand"
 msgstr ""
 
-#: database/models/devices/devices.py:26
+#: database/models/devices/devices.py:27
 msgid "Brand of device"
 msgstr ""
 
-#: database/models/devices/devices.py:31
+#: database/models/devices/devices.py:32
+#: irekua_utils/filters/devices/physical_devices.py:33
 msgid "model"
 msgstr ""
 
-#: database/models/devices/devices.py:32
+#: database/models/devices/devices.py:33
 msgid "Model of device"
 msgstr ""
 
-#: database/models/devices/devices.py:36
-#: database/models/object_types/data_collections/collection_device_types.py:30
-#: database/models/object_types/data_collections/collection_item_types.py:30
-#: database/models/object_types/data_collections/collection_roles.py:30
+#: database/models/devices/devices.py:37
+#: database/models/object_types/data_collections/collection_device_types.py:31
+#: database/models/object_types/data_collections/collection_item_types.py:31
+#: database/models/object_types/data_collections/collection_roles.py:31
 #: database/models/object_types/data_collections/collection_types.py:60
-#: database/models/object_types/entailment_types.py:32
-#: database/models/object_types/licence_types.py:27
-#: database/models/object_types/sampling_events/sampling_event_type_devices.py:34
-#: database/models/object_types/sampling_events/sampling_event_types.py:35
-#: database/models/object_types/site_types.py:25
-#: database/models/object_types/term_types.py:41
+#: database/models/object_types/entailment_types.py:34
+#: database/models/object_types/licence_types.py:28
+#: database/models/object_types/sampling_events/sampling_event_type_devices.py:35
+#: database/models/object_types/sampling_events/sampling_event_types.py:36
+#: database/models/object_types/site_types.py:27
+#: database/models/object_types/term_types.py:43
 msgid "metadata schema"
 msgstr ""
 
-#: database/models/devices/devices.py:37
+#: database/models/devices/devices.py:38
 msgid "JSON Schema for metadata of device info"
 msgstr ""
 
-#: database/models/devices/devices.py:45
+#: database/models/devices/devices.py:46
 msgid "JSON Schema for configuration info of device"
 msgstr ""
 
-#: database/models/devices/devices.py:65
-#: selia/templates/selia/items/upload.html:43
-#: selia/templates/selia/items/upload.html:53
+#: database/models/devices/devices.py:53
 msgid "Device"
 msgstr ""
 
-#: database/models/devices/devices.py:66
+#: database/models/devices/devices.py:54
 #: irekua/templates/irekua/content/about.html:112
+#: selia/templates/selia/components/list_items/collection.html:70
+#: selia/templates/selia/components/list_items/sampling_event.html:46
+#: selia/templates/selia/components/summaries/user.html:38
 msgid "Devices"
 msgstr ""
 
-#: database/models/devices/devices.py:85
+#: database/models/devices/devices.py:73
 #, python-format
 msgid "Invalid device configuration. Error: %(error)s"
 msgstr ""
 
-#: database/models/devices/devices.py:95
+#: database/models/devices/devices.py:83
 #, python-format
 msgid "Invalid device metadata. Error: %(error)s"
 msgstr ""
 
-#: database/models/devices/physical_devices.py:13
+#: database/models/devices/physical_devices.py:16
+#: irekua_utils/filters/devices/physical_devices.py:31
+msgid "custom id"
+msgstr ""
+
+#: database/models/devices/physical_devices.py:17
+msgid "Simple device identifier"
+msgstr ""
+
+#: database/models/devices/physical_devices.py:23
+#: irekua_utils/filters/devices/physical_devices.py:30
 msgid "serial number"
 msgstr ""
 
-#: database/models/devices/physical_devices.py:14
+#: database/models/devices/physical_devices.py:24
 msgid "Serial number of device"
 msgstr ""
 
-#: database/models/devices/physical_devices.py:21
+#: database/models/devices/physical_devices.py:31
 msgid "device"
 msgstr ""
 
-#: database/models/devices/physical_devices.py:22
+#: database/models/devices/physical_devices.py:32
 msgid "Reference to type of device"
 msgstr ""
 
-#: database/models/devices/physical_devices.py:29
-msgid "owner"
-msgstr ""
-
-#: database/models/devices/physical_devices.py:30
-msgid "Owner of device"
-msgstr ""
-
-#: database/models/devices/physical_devices.py:36
+#: database/models/devices/physical_devices.py:38
 msgid "Metadata associated to device"
 msgstr ""
 
-#: database/models/devices/physical_devices.py:42
+#: database/models/devices/physical_devices.py:44
 msgid "bundle"
 msgstr ""
 
-#: database/models/devices/physical_devices.py:44
+#: database/models/devices/physical_devices.py:46
 msgid "Does this device possibly represents many physical devices?"
 msgstr ""
 
-#: database/models/devices/physical_devices.py:62
+#: database/models/devices/physical_devices.py:51
 msgid "Physical Device"
 msgstr ""
 
-#: database/models/devices/physical_devices.py:63
+#: database/models/devices/physical_devices.py:52
 msgid "Physical Devices"
 msgstr ""
 
-#: database/models/devices/physical_devices.py:71
+#: database/models/devices/physical_devices.py:60
 #, python-format
 msgid "Device %(id)s of type %(device)s"
 msgstr ""
 
-#: database/models/items/items.py:48
+#: database/models/items/items.py:49
 msgid "file size"
 msgstr ""
 
-#: database/models/items/items.py:49
+#: database/models/items/items.py:50
 msgid "Size of resource in Bytes"
 msgstr ""
 
-#: database/models/items/items.py:54
-#: database/models/items/secondary_items.py:50
+#: database/models/items/items.py:55
+#: database/models/items/secondary_items.py:51
 msgid "hash"
 msgstr ""
 
-#: database/models/items/items.py:55
+#: database/models/items/items.py:56
 msgid "Hash of resource file"
 msgstr ""
 
-#: database/models/items/items.py:64
-#: database/models/items/secondary_items.py:64
-#: database/models/object_types/data_collections/collection_item_types.py:24
+#: database/models/items/items.py:65
+#: database/models/items/secondary_items.py:65
+#: database/models/object_types/data_collections/collection_item_types.py:25
 msgid "item type"
 msgstr ""
 
-#: database/models/items/items.py:65
+#: database/models/items/items.py:66
 msgid "Type of resource"
-msgstr ""
-
-#: database/models/items/items.py:70
-#: database/models/items/secondary_items.py:56
-msgid "item file"
 msgstr ""
 
 #: database/models/items/items.py:71
 #: database/models/items/secondary_items.py:57
+msgid "item file"
+msgstr ""
+
+#: database/models/items/items.py:72
+#: database/models/items/secondary_items.py:58
 msgid "Upload file associated to file"
 msgstr ""
 
-#: database/models/items/items.py:77
-#: database/models/items/secondary_items.py:78
+#: database/models/items/items.py:78
+#: database/models/items/secondary_items.py:79
 msgid "media info"
 msgstr ""
 
-#: database/models/items/items.py:78
+#: database/models/items/items.py:79
 msgid "Information of resource file"
 msgstr ""
 
-#: database/models/items/items.py:84
+#: database/models/items/items.py:85
 msgid "sampling event device"
 msgstr ""
 
-#: database/models/items/items.py:85
+#: database/models/items/items.py:86
 msgid "Sampling event device used to create item"
 msgstr ""
 
-#: database/models/items/items.py:92 database/models/terms/entailments.py:14
-#: database/models/terms/synonyms.py:15
+#: database/models/items/items.py:93 database/models/terms/entailments.py:15
+#: database/models/terms/synonyms.py:16
 msgid "source"
 msgstr ""
 
-#: database/models/items/items.py:93
+#: database/models/items/items.py:94
 msgid "Source of item (parsing function and parent directory)"
 msgstr ""
 
-#: database/models/items/items.py:99
+#: database/models/items/items.py:100
 msgid "source foreign key"
 msgstr ""
 
-#: database/models/items/items.py:100
+#: database/models/items/items.py:101
 msgid "Foreign key of file in source database"
 msgstr ""
 
-#: database/models/items/items.py:107
+#: database/models/items/items.py:108
 msgid "Metadata associated to item"
 msgstr ""
 
-#: database/models/items/items.py:112
+#: database/models/items/items.py:113 irekua_utils/filters/items/items.py:31
 msgid "captured on"
 msgstr ""
 
-#: database/models/items/items.py:113
+#: database/models/items/items.py:114
 msgid "Date on which item was produced"
 msgstr ""
 
-#: database/models/items/items.py:119
-#: database/models/sampling_events/sampling_event_devices.py:50
-#: database/models/sampling_events/sampling_events.py:63
+#: database/models/items/items.py:120
+#: database/models/sampling_events/sampling_event_devices.py:51
+#: database/models/sampling_events/sampling_events.py:65
 msgid "licence"
 msgstr ""
 
-#: database/models/items/items.py:120
+#: database/models/items/items.py:121
 msgid "Licence of item"
 msgstr ""
 
-#: database/models/items/items.py:127
+#: database/models/items/items.py:128
 msgid "tags"
 msgstr ""
 
-#: database/models/items/items.py:128
+#: database/models/items/items.py:129
 msgid "Tags for item"
 msgstr ""
 
-#: database/models/items/items.py:132
+#: database/models/items/items.py:133
 msgid "ready event types"
 msgstr ""
 
-#: database/models/items/items.py:133
+#: database/models/items/items.py:134
 msgid "Types of event for which item has been fully annotated"
 msgstr ""
 
-#: database/models/items/items.py:142
-msgid "Creator of item"
-msgstr ""
-
-#: database/models/items/items.py:163
-msgid "Last user that modified this item info"
-msgstr ""
-
-#: database/models/items/items.py:168
+#: database/models/items/items.py:138
 msgid "Item"
 msgstr ""
 
-#: database/models/items/items.py:169
+#: database/models/items/items.py:139
 #: irekua/templates/irekua/content/about.html:102
-#: selia/templates/selia/items/components/secondary_navbar.html:5
+#: selia/templates/selia/collection_detail/components/secondary_navbar.html:62
+#: selia/templates/selia/components/list_items/collection.html:82
+#: selia/templates/selia/components/list_items/collection_device.html:51
+#: selia/templates/selia/components/list_items/collection_site.html:57
+#: selia/templates/selia/components/list_items/licence.html:38
+#: selia/templates/selia/components/list_items/sampling_event.html:58
+#: selia/templates/selia/components/list_items/sampling_event_device.html:51
+#: selia/templates/selia/components/summaries/user.html:70
 msgid "Items"
 msgstr ""
 
-#: database/models/items/items.py:174
+#: database/models/items/items.py:144
 msgid "Can download item"
 msgstr ""
 
-#: database/models/items/items.py:175
+#: database/models/items/items.py:145
 msgid "Can annotate item"
 msgstr ""
 
-#: database/models/items/items.py:187
+#: database/models/items/items.py:157
 msgid ""
 "Item creator was not specified and is not determined by sampling event "
 "device."
 msgstr ""
 
-#: database/models/items/items.py:250
+#: database/models/items/items.py:224
 #, python-brace-format
 msgid ""
 "File MIME type does not coincide with declared item type (file: {file_type} !"
 "= {item_type} :item_type)"
 msgstr ""
 
-#: database/models/items/items.py:266
+#: database/models/items/items.py:240
 msgid "Licence was not provided to item nor to sampling event"
 msgstr ""
 
-#: database/models/items/items.py:277
-#: database/models/items/secondary_items.py:113
+#: database/models/items/items.py:251
+#: database/models/items/secondary_items.py:101
 msgid "If no file is provided, a hash must be given"
 msgstr ""
 
-#: database/models/items/items.py:292
-#: database/models/items/secondary_items.py:126
+#: database/models/items/items.py:266
+#: database/models/items/secondary_items.py:114
 msgid "Hash of file and recorded hash do not coincide"
 msgstr ""
 
-#: database/models/items/secondary_items.py:51
+#: database/models/items/secondary_items.py:52
 msgid "Hash of secondary resource file"
 msgstr ""
 
-#: database/models/items/secondary_items.py:65
+#: database/models/items/secondary_items.py:66
 msgid "Type of file of secondary item"
 msgstr ""
 
-#: database/models/items/secondary_items.py:71
+#: database/models/items/secondary_items.py:72
 msgid "item id"
 msgstr ""
 
-#: database/models/items/secondary_items.py:72
+#: database/models/items/secondary_items.py:73
 msgid "Reference to primary item associated to secondary item"
 msgstr ""
 
-#: database/models/items/secondary_items.py:79
+#: database/models/items/secondary_items.py:80
 msgid "Media information of secondary item file"
 msgstr ""
 
-#: database/models/items/secondary_items.py:98
+#: database/models/items/secondary_items.py:86
 msgid "Secondary Item"
 msgstr ""
 
-#: database/models/items/secondary_items.py:99
+#: database/models/items/secondary_items.py:87
 msgid "Secondary Items"
 msgstr ""
 
-#: database/models/items/secondary_items.py:104
+#: database/models/items/secondary_items.py:92
 #, python-format
 msgid "Secondary Item %(id)s derived from %(itemid)s"
 msgstr ""
 
-#: database/models/items/sources.py:11
+#: database/models/items/sources.py:13
 msgid "directory"
 msgstr ""
 
-#: database/models/items/sources.py:12
+#: database/models/items/sources.py:14
 msgid "Directory containing all files in source"
 msgstr ""
 
-#: database/models/items/sources.py:17
+#: database/models/items/sources.py:19
 msgid "source file"
 msgstr ""
 
-#: database/models/items/sources.py:18
+#: database/models/items/sources.py:20
 msgid "File containing metadata for files in source directory"
 msgstr ""
 
-#: database/models/items/sources.py:23
+#: database/models/items/sources.py:25
 msgid "parse function"
 msgstr ""
 
-#: database/models/items/sources.py:24
+#: database/models/items/sources.py:26
 msgid "Parse function used to insert files and metadata to database"
 msgstr ""
 
-#: database/models/items/sources.py:29
-msgid "uploaded on"
-msgstr ""
-
-#: database/models/items/sources.py:30
-msgid "Date on which files in source where parsed and uploaded to database"
-msgstr ""
-
-#: database/models/items/sources.py:36
+#: database/models/items/sources.py:32
 msgid "uploader id"
 msgstr ""
 
-#: database/models/items/sources.py:37
+#: database/models/items/sources.py:33
 msgid "Reference to user who uploaded files in source"
 msgstr ""
 
-#: database/models/items/sources.py:42
+#: database/models/items/sources.py:38
 msgid "Source"
 msgstr ""
 
-#: database/models/items/sources.py:43
+#: database/models/items/sources.py:39
 msgid "Sources"
 msgstr ""
 
-#: database/models/items/sources.py:48
+#: database/models/items/sources.py:42
 #, python-format
 msgid "Directory %(dir)s uploaded with %(func)s"
 msgstr ""
 
-#: database/models/items/tags.py:11
+#: database/models/items/tags.py:13
 msgid "Name of tag"
 msgstr ""
 
-#: database/models/items/tags.py:16
+#: database/models/items/tags.py:18
 msgid "Tag description"
 msgstr ""
 
-#: database/models/items/tags.py:20
-#: database/models/object_types/annotation_types.py:34
-#: database/models/object_types/device_types.py:20
-#: database/models/object_types/event_types.py:21
-#: database/models/object_types/item_types.py:50
-#: database/models/object_types/licence_types.py:50
-#: database/models/object_types/sampling_events/sampling_event_types.py:28
-#: database/models/object_types/term_types.py:26
-#: database/models/users/roles.py:22
+#: database/models/items/tags.py:22
+#: database/models/object_types/annotation_types.py:35
+#: database/models/object_types/device_types.py:22
+#: database/models/object_types/event_types.py:23
+#: database/models/object_types/item_types.py:52
+#: database/models/object_types/licence_types.py:51
+#: database/models/object_types/sampling_events/sampling_event_types.py:29
+#: database/models/object_types/term_types.py:28
+#: database/models/users/roles.py:24
 msgid "icon"
 msgstr ""
 
-#: database/models/items/tags.py:21
+#: database/models/items/tags.py:23
 msgid "Icon for tag"
 msgstr ""
 
-#: database/models/items/tags.py:40
+#: database/models/items/tags.py:29
 msgid "Tag"
 msgstr ""
 
-#: database/models/items/tags.py:41
+#: database/models/items/tags.py:30
 msgid "Tags"
 msgstr ""
 
-#: database/models/licences.py:16
+#: database/models/licences.py:15
+msgid ""
+"\n"
+"    Licence Model\n"
+"\n"
+"    A licence is a legal document expressing detail about ownership and\n"
+"    permissions of any items to which the licence is attached. The licences\n"
+"    are valid until specified, and any item licenced by and outdated "
+"licence\n"
+"    will be of open access.\n"
+"\n"
+"    The licence type (:model:`database.LicenceType`) contains all details "
+"about permissions and also holds a\n"
+"    template document to be filled whenever creating a new licence of such\n"
+"    type.\n"
+"\n"
+"    A single licence can only apply to items (:model:`database.Item`) within "
+"the same collection\n"
+"    (:model:`database.Collection`), therefore a reference to the collection "
+"to\n"
+"    which the licence belongs is stored. This facilitates the process of\n"
+"    attaching a licence to uploaded items, since the number of\n"
+"    licences belonging to a single collection is recommended to be small.\n"
+"\n"
+"    Additional metadata, as specified by the licence type, is also stored.\n"
+"    "
+msgstr ""
+
+#: database/models/licences.py:40
+#: irekua_utils/filters/data_collections/collection_licences.py:29
 msgid "licence type"
 msgstr ""
 
-#: database/models/licences.py:17
+#: database/models/licences.py:41
 msgid "Type of licence used"
 msgstr ""
 
-#: database/models/licences.py:23
+#: database/models/licences.py:47
 msgid "document"
 msgstr ""
 
-#: database/models/licences.py:24
+#: database/models/licences.py:48
 msgid "Legal document of licence agreement"
 msgstr ""
 
-#: database/models/licences.py:32
-msgid "Date of licence creation"
-msgstr ""
-
-#: database/models/licences.py:38
+#: database/models/licences.py:55
 msgid "Metadata associated with licence"
 msgstr ""
 
-#: database/models/licences.py:45
-msgid "signed by"
-msgstr ""
-
-#: database/models/licences.py:46
-msgid "User who signed the licence"
-msgstr ""
-
-#: database/models/licences.py:54
+#: database/models/licences.py:63
 msgid "Collection to which this licence belongs"
 msgstr ""
 
-#: database/models/licences.py:61
+#: database/models/licences.py:70
 msgid "is active"
 msgstr ""
 
-#: database/models/licences.py:62
+#: database/models/licences.py:71
 msgid "Licence is still active"
 msgstr ""
 
-#: database/models/licences.py:68
+#: database/models/licences.py:77
+#: selia/templates/selia/components/list_items/licence.html:11
 msgid "Licence"
 msgstr ""
 
-#: database/models/licences.py:69
+#: database/models/licences.py:78
+#: selia/templates/selia/collection_detail/components/secondary_navbar.html:86
+#: selia/templates/selia/licence_detail/components/secondary_navbar.html:10
 msgid "Licences"
 msgstr ""
 
-#: database/models/licences.py:74
+#: database/models/licences.py:83
 #, python-brace-format
 msgid "Licence of type {type} created on {date}"
 msgstr ""
 
-#: database/models/object_types/annotation_types.py:17
+#: database/models/object_types/annotation_types.py:18
 msgid "Name for type of annotation"
 msgstr ""
 
-#: database/models/object_types/annotation_types.py:22
+#: database/models/object_types/annotation_types.py:23
 msgid "Description of annotation type"
 msgstr ""
 
-#: database/models/object_types/annotation_types.py:25
+#: database/models/object_types/annotation_types.py:26
 msgid "annotation schema"
 msgstr ""
 
-#: database/models/object_types/annotation_types.py:26
+#: database/models/object_types/annotation_types.py:27
 msgid "JSON Schema for annotation info"
 msgstr ""
 
-#: database/models/object_types/annotation_types.py:35
+#: database/models/object_types/annotation_types.py:36
 msgid "Annotation type icon"
 msgstr ""
 
-#: database/models/object_types/annotation_types.py:53
+#: database/models/object_types/annotation_types.py:41
 msgid "Annotation Type"
 msgstr ""
 
-#: database/models/object_types/annotation_types.py:54
+#: database/models/object_types/annotation_types.py:42
 msgid "Annotation Types"
 msgstr ""
 
-#: database/models/object_types/annotation_types.py:67
+#: database/models/object_types/annotation_types.py:55
 #, python-format
 msgid "Invalid annotation for annotation type %(type)s. Error: %(error)s"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_device_types.py:17
-#: database/models/object_types/data_collections/collection_item_types.py:17
-#: database/models/object_types/data_collections/collection_roles.py:17
+#: database/models/object_types/data_collections/collection_device_types.py:18
+#: database/models/object_types/data_collections/collection_item_types.py:18
+#: database/models/object_types/data_collections/collection_roles.py:18
 msgid "Collection type in which role applies"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_device_types.py:25
+#: database/models/object_types/data_collections/collection_device_types.py:26
 msgid "Device to be part of collection"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_device_types.py:31
+#: database/models/object_types/data_collections/collection_device_types.py:32
 msgid "JSON Schema for metadata of collection device info"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_device_types.py:38
+#: database/models/object_types/data_collections/collection_device_types.py:39
 msgid "Collection Device Type"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_device_types.py:39
+#: database/models/object_types/data_collections/collection_device_types.py:40
 msgid "Collection Device Types"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_device_types.py:47
+#: database/models/object_types/data_collections/collection_device_types.py:48
 #, python-format
 msgid "Device type %(device_type)s for collection type %(collection_type)s"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_device_types.py:60
+#: database/models/object_types/data_collections/collection_device_types.py:61
 #, python-format
 msgid "Invalid metadata for collection device. Error: %(error)s"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_item_types.py:25
+#: database/models/object_types/data_collections/collection_item_types.py:26
 msgid "Item to be part of collection"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_item_types.py:31
+#: database/models/object_types/data_collections/collection_item_types.py:32
 msgid "JSON Schema for metadata of collection item info"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_item_types.py:38
+#: database/models/object_types/data_collections/collection_item_types.py:39
 msgid "Collection Item Type"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_item_types.py:39
+#: database/models/object_types/data_collections/collection_item_types.py:40
 msgid "Collection Item Types"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_item_types.py:46
+#: database/models/object_types/data_collections/collection_item_types.py:47
 #, python-format
 msgid "Item type %(item)s for collection %(collection)s"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_item_types.py:59
+#: database/models/object_types/data_collections/collection_item_types.py:60
 msgid ""
 "Invalid metadata for item type %(type)s in collection %(collection). Error: "
 "%(error)"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_roles.py:25
+#: database/models/object_types/data_collections/collection_roles.py:26
 msgid "Role to be part of collection"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_roles.py:31
+#: database/models/object_types/data_collections/collection_roles.py:32
 msgid "JSON Schema for metadata of collection role info"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_roles.py:38
+#: database/models/object_types/data_collections/collection_roles.py:39
 msgid "Collection Role"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_roles.py:39
+#: database/models/object_types/data_collections/collection_roles.py:40
 msgid "Collection Roles"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_roles.py:46
+#: database/models/object_types/data_collections/collection_roles.py:47
 #, python-format
 msgid "Role %(role)s for collections of type %(collection)s"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_roles.py:59
+#: database/models/object_types/data_collections/collection_roles.py:60
 #, python-format
 msgid ""
 "Invalid metadata for user of role type %(type)s in collection "
@@ -1402,7 +1327,7 @@ msgid ""
 msgstr ""
 
 #: database/models/object_types/data_collections/collection_types.py:87
-#: database/models/object_types/sampling_events/sampling_event_types.py:53
+#: database/models/object_types/sampling_events/sampling_event_types.py:54
 msgid "restrict site types"
 msgstr ""
 
@@ -1440,7 +1365,7 @@ msgid ""
 msgstr ""
 
 #: database/models/object_types/data_collections/collection_types.py:123
-#: database/models/object_types/sampling_events/sampling_event_types.py:44
+#: database/models/object_types/sampling_events/sampling_event_types.py:45
 msgid "restrict device types"
 msgstr ""
 
@@ -1469,7 +1394,7 @@ msgid ""
 msgstr ""
 
 #: database/models/object_types/data_collections/collection_types.py:151
-#: database/models/object_types/sampling_events/sampling_event_types.py:70
+#: database/models/object_types/sampling_events/sampling_event_types.py:71
 msgid "site types"
 msgstr ""
 
@@ -1494,7 +1419,7 @@ msgid "Types of licences valid for collections of type"
 msgstr ""
 
 #: database/models/object_types/data_collections/collection_types.py:166
-#: database/models/object_types/item_types.py:59
+#: database/models/object_types/item_types.py:61
 msgid "event types"
 msgstr ""
 
@@ -1519,7 +1444,7 @@ msgid "Types of items valid for collections of type"
 msgstr ""
 
 #: database/models/object_types/data_collections/collection_types.py:185
-#: database/models/object_types/sampling_events/sampling_event_types.py:65
+#: database/models/object_types/sampling_events/sampling_event_types.py:66
 msgid "device types"
 msgstr ""
 
@@ -1535,606 +1460,591 @@ msgstr ""
 msgid "Roles valid for collections of type"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_types.py:211
+#: database/models/object_types/data_collections/collection_types.py:198
 msgid "Collection Type"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_types.py:212
+#: database/models/object_types/data_collections/collection_types.py:199
 msgid "Collection Types"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_types.py:226
+#: database/models/object_types/data_collections/collection_types.py:213
 #, python-format
 msgid ""
 "Invalid collection metadata for collection of type %(type)s. Error: %(error)s"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_types.py:239
+#: database/models/object_types/data_collections/collection_types.py:226
 #, python-format
 msgid ""
 "Site type %(site_type)s is not accepted in collection of type %(col_type)s "
 "or does not exist"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_types.py:254
+#: database/models/object_types/data_collections/collection_types.py:241
 #, python-format
 msgid ""
 "Annotation type %(annotation_type)s is not accepted in collection of type "
 "%(col_type)s or does not exist"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_types.py:269
+#: database/models/object_types/data_collections/collection_types.py:256
 #, python-format
 msgid ""
 "Licence type %(licence_type)s is not accepted in collection of type "
 "%(col_type)s or does not exist"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_types.py:284
+#: database/models/object_types/data_collections/collection_types.py:271
 #, python-format
 msgid ""
 "Event type %(event_type)s is not accepted in collection of type %(col_type)s "
 "or does not exist"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_types.py:301
+#: database/models/object_types/data_collections/collection_types.py:288
 #, python-format
 msgid ""
 "Item type %(item_type)s is not accepted in collection of type %(col_type)s "
 "or does not exist"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_types.py:318
+#: database/models/object_types/data_collections/collection_types.py:305
 #, python-format
 msgid ""
 "Item type %(device_type)s is not accepted in collection of type %(col_type)s "
 "or does not exist"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_types.py:333
+#: database/models/object_types/data_collections/collection_types.py:320
 #, python-format
 msgid ""
 "Sampling Event type %(sampling_event_type)s is not accepted in collection of "
 "type %(col_type)s or does not exist"
 msgstr ""
 
-#: database/models/object_types/data_collections/collection_types.py:347
+#: database/models/object_types/data_collections/collection_types.py:334
 #, python-format
 msgid ""
 "Role type %(role)s is not accepted in collection of type %(col_type)s or "
 "does not exist"
 msgstr ""
 
-#: database/models/object_types/device_types.py:11
+#: database/models/object_types/device_types.py:13
 msgid "Name for device type"
 msgstr ""
 
-#: database/models/object_types/device_types.py:16
+#: database/models/object_types/device_types.py:18
 msgid "Description of device type"
 msgstr ""
 
-#: database/models/object_types/device_types.py:21
+#: database/models/object_types/device_types.py:23
 msgid "Icon for device type"
 msgstr ""
 
-#: database/models/object_types/device_types.py:40
+#: database/models/object_types/device_types.py:29
 msgid "Device Type"
 msgstr ""
 
-#: database/models/object_types/device_types.py:41
+#: database/models/object_types/device_types.py:30
 msgid "Device Types"
 msgstr ""
 
-#: database/models/object_types/entailment_types.py:16
+#: database/models/object_types/entailment_types.py:18
 msgid "source type"
 msgstr ""
 
-#: database/models/object_types/entailment_types.py:17
+#: database/models/object_types/entailment_types.py:19
 msgid "Term type of source of entailment"
 msgstr ""
 
-#: database/models/object_types/entailment_types.py:25
+#: database/models/object_types/entailment_types.py:27
 msgid "target type"
 msgstr ""
 
-#: database/models/object_types/entailment_types.py:26
+#: database/models/object_types/entailment_types.py:28
 msgid "Term type of target of entailment"
 msgstr ""
 
-#: database/models/object_types/entailment_types.py:33
+#: database/models/object_types/entailment_types.py:35
 msgid "JSON Schema for metadata of entailment info"
 msgstr ""
 
-#: database/models/object_types/entailment_types.py:53
+#: database/models/object_types/entailment_types.py:42
 msgid "Entailment Type"
 msgstr ""
 
-#: database/models/object_types/entailment_types.py:54
+#: database/models/object_types/entailment_types.py:43
 msgid "Entailment Types"
 msgstr ""
 
-#: database/models/object_types/entailment_types.py:68
+#: database/models/object_types/entailment_types.py:57
 msgid "Entailments are not possible between terms of the same type"
 msgstr ""
 
-#: database/models/object_types/entailment_types.py:77
+#: database/models/object_types/entailment_types.py:66
 #, python-format
 msgid ""
 "Invalid metadata for entailment between terms of types %(entailment)s. "
 "Error: %(error)s"
 msgstr ""
 
-#: database/models/object_types/event_types.py:12
+#: database/models/object_types/event_types.py:14
 msgid "Name of event type"
 msgstr ""
 
-#: database/models/object_types/event_types.py:17
+#: database/models/object_types/event_types.py:19
 msgid "Description of event type"
 msgstr ""
 
-#: database/models/object_types/event_types.py:22
+#: database/models/object_types/event_types.py:24
 msgid "Event type icon"
 msgstr ""
 
-#: database/models/object_types/event_types.py:30
+#: database/models/object_types/event_types.py:32
 msgid "term types"
 msgstr ""
 
-#: database/models/object_types/event_types.py:32
+#: database/models/object_types/event_types.py:34
 msgid "Valid term types with which to label this type of events"
 msgstr ""
 
-#: database/models/object_types/event_types.py:50
+#: database/models/object_types/event_types.py:39
 msgid "Event Type"
 msgstr ""
 
-#: database/models/object_types/event_types.py:51
+#: database/models/object_types/event_types.py:40
 msgid "Event Types"
 msgstr ""
 
-#: database/models/object_types/event_types.py:63
+#: database/models/object_types/event_types.py:52
 #, python-format
 msgid "Term type %(term_type)s is invalid for event type %(event_type)s"
 msgstr ""
 
-#: database/models/object_types/item_types.py:26
+#: database/models/object_types/item_types.py:28
 msgid "Name of item type"
 msgstr ""
 
-#: database/models/object_types/item_types.py:31
+#: database/models/object_types/item_types.py:33
 msgid "Description of item type"
 msgstr ""
 
-#: database/models/object_types/item_types.py:35
+#: database/models/object_types/item_types.py:37
 msgid "media info schema"
 msgstr ""
 
-#: database/models/object_types/item_types.py:36
+#: database/models/object_types/item_types.py:38
 msgid "JSON Schema for item type media info"
 msgstr ""
 
-#: database/models/object_types/item_types.py:44
+#: database/models/object_types/item_types.py:46
 msgid "media type"
 msgstr ""
 
-#: database/models/object_types/item_types.py:45
+#: database/models/object_types/item_types.py:47
 msgid "MIME type associated with item type"
 msgstr ""
 
-#: database/models/object_types/item_types.py:51
+#: database/models/object_types/item_types.py:53
 msgid "Item type icon"
 msgstr ""
 
-#: database/models/object_types/item_types.py:60
+#: database/models/object_types/item_types.py:62
 msgid "Types of event for this item type"
 msgstr ""
 
-#: database/models/object_types/item_types.py:77
+#: database/models/object_types/item_types.py:66
 msgid "Item Type"
 msgstr ""
 
-#: database/models/object_types/item_types.py:78
+#: database/models/object_types/item_types.py:67
 msgid "Item Types"
 msgstr ""
 
-#: database/models/object_types/item_types.py:92
+#: database/models/object_types/item_types.py:81
 #, python-format
 msgid "Invalid media info for item of type %(type)s. Error %(error)s"
 msgstr ""
 
-#: database/models/object_types/item_types.py:102
+#: database/models/object_types/item_types.py:91
 #, python-format
 msgid "Event type %(event_type)s is invalid for item type %(item_type)s"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:18
+#: database/models/object_types/licence_types.py:19
 msgid "Licence type name"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:23
+#: database/models/object_types/licence_types.py:24
 msgid "Description of licence"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:28
+#: database/models/object_types/licence_types.py:29
 msgid "JSON Schema for metadata of licence info"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:36
+#: database/models/object_types/licence_types.py:37
 msgid "document template"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:37
+#: database/models/object_types/licence_types.py:38
 msgid "Template for licence document"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:42
+#: database/models/object_types/licence_types.py:43
 msgid "years valid for"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:44
+#: database/models/object_types/licence_types.py:45
 msgid "Number of years for which licences of this type are valid"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:51
+#: database/models/object_types/licence_types.py:52
 msgid "Licence type icon"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:57
+#: database/models/object_types/licence_types.py:59
 msgid "can view"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:58
+#: database/models/object_types/licence_types.py:60
 msgid "Any user can view item info"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:63
+#: database/models/object_types/licence_types.py:65
 msgid "can download"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:64
+#: database/models/object_types/licence_types.py:66
 msgid "Any user can download item"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:69
+#: database/models/object_types/licence_types.py:71
 msgid "can view annotations"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:70
+#: database/models/object_types/licence_types.py:72
 msgid "Any user can view item annotations"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:75
+#: database/models/object_types/licence_types.py:77
 msgid "can annotate"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:76
+#: database/models/object_types/licence_types.py:78
 msgid "Any user can annotate item"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:81
+#: database/models/object_types/licence_types.py:83
 msgid "can vote annotations"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:82
+#: database/models/object_types/licence_types.py:84
 msgid "Any user can vote on item annotations"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:100
+#: database/models/object_types/licence_types.py:89
 msgid "Licence Type"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:101
+#: database/models/object_types/licence_types.py:90
 msgid "Licence Types"
 msgstr ""
 
-#: database/models/object_types/licence_types.py:114
+#: database/models/object_types/licence_types.py:103
 #, python-format
 msgid "Invalid licence metadata. Error: %(error)s"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_type_devices.py:16
-#: database/models/sampling_events/sampling_events.py:14
+#: database/models/object_types/sampling_events/sampling_event_type_devices.py:17
+#: database/models/sampling_events/sampling_events.py:16
 msgid "sampling event type"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_type_devices.py:18
+#: database/models/object_types/sampling_events/sampling_event_type_devices.py:19
 msgid "Sampling event type in which this device types can be placed"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_type_devices.py:28
+#: database/models/object_types/sampling_events/sampling_event_type_devices.py:29
 msgid "Type of device that can be used in sampling event of the given type"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_type_devices.py:36
+#: database/models/object_types/sampling_events/sampling_event_type_devices.py:37
 msgid "JSON schema for metadata associated to device in sampling event"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_type_devices.py:44
+#: database/models/object_types/sampling_events/sampling_event_type_devices.py:45
 msgid "Sampling Event Type Device Type"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_type_devices.py:45
+#: database/models/object_types/sampling_events/sampling_event_type_devices.py:46
 msgid "Sampling Event Type Device Types"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_type_devices.py:59
+#: database/models/object_types/sampling_events/sampling_event_type_devices.py:60
 msgid ""
 "Invalid metadata for device of type %(device)s in samplingevent of type "
 "%(sampling_event)s. Error: %(error)"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_types.py:19
+#: database/models/object_types/sampling_events/sampling_event_types.py:20
 msgid "Name fo sampling event type"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_types.py:24
+#: database/models/object_types/sampling_events/sampling_event_types.py:25
 msgid "Description of sampling event type"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_types.py:29
+#: database/models/object_types/sampling_events/sampling_event_types.py:30
 msgid "Icon for sampling event type"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_types.py:36
+#: database/models/object_types/sampling_events/sampling_event_types.py:37
 msgid "JSON Schema for metadata of sampling event info"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_types.py:46
+#: database/models/object_types/sampling_events/sampling_event_types.py:47
 msgid ""
 "Flag indicating whether to restrict device types associated with this "
 "sampling event type"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_types.py:55
+#: database/models/object_types/sampling_events/sampling_event_types.py:56
 msgid ""
 "Flag indicating whether to restrict site types associated with this sampling "
 "event type"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_types.py:66
+#: database/models/object_types/sampling_events/sampling_event_types.py:67
 msgid "Valid device types for this sampling event type"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_types.py:71
+#: database/models/object_types/sampling_events/sampling_event_types.py:72
 msgid "Valid site types for this sampling event type"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_types.py:88
+#: database/models/object_types/sampling_events/sampling_event_types.py:76
 msgid "Sampling Event Type"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_types.py:89
+#: database/models/object_types/sampling_events/sampling_event_types.py:77
 msgid "Sampling Event Types"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_types.py:103
+#: database/models/object_types/sampling_events/sampling_event_types.py:91
 msgid "Invalid metadata for sampling event of type %(type)s. Error: %(error)"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_types.py:117
+#: database/models/object_types/sampling_events/sampling_event_types.py:105
 #, python-format
 msgid ""
 "Device type %(device_type) is not valid for sampling event of type %(type)s"
 msgstr ""
 
-#: database/models/object_types/sampling_events/sampling_event_types.py:132
+#: database/models/object_types/sampling_events/sampling_event_types.py:120
 #, python-format
 msgid "Site type %(site_type) is not valid for sampling event of type %(type)s"
 msgstr ""
 
-#: database/models/object_types/site_types.py:16
+#: database/models/object_types/site_types.py:18
 msgid "Name of site type"
 msgstr ""
 
-#: database/models/object_types/site_types.py:21
+#: database/models/object_types/site_types.py:23
 msgid "Description of site type"
 msgstr ""
 
-#: database/models/object_types/site_types.py:26
+#: database/models/object_types/site_types.py:28
 msgid "JSON Schema for metadata of site info"
 msgstr ""
 
-#: database/models/object_types/site_types.py:46
+#: database/models/object_types/site_types.py:35
 msgid "Site Type"
 msgstr ""
 
-#: database/models/object_types/site_types.py:47
+#: database/models/object_types/site_types.py:36
 msgid "Site Types"
 msgstr ""
 
-#: database/models/object_types/site_types.py:60
+#: database/models/object_types/site_types.py:49
 msgid "Invalid site metadata for site of type %(type)s. Error: %(error)"
 msgstr ""
 
-#: database/models/object_types/term_types.py:17
+#: database/models/object_types/term_types.py:19
 msgid "Name for term type"
 msgstr ""
 
-#: database/models/object_types/term_types.py:22
+#: database/models/object_types/term_types.py:24
 msgid "Description of term type"
 msgstr ""
 
-#: database/models/object_types/term_types.py:27
+#: database/models/object_types/term_types.py:29
 msgid "Term type icon"
 msgstr ""
 
-#: database/models/object_types/term_types.py:33
+#: database/models/object_types/term_types.py:35
 msgid "is categorical"
 msgstr ""
 
-#: database/models/object_types/term_types.py:35
+#: database/models/object_types/term_types.py:37
 msgid "Flag indicating whether the term type represents a categorical variable"
 msgstr ""
 
-#: database/models/object_types/term_types.py:42
+#: database/models/object_types/term_types.py:44
 msgid "JSON Schema for metadata of term info"
 msgstr ""
 
-#: database/models/object_types/term_types.py:49
+#: database/models/object_types/term_types.py:51
 msgid "synonym metadata schema"
 msgstr ""
 
-#: database/models/object_types/term_types.py:50
+#: database/models/object_types/term_types.py:52
 msgid "JSON Schema for metadata of synonym info"
 msgstr ""
 
-#: database/models/object_types/term_types.py:70
+#: database/models/object_types/term_types.py:59
 msgid "Term Type"
 msgstr ""
 
-#: database/models/object_types/term_types.py:71
+#: database/models/object_types/term_types.py:60
 msgid "Term Types"
 msgstr ""
 
-#: database/models/object_types/term_types.py:81
+#: database/models/object_types/term_types.py:70
 #, python-format
 msgid "Value %(value)s is invalid for non-categorical term of type %(type)s"
 msgstr ""
 
-#: database/models/object_types/term_types.py:89
+#: database/models/object_types/term_types.py:78
 #, python-format
 msgid "Value %(value)s is invalid for categorical term of type %(type)s"
 msgstr ""
 
-#: database/models/object_types/term_types.py:107
+#: database/models/object_types/term_types.py:96
 #, python-format
 msgid "Invalid metadata for term of type %(type)s. Error: %(error)s"
 msgstr ""
 
-#: database/models/object_types/term_types.py:119
+#: database/models/object_types/term_types.py:108
 #, python-format
 msgid ""
 "Invalid metadata for synonym of terms of type %(type)s. Error: %(error)s"
 msgstr ""
 
-#: database/models/sampling_events/sampling_event_devices.py:14
+#: database/models/sampling_events/sampling_event_devices.py:15
 msgid "sampling event"
 msgstr ""
 
-#: database/models/sampling_events/sampling_event_devices.py:15
+#: database/models/sampling_events/sampling_event_devices.py:16
 msgid "Sampling event in which this device was deployed"
 msgstr ""
 
-#: database/models/sampling_events/sampling_event_devices.py:22
+#: database/models/sampling_events/sampling_event_devices.py:23
 msgid "collection device"
 msgstr ""
 
-#: database/models/sampling_events/sampling_event_devices.py:23
+#: database/models/sampling_events/sampling_event_devices.py:24
 msgid "Reference to collection device used on sampling event"
 msgstr ""
 
-#: database/models/sampling_events/sampling_event_devices.py:30
-#: database/models/sampling_events/sampling_events.py:30
+#: database/models/sampling_events/sampling_event_devices.py:31
+#: database/models/sampling_events/sampling_events.py:32
 msgid "Sampling event commentaries"
 msgstr ""
 
-#: database/models/sampling_events/sampling_event_devices.py:35
+#: database/models/sampling_events/sampling_event_devices.py:36
 msgid "Metadata associated to sampling event device"
 msgstr ""
 
-#: database/models/sampling_events/sampling_event_devices.py:41
+#: database/models/sampling_events/sampling_event_devices.py:42
 msgid "configuration"
 msgstr ""
 
-#: database/models/sampling_events/sampling_event_devices.py:43
+#: database/models/sampling_events/sampling_event_devices.py:44
 msgid "Configuration on device through the sampling event"
 msgstr ""
 
-#: database/models/sampling_events/sampling_event_devices.py:51
-#: database/models/sampling_events/sampling_events.py:64
+#: database/models/sampling_events/sampling_event_devices.py:52
+#: database/models/sampling_events/sampling_events.py:66
 msgid "Licence for all items in sampling event"
 msgstr ""
 
-#: database/models/sampling_events/sampling_event_devices.py:60
-#: database/models/sampling_events/sampling_events.py:73
-msgid "create by"
-msgstr ""
-
-#: database/models/sampling_events/sampling_event_devices.py:61
-msgid "Creator of sampling event device"
-msgstr ""
-
-#: database/models/sampling_events/sampling_event_devices.py:82
-#: database/models/sampling_events/sampling_events.py:95
-msgid "Last modifier"
-msgstr ""
-
-#: database/models/sampling_events/sampling_event_devices.py:87
+#: database/models/sampling_events/sampling_event_devices.py:57
 msgid "Sampling Event Device"
 msgstr ""
 
-#: database/models/sampling_events/sampling_event_devices.py:88
-#: selia/templates/selia/sampling_events/devices.html:5
-#: selia/templates/selia/sampling_events/home.html:4
-#: selia/templatetags/treeview.py:26
+#: database/models/sampling_events/sampling_event_devices.py:58
+#: selia/templates/selia/sampling_event_detail/device_list.html:4
 msgid "Sampling Event Devices"
 msgstr ""
 
-#: database/models/sampling_events/sampling_event_devices.py:93
+#: database/models/sampling_events/sampling_event_devices.py:63
 #, python-brace-format
 msgid "Collection device {device} in Sampling Event {event}"
 msgstr ""
 
-#: database/models/sampling_events/sampling_events.py:15
+#: database/models/sampling_events/sampling_events.py:17
 msgid "Type of sampling event"
 msgstr ""
 
-#: database/models/sampling_events/sampling_events.py:21
+#: database/models/sampling_events/sampling_events.py:23
 msgid "collection site"
 msgstr ""
 
-#: database/models/sampling_events/sampling_events.py:22
+#: database/models/sampling_events/sampling_events.py:24
 msgid "Reference to site at which sampling took place"
 msgstr ""
 
-#: database/models/sampling_events/sampling_events.py:35
+#: database/models/sampling_events/sampling_events.py:37
 msgid "Metadata associated to sampling event"
 msgstr ""
 
-#: database/models/sampling_events/sampling_events.py:41
+#: database/models/sampling_events/sampling_events.py:43
+#: irekua_utils/filters/data_collections/collection_sampling_events.py:33
+#: irekua_utils/filters/sampling_events/sampling_events.py:26
 msgid "started on"
 msgstr ""
 
-#: database/models/sampling_events/sampling_events.py:42
+#: database/models/sampling_events/sampling_events.py:44
 msgid "Date at which sampling begun"
 msgstr ""
 
-#: database/models/sampling_events/sampling_events.py:47
+#: database/models/sampling_events/sampling_events.py:49
+#: irekua_utils/filters/data_collections/collection_sampling_events.py:34
+#: irekua_utils/filters/sampling_events/sampling_events.py:27
 msgid "ended on"
 msgstr ""
 
-#: database/models/sampling_events/sampling_events.py:48
+#: database/models/sampling_events/sampling_events.py:50
 msgid "Date at which sampling stoped"
 msgstr ""
 
-#: database/models/sampling_events/sampling_events.py:56
+#: database/models/sampling_events/sampling_events.py:58
 msgid "Collection to which sampling event belongs"
 msgstr ""
 
-#: database/models/sampling_events/sampling_events.py:74
-msgid "Creator of sampling event"
-msgstr ""
-
-#: database/models/sampling_events/sampling_events.py:100
-#: selia/templates/selia/items/upload.html:20
+#: database/models/sampling_events/sampling_events.py:71
 msgid "Sampling Event"
 msgstr ""
 
-#: database/models/sampling_events/sampling_events.py:101
-#: selia/templates/selia/collections/detail/sampling_events.html:5
+#: database/models/sampling_events/sampling_events.py:72
+#: selia/templates/selia/components/list_items/collection.html:58
+#: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:10
+#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:15
 msgid "Sampling Events"
 msgstr ""
 
-#: database/models/sampling_events/sampling_events.py:106
+#: database/models/sampling_events/sampling_events.py:77
 #, python-format
 msgid "Sampling event %(id)s on site %(site)s: %(start)s - %(end)s"
 msgstr ""
 
-#: database/models/sampling_events/sampling_events.py:120
+#: database/models/sampling_events/sampling_events.py:97
 msgid "Site does not belong to the declared collection"
 msgstr ""
 
-#: database/models/sites.py:16
+#: database/models/sites.py:17
 msgid ""
 "\n"
 "        Site Model\n"
@@ -2155,368 +2065,371 @@ msgstr ""
 "\n"
 "        Modelo de Sitio\n"
 "\n"
-"        Un sitio consiste de la especificación de coordenadas. Se asume que el datum "
-"de referencia\n"
-"        es WGS-84. Es posible asociar un nombre al sitio para facilitar la referencia futura.\n"
-"        Adicionalmente, un campo opcional de localidad posibilita localizar el sitio dentro de\n"
+"        Un sitio consiste de la especificación de coordenadas. Se asume que "
+"el datum de referencia\n"
+"        es WGS-84. Es posible asociar un nombre al sitio para facilitar la "
+"referencia futura.\n"
+"        Adicionalmente, un campo opcional de localidad posibilita localizar "
+"el sitio dentro de\n"
 "        una región y permite una organización jerárquica de sitios.\n"
 "\n"
-"        El creador del sitio es almacenado de modo que los usuarios sean capaces de buscar"
-" dentro\n"
-"        de sus sitios previamente creados al momento de planear un nuevo evento de monitoreo. \n"
+"        El creador del sitio es almacenado de modo que los usuarios sean "
+"capaces de buscar dentro\n"
+"        de sus sitios previamente creados al momento de planear un nuevo "
+"evento de monitoreo. \n"
 "    "
 
-#: database/models/sites.py:32
+#: database/models/sites.py:33
 msgid "Name of site"
 msgstr ""
 
-#: database/models/sites.py:38
+#: database/models/sites.py:39 irekua_utils/filters/sites.py:28
 msgid "locality"
 msgstr ""
 
-#: database/models/sites.py:39
+#: database/models/sites.py:40
 msgid "Name of locality in which the site is located"
 msgstr ""
 
-#: database/models/sites.py:44
+#: database/models/sites.py:45
 msgid "geo ref"
 msgstr ""
 
-#: database/models/sites.py:45
+#: database/models/sites.py:46
 msgid "Georeference of site as Geometry"
 msgstr ""
 
-#: database/models/sites.py:49
+#: database/models/sites.py:50
 msgid "latitude"
 msgstr ""
 
-#: database/models/sites.py:50
+#: database/models/sites.py:51
 msgid "Latitude of site"
 msgstr ""
 
-#: database/models/sites.py:54
+#: database/models/sites.py:55
 msgid "longitude"
 msgstr ""
 
-#: database/models/sites.py:55
+#: database/models/sites.py:56
 msgid "Longitude of site"
 msgstr ""
 
-#: database/models/sites.py:60
+#: database/models/sites.py:61
 msgid "altitude"
 msgstr ""
 
-#: database/models/sites.py:61
+#: database/models/sites.py:62
 msgid "Altitude of site (in meters)"
 msgstr ""
 
-#: database/models/sites.py:65
+#: database/models/sites.py:66
+#: selia/templates/selia/components/list_items/collection_site.html:19
+#: selia/templates/selia/components/list_items/site.html:20
 msgid "Site"
 msgstr ""
 
-#: database/models/sites.py:66
+#: database/models/sites.py:67
+#: selia/templates/selia/components/list_items/collection.html:46
+#: selia/templates/selia/components/summaries/user.html:22
 msgid "Sites"
 msgstr ""
 
-#: database/models/sites.py:80
+#: database/models/sites.py:81
 msgid "Geo reference or longitude-latitude must be provided"
 msgstr ""
 
-#: database/models/sites.py:87
+#: database/models/sites.py:88
 #, python-format
-msgid "Site %(id)s%(name)s of type %(type)s"
+msgid "Site %(id)s%(name)s"
 msgstr ""
 
-#: database/models/terms/entailments.py:15
+#: database/models/terms/entailments.py:16
 msgid "Source of entailment"
 msgstr ""
 
-#: database/models/terms/entailments.py:22 database/models/terms/synonyms.py:23
+#: database/models/terms/entailments.py:23 database/models/terms/synonyms.py:24
 msgid "target"
 msgstr ""
 
-#: database/models/terms/entailments.py:23
+#: database/models/terms/entailments.py:24
 msgid "Target of entailment"
 msgstr ""
 
-#: database/models/terms/entailments.py:29
+#: database/models/terms/entailments.py:30
 msgid "Metadata associated to entailment"
 msgstr ""
 
-#: database/models/terms/entailments.py:47
+#: database/models/terms/entailments.py:35
 msgid "Entailment"
 msgstr ""
 
-#: database/models/terms/entailments.py:48
+#: database/models/terms/entailments.py:36
 msgid "Entailments"
 msgstr ""
 
-#: database/models/terms/entailments.py:65
+#: database/models/terms/entailments.py:53
 #, python-format
 msgid ""
 "Entailment between types %(source_type)s and %(target_type)s is not possible"
 msgstr ""
 
-#: database/models/terms/entailments.py:74
+#: database/models/terms/entailments.py:62
 #, python-format
 msgid "Invalid entailment metadata. Error %(error)s"
 msgstr ""
 
-#: database/models/terms/synonym_suggestions.py:19
+#: database/models/terms/synonym_suggestions.py:20
 msgid "synonym"
 msgstr ""
 
-#: database/models/terms/synonym_suggestions.py:20
+#: database/models/terms/synonym_suggestions.py:21
 msgid "Suggestion of synonym"
 msgstr ""
 
-#: database/models/terms/synonym_suggestions.py:25
+#: database/models/terms/synonym_suggestions.py:26
 msgid "Description of synonym"
 msgstr ""
 
-#: database/models/terms/synonym_suggestions.py:31
+#: database/models/terms/synonym_suggestions.py:32
 msgid "Metadata associated to synonym"
 msgstr ""
 
 #: database/models/terms/synonym_suggestions.py:38
-#: database/models/terms/term_suggestions.py:42
-msgid "suggested by"
-msgstr ""
-
-#: database/models/terms/synonym_suggestions.py:39
-msgid "User who made the synonym suggestion"
-msgstr ""
-
-#: database/models/terms/synonym_suggestions.py:44
-#: database/models/terms/term_suggestions.py:48
-msgid "suggested on"
-msgstr ""
-
-#: database/models/terms/synonym_suggestions.py:45
-msgid "Date of synonym suggestion"
-msgstr ""
-
-#: database/models/terms/synonym_suggestions.py:50
 msgid "Synonym Suggestion"
 msgstr ""
 
-#: database/models/terms/synonym_suggestions.py:51
+#: database/models/terms/synonym_suggestions.py:39
 msgid "Synonym Suggestions"
 msgstr ""
 
-#: database/models/terms/synonym_suggestions.py:54
+#: database/models/terms/synonym_suggestions.py:42
 #, python-brace-format
 msgid "Suggestion: {term} = {suggestion}"
 msgstr ""
 
-#: database/models/terms/synonyms.py:16
+#: database/models/terms/synonyms.py:17
 msgid "Reference to the source of synonym"
 msgstr ""
 
-#: database/models/terms/synonyms.py:24
+#: database/models/terms/synonyms.py:25
 msgid "Reference to the target of the synonym"
 msgstr ""
 
-#: database/models/terms/synonyms.py:31
+#: database/models/terms/synonyms.py:32
 msgid "Metadata associated to the synonym"
 msgstr ""
 
-#: database/models/terms/synonyms.py:48
+#: database/models/terms/synonyms.py:36
 msgid "Synonym"
 msgstr ""
 
-#: database/models/terms/synonyms.py:49
+#: database/models/terms/synonyms.py:37
 msgid "Synonyms"
 msgstr ""
 
-#: database/models/terms/synonyms.py:62
+#: database/models/terms/synonyms.py:50
 msgid "Source and target terms are not of the same type"
 msgstr ""
 
 #: database/models/terms/term_suggestions.py:16
-#: database/models/terms/terms.py:14
+#: database/models/terms/terms.py:15
 msgid "term type"
 msgstr ""
 
 #: database/models/terms/term_suggestions.py:17
-#: database/models/terms/terms.py:15
+#: database/models/terms/terms.py:16
 msgid "Type of term"
 msgstr ""
 
 #: database/models/terms/term_suggestions.py:23
-#: database/models/terms/terms.py:22
+#: database/models/terms/terms.py:23
 msgid "value"
 msgstr ""
 
 #: database/models/terms/term_suggestions.py:24
-#: database/models/terms/terms.py:23
+#: database/models/terms/terms.py:24
 msgid "Value of term"
 msgstr ""
 
 #: database/models/terms/term_suggestions.py:29
-#: database/models/terms/terms.py:28
+#: database/models/terms/terms.py:29
 msgid "Description of term"
 msgstr ""
 
 #: database/models/terms/term_suggestions.py:36
-#: database/models/terms/terms.py:33
+#: database/models/terms/terms.py:34
 msgid "Metadata associated to term"
 msgstr ""
 
-#: database/models/terms/term_suggestions.py:43
-msgid "User who made the term suggestion"
-msgstr ""
-
-#: database/models/terms/term_suggestions.py:49
-msgid "Date of term suggestion"
-msgstr ""
-
-#: database/models/terms/term_suggestions.py:54
+#: database/models/terms/term_suggestions.py:41
 msgid "Term Suggestion"
 msgstr ""
 
-#: database/models/terms/term_suggestions.py:55
+#: database/models/terms/term_suggestions.py:42
 msgid "Term Suggestions"
 msgstr ""
 
-#: database/models/terms/term_suggestions.py:58
+#: database/models/terms/term_suggestions.py:45
 #, python-format
 msgid "Suggestion: %(term_type)s: %(value)s"
 msgstr ""
 
-#: database/models/terms/terms.py:53
+#: database/models/terms/terms.py:41
 msgid "Term"
 msgstr ""
 
-#: database/models/terms/terms.py:54
+#: database/models/terms/terms.py:42
 msgid "Terms"
 msgstr ""
 
-#: database/models/users/institutions.py:15
+#: database/models/users/institutions.py:16
 msgid "institution name"
 msgstr ""
 
-#: database/models/users/institutions.py:16
+#: database/models/users/institutions.py:17
 msgid "Name of institution"
 msgstr ""
 
-#: database/models/users/institutions.py:21
+#: database/models/users/institutions.py:22
 msgid "institution code"
 msgstr ""
 
-#: database/models/users/institutions.py:22
+#: database/models/users/institutions.py:23
 msgid "Code of institution"
 msgstr ""
 
-#: database/models/users/institutions.py:27
+#: database/models/users/institutions.py:28
 msgid "subdependency"
 msgstr ""
 
-#: database/models/users/institutions.py:28
+#: database/models/users/institutions.py:29
 msgid "Subdependency at institution"
 msgstr ""
 
-#: database/models/users/institutions.py:35
+#: database/models/users/institutions.py:36
 msgid "country"
 msgstr ""
 
-#: database/models/users/institutions.py:36
+#: database/models/users/institutions.py:37
 msgid "Country home of institution"
 msgstr ""
 
-#: database/models/users/institutions.py:41
+#: database/models/users/institutions.py:42
 msgid "postal code"
 msgstr ""
 
-#: database/models/users/institutions.py:42
+#: database/models/users/institutions.py:43
 msgid "Postal code"
 msgstr ""
 
-#: database/models/users/institutions.py:47
+#: database/models/users/institutions.py:48
 msgid "address"
 msgstr ""
 
-#: database/models/users/institutions.py:48
+#: database/models/users/institutions.py:49
 msgid "Address of institution"
 msgstr ""
 
-#: database/models/users/institutions.py:53
+#: database/models/users/institutions.py:54
 msgid "Website of institution"
 msgstr ""
 
-#: database/models/users/institutions.py:57
+#: database/models/users/institutions.py:58
 msgid "Institution logo"
 msgstr ""
 
-#: database/models/users/institutions.py:77
+#: database/models/users/institutions.py:65
+#: selia/templates/selia/components/details/collection.html:23
+#: selia/templates/selia/components/details/user.html:37
+#: selia/templates/selia/components/list_items/collection.html:23
 msgid "Institution"
 msgstr ""
 
-#: database/models/users/institutions.py:78
+#: database/models/users/institutions.py:66
 msgid "Institutions"
 msgstr ""
 
-#: database/models/users/roles.py:12
+#: database/models/users/roles.py:14
 msgid "Name of role"
 msgstr ""
 
-#: database/models/users/roles.py:18
+#: database/models/users/roles.py:20
 msgid "Description of role"
 msgstr ""
 
-#: database/models/users/roles.py:23
+#: database/models/users/roles.py:25
 msgid "Role type icon"
 msgstr ""
 
-#: database/models/users/roles.py:29
+#: database/models/users/roles.py:31
 msgid "permissions"
 msgstr ""
 
-#: database/models/users/roles.py:30
+#: database/models/users/roles.py:32
 msgid "Permissions associated to role"
 msgstr ""
 
-#: database/models/users/roles.py:48
+#: database/models/users/roles.py:37
 msgid "Role"
 msgstr ""
 
-#: database/models/users/roles.py:49
+#: database/models/users/roles.py:38
 msgid "Roles"
 msgstr ""
 
-#: database/models/users/users.py:12
+#: database/models/users/users.py:10
+msgid ""
+"\n"
+"    User Model\n"
+"\n"
+"    People using irekua must be previously registered and should provide\n"
+"    minimal personal information. This is to track contributions and to "
+"control\n"
+"    access to data.\n"
+"\n"
+"    Users can belong to collections (:model:`database.Collection`), possess\n"
+"    devices (:model:`database.PhysicalDevice`), sign licences\n"
+"    (:model:`database.Licence`), upload items (:model:`database.Item`),\n"
+"    annotate data (:model:`database.Annotation`), and more.\n"
+"    "
+msgstr ""
+
+#: database/models/users/users.py:28
 msgid "Institution to which user belongs"
 msgstr ""
 
-#: database/models/users/users.py:17
+#: database/models/users/users.py:33
 msgid "is developer"
 msgstr ""
 
-#: database/models/users/users.py:18
+#: database/models/users/users.py:34
 msgid "Flag to indicate if user is a model developer"
 msgstr ""
 
-#: database/models/users/users.py:24
+#: database/models/users/users.py:40
 msgid "is curator"
 msgstr ""
 
-#: database/models/users/users.py:25
+#: database/models/users/users.py:41
 msgid "Flag to indicate if user is a curator"
 msgstr ""
 
-#: database/models/users/users.py:31
+#: database/models/users/users.py:47
 msgid "is model"
 msgstr ""
 
-#: database/models/users/users.py:32
+#: database/models/users/users.py:48
 msgid "Flag to indicate if user is an AI model"
 msgstr ""
 
-#: database/models/users/users.py:38
+#: database/models/users/users.py:54
+#: selia/templates/selia/user/components/secondary_navbar.html:5
 msgid "User"
 msgstr ""
 
-#: database/models/users/users.py:39
+#: database/models/users/users.py:55
+#: selia/templates/selia/components/list_items/collection.html:34
 msgid "Users"
 msgstr ""
 
@@ -2532,24 +2445,26 @@ msgstr ""
 msgid "generic collection"
 msgstr ""
 
-#: database/utils.py:15
-msgid "Free JSON Schema"
-msgstr ""
-
-#: database/utils.py:23
+#: database/utils.py:19
 #, python-format
 msgid "JSON Schema is not valid. Error: %(error)s"
 msgstr ""
 
-#: database/utils.py:34
+#: database/utils.py:30
 #, python-format
 msgid "Instance does not comply with JSON schema. Error: %(error)s"
 msgstr ""
 
 #: irekua/templates/irekua/components/tab_items.html:7
 #: irekua/templates/irekua/components/tab_items.html:9
-#: selia/templates/selia/components/navbar_items.html:9
-#: selia/templates/selia/components/navbar_items.html:11
+#: selia/templates/selia/collection_detail/components/secondary_navbar.html:26
+#: selia/templates/selia/collections/components/secondary_navbar.html:17
+#: selia/templates/selia/components/navbar_items.html:6
+#: selia/templates/selia/components/navbar_items.html:8
+#: selia/templates/selia/items/components/secondary_navbar.html:17
+#: selia/templates/selia/licence_detail/components/secondary_navbar.html:27
+#: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:27
+#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:32
 msgid "About"
 msgstr ""
 
@@ -2619,6 +2534,12 @@ msgid "Device Dependent"
 msgstr ""
 
 #: irekua/templates/irekua/content/about.html:112
+#: selia/templates/selia/collection_detail/components/secondary_navbar.html:38
+#: selia/templates/selia/components/list_items/collection_device.html:60
+#: selia/templates/selia/components/list_items/collection_site.html:69
+#: selia/templates/selia/components/list_items/physical_device.html:57
+#: selia/templates/selia/components/list_items/site.html:59
+#: selia/templates/selia/components/summaries/user.html:54
 msgid "Sampling events"
 msgstr ""
 
@@ -2631,6 +2552,21 @@ msgstr ""
 #| msgid "Annotations"
 msgid "Item Annotations"
 msgstr "Anotaciones"
+
+#: irekua_utils/filters/data_collections/collection_devices.py:28
+#: irekua_utils/filters/data_collections/collection_licences.py:28
+#: irekua_utils/filters/data_collections/collection_sampling_events.py:32
+#: irekua_utils/filters/data_collections/collection_sites.py:29
+#: irekua_utils/filters/items/items.py:32
+#: irekua_utils/filters/sampling_events/sampling_event_devices.py:27
+#, fuzzy
+#| msgid "created on"
+msgid "added on"
+msgstr "creado en"
+
+#: irekua_utils/filters/items/items.py:33
+msgid "filesize"
+msgstr ""
 
 #: rest/filters/sites.py:18
 msgid "Latitude greater than"
@@ -2674,201 +2610,627 @@ msgstr "modificado en"
 msgid "Modified after than"
 msgstr "modificado en"
 
-#: rest/serializers/data_collections/sites.py:31
+#: selia/templates/selia/collection_detail/detail.html:12
+#, fuzzy
+#| msgid "item"
+msgid "Add items"
+msgstr "item"
+
+#: selia/templates/selia/collection_detail/detail.html:15
+#: selia/templates/selia/collection_detail/devices/detail.html:14
+#: selia/templates/selia/collection_detail/sites/detail.html:15
+#: selia/templates/selia/components/summaries/user.html:85
+#: selia/templates/selia/licence_detail/detail.html:10
+#: selia/templates/selia/sampling_event_detail/detail.html:10
+#: selia/templates/selia/sampling_event_device_detail/detail.html:10
+msgid "Download summary"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/devices/create.html:5
+msgid "Add device to collection"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/devices/create.html:9
+msgid "Back"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/devices/create.html:16
+#: selia/templates/selia/collection_detail/devices/create.html:55
+msgid "Part"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/devices/create.html:17
+msgid ""
+"\n"
+"      Please select one of your devices to register to the collection or\n"
+"      "
+msgstr ""
+
+#: selia/templates/selia/collection_detail/devices/create.html:19
+#: selia/templates/selia/collection_detail/devices/create.html:41
+msgid "register new device"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/devices/create.html:40
+msgid "All user devices are registered in the collection"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/devices/create.html:56
+msgid ""
+"\n"
+"      Fill out the following form\n"
+"      "
+msgstr ""
+
+#: selia/templates/selia/collection_detail/devices/create.html:67
+msgid "Selected device"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/devices/create.html:96
+msgid "Register"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/devices/create.html:97
+#: selia/templates/selia/components/delete.html:19
+#: selia/templates/selia/components/update.html:18
+msgid "Cancel"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/devices/list.html:10
+msgid "Add Device"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/item_list.html:6
+msgid "Collection Items"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/item_list.html:10
+msgid "Add Items"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/licence_list.html:4
+msgid "Collection Licences"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/licence_list.html:8
+msgid "Add licence"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/licence_list.html:11
+#: selia/templates/selia/collection_detail/sampling_event_list.html:11
+#: selia/templates/selia/components/buttons/help.html:4
+#: selia/templates/selia/components/help.html:7
+#: selia/templates/selia/licence_detail/detail.html:13
+#: selia/templates/selia/sampling_event_detail/detail.html:13
+#: selia/templates/selia/sampling_event_detail/device_list.html:11
+#: selia/templates/selia/sampling_event_device_detail/detail.html:13
+msgid "Help"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/sampling_event_list.html:4
+msgid "Collection Sampling Events"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/sampling_event_list.html:8
+msgid "Add sampling event"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/sites/list.html:14
+msgid "Add Site"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/sites/list.html:20
+msgid "List"
+msgstr ""
+
+#: selia/templates/selia/collection_detail/sites/list.html:23
+msgid "Map"
+msgstr ""
+
+#: selia/templates/selia/collections/components/secondary_navbar.html:29
+#: selia/templates/selia/items/components/secondary_navbar.html:29
+msgid "My Collections"
+msgstr ""
+
+#: selia/templates/selia/collections/components/secondary_navbar.html:41
+#: selia/templates/selia/items/components/secondary_navbar.html:41
+msgid "Open Collections"
+msgstr ""
+
+#: selia/templates/selia/components/buttons/add.html:2
+msgid "Add"
+msgstr ""
+
+#: selia/templates/selia/components/buttons/edit.html:2
+#: selia/templates/selia/components/buttons/update.html:3
+msgid "Edit"
+msgstr ""
+
+#: selia/templates/selia/components/buttons/enter.html:2
+#: selia/templates/selia/components/list_items/collection_device.html:15
+#: selia/templates/selia/components/list_items/collection_site.html:25
+#: selia/templates/selia/components/list_items/licence.html:13
+#: selia/templates/selia/components/list_items/sampling_event.html:13
+#: selia/templates/selia/components/list_items/sampling_event_device.html:15
+msgid "View"
+msgstr ""
+
+#: selia/templates/selia/components/buttons/see.html:2
+msgid "See"
+msgstr ""
+
+#: selia/templates/selia/components/delete.html:7
+#: selia/templates/selia/components/delete.html:21
+msgid "Delete"
+msgstr ""
+
+#: selia/templates/selia/components/delete.html:13
+msgid "Are you sure you want to delete this object"
+msgstr ""
+
+#: selia/templates/selia/components/detail.html:7
+msgid "Detail"
+msgstr ""
+
+#: selia/templates/selia/components/detail.html:22
+msgid "Delete "
+msgstr ""
+
+#: selia/templates/selia/components/details/collection.html:19
+#: selia/templates/selia/components/list_items/collection.html:19
+#, fuzzy
+#| msgid "annotation type"
+msgid "Collection type"
+msgstr "tipo de anotación"
+
+#: selia/templates/selia/components/details/collection.html:29
+#: selia/templates/selia/components/list_items/collection.html:27
+#: selia/templates/selia/components/list_items/site.html:44
+#, fuzzy
+#| msgid "created on"
+msgid "Created on"
+msgstr "creado en"
+
+#: selia/templates/selia/components/details/collection.html:35
+#: selia/templates/selia/components/details/licence.html:35
+#: selia/templates/selia/components/details/sampling_event.html:43
+#: selia/templates/selia/components/details/sampling_event_device.html:62
+msgid "Metadata"
+msgstr ""
+
+#: selia/templates/selia/components/details/licence.html:9
+#: selia/templates/selia/licence_detail/components/secondary_navbar.html:6
+#: selia/templates/selia/licence_detail/components/secondary_navbar.html:9
+msgid "Licence "
+msgstr ""
+
+#: selia/templates/selia/components/details/licence.html:19
+#: selia/templates/selia/components/list_items/licence.html:19
+#, fuzzy
+#| msgid "event type"
+msgid "Licence type"
+msgstr "tipo de evento"
+
+#: selia/templates/selia/components/details/licence.html:29
+#: selia/templates/selia/components/list_items/licence.html:30
+msgid "Document"
+msgstr ""
+
+#: selia/templates/selia/components/details/licence.html:41
+msgid "Edit licence"
+msgstr ""
+
+#: selia/templates/selia/components/details/licence.html:42
+msgid "Delete licence"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event.html:9
+#: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:6
+#: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:9
+#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:13
+msgid "Sampling event "
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event.html:19
+#: selia/templates/selia/components/list_items/sampling_event.html:19
+#, fuzzy
+#| msgid "event type"
+msgid "Sampling event type"
+msgstr "tipo de evento"
+
+#: selia/templates/selia/components/details/sampling_event.html:29
+#: selia/templates/selia/components/list_items/sampling_event.html:27
+msgid "Collection site"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event.html:33
+#: selia/templates/selia/components/list_items/sampling_event.html:34
+#, fuzzy
+#| msgid "created on"
+msgid "Started on"
+msgstr "creado en"
+
+#: selia/templates/selia/components/details/sampling_event.html:37
+#: selia/templates/selia/components/list_items/sampling_event.html:38
+#, fuzzy
+#| msgid "modified on"
+msgid "Ended on"
+msgstr "modificado en"
+
+#: selia/templates/selia/components/details/sampling_event.html:49
+msgid "Edit sampling event"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event.html:50
+msgid "Delete sampling event"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event_device.html:9
+#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:6
+#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:9
+msgid "Sampling event device "
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event_device.html:19
+#: selia/templates/selia/components/list_items/sampling_event.html:11
+msgid "Sampling event"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event_device.html:29
+#: selia/templates/selia/components/list_items/collection_device.html:21
+#: selia/templates/selia/components/list_items/physical_device.html:23
+#: selia/templates/selia/components/list_items/sampling_event_device.html:21
+#: selia/templates/selia/components/select_list_items/devices.html:20
+#, fuzzy
+#| msgid "event type"
+msgid "Device type"
+msgstr "tipo de evento"
+
+#: selia/templates/selia/components/details/sampling_event_device.html:33
+msgid "Device brand"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event_device.html:37
+msgid "Device model"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event_device.html:44
+#: selia/templates/selia/components/filters/physical_devices.html:10
+msgid "Serial number"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event_device.html:48
+#: selia/templates/selia/components/list_items/collection_device.html:29
+#: selia/templates/selia/components/list_items/sampling_event_device.html:29
+msgid "Collection Device id"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event_device.html:52
+#: selia/templates/selia/components/list_items/collection_device.html:39
+#: selia/templates/selia/components/list_items/collection_site.html:45
+#: selia/templates/selia/components/list_items/sampling_event_device.html:39
+#: selia/templates/selia/components/select_list_items/devices.html:30
+msgid "Owner"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event_device.html:56
+#: selia/templates/selia/components/list_items/collection_device.html:43
+#: selia/templates/selia/components/list_items/collection_site.html:49
+#: selia/templates/selia/components/list_items/physical_device.html:38
+#: selia/templates/selia/components/list_items/sampling_event_device.html:43
+#: selia/templates/selia/components/select_list_items/devices.html:34
+#, fuzzy
+#| msgid "modified on"
+msgid "Added on"
+msgstr "modificado en"
+
+#: selia/templates/selia/components/details/sampling_event_device.html:68
+msgid "Edit sampling event device"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event_device.html:69
+msgid "Delete sampling event device"
+msgstr ""
+
+#: selia/templates/selia/components/details/user.html:13
+#, fuzzy
+#| msgid "name"
+msgid "Username"
+msgstr "Nombre"
+
+#: selia/templates/selia/components/details/user.html:19
+msgid "First name"
+msgstr ""
+
+#: selia/templates/selia/components/details/user.html:25
+#, fuzzy
+#| msgid "name"
+msgid "Last name"
+msgstr "Nombre"
+
+#: selia/templates/selia/components/details/user.html:31
+msgid "Email"
+msgstr ""
+
+#: selia/templates/selia/components/filter.html:15
+msgid "Search"
+msgstr ""
+
+#: selia/templates/selia/components/filter.html:30
+#: selia/templates/selia/components/update.html:9
+msgid "Update"
+msgstr ""
+
+#: selia/templates/selia/components/filter.html:31
+msgid "Clean"
+msgstr ""
+
+#: selia/templates/selia/components/filters/physical_devices.html:15
+msgid "Brand"
+msgstr ""
+
+#: selia/templates/selia/components/filters/physical_devices.html:20
+#: selia/templates/selia/components/list_items/physical_device.html:42
+msgid "Bundle"
+msgstr ""
+
+#: selia/templates/selia/components/filters/physical_devices.html:27
+msgid "Model"
+msgstr ""
+
+#: selia/templates/selia/components/filters/physical_devices.html:37
+#: selia/templates/selia/components/list_items/physical_device.html:27
+msgid "Identifier"
+msgstr ""
+
+#: selia/templates/selia/components/filters/physical_devices.html:46
+msgid "Serial number filters"
+msgstr ""
+
+#: selia/templates/selia/components/filters/physical_devices.html:49
+#, fuzzy
+#| msgid "quality"
+msgid "Equals"
+msgstr "calidad"
+
+#: selia/templates/selia/components/filters/physical_devices.html:56
+msgid "Contains"
+msgstr ""
+
+#: selia/templates/selia/components/list_items/collection_device.html:25
+#: selia/templates/selia/components/list_items/physical_device.html:31
+#: selia/templates/selia/components/list_items/sampling_event_device.html:25
+#: selia/templates/selia/components/select_list_items/devices.html:24
+msgid "Serial Number"
+msgstr ""
+
+#: selia/templates/selia/components/list_items/collection_site.html:31
 #, fuzzy
 #| msgid "event type"
 msgid "Site type"
 msgstr "tipo de evento"
 
-#: selia/templates/selia/collections/collections.html:4
-msgid "My Collections"
+#: selia/templates/selia/components/list_items/collection_site.html:35
+msgid "Collection Site id"
 msgstr ""
 
-#: selia/templates/selia/collections/collections.html:9
-#: selia/templates/selia/collections/detail/devices.html:11
-#: selia/templates/selia/collections/detail/home.html:10
-#: selia/templates/selia/collections/detail/items.html:11
-#: selia/templates/selia/collections/detail/sampling_events.html:11
-#: selia/templates/selia/collections/detail/sites.html:10
-#: selia/templates/selia/collections/open_collections.html:8
-#: selia/templates/selia/sampling_event_devices/home.html:10
-#: selia/templates/selia/sampling_event_devices/items.html:12
-#: selia/templates/selia/sampling_events/devices.html:11
-#: selia/templates/selia/sampling_events/home.html:9
-#: selia/templates/selia/sampling_events/items.html:10
-#: selia/templates/selia/user/devices.html:10
-#: selia/templates/selia/user/home.html:9
-#: selia/templates/selia/user/items.html:10
-#: selia/templates/selia/user/sampling_events.html:9
-#: selia/templates/selia/user/sites.html:10
-msgid "Help"
+#: selia/templates/selia/components/list_items/physical_device.html:53
+#: selia/templates/selia/components/list_items/site.html:55
+msgid "Items captured"
 msgstr ""
 
-#: selia/templates/selia/collections/detail/devices.html:9
-#: selia/templates/selia/sampling_events/devices.html:9
-#: selia/templates/selia/user/devices.html:8
+#: selia/templates/selia/components/list_items/site.html:32
+msgid "Latitude"
+msgstr ""
+
+#: selia/templates/selia/components/list_items/site.html:36
+msgid "Longitude"
+msgstr ""
+
+#: selia/templates/selia/components/list_items/site.html:40
+msgid "Altitude"
+msgstr ""
+
+#: selia/templates/selia/components/navbar_items.html:25
+#: selia/templates/selia/components/navbar_items.html:27
+msgid "User Home"
+msgstr ""
+
+#: selia/templates/selia/components/pagination.html:5
+#: selia/templates/selia/components/pagination.html:7
+msgid "Previous"
+msgstr ""
+
+#: selia/templates/selia/components/pagination.html:19
+#: selia/templates/selia/components/pagination.html:21
+msgid "Next"
+msgstr ""
+
+#: selia/templates/selia/components/summaries/user.html:9
+#: selia/templates/selia/components/summaries/user.html:25
+#: selia/templates/selia/components/summaries/user.html:41
+#: selia/templates/selia/components/summaries/user.html:57
+#: selia/templates/selia/components/summaries/user.html:73
+msgid "Number"
+msgstr ""
+
+#: selia/templates/selia/components/summaries/user.html:12
+msgid "Last added"
+msgstr ""
+
+#: selia/templates/selia/components/summaries/user.html:28
+#: selia/templates/selia/components/summaries/user.html:44
+#: selia/templates/selia/components/summaries/user.html:60
+#: selia/templates/selia/components/summaries/user.html:76
+#, fuzzy
+#| msgid "created on"
+msgid "Last added on"
+msgstr "creado en"
+
+#: selia/templates/selia/components/summary.html:6
+#: selia/templates/selia/user/components/secondary_navbar.html:17
+msgid "Summary"
+msgstr ""
+
+#: selia/templates/selia/components/summary.html:14
+#, fuzzy
+#| msgid "created on"
+msgid "Updated on"
+msgstr "creado en"
+
+#: selia/templates/selia/licence_detail/detail.html:7
+#: selia/templates/selia/sampling_event_detail/detail.html:7
+#: selia/templates/selia/sampling_event_device_detail/detail.html:7
+#, fuzzy
+#| msgid "item"
+msgid "Add item"
+msgstr "item"
+
+#: selia/templates/selia/no_permission.html:8
+#, fuzzy
+#| msgid "Permissions"
+msgid "Permission Denied"
+msgstr "Permisos"
+
+#: selia/templates/selia/no_permission.html:14
+msgid ""
+"\n"
+"        You do not have permission to view this content or perform this "
+"action.\n"
+"      "
+msgstr ""
+
+#: selia/templates/selia/protected.html:8
+msgid "Object protected"
+msgstr ""
+
+#: selia/templates/selia/protected.html:14
+msgid ""
+"\n"
+"        This object has been used elsewhere, deleting it would leave hanging "
+"references.\n"
+"      "
+msgstr ""
+
+#: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:38
+#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:11
+msgid "Sampling event devices"
+msgstr ""
+
+#: selia/templates/selia/sampling_event_detail/device_list.html:8
 msgid "Add device"
 msgstr ""
 
-#: selia/templates/selia/collections/detail/devices.html:10
-#: selia/templates/selia/collections/detail/home.html:9
-#: selia/templates/selia/collections/detail/items.html:10
-#: selia/templates/selia/collections/detail/sampling_events.html:10
-#: selia/templates/selia/collections/detail/sites.html:9
-#: selia/templates/selia/sampling_event_devices/home.html:9
-#: selia/templates/selia/sampling_event_devices/items.html:11
-#: selia/templates/selia/sampling_events/devices.html:10
-#: selia/templates/selia/sampling_events/home.html:8
-#: selia/templates/selia/sampling_events/items.html:9
-#: selia/templates/selia/user/devices.html:9
-#: selia/templates/selia/user/home.html:8
-#: selia/templates/selia/user/items.html:9
-#: selia/templates/selia/user/sampling_events.html:8
-#: selia/templates/selia/user/sites.html:9
-msgid "Download Summary"
+#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:43
+msgid "Sampling event device items"
 msgstr ""
 
-#: selia/templates/selia/collections/detail/devices.html:21
-#: selia/templates/selia/sampling_events/devices.html:21
-msgid "Add Device"
-msgstr ""
-
-#: selia/templates/selia/collections/detail/home.html:4
-msgid "Collection Home"
-msgstr ""
-
-#: selia/templates/selia/collections/detail/items.html:4
-#: selia/templatetags/treeview.py:21
-msgid "Collection Items"
-msgstr ""
-
-#: selia/templates/selia/collections/detail/items.html:9
-#: selia/templates/selia/items/components/secondary_navbar.html:30
-#: selia/templates/selia/items/gallery.html:5
-#: selia/templates/selia/sampling_event_devices/items.html:10
-#: selia/templates/selia/sampling_events/items.html:8
-#: selia/templates/selia/user/items.html:8
-msgid "Gallery"
-msgstr ""
-
-#: selia/templates/selia/collections/detail/sampling_events.html:9
-msgid "Create Sampling Event"
-msgstr ""
-
-#: selia/templates/selia/collections/detail/sampling_events.html:21
-msgid "Add Sampling Event"
-msgstr ""
-
-#: selia/templates/selia/collections/detail/sites.html:8
-#: selia/templates/selia/user/sites.html:8
-msgid "Add Site"
-msgstr ""
-
-#: selia/templates/selia/collections/open_collections.html:4
-#: selia/templatetags/treeview.py:17
-msgid "Open Collections"
-msgstr ""
-
-#: selia/templates/selia/components/navbar_items.html:17
-#: selia/templates/selia/components/navbar_items.html:19
-#: selia/templatetags/treeview.py:11
-msgid "Home"
-msgstr ""
-
-#: selia/templates/selia/components/navbar_items.html:32
-#: selia/templates/selia/components/navbar_items.html:34
-#, fuzzy
-#| msgid "Annotation"
-msgid "Administration"
-msgstr "Anotación"
-
-#: selia/templates/selia/components/view_buttons.html:5
-msgid "Toggle Table"
-msgstr ""
-
-#: selia/templates/selia/components/view_buttons.html:10
-msgid "Toggle Map"
-msgstr ""
-
-#: selia/templates/selia/components/view_buttons.html:15
-msgid "Toggle Detail"
-msgstr ""
-
-#: selia/templates/selia/components/view_buttons.html:20
-msgid "Toggle Summary"
-msgstr ""
-
-#: selia/templates/selia/items/annotate.html:7
-#, fuzzy
-#| msgid "Annotated item"
-msgid "Annotate Item"
-msgstr "Item anotado"
-
-#: selia/templates/selia/items/components/secondary_navbar.html:20
-#: selia/templates/selia/items/upload.html:65
-msgid "Upload"
-msgstr ""
-
-#: selia/templates/selia/items/upload.html:22
-msgid ""
-"\n"
-"      Select the sampling event in which the data was generated. This refers "
-"to the site in which the device\n"
-"      was placed and the range of dates in which data was captured. Either "
-"select a previously registered sampling\n"
-"      event or create a new one.\n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/items/upload.html:45
-msgid ""
-"\n"
-"      Select the device with which the data was generated. Either select a "
-"device previously registered for this\n"
-"      sampling event or create a new one.\n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/items/upload.html:61
-msgid "Archivos"
-msgstr ""
-
-#: selia/templates/selia/sampling_event_devices/home.html:4
-msgid "Sampling Event Device Home"
-msgstr ""
-
-#: selia/templates/selia/sampling_event_devices/home.html:8
-#: selia/templates/selia/sampling_event_devices/items.html:9
-msgid "Add Items"
-msgstr ""
-
-#: selia/templates/selia/sampling_event_devices/items.html:4
-#: selia/templatetags/treeview.py:31
-msgid "Sampling Event Device Items"
-msgstr ""
-
-#: selia/templates/selia/sampling_events/items.html:4
-#: selia/templatetags/treeview.py:28
-msgid "Sampling Event Items"
-msgstr ""
-
-#: selia/templates/selia/user/devices.html:4 selia/templatetags/treeview.py:12
+#: selia/templates/selia/user/components/secondary_navbar.html:29
 msgid "My Devices"
 msgstr ""
 
-#: selia/templates/selia/user/items.html:4 selia/templatetags/treeview.py:14
-msgid "My Items"
-msgstr ""
-
-#: selia/templates/selia/user/sampling_events.html:4
-#: selia/templatetags/treeview.py:15
-msgid "My Sampling Events"
-msgstr ""
-
-#: selia/templates/selia/user/sites.html:4 selia/templatetags/treeview.py:13
+#: selia/templates/selia/user/components/secondary_navbar.html:41
 msgid "My Sites"
 msgstr ""
 
-#: selia/templatetags/treeview.py:22
-msgid "Collection Sampling Events"
+#: selia/templates/selia/user/components/secondary_navbar.html:53
+msgid "My Sampling events"
 msgstr ""
+
+#: selia/templates/selia/user/components/secondary_navbar.html:65
+msgid "My Items"
+msgstr ""
+
+#: selia/templates/selia/user/devices/detail.html:10
+msgid "User device detail"
+msgstr ""
+
+#: selia/templates/selia/user/devices/detail.html:14
+#: selia/templates/selia/user/home.html:10
+#: selia/templates/selia/user/items/detail.html:14
+#: selia/templates/selia/user/sampling_events/detail.html:14
+#: selia/templates/selia/user/sites/detail.html:14
+msgid "Download Summary"
+msgstr ""
+
+#: selia/templates/selia/user/items/detail.html:10
+msgid "User Item Detail"
+msgstr ""
+
+#: selia/templates/selia/user/sampling_events/detail.html:10
+msgid "User Sampling Event Detail"
+msgstr ""
+
+#: selia/templates/selia/user/sites/detail.html:10
+msgid "User Site Detail"
+msgstr ""
+
+#: selia/templatetags/json_tags.py:54
+msgid "yes"
+msgstr ""
+
+#: selia/templatetags/json_tags.py:56
+msgid "no"
+msgstr ""
+
+#: selia/views/collection_detail/item_list.py:18
+msgid "No items are registered in this collection"
+msgstr ""
+
+#: selia/views/user/devices/list.py:15
+msgid "User has no registered devices"
+msgstr ""
+
+#: selia/views/user/items/list.py:16
+msgid "User has no registered items"
+msgstr ""
+
+#: selia/views/user/sampling_events/list.py:15
+msgid "User has no registered sampling events"
+msgstr ""
+
+#: selia/views/user/sites/list.py:15
+msgid "User has no registered sites"
+msgstr ""
+
+#: selia/views/utils/list_base.py:11
+msgid "search"
+msgstr ""
+
+#: selia/views/utils/list_base.py:18
+msgid "Empty list"
+msgstr ""
+
+#: selia/views/utils/list_base.py:64
+msgid "↑"
+msgstr ""
+
+#: selia/views/utils/list_base.py:72
+msgid "↓"
+msgstr ""
+
+#: selia/views/utils/list_base.py:83
+msgid "ordering"
+msgstr ""
+
+#~ msgid "Date of entry creation"
+#~ msgstr "Fecha de creación del registro"
+
+#~ msgid "created by"
+#~ msgstr "creado por"
+
+#~ msgid "Creator of annotation vote"
+#~ msgstr "Creador del voto de anotación"
+
+#~ msgid "Date of creation of annotation"
+#~ msgstr "Fecha de creación de la anotación"
+
+#, fuzzy
+#~| msgid "Annotation"
+#~ msgid "Administration"
+#~ msgstr "Anotación"
+
+#, fuzzy
+#~| msgid "Annotated item"
+#~ msgid "Annotate Item"
+#~ msgstr "Item anotado"

@@ -29,6 +29,20 @@
 }
 
 .img-thumbnail {
-  height: 10em;
-  max-width: 10em;
+  height: 5em;
+  max-width: 5em;
+}
+
+.select2-selection {
+  height: calc(1.5em + .75rem + 2px)!important;
+  border: 1px solid #ced4da!important;
+}
+
+.select2-selection__rendered {
+  height: calc(1.5em + .75rem + 2px)!important;
+  padding: .375rem .75rem;
+}
+
+.select2-selection__arrow {
+  height: calc(1.5em + .75rem + 2px)!important;
 }

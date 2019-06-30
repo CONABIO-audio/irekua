@@ -1,9 +1,6 @@
 {% extends 'irekua/components/header.html' %}
 
 {% block nav-brand %}
-<button class="toggle-sidebar btn btn-default bg-transparent">
-  <span class="navbar-toggler-icon"></span>
-</button>
 <a class="navbar-brand" href={% url 'selia:home' %}>Selia</a>
 {% endblock nav-brand %}
 
@@ -16,4 +13,3 @@
 {% block tab-items %}
 {% include 'selia/components/navbar_items.html' %}
 {% endblock tab-items %}
-

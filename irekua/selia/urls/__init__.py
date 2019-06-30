@@ -8,8 +8,7 @@ from . import collections_detail
 from . import sampling_event_detail
 from . import sampling_event_device_detail
 from . import licence_detail
-
-from selia.views.test import test
+from . import autocomplete
 
 urlpatterns = (
     selia.urlpatterns +
@@ -18,5 +17,6 @@ urlpatterns = (
     collections_detail.urlpatterns +
     sampling_event_detail.urlpatterns +
     sampling_event_device_detail.urlpatterns +
-    licence_detail.urlpatterns
+    licence_detail.urlpatterns +
+    autocomplete.urlpatterns
 )
