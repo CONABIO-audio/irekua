@@ -3,16 +3,13 @@
 {% load i18n %}
 {% load selia_buttons %}
 
-<div class="jumbotron mt-4">
-  <h1 class="display-4">{% trans 'Part' %} 1/2</h1>
+<div class="jumbotron mt-4 {% if fase != 'select_device' %}bg-success{% endif %}">
+  <h1 class="display-4">{% trans 'Part' %} 1 {% trans 'of'%} 2</h1>
   <p class="lead">
     {% blocktrans %}
       Select the brand, model and device type.
     {% endblocktrans %}
   </p>
-  <div class="progress">
-    <div class="progress-bar" role="progressbar"style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-  </div>
 </div>
 
 {% if fase == 'select_device' %}
@@ -85,29 +82,25 @@
     </div>
   </div>
 </form>
+
+<div class="progress m-5">
+  <div class="progress-bar" role="progressbar"style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
 {% endif %}
 
 {% if not fase == "select_device" %}
 <div class="jumbotron my-4" id="addDetails">
-  <h1 class="display-4">{% trans 'Part' %} 2/2</h1>
+  <h1 class="display-4">{% trans 'Part' %} 2 {% trans 'of' %} 2</h1>
   <p class="lead">
     {% blocktrans %}
       Register any individual traits
     {% endblocktrans %}
   </p>
-  <div class="progress">
-    <div class="progress-bar" role="progressbar"style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-  </div>
 </div>
 
-{% lorem %}
-{% lorem %}
-{% lorem %}
-{% lorem %}
-{% lorem %}
-{% lorem %}
-{% lorem %}
-{% lorem %}
-{% lorem %}
-{% lorem %}
+{{ form.as_p }}
+
+<div class="progress m-5">
+  <div class="progress-bar" role="progressbar"style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
 {% endif %}

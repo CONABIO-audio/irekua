@@ -66,7 +66,7 @@ class FormPhase:
         return form.is_valid()
 
 
-class SeliaCreateView(TemplateView):
+class SeliaMultiStageCreateView(TemplateView):
     phases = {}
 
     def get_current_phase(self, request):

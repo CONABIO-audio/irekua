@@ -1,132 +1,61 @@
 {% load i18n %}
 {% load widget_tweaks %}
 
-<div class="row w-100 h-100 p-0">
-  <div class="col w-100">
-
-    <div class="row w-100 p-0">
-      <div class="col">
-        <a class="btn btn-link text-light d-inline-block" data-toggle="collapse" href="#collapseSerialNumber" role="button" aria-expanded="false" aria-controls="collapseSerialNumber">
-          {% trans 'Serial number' %}
-        </a>
-      </div>
-      <div class="col">
-        <a class="btn btn-link text-light d-inline-block" data-toggle="collapse" href="#collapseBrand" role="button" aria-expanded="false" aria-controls="collapseBrand">
-          {% trans 'Brand' %}
-        </a>
-      </div>
-      <div class="col">
-        <a class="btn btn-link text-light d-inline-block" data-toggle="collapse" href="#collapseBundle" role="button" aria-expanded="false" aria-controls="collapseBundle">
-          {% trans 'Bundle' %}
-        </a>
+<div class="row w-100 p-0">
+  <div class="col">
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseSerialNumber">
+        {% trans 'Serial number' %}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="container p-3">
+          <div class="form-group">
+            {{ filter.form.serial_number.label_tag }}
+            {{ filter.form.serial_number | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.serial_number.help_text }}</small>
+          </div>
+          <div class="form-group">
+            {{ filter.form.serial_number__contains.label_tag }}
+            {{ filter.form.serial_number__contains | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.serial_number__contains.help_text }}</small>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row w-100 p-0">
-      <div class="col">
-        <a class="btn btn-link text-light d-inline-block" data-toggle="collapse" href="#collapseModel" role="button" aria-expanded="false" aria-controls="collapseModel">
-          {% trans 'Model' %}
-        </a>
-      </div>
-      <div class="col">
-        <a class="btn btn-link text-light d-inline-block" data-toggle="collapse" href="#collapseDate" role="button" aria-expanded="false" aria-controls="collapseDate">
-          {% trans 'Date of creation' %}
-        </a>
-      </div>
-      <div class="col">
-        <a class="btn btn-link text-light d-inline-block" data-toggle="collapse" href="#collapseIdentifier" role="button" aria-expanded="false" aria-controls="collapseIdentifier">
-          {% trans 'Identifier' %}
-        </a>
-      </div>
+  </div>
+  <div class="col">
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseBrand">
+        {% trans 'Brand' %}
+      </a>
     </div>
-
-    <div class="row w-100 p-0 text-muted">
-
-      <div class="collapse w-100" id="collapseSerialNumber">
-        <div class="d-flex m-0 p-2 w-100 bg-light">
-          <div class="text-dark flex-fill p-2"><h5>{% trans 'Serial number filters'%}</h5></div>
-
-          <div class="form-group flex-fill row mx-2">
-            <label class="col-3 col-form-label text-right" for="inputEmail4">{% trans 'Equals' %} <i class="fas fa-equals"></i></label>
-            <div class="col-9">
-              {{ filter.form.serial_number | add_class:"form-control" }}
-            </div>
-          </div>
-
-          <div class="form-group flex-fill row mx-2">
-            <label class="col-3 col-form-label text-right" for="inputEmail4">{% trans 'Contains' %} <i class="fas fa-underline"></i></label>
-            <div class="col-9">
-              {{ filter.form.serial_number__contains | add_class:"form-control" }}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="collapse w-100" id="collapseBrand">
-        <div class="form-row w-100 p-0 bg-light">
-          <div class="form-group col-md-6">
-            <label for="inputEmail4">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-          </div>
-          <div class="form-group col-md-6">
-            <label for="inputEmail4">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-          </div>
-        </div>
-      </div>
-
-      <div class="collapse w-100" id="collapseBundle">
-        <div class="form-row w-100 p-0 bg-light">
-          <div class="form-group col-md-6">
-            <label for="inputEmail4">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-          </div>
-          <div class="form-group col-md-6">
-            <label for="inputEmail4">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-          </div>
-        </div>
-      </div>
-
-      <div class="collapse w-100 p-0" id="collapseModel">
-        <div class="form-row w-100 p-0 bg-light">
-          <div class="form-group col-md-6">
-            <label for="inputEmail4">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-          </div>
-          <div class="form-group col-md-6">
-            <label for="inputEmail4">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-          </div>
-        </div>
-      </div>
-
-      <div class="collapse w-100 p-0" id="collapseDate">
-        <div class="form-row w-100 p-0 bg-light">
-          <div class="form-group col-md-6">
-            <label for="inputEmail4">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-          </div>
-          <div class="form-group col-md-6">
-            <label for="inputEmail4">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-          </div>
-        </div>
-      </div>
-
-      <div class="collapse w-100 p-0" id="collapseIdentifier">
-        <div class="form-row w-100 p-0 bg-light">
-          <div class="form-group col-md-6">
-            <label for="inputEmail4">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-          </div>
-          <div class="form-group col-md-6">
-            <label for="inputEmail4">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-          </div>
-        </div>
-      </div>
-
+  </div>
+  <div class="col">
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseBundle">
+        {% trans 'Bundle' %}
+      </a>
     </div>
-
+  </div>
+  <div class="col">
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseModel">
+        {% trans 'Model' %}
+      </a>
+    </div>
+  </div>
+  <div class="col">
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseDate">
+        {% trans 'Date of creation' %}
+      </a>
+    </div>
+  </div>
+  <div class="col">
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseIdentifier">
+        {% trans 'Identifier' %}
+      </a>
+    </div>
   </div>
 </div>
