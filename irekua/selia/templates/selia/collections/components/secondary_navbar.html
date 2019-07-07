@@ -2,7 +2,8 @@
 {% load i18n %}
 
 {% block navbar-brand %}
-<a class="navbar-brand" href={% url 'selia:collections_user' %}>{% trans 'Collections' %}</a>
+<a class="navbar-brand" id="dropdownMenuButton" href={% url 'selia:collections_user' %}>{% trans 'Collections' %}</a>
+
 {% endblock navbar-brand %}
 
 {% block navbar-items %}
