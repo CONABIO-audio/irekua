@@ -7,7 +7,7 @@
   {% include 'selia/components/media/map_media.html' %}
 {% endblock head-extra %}
 
-{% block toolbar-title %}{% trans 'Collection Sites' %}{% endblock %}
+{% block toolbar-title %}{{ collection }}{% trans ': Sites' %}{% endblock %}
 
 {% block toolbar-items %}
   <li class="nav-item">

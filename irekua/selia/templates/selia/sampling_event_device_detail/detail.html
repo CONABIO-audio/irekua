@@ -3,7 +3,8 @@
 {% load selia_components %}
 {% load selia_buttons %}
 
-{% block toolbar-title %}Sampling event device {{ sampling_event_device.pk }}{% endblock %}
+
+{% block toolbar-title %}{{ sampling_event_device.sampling_event.collection }}{% trans ': Sampling Event ' %}{{ sampling_event_device.sampling_event.pk }}{% trans ': Device ' %}{{ sampling_event_device.pk }}{% endblock %}
 
 {% block toolbar-items %}
 <li class="nav-item">

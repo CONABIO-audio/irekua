@@ -1,0 +1,40 @@
+{% extends 'selia/collection_device_detail/base.html' %}
+{% load i18n %}
+{% load selia_components %}
+{% load selia_buttons %}
+
+{% block head-extra %}
+  {% include 'selia/components/media/json_form_media.html' %}
+{% endblock head-extra %}
+
+{% block toolbar-title %}{{ object.collection }}{% trans ': Device ' %} {{ object.pk }}{% endblock %}
+
+{% block toolbar-items %}
+  <li class="nav-item">
+    <a class="nav-link" href="#">{% trans 'Download summary' %} <i class="fas fa-download"></i></a>
+  </li>
+  <li class="nav-item">
+    {% help_button %}
+  </li>
+{% endblock toolbar-items %}
+
+{% block main-content %}
+  <div class="row p-5">
+    <div class="col-6">
+      {% detail_component detail_template=detail_template object=object %}
+    </div>
+    <div class="col-6">
+      {% summary_component summary_template=summary_template object=object %}
+    </div>
+  </div>
+{% endblock main-content %}
+
+{% block modals-extra %}
+  {% help_component help_template=help_template %}
+  {% if permissions.change %}
+    {% update_component update_template=update_form_template form=form %}
+  {% endif %}
+  {% if permissions.delete %}
+    {% delete_component object=object %}
+  {% endif %}
+{% endblock modals-extra %}

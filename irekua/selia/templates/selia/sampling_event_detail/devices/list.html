@@ -1,7 +1,7 @@
 {% extends 'selia/sampling_event_detail/base.html' %}
 {% load i18n %}
 
-{% block toolbar-title %}{% trans 'Sampling Event Devices' %}{% endblock %}
+{% block toolbar-title %}{{ sampling_event.collection }}{% trans ': Sampling Event ' %} {{ sampling_event.pk }}{% trans ': Devices' %}{% endblock %}
 
 {% block toolbar-items %}
 <li class="nav-item">

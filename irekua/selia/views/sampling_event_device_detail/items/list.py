@@ -13,7 +13,7 @@ class SamplingEventDeviceItemsListView(SeliaListView, SingleObjectMixin):
     help_template = 'selia/components/help/sampling_event_device_items.html'
     filter_form_template = 'selia/components/filters/item.html'
 
-    empty_message = _('No items are registered in this sampling event')
+    empty_message = _('No items are registered to this sampling event device')
 
     filter_class = items.Filter
     search_fields = items.search_fields

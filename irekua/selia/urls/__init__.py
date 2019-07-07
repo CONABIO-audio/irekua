@@ -8,6 +8,8 @@ from . import collections_detail
 from . import sampling_event_detail
 from . import sampling_event_device_detail
 from . import licence_detail
+from . import collection_site_detail
+from . import collection_device_detail
 from . import autocomplete
 
 urlpatterns = (
@@ -18,5 +20,7 @@ urlpatterns = (
     sampling_event_detail.urlpatterns +
     sampling_event_device_detail.urlpatterns +
     licence_detail.urlpatterns +
+    collection_site_detail.urlpatterns +
+    collection_device_detail.urlpatterns +
     autocomplete.urlpatterns
 )

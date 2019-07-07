@@ -3,7 +3,7 @@
 {% load selia_components %}
 {% load selia_buttons %}
 
-{% block toolbar-title %}{% trans 'Collection Devices' %}{% endblock %}
+{% block toolbar-title %}{{ collection }}{% trans ': Devices' %}{% endblock %}
 
 {% block toolbar-items %}
   <li class="nav-item">
