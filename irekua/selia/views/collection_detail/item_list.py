@@ -13,7 +13,7 @@ class CollectionItemsListView(SeliaListView, SingleObjectMixin):
     template_name = 'selia/collection_detail/item_list.html'
     list_item_template = 'selia/components/list_items/item.html'
     help_template = 'selia/components/help/collection_items.html'
-    filter_form_template = 'selia/components/filters/items.html'
+    filter_form_template = 'selia/components/filters/item.html'
 
     empty_message = _('No items are registered in this collection')
 

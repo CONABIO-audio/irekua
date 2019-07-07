@@ -11,7 +11,7 @@ class UserItemsListView(SeliaListView):
     template_name = 'selia/user/items/list.html'
     list_item_template = 'selia/components/list_items/item.html'
     help_template = 'selia/components/help/user_items.html'
-    filter_form_template = 'selia/components/filters/items.html'
+    filter_form_template = 'selia/components/filters/item.html'
 
     empty_message = _('User has no registered items')
 

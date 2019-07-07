@@ -52,10 +52,11 @@
           <h6>{% trans 'Items' %}</h6>
           <div class="text-muted ml-4">{{ item.item_set.count }}</div>
       </div>
-        <div class="col-1">
-          <a href="#"><i class="far fa-eye"></i></a>
-        </div>
-        <div class="col-1">
+        <div class="col-2">
+          <div class="row">
+            <a href="{% url 'selia:sampling_event_device_items' item.pk %}">{% see_button %}</a>
+          </div>         </div>
+        <div class="col-2">
           <a href="#"><i class="fas fa-plus"></i></a>
         </div>
     </div>

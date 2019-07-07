@@ -26,6 +26,7 @@ class CollectionSiteDetailView(SeliaDetailView, SingleObjectMixin):
     detail_template = 'selia/components/details/collection_site.html'
     summary_template = 'selia/components/summaries/collection_site.html'
     update_form_template = 'selia/components/update/collection_site.html'
+    viewer_template = 'selia/components/viewers/collection_site.html'
 
 
     def get_context_data(self, *args, **kwargs):

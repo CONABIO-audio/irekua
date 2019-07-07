@@ -31,3 +31,8 @@ def update_button():
 @register.inclusion_tag('selia/components/buttons/edit.html')
 def edit_button():
     return {}
+
+
+@register.inclusion_tag('selia/components/buttons/back.html')
+def back_button(next):
+    return {'next': next}

@@ -8,7 +8,7 @@ from irekua_utils.filters.data_collections import collection_sampling_events
 
 
 class CollectionSamplingEventListView(SeliaListView, SingleObjectMixin):
-    template_name = 'selia/collection_detail/sampling_event_list.html'
+    template_name = 'selia/collection_detail/sampling_events/list.html'
     list_item_template = 'selia/components/list_items/sampling_event.html'
     help_template = 'selia/components/help/collection_sampling_events.html'
     filter_form_template = 'selia/components/filters/sampling_event.html'

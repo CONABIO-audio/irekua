@@ -1,4 +1,5 @@
 from django import template
+from dal_select2.widgets import Select2WidgetMixin
 
 register = template.Library()
 
@@ -55,3 +56,14 @@ def viewer_component(context, viewer_template, object):
     context['viewer_template'] = viewer_template
     context['object'] = object
     return context
+
+@register.inclusion_tag('selia/components/create.html', takes_context=True)
+def create_component(context, create_template, form):
+    context['create_template'] = create_template
+    context['form'] = form
+    return context
+
+
+@register.simple_tag
+def autocomplete_media():
+    return Select2WidgetMixin().media

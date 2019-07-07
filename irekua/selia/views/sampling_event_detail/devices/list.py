@@ -7,7 +7,7 @@ from selia.views.utils import SeliaListView
 from irekua_utils.filters.sampling_events import sampling_event_devices
 
 class SamplingEventDevicesListView(SeliaListView, SingleObjectMixin):
-    template_name = 'selia/sampling_event_detail/device_list.html'
+    template_name = 'selia/sampling_event_detail/devices/list.html'
     list_item_template = 'selia/components/list_items/sampling_event_device.html'
     help_template = 'selia/components/help/sampling_event_device.html'
     filter_form_template = 'selia/components/filters/sampling_event_device.html'

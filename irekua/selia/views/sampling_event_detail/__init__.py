@@ -1,2 +1,3 @@
 from .detail import SamplingEventDetailView
-from .device_list import SamplingEventDevicesListView
+from .devices.list import SamplingEventDevicesListView
+from .items.list import SamplingEventItemsListView

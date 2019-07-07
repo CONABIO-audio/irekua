@@ -1,0 +1,14 @@
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+
+<div class="row">
+  {% for field in filter.form %}
+  <div class="col">
+    <div class="form-group">
+      <label for="created_by_input">{{ field.label_tag }}</label>
+      {{ field | add_class:'form-control' }}
+      <small id="created_by_help" class="form-text text-muted">{{ field.help_text|safe }}</small>
+    </div>
+  </div>
+  {% endfor %}
+</div>

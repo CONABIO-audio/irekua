@@ -1,0 +1,21 @@
+{% extends 'selia/collection_detail/base.html' %}
+{% load i18n %}
+{% load selia_buttons %}
+{% load selia_components %}
+
+
+{% block toolbar-title %}{% trans 'Create device' %}{% endblock %}
+
+{% block toolbar-items %}
+  <li class="navbar-item ">
+    {% back_button next %}
+  </li>
+{% endblock toolbar-items %}
+
+{% block main-content %}
+  {% create_component create_template=create_form_template form=form %}
+{% endblock main-content %}
+
+{% block scripts-extra %}
+ {% autocomplete_media %}
+{% endblock %}

@@ -27,11 +27,11 @@
     <div class="col">
       <div class="row w-100 mb-3" style="height: 300px;">
         <div class="card shadow-sm w-100 h-100">
-          {{ object.site.map_widget }}
+          {% viewer_component viewer_template=viewer_template object=object %}
         </div>
       </div>
       <div class="row w-100">
-        {% summary_component summary_template=summary_template object=object %}
+          {% summary_component summary_template=summary_template object=object %}
       </div>
     </div>
   </div>

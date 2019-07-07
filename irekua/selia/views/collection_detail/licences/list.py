@@ -7,7 +7,7 @@ from selia.views.utils import SeliaListView
 from irekua_utils.filters.data_collections import collection_licences
 
 class CollectionLicencesListView(SeliaListView, SingleObjectMixin):
-    template_name = 'selia/collection_detail/licence_list.html'
+    template_name = 'selia/collection_detail/licences/list.html'
     list_item_template = 'selia/components/list_items/licence.html'
     help_template = 'selia/components/help/collection_licences.html'
     filter_form_template = 'selia/components/filters/licence.html'

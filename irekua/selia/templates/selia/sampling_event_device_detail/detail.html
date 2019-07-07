@@ -1,5 +1,7 @@
 {% extends 'selia/sampling_event_device_detail/base.html' %}
 {% load i18n %}
+{% load selia_components %}
+{% load selia_buttons %}
 
 {% block toolbar-title %}Sampling event device {{ sampling_event_device.pk }}{% endblock %}
 
@@ -16,12 +18,24 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
-<div class="row p-5">
-  <div class="col-6">
-    {% include 'selia/components/detail.html' with detail_template='selia/components/details/sampling_event_device.html' object=sampling_event_device %}
+  <div class="container pl-3 pr-3">
+      <div class="row mt-4 mb-5">
+        <div class="col-6">
+          {% detail_component detail_template=detail_template object=sampling_event_device %}
+        </div>
+        <div class="col-6">
+          {% summary_component summary_template=summary_template object=sampling_event_device %}
+        </div>
+      </div>
   </div>
-  <div class="col-6">
-    {% include 'selia/components/summary.html' with summary_template='selia/components/summaries/sampling_event_device.html' object=sampling_event_device %}
-  </div>
-</div>
 {% endblock main-content %}
+
+{% block modals-extra %}
+  {% help_component help_template=help_template %}
+  {% if permissions.change %}
+    {% update_component update_template=update_form_template form=form %}
+  {% endif %}
+  {% if permissions.delete %}
+    {% delete_component object=object %}
+  {% endif %}
+{% endblock modals-extra %}

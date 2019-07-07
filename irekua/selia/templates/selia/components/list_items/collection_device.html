@@ -48,24 +48,23 @@
 
   <div class="col">
     <div class="row">
-      <div class="col-8 d-flex">
+      <div class="col d-flex">
           <h6>{% trans 'Items' %}</h6>
           <div class="text-muted ml-4">{{ item.items.count }}</div>
       </div>
-      <div class="col-1 d-flex">
-          <a href="#"><i class="far fa-eye"></i></a>
+      <div class="col-2">
+          <div class="row">
+            <a href="#">{% see_button %}</a>
+          </div>
+      </div>
+      <div class="col-2">
+        <a href="#"><i class="fas fa-plus"></i></a>
       </div>
     </div>
     <div class="row">
       <div class="col-8 d-flex">
           <h6>{% trans 'Sampling events' %}</h6>
           <div class="text-muted ml-4">{{ item.samplingeventdevice_set.count }}</div>
-      </div>
-      <div class="col-1 d-flex">
-          <a href="#"><i class="far fa-eye"></i></a>
-      </div>
-      <div class="col-1 d-flex">
-          <a href="#"><i class="fas fa-plus"></i></a>
       </div>
     </div>
   </div>

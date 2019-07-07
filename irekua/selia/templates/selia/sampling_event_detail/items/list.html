@@ -1,14 +1,13 @@
-{% extends 'selia/collection_detail/base.html' %}
+{% extends 'selia/sampling_event_detail/base.html' %}
 {% load i18n %}
 {% load selia_components %}
 {% load selia_buttons %}
 
-
-{% block toolbar-title %}{% trans 'Collection Sampling Events' %}{% endblock %}
+{% block toolbar-title %}{% trans 'Sampling event Items' %}{% endblock %}
 
 {% block toolbar-items %}
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'selia:collection_device_create' collection.pk %}?">{% trans 'Add sampling event' %} <i class="fas fa-plus"></i> <i class="fas fa-tools"></i></a>
+    <a class="nav-link" href="#">{% trans 'Add Items' %} <i class="fas fa-plus"></i> <i class="far fa-file"></i></a>
   </li>
   <li class="nav-item">
     {% help_button %}
@@ -16,12 +15,11 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
-
   <div class="container-fluid w-100 p-0">
     {% filter_component filter_template=filter_form_template filter=filter %}
   </div>
 
-{% list_component template_name=list_item_template item_list=object_list empty_message=empty_message %}
+  {% list_component template_name=template_name item_list=object_list empty_message=empty_message %}
 {% endblock main-content %}
 
 {% block modals-extra %}

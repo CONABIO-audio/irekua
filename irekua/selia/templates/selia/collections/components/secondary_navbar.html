@@ -18,6 +18,7 @@
   </a>
 </li>
 
+{% if user.is_authenticated %}
 {% url 'selia:collections_user' as user_url %}
 <li class="nav-item">
   {% if user_url == request.path|urlencode %}
@@ -29,6 +30,7 @@
     {% trans 'My Collections' %}
   </a>
 </li>
+{% endif %}
 
 {% url 'selia:collections_open' as open_url %}
 <li class="nav-item">
