@@ -27,30 +27,6 @@
   </a>
 </li>
 
-{% url 'selia:collection_sampling_events' collection.pk as detail_url %}
-<li class="nav-item">
-  {% if detail_url == request.path|urlencode %}
-  <a class="nav-link active" href={{ detail_url }}>
-  {% else %}
-  <a class="nav-link" href={{ detail_url }}>
-  {% endif %}
-  <i class="fas fa-calendar-week"></i>
-    {% trans 'Sampling events' %}
-  </a>
-</li>
-
-{% url 'selia:collection_devices' collection.pk as devices_url %}
-<li class="nav-item">
-  {% if devices_url == request.path|urlencode %}
-  <a class="nav-link active" href={{ devices_url }}>
-  {% else %}
-  <a class="nav-link" href={{ devices_url }}>
-  {% endif %}
-    <i class="fas fa-tools"></i>
-    {% trans 'Devices' %}
-  </a>
-</li>
-
 {% url 'selia:collection_items' collection.pk as items_url %}
 <li class="nav-item">
   {% if items_url == request.path|urlencode %}
@@ -60,6 +36,32 @@
   {% endif %}
     <i class="far fa-file"></i>
     {% trans 'Items' %}
+  </a>
+</li>
+
+{% url 'selia:collection_devices' collection.pk as devices_url %}
+<li class="nav-item">
+  {% with devices_url|add:"add/" as add_device_url %}
+  {% if devices_url == request.path|urlencode or add_device_url == request.path|urlencode %}
+  <a id="devices" class="nav-link active" href={{ devices_url }}>
+  {% else %}
+  <a id="devices" class="nav-link" href={{ devices_url }}>
+  {% endif %}
+    <i class="fas fa-tools"></i>
+    {% trans 'Devices' %}
+  </a>
+  {% endwith %}
+</li>
+
+{% url 'selia:collection_sampling_events' collection.pk as detail_url %}
+<li class="nav-item">
+  {% if detail_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ detail_url }}>
+  {% else %}
+  <a class="nav-link" href={{ detail_url }}>
+  {% endif %}
+  <i class="fas fa-calendar-week"></i>
+    {% trans 'Sampling events' %}
   </a>
 </li>
 

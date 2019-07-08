@@ -2,7 +2,9 @@
 {% load i18n %}
 {% load widget_tweaks %}
 
-{% block toolbar-title %}{% trans 'Add device to collection' %}{% endblock %}
+
+{% block toolbar-title %}{{ collection }}{% trans ': Devices: Add' %}{% endblock %}
+
 
 {% block toolbar-items %}
 <li class="nav-item">

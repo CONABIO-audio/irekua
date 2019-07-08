@@ -1,6 +1,7 @@
 {% load json_tags %}
 {% load i18n %}
 
+<div class="border-top" style="padding-top:20px;">
 <div class="media">
   {% if object.logo %}
   <img class="mr-3 img-thumbnail" src="{{ object.logo.url }}" alt="logo">
@@ -37,4 +38,5 @@
     {% show_json object.metadata %}
   </div>
   {% endif %}
+</div>
 </div>
