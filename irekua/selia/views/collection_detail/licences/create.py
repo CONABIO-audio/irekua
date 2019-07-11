@@ -4,43 +4,19 @@ from django.views.generic.edit import CreateView
 from django.views.generic.detail import SingleObjectMixin
 from django.urls import reverse
 
-from database.models import Licence
 from database.models import Collection
-from database.models import Site
+from database.models import Licence
 
-
-class SiteCreateForm(forms.ModelForm):
-    class Meta:
-        model = Site
-        fields = [
-            'latitude',
-            'longitude',
-            'altitude',
-            'name',
-            'locality',
-        ]
-
-class LicenceCreateForm(forms.ModelForm):
-    class Meta:
-        model = Licence
-        fields = [
-            'site_type',
-            'metadata',
-            'site',
-            'collection',
-            'internal_id',
-        ]
 
 class LicenceCreateView(CreateView, SingleObjectMixin):
-    template_name = 'selia/collection_detail/sites/create.html'
+    template_name = 'selia/collection_detail/licences/create.html'
     model = Licence
-    success_url = 'selia:licences'
+    success_url = 'selia:collection_licences'
     fields = [
-            'site_type',
+            'licence_type',
+            'document',
             'metadata',
-            'site',
             'collection',
-            'internal_id',
             ]
 
     def check_perms_or_redirect(self):
@@ -51,7 +27,7 @@ class LicenceCreateView(CreateView, SingleObjectMixin):
         return super().get(*args, **kwargs)
 
     def get_site_list(self):
-        return Site.objects.exclude(collectionsite__collection=self.get_object(queryset=Collection.objects.all()))
+        return Licence.objects.exclude(collectionsite__collection=self.get_object(queryset=Collection.objects.all()))
 
     def get_success_url(self):
         if 'success_url' in self.request.GET:
@@ -62,26 +38,16 @@ class LicenceCreateView(CreateView, SingleObjectMixin):
         return reverse(successurl, args=[self.kwargs['pk']])
 
     def handle_finish_create(self):
-        next_url = self.request.GET.get('next', None)
-        return redirect(next_url)
+        return redirect(self.get_success_url())
 
     def handle_create(self):
-        form = LicenceCreateForm(self.request.POST)
-        print(form.data)
+        form = self.get_form()
         if form.is_valid():
-            print("form is valid!!!")
-            licence = Licence()
-            licence.licence_type = form.cleaned_data.get('licence_type')
-            licence.metadata = form.cleaned_data.get('metadata')
-            licence.document = form.cleaned_data.get('document')
-            licence.collection = form.cleaned_data.get('collection')
+            licence = form.save(commit=False)
             licence.created_by = self.request.user
             licence.save()
-
             return self.handle_finish_create()
         else:
-            print("Not valid!")
-            print(form.errors)
             self.object = None
             context = self.get_context_data()
             context['form'] = form

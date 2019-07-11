@@ -10,6 +10,8 @@ from .devices.create import CollectionDeviceCreateView
 
 from .sites.list import CollectionSitesListView
 from .sites.create import CollectionSiteCreateView
+
 from .licences.list import CollectionLicencesListView
+from .licences.create import LicenceCreateView
 
 from .extra.create_device import PhysicalDeviceCreateView

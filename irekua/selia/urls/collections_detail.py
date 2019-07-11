@@ -43,4 +43,8 @@ urlpatterns = [
         'collections/detail/<pk>/sites/add/',
         collection_detail.CollectionSiteCreateView.as_view(),
         name='collection_site_create'),
+    path(
+        'collections/detail/<pk>/licences/add/',
+        collection_detail.LicenceCreateView.as_view(),
+        name='collection_licence_create'),
 ]
