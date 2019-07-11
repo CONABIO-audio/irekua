@@ -40,7 +40,7 @@ urlpatterns = [
         collection_detail.PhysicalDeviceCreateView.as_view(),
         name='physical_device_create'),
     path(
-        'collections/detail/<pk>/extra/collection_site/create/',
+        'collections/detail/<pk>/sites/add/',
         collection_detail.CollectionSiteCreateView.as_view(),
         name='collection_site_create'),
 ]

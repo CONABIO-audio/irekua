@@ -64,31 +64,34 @@
   <i class="fas fa-calendar-week"></i>
     {% trans 'Sampling events' %}
   </a>
-    {% endwith %}
+  {% endwith %}
 
 </li>
 
-{% url 'selia:collection_sites' collection.pk as sites_url %}
+{% url 'selia:collection_sites' collection.pk as detail_url %}
 <li class="nav-item">
-  {% if sites_url == request.path|urlencode %}
-  <a class="nav-link active" href={{ sites_url }}>
+  {% with detail_url|add:"add/" as add_site_url %}
+  {% if detail_url == request.path|urlencode or add_site_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ detail_url }}>
   {% else %}
-  <a class="nav-link" href={{ sites_url }}>
+  <a class="nav-link" href={{ detail_url }}>
   {% endif %}
     <i class="fas fa-map-marked-alt"></i>
     {% trans 'Sites' %}
   </a>
+  {% endwith %}
 </li>
 
 {% url 'selia:collection_licences' collection.pk as detail_url %}
 <li class="nav-item">
-  {% if detail_url == request.path|urlencode %}
-  <a class="nav-link active" href={{ detail_url }}>
+  {% with detail_url|add:"add/" as add_sampling_event_url %}
+  {% if detail_url == request.path|urlencode or add_sampling_event_url == request.path|urlencode %}  <a class="nav-link active" href={{ detail_url }}>
   {% else %}
   <a class="nav-link" href={{ detail_url }}>
   {% endif %}
   <i class="fas fa-user-lock"></i>
     {% trans 'Licences' %}
   </a>
+  {% endwith %}
 </li>
 {% endblock navbar-items %}

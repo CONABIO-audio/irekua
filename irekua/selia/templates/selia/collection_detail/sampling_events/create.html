@@ -25,8 +25,8 @@
   <div class="jumbotron m-3">
     <h1 class="display-6">{%trans 'Add sampling event to collection: Part' %} 1 / 2</h1>
     <p>{% blocktrans %}
-      Please select a site or 
-      {% endblocktrans %} <a href="{% url 'selia:collection_site_create' collection.pk %}?next={{ request.path }}"></i> {% trans 'register new site' %}</a>.
+      Please select a collection site to associate or 
+      {% endblocktrans %} <a href="{% url 'selia:collection_site_create' collection.pk %}?next={{ request.path }}"></i> {% trans 'add a new one' %}</a>.
     </p>
     <div class="progress">
       <div class="progress-bar" role="progressbar"style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
@@ -43,7 +43,7 @@
       {% else %}
       <a class="stretched-link btn" href="?collection_site={{ item.pk }}#sampling_events">
       {% endif %}
-      {% include 'selia/components/select_list_items/sites.html' with item=item %}
+      {% include 'selia/components/select_list_items/collection_sites.html' with item=item %}
       </a>
       {% empty %}
       <div class="container-fluid bg-light text-center">
@@ -71,7 +71,7 @@
   <div class="row h-100">
         <div class="col">
       <h4>{% trans 'Selected site' %}</h4>
-      {% include 'selia/components/select_list_items/sites.html' with item=selected_site %}
+      {% include 'selia/components/select_list_items/collection_sites.html' with item=selected_site %}
     </div>
   </div>
   <div class="row p-4 h-100">
