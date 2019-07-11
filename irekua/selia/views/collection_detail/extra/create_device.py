@@ -45,6 +45,7 @@ class PhysicalDeviceCreateForm(forms.ModelForm):
     class Meta:
         model = PhysicalDevice
         fields = [
+            'device',
             'metadata',
             'serial_number',
             'identifier',
@@ -68,9 +69,35 @@ class PhysicalDeviceCreateView(SeliaCreateView):
         self.request.user.user_permissions.add(permission)
         return super().get(*args, **kwargs)
 
+
+    def handle_finish_details_fase(self):
+        selected_device = self.request.GET.get('selected_device')
+        prev_form = PhysicalDeviceCreateForm(self.request.POST)
+        prev_data = prev_form.data.copy()
+        prev_data["device"] = selected_device
+        form = PhysicalDeviceCreateForm(prev_data)
+
+        if form.is_valid():
+            physical_device = PhysicalDevice()
+            physical_device.identifier = form.cleaned_data.get('identifier')
+            physical_device.serial_number = form.cleaned_data.get('serial_number')
+            physical_device.device = form.cleaned_data.get('device')
+            physical_device.metadata = form.cleaned_data.get('metadata')
+            physical_device.bundle = form.cleaned_data.get('bundle')
+            physical_device.created_by = self.request.user
+            physical_device.save()
+
+            return self.handle_finish_device(physical_device)
+        else:
+            self.object = None
+            context = self.get_context_data()
+            context['form'] = form
+            return self.render_to_response(context)
+
+
+
     def handle_select_device_fase(self):
         form = SelectDeviceForm(self.request.POST)
-
         if form.is_valid():
             device = form.cleaned_data['device']
             if  device is not None:
@@ -90,6 +117,10 @@ class PhysicalDeviceCreateView(SeliaCreateView):
         else:
             print('No')
 
+    def handle_finish_device(self,physical_device):
+        next_url = self.request.GET.get('next', None)
+        return redirect(next_url)
+
     def handle_select_device(self, device):
         query = self.request.GET.copy()
         query['fase'] = 'add_details'
@@ -100,8 +131,11 @@ class PhysicalDeviceCreateView(SeliaCreateView):
 
     def post(self, *args, **kwargs):
         fase = self.request.GET.get('fase', None)
+        next_url = self.request.GET.get('next', None)
         if fase == 'select_device':
             return self.handle_select_device_fase()
+        else:
+            return self.handle_finish_details_fase()
 
     def get_select_device_form(self):
         data = {}

@@ -1,6 +1,8 @@
 from .detail import CollectionDetailView
 
 from .sampling_events.list import CollectionSamplingEventListView
+from .sampling_events.create import SamplingEventCreateView
+
 from .item_list import CollectionItemsListView
 
 from .devices.list import CollectionDevicesListView
@@ -10,3 +12,4 @@ from .sites.list import CollectionSitesListView
 from .licences.list import CollectionLicencesListView
 
 from .extra.create_device import PhysicalDeviceCreateView
+from .extra.create_site import CollectionSiteCreateView

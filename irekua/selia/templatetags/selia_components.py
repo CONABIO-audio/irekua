@@ -63,6 +63,11 @@ def create_component(context, create_template, form):
     context['form'] = form
     return context
 
+@register.inclusion_tag('selia/components/create_wizard.html', takes_context=True)
+def create_wizard(context, wizard):
+    context['wizard'] = wizard
+    return context
+
 
 @register.simple_tag
 def autocomplete_media():

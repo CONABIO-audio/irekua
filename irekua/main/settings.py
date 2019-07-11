@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     'bootstrap4',
     'crispy_forms',
     'leaflet',
-
     'rest',
     'selia',
     'database',
@@ -68,6 +67,7 @@ INSTALLED_APPS = [
     'irekua',
     'irekua_utils',
     'file_handler',
+    'formtools',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -3,21 +3,26 @@
 {% load widget_tweaks %}
 
 
-{% block toolbar-title %}{{ collection }}{% trans ': Devices: Add' %}{% endblock %}
+{% block toolbar-title %}{% trans 'Add device to collection' %}{% endblock %}
 
 
 {% block toolbar-items %}
 <li class="nav-item">
-  <a class="nav-link" href={% url 'selia:collection_devices' collection.pk %}>{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
+  {% if request.GET.device %}
+    <a class="nav-link" href={% url 'selia:collection_device_create' collection.pk %}>{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
+  {% else %}
+    <a class="nav-link" href={% url 'selia:collection_devices' collection.pk %}>{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
+  {% endif %}
 </li>
 {% endblock %}
 
 {% block main-content %}
-<div class="container-fluid w-100 p-0">
+{% if not request.GET.device %}
+<div class="container">
   <div class="jumbotron m-4">
-    <h1 class="display-4">{%trans 'Part' %} 1 / 2</h1>
+    <h1 class="display-4">{%trans 'Add device to collection: Part' %} 1 / 2</h1>
     <p>{% blocktrans %}
-      Please select one of your devices to register to the collection or
+      Please select one of your registered devices or
       {% endblocktrans %} <a href="{% url 'selia:physical_device_create' collection.pk %}?next={{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register new device' %}</a>.
     </p>
     <div class="progress">
@@ -25,7 +30,6 @@
     </div>
   </div>
   <div class="container m-3">
-    filter
   </div>
   <div class="container-fluid w-100 p-0">
     <div class="w-100 bg-light p-4 list-group mb-4">
@@ -51,10 +55,11 @@
   </div>
 </div>
 
-{% if request.GET.device %}
-<div class="container-fluid w-100" id="devices">
+{% else %}
+
+<div class="container" id="devices">
   <div class="jumbotron m-4">
-    <h1 class="display-4">{%trans 'Part' %} 2 / 2</h1>
+    <h1 class="display-4">{%trans 'Add device to collection: Part' %} 2 / 2</h1>
     <p>{% blocktrans %}
       Fill out the following form
       {% endblocktrans %}
@@ -95,7 +100,7 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">{% trans 'Register' %}</button>
+        <button type="submit" class="btn btn-primary">{% trans 'Add device' %}</button>
         <a class="btn btn-danger" href="#">{% trans 'Cancel' %}</a>
       </form>
     </div>
