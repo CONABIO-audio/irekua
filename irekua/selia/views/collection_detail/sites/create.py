@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import SingleObjectMixin
 from django.urls import reverse
-
+from django.core.paginator import Paginator
 from database.models import CollectionSite
 from database.models import Collection
 from database.models import Site
@@ -51,7 +51,12 @@ class CollectionSiteCreateView(CreateView, SingleObjectMixin):
         return super().get(*args, **kwargs)
 
     def get_site_list(self):
-        return Site.objects.exclude(collectionsite__collection=self.get_object(queryset=Collection.objects.all()))
+        queryset = Site.objects.exclude(collectionsite__collection=self.get_object(queryset=Collection.objects.all()))
+        paginator = Paginator(queryset,5)
+        page = self.request.GET.get('page',1)
+        page = paginator.get_page(page)
+
+        return page
 
     def get_success_url(self):
         if 'success_url' in self.request.GET:

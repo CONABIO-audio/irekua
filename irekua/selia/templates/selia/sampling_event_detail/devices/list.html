@@ -21,3 +21,7 @@
 {% include 'selia/components/list.html' with template_name='selia/components/list_items/sampling_event_device.html' item_list=object_list empty_message='empty' %}
 
 {% endblock main-content %}
+
+{% block modals-extra %}
+  {% help_component help_template=help_template %}
+{% endblock modals-extra %}

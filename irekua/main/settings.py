@@ -41,7 +41,7 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Application definition
 AUTH_USER_MODEL = 'database.User'
-
+DIRS = []
 INSTALLED_APPS = [
     'dal',
     'dal_select2',

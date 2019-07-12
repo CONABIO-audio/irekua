@@ -1,7 +1,7 @@
-from database.models import SamplingEvent
 from django.views.generic.detail import SingleObjectMixin
 from django.utils.translation import gettext as _
 
+from database.models import Collection
 from database.models import Item
 
 from irekua_utils.filters.items import items
@@ -9,30 +9,27 @@ from selia.views.utils import SeliaListView
 
 
 
-class SamplingEventItemsListView(SeliaListView, SingleObjectMixin):
-    template_name = 'selia/sampling_event_detail/items/list.html'
+class CollectionItemsListView(SeliaListView, SingleObjectMixin):
+    template_name = 'selia/collection_detail/items/list.html'
     list_item_template = 'selia/components/list_items/item.html'
-    help_template = 'selia/components/help/sampling_event_items.html'
+    help_template = 'selia/components/help/collection_items.html'
     filter_form_template = 'selia/components/filters/item.html'
 
-    empty_message = _('No items are registered in this sampling event')
+    empty_message = _('No items are registered in this collection')
 
     filter_class = items.Filter
     search_fields = items.search_fields
     ordering_fields = items.ordering_fields
 
     def get(self, request, *args, **kwargs):
-        self.object = self.get_object(queryset=SamplingEvent.objects.all())
+        self.object = self.get_object(queryset=Collection.objects.all())
         return super().get(request, *args, **kwargs)
 
     def get_initial_queryset(self):
-        items = Item.objects.filter(
-            sampling_event_device__sampling_event=self.object)
-        print(items[0])
-        return items
-
+        return Item.objects.filter(
+            sampling_event_device__sampling_event__collection=self.object)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['sampling_event'] = self.object
+        context['collection'] = self.object
         return context

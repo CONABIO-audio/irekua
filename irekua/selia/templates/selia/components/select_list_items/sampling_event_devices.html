@@ -1,0 +1,50 @@
+{% extends 'selia/components/list_item.html' %}
+{% load selia_buttons %}
+{% load static %}
+{% load i18n %}
+
+{% block list-item-content %}
+<div class="row w-100">
+  <div class="col">
+    <div class="media">
+      {% if item.collection_device.physical_device.device.brand.logo %}
+      <img class="mr-3 img-thumbnail" src="{{ item.physical_device.device.brand.logo.url }}" alt="logo">
+      {% endif %}
+      <div class="media-body mt-0">
+        <h4 class="mt-0">{{ item.collection_device.physical_device.device.brand }}</h4>
+        <div class="text-muted">{{ item.collection_device.physical_device.device.model }}</div>
+        <div class="text-muted"><a href="{% url 'selia:sampling_event_device_detail' item.pk %}">{% enter_button %}</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+      <h6>{% trans 'Device type' %}</h6>
+      <div class="text-muted ml-4">{{ item.collection_device.physical_device.device.device_type }}</div>
+    </div>
+    <div class="row">
+      <h6>{% trans 'Serial Number' %}</h6>
+      <div class="text-muted ml-4">{{ item.collection_device.physical_device.serial_number }}</div>
+    </div>
+    <div class="row">
+      <h6>{% trans 'Collection Device id' %}</h6>
+      <div class="text-muted ml-4">{{ item.collection_device.internal_id }}</div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+      <h6>{% trans 'Collection' %}</h6>
+      <div class="text-muted ml-4">{{ item.collection_device.collection }}</div>
+    </div>
+    <div class="row">
+      <h6>{% trans 'Owner' %}</h6>
+      <div class="text-muted ml-4">{{ item.collection_device.physical_device.created_by }}</div>
+    </div>
+    <div class="row">
+      <h6>{% trans 'Added on' %}</h6>
+      <div class="text-muted ml-4">{{ item.collection_device.created_on }}</div>
+    </div>
+  </div>
+
+</div>
+{% endblock list-item-content %}

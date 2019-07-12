@@ -147,7 +147,7 @@
         {% csrf_token %}
        <input type="hidden" id="site_field" name="site" value="{{ selected_site.pk }}">
        <input type="hidden" id="collection_field" name="collection" value="{{ collection }}">
-      <div class="row">
+      <div class="col">
      <div class="form-row">
         <div class="form-group col">
           {{ form.site_type.errors }}

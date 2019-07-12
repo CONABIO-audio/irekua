@@ -16,13 +16,15 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
+
   <div class="container-fluid w-100 p-0">
     {% filter_component filter_template=filter_form_template filter=filter %}
   </div>
 
-  {% list_component template_name=template_name item_list=object_list empty_message=empty_message %}
+{% list_component template_name=list_item_template item_list=object_list empty_message=empty_message %}
 {% endblock main-content %}
 
 {% block modals-extra %}
   {% help_component help_template=help_template %}
 {% endblock modals-extra %}
+

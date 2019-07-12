@@ -3,12 +3,11 @@ from django.shortcuts import redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import SingleObjectMixin
 from django.urls import reverse
-
 from database.models import Collection
 from database.models import Licence
 
 
-class LicenceCreateView(CreateView, SingleObjectMixin):
+class CollectionLicenceCreateView(CreateView, SingleObjectMixin):
     template_name = 'selia/collection_detail/licences/create.html'
     model = Licence
     success_url = 'selia:collection_licences'
@@ -25,9 +24,6 @@ class LicenceCreateView(CreateView, SingleObjectMixin):
     def get(self, *args, **kwargs):
         self.check_perms_or_redirect()
         return super().get(*args, **kwargs)
-
-    def get_site_list(self):
-        return Licence.objects.exclude(collectionsite__collection=self.get_object(queryset=Collection.objects.all()))
 
     def get_success_url(self):
         if 'success_url' in self.request.GET:

@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import SingleObjectMixin
 from django.urls import reverse
-
+from django.core.paginator import Paginator
 from database.models import SamplingEvent
 from database.models import Collection
 from database.models import Site
@@ -36,7 +36,12 @@ class SamplingEventCreateView(CreateView, SingleObjectMixin):
         return super().get(*args, **kwargs)
 
     def get_site_list(self):
-        return CollectionSite.objects.filter()
+        queryset = CollectionSite.objects.filter()
+        paginator = Paginator(queryset,5)
+        page = self.request.GET.get('page',1)
+        page = paginator.get_page(page)
+
+        return page
 
     def get_success_url(self):
         return reverse('selia:collection_sampling_events', args=[self.kwargs['pk']])

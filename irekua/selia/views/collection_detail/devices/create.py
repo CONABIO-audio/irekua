@@ -1,7 +1,7 @@
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import SingleObjectMixin
 from django.urls import reverse
-
+from django.core.paginator import Paginator
 from database.models import CollectionDevice
 from database.models import Collection
 from database.models import PhysicalDevice
@@ -26,7 +26,12 @@ class CollectionDeviceCreateView(CreateView, SingleObjectMixin):
         collection = self.get_object(queryset=Collection.objects.all())
         collection_user_devices = collection.physical_devices.filter(created_by=user)
 
-        return user_devices.difference(collection_user_devices)
+        queryset =  user_devices.difference(collection_user_devices)
+        paginator = Paginator(queryset,5)
+        page = self.request.GET.get('page',1)
+        page = paginator.get_page(page)
+
+        return page
 
     def get_success_url(self):
         return reverse('selia:collection_devices', args=[self.kwargs['pk']])

@@ -27,12 +27,12 @@
   </a>
 </li>
 
-{% url 'selia:collection_items' collection.pk as items_url %}
+{% url 'selia:collection_items' collection.pk as detail_url %}
 <li class="nav-item">
-  {% if items_url == request.path|urlencode %}
-  <a class="nav-link active" href={{ items_url }}>
+  {% if detail_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ detail_url }}>
   {% else %}
-  <a class="nav-link" href={{ items_url }}>
+  <a class="nav-link" href={{ detail_url }}>
   {% endif %}
     <i class="far fa-file"></i>
     {% trans 'Items' %}
