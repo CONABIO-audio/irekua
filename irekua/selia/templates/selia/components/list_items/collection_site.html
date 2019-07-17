@@ -60,11 +60,11 @@
       </div>
       <div class="col-3">
           <div class="row">
-            <a href="#">{% see_button %}</a>
+            <a href="{% url 'selia:collection_site_items' item.pk %}">{% see_button %}</a>
           </div>
       </div>
       <div class="col-2">
-          <a href="#"><i class="fas fa-plus"></i></a>
+          <a href="{% url 'selia:collection_site_item_create' item.pk %}"><i class="fas fa-plus"></i></a>
       </div>
     </div>
     <div class="row">

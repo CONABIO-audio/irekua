@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="col-2">
-          <a href="#"><i class="fas fa-plus"></i></a>
+          <a href="{% url 'selia:collection_site_create' item.pk %}"><i class="fas fa-plus"></i></a>
         </div>
       </div>
       <div class="row">
@@ -62,7 +62,7 @@
           </div>
         </div>
         <div class="col-2">
-            <a href="#"><i class="fas fa-plus"></i></a>
+            <a href="{% url 'selia:collection_sampling_event_create' item.pk %}"><i class="fas fa-plus"></i></a>
         </div>
       </div>
       <div class="row">
@@ -76,7 +76,7 @@
           </div>
         </div>
         <div class="col-2">
-          <a href="#"><i class="fas fa-plus"></i></a>
+          <a href="{% url 'selia:collection_device_create' item.pk %}"><i class="fas fa-plus"></i></a>
         </div>
       </div>
       <div class="row">
@@ -90,7 +90,7 @@
           </div>
         </div>
         <div class="col-2">
-          <a href="#"><i class="fas fa-plus"></i></a>
+          <a href="{% url 'selia:collection_item_create' item.pk %}"><i class="fas fa-plus"></i></a>
         </div>
       </div>
     </div>

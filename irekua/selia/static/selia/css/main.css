@@ -42,6 +42,17 @@
   display: block;
   text-overflow: ellipsis;
 }
+
+
+
+#dropDownLabel {
+  width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+  text-overflow: ellipsis;
+}
+
 .leaflet-container-default {
   height: 100%;
   width: 100%;

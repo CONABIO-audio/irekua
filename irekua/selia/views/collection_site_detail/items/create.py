@@ -152,7 +152,7 @@ class CollectionSiteItemCreateView(CreateView, SingleObjectMixin):
             sampling_event.created_by = self.request.user
             sampling_event.save()
 
-            return self.handle_finish_create()
+            return self.handle_sampling_event_created(sampling_event)
         else:
             print("Not valid!")
             print(form.errors)
