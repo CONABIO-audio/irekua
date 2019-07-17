@@ -5,12 +5,17 @@ from django.core.paginator import Paginator
 from database.models import SamplingEvent, SamplingEventDevice
 from selia.views.utils import SeliaListView
 from irekua_utils.filters.sampling_events import sampling_event_devices
+from django.utils.translation import gettext as _
+
 
 class SamplingEventDevicesListView(SeliaListView, SingleObjectMixin):
     template_name = 'selia/sampling_event_detail/devices/list.html'
     list_item_template = 'selia/components/list_items/sampling_event_device.html'
     help_template = 'selia/components/help/sampling_event_device.html'
     filter_form_template = 'selia/components/filters/sampling_event_device.html'
+
+    empty_message = _('No devices are registered in this sampling event')
+
 
     filter_class = sampling_event_devices.Filter
     search_fields = sampling_event_devices.search_fields

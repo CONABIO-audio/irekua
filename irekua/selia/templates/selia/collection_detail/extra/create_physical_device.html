@@ -7,10 +7,10 @@
 {% block toolbar-title %}{% trans 'Register new device' %}{% endblock %}
 
 {% block toolbar-items %}
-  <li class="navbar-item ">
-    {% back_button next %}
-  </li>
-{% endblock toolbar-items %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ back }}">{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
+</li>
+{% endblock %}
 
 {% block main-content %}
   {% create_component create_template=create_form_template form=form %}

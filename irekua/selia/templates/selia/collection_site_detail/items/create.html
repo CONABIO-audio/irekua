@@ -1,0 +1,265 @@
+{% extends 'selia/collection_site_detail/base.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block toolbar-title %}{% trans 'Add item to collection site' %}{% endblock %}
+
+
+
+{% block toolbar-items %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ back }}">{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
+</li>
+{% endblock %}
+
+{% block main-content %}
+{% if not request.GET.sampling_event %}
+<div class="container">
+  <div class="jumbotron m-3">
+    <h1 class="display-6">{%trans 'Add item to collection site: Part' %} 1 / 3</h1>
+    <p>{% blocktrans %}
+      Please select a sampling event within this site to associate or 
+      {% endblocktrans %}<a href="#collapseSamplingEvent" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSamplingEvent">{% trans 'create a new sampling event in this site' %}</a>  </p>
+
+    <div class="progress">
+      <div class="progress-bar" role="progressbar"style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+
+<form action="?back={{ request.path }}&chain={{ chain }}&fase=create_sampling_event#" method="post">
+  {% csrf_token %}
+  <div class="container-fluid px-4 pb-5">
+    <div class="collapse" id="collapseSamplingEvent">
+      <div class="card card-body">
+        <h5 class="w-100 text-center">{% trans 'Create new sampling in this site' %}</h5>
+        <input type="hidden" id="site_field" name="collection_site" value="{{ collection_site.pk }}">
+       <input type="hidden" id="collection_field" name="collection" value="{{ collection_site.collection.pk }}">
+        <div class="row">
+        <div class="col-2 mx-5">
+          <div class="row d-flex justify-content-between">
+          <div class="p-3">
+            {{ sampling_event_create_form.sampling_event_type.errors }}
+            {{ sampling_event_create_form.sampling_event_type.label_tag }}
+            {{ sampling_event_create_form.sampling_event_type }}
+            <small id="sampling_event_typeInput" class="form-text text-muted">{{ form.sampling_event_type.help_text }}</small>
+          </div>
+          </div>
+          <div class="row d-flex justify-content-between">
+          <div class="p-3">
+            {{ sampling_event_create_form.started_on.errors }}
+            {{ sampling_event_create_form.started_on.label_tag }}
+            {{ sampling_event_create_form.started_on }}
+            <small id="started_onInput" class="form-text text-muted">{{ form.started_on.help_text }}</small>
+          </div>
+          </div>
+          <div class="row d-flex justify-content-between">
+          <div class="p-3">
+            {{ sampling_event_create_form.ended_on.errors }}
+            {{ sampling_event_create_form.ended_on.label_tag }}
+            {{ sampling_event_create_form.ended_on }}
+            <small id="ended_onInput" class="form-text text-muted">{{ form.ended_on.help_text }}</small>
+          </div>
+          </div>
+        </div>
+        <div class="col-2 mx-5">
+          <div class="row d-flex justify-content-between">
+          <div class="p-3">
+            {{ sampling_event_create_form.metadata.errors }}
+            {{ sampling_event_create_form.metadata.label_tag }}
+            {{ sampling_event_create_form.metadata }}
+            <small id="metadataInput" class="form-text text-muted">{{ form.metadata.help_text }}</small>
+          </div>
+          </div>
+        </div> 
+        <div class="d-flex w-100 justify-content-end">
+          <input type="submit" class="btn btn-link text-primary" value="{% trans 'Create' %}">
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+  <div class="container m-3" id="filter_container">
+
+  </div>
+  <div class="container-fluid w-100 p-0">
+    <div class="w-100 bg-light p-4 list-group mb-4">
+      {% for item in sampling_event_list %}
+      {% if item.pk == request.GET.sampling_event %}
+      <a class="stretched-link btn btn-primary" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ item.pk }}#sampling_events">
+      {% else %}
+      <a class="stretched-link btn" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ item.pk }}#sampling_events">
+      {% endif %}
+      {% include 'selia/components/select_list_items/sampling_events.html' with item=item %}
+      </a>
+      {% empty %}
+      <div class="container-fluid bg-light text-center">
+          <h4>{% trans 'No available sampling events. Please ' %}</h4>
+          <p><a href="#collapseSamplingEvent" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSamplingEvent"><i class="fas fa-plus"></i> {% trans 'register new sampling event in this site' %}</a></p>
+      </div>
+      {% endfor %}
+
+      <div class="container center w-100 p-4">
+        {% include 'selia/components/pagination.html' with list=sampling_event_list %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% elif not request.GET.sampling_event_device %}
+
+<div class="container" id="devices">
+  <div class="jumbotron m-4">
+    <h1 class="display-6">{%trans 'Add item to collection site: Part' %} 2 / 3</h1>
+    <p>{% blocktrans %}
+      Please select a device declared within this sampling event or 
+      {% endblocktrans %} <a href="{% url 'selia:sampling_event_device_create' selected_sampling_event.pk %}?chain={{ chain }}|{{ request.path }}"></i> {% trans 'add a new one' %}</a>.
+    </p>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+ <div class="row h-100" align="center">
+    <div class="col">
+      <a href="#collapseSamplingEvent" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSamplingEvent"><h4>{% trans 'Selected sampling event: ' %}{{ selected_sampling_event.pk }}</h4></a>
+      <div class="collapse" id="collapseSamplingEvent">
+      {% include 'selia/components/select_list_items/sampling_events.html' with item=selected_sampling_event %}
+      </div>
+    </div>
+  </div>
+
+<div class="container-fluid w-100 p-4">
+    <h4>{% trans 'Devices whithin this sampling event: ' %}</h4>
+    <div class="w-100 bg-light p-4 list-group mb-4">
+      {% for item in sampling_event_device_list %}
+      {% if item.pk == request.GET.sampling_event_device %}
+      <a class="stretched-link btn btn-primary" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ item.pk }}#addDetail">
+      {% else %}
+      <a class="stretched-link btn" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ item.pk }}#addDetail">
+      {% endif %}
+      {% include 'selia/components/select_list_items/sampling_event_devices.html' with item=item %}
+      </a>
+      {% empty %}
+      <div class="container-fluid bg-light text-center">
+          <h4>{% trans 'No available devices in this sampling event. Please ' %}</h4>
+          <p><a href="{% url 'selia:sampling_event_device_create' selected_sampling_event.pk %}?chain={{ chain }}|{{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register add a new device' %}</a></p>
+      </div>
+      {% endfor %}
+
+      <div class="container center w-100 p-4">
+        {% include 'selia/components/pagination.html' with list=sampling_event_device_list %}
+      </div>
+    </div>
+</div>
+
+{% else %}
+
+<div class="container" id="addDetail">
+  <div class="jumbotron m-4">
+    <h1 class="display-6">{%trans 'Add item to collection site: Part' %} 3 / 3</h1>
+    <p>{% blocktrans %}
+      Please fill complete the information below 
+      {% endblocktrans %} 
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+  <div class="row h-100" align="center">
+    <div class="col">
+      <a href="#collapseSamplingEvent" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSamplingEvent"><h4>{% trans 'Selected sampling event: ' %}{{ selected_sampling_event.pk }}</h4></a>
+      <div class="collapse" id="collapseSamplingEvent">
+      {% include 'selia/components/select_list_items/sampling_events.html' with item=selected_sampling_event %}
+      </div>
+    </div>
+  </div>
+  <div class="row h-100" align="center">
+    <div class="col">
+      <a href="#collapseSamplingEventDevice" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSamplingEventDevice"><h4>{% trans 'Selected device: ' %}{{ selected_sampling_event_device.pk }}</h4></a>
+      <div class="collapse" id="collapseSamplingEventDevice">
+      {% include 'selia/components/select_list_items/sampling_event_devices.html' with item=selected_sampling_event_device %}
+      </div>
+    </div>
+  </div>
+
+      <form action="?chain={{ chain }}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" id="sampling_event_device_field" name="sampling_event_device" value="{{ selected_sampling_event_device.pk }}">
+       <input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
+      <div class="row">
+        <div class="col-4 mx-5">
+          <div class="row d-flex justify-content-between">
+          <div class="p-3">
+            {{ form.item_type.errors }}
+            <label for="item_typeInput">{{ form.item_type.label_tag }}</label>
+            {{ form.item_type|add_class:"form-control" }}
+            <small id="item_typeHelp" class="form-text text-muted">{{ form.item_type.help_text|safe }} </small>
+          </div>
+          </div>
+          <div class="row d-flex justify-content-between">
+          <div class="p-3">
+            {{ form.item_file.errors }}
+            <label for="item_fileInput">{{ form.item_file.label_tag }}</label>
+            {{ form.item_file|add_class:"form-control" }}
+            <small id="item_fileHelp" class="form-text text-muted">{{ form.item_file.help_text|safe }} </small>
+          </div>
+          </div>
+          <div class="row d-flex justify-content-between">
+          <div class="p-3">
+            {{ form.source.errors }}
+            <label for="item_fileInput">{{ form.source.label_tag }}</label>
+            {{ form.source|add_class:"form-control" }}
+            <small id="sourceHelp" class="form-text text-muted">{{ form.source.help_text|safe }} </small>
+          </div>
+          </div>
+        </div>
+        <div class="col-4 mx-5">
+          <div class="row d-flex justify-content-between">
+          <div class="p-4">
+            {{ form.captured_on.errors }}
+            <label for="sampling_event_typeInput">{{ form.captured_on.label_tag }}</label>
+            {{ form.captured_on|add_class:"form-control" }}
+            <small id="sampling_event_type" class="form-text text-muted">{{ form.captured_on.help_text|safe }} </small>
+          </div>
+          </div>
+          <div class="row d-flex justify-content-between">
+          <div class="p-4">
+            {{ form.tags.errors }}
+            <label for="sampling_event_typeInput">{{ form.tags.label_tag }}</label>
+            {{ form.tags|add_class:"form-control" }}
+            <small id="sampling_event_type" class="form-text text-muted">{{ form.tags.help_text|safe }} </small>
+          </div>
+          </div>
+          <div class="row d-flex justify-content-between">
+          <div class="p-4">
+            {{ form.licence.errors }}
+            <label for="sampling_event_typeInput">{{ form.licence.label_tag }}</label>
+            {{ form.licence|add_class:"form-control" }}
+            <small id="sampling_event_type" class="form-text text-muted">{{ form.licence.help_text|safe }} </small>
+          </div>
+          </div>
+
+          </div>
+      </div>
+      <div class="row p-6">
+          <div class="row d-flex justify-content-between">
+          <div class="p-4">
+            {{ form.metadata.errors }}
+            <label for="sampling_event_typeInput">{{ form.metadata.label_tag }}</label>
+            {{ form.metadata|add_class:"form-control" }}
+            <small id="sampling_event_type" class="form-text text-muted">{{ form.metadata.help_text|safe }} </small>
+          </div>
+          </div>
+      </div>
+        <div class="row p-6">
+          <div class="col p-3 text-center">
+              <button type="submit" class="btn btn-primary">{% trans 'Add item' %}</button>
+          </div>
+          <div class="col p-3 text-center">
+              <a class="btn btn-danger" href="#">{% trans 'Cancel' %}</a>
+          </div>
+        </div>
+
+      </form>
+</div>
+{% endif %}
+{% endblock main-content %}

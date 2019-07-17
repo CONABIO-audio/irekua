@@ -5,7 +5,8 @@
 
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'selia/css/main.css' %}">
-{% endblock stylesheet %}
+{% block stylesheet-extra %}{% endblock stylesheet-extra %}
+{% endblock %}
 
 {% block header %}
 {% include 'selia/components/header.html' %}

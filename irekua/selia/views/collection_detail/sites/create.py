@@ -58,17 +58,57 @@ class CollectionSiteCreateView(CreateView, SingleObjectMixin):
 
         return page
 
-    def get_success_url(self):
-        if 'success_url' in self.request.GET:
-            successurl = self.request.GET["success_url"]
+    def get_chain(self):
+        if 'chain' in self.request.GET:
+            return self.request.GET.get('chain', None)
         else:
-            successurl = self.success_url
+            return ''
 
-        return reverse(successurl, args=[self.kwargs['pk']])
+    def get_new_chain(self):
+        chain = self.get_chain()
+        print(chain)
+        if chain != "":
+            chain_arr = chain.split('|')
+        else:
+            chain_arr = []
+
+        chain_str = ''
+        next_url = ''
+        print(chain_arr)
+        if len(chain_arr) != 0:
+            next_url = chain_arr[-1]
+            print(next_url)
+            chain_arr.pop(-1)
+            if len(chain_arr) != 0:
+                chain_str = "|".join(chain_arr)
+
+        return chain_str, next_url
+
+    def get_back_url(self):
+        if 'back' in self.request.GET:
+            chain_str = self.get_chain()
+            return self.request.GET['back']+"?chain="+chain_str
+        else:
+            chain_str, next_url = self.get_new_chain()
+
+            if next_url == '':
+                return self.get_success_url()
+
+            return next_url+"?chain="+chain_str
+            
+    def get_success_url(self):
+        return reverse(self.success_url, args=[self.kwargs['pk']])
 
     def handle_finish_create(self):
-        next_url = self.request.GET.get('next', None)
-        return redirect(next_url)
+        #next_url = self.request.GET.get('next', None)
+        chain_str, next_url = self.get_new_chain()
+
+        if next_url == '':
+            return redirect(self.get_success_url())
+
+        redirect_url = next_url+"?&chain="+chain_str
+        
+        return redirect(redirect_url)
 
     def handle_site_created(self,site):
         query = self.request.GET.copy()
@@ -153,6 +193,9 @@ class CollectionSiteCreateView(CreateView, SingleObjectMixin):
         context['collection'] = self.get_object(queryset=Collection.objects.all())
         context['site_create_form'] = SiteCreateForm()
         context['site_list'] = self.get_site_list()
+
+        context['chain'] = self.get_chain()
+        context['back'] = self.get_back_url()
 
         if 'site' in self.request.GET:
             site = Site.objects.get(pk=self.request.GET['site'])

@@ -7,13 +7,7 @@
 
 {% block toolbar-items %}
 <li class="nav-item">
-  {% if request.GET.sampling_event and not request.GET.sampling_event_device%}
-    <a class="nav-link" href="{% url 'selia:collection_item_create' collection.pk %}">{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
-  {% elif request.GET.sampling_event_device %}
-    <a class="nav-link" href="{% url 'selia:collection_item_create' collection.pk %}?sampling_event={{ selected_sampling_event.pk }}#devices">{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
-  {% else %}
-    <a class="nav-link" href="{% url 'selia:collection_items' collection.pk %}">{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
-  {% endif %}
+  <a class="nav-link" href="{{ back }}">{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
 </li>
 {% endblock %}
 
@@ -21,10 +15,10 @@
 {% if not request.GET.sampling_event %}
 <div class="container" id="sampling_events">
   <div class="jumbotron m-3">
-    <h1 class="display-6">{%trans 'Add item to collection: Part' %} 1 / 2</h1>
+    <h1 class="display-6">{%trans 'Add item to collection: Part' %} 1 / 3</h1>
     <p>{% blocktrans %}
-      Please select a sampling_event to associate or 
-      {% endblocktrans %} <a href="{% url 'selia:collection_sampling_event_create' collection.pk %}?next={{ request.path }}"></i> {% trans 'add a new one' %}</a>.
+      Please select a sampling event to associate or 
+      {% endblocktrans %} <a href="{% url 'selia:collection_sampling_event_create' collection.pk %}?chain={{ chain }}|{{ request.path }}"></i> {% trans 'add a new one' %}</a>
     </p>
     <div class="progress">
       <div class="progress-bar" role="progressbar"style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
@@ -38,16 +32,16 @@
     <div class="w-100 bg-light p-4 list-group mb-4">
       {% for item in sampling_event_list %}
       {% if item.pk == request.GET.sampling_event %}
-      <a class="stretched-link btn btn-primary" href="?sampling_event={{ item.pk }}#devices">
+      <a class="stretched-link btn btn-primary" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ item.pk }}#devices">
       {% else %}
-      <a class="stretched-link btn" href="?sampling_event={{ item.pk }}#devices">
+      <a class="stretched-link btn" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ item.pk }}#devices">
       {% endif %}
       {% include 'selia/components/select_list_items/sampling_events.html' with item=item %}
       </a>
       {% empty %}
       <div class="container-fluid bg-light text-center">
           <h4>{% trans 'No available sampling events. Please ' %}</h4>
-          <p><a href="{% url 'selia:collection_sampling_events' collection.pk %}?next={{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register new sampling event' %}</a></p>
+          <p><a href="{% url 'selia:collection_sampling_events' collection.pk %}?chain={{ chain }}|{{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register new sampling event' %}</a></p>
       </div>
       {% endfor %}
 
@@ -65,7 +59,7 @@
     <h1 class="display-6">{%trans 'Add item to collection: Part' %} 2 / 3</h1>
     <p>{% blocktrans %}
       Please select a device declared within this sampling event or 
-      {% endblocktrans %} <a href=""></i> {% trans 'add a new one' %}</a>.
+      {% endblocktrans %} <a href="{% url 'selia:sampling_event_device_create' selected_sampling_event.pk %}?chain={{ chain }}|{{ request.path }}"></i> {% trans 'add a new one' %}</a>.
     </p>
     <div class="progress">
       <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
@@ -85,16 +79,16 @@
     <div class="w-100 bg-light p-4 list-group mb-4">
       {% for item in sampling_event_device_list %}
       {% if item.pk == request.GET.sampling_event_device %}
-      <a class="stretched-link btn btn-primary" href="?sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ item.pk }}#addDetail">
+      <a class="stretched-link btn btn-primary" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ item.pk }}#addDetail">
       {% else %}
-      <a class="stretched-link btn" href="?sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ item.pk }}#addDetail">
+      <a class="stretched-link btn" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ item.pk }}#addDetail">
       {% endif %}
       {% include 'selia/components/select_list_items/sampling_event_devices.html' with item=item %}
       </a>
       {% empty %}
       <div class="container-fluid bg-light text-center">
           <h4>{% trans 'No available devices in this sampling event. Please ' %}</h4>
-          <p><a href="{% url 'selia:collection_sampling_events' collection.pk %}?next={{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register add a new device' %}</a></p>
+          <p><a href="{% url 'selia:sampling_event_device_create' selected_sampling_event.pk %}?chain={{ chain }}|{{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register add a new device' %}</a></p>
       </div>
       {% endfor %}
 
@@ -133,9 +127,9 @@
     </div>
   </div>
 
-      <form action="?next={% url 'selia:collection_items' collection.pk %}" method="post" enctype="multipart/form-data">
+      <form action="?chain={{ chain }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="hidden" id="sampling_event_device_field" name="sampling_event_device" value="{{ selected_sampling_event_device.collection_device.pk }}">
+        <input type="hidden" id="sampling_event_device_field" name="sampling_event_device" value="{{ selected_sampling_event_device.pk }}">
        <input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
       <div class="row">
         <div class="col-4 mx-5">

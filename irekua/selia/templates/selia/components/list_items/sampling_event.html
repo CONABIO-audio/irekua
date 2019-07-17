@@ -26,7 +26,7 @@
       </div>
       <div class="row">
         <h6>{% trans 'Collection site' %}</h6>
-        <div class="text-muted ml-4">{{ item.collection_site.site.name }}</div>
+        <div class="text-muted ml-4"><a href="{% url 'selia:collection_site_detail' item.collection_site.pk %}">{{ item.collection_site.site.name }}</a></div>
       </div>
     </div>
 

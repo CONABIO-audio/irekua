@@ -8,7 +8,7 @@
 
 {% block toolbar-items %}
   <li class="nav-item">
-    <a class="nav-link" href="#">{% trans 'Add Items' %} <i class="fas fa-plus"></i> <i class="far fa-file"></i></a>
+    <a class="nav-link" href="{% url 'selia:collection_device_item_create' collection_device.pk %}?">{% trans 'Add Items' %} <i class="fas fa-plus"></i> <i class="far fa-file"></i></a>
   </li>
   <li class="nav-item">
     {% help_button %}

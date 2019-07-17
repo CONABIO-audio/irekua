@@ -11,5 +11,9 @@ urlpatterns = [
         'collection_sites/detail/<pk>/items/',
         collection_site_detail.CollectionSiteItemsListView.as_view(),
         name='collection_site_items'),
+    path(
+        'collection_sites/detail/<pk>/items/add',
+        collection_site_detail.CollectionSiteItemCreateView.as_view(),
+        name='collection_site_item_create'),
 ]
 

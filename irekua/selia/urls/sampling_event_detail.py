@@ -15,5 +15,13 @@ urlpatterns = [
         'sampling_events/detail/<pk>/items/',
         sampling_event_detail.SamplingEventItemsListView.as_view(),
         name='sampling_event_items'),
+    path(
+        'sampling_events/detail/<pk>/devices/add',
+        sampling_event_detail.SamplingEventDeviceCreateView.as_view(),
+        name='sampling_event_device_create'),
+     path(
+        'sampling_events/detail/<pk>/items/add',
+        sampling_event_detail.SamplingEventItemCreateView.as_view(),
+        name='sampling_event_item_create')   
 ]
 

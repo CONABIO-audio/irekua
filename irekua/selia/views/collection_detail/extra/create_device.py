@@ -70,8 +70,56 @@ class PhysicalDeviceCreateView(SeliaCreateView):
         return super().get(*args, **kwargs)
 
 
+    def get_chain(self):
+        if 'chain' in self.request.GET:
+            return self.request.GET.get('chain', None)
+        else:
+            return ''
+
+    def get_new_chain(self):
+        chain = self.get_chain()
+        if chain != "":
+            chain_arr = chain.split('|')
+        else:
+            chain_arr = []
+
+        chain_str = ''
+        next_url = ''
+        if len(chain_arr) != 0:
+            next_url = chain_arr[-1]
+            chain_arr.pop(-1)
+            if len(chain_arr) != 0:
+                chain_str = "|".join(chain_arr)
+
+        return chain_str, next_url
+
+    def get_back_url(self):
+        if 'back' in self.request.GET:
+            chain_str = self.get_chain()
+            return self.request.GET['back']+"?&chain="+chain_str
+        else:
+            chain_str, next_url = self.get_new_chain()
+
+            if next_url == '':
+                return self.get_success_url()
+                
+            return next_url+"?&chain="+chain_str
+            
+    def handle_finish_create(self):
+        #next_url = self.request.GET.get('next', None)
+        chain_str, next_url = self.get_new_chain()
+
+        if next_url == '':
+            return redirect(self.get_success_url())
+
+        redirect_url = next_url+"?&chain="+chain_str
+        
+        return redirect(redirect_url)
+
     def handle_finish_details_fase(self):
         selected_device = self.request.GET.get('selected_device')
+        print("selected device")
+        print(selected_device)
         prev_form = PhysicalDeviceCreateForm(self.request.POST)
         prev_data = prev_form.data.copy()
         prev_data["device"] = selected_device
@@ -87,7 +135,7 @@ class PhysicalDeviceCreateView(SeliaCreateView):
             physical_device.created_by = self.request.user
             physical_device.save()
 
-            return self.handle_finish_device(physical_device)
+            return self.handle_finish_create()
         else:
             self.object = None
             context = self.get_context_data()
@@ -112,14 +160,9 @@ class PhysicalDeviceCreateView(SeliaCreateView):
             else:
                 context = self.get_context_data()
                 context['device_form'] = new_device_form
-                self.object = None
                 return self.render_to_response(context)
         else:
             print('No')
-
-    def handle_finish_device(self,physical_device):
-        next_url = self.request.GET.get('next', None)
-        return redirect(next_url)
 
     def handle_select_device(self, device):
         query = self.request.GET.copy()
@@ -149,5 +192,13 @@ class PhysicalDeviceCreateView(SeliaCreateView):
         context = super().get_context_data(*args, **kwargs)
         context['fase'] = self.request.GET.get('fase', 'select_device')
         context['select_device_form'] = self.get_select_device_form()
+
+        if 'selected_device' in self.request.GET:
+            device = Device.objects.get(pk=self.request.GET['selected_device'])
+            context['selected_device'] = device
+
         context['collection'] = Collection.objects.get(pk=self.kwargs['pk'])
+        context['chain'] = self.get_chain()
+        context['back'] = self.get_back_url()
+        
         return context

@@ -26,15 +26,53 @@ class CollectionLicenceCreateView(CreateView, SingleObjectMixin):
         return super().get(*args, **kwargs)
 
     def get_success_url(self):
-        if 'success_url' in self.request.GET:
-            successurl = self.request.GET["success_url"]
+        return reverse(self.success_url, args=[self.kwargs['pk']])
+
+    def get_chain(self):
+        if 'chain' in self.request.GET:
+            return self.request.GET.get('chain', None)
         else:
-            successurl = self.success_url
+            return ''
 
-        return reverse(successurl, args=[self.kwargs['pk']])
+    def get_new_chain(self):
+        chain = self.get_chain()
+        if chain != "":
+            chain_arr = chain.split('|')
+        else:
+            chain_arr = []
 
+        chain_str = ''
+        next_url = ''
+        if len(chain_arr) != 0:
+            next_url = chain_arr[-1]
+            chain_arr.pop(-1)
+            if len(chain_arr) != 0:
+                chain_str = "|".join(chain_arr)
+
+        return chain_str, next_url
+
+    def get_back_url(self):
+        if 'back' in self.request.GET:
+            chain_str = self.get_chain()
+            return self.request.GET['back']+"?&chain="+chain_str
+        else:
+            chain_str, next_url = self.get_new_chain()
+
+            if next_url == '':
+                return self.get_success_url()
+                
+            return next_url+"?&chain="+chain_str
+            
     def handle_finish_create(self):
-        return redirect(self.get_success_url())
+        #next_url = self.request.GET.get('next', None)
+        chain_str, next_url = self.get_new_chain()
+
+        if next_url == '':
+            return redirect(self.get_success_url())
+
+        redirect_url = next_url+"?&chain="+chain_str
+        
+        return redirect(redirect_url)
 
     def handle_create(self):
         form = self.get_form()
@@ -67,9 +105,7 @@ class CollectionLicenceCreateView(CreateView, SingleObjectMixin):
         context = super().get_context_data(*args, **kwargs)
         context['collection'] = self.get_object(queryset=Collection.objects.all())
 
-        if 'success_url' in self.request.GET:
-            context["success_url"] = self.request.GET["success_url"]
-        else:
-            context["success_url"] = self.success_url
+        context['chain'] = self.get_chain()
+        context['back'] = self.get_back_url()
 
         return context
