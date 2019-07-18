@@ -78,14 +78,14 @@ class SamplingEventCreateView(CreateView, SingleObjectMixin):
 
             return next_url+"?chain="+chain_str
             
-    def handle_finish_create(self):
+    def handle_finish_create(self,new_object):
         #next_url = self.request.GET.get('next', None)
         chain_str, next_url = self.get_new_chain()
 
         if next_url == '':
             return redirect(self.get_success_url())
 
-        redirect_url = next_url+"?&chain="+chain_str
+        redirect_url = next_url+"?&chain="+chain_str+"&created_object="+str(new_object.pk)
         
         return redirect(redirect_url)
 
@@ -106,7 +106,7 @@ class SamplingEventCreateView(CreateView, SingleObjectMixin):
             sampling_event.created_by = self.request.user
             sampling_event.save()
 
-            return self.handle_finish_create()
+            return self.handle_finish_create(sampling_event)
         else:
             print("Not valid!")
             print(form.errors)

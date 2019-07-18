@@ -95,14 +95,14 @@ class CollectionItemCreateView(CreateView, SingleObjectMixin):
     def get_success_url(self):
         return reverse(self.success_url, args=[self.kwargs['pk']])
 
-    def handle_finish_create(self):
+    def handle_finish_create(self,new_object):
         #next_url = self.request.GET.get('next', None)
         chain_str, next_url = self.get_new_chain()
 
         if next_url == '':
             return redirect(self.get_success_url())
 
-        redirect_url = next_url+"?&chain="+chain_str
+        redirect_url = next_url+"?&chain="+chain_str+"&created_object="+str(new_object.pk)
         
         return redirect(redirect_url)
 
@@ -113,7 +113,7 @@ class CollectionItemCreateView(CreateView, SingleObjectMixin):
             item = form.save(commit=False)
             item.created_by = self.request.user
             item.save()
-            return self.handle_finish_create()
+            return self.handle_finish_create(item)
         else:
             self.object = None
             context = self.get_context_data()

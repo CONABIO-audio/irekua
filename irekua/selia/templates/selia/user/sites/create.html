@@ -1,0 +1,85 @@
+{% extends 'selia/user/base.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block toolbar-title %}{% trans 'Create site' %}{% endblock %}
+
+
+{% block toolbar-items %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ back }}">{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
+</li>
+{% endblock %}
+
+{% block main-content %}
+<div class="container">
+  <div class="jumbotron m-3">
+    <h1 class="display-6">{%trans 'Create site: Part' %} 1 / 1</h1>
+    <p>{% blocktrans %}
+      Please fill in the following information: 
+      {% endblocktrans %}      
+    <div class="progress">
+      <div class="progress-bar" role="progressbar"style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+
+<form action="?chain={{ chain }}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="hidden" id="collection_field" name="collection" value="{{ collection }}">
+  <div class="container-fluid px-4 pb-5">
+      <div class="card card-body">
+        <h5 class="w-100 text-center">{% trans 'Create new site' %}</h5>
+        <div class="row">
+        <div class="col-4 mx-5">
+          <div class="row d-flex justify-content-between">
+          <div class="p-3">
+            {{ form.latitude.errors }}
+            {{ form.latitude.label_tag }}
+            {{ form.latitude }}
+            <small id="latitudeInput" class="form-text text-muted">{{ form.latitude.help_text }}</small>
+          </div>
+          </div>
+          <div class="row d-flex justify-content-between">
+          <div class="p-3">
+            {{ form.longitude.errors }}
+            {{ form.longitude.label_tag }}
+            {{ form.longitude }}
+            <small id="longitudeInput" class="form-text text-muted">{{ form.longitude.help_text }}</small>
+          </div>
+          </div>
+          <div class="row d-flex justify-content-between">
+          <div class="p-3">
+            {{ form.altitude.errors }}
+            {{ form.altitude.label_tag }}
+            {{ form.altitude }}
+            <small id="altitudeInput" class="form-text text-muted">{{ form.altitude.help_text }}</small>
+          </div>
+          </div>
+        </div>
+        <div class="col-2 mx-5">
+          <div class="row d-flex justify-content-between">
+          <div class="p-3">
+            {{ form.locality.errors }}
+            {{ form.locality.label_tag }}
+            {{ form.locality }}
+            <small id="localityInput" class="form-text text-muted">{{ form.locality.help_text }}</small>
+          </div>
+          </div>
+          <div class="row d-flex justify-content-between">
+          <div class="p-3">
+            {{ form.name.errors }}
+            {{ form.name.label_tag }}
+            {{ form.name }}
+            <small id="nameInput" class="form-text text-muted">{{ form.name.help_text }}</small>
+          </div>
+          </div>
+        </div>
+        </div> 
+        <div class="d-flex w-100 justify-content-end">
+          <input type="submit" class="btn btn-link text-primary" value="{% trans 'Create' %}">
+        </div>
+      </div>
+  </div>
+</form>
+
+{% endblock main-content %}

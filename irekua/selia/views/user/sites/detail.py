@@ -29,7 +29,7 @@ class UserSiteDetailView(SeliaDetailView):
     detail_template = 'selia/components/details/site.html'
     summary_template = 'selia/components/summaries/site.html'
     update_form_template = 'selia/components/update/site.html'
-    viewer_template = 'selia/components/viewers/collection_site.html'
+    viewer_template = 'selia/components/viewers/site.html'
 
     def has_view_permission(self):
         return self.object.created_by == self.request.user
@@ -39,3 +39,5 @@ class UserSiteDetailView(SeliaDetailView):
 
     def has_change_permission(self):
         return True
+
+
