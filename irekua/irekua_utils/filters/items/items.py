@@ -7,16 +7,16 @@ from database.models import Item
 class Filter(FilterSet):
     class Meta:
         model = Item
-        fields = [
-            'created_on',
-            'created_by__username',
-            'created_by__first_name',
-            'created_by__last_name',
-            'created_by__institution__institution_name',
-            'created_by__institution__institution_code',
-            'created_by__institution__country',
-            'item_type',
-        ]
+        fields = {
+            'created_on': ['gt', 'lt'],
+            'created_by__username': ['exact', 'contains'],
+            'created_by__first_name': ['exact', 'contains'],
+            'created_by__last_name': ['exact', 'contains'],
+            'created_by__institution__institution_name': ['exact', 'contains'],
+            'created_by__institution__institution_code': ['exact'],
+            'created_by__institution__country': ['exact', 'contains'],
+            'item_type': ['exact'],
+            }
 
 
 search_fields = (

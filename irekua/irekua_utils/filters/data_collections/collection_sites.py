@@ -7,15 +7,15 @@ from database.models import CollectionSite
 class Filter(FilterSet):
     class Meta:
         model = CollectionSite
-        fields = [
-            'created_on',
-            'created_by',
-            'site_type',
-            'site__latitude',
-            'site__longitude',
-            'site__name',
-            'site__locality'
-        ]
+        fields = {
+        'created_on': ['gt', 'lt'],
+        'created_by__username': ['exact', 'contains'],
+        'site_type': ['exact'],
+        'site__latitude': ['gt', 'lt'],
+        'site__longitude': ['gt', 'lt'],
+        'site__name': ['exact','contains'],
+        'site__locality': ['exact','contains'],
+        }
 
 
 search_fields = (

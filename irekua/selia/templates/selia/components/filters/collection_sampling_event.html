@@ -20,15 +20,41 @@
   </div>
   <div class="col">
     <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseCollection">
-        {% trans 'Collection' %}
+      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseSite">
+        {% trans 'Site' %}
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <div class="container p-3">
           <div class="form-group">
-            {{ filter.form.collection.label_tag }}
-            {{ filter.form.collection | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.collection.help_text }}</small>
+            {{ filter.form.collection_site__site__name.label_tag }}
+            {{ filter.form.collection_site__site__name | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.collection_site__site__name.help_text }}</small>
+          </div>
+          <div class="form-group">
+            {{ filter.form.collection_site__site__name__contains.label_tag }}
+            {{ filter.form.collection_site__site__name__contains | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.collection_site__site__name__contains.help_text }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseUserName">
+        {% trans 'User name' %}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="container p-3">
+          <div class="form-group">
+            {{ filter.form.created_by__username.label_tag }}
+            {{ filter.form.created_by__username | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.created_by__username.help_text }}</small>
+          </div>
+          <div class="form-group">
+            {{ filter.form.created_by__username__contains.label_tag }}
+            {{ filter.form.created_by__username__contains | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.created_by__username__contains.help_text }}</small>
           </div>
         </div>
       </div>
