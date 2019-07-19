@@ -15,6 +15,18 @@
   z-index: 3;
 }
 
+.ui-datepicker-calendar {
+    background-color: white !important;
+}
+.ui-datepicker-header {
+    background-color: white !important;
+}
+.media_image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
 .toolbar {
   z-index: 2;
 }

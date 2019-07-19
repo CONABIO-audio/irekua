@@ -1,14 +1,15 @@
+from django import forms
 from django.utils.translation import gettext as _
-from django_filters import FilterSet
+from django_filters import FilterSet,DateFilter
 
 from database.models import CollectionDevice
 
 
 class Filter(FilterSet):
+    created_on = DateFilter(widget=forms.DateInput(attrs={'class': 'datepicker'}))    
     class Meta:
         model = CollectionDevice
         fields = {
-            'created_on': ['gt', 'lt'],
             'created_by__username': ['exact', 'contains'],
             'physical_device__device__brand__name': ['exact', 'contains'],
             'physical_device__device__model': ['exact', 'contains'],

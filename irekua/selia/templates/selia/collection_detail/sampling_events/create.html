@@ -37,14 +37,14 @@
       {% if item.pk == request.GET.collection_site %}
       <a class="stretched-link btn btn-primary" href="?back={{ request.path }}&chain={{ chain }}&collection_site={{ item.pk }}#sampling_events">
       {% else %}
-      <a class="stretched-link btn" href="?chain={{ chain }}&collection_site={{ item.pk }}#sampling_events">
+      <a class="stretched-link btn" href="?back={{ request.path }}&chain={{ chain }}&collection_site={{ item.pk }}#sampling_events">
       {% endif %}
       {% include 'selia/components/select_list_items/collection_sites.html' with item=item %}
       </a>
       {% empty %}
       <div class="container-fluid bg-light text-center">
           <h4>{% trans 'No available sites. Please ' %}</h4>
-          <p><a href="{% url 'selia:collection_site_create' collection.pk %}?back={{ request.path }}&chain={{ chain }}|{{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register new site' %}</a></p>
+          <p><a href="{% url 'selia:collection_site_create' collection.pk %}?chain={{ chain }}|{{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register new site' %}</a></p>
       </div>
       {% endfor %}
 

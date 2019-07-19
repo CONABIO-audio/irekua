@@ -110,14 +110,9 @@
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <div class="container p-3">
           <div class="form-group">
-            {{ filter.form.created_on__gt.label_tag }}
-            {{ filter.form.created_on__gt | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.created_on__gt.help_text }}</small>
-          </div>
-          <div class="form-group">
-            {{ filter.form.created_on__lt.label_tag }}
-            {{ filter.form.created_on__lt | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.created_on__lt.help_text }}</small>
+            {{ filter.form.created_on.label_tag }}
+            {{ filter.form.created_on }}
+            <small class="form-text text-muted">{{ filter.form.created_on.help_text }}</small>
           </div>
         </div>
       </div>

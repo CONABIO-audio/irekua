@@ -8,6 +8,17 @@
 {% block stylesheet-extra %}{% endblock stylesheet-extra %}
 {% endblock %}
 
+{% block scripts-extra %}
+<script type="text/javascript">
+ $( function() {
+            $( ".datepicker" ).datepicker();
+        } );
+$(document).on('click', '.dropdown-menu', function (e) {
+  e.stopPropagation();
+});
+</script>
+{% endblock scripts-extra %}
+
 {% block header %}
 {% include 'selia/components/header.html' %}
 {% endblock header%}
