@@ -1,12 +1,12 @@
 from django import forms
 from django.shortcuts import redirect
-from django.views.generic.edit import CreateView
+from selia.views.utils import SeliaCreateView
 from django.views.generic.detail import SingleObjectMixin
 from django.urls import reverse
 from database.models import Site
 
 
-class UserSiteCreateView(CreateView, SingleObjectMixin):
+class UserSiteCreateView(SeliaCreateView):
     template_name = 'selia/user/sites/create.html'
     model = Site
     success_url = 'selia:user_sites'
@@ -16,63 +16,7 @@ class UserSiteCreateView(CreateView, SingleObjectMixin):
             'altitude',
             'name',
             'locality',
-            ]
-
-    def check_perms_or_redirect(self):
-        return True
-
-    def get(self, *args, **kwargs):
-        self.check_perms_or_redirect()
-        return super().get(*args, **kwargs)
-
-    def get_success_url(self):
-        return reverse(self.success_url)
-
-    def get_chain(self):
-        if 'chain' in self.request.GET:
-            return self.request.GET.get('chain', None)
-        else:
-            return ''
-
-    def get_new_chain(self):
-        chain = self.get_chain()
-        if chain != "":
-            chain_arr = chain.split('|')
-        else:
-            chain_arr = []
-
-        chain_str = ''
-        next_url = ''
-        if len(chain_arr) != 0:
-            next_url = chain_arr[-1]
-            chain_arr.pop(-1)
-            if len(chain_arr) != 0:
-                chain_str = "|".join(chain_arr)
-
-        return chain_str, next_url
-
-    def get_back_url(self):
-        if 'back' in self.request.GET:
-            chain_str = self.get_chain()
-            return self.request.GET['back']+"?&chain="+chain_str
-        else:
-            chain_str, next_url = self.get_new_chain()
-
-            if next_url == '':
-                return self.get_success_url()
-                
-            return next_url+"?&chain="+chain_str
-            
-    def handle_finish_create(self):
-        #next_url = self.request.GET.get('next', None)
-        chain_str, next_url = self.get_new_chain()
-
-        if next_url == '':
-            return redirect(self.get_success_url())
-
-        redirect_url = next_url+"?&chain="+chain_str
-        
-        return redirect(redirect_url)
+            ]            
 
     def handle_create(self):
         form = self.get_form()
@@ -80,18 +24,13 @@ class UserSiteCreateView(CreateView, SingleObjectMixin):
             site = form.save(commit=False)
             site.created_by = self.request.user
             site.save()
-            return self.handle_finish_create()
+            return self.handle_finish_create(site)
         else:
             self.object = None
             context = self.get_context_data()
             context['form'] = form
 
-            return self.render_to_response(context)
-         
-
-    def post(self, *args, **kwargs):
-        return self.handle_create()
-
+            return self.render_to_response(context)         
 
 
     def get_initial(self):
@@ -104,7 +43,5 @@ class UserSiteCreateView(CreateView, SingleObjectMixin):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['user'] = self.request.user
-        context['chain'] = self.get_chain()
-        context['back'] = self.get_back_url()
 
         return context

@@ -1,6 +1,6 @@
 from django import forms
 from django.shortcuts import redirect
-from django.views.generic.edit import CreateView
+from selia.views.utils import SeliaCreateView
 from django.views.generic.detail import SingleObjectMixin
 from django.urls import reverse
 from django.core.paginator import Paginator
@@ -9,7 +9,7 @@ from database.models import SamplingEvent
 from database.models import CollectionDevice
 
 
-class SamplingEventDeviceCreateView(CreateView, SingleObjectMixin):
+class SamplingEventDeviceCreateView(SeliaCreateView):
     template_name = 'selia/sampling_event_detail/devices/create.html'
     model = SamplingEventDevice
     success_url = 'selia:sampling_event_devices'
@@ -22,12 +22,8 @@ class SamplingEventDeviceCreateView(CreateView, SingleObjectMixin):
             'licence'
         ]
 
-    def check_perms_or_redirect(self):
-        return True
-
-    def get(self, *args, **kwargs):
-        self.check_perms_or_redirect()
-        return super().get(*args, **kwargs)
+    def get_success_url_args(self):
+        return [self.kwargs['pk']]
 
     def get_collection_device_list(self):
         queryset = CollectionDevice.objects.exclude(samplingeventdevice__sampling_event=self.get_object(queryset=SamplingEvent.objects.all()))
@@ -37,28 +33,6 @@ class SamplingEventDeviceCreateView(CreateView, SingleObjectMixin):
 
         return page
 
-    def get_chain(self):
-        if 'chain' in self.request.GET:
-            return self.request.GET.get('chain', None)
-        else:
-            return ''
-
-    def get_new_chain(self):
-        chain = self.get_chain()
-        if chain != "":
-            chain_arr = chain.split('|')
-        else:
-            chain_arr = []
-
-        chain_str = ''
-        next_url = ''
-        if len(chain_arr) != 0:
-            next_url = chain_arr[-1]
-            chain_arr.pop(-1)
-            if len(chain_arr) != 0:
-                chain_str = "|".join(chain_arr)
-
-        return chain_str, next_url
 
     def get_back_url(self):
         if 'back' in self.request.GET:
@@ -83,12 +57,9 @@ class SamplingEventDeviceCreateView(CreateView, SingleObjectMixin):
         
         return redirect(redirect_url)
 
-    def get_success_url(self):
-        return reverse(self.success_url, args=[self.kwargs['pk']])
 
     def handle_create(self):
         form = self.get_form()
-        print(form.data)
         if form.is_valid():
             sampling_event_device = form.save(commit=False)
             sampling_event_device.created_by = self.request.user
@@ -100,10 +71,6 @@ class SamplingEventDeviceCreateView(CreateView, SingleObjectMixin):
             context['form'] = form
 
             return self.render_to_response(context)
-
-    def post(self, *args, **kwargs):
-        return self.handle_create()
-
 
 
     def get_initial(self):
@@ -122,9 +89,6 @@ class SamplingEventDeviceCreateView(CreateView, SingleObjectMixin):
 
         context['sampling_event'] = self.get_object(queryset=SamplingEvent.objects.all())
         context['collection_device_list'] = self.get_collection_device_list()
-
-        context['chain'] = self.get_chain()
-        context['back'] = self.get_back_url()
 
         if 'collection_device' in self.request.GET:
             collection_device = CollectionDevice.objects.get(pk=self.request.GET['collection_device'])
