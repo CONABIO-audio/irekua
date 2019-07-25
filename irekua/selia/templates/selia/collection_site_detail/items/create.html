@@ -292,8 +292,8 @@
         <div id="upload_summary" class="container-fluid w-100 p-4">
           <h3 class="p-4">{% trans 'Result summary: ' %}</h3>
             <div class="tab">
-                <a class="active" href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=added" role="button"><h4>{% trans 'Added items: ' %}{{ success_count }}</h4></a>
-                <a href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=duplicate" role="button"><h4>{% trans 'Duplicate items: ' %}{{ duplicate_count }}</h4></a>
+                <a class="active" href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=added#upload_summary" role="button"><h4>{% trans 'Added items: ' %}{{ success_count }}</h4></a>
+                <a href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=duplicate#upload_summary" role="button"><h4>{% trans 'Duplicate items: ' %}{{ duplicate_count }}</h4></a>
             </div>
 
             <div class="w-100 bg-light p-4 list-group mb-4">
@@ -321,8 +321,8 @@
         <div id="upload_summary" class="container-fluid w-100 p-4">
             <h3 class="p-4">{% trans 'Result summary: ' %}</h3>
             <div class="tab">
-                <a class="active" href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=added" role="button"><h4>{% trans 'Added items: ' %}{{ success_count }}</h4></a>
-                <a href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=duplicate" role="button"><h4>{% trans 'Duplicate items: ' %}{{ duplicate_count }}</h4></a>
+                <a class="active" href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=added#upload_summary" role="button"><h4>{% trans 'Added items: ' %}{{ success_count }}</h4></a>
+                <a href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=duplicate#upload_summary" role="button"><h4>{% trans 'Duplicate items: ' %}{{ duplicate_count }}</h4></a>
             </div>
             <div class="w-100 bg-light p-4 list-group mb-4">
               {% for item in success_list %}
@@ -348,8 +348,8 @@
         <div id="upload_summary" class="container-fluid w-100 p-4">
           <h3 class="p-4">{% trans 'Result summary: ' %}</h3>
             <div class="tab">
-                <a href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=added" role="button"><h4>{% trans 'Added items: ' %}{{ success_count }}</h4></a>
-                <a class="active" href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=duplicate" role="button"><h4>{% trans 'Duplicate items: ' %}{{ duplicate_count }}</h4></a>
+                <a href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=added#upload_summary" role="button"><h4>{% trans 'Added items: ' %}{{ success_count }}</h4></a>
+                <a class="active" href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=duplicate#upload_summary" role="button"><h4>{% trans 'Duplicate items: ' %}{{ duplicate_count }}</h4></a>
             </div>
             <div class="w-100 bg-light p-4 list-group mb-4">
               {% for item in duplicate_list %}
