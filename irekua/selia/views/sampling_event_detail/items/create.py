@@ -1,6 +1,6 @@
 from django import forms
 from django.shortcuts import redirect
-from selia.views.utils import SeliaCreateView
+from selia.views.utils import SeliaMultipleItemsCreateView
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage
 
@@ -8,7 +8,7 @@ from database.models import SamplingEventDevice
 from database.models import SamplingEvent
 from database.models import Item
 
-class SamplingEventItemCreateView(SeliaCreateView):
+class SamplingEventItemCreateView(SeliaMultipleItemsCreateView):
     template_name = 'selia/sampling_event_detail/items/create.html'
     model = Item
     success_url = 'selia:sampling_event_items'
@@ -24,20 +24,6 @@ class SamplingEventItemCreateView(SeliaCreateView):
         page = paginator.get_page(page)
 
         return page
-
-    def handle_create(self):
-        form = self.get_form()
-        if form.is_valid():
-            item = form.save(commit=False)
-            item.created_by = self.request.user
-            item.save()
-            return self.handle_finish_create(item)
-        else:
-            self.object = None
-            context = self.get_context_data()
-            context['form'] = form
-
-            return self.render_to_response(context)
 
     def get_initial(self):
         initial = {

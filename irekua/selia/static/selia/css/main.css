@@ -89,14 +89,14 @@
   height: calc(1.5em + .75rem + 2px)!important;
 }
 
-.tab {
+#upload_summary .tab {
   overflow: hidden;
 
 
 }
 
 /* Style the buttons that are used to open the tab content */
-.tab a {
+#upload_summary .tab a {
   background-color: inherit;
   float: left;
   border: none;
@@ -107,12 +107,13 @@
 }
 
 /* Change background color of buttons on hover */
-.tab a:hover {
+#upload_summary .tab a:hover {
   background-color: #ddd;
 }
 
 /* Create an active/current tablink class */
-.tab a.active {
+#upload_summary .active {
   background-color: #f8f9fa!important;
   color: #2F4F4F;
 }
+

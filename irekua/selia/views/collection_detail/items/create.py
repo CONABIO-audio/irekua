@@ -1,47 +1,19 @@
 from django import forms
 from django.shortcuts import redirect
-from selia.views.utils import SeliaCreateView
+from selia.views.utils import SeliaMultipleItemsCreateView
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage
-from django.http import HttpResponse,JsonResponse
-from django.core.exceptions import ValidationError
 from database.models import SamplingEventDevice
 from database.models import SamplingEvent
 from database.models import Collection
 from database.models import Item
-import json
-from ast import literal_eval
 
 
-class CollectionItemCreateView(SeliaCreateView):
+class CollectionItemCreateView(SeliaMultipleItemsCreateView):
     template_name = 'selia/collection_detail/items/create.html'
     model = Item
     success_url = 'selia:collection_items'
-    fields = ["item_type","item_file","sampling_event_device","source","captured_on","licence","tags"]
-
-    def get_items_in_list(self,pk_list):
-        queryset = Item.objects.filter(pk__in=pk_list)
-        paginator = Paginator(queryset,5)
-        page = self.request.GET.get('page',1)
-        page = paginator.get_page(page)
-        return page
-
-    def get(self, *args, **kwargs):
-        if 'success_pks' in self.request.GET:
-            self.object = None
-            context = self.get_context_data()
-            
-            successes = literal_eval(self.request.GET["success_pks"])
-            duplicates = literal_eval(self.request.GET["duplicate_pks"])
-
-            context["success_list"] = self.get_items_in_list(successes)
-            context["duplicate_list"] = self.get_items_in_list(duplicates)
-            context["success_count"] = len(successes)
-            context["duplicate_count"] = len(duplicates)
-
-            return self.render_to_response(context)
-        else:
-            return super().get(*args, **kwargs)            
+    fields = ["item_type","item_file","sampling_event_device","source","captured_on","licence","tags"]   
 
     def get_success_url_args(self):
         return [self.kwargs['pk']]
@@ -85,40 +57,6 @@ class CollectionItemCreateView(SeliaCreateView):
                 return self.get_success_url()
 
             return next_url+"?chain="+chain_str
-            
-
-    def handle_create(self):
-        form = self.get_form()
-        if form.is_valid():
-            item = form.save(commit=False)
-            item.created_by = self.request.user
-            try:
-                item.save()
-            except ValidationError:
-                item_hash = item.hash
-                duplicate = Item.objects.filter(hash=item_hash)
-
-                if duplicate:
-                    error_data = {
-                    'error_type': 'duplicate',
-                    'duplicate_pk':duplicate[0].pk
-                    }
-
-                    return HttpResponse(json.dumps(error_data), content_type="application/json",status=400)
-
-            if 'async' in self.request.GET:
-                success_data = {
-                'success_pk': item.pk
-                }
-                return HttpResponse(json.dumps(success_data), content_type="application/json")
-            else:
-                return self.handle_finish_create(item)
-        else:
-            self.object = None
-            context = self.get_context_data()
-            context['form'] = form
-
-            return self.render_to_response(context)
 
     def get_initial(self):
         initial = {

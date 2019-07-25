@@ -8,15 +8,10 @@
   <div class="row w-100">
     <div class="col-3">
     <div class="row media">
-      <a target="_blank" href="{{ item.item_file.url }}">
+      <a href="{% url 'selia:item_detail' item.pk %}">
         <img class="itemimage" src="{{ item.item_file.url }}">
       </a>
     </div>
-      <div class="row" align="center">
-        <div class="media-body mt-0">
-        <div class="text-muted"><a href="{% url 'selia:item_detail' item.pk %}">{% enter_button %}</a></div>
-        </div>
-      </div>
     </div>
     <div class="col-3">
        <div class="row">

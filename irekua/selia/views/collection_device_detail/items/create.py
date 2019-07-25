@@ -1,6 +1,6 @@
 from django import forms
 from django.shortcuts import redirect
-from selia.views.utils import SeliaCreateView
+from selia.views.utils import SeliaMultipleItemsCreateView
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage
 from database.models import SamplingEvent
@@ -8,7 +8,6 @@ from database.models import SamplingEventDevice
 from database.models import CollectionDevice
 from database.models import Collection
 from database.models import Item
-
 
 class SamplingEventDeviceCreateForm(forms.ModelForm):
     class Meta:
@@ -23,7 +22,7 @@ class SamplingEventDeviceCreateForm(forms.ModelForm):
         ]
 
 
-class CollectionDeviceItemCreateView(SeliaCreateView):
+class CollectionDeviceItemCreateView(SeliaMultipleItemsCreateView):
     template_name = 'selia/collection_device_detail/items/create.html'
     model = Item
     success_url = 'selia:collection_device_items'
@@ -31,6 +30,8 @@ class CollectionDeviceItemCreateView(SeliaCreateView):
 
     def get_success_url_args(self):
         return [self.kwargs['pk']]
+
+
         
     def get_sampling_event_list(self):
         collection_device = self.get_object(queryset=CollectionDevice.objects.all())
@@ -82,20 +83,6 @@ class CollectionDeviceItemCreateView(SeliaCreateView):
 
         url = '{}?{}#{}'.format(self.request.path, query.urlencode(), 'addDetail')
         return redirect(url)
-
-    def handle_create(self):
-        form = self.get_form()
-        if form.is_valid():
-            item = form.save(commit=False)
-            item.created_by = self.request.user
-            item.save()
-            return self.handle_finish_create()
-        else:
-            self.object = None
-            context = self.get_context_data()
-            context['form'] = form
-
-            return self.render_to_response(context)
 
     def handle_create_sampling_event_device(self):
         form = SamplingEventDeviceCreateForm(self.request.POST)
