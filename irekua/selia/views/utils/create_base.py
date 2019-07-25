@@ -64,18 +64,22 @@ class SeliaCreateView(CreateView, SingleObjectMixin):
             redirect_url = next_url+"?&chain="+chain_str+"&created_object="+str(new_object.pk)
         else:
             redirect_url = next_url+"?&chain="+chain_str
-            
+
         return redirect(redirect_url)
 
     def get_success_url(self):
         return reverse(self.success_url, args=self.get_success_url_args())
 
     def post(self, *args, **kwargs):
+        print(self.request.POST)
         return self.handle_create()
 
     def get(self, *args, **kwargs):
         if not self.has_view_permission():
             return self.no_permission_redirect()
+
+        if 'finalize' in self.request.GET:
+            return self.handle_finish_create()
 
         return super().get(*args, **kwargs)
 
