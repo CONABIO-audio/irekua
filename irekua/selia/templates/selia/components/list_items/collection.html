@@ -42,6 +42,7 @@
           <h6>{% trans 'Sites' %}</h6>
           <div class="text-muted ml-4">{{ item.sites.count }}</div>
         </div>
+        {% if with_buttons|default_if_none:True %}
         <div class="col-2">
           <div class="row">
             <a href="{% url 'selia:collection_sites' item.pk %}">{% see_button %}</a>
@@ -50,12 +51,14 @@
         <div class="col-2">
           <a href="#"><i class="fas fa-plus"></i></a>
         </div>
+        {% endif %}
       </div>
       <div class="row">
         <div class="col d-flex">
           <h6>{% trans 'Sampling Events' %}</h6>
           <div class="text-muted ml-4">{{ item.samplingevent_set.count }}</div>
         </div>
+        {% if with_buttons|default_if_none:True %}
         <div class="col-2">
           <div class="row">
             <a href="{% url 'selia:collection_sampling_events' item.pk %}">{% see_button %}</a>
@@ -64,12 +67,14 @@
         <div class="col-2">
             <a href="#"><i class="fas fa-plus"></i></a>
         </div>
+        {% endif %}
       </div>
       <div class="row">
         <div class="col d-flex">
           <h6>{% trans 'Devices' %}</h6>
           <div class="text-muted ml-4">{{ item.collectiondevice_set.count }}</div>
         </div>
+        {% if with_buttons|default_if_none:True %}
         <div class="col-2">
           <div class="row">
             <a href="{% url 'selia:collection_devices' item.pk %}">{% see_button %}</a>
@@ -78,12 +83,14 @@
         <div class="col-2">
           <a href="#"><i class="fas fa-plus"></i></a>
         </div>
+        {% endif %}
       </div>
       <div class="row">
         <div class="col d-flex">
           <h6>{% trans 'Items' %}</h6>
           <div class="text-muted ml-4">{{ item.items }}</div>
         </div>
+        {% if with_buttons|default_if_none:True %}
         <div class="col-2">
           <div class="row">
             <a href="{% url 'selia:collection_items' item.pk %}">{% see_button %}</a>
@@ -92,6 +99,7 @@
         <div class="col-2">
           <a href="#"><i class="fas fa-plus"></i></a>
         </div>
+        {% endif %}
       </div>
     </div>
   </div>

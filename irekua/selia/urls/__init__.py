@@ -11,6 +11,7 @@ from . import licence_detail
 from . import collection_site_detail
 from . import collection_device_detail
 from . import autocomplete
+from . import collections_admin
 
 urlpatterns = (
     selia.urlpatterns +
@@ -22,5 +23,6 @@ urlpatterns = (
     licence_detail.urlpatterns +
     collection_site_detail.urlpatterns +
     collection_device_detail.urlpatterns +
-    autocomplete.urlpatterns
+    autocomplete.urlpatterns +
+    collections_admin.urlpatterns
 )

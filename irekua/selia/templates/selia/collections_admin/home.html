@@ -1,0 +1,106 @@
+{% extends 'selia/collections_admin/base.html' %}
+{% load i18n %}
+{% load selia_buttons %}
+
+{% block main-content %}
+<div class="container-fluid m-0 p-4 w-100">
+  <div class="container">
+    <div class="row bg-light p-3">
+      <div class="col-6">
+        <h4>{% trans 'Manager page' %}</h4>
+      </div>
+      <div class="col">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-3">
+        <div class="card m-3">
+          <div class="card-body">
+            {% trans 'Create collection '%}
+          </div>
+        </div>
+        <div class="card m-3">
+          <div class="card-body">
+            {% trans 'Add administrator'%}
+          </div>
+        </div>
+      </div>
+      <div class="col-9 p-3">
+        {% lorem %}
+      </div>
+    </div>
+
+    <div class="row p-3 bg-light">
+      <div class="col">
+      </div>
+      <div class="col">
+        <h5>{% trans 'Managed collections' %}</h5>
+      </div>
+    </div>
+
+    <div class="row mb-4 p-3">
+      <div class="col-3">
+        <p>
+          {% trans 'You currently manage' %} <b>{{ user.collectiontype_set.count }}</b> {% trans 'collection types' %}:
+        </p>
+        {% for type in user.collectiontype_set.all %}
+        <p><a class="btn btn-link" href="#">{{ type.name }}</a></p>
+        {% endfor %}
+      </div>
+      <div class="col-9">
+        {% for type, collections in collection_types %}
+        <div class="row">
+          <h6 class="w-100 text-center">{{ type.name }}</h6>
+        </div>
+        <div class="row mb-3 border-bottom pb-3">
+          <div class="col">
+            {% for collection in collections %}
+              <div class="row">
+                <div class="col">
+                  <h6 class="text-muted text-right">
+                    {{ collection }}
+                  </h6>
+                </div>
+                <div class="col">
+                  <p class="text-muted text-left">
+                  {{ collection.created_on |date }}
+                  </p>
+                </div>
+                <div class="col-md-2">
+                  <a href="#">{% see_button %}</a>
+                </div>
+                <div class="col-md-2">
+                  <a href="#">{% add_button %} {% trans 'admin'%}</a>
+                </div>
+              </div>
+            {% empty %}
+            <div class="row">
+              <p class="text-center w-100 text-muted">
+              {% trans 'No collections' %} ...
+              </p>
+            </div>
+            {% endfor %}
+            {% if collections.has_next %}
+            <div class="row">
+              <p class="text-center w-100 text-muted">
+                <a href="#" >...</a>
+              </p>
+            </div>
+            {% endif %}
+            <div class="row d-flex justify-content-end">
+              <div class="col-3">
+                <a href="#">{% trans 'Create collection' %}</a>
+              </div>
+              <div class="col-3">
+                <a href="#">{% trans 'See more' %}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock main-content %}

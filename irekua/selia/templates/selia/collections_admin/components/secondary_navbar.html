@@ -1,0 +1,20 @@
+{% extends 'selia/components/secondary_navbar.html' %}
+{% load i18n %}
+
+{% block navbar-brand %}
+<a class="navbar-brand" id="dropdownMenuButton" href={% url 'selia:collections_user' %}>{% trans 'Collections Admin' %}</a>
+{% endblock navbar-brand %}
+
+{% block navbar-items %}
+{% url 'selia:collections_admin_home' as home_url %}
+<li class="nav-item">
+  {% if home_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ home_url }}>
+    {% else %}
+    <a class="nav-link" href={{ home_url }}>
+      {% endif %}
+      <i class="fas fa-home"></i>
+      {% trans 'Home' %}
+    </a>
+</li>
+{% endblock navbar-items %}

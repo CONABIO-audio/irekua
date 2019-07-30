@@ -1,8 +1,10 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.utils.functional import cached_property
 
 from database.utils import translate_doc
+from database.models.data_collections.data_collections import Collection
 
 
 @translate_doc
@@ -57,3 +59,13 @@ class User(AbstractUser):
     @property
     def is_special(self):
         return self.is_developer | self.is_curator | self.is_model | self.is_superuser
+
+    @cached_property
+    def is_collection_type_admin(self):
+        return self.collectiontype_set.exists()
+
+    @cached_property
+    def managed_collections(self):
+        queryset = Collection.objects.filter(
+            collection_type__in=self.collectiontype_set.all())
+        return queryset
