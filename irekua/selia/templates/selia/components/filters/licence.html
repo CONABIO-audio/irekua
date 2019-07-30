@@ -1,14 +1,59 @@
-{% load widget_tweaks %}
 {% load i18n %}
+{% load widget_tweaks %}
 
-<div class="row">
-  {% for field in filter.form %}
+<div class="row w-100 p-0">
   <div class="col">
-    <div class="form-group">
-      <label for="created_by_input">{{ field.label_tag }}</label>
-      {{ field | add_class:'form-control' }}
-      <small id="created_by_help" class="form-text text-muted">{{ field.help_text|safe }}</small>
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseLicenceType">
+        {% trans 'Licence type' %}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="container p-3">
+          <div class="form-group">
+            {{ filter.form.licence_type.label_tag }}
+            {{ filter.form.licence_type | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.licence_type.help_text }}</small>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  {% endfor %}
+  <div class="col">
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseUserName">
+        {% trans 'Created by' %}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="container p-3">
+          <div class="form-group">
+            {{ filter.form.created_by__username.label_tag }}
+            {{ filter.form.created_by__username | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.created_by__username.help_text }}</small>
+          </div>
+          <div class="form-group">
+            {{ filter.form.created_by__username__contains.label_tag }}
+            {{ filter.form.created_by__username__contains | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.created_by__username__contains.help_text }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseDate">
+        {% trans 'Date of creation' %}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="container p-3">
+          <div class="form-group">
+            {{ filter.form.created_on.label_tag }}
+            {{ filter.form.created_on }}
+            <small class="form-text text-muted">{{ filter.form.created_on.help_text }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

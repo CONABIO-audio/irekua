@@ -57,7 +57,7 @@
             <a href="{% url 'selia:sampling_event_device_items' item.pk %}">{% see_button %}</a>
           </div>         </div>
         <div class="col-2">
-          <a href="#"><i class="fas fa-plus"></i></a>
+          <a href="{% url 'selia:sampling_event_device_item_create' item.pk %}"><i class="fas fa-plus"></i></a>
         </div>
     </div>
   </div>

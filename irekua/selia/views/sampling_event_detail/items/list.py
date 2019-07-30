@@ -26,13 +26,11 @@ class SamplingEventItemsListView(SeliaListView, SingleObjectMixin):
         return super().get(request, *args, **kwargs)
 
     def get_initial_queryset(self):
-        items = Item.objects.filter(
+        return Item.objects.filter(
             sampling_event_device__sampling_event=self.object)
-        print(items[0])
-        return items
-
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['sampling_event'] = self.object
         return context
+        

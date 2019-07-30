@@ -11,11 +11,7 @@
 
 {% block toolbar-items %}
 <li class="nav-item">
-  {% if request.GET.collection_site %}
-    <a class="nav-link" href={% url 'selia:collection_sampling_event_create' collection.pk %}>{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
-  {% else %}
-    <a class="nav-link" href={% url 'selia:collection_sampling_events' collection.pk %}>{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
-  {% endif %}
+  <a class="nav-link" href="{{ back }}">{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
 </li>
 {% endblock %}
 
@@ -26,7 +22,7 @@
     <h1 class="display-6">{%trans 'Add sampling event to collection: Part' %} 1 / 2</h1>
     <p>{% blocktrans %}
       Please select a collection site to associate or 
-      {% endblocktrans %} <a href="{% url 'selia:collection_site_create' collection.pk %}?next={{ request.path }}"></i> {% trans 'add a new one' %}</a>.
+      {% endblocktrans %} <a href="{% url 'selia:collection_site_create' collection.pk %}?chain={{ chain }}|{{ request.path }}"></i> {% trans 'add a new one' %}</a>.
     </p>
     <div class="progress">
       <div class="progress-bar" role="progressbar"style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
@@ -39,16 +35,16 @@
     <div class="w-100 bg-light p-4 list-group mb-4">
       {% for item in site_list %}
       {% if item.pk == request.GET.collection_site %}
-      <a class="stretched-link btn btn-primary" href="?collection_site={{ item.pk }}#sampling_events">
+      <a class="stretched-link btn btn-primary" href="?back={{ request.path }}&chain={{ chain }}&collection_site={{ item.pk }}#sampling_events">
       {% else %}
-      <a class="stretched-link btn" href="?collection_site={{ item.pk }}#sampling_events">
+      <a class="stretched-link btn" href="?back={{ request.path }}&chain={{ chain }}&collection_site={{ item.pk }}#sampling_events">
       {% endif %}
       {% include 'selia/components/select_list_items/collection_sites.html' with item=item %}
       </a>
       {% empty %}
       <div class="container-fluid bg-light text-center">
           <h4>{% trans 'No available sites. Please ' %}</h4>
-          <p><a href="{% url 'selia:collection_site_create' collection.pk %}?next={{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register new site' %}</a></p>
+          <p><a href="{% url 'selia:collection_site_create' collection.pk %}?chain={{ chain }}|{{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register new site' %}</a></p>
       </div>
       {% endfor %}
 
@@ -77,8 +73,7 @@
   <div class="row p-4 h-100">
     <h4>{% trans 'Please fill out the following information:' %}</h4>
   </div>
-
-      <form action="?next={% url 'selia:collection_sampling_events' collection.pk %}" method="post">
+      <form action="?chain={{ chain }}" method="post">
         {% csrf_token %}
         <input type="hidden" id="site_field" name="collection_site" value="{{ selected_site.pk }}">
        <input type="hidden" id="collection_field" name="collection" value="{{ collection }}">

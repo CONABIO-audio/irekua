@@ -22,16 +22,14 @@
 
 {% block main-content %}
   <div class="row p-5 w-100">
-    <div class="col">
+    <div class="col-6">
       {% detail_component detail_template=detail_template object=collection_site %}
     </div>
-    <div class="col">
-      <div class="row w-100 mb-3" style="height: 300px;">
-        <div class="card shadow-sm w-100 h-100">
+    <div class="col-6">
+      <div class="row p-4">
           {% viewer_component viewer_template=viewer_template object=collection_site %}
-        </div>
       </div>
-      <div class="row w-100">
+      <div class="row p-4">
           {% summary_component summary_template=summary_template object=collection_site %}
       </div>
     </div>

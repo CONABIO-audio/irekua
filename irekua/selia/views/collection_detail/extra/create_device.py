@@ -57,9 +57,14 @@ class PhysicalDeviceCreateView(SeliaCreateView):
     template_name = 'selia/collection_detail/extra/create_physical_device.html'
     create_form_template = 'selia/components/create/physical_device.html'
     success_url = 'selia:collection_devices'
-
-    form_class = PhysicalDeviceCreateForm
     model = PhysicalDevice
+    fields = [
+            'device',
+            'metadata',
+            'serial_number',
+            'identifier',
+            'bundle',
+        ]
 
     def get_success_url_args(self):
         return [self.kwargs['pk']]
@@ -87,7 +92,7 @@ class PhysicalDeviceCreateView(SeliaCreateView):
             physical_device.created_by = self.request.user
             physical_device.save()
 
-            return self.handle_finish_device(physical_device)
+            return self.handle_finish_create(physical_device)
         else:
             self.object = None
             context = self.get_context_data()
@@ -112,14 +117,9 @@ class PhysicalDeviceCreateView(SeliaCreateView):
             else:
                 context = self.get_context_data()
                 context['device_form'] = new_device_form
-                self.object = None
                 return self.render_to_response(context)
         else:
             print('No')
-
-    def handle_finish_device(self,physical_device):
-        next_url = self.request.GET.get('next', None)
-        return redirect(next_url)
 
     def handle_select_device(self, device):
         query = self.request.GET.copy()
@@ -149,5 +149,11 @@ class PhysicalDeviceCreateView(SeliaCreateView):
         context = super().get_context_data(*args, **kwargs)
         context['fase'] = self.request.GET.get('fase', 'select_device')
         context['select_device_form'] = self.get_select_device_form()
+
+        if 'selected_device' in self.request.GET:
+            device = Device.objects.get(pk=self.request.GET['selected_device'])
+            context['selected_device'] = device
+
         context['collection'] = Collection.objects.get(pk=self.kwargs['pk'])
+        
         return context

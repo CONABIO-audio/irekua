@@ -1,21 +1,22 @@
+from django import forms
 from django.utils.translation import gettext as _
-from django_filters import FilterSet
+from django_filters import FilterSet,DateFilter
 
 from database.models import Collection
 
 
 class Filter(FilterSet):
+    created_on = DateFilter(widget=forms.DateInput(attrs={'class': 'datepicker'}))    
     class Meta:
         model = Collection
-        fields = [
-            'created_on',
-            'collection_type',
-            'name',
-            'institution__institution_name',
-            'institution__institution_code',
-            'institution__country',
-            'is_open',
-        ]
+        fields = {
+            'collection_type': ['exact'],
+            'name': ['exact', 'contains'],
+            'institution__institution_name': ['exact', 'contains'],
+            'institution__institution_code': ['exact'],
+            'institution__country': ['exact', 'contains'],
+            'is_open': ['exact'],
+        }
 
 
 search_fields = (

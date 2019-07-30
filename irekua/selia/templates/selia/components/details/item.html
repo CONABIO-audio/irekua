@@ -1,0 +1,67 @@
+{% load json_tags %}
+{% load i18n %}
+
+<div class="border-top" style="padding-top:20px;">
+<div class="media">
+  <div class="media-body mt-0">
+    <h4 class="mt-0">{% trans 'Item ' %}{{ object.pk }}
+      {% if object.is_open %}
+      {% endif %}
+    </h4>
+    {{ object.description }}
+  </div>
+</div>
+<div class="container mt-3 mb-3">
+  <div class="row">
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Sampling event' %}</h5>
+      <p class="text-muted">{{ object.sampling_event_device.sampling_event.pk }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Device' %}</h5>
+      <p class="text-muted">{{ object.sampling_event_device.pk }}</p>
+    </div>
+  </div>
+   <div class="row">
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Item type' %}</h5>
+      <p class="text-muted">{{ object.item_type }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'File size' %}</h5>
+      <p class="text-muted">{{ object.filesize }}</p>
+    </div>
+  </div>
+  <div class="row">    
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Captured on' %}</h5>
+      <p class="text-muted">{{ object.captured_on }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'File' %}</h5>
+      <div class="text-muted ellipsis">
+      <a href="{{ object.item_file.url }}" target="_blank"><p>{{ object.item_file }}</p></a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Tags' %}</h5>
+      <p class="text-muted">{{ object.tags }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Media info' %}</h5>
+        <div class="d-flex flex-wrap">
+          {% show_json object.media_info %}
+        </div>
+    </div>
+  </div> 
+  {% if object.metadata %}
+  <h4>{% trans 'Metadata' %}</h4>
+  <div class="d-flex flex-wrap">
+    {% show_json object.metadata %}
+  </div>
+  {% endif %}
+
+</div>
+</div>

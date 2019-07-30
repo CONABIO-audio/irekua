@@ -1,11 +1,119 @@
 {% extends 'irekua/base.html' %}
 {% load static from staticfiles %}
+{% load i18n %}
 
 {% block title %}SELIA{% endblock %}
 
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'selia/css/main.css' %}">
-{% endblock stylesheet %}
+{% block stylesheet-extra %}{% endblock stylesheet-extra %}
+{% endblock %}
+
+{% block scripts-extra %}
+<script type="text/javascript">
+var itemFileList = [];
+var errorList = [];
+var successList = [];
+var req_count = 0;
+
+
+$( function() {
+            $( ".datepicker" ).datepicker();
+        } );
+
+$(document).on('click', '.dropdown-menu', function (e) {
+  e.stopPropagation();
+});
+
+
+
+var submitSingle = function(fileIndex,file,url,total_files){
+ 	var formData = new FormData($('#addItemForm')[0]);
+ 	var request = new XMLHttpRequest();
+
+ 	formData.set('item_file',file);
+ 	request.open("POST",url,false);
+ 	request.send(formData);
+
+	try {
+		response_obj = JSON.parse(request.responseText);
+	 	if (request.status == 200){
+	 		successList.push([file.name,request.status,response_obj]);
+	 	} else {
+	 		errorList.push([file.name,request.status,response_obj]);
+	 	}
+	}
+	catch(error) {
+	  console.error(error);
+	}
+	req_count = req_count + 1;
+ 	percent = Math.round(req_count*100/total_files);
+ 	$('#progress_upload_bar').css('width', percent+'%').attr('aria-valuenow', percent);
+ 	$('#progress_upload_bar span').html( percent+'%');
+
+ 	if (fileIndex == total_files - 1){
+ 		showResults(url,errorList,successList);
+ 	}
+ };
+
+ var showResults = function(url,errors,successes){
+	var duplicate_pks = [];
+	var success_pks = [];
+
+	for (var i=0;i<errors.length;i++){
+		var error = errors[i];
+		var error_data = error[2];
+		if (error_data["error_type"] == "duplicate"){
+			duplicate_pks.push(error_data["duplicate_pk"]);
+		}
+	}
+	for (var i=0;i<successes.length;i++){
+		var success = successes[i];
+		var success_data = success[2];
+		success_pks.push(success_data["success_pk"])
+	}
+
+	window.location.href = url+"&duplicate_pks="+JSON.stringify(duplicate_pks)+"&success_pks="+JSON.stringify(success_pks);
+}
+
+$( document ).ready(function() {
+    var itemFilePicker = document.getElementById('itemFilePicker');
+    var addItemForm = document.getElementById('addItemForm');
+    if (itemFilePicker && addItemForm) {
+    	errorList = [];
+    	successList = [];
+		itemFileList = [];
+		req_count = 0;
+
+        itemFilePicker.addEventListener('change',function(e){
+            itemFileList = [];
+            for (var i=0; i<itemFilePicker.files.length;i++) {
+                itemFileList.push(itemFilePicker.files[i]);
+            }
+        });
+
+        addItemForm.addEventListener('submit',function(e){
+            e.preventDefault();
+            document.getElementById('selected_objects').style.display = "none";
+            document.getElementById('filePickerContainer').style.display="none";
+			addItemForm.style.display = "none";
+			document.getElementById('progress_upload').style.display = "block";
+
+            var url = this.action+"&async=true";
+			var total_files = itemFileList.length;
+
+            if (total_files > 0){
+	            for (var i=0;i<total_files;i++){
+	                submitSingle(i,itemFileList[i],url,total_files);
+	            }
+            } else {
+            	alert("{% trans 'No selected files. Please select at least one file to upload' %}");
+            }
+        });
+    }
+});
+</script>
+{% endblock scripts-extra %}
 
 {% block header %}
 {% include 'selia/components/header.html' %}

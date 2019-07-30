@@ -12,7 +12,7 @@ class CollectionSamplingEventListView(SeliaListView, SingleObjectMixin):
     template_name = 'selia/collection_detail/sampling_events/list.html'
     list_item_template = 'selia/components/list_items/sampling_event.html'
     help_template = 'selia/components/help/collection_sampling_events.html'
-    filter_form_template = 'selia/components/filters/sampling_event.html'
+    filter_form_template = 'selia/components/filters/collection_sampling_event.html'
 
     filter_class = collection_sampling_events.Filter
     search_fields = collection_sampling_events.search_fields

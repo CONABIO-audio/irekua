@@ -7,27 +7,21 @@
 
 {% block toolbar-items %}
 <li class="nav-item">
-  {% if request.GET.sampling_event and not request.GET.sampling_event_device%}
-    <a class="nav-link" href="{% url 'selia:collection_item_create' collection.pk %}">{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
-  {% elif request.GET.sampling_event_device %}
-    <a class="nav-link" href="{% url 'selia:collection_item_create' collection.pk %}?sampling_event={{ selected_sampling_event.pk }}#devices">{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
-  {% else %}
-    <a class="nav-link" href="{% url 'selia:collection_items' collection.pk %}">{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
-  {% endif %}
+  <a class="nav-link" href="{{ back }}">{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
 </li>
 {% endblock %}
 
 {% block main-content %}
-{% if not request.GET.sampling_event %}
+{% if not request.GET.sampling_event and not success_count and not duplicate_count %}
 <div class="container" id="sampling_events">
   <div class="jumbotron m-3">
-    <h1 class="display-6">{%trans 'Add item to collection: Part' %} 1 / 2</h1>
+    <h1 class="display-6">{%trans 'Add items to collection: Part' %} 1 / 3</h1>
     <p>{% blocktrans %}
-      Please select a sampling_event to associate or 
-      {% endblocktrans %} <a href="{% url 'selia:collection_sampling_event_create' collection.pk %}?next={{ request.path }}"></i> {% trans 'add a new one' %}</a>.
+      Please select a sampling event to associate or 
+      {% endblocktrans %} <a href="{% url 'selia:collection_sampling_event_create' collection.pk %}?chain={{ chain }}|{{ request.path }}"></i> {% trans 'add a new one' %}</a>
     </p>
     <div class="progress">
-      <div class="progress-bar" role="progressbar"style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+      <div class="progress-bar" role="progressbar" style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
   </div>
   <div class="container m-3" id="filter_container">
@@ -38,16 +32,16 @@
     <div class="w-100 bg-light p-4 list-group mb-4">
       {% for item in sampling_event_list %}
       {% if item.pk == request.GET.sampling_event %}
-      <a class="stretched-link btn btn-primary" href="?sampling_event={{ item.pk }}#devices">
+      <a class="stretched-link btn btn-primary" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ item.pk }}#devices">
       {% else %}
-      <a class="stretched-link btn" href="?sampling_event={{ item.pk }}#devices">
+      <a class="stretched-link btn" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ item.pk }}#devices">
       {% endif %}
       {% include 'selia/components/select_list_items/sampling_events.html' with item=item %}
       </a>
       {% empty %}
       <div class="container-fluid bg-light text-center">
           <h4>{% trans 'No available sampling events. Please ' %}</h4>
-          <p><a href="{% url 'selia:collection_sampling_events' collection.pk %}?next={{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register new sampling event' %}</a></p>
+          <p><a href="{% url 'selia:collection_sampling_events' collection.pk %}?chain={{ chain }}|{{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register new sampling event' %}</a></p>
       </div>
       {% endfor %}
 
@@ -58,17 +52,17 @@
   </div>
 </div>
 
-{% elif not request.GET.sampling_event_device %}
+{% elif not request.GET.sampling_event_device and not success_count and not duplicate_count %}
 
 <div class="container" id="devices">
   <div class="jumbotron m-4">
-    <h1 class="display-6">{%trans 'Add item to collection: Part' %} 2 / 3</h1>
+    <h1 class="display-6">{%trans 'Add items to collection: Part' %} 2 / 3</h1>
     <p>{% blocktrans %}
       Please select a device declared within this sampling event or 
-      {% endblocktrans %} <a href=""></i> {% trans 'add a new one' %}</a>.
+      {% endblocktrans %} <a href="{% url 'selia:sampling_event_device_create' selected_sampling_event.pk %}?chain={{ chain }}|{{ request.path }}"></i> {% trans 'add a new one' %}</a>.
     </p>
     <div class="progress">
-      <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+      <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
   </div>
  <div class="row h-100" align="center">
@@ -85,16 +79,16 @@
     <div class="w-100 bg-light p-4 list-group mb-4">
       {% for item in sampling_event_device_list %}
       {% if item.pk == request.GET.sampling_event_device %}
-      <a class="stretched-link btn btn-primary" href="?sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ item.pk }}#addDetail">
+      <a class="stretched-link btn btn-primary" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ item.pk }}#addDetail">
       {% else %}
-      <a class="stretched-link btn" href="?sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ item.pk }}#addDetail">
+      <a class="stretched-link btn" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ item.pk }}#addDetail">
       {% endif %}
       {% include 'selia/components/select_list_items/sampling_event_devices.html' with item=item %}
       </a>
       {% empty %}
       <div class="container-fluid bg-light text-center">
           <h4>{% trans 'No available devices in this sampling event. Please ' %}</h4>
-          <p><a href="{% url 'selia:collection_sampling_events' collection.pk %}?next={{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register add a new device' %}</a></p>
+          <p><a href="{% url 'selia:sampling_event_device_create' selected_sampling_event.pk %}?chain={{ chain }}|{{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register add a new device' %}</a></p>
       </div>
       {% endfor %}
 
@@ -104,18 +98,19 @@
     </div>
 </div>
 
-{% else %}
+{% elif not success_count and not duplicate_count %}
 
 <div class="container" id="addDetail">
   <div class="jumbotron m-4">
-    <h1 class="display-6">{%trans 'Add item to collection: Part' %} 3 / 3</h1>
+    <h1 class="display-6">{%trans 'Add items to collection: Part' %} 3 / 3</h1>
     <p>{% blocktrans %}
-      Please fill complete the information below 
+      Please complete the information below 
       {% endblocktrans %} 
     <div class="progress">
-      <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+      <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
   </div>
+  <div id="selected_objects">
   <div class="row h-100" align="center">
     <div class="col">
       <a href="#collapseSamplingEvent" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSamplingEvent"><h4>{% trans 'Selected sampling event: ' %}{{ selected_sampling_event.pk }}</h4></a>
@@ -132,10 +127,18 @@
       </div>
     </div>
   </div>
+  </div>
 
-      <form action="?next={% url 'selia:collection_items' collection.pk %}" method="post" enctype="multipart/form-data">
+<div id="filePickerContainer" class="row">
+  <div class="col-4 mx-5">
+    <label for="item_typeInput">{% trans 'Files to upload: ' %}</label>
+    <input id='itemFilePicker' type='file' multiple/>
+  </div>
+</div>
+
+      <form id="addItemForm" action="?chain={{ chain }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="hidden" id="sampling_event_device_field" name="sampling_event_device" value="{{ selected_sampling_event_device.collection_device.pk }}">
+        <input type="hidden" id="sampling_event_device_field" name="sampling_event_device" value="{{ selected_sampling_event_device.pk }}">
        <input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
       <div class="row">
         <div class="col-4 mx-5">
@@ -145,14 +148,6 @@
             <label for="item_typeInput">{{ form.item_type.label_tag }}</label>
             {{ form.item_type|add_class:"form-control" }}
             <small id="item_typeHelp" class="form-text text-muted">{{ form.item_type.help_text|safe }} </small>
-          </div>
-          </div>
-          <div class="row d-flex justify-content-between">
-          <div class="p-3">
-            {{ form.item_file.errors }}
-            <label for="item_fileInput">{{ form.item_file.label_tag }}</label>
-            {{ form.item_file|add_class:"form-control" }}
-            <small id="item_fileHelp" class="form-text text-muted">{{ form.item_file.help_text|safe }} </small>
           </div>
           </div>
           <div class="row d-flex justify-content-between">
@@ -212,6 +207,118 @@
         </div>
 
       </form>
+      <div id="progress_upload" class="container-fluid w-100 p-4" style="display:none;">
+        <p>{% trans 'Upload progress: ' %}</p>
+        <div class="progress">
+          <div id="progress_upload_bar" class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0"
+          aria-valuemin="0" aria-valuemax="100" style="width:0%">
+            <span class="">0%</span>
+          </div>
+        </div>
+      </div>
 </div>
+
+{% else %}
+<div class="container" id="finalize_with_errors">
+  <div class="jumbotron m-4">
+    <h1 class="display-6">{%trans 'Add items to collection: Complete' %}</h1>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+<div class="container-fluid w-100 p-4">
+        <div class="row p-6">
+          <div class="col p-3 text-center">
+              <a style="width:30%" href="?chain={{ chain }}&finalize=true" class="btn btn-primary"><h4>{% trans 'Done' %}</h4></a>
+          </div>
+        </div>
+  </div>
+{% if not request.GET.final_section %}
+        <div id="upload_summary" class="container-fluid w-100 p-4">
+          <h3 class="p-4">{% trans 'Result summary: ' %}</h3>
+            <div class="tab">
+                <a class="active" href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=added#upload_summary" role="button"><h4>{% trans 'Added items: ' %}{{ success_count }}</h4></a>
+                <a href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=duplicate#upload_summary" role="button"><h4>{% trans 'Duplicate items: ' %}{{ duplicate_count }}</h4></a>
+            </div>
+
+            <div class="w-100 bg-light p-4 list-group mb-4">
+              {% for item in success_list %}
+              {% if item.pk == request.GET.sampling_event_device %}
+              <a class="stretched-link btn btn-primary" href="#">
+              {% else %}
+              <a class="stretched-link btn" href="#">
+              {% endif %}
+              {% include 'selia/components/select_list_items/items.html' with item=item %}
+              </a>
+              {% empty %}
+              <div class="container-fluid bg-light text-center">
+                  <h4>{% trans 'No new items' %}</h4>
+              </div>
+              {% endfor %}
+
+              <div class="container center w-100 p-4">
+                {% include 'selia/components/pagination.html' with list=success_list %}
+              </div>
+            </div>
+        </div>
+{% else %}
+  {% if request.GET.final_section == 'added' %}
+        <div id="upload_summary" class="container-fluid w-100 p-4">
+            <h3 class="p-4">{% trans 'Result summary: ' %}</h3>
+            <div class="tab">
+                <a class="active" href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=added#upload_summary" role="button"><h4>{% trans 'Added items: ' %}{{ success_count }}</h4></a>
+                <a href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=duplicate#upload_summary" role="button"><h4>{% trans 'Duplicate items: ' %}{{ duplicate_count }}</h4></a>
+            </div>
+            <div class="w-100 bg-light p-4 list-group mb-4">
+              {% for item in success_list %}
+              {% if item.pk == request.GET.sampling_event_device %}
+              <a class="stretched-link btn btn-primary" href="#">
+              {% else %}
+              <a class="stretched-link btn" href="#">
+              {% endif %}
+              {% include 'selia/components/select_list_items/items.html' with item=item %}
+              </a>
+              {% empty %}
+              <div class="container-fluid bg-light text-center">
+                  <h4>{% trans 'No new items' %}</h4>
+              </div>
+              {% endfor %}
+
+              <div class="container center w-100 p-4">
+                {% include 'selia/components/pagination.html' with list=success_list %}
+              </div>
+            </div>
+        </div>
+  {% else %}
+        <div id="upload_summary" class="container-fluid w-100 p-4">
+          <h3 class="p-4">{% trans 'Result summary: ' %}</h3>
+            <div class="tab">
+                <a href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=added#upload_summary" role="button"><h4>{% trans 'Added items: ' %}{{ success_count }}</h4></a>
+                <a class="active" href="?chain={{ chain }}&duplicate_pks={{ request.GET.duplicate_pks }}&success_pks={{ request.GET.success_pks }}&final_section=duplicate#upload_summary" role="button"><h4>{% trans 'Duplicate items: ' %}{{ duplicate_count }}</h4></a>
+            </div>
+            <div class="w-100 bg-light p-4 list-group mb-4">
+              {% for item in duplicate_list %}
+              {% if item.pk == request.GET.sampling_event_device %}
+              <a class="stretched-link btn btn-primary" href="#">
+              {% else %}
+              <a class="stretched-link btn" href="#">
+              {% endif %}
+              {% include 'selia/components/select_list_items/items.html' with item=item %}
+              </a>
+              {% empty %}
+              <div class="container-fluid bg-light text-center">
+                  <h4>{% trans 'No duplicates' %}</h4>
+              </div>
+              {% endfor %}
+
+              <div class="container center w-100 p-4">
+                {% include 'selia/components/pagination.html' with list=duplicate_list %}
+              </div>
+            </div>
+        </div>
+  {% endif %}
+  
+{% endif %}
+
 {% endif %}
 {% endblock main-content %}

@@ -1,5 +1,5 @@
-from django.views.generic.edit import CreateView
-from django.views.generic.detail import SingleObjectMixin
+from selia.views.utils import SeliaCreateView
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.core.paginator import Paginator
 from database.models import CollectionDevice
@@ -7,17 +7,11 @@ from database.models import Collection
 from database.models import PhysicalDevice
 
 
-class CollectionDeviceCreateView(CreateView, SingleObjectMixin):
+class CollectionDeviceCreateView(SeliaCreateView):
     template_name = 'selia/collection_detail/devices/create.html'
     model = CollectionDevice
+    success_url = 'selia:collection_devices'
     fields = ['physical_device', 'collection', 'internal_id', 'metadata']
-
-    def check_perms_or_redirect(self):
-        return True
-
-    def get(self, *args, **kwargs):
-        self.check_perms_or_redirect()
-        return super().get(*args, **kwargs)
 
     def get_device_list(self):
         user = self.request.user
@@ -33,8 +27,22 @@ class CollectionDeviceCreateView(CreateView, SingleObjectMixin):
 
         return page
 
+    def handle_create(self):
+        form = self.get_form()
+        if form.is_valid():
+            collection_device = form.save(commit=False)
+            collection_device.created_by = self.request.user
+            collection_device.save()
+            return self.handle_finish_create(collection_device)
+        else:
+            self.object = None
+            context = self.get_context_data()
+            context['form'] = form
+
+            return self.render_to_response(context)
+
     def get_success_url(self):
-        return reverse('selia:collection_devices', args=[self.kwargs['pk']])
+        return reverse(self.success_url, args=[self.kwargs['pk']])
 
     def get_initial(self):
         initial = {

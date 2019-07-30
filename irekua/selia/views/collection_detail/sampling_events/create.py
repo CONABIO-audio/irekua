@@ -1,7 +1,6 @@
 from django import forms
 from django.shortcuts import redirect
-from django.views.generic.edit import CreateView
-from django.views.generic.detail import SingleObjectMixin
+from selia.views.utils import SeliaCreateView
 from django.urls import reverse
 from django.core.paginator import Paginator
 from database.models import SamplingEvent
@@ -22,18 +21,14 @@ class SamplingEventCreateForm(forms.ModelForm):
             'collection'
         ]
 
-class SamplingEventCreateView(CreateView, SingleObjectMixin):
+class SamplingEventCreateView(SeliaCreateView):
     template_name = 'selia/collection_detail/sampling_events/create.html'
     model = SamplingEvent
     success_url = 'selia:collection_sampling_events'
     fields = ['sampling_event_type','collection_site', 'collection','metadata','started_on','ended_on']
 
-    def check_perms_or_redirect(self):
-        return True
-
-    def get(self, *args, **kwargs):
-        self.check_perms_or_redirect()
-        return super().get(*args, **kwargs)
+    def get_success_url_args(self):
+        return [self.kwargs['pk']]
 
     def get_site_list(self):
         queryset = CollectionSite.objects.filter()
@@ -43,18 +38,10 @@ class SamplingEventCreateView(CreateView, SingleObjectMixin):
 
         return page
 
-    def get_success_url(self):
-        return reverse('selia:collection_sampling_events', args=[self.kwargs['pk']])
-
-    def handle_finish_create(self):
-        next_url = self.request.GET.get('next', None)
-        return redirect(next_url)
 
     def handle_create(self):
         form = SamplingEventCreateForm(self.request.POST)
-        print(form.data)
         if form.is_valid():
-            print("form is valid!!!")
             sampling_event = SamplingEvent()
             sampling_event.collection_site = form.cleaned_data.get('collection_site')
             sampling_event.started_on = form.cleaned_data.get('started_on')
@@ -65,18 +52,12 @@ class SamplingEventCreateView(CreateView, SingleObjectMixin):
             sampling_event.created_by = self.request.user
             sampling_event.save()
 
-            return self.handle_finish_create()
+            return self.handle_finish_create(sampling_event)
         else:
-            print("Not valid!")
-            print(form.errors)
             self.object = None
             context = self.get_context_data()
             context['form'] = form
             return self.render_to_response(context)
-
-    def post(self, *args, **kwargs):
-        return self.handle_create()
-
 
 
     def get_initial(self):

@@ -15,21 +15,32 @@
   z-index: 3;
 }
 
+.ui-datepicker-calendar {
+    background-color: white !important;
+}
+.ui-datepicker-header {
+    background-color: white !important;
+}
+.media_image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
 .toolbar {
   z-index: 2;
 }
 
-/*img {*/
-  /*border: 1px solid #ddd; [> Gray border <]*/
-  /*border-radius: 4px;  [> Rounded border <]*/
-  /*padding: 5px; [> Some padding <]*/
-  /*width: 200px; [> Set a small width <]*/
-/*}*/
+.itemimage {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 200px;
+}
 
-/* Add a hover effect (blue shadow) */
-/*img:hover {*/
-  /*box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);*/
-/*}*/
+.itemimage:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
 
 .ellipsis {
   text-overflow: ellipsis;
@@ -44,6 +55,15 @@
   display: block;
   text-overflow: ellipsis;
 }
+
+#dropDownLabel {
+  width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+  text-overflow: ellipsis;
+}
+
 .leaflet-container-default {
   height: 100%;
   width: 100%;
@@ -67,3 +87,30 @@
 .select2-selection__arrow {
   height: calc(1.5em + .75rem + 2px)!important;
 }
+
+#upload_summary .tab {
+  overflow: hidden;
+}
+
+/* Style the buttons that are used to open the tab content */
+#upload_summary .tab a {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+#upload_summary .tab a:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+#upload_summary .active {
+  background-color: #f8f9fa!important;
+  color: #2F4F4F;
+}
+

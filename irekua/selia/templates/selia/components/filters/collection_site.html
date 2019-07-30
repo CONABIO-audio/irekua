@@ -1,14 +1,122 @@
-{% load widget_tweaks %}
 {% load i18n %}
+{% load widget_tweaks %}
 
-<div class="row">
-  {% for field in filter.form %}
+<div class="row w-100 p-0">
   <div class="col">
-    <div class="form-group">
-      <label for="created_by_input">{{ field.label_tag }}</label>
-      {{ field | add_class:'form-control' }}
-      <small id="created_by_help" class="form-text text-muted">{{ field.help_text|safe }}</small>
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseSiteType">
+        {% trans 'Site type' %}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="container p-3">
+          <div class="form-group">
+            {{ filter.form.site_type.label_tag }}
+            {{ filter.form.site_type | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.site_type.help_text }}</small>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  {% endfor %}
+  <div class="col">
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseName">
+        {% trans 'Name' %}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="container p-3">
+          <div class="form-group">
+            {{ filter.form.site__name.label_tag }}
+            {{ filter.form.site__name | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.site__name.help_text }}</small>
+          </div>
+          <div class="form-group">
+            {{ filter.form.site__name__contains.label_tag }}
+            {{ filter.form.site__name__contains | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.site__name__contains.help_text }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseLocality">
+        {% trans 'Locality' %}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="container p-3">
+          <div class="form-group">
+            {{ filter.form.site__locality.label_tag }}
+            {{ filter.form.site__locality | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.site__locality.help_text }}</small>
+          </div>
+          <div class="form-group">
+            {{ filter.form.site__locality__contains.label_tag }}
+            {{ filter.form.site__locality__contains | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.site__locality__contains.help_text }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseLatitude">
+        {% trans 'Latitude' %}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="container p-3">
+          <div class="form-group">
+            {{ filter.form.site__latitude__gt.label_tag }}
+            {{ filter.form.site__latitude__gt | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.site__latitude__gt.help_text }}</small>
+          </div>
+          <div class="form-group">
+            {{ filter.form.site__latitude__lt.label_tag }}
+            {{ filter.form.site__latitude__lt | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.site__latitude__lt.help_text }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseLongitude">
+        {% trans 'Longitude' %}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="container p-3">
+          <div class="form-group">
+            {{ filter.form.site__longitude__gt.label_tag }}
+            {{ filter.form.site__longitude__gt | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.site__longitude__gt.help_text }}</small>
+          </div>
+          <div class="form-group">
+            {{ filter.form.site__longitude__lt.label_tag }}
+            {{ filter.form.site__longitude__lt | add_class:"form-control" }}
+            <small class="form-text text-muted">{{ filter.form.site__longitude__lt.help_text }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="dropdown">
+      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseDate">
+        {% trans 'Date of creation' %}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="container p-3">
+          <div class="form-group">
+            {{ filter.form.created_on.label_tag }}
+            {{ filter.form.created_on }}
+            <small class="form-text text-muted">{{ filter.form.created_on.help_text }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
