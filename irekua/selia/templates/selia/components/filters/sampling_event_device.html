@@ -1,86 +1,91 @@
 {% load i18n %}
 {% load widget_tweaks %}
 
-<div class="row w-100 p-0">
+<div class="row w-100 p-2">
   <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseUserName">
-        {% trans 'User name' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.created_by__username.label_tag }}
-            {{ filter.form.created_by__username | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.created_by__username.help_text }}</small>
-          </div>
-          <div class="form-group">
-            {{ filter.form.created_by__username__contains.label_tag }}
-            {{ filter.form.created_by__username__contains | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.created_by__username__contains.help_text }}</small>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseUserName">
+          {% trans 'User name' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.created_by__username.label_tag }}
+              {{ filter.form.created_by__username | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.created_by__username.help_text }}</small>
+            </div>
+            <div class="form-group">
+              {{ filter.form.created_by__username__contains.label_tag }}
+              {{ filter.form.created_by__username__contains | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.created_by__username__contains.help_text }}</small>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseDeviceType">
+          {% trans 'Device type' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.collection_device__physical_device__device__device_type.label_tag }}
+              {{ filter.form.collection_device__physical_device__device__device_type | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.collection_device__physical_device__device__device_type.help_text }}</small>
+            </div>
+          </div>
+        </div>
+      </div>      
+    </div>
   </div>
   <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseDeviceType">
-        {% trans 'Device type' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.collection_device__physical_device__device__device_type.label_tag }}
-            {{ filter.form.collection_device__physical_device__device__device_type | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.collection_device__physical_device__device__device_type.help_text }}</small>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseBrand">
+          {% trans 'Brand' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.collection_device__physical_device__device__brand__name.label_tag }}
+              {{ filter.form.collection_device__physical_device__device__brand__name | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.collection_device__physical_device__device__brand__name.help_text }}</small>
+            </div>
+            <div class="form-group">
+              {{ filter.form.collection_device__physical_device__device__brand__name__contains.label_tag }}
+              {{ filter.form.collection_device__physical_device__device__brand__name__contains | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.collection_device__physical_device__device__brand__name__contains.help_text }}</small>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseBrand">
-        {% trans 'Brand' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.collection_device__physical_device__device__brand__name.label_tag }}
-            {{ filter.form.collection_device__physical_device__device__brand__name | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.collection_device__physical_device__device__brand__name.help_text }}</small>
-          </div>
-          <div class="form-group">
-            {{ filter.form.collection_device__physical_device__device__brand__name__contains.label_tag }}
-            {{ filter.form.collection_device__physical_device__device__brand__name__contains | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.collection_device__physical_device__device__brand__name__contains.help_text }}</small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseModel">
-        {% trans 'Model' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.collection_device__physical_device__device__model.label_tag }}
-            {{ filter.form.collection_device__physical_device__device__model | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.collection_device__physical_device__device__model.help_text }}</small>
-          </div>
-          <div class="form-group">
-            {{ filter.form.collection_device__physical_device__device__model__contains.label_tag }}
-            {{ filter.form.collection_device__physical_device__device__model__contains | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.collection_device__physical_device__device__model__contains.help_text }}</small>
+    <div class="row">
+       <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseModel">
+          {% trans 'Model' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.collection_device__physical_device__device__model.label_tag }}
+              {{ filter.form.collection_device__physical_device__device__model | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.collection_device__physical_device__device__model.help_text }}</small>
+            </div>
+            <div class="form-group">
+              {{ filter.form.collection_device__physical_device__device__model__contains.label_tag }}
+              {{ filter.form.collection_device__physical_device__device__model__contains | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.collection_device__physical_device__device__model__contains.help_text }}</small>
+            </div>
           </div>
         </div>
-      </div>
+      </div>     
     </div>
   </div>
+
   <div class="col">
     <div class="dropdown">
       <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseDate">

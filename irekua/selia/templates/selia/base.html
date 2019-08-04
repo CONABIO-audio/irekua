@@ -6,10 +6,12 @@
 
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'selia/css/main.css' %}">
+<link rel="stylesheet" href="{% static 'irekua/vendor/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
 {% block stylesheet-extra %}{% endblock stylesheet-extra %}
 {% endblock %}
 
 {% block scripts-extra %}
+
 <script type="text/javascript">
 var itemFileList = [];
 var errorList = [];
@@ -21,8 +23,9 @@ $( function() {
             $( ".datepicker" ).datepicker();
         } );
 
-$(document).on('click', '.dropdown-menu', function (e) {
-  e.stopPropagation();
+
+$(document).on('click', '.ui-datepicker*', function (e) {
+        e.stopPropagation();
 });
 
 
@@ -113,6 +116,8 @@ $( document ).ready(function() {
     }
 });
 </script>
+{% block local-scripts %}
+{% endblock local-scripts%}
 {% endblock scripts-extra %}
 
 {% block header %}

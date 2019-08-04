@@ -1,121 +1,128 @@
 {% load i18n %}
 {% load widget_tweaks %}
 
-<div class="row w-100 p-0">
+<div class="row w-100 p-2">
   <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseSerialNumber">
-        {% trans 'Serial number' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.serial_number.label_tag }}
-            {{ filter.form.serial_number | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.serial_number.help_text }}</small>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseSerialNumber">
+          {% trans 'Serial number' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.serial_number.label_tag }}
+              {{ filter.form.serial_number | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.serial_number.help_text }}</small>
+            </div>
+            <div class="form-group">
+              {{ filter.form.serial_number__contains.label_tag }}
+              {{ filter.form.serial_number__contains | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.serial_number__contains.help_text }}</small>
+            </div>
           </div>
-          <div class="form-group">
-            {{ filter.form.serial_number__contains.label_tag }}
-            {{ filter.form.serial_number__contains | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.serial_number__contains.help_text }}</small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseBrand">
+          {% trans 'Brand' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.device__brand__name.label_tag }}
+              {{ filter.form.device__brand__name | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.device__brand__name.help_text }}</small>
+            </div>
+            <div class="form-group">
+              {{ filter.form.device__brand__name__contains.label_tag }}
+              {{ filter.form.device__brand__name__contains | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.device__brand__name__contains.help_text }}</small>
+            </div>
+          </div>
+        </div>
+      </div>      
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseBundle">
+          {% trans 'Bundle' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.bundle.label_tag }}
+              {{ filter.form.bundle | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.bundle.help_text }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseModel">
+          {% trans 'Model' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.device__model.label_tag }}
+              {{ filter.form.device__model | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.device__model.help_text }}</small>
+            </div>
+            <div class="form-group">
+              {{ filter.form.device__model__contains.label_tag }}
+              {{ filter.form.device__model__contains | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.device__model__contains.help_text }}</small>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseBrand">
-        {% trans 'Brand' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.device__brand__name.label_tag }}
-            {{ filter.form.device__brand__name | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.device__brand__name.help_text }}</small>
-          </div>
-          <div class="form-group">
-            {{ filter.form.device__brand__name__contains.label_tag }}
-            {{ filter.form.device__brand__name__contains | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.device__brand__name__contains.help_text }}</small>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseDate">
+          {% trans 'Date of creation' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.created_on.label_tag }}
+              {{ filter.form.created_on }}
+              <small class="form-text text-muted">{{ filter.form.created_on.help_text }}</small>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseBundle">
-        {% trans 'Bundle' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.bundle.label_tag }}
-            {{ filter.form.bundle | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.bundle.help_text }}</small>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseIdentifier">
+          {% trans 'Identifier' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.identifier.label_tag }}
+              {{ filter.form.identifier | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.identifier.help_text }}</small>
+            </div>
+            <div class="form-group">
+              {{ filter.form.identifier__contains.label_tag }}
+              {{ filter.form.identifier__contains | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.identifier__contains.help_text }}</small>
+            </div>
           </div>
         </div>
-      </div>
+      </div>      
     </div>
   </div>
-  <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseModel">
-        {% trans 'Model' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.device__model.label_tag }}
-            {{ filter.form.device__model | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.device__model.help_text }}</small>
-          </div>
-          <div class="form-group">
-            {{ filter.form.device__model__contains.label_tag }}
-            {{ filter.form.device__model__contains | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.device__model__contains.help_text }}</small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseDate">
-        {% trans 'Date of creation' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.created_on.label_tag }}
-            {{ filter.form.created_on }}
-            <small class="form-text text-muted">{{ filter.form.created_on.help_text }}</small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseIdentifier">
-        {% trans 'Identifier' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.identifier.label_tag }}
-            {{ filter.form.identifier | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.identifier.help_text }}</small>
-          </div>
-          <div class="form-group">
-            {{ filter.form.identifier__contains.label_tag }}
-            {{ filter.form.identifier__contains | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.identifier__contains.help_text }}</small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
 </div>

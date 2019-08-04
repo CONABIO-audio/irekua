@@ -7,6 +7,38 @@
   --toolbar-color: #CC8B86;
 }
 
+.small_toolbar {
+  border-radius: 10px;
+  background-color: #d4d4f7 !important;
+  padding: 20px;  
+  display: flex;
+  margin: 20px;
+}
+
+.description_object {
+  border-radius: 10px;
+  background-color: #eaeafb !important;
+  padding: 20px;  
+}
+
+.list_item {
+  border-radius: 10px;
+  background-color: #eaeafb !important;
+  padding: 20px;  
+  display: flex;
+  flex-direction: row;
+  display: table-cell;
+}
+
+.button_small_toolbar {
+  background-color: #eaeafb !important;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
 .main-navbar {
   background-color: var(--dark)!important;
 }

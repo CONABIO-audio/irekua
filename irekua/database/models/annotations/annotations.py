@@ -108,7 +108,7 @@ class Annotation(IrekuaModelBaseUser):
         except ValidationError as error:
             raise ValidationError({'event_type': error})
 
-        collection = self.item.sampling_event.collection
+        collection = self.item.sampling_event_device.sampling_event.collection
         try:
             collection.validate_and_get_event_type(self.event_type)
         except ValidationError as error:

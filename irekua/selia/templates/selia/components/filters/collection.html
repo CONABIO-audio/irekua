@@ -1,153 +1,162 @@
 {% load i18n %}
 {% load widget_tweaks %}
 
-<div class="row w-100 p-0">
+<div class="row w-100 p-2">
   <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseCollectionType">
-        {% trans 'Collection type' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.collection_type.label_tag }}
-            {{ filter.form.collection_type | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.collection_type.help_text }}</small>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseCollectionType">
+          {% trans 'Collection type' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.collection_type.label_tag }}
+              {{ filter.form.collection_type | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.collection_type.help_text }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseName">
+          {% trans 'Name' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.name.label_tag }}
+              {{ filter.form.name | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.name.help_text }}</small>
+            </div>
+            <div class="form-group">
+              {{ filter.form.name__contains.label_tag }}
+              {{ filter.form.name__contains | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.name__contains.help_text }}</small>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseName">
-        {% trans 'Name' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.name.label_tag }}
-            {{ filter.form.name | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.name.help_text }}</small>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseInstitutionName">
+          {% trans 'Institution name' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.institution__institution_name.label_tag }}
+              {{ filter.form.institution__institution_name | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.institution__institution_name.help_text }}</small>
+            </div>
+            <div class="form-group">
+              {{ filter.form.institution__institution_name__contains.label_tag }}
+              {{ filter.form.institution__institution_name__contains | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.institution__institution_name__contains.help_text }}</small>
+            </div>
           </div>
-          <div class="form-group">
-            {{ filter.form.name__contains.label_tag }}
-            {{ filter.form.name__contains | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.name__contains.help_text }}</small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseInstitutionCode">
+          {% trans 'Institution code' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.institution__institution_code.label_tag }}
+              {{ filter.form.institution__institution_code | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.institution__institution_code.help_text }}</small>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseInstitutionName">
-        {% trans 'Institution name' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.institution__institution_name.label_tag }}
-            {{ filter.form.institution__institution_name | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.institution__institution_name.help_text }}</small>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseInstitutionCountry">
+          {% trans 'Institution country' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.institution__country.label_tag }}
+              {{ filter.form.institution__country | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.institution__country.help_text }}</small>
+            </div>
+            <div class="form-group">
+              {{ filter.form.institution__country__contains.label_tag }}
+              {{ filter.form.institution__country__contains | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.institution__country__contains.help_text }}</small>
+            </div>
           </div>
-          <div class="form-group">
-            {{ filter.form.institution__institution_name__contains.label_tag }}
-            {{ filter.form.institution__institution_name__contains | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.institution__institution_name__contains.help_text }}</small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseInstitutionIsOpen">
+          {% trans 'Is open' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.is_open.label_tag }}
+              {{ filter.form.is_open | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.is_open.help_text }}</small>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseInstitutionCode">
-        {% trans 'Institution code' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.institution__institution_code.label_tag }}
-            {{ filter.form.institution__institution_code | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.institution__institution_code.help_text }}</small>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseDate">
+          {% trans 'Date of creation' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.created_on.label_tag }}
+              {{ filter.form.created_on }}
+              <small class="form-text text-muted">{{ filter.form.created_on.help_text }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseIdentifier">
+          {% trans 'Identifier' %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="container p-3">
+            <div class="form-group">
+              {{ filter.form.identifier.label_tag }}
+              {{ filter.form.identifier | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.identifier.help_text }}</small>
+            </div>
+            <div class="form-group">
+              {{ filter.form.identifier__contains.label_tag }}
+              {{ filter.form.identifier__contains | add_class:"form-control" }}
+              <small class="form-text text-muted">{{ filter.form.identifier__contains.help_text }}</small>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseInstitutionCountry">
-        {% trans 'Institution country' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.institution__country.label_tag }}
-            {{ filter.form.institution__country | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.institution__country.help_text }}</small>
-          </div>
-          <div class="form-group">
-            {{ filter.form.institution__country__contains.label_tag }}
-            {{ filter.form.institution__country__contains | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.institution__country__contains.help_text }}</small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseInstitutionIsOpen">
-        {% trans 'Is open' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.is_open.label_tag }}
-            {{ filter.form.is_open | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.is_open.help_text }}</small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseDate">
-        {% trans 'Date of creation' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.created_on.label_tag }}
-            {{ filter.form.created_on }}
-            <small class="form-text text-muted">{{ filter.form.created_on.help_text }}</small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="dropdown">
-      <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseIdentifier">
-        {% trans 'Identifier' %}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="container p-3">
-          <div class="form-group">
-            {{ filter.form.identifier.label_tag }}
-            {{ filter.form.identifier | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.identifier.help_text }}</small>
-          </div>
-          <div class="form-group">
-            {{ filter.form.identifier__contains.label_tag }}
-            {{ filter.form.identifier__contains | add_class:"form-control" }}
-            <small class="form-text text-muted">{{ filter.form.identifier__contains.help_text }}</small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
 </div>

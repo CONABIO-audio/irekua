@@ -68,6 +68,14 @@ def create_wizard(context, wizard):
     context['wizard'] = wizard
     return context
 
+@register.inclusion_tag('selia/components/annotator.html', takes_context=True)
+def annotator_component(context, annotator_template, item, annotation_list, mode):
+    context['annotator_template'] = annotator_template
+    context['annotation_list'] = annotation_list
+    context['item'] = item
+    context['mode'] = mode
+    
+    return context
 
 @register.simple_tag
 def autocomplete_media():
