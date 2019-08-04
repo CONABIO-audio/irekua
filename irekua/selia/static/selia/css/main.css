@@ -9,7 +9,7 @@
 
 .small_toolbar {
   border-radius: 10px;
-  background-color: #d4d4f7 !important;
+  background-color: #eaeafb !important;
   padding: 20px;  
   display: flex;
   margin: 20px;
@@ -17,7 +17,7 @@
 
 .description_object {
   border-radius: 10px;
-  background-color: #eaeafb !important;
+  background-color: #f8f9fa!important;
   padding: 20px;  
 }
 
@@ -31,7 +31,7 @@
 }
 
 .button_small_toolbar {
-  background-color: #eaeafb !important;
+  background-color: #f8f9fa!important;
   padding: 10px;
   text-align: center;
   text-decoration: none;
