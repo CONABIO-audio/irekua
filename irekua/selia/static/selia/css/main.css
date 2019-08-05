@@ -9,12 +9,35 @@
 
 .small_toolbar {
   border-radius: 10px;
-  background-color: #eaeafb !important;
+  background-color: #d2d9e0 !important;
   padding: 20px;  
   display: flex;
-  margin: 20px;
+  margin: 10px;
 }
 
+.dropdown-toggle {
+  border-radius: 5px;
+  margin: 5px;
+  background-color: #556577 !important;
+}
+
+#navbarDropdownMenuLink {
+  background-color:   #343a40 !important;
+  margin: 0px;
+  border-radius: 0px;
+  display: block;
+  white-space: nowrap;
+}
+
+#dropdownMenuButton {
+  background-color: #f8f9fa !important;
+  width: 200px;
+  margin: 0px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+  text-overflow: ellipsis;
+}
 .description_object {
   border-radius: 10px;
   background-color: #f8f9fa!important;
@@ -30,13 +53,27 @@
   display: table-cell;
 }
 
+select option {
+    margin: 40px;
+    color: #595959;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
 .button_small_toolbar {
+  border-radius: 10px;
   background-color: #f8f9fa!important;
   padding: 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+}
+
+#view_content {
+  background-color: #eff5f5!important;
+}
+.navbar-brand {
+  color: #595959 !important;
 }
 
 .main-navbar {
@@ -78,16 +115,6 @@
   white-space: nowrap;
   overflow: hidden;
 }
-
-#dropdownMenuButton {
-  width: 200px;
-  overflow: hidden;
-  white-space: nowrap;
-  display: block;
-  text-overflow: ellipsis;
-}
-
-
 
 #dropDownLabel {
   width: 200px;

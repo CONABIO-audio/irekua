@@ -11,13 +11,12 @@ def show_json(data):
 
 @register.simple_tag
 def parse_annotation_label(data):
-    header_level = 'h6'
-    div_class = 'd-block'
+    header_level = 'h5'
+    div_class = 'row'
 
     headers = [
         '''<div class="{div_class}">
-             <{header_level}>{key}</{header_level}>
-             <div class="container ml-4">{value}</div>
+                <{header_level}>{value}</{header_level}>
            </div>'''.format(
                key=key.capitalize(),
                value=parse_json_value(value, 0),

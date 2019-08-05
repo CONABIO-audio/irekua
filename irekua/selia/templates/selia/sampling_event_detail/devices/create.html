@@ -75,14 +75,6 @@
         <input type="hidden" id="collection_device_field" name="collection_device" value="{{ selected_collection_device.pk }}">
        <input type="hidden" id="sampling_event_field" name="sampling_event" value="{{ sampling_event.pk }}">
       <div class="row">
-            <div class="p-4">
-            {{ form.licence.errors }}
-            <label for="licenceInput">{{ form.licence.label_tag }}</label>
-            {{ form.licence|add_class:"form-control" }}
-            <small id="licenceHelp" class="form-text text-muted">{{ form.licence.help_text|safe }} </small>
-          </div>
-      </div>
-      <div class="row">
         <div class="col-4 mx-5">
           <div class="row d-flex justify-content-between">
           <div class="p-3">

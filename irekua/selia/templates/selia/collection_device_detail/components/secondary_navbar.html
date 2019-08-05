@@ -7,8 +7,9 @@
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item active" href={% url 'selia:collection_device_detail' collection_device.pk %}>{% trans 'Device ' %}{{ collection_device.pk }}</a>
+    <a class="dropdown-item" href={% url 'selia:collection_devices' collection_device.collection.pk %}>{{collection_device.collection.pk}}{% trans ': Devices' %}</a>
     <a class="dropdown-item" href={% url 'selia:collection_detail' collection_device.collection.pk %}>{{collection_device.collection.pk}}</a>   
-    <a class="dropdown-item" href={% url 'selia:collections_about' %}>{% trans 'Collections' %}</a>
+    <a class="dropdown-item" href={% url 'selia:collections_user' %}>{% trans 'Collections' %}</a>
   </div>
 </div>
 

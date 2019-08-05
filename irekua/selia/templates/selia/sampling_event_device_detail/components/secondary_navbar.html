@@ -8,10 +8,11 @@
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item active" href={% url 'selia:sampling_event_device_detail' sampling_event_device.pk %}>{% trans 'Device ' %}{{ sampling_event_device.pk }}</a>
 
+    <a class="dropdown-item" href={% url 'selia:sampling_event_devices' sampling_event_device.sampling_event.pk %}>{% trans 'Sampling event ' %}{{ sampling_event_device.sampling_event.pk }}{% trans ': Devices'%}</a>
     <a class="dropdown-item" href={% url 'selia:sampling_event_detail' sampling_event_device.sampling_event.pk %}>{% trans 'Sampling event ' %}{{ sampling_event_device.sampling_event.pk }}</a>
-
+    <a class="dropdown-item" href={% url 'selia:collection_sampling_events' sampling_event_device.sampling_event.collection.pk %}>{{sampling_event_device.sampling_event.collection.pk}}{% trans ': Sampling events' %}</a>
     <a class="dropdown-item" href={% url 'selia:collection_detail' sampling_event_device.sampling_event.collection.pk %}>{{sampling_event_device.sampling_event.collection.pk}}</a>   
-    <a class="dropdown-item" href={% url 'selia:collections_about' %}>{% trans 'Collections' %}</a>
+    <a class="dropdown-item" href={% url 'selia:collections_user' %}>{% trans 'Collections' %}</a>
   </div>
 </div>
 

@@ -20,15 +20,15 @@
 <div class="container-fluid w-100 p-0">
     {% filter_component filter_template=filter_form_template filter=filter %}
 </div>
-<div class="row middle_align">
-  <div class="col-6 middle_align" align="center">
-  {% list_component template_name=list_item_template item_list=object_list empty_message=empty_message %}
+<div class="row p-5 justify-content-center">
+  <div class="col-6">
+    {% list_component template_name=list_item_template item_list=object_list empty_message=empty_message %}
   </div>
-  <div class="col-6 middle_align description_object" align="center">
-    <div class="container bg-light p-2 middle_align" align="center">
-    <input type="hidden" id="img_url" name="img_url" value="{{ item.item_file.url }}">
+  <div class="col-6" align="center">
+    <div class="container card p-2 bg-dark" align="center">
+      <input type="hidden" id="img_url" name="img_url" value="{{ item.item_file.url }}">
       <canvas id="canvas" class="center-fit" width="800" height="600" style="background-image: url({{ item.item_file.url }}); background-size:cover; background-repeat:   no-repeat;background-position: center center;"></canvas>
-  </div>
+    </div>
   </div>
 </div>
 {% endblock main-content %}
