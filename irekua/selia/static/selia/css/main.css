@@ -100,11 +100,16 @@ select option {
 #view_content {
   background-color: #eff5f5!important;
 }
+
 .navbar-brand {
   color: #595959 !important;
 }
 
 .main-navbar {
+  background-color: var(--dark)!important;
+}
+
+.filter_bar {
   background-color: var(--dark)!important;
 }
 
@@ -212,6 +217,23 @@ select option {
 .animate-out {
     -webkit-animation: fadeOut .5s;
     animation: fadeOut .5s;
+}
+
+.nav-link {
+  color: #005580;
+}
+
+a {
+  color: #005580;
+}
+
+.btn-link {
+  color: #005580;
+}
+
+.btn-primary {
+  background-color: #005580;
+  border: none;
 }
 
 @-webkit-keyframes fadeIn {
