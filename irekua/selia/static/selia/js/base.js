@@ -5,7 +5,7 @@ var req_count = 0;
 
 
 $( function() {
-            $( ".datepicker" ).datepicker();
+            $( ".datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
         } );
 
 
@@ -119,6 +119,44 @@ $( document ).ready(function() {
     var sort_submit = document.getElementsByClassName("sort_submit");
     var itemFilePicker = document.getElementById('itemFilePicker');
     var addItemForm = document.getElementById('addItemForm');
+    var datepicker = document.getElementById('ui-datepicker-div');
+
+    if (datepicker){
+        function hide_if_pressed_and_shown(ddown,event){
+            if (datepicker.style.display != "none"){
+                event.preventDefault();
+                datepicker.style.display = "none";
+
+                if ($(ddown).hasClass('show')){
+                    $(ddown).removeClass("show");
+                    $(ddown.querySelector('.dropdown-menu')).removeClass("show");
+                }
+            }
+        }
+        function hide_if_not_datepicker(ddown,event){
+            if (datepicker.style.display == "block"){
+                event.preventDefault();
+            } 
+        }
+        var drop_downs = document.getElementsByClassName('dropdown');
+
+        for (var i=0;i<drop_downs.length;i++){
+            if (drop_downs[i].querySelector('.datepicker')){
+                $(drop_downs[i]).on('hide.bs.dropdown',function(e){
+                    hide_if_not_datepicker(this,e);
+                });
+                $(drop_downs[i].querySelector('.dropdown-toggle')).on('click',function(e){
+                    hide_if_pressed_and_shown(drop_downs[i],e);
+                });               
+            } else {
+                $(drop_downs[i].querySelector('.dropdown-toggle')).on('click',function(e){
+                    if (datepicker.style.display != "none"){
+                        datepicker.style.display = "none";
+                    }
+                });
+            }   
+        }       
+    }
 
     if (itemFilePicker && addItemForm) {
     	errorList = [];
@@ -135,20 +173,20 @@ $( document ).ready(function() {
 
         addItemForm.addEventListener('submit',function(e){
             e.preventDefault();
-            document.getElementById('selected_objects').style.display = "none";
-            document.getElementById('filePickerContainer').style.display="none";
-			addItemForm.style.display = "none";
-			document.getElementById('progress_upload').style.display = "block";
-
             var url = this.action+"&async=true";
 			var total_files = itemFileList.length;
 
             if (total_files > 0){
+                document.getElementById('selected_objects').style.display = "none";
+                document.getElementById('filePickerContainer').style.display="none";
+                addItemForm.style.display = "none";
+                document.getElementById('progress_upload').style.display = "block";
+
 	            for (var i=0;i<total_files;i++){
 	                submitSingle(i,itemFileList[i],url,total_files);
 	            }
             } else {
-            	alert("{% trans 'No selected files. Please select at least one file to upload' %}");
+            	alert("Please select at least one file");
             }
         });
     }

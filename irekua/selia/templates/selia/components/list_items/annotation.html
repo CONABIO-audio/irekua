@@ -15,7 +15,7 @@
 
         {% parse_annotation_label item.label %}
       <div class="row p-2">
-        <a href="{% url 'selia:item_annotation_create' item.item.pk %}?mode=edit&annotation={{ item.pk }}">{% edit_button %}</a>
+        <a id="edit_annotation_btn" href="{% url 'selia:item_annotation_create' item.item.pk %}?mode=edit&annotation={{ item.pk }}">{% edit_button %}</a>
       </div>
         
     </div>

@@ -20,11 +20,11 @@ $( document ).ready(function() {
 				this.img_coeff = null;
 
 				this.ctx = this.getContext('2d');
-				this.client_rect = canvas.getBoundingClientRect();
-		        this.scaleX = this.width / this.client_rect.width;
-		        this.scaleY = this.height / this.client_rect.height;
-				this.pos_x = this.client_rect.left;
-				this.pos_y = this.client_rect.top;
+				this.client_rect = function(){return canvas.getBoundingClientRect();}
+		        this.scaleX = function(){return this.width / this.client_rect().width;}
+		        this.scaleY = function(){return this.height / this.client_rect().height;}
+				this.pos_x = function(){return this.client_rect().left;}
+				this.pos_y = this.client_rect().top;
 
 				this.fit_to_img()
 			}
@@ -135,8 +135,8 @@ $( document ).ready(function() {
 				}
 
 				$(canvas).on('mousedown', function(e) {
-				    last_mousex = Math.min(canvas.width,Math.max(0,Math.round((e.clientX-canvas.pos_x + $("#view_content").scrollLeft())*canvas.scaleX)));
-					last_mousey = Math.min(canvas.height,Math.max(0,Math.round((e.clientY-canvas.pos_y + $("#view_content").scrollTop())*canvas.scaleY)));
+				    last_mousex = Math.min(canvas.width,Math.max(0,Math.round((e.clientX-canvas.pos_x() + $("#view_content").scrollLeft())*canvas.scaleX())));
+					last_mousey = Math.min(canvas.height,Math.max(0,Math.round((e.clientY-canvas.pos_y + $("#view_content").scrollTop())*canvas.scaleY())));
 					width = 0;
 					height = 0;
 				    mousedown = true;
@@ -166,8 +166,8 @@ $( document ).ready(function() {
 				});
 
 				$(document).on('mousemove', function(e) {
-				    mousex = Math.min(canvas.width,Math.max(0,Math.round((e.clientX-canvas.pos_x + $("#view_content").scrollLeft())*canvas.scaleX)));
-					mousey = Math.min(canvas.height,Math.max(0,Math.round((e.clientY-canvas.pos_y + $("#view_content").scrollTop())*canvas.scaleY)));
+				    mousex = Math.min(canvas.width,Math.max(0,Math.round((e.clientX-canvas.pos_x() + $("#view_content").scrollLeft())*canvas.scaleX())));
+					mousey = Math.min(canvas.height,Math.max(0,Math.round((e.clientY-canvas.pos_y + $("#view_content").scrollTop())*canvas.scaleY())));
 
 				    if(mousedown) {
 
@@ -183,11 +183,16 @@ $( document ).ready(function() {
 				var img_url = document.getElementById('img_url').value;
 				canvas.init_image_annotator(img_url);
 				var row_arr = document.getElementsByClassName('list_item');
-				if (row_arr){
+				
+				if (row_arr.length){
 					row_arr[0].classList.add("selected_ann");
 					var annotation = JSON.parse(row_arr[0].querySelector("input").value.replace(/\'/g,'"'));
 					canvas.load_annotation(annotation["ul_x"],annotation["ul_y"],annotation["width"],annotation["height"]);
 				}
+
+				$(canvas).on('mousedown',function(e){
+					window.location.href = document.getElementById('img_url').getAttribute("add_ann_url");;
+				});
 
 				$('.list_item').on('click', function() {
 					var selected_arr = document.getElementsByClassName('selected_ann');

@@ -30,7 +30,18 @@ class CollectionItemDetailView(SeliaDetailView, SingleObjectMixin):
     update_form_template = 'selia/components/update/item.html'
     viewer_template = 'selia/components/viewers/item_image.html'
 
+    def get_next_object(self):
+        next_object = Item.objects.filter(pk__gt=self.kwargs['pk']).order_by('pk').first()
+        return next_object
+
+    def get_prev_object(self):
+        prev_object = Item.objects.filter(pk__lt=self.kwargs['pk']).order_by('pk').last()
+        return prev_object
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['collection_device'] = self.object
+        context["next_object"] = self.get_next_object()
+        context["prev_object"] = self.get_prev_object()
+        
         return context
