@@ -17,4 +17,16 @@
       {% trans 'Home' %}
     </a>
 </li>
+
+{% url 'selia:managed_collections' as collections_url %}
+<li class="nav-item">
+  {% if collections_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ collections_url }}>
+    {% else %}
+    <a class="nav-link" href={{ collections_url }}>
+      {% endif %}
+      <i class="fas fa-file"></i>
+      {% trans 'Collections' %}
+    </a>
+</li>
 {% endblock navbar-items %}

@@ -20,6 +20,10 @@ urlpatterns = [
         autocomplete.CollectionAutocomplete.as_view(),
         name='collection_autocomplete'),
     path(
+        'autocomplete/collection_types/',
+        autocomplete.CollectionTypeAutocomplete.as_view(),
+        name='collection_type_autocomplete'),
+    path(
         'autocomplete/metacollections/',
         autocomplete.MetacollectionAutocomplete.as_view(),
         name='metacollection_autocomplete'),

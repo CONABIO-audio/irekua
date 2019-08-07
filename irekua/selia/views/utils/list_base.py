@@ -98,7 +98,6 @@ class SeliaListView(ListView):
 
         raise NotImplementedError('No filter class was provided')
 
-
     def get_initial_queryset(self):
         if hasattr(self, 'queryset'):
             return self.queryset
@@ -111,10 +110,12 @@ class SeliaListView(ListView):
         return filtered_queryset
 
     def filter_queryset_with_query(self, queryset):
-        if hasattr(self, 'filter_class'):
+        try:
             filter_class = self.get_filter_class()
             self.filter = filter_class(self.request.GET, queryset=queryset)
             queryset = self.filter.qs
+        except NotImplementedError:
+            pass
 
         return queryset
 

@@ -64,6 +64,10 @@
   text-overflow: ellipsis;
 }
 
+.dropdown-menu {
+  width: 30em;
+}
+
 .leaflet-container-default {
   height: 100%;
   width: 100%;

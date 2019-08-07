@@ -51,6 +51,16 @@ class CollectionAutocomplete(autocomplete.Select2QuerySetView):
         return qs
 
 
+class CollectionTypeAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = irekua_models.CollectionType.objects.all()
+
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+
+        return qs
+
+
 class MetacollectionAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = irekua_models.MetaCollection.objects.all()

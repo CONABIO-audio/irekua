@@ -1,20 +1,26 @@
 {% extends 'selia/collections_admin/base.html' %}
 {% load i18n %}
+{% load selia_components %}
+{% load selia_buttons %}
 
 {% block toolbar-items %}
-<li class="nav-item">
-  {% include 'selia/components/buttons/help.html' %}
-</li>
+  <li class="nav-item">
+    {% help_button %}
+  </li>
 {% endblock toolbar-items %}
 
 {% block main-content %}
-<div class="container-fluid w-100 p-0">
-  {% include 'selia/components/filter.html' with filter_template=filter_form_template filter=filter %}
-</div>
+  <div class="container-fluid w-100 p-0">
+    {% filter_component filter_template=filter_form_template filter=filter %}
+  </div>
 
-{% include 'selia/components/list.html' with template_name=list_item_template item_list=object_list empty_message=empty_message %}
+  {% list_component template_name=list_item_template item_list=object_list empty_message=empty_message %}
 {% endblock main-content %}
 
 {% block modals-extra %}
-{% include 'selia/components/help.html' with help_template=help_template %}
+  {% help_component help_template=help_template %}
 {% endblock modals-extra %}
+
+{% block scripts-extra %}
+  {% autocomplete_media %}
+{% endblock %}

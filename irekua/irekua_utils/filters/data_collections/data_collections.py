@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.translation import gettext as _
-from django_filters import FilterSet,DateFilter
+from django_filters import FilterSet, DateFilter
 
 from database.models import Collection
 
