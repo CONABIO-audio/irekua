@@ -21,8 +21,9 @@ class Filter(FilterSet):
         }
 
 search_fields = (
-    'sampling_event_type',
-    'collection',
+    'sampling_event_type__name',
+    'collection_site__site__name',
+    'collection__name',
 )
 
 
