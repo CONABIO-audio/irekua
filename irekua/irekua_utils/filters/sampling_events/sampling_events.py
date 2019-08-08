@@ -6,15 +6,18 @@ from database.models import SamplingEvent
 
 
 class Filter(FilterSet):
-    created_on = DateFilter(widget=forms.DateInput(attrs={'class': 'datepicker'}))    
+    created_on_from = DateFilter(field_name="created_on",lookup_expr='gt',widget=forms.DateInput(attrs={'class': 'datepicker'}))
+    created_on_to = DateFilter(field_name="created_on",lookup_expr='lt',widget=forms.DateInput(attrs={'class': 'datepicker'}))    
+    ended_on_from = DateFilter(field_name="ended_on",lookup_expr='gt',widget=forms.DateInput(attrs={'class': 'datepicker'}))
+    ended_on_to = DateFilter(field_name="ended_on",lookup_expr='lt',widget=forms.DateInput(attrs={'class': 'datepicker'}))
+    started_on_from = DateFilter(field_name="started_on",lookup_expr='gt',widget=forms.DateInput(attrs={'class': 'datepicker'}))
+    started_on_to = DateFilter(field_name="started_on",lookup_expr='lt',widget=forms.DateInput(attrs={'class': 'datepicker'}))
+
     class Meta:
         model = SamplingEvent
         fields = {
             'sampling_event_type': ['exact'],
-            'collection': ['exact'],
-            'started_on': ['gt', 'lt'],
-            'ended_on': ['gt', 'lt'],
-            'created_on': ['gt', 'lt'],
+            'collection': ['exact']
         }
 
 search_fields = (

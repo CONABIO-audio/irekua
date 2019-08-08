@@ -9,6 +9,22 @@ register = template.Library()
 def show_json(data):
     return parse_json_value(data, 0)
 
+@register.simple_tag
+def parse_annotation_label(data):
+    header_level = 'h5'
+    div_class = 'row'
+
+    headers = [
+        '''<div class="{div_class}">
+                <{header_level}>{value}</{header_level}>
+           </div>'''.format(
+               key=key.capitalize(),
+               value=parse_json_value(value, 0),
+               header_level=header_level,
+               div_class=div_class)
+        for key, value in sorted(data.items())]
+
+    return format_html(''.join(headers))
 
 def parse_json_object(data, level):
     if level == 0:

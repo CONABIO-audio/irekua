@@ -84,8 +84,8 @@
           </div>
         </div>
         </div> 
-        <div class="d-flex w-100 justify-content-end">
-          <input type="submit" class="btn btn-link text-primary" value="{% trans 'Create' %}">
+        <div class="row justify-content-center">
+          <input type="submit" class="btn btn-primary" value="{% trans 'Create' %}">
         </div>
       </div>
     </div>
@@ -142,36 +142,37 @@
         {% csrf_token %}
        <input type="hidden" id="site_field" name="site" value="{{ selected_site.pk }}">
        <input type="hidden" id="collection_field" name="collection" value="{{ collection }}">
+      <div class="row">
       <div class="col">
-     <div class="form-row">
+        <div class="row">
         <div class="form-group col">
           {{ form.site_type.errors }}
           {{ form.site_type.label_tag }}
           {{ form.site_type }}
           <small id="site_typeInput" class="form-text text-muted">{{ form.site_type.help_text }}</small>
         </div>
+        </div>
+        <div class="row">
         <div class="form-group col">
           {{ form.internal_id.errors }}
           {{ form.internal_id.label_tag }}
           {{ form.internal_id }}
           <small id="internal_idInput" class="form-text text-muted">{{ form.identifier.help_text }}</small>
         </div>
+        </div>
       </div>
-      <div class="form-row">
+      <div class="col">
         <div class="form-group col">
           {{ form.metadata.errors }}
           {{ form.metadata.label_tag }}
           {{ form.metadata }}
           <small id="metadataInput" class="form-text text-muted">{{ form.metadata.help_text }}</small>
         </div>
-
       </div>
-      <div class="form-row" align="center">
-        <div class="form-group col">
+    </div>
+    <div class="row justify-content-center">
           <button type="submit" class="btn btn-primary">{% trans 'Register site' %}</button>
-        </div>
-      </div>
-      </div>
+    </div>
 
       </form>
 

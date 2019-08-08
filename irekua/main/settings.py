@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'irekua_utils',
     'file_handler',
     'formtools',
+    'bootstrap_datepicker_plus'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -39,7 +39,7 @@
   {% block navbars %}
   {% endblock navbars %}
 
-  <main role="main" class="container-fluid scroll p-0 h-100">
+  <main id="main_body_view" role="main" class="container-fluid scroll p-0 h-100">
     {% block content %}
       {% block main-content %}
       {% endblock main-content %}
@@ -80,7 +80,6 @@
   <script src="{% static 'irekua/vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'irekua/vendor/jquery-ui-1.12.1.custom/jquery-ui.min.js' %}"></script>
   <script src="{% static 'irekua/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-
   {% block scripts-extra %}
   {% endblock scripts-extra %}
 

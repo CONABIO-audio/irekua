@@ -4,9 +4,7 @@
 {% load i18n %}
 
 {% block list-item-content %}
-  <div class="row w-100">
-
-
+<div class="row w-100">
   <div class="col-2">
     <div class="row media">
 		<a target="_blank" href="{{ item.item_file.url }}">
@@ -14,7 +12,7 @@
 		</a>
     </div>
   </div>
-  	<div class="col">
+  	<div class="col-2">
   		<div class="row">
       	<div class="media-body mt-0">
         <h4 class="mt-0">Item {{ item.pk }}</h4>
@@ -66,6 +64,19 @@
       <div class="row">
         <h6>{% trans 'Licence' %}</h6>
         <div class="text-muted ml-4">{{ item.licence.licence_type }}</div>
+      </div>
+      <div class="row">
+        <h6>{% trans 'Annotations' %}</h6>
+        <div class="text-muted ml-4">{{ item.annotation_set.count }}</div>
+      </div>
+      <div class="row">
+        <div class="col-2">
+          <div class="row">
+            <a href="{% url 'selia:item_annotations' item.pk %}">{% see_button %}</a>
+          </div>        </div>
+        <div class="col-2">
+          <a href="{% url 'selia:item_annotation_create' item.pk %}"><i class="fas fa-plus"></i></a>
+        </div>
       </div>
     </div>
 

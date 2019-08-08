@@ -8,7 +8,7 @@
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item active" href={% url 'selia:collection_detail' collection.pk %}>{{ collection }}</a>
-    <a class="dropdown-item" href={% url 'selia:collections_about' %}>{% trans 'Collections' %}</a>
+    <a class="dropdown-item" href={% url 'selia:collections_user' %}>{% trans 'Collections' %}</a>
   </div>
 </div>
 
@@ -42,9 +42,9 @@
 {% url 'selia:collection_devices' collection.pk as detail_url %}
 <li class="nav-item">
   {% if detail_url in request.path|urlencode or 'physical_device' in request.path|urlencode%}
-  <a id="devices" class="nav-link active" href={{ detail_url }}>
+  <a class="nav-link active" href={{ detail_url }}>
   {% else %}
-  <a id="devices" class="nav-link" href={{ detail_url }}>
+  <a class="nav-link" href={{ detail_url }}>
   {% endif %}
     <i class="fas fa-tools"></i>
     {% trans 'Devices' %}
@@ -54,9 +54,9 @@
 {% url 'selia:collection_sampling_events' collection.pk as detail_url %}
 <li class="nav-item">
   {% if detail_url in request.path|urlencode %}
-  <a id="devices" class="nav-link active" href={{ detail_url }}>
+  <a class="nav-link active" href={{ detail_url }}>
   {% else %}
-  <a id="devices" class="nav-link" href={{ detail_url }}>
+  <a class="nav-link" href={{ detail_url }}>
   {% endif %}
   <i class="fas fa-calendar-week"></i>
     {% trans 'Sampling events' %}

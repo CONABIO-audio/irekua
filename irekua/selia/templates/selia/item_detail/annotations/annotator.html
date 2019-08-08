@@ -1,0 +1,34 @@
+{% extends 'selia/item_detail/base.html' %}
+{% load i18n %}
+{% load selia_components %}
+{% load selia_buttons %}
+
+{% block toolbar-title %}{{ item.collection }}{% trans ': Item ' %}{{ item.pk }}{% trans ': Annotations: Add' %}{% endblock %}
+
+{% block toolbar-items %}
+	<li class="nav-item">
+		<a class="nav-link" href="{{ back }}">{% trans 'Back' %} <i class="fas fa-backspace"></i></a>
+	</li>
+  <li class="nav-item">
+    {% help_button %}
+  </li>
+  {% if prev_object %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'selia:item_annotation_create' prev_object.pk %}?"><i class="fas fa-chevron-left"></i>{% trans 'Item ' %}{{ prev_object.pk }}</a>
+    </li>
+  {% endif %}
+  {% if next_object %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'selia:item_annotation_create' next_object.pk %}?">{% trans 'Item ' %}{{ next_object.pk }}<i class="fas fa-chevron-right"></i></a>
+    </li>
+  {% endif %}
+{% endblock toolbar-items %}
+
+{% block main-content %}
+{% annotator_component annotator_template=annotator_template item=item annotation_list=annotation_list mode=mode %}
+{% endblock main-content %}
+
+{% block modals-extra %}
+
+{% endblock modals-extra %}
+

@@ -1,12 +1,12 @@
 {% extends 'selia/base_with_toolbar.html' %}
-{% load static %}
+{% load static from staticfiles %}
 
-{% block head-extra %}
-<script type="text/javascript" src="{% static 'annotorious/annotorious.min.js' %}"></script>
-{% endblock head-extra %}
+{% block local-scripts %}
+<script type="text/javascript" src="{% static 'selia/js/image_annotator.js' %}"></script>
+{% endblock local-scripts %}
 
 {% block stylesheet-extra %}
-<link rel="stylesheet" type="text/css" href="{% static 'annotorious/css/annotorious.css' %}"/>
+<link rel="stylesheet" href="{% static 'selia/css/image_annotator.css' %}">
 {% endblock stylesheet-extra %}
 
 {% block secondary-navbar %}
