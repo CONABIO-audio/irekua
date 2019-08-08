@@ -15,12 +15,14 @@
         </div>
       </div>
       {% if order_form %}
-      <div class="col-3" align="right">
-        <div class="form-group mb-0">
-          {{ order_form.order|add_class:"btn btn-link text-light m-2 sort_submit"}}
+        <div class="col-2" align="right">
+          <div class="form-group mb-0">
+            {{ order_form.order|add_class:"btn btn-link text-light m-2 sort_submit"}}
+          </div>
         </div>
-      </div>
       {% endif %}
+      <div class="col-1">
+      </div>
       {% if search_form %}
         <div class="col-5">
           <div class="input-group">
@@ -36,27 +38,8 @@
       <div class="col-9">
         {% include filter_template with filter=filter %}
       </div>
-<<<<<<< HEAD
-      <div class="col-3">
-        <div class="row">
-          {% if order_form %}
-          <div class="col p-0">
-            <div class="form-group mb-0">
-              {{ order_form.order|add_class:"btn btn-link text-light m-2"}}
-            </div>
-          </div>
-          {% endif %}
-          <div class="col p-0">
-            <button type="submit" class="btn btn-link text-light">{% trans 'Update' %} <i class="fas fa-sync"></i></button>
-          </div>
-          <div class="col p-0">
-            <a class="btn btn-link text-light" href="?#">{% trans 'Clean' %} <i class="fas fa-eraser"></i></a>
-          </div>
-        </div>
-=======
       <div class="col-3" align="middle">
           <button type="submit" class="btn btn-link text-light">{% trans 'Update' %} <i class="fas fa-sync"></i></button>
->>>>>>> erobredo
       </div>
     </div>
   </div>
