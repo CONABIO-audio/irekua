@@ -6,7 +6,8 @@ from database.models import PhysicalDevice
 
 
 class Filter(FilterSet):
-    created_on = DateFilter(widget=forms.DateInput(attrs={'class': 'datepicker'}))    
+    created_on_from = DateFilter(field_name="created_on",lookup_expr='gt',widget=forms.DateInput(attrs={'class': 'datepicker'}))
+    created_on_to = DateFilter(field_name="created_on",lookup_expr='lt',widget=forms.DateInput(attrs={'class': 'datepicker'}))    
     class Meta:
         model = PhysicalDevice
         fields = {

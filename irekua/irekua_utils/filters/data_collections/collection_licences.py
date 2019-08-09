@@ -11,7 +11,9 @@ class Filter(FilterSet):
     class Meta:
         model = Licence
         fields = {
-            'created_by__username': ['exact', 'contains'],
+            'created_by__username': ['contains'],
+            'created_by__first_name': ['contains'],
+            'created_by__last_name': ['contains'],
             'licence_type': ['exact'],
         }
 

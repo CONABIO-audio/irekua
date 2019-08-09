@@ -11,7 +11,7 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <div class="container p-3">
             <div class="form-group">
-              {{ filter.form.sampling_event_type.label_tag }}
+              {% trans 'Choose a type:' %}
               {{ filter.form.sampling_event_type | add_class:"form-control" }}
               <small class="form-text text-muted">{{ filter.form.sampling_event_type.help_text }}</small>
             </div>
@@ -27,7 +27,6 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <div class="container p-3">
             <div class="form-group">
-              {{ filter.form.collection.label_tag }}
               {{ filter.form.collection | add_class:"form-control" }}
               <small class="form-text text-muted">{{ filter.form.collection.help_text }}</small>
             </div>
@@ -45,12 +44,12 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <div class="container p-3">
             <div class="form-group">
-              {% trans 'From' %}
+              {% trans 'From:' %}
               {{ filter.form.started_on_from}}
               <small class="form-text text-muted">{{ filter.form.started_on_from.help_text }}</small>
             </div>
             <div class="form-group">
-              {% trans 'To' %}
+              {% trans 'To:' %}
               {{ filter.form.started_on_to}}
               <small class="form-text text-muted">{{ filter.form.started_on_to.help_text }}</small>
             </div>
@@ -66,12 +65,12 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <div class="container p-3">
             <div class="form-group">
-              {% trans 'From' %}
+              {% trans 'From:' %}
               {{ filter.form.ended_on_from}}
               <small class="form-text text-muted">{{ filter.form.ended_on_from.help_text }}</small>
             </div>
             <div class="form-group">
-              {% trans 'To' %}
+              {% trans 'To:' %}
               {{ filter.form.ended_on_to}}
               <small class="form-text text-muted">{{ filter.form.ended_on_to.help_text }}</small>
             </div>
@@ -89,12 +88,12 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <div class="container p-3">
             <div class="form-group">
-              {% trans 'From' %}
+              {% trans 'From:' %}
               {{ filter.form.created_on_from}}
               <small class="form-text text-muted">{{ filter.form.created_on_from.help_text }}</small>
             </div>
             <div class="form-group">
-              {% trans 'To' %}
+              {% trans 'To:' %}
               {{ filter.form.created_on_to}}
               <small class="form-text text-muted">{{ filter.form.created_on_to.help_text }}</small>
             </div>

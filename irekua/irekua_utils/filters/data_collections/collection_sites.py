@@ -11,7 +11,9 @@ class Filter(FilterSet):
     class Meta:
         model = CollectionSite
         fields = {
-        'created_by__username': ['exact', 'contains'],
+        'created_by__username': ['contains'],
+        'created_by__first_name': ['contains'],
+        'created_by__last_name': ['contains'],
         'site_type': ['exact'],
         'site__latitude': ['gt', 'lt'],
         'site__longitude': ['gt', 'lt'],

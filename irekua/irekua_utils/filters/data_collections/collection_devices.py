@@ -11,7 +11,9 @@ class Filter(FilterSet):
     class Meta:
         model = CollectionDevice
         fields = {
-            'created_by__username': ['exact', 'contains'],
+            'created_by__username': ['contains'],
+            'created_by__first_name': ['contains'],
+            'created_by__last_name': ['contains'],
             'physical_device__device__brand__name': ['exact', 'contains'],
             'physical_device__device__model': ['exact', 'contains'],
             'physical_device__device__device_type': ['exact']

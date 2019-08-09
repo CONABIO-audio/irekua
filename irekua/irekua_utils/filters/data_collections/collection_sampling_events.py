@@ -17,9 +17,11 @@ class Filter(FilterSet):
     class Meta:
         model = SamplingEvent
         fields = {
-            'created_by__username': ['exact', 'contains'],
+            'created_by__username': ['contains'],
+            'created_by__first_name': ['contains'],
+            'created_by__last_name': ['contains'],
             'sampling_event_type': ['exact'],
-            'collection_site__site__name': ['exact','contains'],
+            'collection_site__site__name': ['contains'],
         }
 
 

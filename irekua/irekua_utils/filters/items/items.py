@@ -12,12 +12,12 @@ class Filter(FilterSet):
     class Meta:
         model = Item
         fields = {
-            'created_by__username': ['exact', 'contains'],
-            'created_by__first_name': ['exact', 'contains'],
-            'created_by__last_name': ['exact', 'contains'],
-            'created_by__institution__institution_name': ['exact', 'contains'],
+            'created_by__username': ['contains'],
+            'created_by__first_name': ['contains'],
+            'created_by__last_name': ['contains'],
+            'created_by__institution__institution_name': ['contains'],
             'created_by__institution__institution_code': ['exact'],
-            'created_by__institution__country': ['exact', 'contains'],
+            'created_by__institution__country': ['contains'],
             'item_type': ['exact'],
             }
 

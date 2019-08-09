@@ -133,11 +133,13 @@ $( document ).ready(function() {
                 }
             }
         }
+        
         function hide_if_not_datepicker(ddown,event){
             if (datepicker.style.display == "block"){
                 event.preventDefault();
             } 
         }
+
         var drop_downs = document.getElementsByClassName('dropdown');
 
         for (var i=0;i<drop_downs.length;i++){
