@@ -1,3 +1,4 @@
+{% load selia_components %}
 {% load widget_tweaks %}
 {% load i18n %}
 
@@ -17,7 +18,7 @@
       {% if order_form %}
         <div class="col-2" align="right">
           <div class="form-group mb-0">
-            {{ order_form.order|add_class:"btn btn-link text-light m-2 sort_submit"}}
+            {{ order_form.order|add_class:"form-control btn btn-link text-light m-2 sort_submit"}}
           </div>
         </div>
       {% endif %}
@@ -41,6 +42,9 @@
       <div class="col-3" align="middle">
           <button type="submit" class="btn btn-link text-light">{% trans 'Update' %} <i class="fas fa-sync"></i></button>
       </div>
+    </div>
+    <div class="row w-100">
+      {% filter_bar filter %}
     </div>
   </div>
 </form>

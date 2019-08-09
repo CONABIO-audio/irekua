@@ -1,3 +1,5 @@
+import re
+
 from django import template
 from dal_select2.widgets import Select2WidgetMixin
 
@@ -74,9 +76,21 @@ def annotator_component(context, annotator_template, item, annotation_list, mode
     context['annotation_list'] = annotation_list
     context['item'] = item
     context['mode'] = mode
-    
     return context
 
 @register.simple_tag
 def autocomplete_media():
     return Select2WidgetMixin().media
+
+
+@register.inclusion_tag('selia/components/filter_bar.html', takes_context=True)
+def filter_bar(context, filter_form):
+    context['form'] = filter_form.form
+    return context
+
+
+@register.filter(name='remove_option')
+def remove_option(value, field):
+    regex = r'({}=)([^&]+)'.format(field)
+    result = re.sub(regex, r'\1', value)
+    return result
