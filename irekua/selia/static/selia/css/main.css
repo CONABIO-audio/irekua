@@ -5,6 +5,11 @@
   --summary-color: #8CC7A1;
   --table-color: #CADBC8;
   --toolbar-color: #CC8B86;
+  --lavander: #eaeafb;
+  --teal: #005580;
+  --light-green: #eff5f5;
+  --dark-brown: #595959;
+  --dark-ash: #45484c;
 }
 
 .small_toolbar {
@@ -22,7 +27,7 @@
 }
 
 #navbarDropdownMenuLink {
-  background-color:   #343a40 !important;
+  background-color: #343a40 !important;
   margin: 0px;
   border-radius: 0px;
   display: block;
@@ -224,19 +229,19 @@ select option {
 }
 
 .nav-link {
-  color: #005580;
+  color: var(--teal);
 }
 
 a {
-  color: #005580;
+  color: var(--teal);
 }
 
 .btn-link {
-  color: #005580;
+  color: var(--teal);
 }
 
 .btn-primary {
-  background-color: #005580;
+  background-color: var(--teal);
   border: none;
 }
 
@@ -263,4 +268,13 @@ a {
 .nav-tabs > .nav-item > .nav-link.active {
   background-color: var(--light)!important;
   border-bottom-color: var(--light)!important;
+}
+
+.filter-bar {
+  border-radius: 15px;
+  background-color: var(--dark-ash)!important;
+}
+
+.filter-badge {
+  background-color: #803300!important;
 }

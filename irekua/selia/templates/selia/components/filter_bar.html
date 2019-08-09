@@ -1,9 +1,11 @@
 {% load selia_components %}
 
-{% for field in form %}
-{% if field.data %}
-<a href="{{ request.get_full_path | remove_option:field.name }}" class="badge badge-secondary badge-pill mx-2 mb-2">
-  {{ field.label }}: {{ field.data }} <i class="fas fa-times"></i>
-</a>
-{% endif %}
-{% endfor %}
+<div class="container-fluid filter-bar">
+  {% for field in form %}
+  {% if field.data %}
+  <a href="{{ request.get_full_path | remove_option:field.name }}" class="badge badge-dark filter-badge badge-pill p-2 mx-2 my-2">
+    {{ field.label }}: {{ field.data }} &nbsp; &nbsp;  <i class="fas fa-times"></i>
+  </a>
+  {% endif %}
+  {% endfor %}
+</div>
