@@ -129,6 +129,11 @@ select option {
 .ui-datepicker-header {
     background-color: white !important;
 }
+
+.ui-datepicker.ui-widget {
+  z-index: 9999!important;
+}
+
 .media_image img {
     display: block;
     width: 100%;
@@ -277,4 +282,9 @@ a {
 
 .filter-badge {
   background-color: #803300!important;
+}
+
+.update-button {
+  background-color: var(--light-green)!important;
+  /*margin: 5px;*/
 }

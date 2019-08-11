@@ -1,4 +1,5 @@
 from django import forms
+from django.db import models
 from django.utils.translation import gettext as _
 from django_filters import FilterSet,DateFilter
 
@@ -6,18 +7,25 @@ from database.models import PhysicalDevice
 
 
 class Filter(FilterSet):
-    created_on_from = DateFilter(field_name="created_on",lookup_expr='gt',widget=forms.DateInput(attrs={'class': 'datepicker'}))
-    created_on_to = DateFilter(field_name="created_on",lookup_expr='lt',widget=forms.DateInput(attrs={'class': 'datepicker'}))    
     class Meta:
         model = PhysicalDevice
         fields = {
-            'serial_number': ['exact', 'contains'],
-            'device__brand__name': ['exact', 'contains'],
-            'device__model': ['exact', 'contains'],
+            'serial_number': ['exact', 'icontains'],
+            'device__brand__name': ['exact', 'icontains'],
+            'device__model': ['exact', 'icontains'],
             'bundle': ['exact'],
-            'identifier': ['exact', 'contains'],
+            'identifier': ['exact', 'icontains'],
+            'created_on': ['lt', 'gt']
         }
 
+        filter_overrides = {
+            models.DateTimeField: {
+                'filter_class': DateFilter,
+                'extra': lambda f: {
+                    'widget': forms.DateInput(attrs={'class': 'datepicker'})
+                }
+            }
+        }
 
 
 search_fields = (

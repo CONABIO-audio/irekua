@@ -1,25 +1,21 @@
 {% load i18n %}
 {% load widget_tweaks %}
+{% load selia_components %}
 
 <div class="row w-100 p-2">
   <div class="col">
-    <div class="row">
       <div class="dropdown">
         <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseSamplingEventTYpe">
           {% trans 'Sampling event type' %}
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <div class="container p-3">
-            <div class="form-group">
-              {% trans 'Choose a type:' %}
-              {{ filter.form.sampling_event_type | add_class:"form-control" }}
-              <small class="form-text text-muted">{{ filter.form.sampling_event_type.help_text }}</small>
-            </div>
+            {{ filter.form.sampling_event_type | selia_form:None }}
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
+  </div>
+  <div class="col">
       <div class="dropdown">
         <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseCollection">
           {% trans 'Collection' %}
@@ -36,7 +32,6 @@
     </div>
   </div>
   <div class="col">
-    <div class="row">
       <div class="dropdown">
         <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseStartedOn">
           {% trans 'Started on' %}
@@ -56,8 +51,8 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
+  </div>
+  <div class="col">
       <div class="dropdown">
         <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-controls="collapseEndedOn">
           {% trans 'Ended on' %}
@@ -77,7 +72,7 @@
           </div>
         </div>
       </div>
-    </div>   
+    </div>
   </div>
 
   <div class="col">

@@ -1,6 +1,8 @@
 import re
 
+from django.utils.safestring import mark_safe
 from django import template
+from django.utils.translation import gettext as _
 from dal_select2.widgets import Select2WidgetMixin
 
 register = template.Library()
@@ -84,8 +86,23 @@ def autocomplete_media():
 
 
 @register.inclusion_tag('selia/components/filter_bar.html', takes_context=True)
-def filter_bar(context, filter_form):
-    context['form'] = filter_form.form
+def filter_bar(context, filter_form, search_form):
+    search_field = search_form.fields['search']
+    search_field = search_field.get_bound_field(search_form, 'search')
+    if search_field.data:
+        context['search'] = search_field.data
+        context['clear'] = True
+
+    context['form'] = {}
+    for field_name, field in filter_form._form.fields.items():
+        bound_field = field.get_bound_field(filter_form._form, field_name)
+        if bound_field.data:
+            context['form'][field_name] = {
+                'data': bound_field.data,
+                'label': field.label
+            }
+            context['clear'] = True
+
     return context
 
 
@@ -94,3 +111,93 @@ def remove_option(value, field):
     regex = r'({}=)([^&]+)'.format(field)
     result = re.sub(regex, r'\1', value)
     return result
+
+
+FORM_ICONS = {
+    'exact': '<i class="fas fa-equals"></i>',
+    'iexact':'<i class="fas fa-equals"></i>',
+    'in': '<i class="fas fa-list-ol"></i>',
+    'lt': '<i class="fas fa-less-than"></i>',
+    'gt': '<i class="fas fa-greater-than"></i>',
+    'gte': '<i class="fas fa-greater-than-equal"></i>',
+    'lte': '<i class="fas fa-less-than-equal"></i>',
+    'icontains': '<i class="fas fa-font"></i>',
+    'contains': '<i class="fas fa-font"></i>',
+    'istartswith': '<i class="fas fa-font"></i>',
+    'startswith': '<i class="fas fa-font"></i>',
+    'iendswith': '<i class="fas fa-font"></i>',
+    'endswith': '<i class="fas fa-font"></i>',
+    'regex': '<i class="fas fa-terminal"></i>',
+    'iregex': '<i class="fas fa-terminal"></i>',
+}
+
+
+@register.filter(name='selia_form', is_safe=True)
+def selia_form(form, label):
+    widget_attrs = form.field.widget.attrs.get('class', '')
+    class_for_html = widget_attrs + ' form-control'
+
+    input_html = form.as_widget(attrs={'class': class_for_html})
+
+    try:
+        lookup_expr = form.html_name.split('__')[-1]
+        icon = FORM_ICONS.get(lookup_expr, FORM_ICONS['exact'])
+    except:
+        icon = FORM_ICONS['exact']
+
+    prepend_html = '''
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="{prepend_id}">
+            {prepend_icon}
+        </span>
+    </div>
+    '''.format(
+        prepend_id=form.html_name + '_prepend',
+        prepend_icon=icon
+    )
+
+    append_html = '''
+    <div class="input-group-append">
+        <button type="submit" class="btn btn-outline-success" type="button" id="{append_id}">
+            {append_icon} <i class="fas fa-plus"></i>
+        </button>
+    </div>
+    '''.format(
+        append_id=form.html_name + '_append',
+        append_icon=_('add')
+    )
+
+    help_text_html = '''
+    <small id="{help_text_id}" class="form-text text-muted">{help_text}</small>
+    '''.format(
+        help_text_id=form.html_name + '_help_text',
+        help_text=form.help_text
+    )
+
+    if label:
+        label_html = form.label_tag(contents=label)
+    elif label is None:
+        label_html = ''
+    else:
+        label_html = form.label_tag()
+
+    form_html = '''
+      <div class="form-group">
+        <small>{label_html}</small>
+        <div class="input-group">
+            {prepend_html}
+            {input_html}
+            {append_html}
+        </div>
+        {help_text_html}
+      </div>
+    '''
+    form_html = form_html.format(
+        label_html=label_html,
+        prepend_html=prepend_html,
+        input_html=input_html,
+        append_html=append_html,
+        help_text_html=help_text_html
+    )
+
+    return mark_safe(form_html)
