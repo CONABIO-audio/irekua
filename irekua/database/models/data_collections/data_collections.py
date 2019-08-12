@@ -272,3 +272,7 @@ class Collection(IrekuaModelBaseUser):
 
         self.is_open = not restrictive_licences.exits()
         self.save()
+
+    @property
+    def autocomplete_url(self):
+        return 'selia:collection_autocomplete'

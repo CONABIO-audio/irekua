@@ -1,23 +1,51 @@
 from django import forms
+from django.db import models
 from django.utils.translation import gettext as _
-from django_filters import FilterSet,DateFilter
+
+from django_filters import FilterSet
+from django_filters import DateFilter
+from django_filters import ModelChoiceFilter
+
+from dal import autocomplete
 
 from database.models import SamplingEvent
 
 
-class Filter(FilterSet):
-    created_on_from = DateFilter(field_name="created_on",lookup_expr='gt',widget=forms.DateInput(attrs={'class': 'datepicker'}))
-    created_on_to = DateFilter(field_name="created_on",lookup_expr='lt',widget=forms.DateInput(attrs={'class': 'datepicker'}))    
-    ended_on_from = DateFilter(field_name="ended_on",lookup_expr='gt',widget=forms.DateInput(attrs={'class': 'datepicker'}))
-    ended_on_to = DateFilter(field_name="ended_on",lookup_expr='lt',widget=forms.DateInput(attrs={'class': 'datepicker'}))
-    started_on_from = DateFilter(field_name="started_on",lookup_expr='gt',widget=forms.DateInput(attrs={'class': 'datepicker'}))
-    started_on_to = DateFilter(field_name="started_on",lookup_expr='lt',widget=forms.DateInput(attrs={'class': 'datepicker'}))
+def get_url(f):
+    return f.target_field.model.autocomplete_url
 
+
+def get_queryset(f):
+    return f.target_field.model.objects.all()
+
+
+class Filter(FilterSet):
     class Meta:
         model = SamplingEvent
         fields = {
             'sampling_event_type': ['exact'],
-            'collection': ['exact']
+            'collection': ['exact'],
+            'created_on': ['lt', 'gt'],
+            'ended_on': ['lt', 'gt'],
+            'started_on': ['lt', 'gt'],
+        }
+
+        filter_overrides = {
+            models.DateTimeField: {
+                'filter_class': DateFilter,
+                'extra': lambda f: {
+                    'widget': forms.DateInput(attrs={'class': 'datepicker'})
+                }
+            },
+            models.ForeignKey: {
+                'filter_class': ModelChoiceFilter,
+                'extra': lambda f: {
+                    'queryset': get_queryset(f),
+                    'widget': autocomplete.ModelSelect2(
+                        url=get_url(f)
+                    )
+                }
+            }
         }
 
 search_fields = (
