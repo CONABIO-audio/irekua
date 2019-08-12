@@ -6,19 +6,19 @@ from database.models import CollectionSite
 
 
 class Filter(FilterSet):
-    created_on_from = DateFilter(field_name="created_on",lookup_expr='gt',widget=forms.DateInput(attrs={'class': 'datepicker'}))
-    created_on_to = DateFilter(field_name="created_on",lookup_expr='lt',widget=forms.DateInput(attrs={'class': 'datepicker'}))    
     class Meta:
         model = CollectionSite
         fields = {
-        'created_by__username': ['contains'],
-        'created_by__first_name': ['contains'],
-        'created_by__last_name': ['contains'],
+        'created_by__username': ['icontains'],
+        'created_by__first_name': ['icontains'],
+        'created_by__last_name': ['icontains'],
         'site_type': ['exact'],
+        'site__altitude': ['gt', 'lt'],
         'site__latitude': ['gt', 'lt'],
         'site__longitude': ['gt', 'lt'],
-        'site__name': ['exact','contains'],
-        'site__locality': ['exact','contains'],
+        'site__name': ['icontains'],
+        'site__locality': ['icontains'],
+        'created_on': ['gt', 'lt']
         }
 
 
