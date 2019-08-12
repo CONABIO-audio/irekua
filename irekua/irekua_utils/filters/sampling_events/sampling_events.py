@@ -30,6 +30,7 @@ class Filter(FilterSet):
             'started_on': ['lt', 'gt'],
         }
 
+
         filter_overrides = {
             models.DateTimeField: {
                 'filter_class': DateFilter,
@@ -47,6 +48,7 @@ class Filter(FilterSet):
                 }
             }
         }
+
 
 search_fields = (
     'sampling_event_type__name',

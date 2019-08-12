@@ -1,25 +1,33 @@
 from django import forms
+from django.db import models
 from django.utils.translation import gettext as _
 from django_filters import FilterSet, DateFilter
 
 from database.models import Collection
 
 
-class Filter(FilterSet):
-    created_on_from = DateFilter(field_name="created_on",lookup_expr='gt',widget=forms.DateInput(attrs={'class': 'datepicker'}))
-    created_on_to = DateFilter(field_name="created_on",lookup_expr='lt',widget=forms.DateInput(attrs={'class': 'datepicker'}))    
+class Filter(FilterSet):  
     class Meta:
         model = Collection
         fields = {
             'collection_type': ['exact'],
-            'name': ['exact', 'contains'],
-            'institution__institution_name': ['exact', 'contains'],
+            'name': ['icontains'],
+            'institution__institution_name': ['icontains'],
             'institution__institution_code': ['exact'],
-            'institution__country': ['exact', 'contains'],
+            'institution__country': ['icontains'],
             'is_open': ['exact'],
+            'created_on': ['gt', 'lt'],
         }
 
-
+        filter_overrides = {
+            models.DateTimeField: {
+                'filter_class': DateFilter,
+                'extra': lambda f: {
+                    'widget': forms.DateInput(attrs={'class': 'datepicker'})
+                }
+            }
+        }
+        
 search_fields = (
     'name',
     'collection_type__name',
