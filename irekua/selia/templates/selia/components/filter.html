@@ -31,16 +31,16 @@
       {% endif %}
     </div>
     <div class="row w-100 collapse" id="collapseFilters">
-      <div class="col-9">
+      <div class="col-12">
         {% include filter_template with filter=filter %}
       </div>
-      <div class="col-3">
-        <div class="row w-100 h-100 p-2">
-          <div class="col">
-            <button type="submit" class="btn btn-link text-dark update-button w-100">{% trans 'Update' %} <i class="fas fa-sync"></i></button>
-          </div>
-        </div>
-      </div>
+      <!--<div class="col-3">-->
+        <!--<div class="row w-100 h-100 p-2">-->
+          <!--<div class="col">-->
+            <!--<button type="submit" class="btn btn-link text-dark update-button w-100">{% trans 'Update' %} <i class="fas fa-sync"></i></button>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
     </div>
     <div class="row w-100">
       {% filter_bar filter search_form %}
