@@ -1,9 +1,22 @@
 from django import forms
 from django.db import models
 from django.utils.translation import gettext as _
-from django_filters import FilterSet,DateFilter
+
+from django_filters import FilterSet
+from django_filters import DateFilter
+from django_filters import ModelChoiceFilter
+
+from dal import autocomplete
 
 from database.models import SamplingEvent
+
+
+def get_url(f):
+    return f.target_field.model.autocomplete_url
+
+
+def get_queryset(f):
+    return f.target_field.model.objects.all()
 
 
 class Filter(FilterSet):
@@ -12,9 +25,9 @@ class Filter(FilterSet):
         fields = {
             'sampling_event_type': ['exact'],
             'collection': ['exact'],
-            'created_on': ['gt', 'lt'],
-            'started_on': ['gt', 'lt'],
-            'ended_on': ['gt', 'lt']
+            'created_on': ['lt', 'gt'],
+            'ended_on': ['lt', 'gt'],
+            'started_on': ['lt', 'gt'],
         }
 
 
@@ -24,8 +37,18 @@ class Filter(FilterSet):
                 'extra': lambda f: {
                     'widget': forms.DateInput(attrs={'class': 'datepicker'})
                 }
+            },
+            models.ForeignKey: {
+                'filter_class': ModelChoiceFilter,
+                'extra': lambda f: {
+                    'queryset': get_queryset(f),
+                    'widget': autocomplete.ModelSelect2(
+                        url=get_url(f)
+                    )
+                }
             }
         }
+
 
 search_fields = (
     'sampling_event_type__name',
