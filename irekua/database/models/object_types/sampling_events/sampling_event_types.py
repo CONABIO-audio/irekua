@@ -12,6 +12,8 @@ from .sampling_event_type_devices import SamplingEventTypeDeviceType
 
 
 class SamplingEventType(IrekuaModelBase):
+    autocomplete_url = 'selia:sampling_event_types_autocomplete'
+
     name = models.CharField(
         max_length=128,
         primary_key=True,
@@ -140,7 +142,3 @@ class SamplingEventType(IrekuaModelBase):
     def remove_site_type(self, site_type):
         self.site_types.remove(site_type)
         self.save()
-
-    @property
-    def autocomplete_url(self):
-        return 'selia:sampling_event_type_autocomplete'

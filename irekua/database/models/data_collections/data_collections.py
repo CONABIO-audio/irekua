@@ -13,6 +13,8 @@ from .collection_sites import CollectionSite
 
 
 class Collection(IrekuaModelBaseUser):
+    autocomplete_url = 'selia:collection_autocomplete'
+
     collection_type = models.ForeignKey(
         'CollectionType',
         on_delete=models.PROTECT,
@@ -272,7 +274,3 @@ class Collection(IrekuaModelBaseUser):
 
         self.is_open = not restrictive_licences.exits()
         self.save()
-
-    @property
-    def autocomplete_url(self):
-        return 'selia:collection_autocomplete'
