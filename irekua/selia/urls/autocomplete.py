@@ -39,4 +39,8 @@ urlpatterns = [
         'autocomplete/annotation_tools/',
         autocomplete.AnnotationToolsAutocomplete.as_view(),
         name='annotation_tools_autocomplete'),
+    path(
+        'autocomplete/sampling_event_types/',
+        autocomplete.SamplingEventTypesAutocomplete.as_view(),
+        name='sampling_event_types_autocomplete'),
 ]
