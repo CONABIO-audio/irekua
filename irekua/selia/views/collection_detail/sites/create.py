@@ -1,11 +1,16 @@
 from django import forms
 from django.shortcuts import redirect
-from selia.views.utils import SeliaCreateView
 from django.urls import reverse
 from django.core.paginator import Paginator
+
 from database.models import CollectionSite
 from database.models import Collection
 from database.models import Site
+
+from irekua_utils.filters import sites as site_utils
+
+from selia.views.utils import SeliaCreateView
+from selia.views.utils import SeliaList
 
 
 class SiteCreateForm(forms.ModelForm):
@@ -19,6 +24,7 @@ class SiteCreateForm(forms.ModelForm):
             'locality',
         ]
 
+
 class CollectionSiteCreateForm(forms.ModelForm):
     class Meta:
         model = CollectionSite
@@ -30,18 +36,19 @@ class CollectionSiteCreateForm(forms.ModelForm):
             'internal_id',
         ]
 
+
+
 class CollectionSiteCreateView(SeliaCreateView):
     template_name = 'selia/collection_detail/sites/create.html'
     model = CollectionSite
     success_url = 'selia:collection_sites'
     fields = [
-            'site_type',
-            'metadata',
-            'site',
-            'collection',
-            'internal_id',
-            ]
-
+        'site_type',
+        'metadata',
+        'site',
+        'collection',
+        'internal_id',
+    ]
 
     def get_success_url_args(self):
         return [self.kwargs['pk']]
@@ -51,9 +58,8 @@ class CollectionSiteCreateView(SeliaCreateView):
         paginator = Paginator(queryset,5)
         page = self.request.GET.get('page',1)
         page = paginator.get_page(page)
-
         return page
-            
+
     def handle_site_created(self,site):
         query = self.request.GET.copy()
         query['site'] = site.pk
@@ -104,38 +110,43 @@ class CollectionSiteCreateView(SeliaCreateView):
             self.object = None
             context = self.get_context_data()
             context['form'] = form
-            
+
             return self.render_to_response(context)
-         
 
     def post(self, *args, **kwargs):
         fase = self.request.GET.get('fase', None)
+
         if fase == "create_site":
             return self.handle_create_site()
-        else:        
+        else:
             return self.handle_create()
-
-
-
-    def get_initial(self):
-        initial = {
-            'collection': Collection.objects.get(pk=self.kwargs['pk'])
-        }
-
-        if 'site' in self.request.GET:
-            initial['site'] = Site.objects.get(pk=self.request.GET['site'])
-
-        return initial
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
-        context['collection'] = self.get_object(queryset=Collection.objects.all())
+        collection = self.get_object(queryset=Collection.objects.all())
+        context['collection'] = collection
         context['site_create_form'] = SiteCreateForm()
         context['site_list'] = self.get_site_list()
 
         if 'site' in self.request.GET:
             site = Site.objects.get(pk=self.request.GET['site'])
             context['selected_site'] = site
+
+        class SiteList(SeliaList):
+            prefix='sites'
+
+            filter_class = site_utils.Filter
+            search_fields = site_utils.search_fields
+            ordering_fields = site_utils.ordering_fields
+
+            queryset = self.request.user.site_created_by.exclude(
+                collectionsite__collection=collection)
+
+            list_item_template = 'selia/components/select_list_items/sites.html'
+            filter_form_template = 'selia/components/filters/site.html'
+
+        site_list = SiteList()
+        context['site_list'] = site_list.get_context_data(self.request)
 
         return context

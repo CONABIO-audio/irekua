@@ -6,7 +6,9 @@ from dal import autocomplete
 from database.models import CollectionSite
 from database.models import Collection
 from database.models import Site
+
 from selia.views.utils import SeliaCreateView
+from selia.views.utils import SeliaList
 
 
 class SelectSiteForm(forms.Form):
@@ -31,6 +33,10 @@ class CreateSiteForm(forms.ModelForm):
             'locality',
         ]
 
+
+
+
+
 class CollectionSiteCreateForm(forms.ModelForm):
     class Meta:
         model = CollectionSite
@@ -48,7 +54,6 @@ class CollectionSiteCreateView(SeliaCreateView):
     create_form_template = 'selia/components/create/collection_site.html'
     success_url = 'selia:collection_sites'
 
-
     form_class = CollectionSiteCreateForm
     model = CollectionSite
 
@@ -61,7 +66,7 @@ class CollectionSiteCreateView(SeliaCreateView):
         prev_data = prev_form.data.copy()
         prev_data["site"] = selected_site
         form = CollectionSiteCreateForm(prev_data)
-        print(form.data)
+
         if form.is_valid():
             collection_site = CollectionSite()
             collection_site.site_type = form.cleaned_data.get('site_type')
@@ -74,7 +79,7 @@ class CollectionSiteCreateView(SeliaCreateView):
 
             return self.handle_finish_site(collection_site)
         else:
-            print(form.errors)
+
             self.object = None
             context = self.get_context_data()
             context['form'] = form
@@ -130,8 +135,14 @@ class CollectionSiteCreateView(SeliaCreateView):
         return SelectSiteForm(data)
 
     def get_context_data(self, *args, **kwargs):
+        site_list = SiteList()
+
         context = super().get_context_data(*args, **kwargs)
         context['fase'] = self.request.GET.get('fase', 'select_site')
         context['select_site_form'] = self.get_select_site_form()
         context['collection'] = Collection.objects.get(pk=self.kwargs['pk'])
+        context['site_list'] = site_list.get_context_data(self.request)
+
+        print(context['site_list'])
+
         return context

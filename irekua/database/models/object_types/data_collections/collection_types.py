@@ -36,6 +36,9 @@ class CollectionType(IrekuaModelBase):
 
         # TODO
     """
+
+    autocomplete_url = 'selia:collection_type_autocomplete'
+
     name = models.CharField(
         max_length=128,
         primary_key=True,

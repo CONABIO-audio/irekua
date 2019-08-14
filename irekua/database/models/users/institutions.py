@@ -10,6 +10,8 @@ class Institution(IrekuaModelBaseUser):
         (country.alpha_2, country.name) for country in pycountry.countries
     )
 
+    autocomplete_url = 'selia:institutions_autocomplete'
+
     institution_name = models.CharField(
         max_length=256,
         db_column='institution_name',

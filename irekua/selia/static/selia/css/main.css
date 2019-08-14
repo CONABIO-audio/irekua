@@ -54,7 +54,7 @@
   padding: 20px;
 }
 
-form {
+.form-container {
   border-radius: 10px;
   background-color: #f8f9fa!important;
   padding: 20px;
@@ -291,4 +291,9 @@ a {
 .update-button {
   background-color: var(--light-green)!important;
   /*margin: 5px;*/
+}
+
+.custom-select {
+  border-radius: 0!important;
+  background: white;
 }
