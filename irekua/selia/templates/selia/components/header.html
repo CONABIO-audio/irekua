@@ -4,12 +4,6 @@
 <a class="navbar-brand" style="color: white !important" href={% url 'selia:home' %}>Selia</a>
 {% endblock nav-brand %}
 
-{% block navigation-items %}
-<li class="nav-item">
-  <a class="nav-link" href={% url 'irekua:home' %}>Irekua</a>
-</li>
-{% endblock navigation-items %}
-
 {% block tab-items %}
 {% include 'selia/components/navbar_items.html' %}
 {% endblock tab-items %}
