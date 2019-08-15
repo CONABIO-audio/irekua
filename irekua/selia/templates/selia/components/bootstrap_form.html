@@ -1,0 +1,8 @@
+{% load widget_tweaks %}
+
+<div class="form-group">
+  {{ form.errors }}
+  {{ form.label_tag }}
+  {{ form | add_class:"form-control" }}
+  <small id="{{form.id_for_label}}_help" class="form-text text-muted">{{ form.help_text }}</small>
+</div>

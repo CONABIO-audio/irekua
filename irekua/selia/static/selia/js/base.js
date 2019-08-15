@@ -17,6 +17,8 @@ $(document).on('click', '.dropdown-menu select*', function(e) {
   e.stopPropagation();
 });
 
+
+
 function submitSingle(fileIndex, file, url, total_files) {
   var formData = new FormData($('#addItemForm')[0]);
   var request = new XMLHttpRequest();

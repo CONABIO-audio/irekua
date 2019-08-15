@@ -80,9 +80,25 @@ def annotator_component(context, annotator_template, item, annotation_list, mode
     context['mode'] = mode
     return context
 
+
 @register.simple_tag
 def autocomplete_media():
-    return Select2WidgetMixin().media
+    extra_script = r'''
+    <script>
+      $(document).on('click', '.dropdown-menu .select2*', function(e) {
+        e.stopPropagation();
+      });
+    </script>
+    '''
+
+    media = '''
+    {select2_media}
+    {extra_script}
+    '''.format(
+        select2_media=Select2WidgetMixin().media,
+        extra_script=extra_script)
+
+    return mark_safe(media)
 
 
 @register.inclusion_tag('selia/components/filter_bar.html', takes_context=True)
@@ -134,8 +150,14 @@ FORM_ICONS = {
 
 @register.filter(name='selia_form', is_safe=True)
 def selia_form(form, label):
-    widget_attrs = form.field.widget.attrs.get('class', '')
-    class_for_html = widget_attrs + ' form-control'
+    widget = form.field.widget
+
+    custom_attrs = ' form-control'
+    if widget.input_type == 'select':
+        custom_attrs += ' custom-select'
+
+    widget_attrs = widget.attrs.get('class', '')
+    class_for_html = widget_attrs + custom_attrs
 
     input_html = form.as_widget(attrs={'class': class_for_html})
 
@@ -201,3 +223,8 @@ def selia_form(form, label):
     )
 
     return mark_safe(form_html)
+
+
+@register.inclusion_tag('selia/components/bootstrap_form.html')
+def bootstrap_form(form):
+    return {'form': form}

@@ -57,6 +57,10 @@ class SamplingEventDevice(IrekuaModelBaseUser):
         verbose_name = _('Sampling Event Device')
         verbose_name_plural = _('Sampling Event Devices')
 
+        unique_together = (
+            ('sampling_event', 'collection_device'),
+        )
+
         ordering = ['-created_on']
 
     def __str__(self):

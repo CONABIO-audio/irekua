@@ -3,7 +3,7 @@
 {% load i18n %}
 
 <form id="filter_form" action="#" method="get">
-  <div class="container-fluid w-100 text-light shadow border px-4 py-2 filter_bar" style="background-color: #465362;">
+  <div class="container-fluid w-100 text-light px-4 py-2 filter_bar" style="background-color: #465362;">
     <div class="row mt-2 d-flex flex-row-reverse">
       {% if order_form %}
       <div class="col-2" align="right">
@@ -34,13 +34,6 @@
       <div class="col-12">
         {% include filter_template with filter=filter %}
       </div>
-      <!--<div class="col-3">-->
-        <!--<div class="row w-100 h-100 p-2">-->
-          <!--<div class="col">-->
-            <!--<button type="submit" class="btn btn-link text-dark update-button w-100">{% trans 'Update' %} <i class="fas fa-sync"></i></button>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
     </div>
     <div class="row w-100">
       {% filter_bar filter search_form %}
