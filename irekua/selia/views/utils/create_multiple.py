@@ -68,7 +68,7 @@ class SeliaMultipleItemsCreateView(SeliaCreateView):
 
             if 'async' in self.request.GET:
                 success_data = {
-                'success_pk': item.pk
+                    'success_pk': item.pk
                 }
                 return HttpResponse(json.dumps(success_data), content_type="application/json")
             else:

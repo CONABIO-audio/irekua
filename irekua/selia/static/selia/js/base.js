@@ -2,6 +2,8 @@ var itemFileList = [];
 var errorList = [];
 var successList = [];
 var req_count = 0;
+var bad_date_map = false;
+var date_parser_map = null;
 
 $(function() {
   $('.datepicker').datepicker({dateFormat: 'yy-mm-dd'});
@@ -132,11 +134,16 @@ function asigna_autocomplete_tax($elems) {
   });
 }
 
+function distinctStr(str) {
+  return String.prototype.concat(...new Set(str))
+}
+
 $(document).ready(function() {
   var sort_submit = document.getElementsByClassName('sort_submit');
   var itemFilePicker = document.getElementById('itemFilePicker');
   var addItemForm = document.getElementById('addItemForm');
   var datepicker = document.getElementById('ui-datepicker-div');
+  var datePattern = document.getElementById('itemDatePattern');
 
   if (datepicker) {
     function hide_if_pressed_and_shown(ddown, event) {
@@ -187,10 +194,85 @@ $(document).ready(function() {
     itemFileList = [];
     req_count = 0;
 
+    if (datePattern){
+      datePattern.addEventListener('input',function(e){
+        var example_date = {"year":"1985","month":"09","day":"19"}
+        var pvalue = datePattern.value;
+        var pieces = [];
+        if (pvalue.includes('<') && pvalue.includes('>')){
+          
+          for(var i=0; i<pvalue.length;i++) {
+            if (pvalue[i] == "<"){
+              
+              for (var j=i+1; j<pvalue.length; j++){
+                if (pvalue[j] == ">"){
+                  pieces.push([i+1,j]);
+                  i = j;
+                  break;
+                } else if (pvalue[j] == "<") {
+                  i = pvalue.length;
+                  break;
+                }
+              }
+            }
+          }
+          if (pieces.length > 0){
+            date_parser_map = {};
+            bad_date_map = false;
+            for (var p=0;p<pieces.length;p++){
+              var substr = pvalue.substring(pieces[p][0],pieces[p][1]);
+              var substr_length = substr.length;
+              var cat = distinctStr(substr);
+              if (substr_length > 0 && cat.length == 1){
+                switch(cat){
+                  case 'y':{
+                    if (substr_length == 4 || substr_length == 2){
+                      date_parser_map['year'] = {'limits':pieces[p],'length':substr_length,"order":p}
+                    } else {
+                      bad_date_map = true;
+                    }
+                    break;
+                  }
+                  case 'm':{
+                    if (substr_length == 2){
+                      date_parser_map['month'] = {'limits':pieces[p],'length':substr_length,"order":p}
+                    } else {
+                      bad_date_map = true;
+                    }                    
+                    break;
+                  }
+                  case 'd':{
+                    if (substr_length == 2){
+                      date_parser_map['day'] = {'limits':pieces[p],'length':substr_length,"order":p}
+                    } else {
+                      bad_date_map = true;
+                    }
+                    break;
+                  }
+                  default:{
+                    bad_date_map = true;
+                    break;
+                  }
+                }
+              } else {
+                bad_date_map = true;
+              }
+            }
+            if (!bad_date_map){
+              if ('year' in date_parser_map && 'month' in date_parser_map && 'day' in date_parser_map){
+                //alert(JSON.stringify(date_parser_map));
+              }
+            }
+          }
+        }
+      });
+    }
+
     itemFilePicker.addEventListener('change', function(e) {
       itemFileList = [];
       for (var i = 0; i < itemFilePicker.files.length; i++) {
         itemFileList.push(itemFilePicker.files[i]);
+
       }
     });
 

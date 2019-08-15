@@ -134,6 +134,10 @@
     <label for="item_typeInput">{% trans 'Files to upload: ' %}</label>
     <input id='itemFilePicker' type='file' multiple/>
   </div>
+  <div class="col-4 mx-5">
+    <label for="date_pattern_input">{% trans 'Date pattern: ' %}</label>
+    <input id='itemDatePattern' type='text' placeholder="{% trans 'Date from file name' %}"/>
+  </div>
 </div>
 
       <form id="addItemForm" action="?chain={{ chain }}" method="post" enctype="multipart/form-data">
