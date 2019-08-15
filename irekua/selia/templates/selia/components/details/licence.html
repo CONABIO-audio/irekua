@@ -3,33 +3,39 @@
 
 <div class="border-top" style="padding-top:20px;">
 <div class="media">
-  {% if object.logo %}
-  <img class="mr-3 img-thumbnail" src="{{ object.logo.url }}" alt="logo">
-  {% endif %}
   <div class="media-body mt-0">
     <h4 class="mt-0">{% trans 'Licence ' %}{{ object.pk }}
-      {% if object.is_open %}
-      {% endif %}
     </h4>
-    {{ object.description }}
   </div>
 </div>
 <div class="container mt-3 mb-3">
   <div class="row">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Licence type' %}</h5>
-      <p class="text-muted">{{ object.licence_type }}</p>
+      <h5>{% trans 'Signed on'%}</h5>
+      <p class="text-muted">{{ object.created_on | date }}</p>
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Collection' %}</h5>
-      <p class="text-muted">{{ object.collection }}</p>
+      <h5>{% trans 'Signer'%}</h5>
+      <p class="text-muted">{{ object.created_by }}</p>
     </div>
   </div>
+
   <div class="row">
     <div class="col">
+      <h5 class="mt-0">{% trans 'Valid until' %}</h5>
+      {% if object.licence_type.years_valid_for > 50 %}
+      <p class="text-muted">-</p>
+      {% else %}
+      <p class="text-muted">{{ object.created_on.year|add:object.licence_type.years_valid_for }}</p>
+      {% endif %}
+    </div>
+    <div class="col">
       <h5 class="mt-0">{% trans 'Document' %}</h5>
+      {% if object.document %}
       <a href="{{ object.document.url }}" target="_blank"><p>{{ object.document }}</p></a>
-      
+      {% else %}
+      <p class="text-muted">-</p>
+      {% endif %}
     </div>
   </div>
 
@@ -39,6 +45,64 @@
     {% show_json object.metadata %}
   </div>
   {% endif %}
+
+  <hr/>
+
+  <div class="row w-100">
+    <h4 class="w-100 text-center">{% trans 'Licence type' %}</h4>
+    <p class="w-100 text-muted text-center">{{ object.licence_type }}</p>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <p class="text-muted">{{ object.licence_type.description }}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Licence type' %}</h5>
+      <p class="text-muted">{{ object.licence_type }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Years valid for' %}</h5>
+      <p class="text-muted">{{ object.licence_type.years_valid_for }}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <table class="table table-borderless">
+      <thead>
+        <tr>
+          <th scope="col">{% trans 'Permissions' %}</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{% trans 'Can view items' %}</td>
+          <td>{{ object.licence_type.can_view|yesno }}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Can download items'%}</td>
+          <td>{{ object.licence_type.can_download|yesno }}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Can view annotations'%}</td>
+          <td>{{ object.licence_type.can_view_annotations|yesno }}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Can annotate'%}</td>
+          <td>{{ object.licence_type.can_annotate|yesno }}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Can vote annotations'%}</td>
+          <td>{{ object.licence_type.can_vote_annotations|yesno }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 
 </div>
 </div>

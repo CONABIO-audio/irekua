@@ -11,15 +11,14 @@ class CollectionLicenceCreateView(SeliaCreateView):
     model = Licence
     success_url = 'selia:collection_licences'
     fields = [
-            'licence_type',
-            'document',
-            'metadata',
-            'collection',
-            ]
+        'licence_type',
+        'document',
+        'metadata',
+        'collection',
+    ]
 
     def get_success_url_args(self):
         return [self.kwargs['pk']]
-
 
     def handle_create(self):
         form = self.get_form()
@@ -32,18 +31,9 @@ class CollectionLicenceCreateView(SeliaCreateView):
             self.object = None
             context = self.get_context_data()
             context['form'] = form
-
             return self.render_to_response(context)
-         
-    def get_initial(self):
-        initial = {
-            'collection': Collection.objects.get(pk=self.kwargs['pk'])
-        }
-
-        return initial
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['collection'] = self.get_object(queryset=Collection.objects.all())
-
         return context
