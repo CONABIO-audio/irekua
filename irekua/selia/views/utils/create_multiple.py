@@ -25,7 +25,6 @@ class CreateUploadEventForm(forms.ModelForm):
             'item'
         ]
 
-class SeliaMultipleItemsCreateView(SeliaCreateView):
 
 class SeliaMultipleItemsCreateView(SeliaCreateView):
     def get_items_in_list(self,pk_list):
