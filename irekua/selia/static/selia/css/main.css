@@ -20,12 +20,6 @@
   margin: 10px;
 }
 
-/*.dropdown-toggle {*/
-  /*border-radius: 5px;*/
-  /*margin: 5px;*/
-  /*background-color: #556577 !important;*/
-/*}*/
-
 .dropdown-toggle:hover {
   background-color: #556577 !important;
 }

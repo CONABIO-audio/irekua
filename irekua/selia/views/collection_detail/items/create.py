@@ -7,7 +7,7 @@ from database.models import SamplingEventDevice
 from database.models import SamplingEvent
 from database.models import Collection
 from database.models import Item
-
+from database.models import Licence
 
 class CollectionItemCreateView(SeliaMultipleItemsCreateView):
     template_name = 'selia/collection_detail/items/create.html'
@@ -19,7 +19,7 @@ class CollectionItemCreateView(SeliaMultipleItemsCreateView):
         return [self.kwargs['pk']]
 
     def get_sampling_event_list(self):
-        queryset = SamplingEvent.objects.filter()
+        queryset = SamplingEvent.objects.filter(collection=self.kwargs['pk'],)
         paginator = Paginator(queryset,5)
         page = self.request.GET.get('page',1)
         page = paginator.get_page(page)
@@ -30,6 +30,27 @@ class CollectionItemCreateView(SeliaMultipleItemsCreateView):
         if 'sampling_event' in self.request.GET:
             sampling_event = self.request.GET.get('sampling_event', None)
             queryset = SamplingEventDevice.objects.filter(sampling_event__pk=sampling_event)
+            paginator = Paginator(queryset,5)
+            page = self.request.GET.get('page',1)
+            page = paginator.get_page(page)
+
+            return page
+        else:
+            return EmptyPage()
+
+    def get_licence_list(self):
+        queryset = Licence.objects.filter(collection=self.get_object(queryset=Collection.objects.all()))
+        paginator = Paginator(queryset,5)
+        page = self.request.GET.get('page',1)
+        page = paginator.get_page(page)
+
+        return page
+
+
+    def get_upload_event_list(self,error):
+        if 'upload_session' in self.request.GET:
+            upload_session = self.request.GET.get('upload_session', None)
+            queryset = UploadEvent.objects.filter(upload_session__pk=upload_session,error=error)
             paginator = Paginator(queryset,5)
             page = self.request.GET.get('page',1)
             page = paginator.get_page(page)
@@ -67,6 +88,8 @@ class CollectionItemCreateView(SeliaMultipleItemsCreateView):
             initial['sampling_event'] = SamplingEvent.objects.get(pk=self.request.GET['sampling_event'])
         if 'sampling_event_device' in self.request.GET:
             initial['sampling_event_device'] = SamplingEventDevice.objects.get(pk=self.request.GET['sampling_event_device'])           
+        if 'licence' in self.request.GET:
+            initial['licence'] = Licence.objects.get(pk=self.request.GET['licence'])           
 
         return initial
 
@@ -75,6 +98,7 @@ class CollectionItemCreateView(SeliaMultipleItemsCreateView):
         context['collection'] = self.get_object(queryset=Collection.objects.all())
         context['sampling_event_list'] = self.get_sampling_event_list()
         context['sampling_event_device_list'] = self.get_sampling_event_device_list()
+        context['licence_list'] = self.get_licence_list()
 
         if 'sampling_event' in self.request.GET:
             sampling_event = SamplingEvent.objects.get(pk=self.request.GET['sampling_event'])
@@ -84,5 +108,8 @@ class CollectionItemCreateView(SeliaMultipleItemsCreateView):
             sampling_event_device = SamplingEventDevice.objects.get(pk=self.request.GET['sampling_event_device'])
             context['selected_sampling_event_device'] = sampling_event_device
 
+        if 'licence' in self.request.GET:
+            licence = Licence.objects.get(pk=self.request.GET['licence'])
+            context['selected_licence'] = licence
 
         return context

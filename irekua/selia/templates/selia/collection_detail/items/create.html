@@ -79,9 +79,9 @@
     <div class="w-100 bg-light p-4 list-group mb-4">
       {% for item in sampling_event_device_list %}
       {% if item.pk == request.GET.sampling_event_device %}
-      <a class="stretched-link btn btn-primary" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ item.pk }}#addDetail">
+      <a class="stretched-link btn btn-primary" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ item.pk }}#licences">
       {% else %}
-      <a class="stretched-link btn" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ item.pk }}#addDetail">
+      <a class="stretched-link btn" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ item.pk }}#licences">
       {% endif %}
       {% include 'selia/components/select_list_items/sampling_event_devices.html' with item=item %}
       </a>
@@ -97,7 +97,61 @@
       </div>
     </div>
 </div>
+{% elif not request.GET.licence and not success_count and not duplicate_count %}
 
+<div class="container" id="licences">
+  <div class="jumbotron m-4">
+    <h1 class="display-6">{%trans 'Add items to collection: Part' %} 3 / 4</h1>
+    <p>{% blocktrans %}
+      Please select a licence or 
+      {% endblocktrans %} <a href="{% url 'selia:collection_licence_create' collection.pk %}?chain={{ chain }}|{{ request.path }}"></i> {% trans 'create a new one' %}</a>.
+    </p>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+  <div id="selected_objects">
+  <div class="row h-100" align="center">
+    <div class="col">
+      <a href="#collapseSamplingEvent" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSamplingEvent"><h4>{% trans 'Selected sampling event: ' %}{{ selected_sampling_event.pk }}</h4></a>
+      <div class="collapse" id="collapseSamplingEvent">
+      {% include 'selia/components/select_list_items/sampling_events.html' with item=selected_sampling_event %}
+      </div>
+    </div>
+  </div>
+  <div class="row h-100" align="center">
+    <div class="col">
+      <a href="#collapseSamplingEventDevice" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSamplingEventDevice"><h4>{% trans 'Selected device: ' %}{{ selected_sampling_event_device.pk }}</h4></a>
+      <div class="collapse" id="collapseSamplingEventDevice">
+      {% include 'selia/components/select_list_items/sampling_event_devices.html' with item=selected_sampling_event_device %}
+      </div>
+    </div>
+  </div>
+  </div>
+
+<div class="container-fluid w-100 p-4">
+    <h4>{% trans 'Available licences: ' %}</h4>
+    <div class="w-100 bg-light p-4 list-group mb-4">
+      {% for item in licence_list %}
+      {% if item.pk == request.GET.licence %}
+      <a class="stretched-link btn btn-primary" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ selected_samplng_event_device.pk }}&licence={{ item.pk }}#addDetail">
+      {% else %}
+      <a class="stretched-link btn" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ selected_samplng_event_device.pk }}&licence={{ item.pk }}#addDetail">
+      {% endif %}
+      {% include 'selia/components/select_list_items/licences.html' with item=item %}
+      </a>
+      {% empty %}
+      <div class="container-fluid bg-light text-center">
+          <h4>{% trans 'No available licences. Please ' %}</h4>
+          <p><a href="{% url 'selia:collection_licence_create' collection.pk %}?chain={{ chain }}|{{ request.path }}"><i class="fas fa-plus"></i> {% trans 'create a new licence' %}</a></p>
+      </div>
+      {% endfor %}
+
+      <div class="container center w-100 p-4">
+        {% include 'selia/components/pagination.html' with list=sampling_event_device_list %}
+      </div>
+    </div>
+</div>
 {% elif not success_count and not duplicate_count %}
 
 <div class="container" id="addDetail">
@@ -133,6 +187,10 @@
   <div class="col-4 mx-5">
     <label for="item_typeInput">{% trans 'Files to upload: ' %}</label>
     <input id='itemFilePicker' type='file' multiple/>
+  </div>
+  <div class="col-4 mx-5">
+    <label for="date_pattern_input">{% trans 'Date pattern: ' %}</label>
+    <input id='itemDatePattern' type='text' placeholder="{% trans 'Date from file name' %}"/>
   </div>
 </div>
 

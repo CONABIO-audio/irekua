@@ -1,14 +1,31 @@
-import json
-from ast import literal_eval
-
+from django import forms
 from django.shortcuts import redirect
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.core.exceptions import ValidationError
-
-from database.models import Item
+from database.models import Item, UploadSession, UploadEvent
+import json
+from ast import literal_eval
 from .create_base import SeliaCreateView
 
+
+class CreateUploadSessionForm(forms.ModelForm):
+    class Meta:
+        model = UploadSession
+        fields = [
+            'sampling_event_device'
+        ]
+
+class CreateUploadEventForm(forms.ModelForm):
+    class Meta:
+        model = UploadEvent
+        fields = [
+            'upload_session',
+            'error',
+            'item'
+        ]
+
+class SeliaMultipleItemsCreateView(SeliaCreateView):
 
 class SeliaMultipleItemsCreateView(SeliaCreateView):
     def get_items_in_list(self,pk_list):
@@ -19,7 +36,18 @@ class SeliaMultipleItemsCreateView(SeliaCreateView):
         return page
 
     def get(self, *args, **kwargs):
-        if 'success_pks' in self.request.GET:
+        if 'get_session' in self.request.GET:
+            sampling_event_device = SamplingEventDevice.objects.get(pk=self.request.GET['sampling_event_device'])
+            upload_session_form = CreateUploadSessionForm({"sampling_event_device":sampling_event_device})
+
+            if upload_session_form.is_valid():
+                upload_session = upload_session_form.save(commit=False)
+                upload_session.created_by = self.request.user
+                upload_session.save()
+
+                return HttpResponse(json.dumps({"upload_session_pk":upload_session.pk}), content_type="application/json")
+
+        elif 'success_pks' in self.request.GET:
             self.object = None
             context = self.get_context_data()
 
