@@ -4,11 +4,11 @@ from selia.views import collections_admin
 
 urlpatterns = [
     path(
-        'admin/',
+        'manage/',
         collections_admin.Home.as_view(),
-        name='collections_admin_home'),
+        name='collections_manager_home'),
     path(
-        'admin/managed_collections/',
+        'manage/managed_collections/',
         collections_admin.ManagedCollectionsView.as_view(),
         name='managed_collections'),
 ]

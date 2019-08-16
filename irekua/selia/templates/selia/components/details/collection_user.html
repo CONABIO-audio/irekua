@@ -1,0 +1,118 @@
+{% load i18n %}
+{% load country_tags %}
+{% load json_tags %}
+{% load static %}
+
+
+<div class="row">
+  <div class="col">
+    <h4>{% trans 'Collection user'%} {{ object.pk}} {% trans 'detail'%}</h4>
+  </div>
+</div>
+
+<div class="row w-100">
+  <div class="col m-2">
+    <div class="row border-bottom">
+      <h6 class="text-center w-100">{% trans 'User info' %}</h6>
+    </div>
+
+    <div class="row">
+      <div class="media text-muted pt-3">
+        <p class="media-body pb-3 mb-0 small lh-125">
+          <strong class="d-block text-gray-dark">{% trans 'Username' %}</strong>
+          {{ object.user.username }}
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col m-0 p-0">
+        <div class="media text-muted pt-3">
+          <p class="media-body pb-3 mb-0 small lh-125">
+            <strong class="d-block text-gray-dark">{% trans 'First name' %}</strong>
+            {{ object.user.first_name }}
+          </p>
+        </div>
+      </div>
+
+      <div class="col m-0 p-0">
+        <div class="media text-muted pt-3">
+          <p class="media-body pb-3 mb-0 small lh-125">
+            <strong class="d-block text-gray-dark">{% trans 'Last name' %}</strong>
+            {{ object.user.last_name }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col m-0 p-0">
+        <div class="media text-muted pt-3">
+          <p class="media-body pb-3 mb-0 small lh-125">
+            <strong class="d-block text-gray-dark">{% trans 'Email' %}</strong>
+            {{ object.user.email }}
+          </p>
+        </div>
+      </div>
+
+      <div class="col m-0 p-0">
+        <div class="media text-muted pt-3">
+          <p class="media-body pb-3 mb-0 small lh-125">
+            <strong class="d-block text-gray-dark">{% trans 'Institution' %}</strong>
+            {{ object.user.institution }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row w-100">
+  <div class="col m-2">
+    <div class="row border-bottom">
+      <h6 class="text-center w-100">{% trans 'Role' %}</h6>
+    </div>
+
+    <div class="row">
+      {% if object.role.icon %}
+      <div class="col m-0 p-0">
+        <div class="media text-muted pt-3">
+          <img src="{{ object.role.icon.url }}" alt="role">
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="col m-0 p-0">
+        <div class="media text-muted pt-3">
+          <p class="media-body pb-3 mb-0 small lh-125">
+            <strong class="d-block text-gray-dark">{% trans 'Role' %}</strong>
+            {{ object.role }}
+          </p>
+        </div>
+      </div>
+
+      <div class="col m-0 p-0">
+        <div class="media text-muted pt-3">
+          <p class="media-body pb-3 mb-0 small lh-125">
+            <strong class="d-block text-gray-dark">{% trans 'Description' %}</strong>
+            {{ object.role.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if object.metadata %}
+<div class="row w-100">
+  <div class="col m-2">
+    <div class="row border-bottom">
+      <h6 class="text-center w-100">{% trans 'Metadata' %}</h6>
+    </div>
+
+    <div class="row">
+      {% show_json object.metadata %}
+    </div>
+  </div>
+</div>
+{% endif %}

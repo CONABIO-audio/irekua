@@ -6,7 +6,7 @@
 {% endblock navbar-brand %}
 
 {% block navbar-items %}
-{% url 'selia:collections_admin_home' as home_url %}
+{% url 'selia:collections_manager_home' as home_url %}
 <li class="nav-item">
   {% if home_url == request.path|urlencode %}
   <a class="nav-link active" href={{ home_url }}>

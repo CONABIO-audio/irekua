@@ -7,8 +7,8 @@
 <div class="row w-100">
   <div class="col">
     <div class="media">
-      {% if item.collection_device.physical_device.device.brand.logo %}
-      <img class="mr-3 img-thumbnail" src="{{ item.physical_device.device.brand.logo.url }}" alt="logo">
+      {% if item.collection_device.physical_device.device.device_type.icon %}
+      <img class="mr-3 img-thumbnail" src="{{ item.collection_device.physical_device.device.device_type.icon.url }}" alt="logo">
       {% endif %}
       <div class="media-body mt-0">
         <h4 class="mt-0">{{ item.collection_device.physical_device.device.brand }}</h4>

@@ -16,10 +16,10 @@ urlpatterns = [
         'user/sites/',
         user.UserSitesListView.as_view(),
         name='user_sites'),
-     path(
+    path(
         'user/sites/add/',
         user.UserSiteCreateView.as_view(),
-        name='user_site_create'),   
+        name='user_site_create'),
     path(
         'user/items/',
         user.UserItemsListView.as_view(),

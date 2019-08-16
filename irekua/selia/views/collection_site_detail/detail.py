@@ -35,4 +35,7 @@ class CollectionSiteDetailView(SeliaDetailView, SingleObjectMixin):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['collection_site'] = self.object
+        
+        schema = self.object.site_type.metadata_schema
+        context['form'].fields['metadata'].update_schema(schema)
         return context

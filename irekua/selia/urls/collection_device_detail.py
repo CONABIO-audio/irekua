@@ -14,6 +14,5 @@ urlpatterns = [
     path(
         'collection_devices/detail/<pk>/items/add',
         collection_device_detail.CollectionDeviceItemCreateView.as_view(),
-        name='collection_device_item_create'),   
+        name='collection_device_item_create'),
 ]
-

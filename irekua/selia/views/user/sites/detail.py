@@ -2,12 +2,9 @@ from django import forms
 
 from database.models import Site
 from selia.views.utils import SeliaDetailView
-from selia.forms.json_field import JsonField
 
 
 class SiteUpdateForm(forms.ModelForm):
-    metadata = JsonField()
-
     class Meta:
         model = Site
         fields = [
@@ -39,5 +36,3 @@ class UserSiteDetailView(SeliaDetailView):
 
     def has_change_permission(self):
         return True
-
-

@@ -1,4 +1,5 @@
-{% extends 'selia/licence_detail/base.html' %}
+{% extends 'selia/collection_detail/base.html' %}
+
 {% load i18n %}
 {% load selia_components %}
 {% load selia_buttons %}
@@ -7,32 +8,29 @@
 {% include 'selia/components/media/json_form_media.html' %}
 {% endblock head-extra %}
 
-{% block toolbar-title %}{{ licence.collection }}{% trans ': Licence ' %} {{ licence.pk }}{% endblock %}
+{% block toolbar-title %}{{ object.collection }}: {% trans 'User' %} {{ object.pk }}{% endblock %}
 
 {% block toolbar-items %}
 <li class="nav-item">
   <a class="nav-link" href="#">{% trans 'Download summary' %} <i class="fas fa-download"></i></a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="#">{% trans 'Help' %} <i class="fas fa-question"></i></a>
+  {% help_button %}
 </li>
 {% endblock toolbar-items %}
+
 
 {% block main-content %}
 <div class="row p-5">
   <div class="col-6 p-4">
-  	<div class="row pb-2">
-      {% detail_component detail_template=detail_template object=licence %}
-	   </div>
-  	<div class="row pt-2">
-      {% summary_component summary_template=summary_template object=licence %}
-    </div>
+    {% detail_component detail_template=detail_template object=object %}
   </div>
-  <div class="col-6 px-4">
-    {% viewer_component viewer_template=viewer_template object=licence %}
-   </div>
+  <div class="col p-3">
+    {% summary_component summary_template=summary_template object=object %}
+  </div>
 </div>
 {% endblock main-content %}
+
 
 {% block modals-extra %}
   {% help_component help_template=help_template %}

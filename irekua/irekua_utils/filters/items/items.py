@@ -11,6 +11,7 @@ class Filter(FilterSet):
     class Meta:
         model = Item
         fields = {
+            'created_by': ['exact'],
             'created_by__username': ['icontains'],
             'created_by__first_name': ['icontains'],
             'created_by__last_name': ['icontains'],

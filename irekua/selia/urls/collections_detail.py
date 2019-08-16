@@ -28,6 +28,10 @@ urlpatterns = [
         collection_detail.CollectionItemsListView.as_view(),
         name='collection_items'),
     path(
+        'collections/detail/<pk>/users/',
+        collection_detail.CollectionUserListView.as_view(),
+        name='collection_users'),
+    path(
         'collections/detail/<pk>/items/add/',
         collection_detail.CollectionItemCreateView.as_view(),
         name='collection_item_create'),
@@ -51,4 +55,8 @@ urlpatterns = [
         'collections/detail/<pk>/licences/add/',
         collection_detail.CollectionLicenceCreateView.as_view(),
         name='collection_licence_create'),
+    path(
+        'collections/detail/<pk>/users/add/',
+        collection_detail.CollectionUserCreateView.as_view(),
+        name='collection_user_create'),
 ]

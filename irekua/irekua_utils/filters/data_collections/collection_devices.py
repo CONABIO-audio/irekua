@@ -6,10 +6,11 @@ from django_filters import FilterSet,DateFilter
 from database.models import CollectionDevice
 
 
-class Filter(FilterSet): 
+class Filter(FilterSet):
     class Meta:
         model = CollectionDevice
         fields = {
+            'created_by': ['exact'],
             'created_by__username': ['icontains'],
             'created_by__first_name': ['icontains'],
             'created_by__last_name': ['icontains'],

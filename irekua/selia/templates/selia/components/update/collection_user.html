@@ -3,11 +3,11 @@
 
 <div class="row">
   <div class="col">
-    {% bootstrap_form form.internal_id %}
+    {% bootstrap_form form.role %}
   </div>
 </div>
 
-{% if object.site_type.metadata_schema %}
+{% if object.role.metadata_schema %}
 <div class="row">
   <div class="col">
     <h5>{% trans 'Metadata' %}</h5>

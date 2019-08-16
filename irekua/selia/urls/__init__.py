@@ -14,6 +14,7 @@ from . import item_detail
 from . import autocomplete
 from . import collections_admin
 from . import about
+from . import collection_user_detail
 
 urlpatterns = (
     selia.urlpatterns +
@@ -28,5 +29,6 @@ urlpatterns = (
     autocomplete.urlpatterns +
     collections_admin.urlpatterns +
     item_detail.urlpatterns +
-    about.urlpatterns
+    about.urlpatterns +
+    collection_user_detail.urlpatterns
 )

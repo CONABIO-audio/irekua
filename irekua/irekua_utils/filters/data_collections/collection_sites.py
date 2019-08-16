@@ -9,16 +9,17 @@ class Filter(FilterSet):
     class Meta:
         model = CollectionSite
         fields = {
-        'created_by__username': ['icontains'],
-        'created_by__first_name': ['icontains'],
-        'created_by__last_name': ['icontains'],
-        'site_type': ['exact'],
-        'site__altitude': ['gt', 'lt'],
-        'site__latitude': ['gt', 'lt'],
-        'site__longitude': ['gt', 'lt'],
-        'site__name': ['icontains'],
-        'site__locality': ['icontains'],
-        'created_on': ['gt', 'lt']
+            'created_by': ['exact'],
+            'created_by__username': ['icontains'],
+            'created_by__first_name': ['icontains'],
+            'created_by__last_name': ['icontains'],
+            'site_type': ['exact'],
+            'site__altitude': ['gt', 'lt'],
+            'site__latitude': ['gt', 'lt'],
+            'site__longitude': ['gt', 'lt'],
+            'site__name': ['icontains'],
+            'site__locality': ['icontains'],
+            'created_on': ['gt', 'lt']
         }
 
 

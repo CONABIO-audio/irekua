@@ -30,9 +30,15 @@
       <h5 class="mt-0">{% trans 'Site type' %}</h5>
       <p class="text-muted">{{ object.site_type }}</p>
     </div>
+  </div>
+  <div class="row">
     <div class="col">
       <h5 class="mt-0">{% trans 'Added to collection on' %}</h5>
       <p class="text-muted">{{ object.created_on|date }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Added to collection by' %}</h5>
+      <p class="text-muted">{{ object.created_by }}</p>
     </div>
   </div>
 

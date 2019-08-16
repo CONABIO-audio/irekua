@@ -7,13 +7,12 @@
 <div class="row w-100">
   <div class="col">
     <div class="media">
-      {% if item.physical_device.device.brand.logo %}
-      <img class="img-thumbnail mr-4" src="{{ item.physical_device.device.brand.logo.url }}" alt="logo" style="max-height: 100px; max-width: 100px; object-fit: contain;">
+      {% if item.physical_device.device.device_type.icon %}
+      <img class="img-thumbnail mr-4" src="{{ item.physical_device.device.device_type.icon.url }}" alt="logo" style="max-height: 100px; max-width: 100px; object-fit: contain;">
       {% endif %}
       <div class="media-body mt-0">
         <h4 class="mt-0">{{ item.physical_device.device.brand }}</h4>
         <div class="text-muted">{{ item.physical_device.device.model }}</div>
-        <div class="text-muted"><a href="{% url 'selia:collection_device_detail' item.pk %}">{% enter_button %}</a></div>
       </div>
     </div>
   </div>

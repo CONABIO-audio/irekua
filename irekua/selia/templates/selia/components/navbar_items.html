@@ -30,7 +30,7 @@
 {% endif %}
 
 {% if user.is_collection_type_admin %}
-{% url 'selia:collections_admin_home' as admin_home %}
+{% url 'selia:collections_manager_home' as admin_home %}
 <li class="nav-item">
   {% if admin_home in request.path %}
   <a class="nav-link active" href={{ admin_home|urlencode }}>{% trans "Admin Collections" %}</a>

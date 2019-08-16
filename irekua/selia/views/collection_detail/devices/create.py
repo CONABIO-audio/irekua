@@ -32,6 +32,7 @@ class CollectionDeviceCreateView(SeliaCreateView):
 
     def handle_create(self):
         form = self.get_form()
+
         if form.is_valid():
             collection_device = form.save(commit=False)
             collection_device.created_by = self.request.user
@@ -46,20 +47,26 @@ class CollectionDeviceCreateView(SeliaCreateView):
     def get_device_list_context(self):
         user = self.request.user
         user_devices = user.physicaldevice_created_by.all()
+        queryset_ = user_devices.exclude(collectiondevice__collection=self.collection)
 
-        class SiteList(SeliaList):
-            prefix = 'devices'
+        collection_type = self.collection.collection_type
+        if collection_type.restrict_device_types:
+            queryset_ = queryset_.filter(
+                device__device_type__in=collection_type.device_types.all())
+
+        class DeviceList(SeliaList):
+            prefix = 'device_list'
 
             filter_class = device_utils.Filter
             search_fields = device_utils.search_fields
             ordering_fields = device_utils.ordering_fields
 
-            queryset = user_devices.exclude(collectiondevice__collection=self.collection)
+            queryset = queryset_
 
             list_item_template = 'selia/components/select_list_items/physical_devices.html'
             filter_form_template = 'selia/components/filters/physical_device.html'
 
-        site_list = SiteList()
+        site_list = DeviceList()
         return site_list.get_context_data(self.request)
 
     def get_success_url_args(self):

@@ -25,11 +25,11 @@ class CollectionLicenceCreateView(SeliaCreateView):
             licence.created_by = self.request.user
             licence.save()
             return self.handle_finish_create()
-        else:
-            self.object = None
-            context = self.get_context_data()
-            context['form'] = form
-            return self.render_to_response(context)
+
+        self.object = None
+        context = self.get_context_data()
+        context['form'] = form
+        return self.render_to_response(context)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)

@@ -12,6 +12,7 @@ class LicenceUpdateForm(forms.ModelForm):
         model = Licence
         fields = [
             'metadata',
+            'document',
         ]
 
 class LicenceDetailView(SeliaDetailView, SingleObjectMixin):
@@ -26,8 +27,10 @@ class LicenceDetailView(SeliaDetailView, SingleObjectMixin):
     viewer_template = 'selia/components/viewers/licence.html'
 
     def get_context_data(self, *args, **kwargs):
-        licence = self.object
-
         context = super().get_context_data(*args, **kwargs)
+
+        licence = self.object
         context['licence'] = licence
+        schema = licence.licence_type.metadata_schema
+        context['form'].fields['metadata'].update_schema(schema)
         return context

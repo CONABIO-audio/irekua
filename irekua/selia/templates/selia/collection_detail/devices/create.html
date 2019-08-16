@@ -14,16 +14,18 @@
 {% endblock %}
 
 {% block main-content %}
-{% if not request.GET.physical_device %}
+{% if not physical_device %}
 <div class="container">
+
   <div class="jumbotron m-4">
     <h1 class="display-6">{%trans 'Add device to collection: Part' %} 1 / 2</h1>
     <p class="lead">{% blocktrans %}
       Please select one of your registered devices or
       {% endblocktrans %} <a href="{% url 'selia:physical_device_create' collection.pk %}?chain={{ chain }}|{{ request.path }}"><i class="fas fa-plus"></i> {% trans 'register new device' %}</a>.
     </p>
+
     <div class="progress">
-      <div class="progress-bar" role="progressbar"style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+      <div class="progress-bar" role="progressbar" style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
   </div>
 
@@ -79,13 +81,22 @@
   </div>
 
   <div class="form-container mb-4">
-    <form action="?chain={{ chain }}" method="post">
+    <form action="?chain={{ chain }}&physical_device={{ physical_device.pk }}" method="post">
       {% csrf_token %}
       <input type="hidden" id="physical_device_field" name="physical_device" value="{{ physical_device.pk }}">
       <input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
 
       <div class="row w-100 p-4">
         <div class="col">
+          {% if form.physical_device.errors %}
+          <div class="row">
+            {% for error in form.physical_device.errors %}
+            <p class="text-danger">
+              {{ error }}
+            </p>
+            {% endfor %}
+          </div>
+          {% endif %}
           <div class="row">
             {% bootstrap_form form.internal_id %}
           </div>

@@ -1,0 +1,19 @@
+{% extends 'selia/components/select_list_item.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block list-item-content %}
+<div class="row w-100">
+  <div class="col">
+    <div class="media">
+      {% if item.device_type.icon %}
+      <img class="mr-3 img-thumbnail" src="{{ item.device_type.icon.url }}" alt="logo">
+      {% endif %}
+      <div class="media-body mt-0">
+        <h4 class="mt-0">{{ item.brand }}</h4>
+        <div class="text-muted">{% trans 'Model'%}: {{ item.model }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock list-item-content %}

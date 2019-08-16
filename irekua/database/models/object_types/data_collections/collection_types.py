@@ -305,7 +305,7 @@ class CollectionType(IrekuaModelBase):
                 device_type=device_type)
         except CollectionDeviceType.DoesNotExist:
             msg = _(
-                'Item type %(device_type)s is not accepted in collection of '
+                'Device type %(device_type)s is not accepted in collection of '
                 'type %(col_type)s or does not exist')
             params = dict(
                 device_type=device_type,

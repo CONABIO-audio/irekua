@@ -77,13 +77,25 @@
 
 {% url 'selia:collection_licences' collection.pk as detail_url %}
 <li class="nav-item">
-  {% if detail_url in request.path|urlencode %}  
+  {% if detail_url in request.path|urlencode %}
   <a class="nav-link active" href={{ detail_url }}>
   {% else %}
   <a class="nav-link" href={{ detail_url }}>
   {% endif %}
   <i class="fas fa-user-lock"></i>
     {% trans 'Licences' %}
+  </a>
+</li>
+
+{% url 'selia:collection_users' collection.pk as users_url %}
+<li class="nav-item">
+  {% if users_url in request.path|urlencode %}
+  <a class="nav-link active" href={{ users_url }}>
+  {% else %}
+  <a class="nav-link" href={{ users_url }}>
+  {% endif %}
+  <i class="fas fa-user"></i>
+    {% trans 'Users' %}
   </a>
 </li>
 {% endblock navbar-items %}

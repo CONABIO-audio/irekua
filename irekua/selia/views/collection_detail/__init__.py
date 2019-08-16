@@ -15,4 +15,9 @@ from .sites.create import CollectionSiteCreateView
 from .licences.list import CollectionLicencesListView
 from .licences.create import CollectionLicenceCreateView
 
+from .users.list import CollectionUserListView
+from .users.create import CollectionUserCreateView
+
 from .extra.create_device import PhysicalDeviceCreateView
+
+from .users.detail import CollectionUserDetailView
