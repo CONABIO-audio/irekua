@@ -40,7 +40,8 @@ from .terms.terms import Term
 from .users.institutions import Institution
 from .users.roles import Role
 from .users.users import User
-
+from .temp.upload_session import UploadSession
+from .temp.upload_event import UploadEvent
 
 __all__ = [
     'Annotation',
@@ -84,5 +85,7 @@ __all__ = [
     'Term',
     'TermSuggestion',
     'TermType',
+    'UploadEvent',
+    'UploadSession',
     'User',
 ]

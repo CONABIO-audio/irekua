@@ -3,6 +3,7 @@ var errorList = [];
 var successList = [];
 var req_count = 0;
 var bad_date_map = false;
+var date_regexp = null;
 var date_parser_map = null;
 
 $(function() {
@@ -200,13 +201,15 @@ $(document).ready(function() {
       datePattern.addEventListener('input',function(e){
         var example_date = {"year":"1985","month":"09","day":"19"}
         var pvalue = datePattern.value;
+        var pattern_mask = "";
         var pieces = [];
         if (pvalue.includes('<') && pvalue.includes('>')){
           
           for(var i=0; i<pvalue.length;i++) {
             if (pvalue[i] == "<"){
-              
+              pattern_mask = pattern_mask + pvalue[i];
               for (var j=i+1; j<pvalue.length; j++){
+                pattern_mask = pattern_mask + pvalue[j];
                 if (pvalue[j] == ">"){
                   pieces.push([i+1,j]);
                   i = j;
@@ -216,18 +219,23 @@ $(document).ready(function() {
                   break;
                 }
               }
+            } else {
+              pattern_mask = pattern_mask + "_";
             }
           }
+          
           if (pieces.length > 0){
             date_parser_map = {};
             bad_date_map = false;
+            date_regexp = pvalue.substring(pieces[0][0]-1,pieces[pieces.length-1][1]+1);
+
             for (var p=0;p<pieces.length;p++){
               var substr = pvalue.substring(pieces[p][0],pieces[p][1]);
               var substr_length = substr.length;
               var cat = distinctStr(substr);
               if (substr_length > 0 && cat.length == 1){
                 switch(cat){
-                  case 'y':{
+                  case 'Y':{
                     if (substr_length == 4 || substr_length == 2){
                       date_parser_map['year'] = {'limits':pieces[p],'length':substr_length,"order":p}
                     } else {
@@ -235,7 +243,7 @@ $(document).ready(function() {
                     }
                     break;
                   }
-                  case 'm':{
+                  case 'M':{
                     if (substr_length == 2){
                       date_parser_map['month'] = {'limits':pieces[p],'length':substr_length,"order":p}
                     } else {
@@ -243,9 +251,33 @@ $(document).ready(function() {
                     }                    
                     break;
                   }
-                  case 'd':{
+                  case 'D':{
                     if (substr_length == 2){
                       date_parser_map['day'] = {'limits':pieces[p],'length':substr_length,"order":p}
+                    } else {
+                      bad_date_map = true;
+                    }
+                    break;
+                  }
+                  case 'h':{
+                    if (substr_length == 2){
+                      date_parser_map['hour'] = {'limits':pieces[p],'length':substr_length,"order":p}
+                    } else {
+                      bad_date_map = true;
+                    }
+                    break;
+                  }
+                  case 'm':{
+                    if (substr_length == 2){
+                      date_parser_map['minute'] = {'limits':pieces[p],'length':substr_length,"order":p}
+                    } else {
+                      bad_date_map = true;
+                    }
+                    break;
+                  }
+                  case 's':{
+                    if (substr_length == 2){
+                      date_parser_map['second'] = {'limits':pieces[p],'length':substr_length,"order":p}
                     } else {
                       bad_date_map = true;
                     }
@@ -256,13 +288,20 @@ $(document).ready(function() {
                     break;
                   }
                 }
+
+                if (!bad_date_map){
+                  date_regexp = date_regexp.replace("<"+substr+">","\\d{"+substr_length+"}");
+                }
+
               } else {
                 bad_date_map = true;
               }
             }
             if (!bad_date_map){
-              if ('year' in date_parser_map && 'month' in date_parser_map && 'day' in date_parser_map){
-                //alert(JSON.stringify(date_parser_map));
+              if ('year' in date_parser_map && 'month' in date_parser_map && 'day' in date_parser_map && 'second' in date_parser_map){
+                date_parser_map["regexp"] = date_regexp;
+                alert(JSON.stringify(date_parser_map));
+                //alert(date_regexp);
               }
             }
           }

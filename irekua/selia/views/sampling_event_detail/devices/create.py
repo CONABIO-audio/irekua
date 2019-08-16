@@ -26,6 +26,7 @@ class SamplingEventDeviceCreateView(SeliaCreateView):
         return [self.kwargs['pk']]
 
     def get_collection_device_list(self):
+        #Agregar filtro de colección
         queryset = CollectionDevice.objects.exclude(samplingeventdevice__sampling_event=self.get_object(queryset=SamplingEvent.objects.all()))
         paginator = Paginator(queryset,5)
         page = self.request.GET.get('page',1)

@@ -1,0 +1,40 @@
+{% extends 'selia/components/select_list_item.html' %}
+{% load selia_buttons %}
+{% load static %}
+{% load i18n %}
+
+{% block list-item-content %}
+  <div class="row w-100">
+    <div class="col-3">
+      <div class="media">
+        <div class="media-body mt-0">
+          <h4 class="mt-0">
+            {% trans 'Licence' %} {{item.pk }}
+          </h4>
+          <div class="text-muted"><a href="{% url 'selia:licence_detail' item.pk %}">{% enter_button %}</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="row">
+        <h6>{% trans 'Licence type' %}</h6>
+        <div class="text-muted ml-4">{{ item.licence_type }}</div>
+      </div>
+      <div class="row">
+        <h6>{% trans 'Collection' %}</h6>
+        <div class="text-muted ml-4">{{ item.collection }}</div>
+      </div>
+    </div>
+
+    <div class="col-3">
+      <div class="row">
+        <h6>{% trans 'Document' %}</h6>
+        <div class="text-muted ml-4 ellipsis">{{ item.document }}</div>
+      </div>
+      <div class="row">
+        <h6>{% trans 'Created by' %}</h6>
+        <div class="text-muted ml-4 ellipsis">{{ item.created_by }}</div>
+      </div>
+    </div>
+  </div>
+{% endblock list-item-content %}
