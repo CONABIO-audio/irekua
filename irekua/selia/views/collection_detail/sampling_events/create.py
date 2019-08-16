@@ -43,13 +43,12 @@ class SamplingEventCreateView(SeliaCreateView):
         return [self.kwargs['pk']]
 
     def handle_create(self):
-        form = SamplingEventCreateForm(self.request.POST)
+        form = self.get_form()
 
         if form.is_valid():
             sampling_event = form.save(commit=False)
             sampling_event.created_by = self.request.user
             sampling_event.save()
-
             return self.handle_finish_create(sampling_event)
 
         self.object = None

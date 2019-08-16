@@ -91,9 +91,9 @@ class SamplingEventType(IrekuaModelBase):
         except ValidationError as error:
             msg = _(
                 'Invalid metadata for sampling event of type '
-                '%(type)s. Error: %(error)')
+                '%(type)s. Error: %(error)s')
             params = dict(type=str(self), error=str(error))
-            raise ValidationError(msg, params=params)
+            raise ValidationError(str(msg), params=params)
 
     def validate_and_get_device_type(self, device_type):
         if not self.restrict_device_types:
@@ -104,10 +104,10 @@ class SamplingEventType(IrekuaModelBase):
                 device_type=device_type.name)
         except self.device_types.model.DoesNotExist:
             msg = _(
-                'Device type %(device_type) is not valid for sampling '
+                'Device type %(device_type)s is not valid for sampling '
                 'event of type %(type)s')
             params = dict(device_type=str(device_type), type=str(self))
-            raise ValidationError(msg, params=params)
+            raise ValidationError(str(msg), params=params)
 
         return device_type
 
@@ -119,10 +119,10 @@ class SamplingEventType(IrekuaModelBase):
             self.site_types.get(name=site_type.name)
         except self.site_types.model.DoesNotExist:
             msg = _(
-                'Site type %(site_type) is not valid for '
+                'Site type %(site_type)s is not valid for '
                 'sampling event of type %(type)s')
             params = dict(site_type=str(site_type), type=str(self))
-            raise ValidationError(msg, params=params)
+            raise ValidationError(str(msg), params=params)
 
     def add_device_type(self, device_type, metadata_schema):
         SamplingEventTypeDeviceType.objects.create(

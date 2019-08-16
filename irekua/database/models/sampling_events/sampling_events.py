@@ -103,28 +103,28 @@ class SamplingEvent(IrekuaModelBaseUser):
         try:
             self.validate_site()
         except ValidationError as error:
-            raise ValidationError({'collection_site': error})
+            raise ValidationError({'collection_site': str(error)})
 
         try:
             self.sampling_event_type.validate_metadata(self.metadata)
         except ValidationError as error:
-            raise ValidationError({'metadata': error})
+            raise ValidationError({'metadata': str(error)})
 
         try:
             site_type = self.collection_site.site_type
             self.sampling_event_type.validate_site_type(site_type)
         except ValidationError as error:
-            raise ValidationError({'site': error})
+            raise ValidationError({'collection_site': str(error)})
 
         try:
             collection.validate_and_get_sampling_event_type(self.sampling_event_type)
         except ValidationError as error:
-            raise ValidationError({'sampling_event_type': error})
+            raise ValidationError({'sampling_event_type': str(error)})
 
         if self.licence:
             try:
                 collection.validate_and_get_licence(self.licence)
             except ValidationError as error:
-                raise ValidationError({'licence': error})
+                raise ValidationError({'licence': str(error)})
 
         super(SamplingEvent, self).clean()

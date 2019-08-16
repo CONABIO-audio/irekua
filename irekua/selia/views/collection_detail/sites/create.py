@@ -52,7 +52,6 @@ class CollectionSiteCreateView(SeliaCreateView):
         query = self.request.GET.copy()
         query['site'] = site.pk
         query['selected_site'] = site.pk
-
         url = '{}?{}#{}'.format(self.request.path, query.urlencode(), 'sites')
         return redirect(url)
 

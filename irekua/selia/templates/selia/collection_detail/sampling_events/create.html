@@ -113,9 +113,8 @@
   </div>
 
   <div class="form-container mb-4 mr-4">
-    <form action="?chain={{ chain }}" method="post">
+    <form action="?chain={{ chain }}&collection_site={{ collection_site.pk }}&sampling_event_type={{ sampling_event_type.pk }}" method="post">
       {% csrf_token %}
-      <input type="hidden" id="site_field" name="collection_site" value="{{ selected_site.pk }}">
       <input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
       <input type="hidden" id="sampling_event_type_field" name="sampling_event_type" value="{{ sampling_event_type.pk }}">
       <input type="hidden" id="collection_site_field" name="collection_site" value="{{ collection_site.pk }}">
@@ -149,6 +148,11 @@
             <h4 class="w-100 text-center">{% trans 'Metadata' %}</h4>
           </div>
           <div class="row px-5">
+            {% if form.metadata.errors %}
+              {% for error in form.metadata.errors %}
+                <p class="text-danger">{{ error }}</p>
+              {% endfor %}
+            {% endif %}
             {{ form.metadata }}
           </div>
         </div>
