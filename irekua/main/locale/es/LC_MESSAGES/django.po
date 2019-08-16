@@ -290,11 +290,13 @@ msgid ""
 "Label contains a term (of type %(type)s) that is not valid for the event "
 "type or does not exist"
 msgstr ""
+"La etiqueta contiene un termino (de tipo %(type)s) que no es valido para "
+" el tipo de evento, o no existe"
 
 #: database/models/annotations/annotations.py:154
 #, python-format
 msgid "Invalid label. Error: %(error)s"
-msgstr ""
+msgstr "Etiqueta invalida. Error: %(error)s"
 
 #: database/models/base.py:8
 #: irekua_utils/filters/data_collections/data_collections.py:56
@@ -333,7 +335,7 @@ msgstr "Fecha de última modificación"
 
 #: database/models/base.py:29
 msgid "creator"
-msgstr ""
+msgstr "creador"
 
 #: database/models/base.py:32
 #, fuzzy
@@ -353,11 +355,11 @@ msgstr "Usuario que modifico por ultima vez"
 
 #: database/models/data_collections/collection_devices.py:16
 msgid "physical device"
-msgstr ""
+msgstr "dispositivo físico"
 
 #: database/models/data_collections/collection_devices.py:17
 msgid "Reference to physical device"
-msgstr ""
+msgstr "Referencia al dispositivo físico"
 
 #: database/models/data_collections/collection_devices.py:24
 #: database/models/data_collections/collection_sites.py:33
@@ -365,22 +367,22 @@ msgstr ""
 #: database/models/licences.py:62
 #: database/models/sampling_events/sampling_events.py:57
 msgid "collection"
-msgstr ""
+msgstr "colección"
 
 #: database/models/data_collections/collection_devices.py:25
 msgid "Collection to which the device belongs"
-msgstr ""
+msgstr "Colección a la cual pertenece el dispositivo"
 
 #: database/models/data_collections/collection_devices.py:31
 #: database/models/data_collections/collection_sites.py:47
 #: irekua_utils/filters/data_collections/collection_devices.py:42
 #: irekua_utils/filters/data_collections/collection_sites.py:35
 msgid "internal id"
-msgstr ""
+msgstr "id interno"
 
 #: database/models/data_collections/collection_devices.py:32
 msgid "ID of device within the collection"
-msgstr ""
+msgstr "ID del dispositivo dentro de la colección"
 
 #: database/models/data_collections/collection_devices.py:38
 #: database/models/data_collections/collection_sites.py:39
@@ -396,40 +398,40 @@ msgstr ""
 #: database/models/terms/term_suggestions.py:35
 #: database/models/terms/terms.py:33
 msgid "metadata"
-msgstr ""
+msgstr "metadatos"
 
 #: database/models/data_collections/collection_devices.py:39
 msgid "Metadata associated with device within collection"
-msgstr ""
+msgstr "Metadatos asociados con el dispositivo dentro de la colección"
 
 #: database/models/data_collections/collection_devices.py:43
 msgid "Collection Device"
-msgstr ""
+msgstr "Dispositivo de colección"
 
 #: database/models/data_collections/collection_devices.py:44
 msgid "Collection Devices"
-msgstr ""
+msgstr "Dispositivos de colección"
 
 #: database/models/data_collections/collection_sites.py:17
 msgid "site type"
-msgstr ""
+msgstr "tipo de sitio"
 
 #: database/models/data_collections/collection_sites.py:18
 msgid "Type of site"
-msgstr ""
+msgstr "Tipo de sitio"
 
 #: database/models/data_collections/collection_sites.py:25
 #: selia/templates/selia/components/details/collection_site.html:50
 msgid "site"
-msgstr ""
+msgstr "sitio"
 
 #: database/models/data_collections/collection_sites.py:26
 msgid "Reference to Site"
-msgstr ""
+msgstr "Referencia al sitio"
 
 #: database/models/data_collections/collection_sites.py:34
 msgid "Collection to which the site belongs"
-msgstr ""
+msgstr "Colección a la cual pertenece el sitio"
 
 #: database/models/data_collections/collection_sites.py:40
 #, fuzzy
@@ -439,62 +441,62 @@ msgstr "Etiqueta asociada a la anotación"
 
 #: database/models/data_collections/collection_sites.py:48
 msgid "ID of site within the collection"
-msgstr ""
+msgstr "ID del sitio dentro de la colección"
 
 #: database/models/data_collections/collection_sites.py:52
 msgid "Collection Site"
-msgstr ""
+msgstr "Sitio de colección"
 
 #: database/models/data_collections/collection_sites.py:53
 msgid "Collection Sites"
-msgstr ""
+msgstr "Sitios de colección"
 
 #: database/models/data_collections/collection_sites.py:61
 #, python-format
 msgid "Site %(site)s of collection %(collection)s"
-msgstr ""
+msgstr "Sitio %(site)s de la colección %(collection)s"
 
 #: database/models/data_collections/collection_users.py:15
 msgid "Collection to which user belongs"
-msgstr ""
+msgstr "Colección a la cual pertenece el usuario"
 
 #: database/models/data_collections/collection_users.py:21
 msgid "user"
-msgstr ""
+msgstr "usuario"
 
 #: database/models/data_collections/collection_users.py:22
 msgid "User of collection"
-msgstr ""
+msgstr "Usuario de colección"
 
 #: database/models/data_collections/collection_users.py:29
 #: database/models/object_types/data_collections/collection_roles.py:25
 msgid "role"
-msgstr ""
+msgstr "rol"
 
 #: database/models/data_collections/collection_users.py:30
 msgid "Role of user in collection"
-msgstr ""
+msgstr "Rol del usuario en la colección"
 
 #: database/models/data_collections/collection_users.py:37
 msgid "Metadata associated to user in collection"
-msgstr ""
+msgstr "Metadatos asociados al usuario en la colección"
 
 #: database/models/data_collections/collection_users.py:41
 msgid "Collection User"
-msgstr ""
+msgstr "Usuario de colección"
 
 #: database/models/data_collections/collection_users.py:42
 msgid "Collection Users"
-msgstr ""
+msgstr "Usuarios de colección"
 
 #: database/models/data_collections/collection_users.py:49
 #, python-format
 msgid "User %(user)s of collection %(collection)s"
-msgstr ""
+msgstr "Usuario %(user)s de la colección %(collection)s"
 
 #: database/models/data_collections/collection_users.py:59
 msgid "Role is not valid for this collection's type"
-msgstr ""
+msgstr "Este rol no es válido para este tipo de colección"
 
 #: database/models/data_collections/collection_users.py:66
 #, python-format
@@ -502,59 +504,61 @@ msgid ""
 "Invalid metadata for user of role type %(role)s in collection "
 "%(collection)s. Error: %(error)s"
 msgstr ""
+"Metadatos de usuario invalidos para el tipo de rol %(role)s en "
+"la colección %(collection)s. Error: %(error)s"
 
 #: database/models/data_collections/data_collections.py:22
 #: database/models/object_types/data_collections/collection_device_types.py:17
 #: database/models/object_types/data_collections/collection_item_types.py:17
 #: database/models/object_types/data_collections/collection_roles.py:17
 msgid "collection type"
-msgstr ""
+msgstr "tipo de colección"
 
 #: database/models/data_collections/data_collections.py:23
 msgid "Type of collection"
-msgstr ""
+msgstr "Tipo de colección"
 
 #: database/models/data_collections/data_collections.py:31
 msgid "Name of collection"
-msgstr ""
+msgstr "Nombre de la colección"
 
 #: database/models/data_collections/data_collections.py:36
 msgid "Description of collection"
-msgstr ""
+msgstr "Descripción de la colección"
 
 #: database/models/data_collections/data_collections.py:41
 msgid "Metadata associated to collection"
-msgstr ""
+msgstr "Metadatos asociados a la colección"
 
 #: database/models/data_collections/data_collections.py:49
 #: database/models/users/users.py:29
 msgid "institution"
-msgstr ""
+msgstr "institución"
 
 #: database/models/data_collections/data_collections.py:50
 msgid "Institution to which the collection belogs"
-msgstr ""
+msgstr "Institución a la cual pertenece la colección"
 
 #: database/models/data_collections/data_collections.py:56
 msgid "Logo of data collection"
-msgstr ""
+msgstr "Logo de la colección"
 
 #: database/models/data_collections/data_collections.py:80
 #: database/models/object_types/data_collections/collection_types.py:82
 msgid "administrators"
-msgstr ""
+msgstr "administradores"
 
 #: database/models/data_collections/data_collections.py:81
 msgid "Administrators of collection"
-msgstr ""
+msgstr "Administrador de la colección"
 
 #: database/models/data_collections/data_collections.py:86
 msgid "is open"
-msgstr ""
+msgstr "es abierta"
 
 #: database/models/data_collections/data_collections.py:88
 msgid "Boolean flag indicating whether contents of the collection are public."
-msgstr ""
+msgstr "Indica si los contenidos de la colección son públicos"
 
 #: database/models/data_collections/data_collections.py:94
 #: selia/templates/selia/components/create/navbar.html:6
@@ -572,7 +576,7 @@ msgstr ""
 #: selia/templates/selia/components/select_list_items/sampling_event_devices.html:36
 #: selia/templates/selia/components/select_list_items/sampling_events.html:24
 msgid "Collection"
-msgstr ""
+msgstr "Colección"
 
 #: database/models/data_collections/data_collections.py:95
 #: irekua/templates/irekua/content/about.html:82
@@ -592,47 +596,47 @@ msgstr ""
 #: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:12
 #: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:15
 msgid "Collections"
-msgstr ""
+msgstr "Colecciones"
 
 #: database/models/data_collections/data_collections.py:100
 msgid "Can add site to collection"
-msgstr ""
+msgstr "Puede añadir un sitio a la colección"
 
 #: database/models/data_collections/data_collections.py:103
 msgid "Can add item to collection"
-msgstr ""
+msgstr "Puede añadir un item a la colección"
 
 #: database/models/data_collections/data_collections.py:106
 msgid "Can add device to collection"
-msgstr ""
+msgstr "Puede añadir un dispositivo a la colección"
 
 #: database/models/data_collections/data_collections.py:109
 msgid "Can add user to collection"
-msgstr ""
+msgstr "Puede añadir un usuario a la colección"
 
 #: database/models/data_collections/data_collections.py:112
 msgid "Can add licence to collection"
-msgstr ""
+msgstr "Puede añadir una licencia a la colección"
 
 #: database/models/data_collections/data_collections.py:115
 msgid "Can annotate items in collection"
-msgstr ""
+msgstr "Puede anotar items de la colección"
 
 #: database/models/data_collections/data_collections.py:118
 msgid "Can vote on annotations of items in collection"
-msgstr ""
+msgstr "Puede votar anotaciones de items de la colección"
 
 #: database/models/data_collections/data_collections.py:121
 msgid "Can view sites in collection"
-msgstr ""
+msgstr "Puede ver sitios de la colección"
 
 #: database/models/data_collections/data_collections.py:124
 msgid "Can view items in collection"
-msgstr ""
+msgstr "Puede ver items de la colección"
 
 #: database/models/data_collections/data_collections.py:127
 msgid "Can view devices in collection"
-msgstr ""
+msgstr "Puede ver dispositivos de la colección"
 
 #: database/models/data_collections/data_collections.py:130
 msgid "Can view sampling event in collection"
@@ -640,121 +644,121 @@ msgstr ""
 
 #: database/models/data_collections/data_collections.py:133
 msgid "Can view annotations of items in collection"
-msgstr ""
+msgstr "Puede ver anotaciones de los items de la colección"
 
 #: database/models/data_collections/data_collections.py:136
 msgid "Can change sites in collection"
-msgstr ""
+msgstr "Puede cambiar los sitios de la colección"
 
 #: database/models/data_collections/data_collections.py:139
 msgid "Can change user info in collection"
-msgstr ""
+msgstr "Puede cambiar los usuarios de la colección"
 
 #: database/models/data_collections/data_collections.py:142
 msgid "Can change items in collection"
-msgstr ""
+msgstr "Puede cambiar los items de la colección"
 
 #: database/models/data_collections/data_collections.py:145
 msgid "Can change devices in collection"
-msgstr ""
+msgstr "Puede cambiar los dispositivos de la colección"
 
 #: database/models/data_collections/data_collections.py:148
 msgid "Can change annotations of items in collection"
-msgstr ""
+msgstr "Puede cambiar las anotaciones de items en la colección"
 
 #: database/models/data_collections/data_collections.py:151
 msgid "Can change sampling events in collection"
-msgstr ""
+msgstr "Puede cambiar los eventos de muestreo de la colección"
 
 #: database/models/data_collections/data_collections.py:154
 msgid "Can download annotation items"
-msgstr ""
+msgstr "Puede descargar las anotaciones de los items de la colección"
 
 #: database/models/data_collections/data_collections.py:167
 #, python-brace-format
 msgid "Invalid metadata for collection of type {type}. Error: {error}"
-msgstr ""
+msgstr "Metadatos invalidos para el tipo de coleccion {type}. Error: {error}"
 
 #: database/models/data_collections/data_collections.py:237
 #, python-format
 msgid "Licence %(licence)s is not part of collection %(collection)s."
-msgstr ""
+msgstr "La licencia %(licence)s no es parte de la colección %(collection)s"
 
 #: database/models/data_collections/metacollections.py:13
 msgid "Name of meta collection"
-msgstr ""
+msgstr "Nombre de la metacolección"
 
 #: database/models/data_collections/metacollections.py:19
 msgid "Description of Meta Collection"
-msgstr ""
+msgstr "Descripción de la metacolección"
 
 #: database/models/data_collections/metacollections.py:24
 msgid "items"
-msgstr ""
+msgstr "items"
 
 #: database/models/data_collections/metacollections.py:25
 msgid "Items belonging to MetaCollection"
-msgstr ""
+msgstr "Items pertenecientes a la metacolección"
 
 #: database/models/data_collections/metacollections.py:31
 msgid "Curators of metacollection"
-msgstr ""
+msgstr "Curadores de la metacolección"
 
 #: database/models/data_collections/metacollections.py:35
 msgid "Meta Collection"
-msgstr ""
+msgstr "Metacolección"
 
 #: database/models/data_collections/metacollections.py:36
 msgid "Meta Collections"
-msgstr ""
+msgstr "Metacolecciones"
 
 #: database/models/devices/device_brands.py:12
 msgid "Name of device brand"
-msgstr ""
+msgstr "Nombre de la marca del dispositivo"
 
 #: database/models/devices/device_brands.py:18
 msgid "Brand's website"
-msgstr ""
+msgstr "Sitio web de la marca"
 
 #: database/models/devices/device_brands.py:24
 msgid "Logo of device brand"
-msgstr ""
+msgstr "Logo de la marca del dispositivo"
 
 #: database/models/devices/device_brands.py:30
 msgid "Device Brand"
-msgstr ""
+msgstr "Marca de dispositivo"
 
 #: database/models/devices/device_brands.py:31
 msgid "Device Brands"
-msgstr ""
+msgstr "Marcas de dispositivos"
 
 #: database/models/devices/devices.py:18
 #: database/models/object_types/data_collections/collection_device_types.py:25
 #: database/models/object_types/sampling_events/sampling_event_type_devices.py:27
 msgid "device type"
-msgstr ""
+msgstr "tipo de dispositivo"
 
 #: database/models/devices/devices.py:19
 msgid "Type of device"
-msgstr ""
+msgstr "Tipo de dispositivo"
 
 #: database/models/devices/devices.py:26
 #: irekua_utils/filters/devices/physical_devices.py:42
 msgid "brand"
-msgstr ""
+msgstr "marca"
 
 #: database/models/devices/devices.py:27
 msgid "Brand of device"
-msgstr ""
+msgstr "Marca de dispositivo"
 
 #: database/models/devices/devices.py:32
 #: irekua_utils/filters/devices/physical_devices.py:43
 msgid "model"
-msgstr ""
+msgstr "modelo"
 
 #: database/models/devices/devices.py:33
 msgid "Model of device"
-msgstr ""
+msgstr "Modelo del dispositivo"
 
 #: database/models/devices/devices.py:37
 #: database/models/object_types/data_collections/collection_device_types.py:31
@@ -768,15 +772,15 @@ msgstr ""
 #: database/models/object_types/site_types.py:27
 #: database/models/object_types/term_types.py:43
 msgid "metadata schema"
-msgstr ""
+msgstr "esquema de metadatos"
 
 #: database/models/devices/devices.py:38
 msgid "JSON Schema for metadata of device info"
-msgstr ""
+msgstr "Esquema JSON para los metadatos asociados a un dispositivo"
 
 #: database/models/devices/devices.py:46
 msgid "JSON Schema for configuration info of device"
-msgstr ""
+msgstr "Esquema JSON para la información de configuración del dispositivo"
 
 #: database/models/devices/devices.py:53
 #: selia/templates/selia/collection_detail/extra/create_physical_device.html:38
@@ -790,7 +794,7 @@ msgstr ""
 #: selia/templates/selia/components/select_list_items/items.html:44
 #: selia/templates/selia/user/devices/create.html:35
 msgid "Device"
-msgstr ""
+msgstr "Dispositivo"
 
 #: database/models/devices/devices.py:54
 #: irekua/templates/irekua/content/about.html:112
@@ -802,181 +806,181 @@ msgstr ""
 #: selia/templates/selia/components/summaries/user.html:38
 #: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:49
 msgid "Devices"
-msgstr ""
+msgstr "Dispositivos"
 
 #: database/models/devices/devices.py:73
 #, python-format
 msgid "Invalid device configuration. Error: %(error)s"
-msgstr ""
+msgstr "Configuración de dispositivo inválida. Error: %(error)s"
 
 #: database/models/devices/devices.py:83
 #, python-format
 msgid "Invalid device metadata. Error: %(error)s"
-msgstr ""
+msgstr "Metadatos de dispositivo invalidos. Error: %(error)s"
 
 #: database/models/devices/physical_devices.py:16
 #: irekua_utils/filters/devices/physical_devices.py:41
 msgid "custom id"
-msgstr ""
+msgstr "id personal"
 
 #: database/models/devices/physical_devices.py:17
 msgid "Simple device identifier"
-msgstr ""
+msgstr "Nombre personal para fines de identificación"
 
 #: database/models/devices/physical_devices.py:23
 #: irekua_utils/filters/devices/physical_devices.py:40
 msgid "serial number"
-msgstr ""
+msgstr "número de serie"
 
 #: database/models/devices/physical_devices.py:24
 msgid "Serial number of device"
-msgstr ""
+msgstr "Número de serie del dispositivo"
 
 #: database/models/devices/physical_devices.py:31
 msgid "device"
-msgstr ""
+msgstr "dispositivo"
 
 #: database/models/devices/physical_devices.py:32
 msgid "Brand and model of device"
-msgstr ""
+msgstr "Marca y modelo del dispositivo"
 
 #: database/models/devices/physical_devices.py:38
 msgid "Metadata associated to device"
-msgstr ""
+msgstr "Metadatos asociados al dispositivo"
 
 #: database/models/devices/physical_devices.py:44
 msgid "bundle"
-msgstr ""
+msgstr "manojo"
 
 #: database/models/devices/physical_devices.py:46
 msgid "Does this device possibly represents many physical devices?"
-msgstr ""
+msgstr "¿Es posible que este dispositivo consista de varios dispositivos físicos?"
 
 #: database/models/devices/physical_devices.py:51
 msgid "Physical Device"
-msgstr ""
+msgstr "Dispositivo físico"
 
 #: database/models/devices/physical_devices.py:52
 msgid "Physical Devices"
-msgstr ""
+msgstr "Dispositivo físico"
 
 #: database/models/devices/physical_devices.py:60
 #, python-format
 msgid "Device %(id)s of type %(device)s"
-msgstr ""
+msgstr "Dispositivo %(id)s de tipo %(device)s"
 
 #: database/models/items/items.py:49
 msgid "file size"
-msgstr ""
+msgstr "tamaño de archivo"
 
 #: database/models/items/items.py:50
 msgid "Size of resource in Bytes"
-msgstr ""
+msgstr "Tamaño del recurso en bytes"
 
 #: database/models/items/items.py:55
 #: database/models/items/secondary_items.py:51
 msgid "hash"
-msgstr ""
+msgstr "hash"
 
 #: database/models/items/items.py:56
 msgid "Hash of resource file"
-msgstr ""
+msgstr "Hash del archivo"
 
 #: database/models/items/items.py:65
 #: database/models/items/secondary_items.py:65
 #: database/models/object_types/data_collections/collection_item_types.py:25
 msgid "item type"
-msgstr ""
+msgstr "tipo de item"
 
 #: database/models/items/items.py:66
 msgid "Type of resource"
-msgstr ""
+msgstr "Tipo de recurso"
 
 #: database/models/items/items.py:71
 #: database/models/items/secondary_items.py:57
 msgid "item file"
-msgstr ""
+msgstr "archivo del item"
 
 #: database/models/items/items.py:72
 #: database/models/items/secondary_items.py:58
 msgid "Upload file associated to file"
-msgstr ""
+msgstr "Sube el archivo asociado al item"
 
 #: database/models/items/items.py:78
 #: database/models/items/secondary_items.py:79
 msgid "media info"
-msgstr ""
+msgstr "información de media"
 
 #: database/models/items/items.py:79
 msgid "Information of resource file"
-msgstr ""
+msgstr "Información del archivo"
 
 #: database/models/items/items.py:85 database/models/temp/upload_session.py:13
 msgid "sampling event device"
-msgstr ""
+msgstr "dispositivo de evento de muestreo"
 
 #: database/models/items/items.py:86 database/models/temp/upload_session.py:14
 msgid "Sampling event device used to create item"
-msgstr ""
+msgstr "Dispositivo de evento de muestreo usado para crear el item"
 
 #: database/models/items/items.py:93 database/models/terms/entailments.py:15
 #: database/models/terms/synonyms.py:16
 msgid "source"
-msgstr ""
+msgstr "fuente"
 
 #: database/models/items/items.py:94
 msgid "Source of item (parsing function and parent directory)"
-msgstr ""
+msgstr "Fuente de item (funcián de parseo y directorio)"
 
 #: database/models/items/items.py:100
 msgid "source foreign key"
-msgstr ""
+msgstr "llave foránea de fuente"
 
 #: database/models/items/items.py:101
 msgid "Foreign key of file in source database"
-msgstr ""
+msgstr "Llave foránea de archivo en la base de datos de fuente"
 
 #: database/models/items/items.py:108
 msgid "Metadata associated to item"
-msgstr ""
+msgstr "Metadatos asociados al item"
 
 #: database/models/items/items.py:113 irekua_utils/filters/items/items.py:43
 msgid "captured on"
-msgstr ""
+msgstr "capturado el"
 
 #: database/models/items/items.py:114
 msgid "Date on which item was produced"
-msgstr ""
+msgstr "Fecha en la cual fue producido el item"
 
 #: database/models/items/items.py:120
 #: database/models/sampling_events/sampling_event_devices.py:51
 #: database/models/sampling_events/sampling_events.py:65
 msgid "licence"
-msgstr ""
+msgstr "lincencia"
 
 #: database/models/items/items.py:121
 msgid "Licence of item"
-msgstr ""
+msgstr "Licencia de item"
 
 #: database/models/items/items.py:128
 msgid "tags"
-msgstr ""
+msgstr "etiquetas"
 
 #: database/models/items/items.py:129
 msgid "Tags for item"
-msgstr ""
+msgstr "Etiquetas para el item"
 
 #: database/models/items/items.py:133
 msgid "ready event types"
-msgstr ""
+msgstr "tipos de evento finalizados"
 
 #: database/models/items/items.py:134
 msgid "Types of event for which item has been fully annotated"
-msgstr ""
+msgstr "Tipos de evento para el cual el item ya ha sido completamente anotado"
 
 #: database/models/items/items.py:138
 msgid "Item"
-msgstr ""
+msgstr "Item"
 
 #: database/models/items/items.py:139
 #: irekua/templates/irekua/content/about.html:102
@@ -1001,21 +1005,23 @@ msgstr ""
 #: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:38
 #: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:41
 msgid "Items"
-msgstr ""
+msgstr "Items"
 
 #: database/models/items/items.py:144
 msgid "Can download item"
-msgstr ""
+msgstr "Puede descargar el item"
 
 #: database/models/items/items.py:145
 msgid "Can annotate item"
-msgstr ""
+msgstr "Puede anotar el item"
 
 #: database/models/items/items.py:157
 msgid ""
 "Item creator was not specified and is not determined by sampling event "
 "device."
 msgstr ""
+"El creador del item no fue especificado y no pudo ser determinado por el "
+"dispositivo utilizado"
 
 #: database/models/items/items.py:224
 #, python-brace-format
@@ -1023,69 +1029,71 @@ msgid ""
 "File MIME type does not coincide with declared item type (file: {file_type} !"
 "= {item_type} :item_type)"
 msgstr ""
+"El tipo MIME del archivo no coincide con el tipo de item declarado (archivo: {file_type}"
+" != {item_type} :tipo de item)"
 
 #: database/models/items/items.py:240
 msgid "Licence was not provided to item nor to sampling event"
-msgstr ""
+msgstr "No se designaron licencias al item y no se pudieron inferir del evento de muestreo"
 
 #: database/models/items/items.py:251
 #: database/models/items/secondary_items.py:101
 msgid "If no file is provided, a hash must be given"
-msgstr ""
+msgstr "Si el archivo no fue provisto es obligatorio determinar el hash"
 
 #: database/models/items/items.py:267
 #: database/models/items/secondary_items.py:114
 msgid "Hash of file and recorded hash do not coincide"
-msgstr ""
+msgstr "El hash del archivo y el hash previamente registrado no coinciden"
 
 #: database/models/items/secondary_items.py:52
 msgid "Hash of secondary resource file"
-msgstr ""
+msgstr "Hash de archivo"
 
 #: database/models/items/secondary_items.py:66
 msgid "Type of file of secondary item"
-msgstr ""
+msgstr "Tipo de archivo de item secundario"
 
 #: database/models/items/secondary_items.py:72
 msgid "item id"
-msgstr ""
+msgstr "id de item"
 
 #: database/models/items/secondary_items.py:73
 msgid "Reference to primary item associated to secondary item"
-msgstr ""
+msgstr "Referencia al item primario asociado al item secundario"
 
 #: database/models/items/secondary_items.py:80
 msgid "Media information of secondary item file"
-msgstr ""
+msgstr "Información de media del archivo del item secundario"
 
 #: database/models/items/secondary_items.py:86
 msgid "Secondary Item"
-msgstr ""
+msgstr "Item secundario"
 
 #: database/models/items/secondary_items.py:87
 msgid "Secondary Items"
-msgstr ""
+msgstr "Items secundarios"
 
 #: database/models/items/secondary_items.py:92
 #, python-format
 msgid "Secondary Item %(id)s derived from %(itemid)s"
-msgstr ""
+msgstr "Item secundario %(id)s derivado de %(itemid)s"
 
 #: database/models/items/sources.py:13
 msgid "directory"
-msgstr ""
+msgstr "directorio"
 
 #: database/models/items/sources.py:14
 msgid "Directory containing all files in source"
-msgstr ""
+msgstr "Directorio que contiene todos los archivos en la fuente"
 
 #: database/models/items/sources.py:19
 msgid "source file"
-msgstr ""
+msgstr "archivo fuente"
 
 #: database/models/items/sources.py:20
 msgid "File containing metadata for files in source directory"
-msgstr ""
+msgstr "Archivo que contiene los metadatos de los archivos "
 
 #: database/models/items/sources.py:25
 msgid "parse function"
@@ -2998,6 +3006,8 @@ msgid ""
 "      Register any individual traits\n"
 "    "
 msgstr ""
+
+=================
 
 #: selia/templates/selia/collection_detail/extra/create_physical_device.html:145
 #: selia/templates/selia/components/create/physical_device.html:128
