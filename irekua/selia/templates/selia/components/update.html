@@ -3,7 +3,7 @@
 <div class="modal fade" id="changeModal" role="dialog" aria-labelledby="changeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <form action="#" method="post">
+      <form action="#" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="modal-header">
           <h5 class="modal-title" id="changeModalLabel">{% trans 'Update' %}</h5>

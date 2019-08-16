@@ -297,3 +297,7 @@ a {
   border-radius: 0!important;
   background: white;
 }
+
+.p-auto {
+  justify-content: center;
+}

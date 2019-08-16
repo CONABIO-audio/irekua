@@ -17,27 +17,43 @@
   </div>
     <div class="col">
       <div class="row">
-        <h6>{% trans 'Sampling event type' %}</h6>
-        <div class="text-muted ml-4">{{ item.sampling_event_type }}</div>
-      </div>
-      <div class="row">
         <h6>{% trans 'Collection' %}</h6>
         <div class="text-muted ml-4">{{ item.collection }}</div>
       </div>
       <div class="row">
         <h6>{% trans 'Collection site' %}</h6>
-        <div class="text-muted ml-4"><a href="{% url 'selia:collection_site_detail' item.collection_site.pk %}">{{ item.collection_site.site.name }}</a></div>
+        <div class="text-muted ml-4"><a href="{% url 'selia:collection_site_detail' item.collection_site.pk %}">{% trans 'Site' %} {{ item.collection_site.pk }}</a></div>
       </div>
+      {% if item.collection_site.site.name %}
+      <div class="row">
+        <h6>{% trans 'Site name' %}</h6>
+        <div class="text-muted ml-4">{{ item.collection_site.site.name }}</div>
+      </div>
+      {% endif %}
+      {% if item.collection_site.site.locality %}
+      <div class="row">
+        <h6>{% trans 'Site locality' %}</h6>
+        <div class="text-muted ml-4">{{ item.collection_site.site.locality }}</div>
+      </div>
+      {% endif %}
     </div>
 
     <div class="col">
       <div class="row">
+        <h6>{% trans 'Sampling event type' %}</h6>
+        <div class="text-muted ml-4">{{ item.sampling_event_type }}</div>
+      </div>
+      <div class="row">
         <h6>{% trans 'Started on' %}</h6>
-        <div class="text-muted ml-4">{{ item.started_on }}</div>
+        <div class="text-muted ml-4">{{ item.started_on|date }}</div>
       </div>
       <div class="row">
         <h6>{% trans 'Ended on' %}</h6>
-        <div class="text-muted ml-4">{{ item.ended_on }}</div>
+        <div class="text-muted ml-4">{{ item.ended_on|date }}</div>
+      </div>
+      <div class="row">
+        <h6>{% trans 'Created on' %}</h6>
+        <div class="text-muted ml-4">{{ item.created_on|date }}</div>
       </div>
     </div>
 

@@ -55,11 +55,13 @@ def delete_component(context, object):
     context['object'] = object
     return context
 
+
 @register.inclusion_tag('selia/components/viewer.html', takes_context=True)
 def viewer_component(context, viewer_template, object):
     context['viewer_template'] = viewer_template
     context['object'] = object
     return context
+
 
 @register.inclusion_tag('selia/components/create.html', takes_context=True)
 def create_component(context, create_template, form):
@@ -67,10 +69,12 @@ def create_component(context, create_template, form):
     context['form'] = form
     return context
 
+
 @register.inclusion_tag('selia/components/create_wizard.html', takes_context=True)
 def create_wizard(context, wizard):
     context['wizard'] = wizard
     return context
+
 
 @register.inclusion_tag('selia/components/annotator.html', takes_context=True)
 def annotator_component(context, annotator_template, item, annotation_list, mode):
@@ -204,7 +208,7 @@ def selia_form(form, label):
         label_html = form.label_tag()
 
     form_html = '''
-      <div class="form-group">
+      <div class="form-group w-100">
         <small>{label_html}</small>
         <div class="input-group">
             {prepend_html}
@@ -228,3 +232,8 @@ def selia_form(form, label):
 @register.inclusion_tag('selia/components/bootstrap_form.html')
 def bootstrap_form(form):
     return {'form': form}
+
+
+@register.filter(name='update_metadata', is_safe=True)
+def update_metadata(form, metadata):
+    form.update_metadata(metadata)

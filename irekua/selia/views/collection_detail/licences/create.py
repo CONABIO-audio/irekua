@@ -1,9 +1,7 @@
-from django import forms
-from django.shortcuts import redirect
 from selia.views.utils import SeliaCreateView
-from django.urls import reverse
 from database.models import Collection
 from database.models import Licence
+from database.models import LicenceType
 
 
 class CollectionLicenceCreateView(SeliaCreateView):
@@ -35,5 +33,16 @@ class CollectionLicenceCreateView(SeliaCreateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['collection'] = self.get_object(queryset=Collection.objects.all())
+        collection = self.get_object(queryset=Collection.objects.all())
+        context['collection'] = collection
+
+        collection_type = collection.collection_type
+        if collection_type.restrict_licence_types:
+            context['licence_types'] = collection_type.licence_types.all()
+        else:
+            context['licence_types'] = LicenceType.objects.all()
+
+        if 'licence_type' in self.request.GET:
+            licence_type = LicenceType.objects.get(pk=self.request.GET['licence_type'])
+            context['licence_type'] = licence_type
         return context

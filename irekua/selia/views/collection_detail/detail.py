@@ -1,4 +1,5 @@
 from django import forms
+from dal import autocomplete
 
 from database.models import Collection
 from selia.views.utils import SeliaDetailView
@@ -13,9 +14,14 @@ class CollectionUpdateForm(forms.ModelForm):
         fields = [
             'name',
             'institution',
+            'description',
             'metadata',
             'logo'
         ]
+
+        widgets = {
+            'institution': autocomplete.ModelSelect2(url='selia:institutions_autocomplete')
+        }
 
 
 class CollectionDetailView(SeliaDetailView):
@@ -30,7 +36,6 @@ class CollectionDetailView(SeliaDetailView):
 
     def get_form(self, **kwargs):
         form = super().get_form(**kwargs)
-
         schema = self.object.collection_type.metadata_schema
         form.fields['metadata'].update_schema(schema)
         return form

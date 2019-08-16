@@ -1,11 +1,8 @@
 {% load i18n %}
 {% load selia_buttons %}
 
-<div class="container-fluid h-100 w-100 description_object">
+<div class="container-fluid w-100 description_object">
   <div class="col h-100 w-100">
-    <div class="row">
-      <h3>{% trans 'Detail'%}</h3>
-    </div>
     <div class="row">
       <div class="container-fluid h-100 w-100">
         {% include detail_template with object=object %}

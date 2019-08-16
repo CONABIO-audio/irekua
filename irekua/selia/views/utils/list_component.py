@@ -34,7 +34,6 @@ class SeliaList(object):
 
         return context
 
-
     def get_ordering_choices(self):
         orderings = []
         for field, label in self.ordering_fields:
@@ -61,8 +60,8 @@ class SeliaList(object):
 
         class OrderingForm(forms.Form):
             order = forms.ChoiceField(
-                    label=_('ordering'),
-                    choices=ordering_choices)
+            label=_('ordering'),
+            choices=ordering_choices)
 
         return OrderingForm
 
@@ -164,4 +163,3 @@ class SeliaList(object):
             return self.list_item_template
 
         return NotImplementedError('No template for list item was given')
-

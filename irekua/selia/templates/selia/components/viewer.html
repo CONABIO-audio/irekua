@@ -1,11 +1,5 @@
 {% load i18n %}
 
-<div class="container-fluid h-100 w-100 description_object">
-  <div class="col h-100 w-100">
-    <div class="row">
-      <div class="container-fluid h-100 w-100">
-        {% include viewer_template with object=object %}
-      </div>
-    </div>
-  </div>
+<div class="container-fluid h-100 w-100 description_object p-0">
+    {% include viewer_template with object=object %}
 </div>

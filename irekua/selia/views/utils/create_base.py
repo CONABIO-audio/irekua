@@ -21,8 +21,8 @@ class SeliaCreateView(CreateView, SingleObjectMixin):
     def get_chain(self):
         if 'chain' in self.request.GET:
             return self.request.GET.get('chain', None)
-        else:
-            return ''
+
+        return ''
 
     def get_new_chain(self):
         chain = self.get_chain()
@@ -33,10 +33,11 @@ class SeliaCreateView(CreateView, SingleObjectMixin):
 
         chain_str = ''
         next_url = ''
-        if len(chain_arr) != 0:
+        if chain_arr:
             next_url = chain_arr[-1]
             chain_arr.pop(-1)
-            if len(chain_arr) != 0:
+
+            if chain_arr:
                 chain_str = "|".join(chain_arr)
 
         return chain_str, next_url
@@ -45,16 +46,15 @@ class SeliaCreateView(CreateView, SingleObjectMixin):
         if 'back' in self.request.GET:
             chain_str = self.get_chain()
             return self.request.GET['back']+"?&chain="+chain_str
-        else:
-            chain_str, next_url = self.get_new_chain()
 
-            if next_url == '':
-                return self.get_success_url()
-                
-            return next_url+"?&chain="+chain_str
+        chain_str, next_url = self.get_new_chain()
 
-    def handle_finish_create(self,new_object=None):
-        #next_url = self.request.GET.get('next', None)
+        if next_url == '':
+            return self.get_success_url()
+
+        return next_url+"?&chain="+chain_str
+
+    def handle_finish_create(self, new_object=None):
         chain_str, next_url = self.get_new_chain()
 
         if next_url == '':
@@ -71,7 +71,6 @@ class SeliaCreateView(CreateView, SingleObjectMixin):
         return reverse(self.success_url, args=self.get_success_url_args())
 
     def post(self, *args, **kwargs):
-        print(self.request.POST)
         return self.handle_create()
 
     def get(self, *args, **kwargs):
@@ -87,5 +86,4 @@ class SeliaCreateView(CreateView, SingleObjectMixin):
         context = super().get_context_data(*args, **kwargs)
         context['chain'] = self.get_chain()
         context['back'] = self.get_back_url()
-
         return context

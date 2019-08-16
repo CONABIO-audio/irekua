@@ -257,10 +257,11 @@ class Item(IrekuaModelBaseUser):
         self.item_file.open() # pylint: disable=E1101
         hash_string = hash_file(self.item_file)
         item_size = self.item_file.size  # pylint: disable=E1101
+        print('item size', item_size)
 
         if self.hash is '':
             self.hash = hash_string
-            self.item_size = item_size
+            self.filesize = item_size
 
         if self.hash != hash_string:
             msg = _('Hash of file and recorded hash do not coincide')

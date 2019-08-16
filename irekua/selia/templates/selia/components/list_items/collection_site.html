@@ -15,13 +15,13 @@
       <div class="media-body mt-0">
         <h4 class="mt-0">
           {% if item.site.name %}
-          {{ item.site.name }}
+            {{ item.site.name }}
           {% else %}
           {% trans 'Site' %} {{item.site.pk }}
           {% endif %}
         </h4>
         {% if item.site.locality %}
-        <div class="text-muted">{{ item.site.locality }}</div>
+          <div class="text-muted">{{ item.site.locality }}</div>
         {% endif %}
         <div class="text-muted"><a href="{% url 'selia:collection_site_detail' item.pk %}">{% enter_button %}</a></div>
       </div>
@@ -33,21 +33,35 @@
       <div class="text-muted ml-4">{{ item.site_type }}</div>
     </div>
     <div class="row">
-      <h6>{% trans 'Collection Site id' %}</h6>
+      <h6>{% trans 'Collection Site ID' %}</h6>
       <div class="text-muted ml-4">{{ item.internal_id }}</div>
     </div>
-  </div>
-  <div class="col">
     <div class="row">
       <h6>{% trans 'Collection' %}</h6>
       <div class="text-muted ml-4">{{ item.collection }}</div>
     </div>
+
+  </div>
+
+  <div class="col">
+    {% if item.site.name %}
+    <div class="row">
+      <h6>{% trans 'Name' %}</h6>
+      <div class="text-muted ml-4">{{ item.site.name }}</div>
+    </div>
+    {% endif %}
+    {% if items.site.locality %}
+    <div class="row">
+      <h6>{% trans 'Locality' %}</h6>
+      <div class="text-muted ml-4">{{ item.site.locality }}</div>
+    </div>
+    {% endif %}
     <div class="row">
       <h6>{% trans 'Owner' %}</h6>
       <div class="text-muted ml-4">{{ item.site.created_by }}</div>
     </div>
     <div class="row">
-      <h6>{% trans 'Added on' %}</h6>
+      <h6>{% trans 'Registered on' %}</h6>
       <div class="text-muted ml-4">{{ item.created_on }}</div>
     </div>
   </div>

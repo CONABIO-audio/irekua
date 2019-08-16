@@ -1,18 +1,13 @@
 {% load json_tags %}
 {% load i18n %}
 
-
-<div class="border-top" style="padding-top:20px;">
 <div class="media">
   {% if object.logo %}
   <img class="mr-3 img-thumbnail" src="{{ object.logo.url }}" alt="logo">
   {% endif %}
   <div class="media-body mt-0">
     <h4 class="mt-0">{% trans 'Site ' %}{{ object.pk }}
-      {% if object.is_open %}
-      {% endif %}
     </h4>
-    {{ object.description }}
   </div>
 </div>
 <div class="container mt-3 mb-3">
@@ -52,5 +47,4 @@
       <p class="text-muted">{{ object.created_on }}</p>
     </div>
   </div>
-</div>
 </div>

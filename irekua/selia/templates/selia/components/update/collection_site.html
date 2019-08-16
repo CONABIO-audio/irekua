@@ -1,2 +1,7 @@
-{% load crispy_forms_tags %}
-{{ form | crispy }}
+{% load selia_components %}
+
+{% bootstrap_form form.internal_id %}
+
+{% if object.site_type.metadata_schema %}
+{{ form.metadata }}
+{% endif %}

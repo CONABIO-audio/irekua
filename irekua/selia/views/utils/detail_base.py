@@ -67,14 +67,19 @@ class SeliaDetailView(UpdateView):
     def protected_redirect(self):
         return render(self.request, self.protected_template)
 
+    def get_delete_redirect_url_args(self):
+        return []
+
     def handle_delete(self):
         if not self.has_delete_permission():
             return self.no_permission_redirect()
 
+        self.object = self.get_object()
         try:
-            self.get_object().delete()
             redirect_to = self.get_delete_redirect_url()
-            return redirect(redirect_to)
+            redirect_url_args = self.get_delete_redirect_url_args()
+            self.object.delete()
+            return redirect(redirect_to, *redirect_url_args)
         except ProtectedError:
             return self.protected_redirect()
 

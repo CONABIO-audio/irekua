@@ -19,12 +19,16 @@ class SelectSerializer(serializers.ModelSerializer):
 
 
 class ListSerializer(serializers.ModelSerializer):
+    media_type = serializers.CharField(
+        source='item_type.media_type')
+
     class Meta:
         model = CollectionItemType
         fields = (
             'url',
             'id',
             'item_type',
+            'media_type',
             'metadata_schema',
         )
 

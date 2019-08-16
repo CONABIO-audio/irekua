@@ -16,15 +16,15 @@
 
 {% block main-content %}
 <div class="row p-5">
-  <div class="col-6">
-  	<div class="row p-5">
+  <div class="col-6 p-4">
+  	<div class="row pb-2">
       {% detail_component detail_template=detail_template object=licence %}
-	</div>
-	<div class="row p-5">
+	   </div>
+  	<div class="row pt-2">
       {% summary_component summary_template=summary_template object=licence %}
+    </div>
   </div>
-  </div>
-  <div class="col-6">
+  <div class="col-6 px-4">
     {% viewer_component viewer_template=viewer_template object=licence %}
    </div>
 </div>

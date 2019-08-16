@@ -11,7 +11,9 @@
         {% endif %}
         <div class="media-body mt-0">
           <h4 class="mt-0"><a href="{% url 'selia:collection_detail' item.name %}">{{ item.name }}</a></h4>
-          {{ item.description }}
+          <p class="text-muted">
+            {{ item.description }}
+          </p>
         </div>
       </div>
     </div>

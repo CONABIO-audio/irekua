@@ -1,17 +1,11 @@
 {% load json_tags %}
 {% load i18n %}
+{% load selia_buttons %}
 
-<div class="border-top" style="padding-top:20px;">
 <div class="media">
-  {% if object.logo %}
-  <img class="mr-3 img-thumbnail" src="{{ object.logo.url }}" alt="logo">
-  {% endif %}
   <div class="media-body mt-0">
     <h4 class="mt-0">{% trans 'Sampling event ' %}{{ object.pk }}
-      {% if object.is_open %}
-      {% endif %}
     </h4>
-    {{ object.description }}
   </div>
 </div>
 <div class="container mt-3 mb-3">
@@ -27,10 +21,6 @@
   </div>
   <div class="row">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Collection site' %}</h5>
-      <p class="text-muted">{{ object.collection_site.site.name }}</p>
-    </div>
-    <div class="col">
       <h5 class="mt-0">{% trans 'Started on' %}</h5>
       <p class="text-muted">{{ object.started_on }}</p>
     </div>
@@ -40,12 +30,53 @@
     </div>
   </div>
 
+  <hr/>
+
+  <div class="row w-100">
+    <h5 class="w-100 text-center">{% trans 'Site info' %}</h5>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Collection site' %}</h5>
+      <p class="text-muted"><a href="{% url 'selia:collection_site_detail' object.collection_site.pk %}">{% trans 'Site' %} {{ object.collection_site.pk }} &nbsp;&nbsp; {% enter_button %}</a></p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Collection site internal ID' %}</h5>
+      <p class="text-muted">{{ object.collection_site.internal_id }}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Site name' %}</h5>
+      <p class="text-muted">{{ object.collection_site.site.name }} </p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Site locality' %}</h5>
+      <p class="text-muted">{{ object.collection_site.site.locality }}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Site latitude' %}</h5>
+      <p class="text-muted">{{ object.collection_site.site.latitude }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Site longitude' %}</h5>
+      <p class="text-muted">{{ object.collection_site.site.longitude }}</p>
+    </div>
+    <div class="col">
+      <h5 class="mt-0">{% trans 'Site altitude' %}</h5>
+      <p class="text-muted">{{ object.collection_site.site.altitude }}</p>
+    </div>
+  </div>
+
   {% if object.metadata %}
+  <hr/>
   <h4>{% trans 'Metadata' %}</h4>
   <div class="d-flex flex-wrap">
     {% show_json object.metadata %}
   </div>
   {% endif %}
 
-</div>
 </div>

@@ -1,31 +1,34 @@
-from selia.views.utils import SeliaCreateView
-from django.shortcuts import redirect
-from django.urls import reverse
-from django.core.paginator import Paginator
+from django import forms
+
 from database.models import CollectionDevice
 from database.models import Collection
 from database.models import PhysicalDevice
+
+from irekua_utils.filters.devices import physical_devices as device_utils
+
+from selia.forms.json_field import JsonField
+from selia.views.utils import SeliaCreateView
+from selia.views.utils import SeliaList
+
+
+class CollectionDeviceCreateForm(forms.ModelForm):
+    metadata = JsonField()
+
+    class Meta:
+        model = CollectionDevice
+        fields = [
+            'physical_device',
+            'collection',
+            'internal_id',
+            'metadata'
+        ]
 
 
 class CollectionDeviceCreateView(SeliaCreateView):
     template_name = 'selia/collection_detail/devices/create.html'
     model = CollectionDevice
     success_url = 'selia:collection_devices'
-    fields = ['physical_device', 'collection', 'internal_id', 'metadata']
-
-    def get_device_list(self):
-        user = self.request.user
-        user_devices = user.physicaldevice_created_by.all()
-
-        collection = self.get_object(queryset=Collection.objects.all())
-        collection_user_devices = collection.physical_devices.filter(created_by=user)
-
-        queryset =  user_devices.difference(collection_user_devices)
-        paginator = Paginator(queryset,5)
-        page = self.request.GET.get('page',1)
-        page = paginator.get_page(page)
-
-        return page
+    form_class = CollectionDeviceCreateForm
 
     def handle_create(self):
         form = self.get_form()
@@ -34,34 +37,45 @@ class CollectionDeviceCreateView(SeliaCreateView):
             collection_device.created_by = self.request.user
             collection_device.save()
             return self.handle_finish_create(collection_device)
-        else:
-            self.object = None
-            context = self.get_context_data()
-            context['form'] = form
 
-            return self.render_to_response(context)
+        self.object = None
+        context = self.get_context_data()
+        context['form'] = form
+        return self.render_to_response(context)
 
-    def get_success_url(self):
-        return reverse(self.success_url, args=[self.kwargs['pk']])
+    def get_device_list_context(self):
+        user = self.request.user
+        user_devices = user.physicaldevice_created_by.all()
 
-    def get_initial(self):
-        initial = {
-            'collection': Collection.objects.get(pk=self.kwargs['pk'])
-        }
+        class SiteList(SeliaList):
+            prefix = 'devices'
 
-        if 'device' in self.request.GET:
-            initial['physical_device'] = PhysicalDevice.objects.get(pk=self.request.GET['device'])
+            filter_class = device_utils.Filter
+            search_fields = device_utils.search_fields
+            ordering_fields = device_utils.ordering_fields
 
-        return initial
+            queryset = user_devices.exclude(collectiondevice__collection=self.collection)
+
+            list_item_template = 'selia/components/select_list_items/physical_devices.html'
+            filter_form_template = 'selia/components/filters/physical_device.html'
+
+        site_list = SiteList()
+        return site_list.get_context_data(self.request)
+
+    def get_success_url_args(self):
+        return [self.kwargs['pk']]
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
-        context['collection'] = self.get_object(queryset=Collection.objects.all())
-        context['device_list'] = self.get_device_list()
+        self.collection = self.get_object(queryset=Collection.objects.all())
+        context['collection'] = self.collection
+        context['device_list'] = self.get_device_list_context()
 
-        if 'device' in self.request.GET:
-            device = PhysicalDevice.objects.get(pk=self.request.GET['device'])
-            context['selected_device'] = device
+        if 'physical_device' in self.request.GET:
+            device = PhysicalDevice.objects.get(pk=self.request.GET['physical_device'])
+            context['physical_device'] = device
+            schema = device.device.metadata_schema
+            context['form'].fields['metadata'].update_schema(schema)
 
         return context

@@ -3,6 +3,11 @@
 {% load selia_components %}
 {% load selia_buttons %}
 
+{% block head-extra %}
+  {% include 'selia/components/media/map_media.html' %}
+  {% include 'selia/components/media/json_form_media.html' %}
+{% endblock head-extra %}
+
 {% block toolbar-title %}{{ sampling_event.collection }}{% trans ': Sampling Event ' %} {{ sampling_event.pk }}{% endblock %}
 
 {% block toolbar-items %}
@@ -15,13 +20,18 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
-  <div class="container pl-3 pr-3">
+  <div class="container-fluid w-100 pl-3 pr-3">
       <div class="row mt-4 mb-5">
         <div class="col-6">
           {% detail_component detail_template=detail_template object=sampling_event %}
         </div>
         <div class="col-6">
-          {% summary_component summary_template=summary_template object=sampling_event %}
+          <div class="row p-4">
+            {% viewer_component viewer_template="selia/components/viewers/collection_site.html" object=sampling_event.collection_site %}
+          </div>
+          <div class="row p-4">
+            {% summary_component summary_template=summary_template object=sampling_event %}
+          </div>
         </div>
       </div>
   </div>
@@ -37,3 +47,8 @@
     {% delete_component object=object %}
   {% endif %}
 {% endblock modals-extra %}
+
+{% block scripts-extra %}
+  {{ block.super }}
+  {% include 'selia/components/media/datetime_media.html' %}
+{% endblock %}

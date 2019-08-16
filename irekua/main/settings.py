@@ -36,7 +36,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-LOGIN_REDIRECT_URL = '/selia/'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Application definition
@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     'irekua',
     'irekua_utils',
     'file_handler',
-    'formtools',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

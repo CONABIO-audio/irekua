@@ -1,14 +1,14 @@
 from django import forms
 from django.shortcuts import redirect
-from django.urls import reverse
-from django.core.paginator import Paginator
 
 from database.models import CollectionSite
 from database.models import Collection
 from database.models import Site
+from database.models import SiteType
 
 from irekua_utils.filters import sites as site_utils
 
+from selia.forms.json_field import JsonField
 from selia.views.utils import SeliaCreateView
 from selia.views.utils import SeliaList
 
@@ -26,6 +26,8 @@ class SiteCreateForm(forms.ModelForm):
 
 
 class CollectionSiteCreateForm(forms.ModelForm):
+    metadata = JsonField()
+
     class Meta:
         model = CollectionSite
         fields = [
@@ -37,30 +39,16 @@ class CollectionSiteCreateForm(forms.ModelForm):
         ]
 
 
-
 class CollectionSiteCreateView(SeliaCreateView):
     template_name = 'selia/collection_detail/sites/create.html'
     model = CollectionSite
     success_url = 'selia:collection_sites'
-    fields = [
-        'site_type',
-        'metadata',
-        'site',
-        'collection',
-        'internal_id',
-    ]
+    form_class = CollectionSiteCreateForm
 
     def get_success_url_args(self):
         return [self.kwargs['pk']]
 
-    def get_site_list(self):
-        queryset = Site.objects.exclude(collectionsite__collection=self.get_object(queryset=Collection.objects.all()))
-        paginator = Paginator(queryset,5)
-        page = self.request.GET.get('page',1)
-        page = paginator.get_page(page)
-        return page
-
-    def handle_site_created(self,site):
+    def handle_site_created(self, site):
         query = self.request.GET.copy()
         query['site'] = site.pk
         query['selected_site'] = site.pk
@@ -68,85 +56,109 @@ class CollectionSiteCreateView(SeliaCreateView):
         url = '{}?{}#{}'.format(self.request.path, query.urlencode(), 'sites')
         return redirect(url)
 
+    def get_initial(self):
+        initial = {
+            'collection': Collection.objects.get(pk=self.kwargs['pk'])
+        }
+
+        if 'site' in self.request.GET:
+            site_pk = self.request.GET['site']
+            initial['site'] = Site.objects.get(pk=site_pk)
+
+        if 'site_type' in self.request.GET:
+            initial['site_type'] = SiteType.objects.get(
+                pk=self.request.GET['site_type'])
+
+        return initial
+
     def handle_create(self):
         form = CollectionSiteCreateForm(self.request.POST)
         if form.is_valid():
-            print("form is valid!!!")
-            collection_site = CollectionSite()
-            collection_site.site_type = form.cleaned_data.get('site_type')
-            collection_site.metadata = form.cleaned_data.get('metadata')
-            collection_site.site = form.cleaned_data.get('site')
-            collection_site.collection = form.cleaned_data.get('collection')
-            collection_site.internal_id = form.cleaned_data.get('internal_id')
+            collection_site = form.save(commit=False)
             collection_site.created_by = self.request.user
             collection_site.save()
             return self.handle_finish_create(collection_site)
-        else:
-            print("Not valid!")
-            print(form.errors)
-            self.object = None
-            context = self.get_context_data()
-            context['form'] = form
 
-            return self.render_to_response(context)
+        self.object = None
+        context = self.get_context_data()
+        context['form'] = form
+        return self.render_to_response(context)
 
     def handle_create_site(self):
         form = SiteCreateForm(self.request.POST)
         if form.is_valid():
-            print("form is valid!!!")
-            site = Site()
-            site.latitude = form.cleaned_data.get('latitude')
-            site.longitude = form.cleaned_data.get('longitude')
-            site.altitude = form.cleaned_data.get('altitude')
-            site.name = form.cleaned_data.get('name')
-            site.locality = form.cleaned_data.get('locality')
+            site = form.save(commit=False)
             site.created_by = self.request.user
             site.save()
-
             return self.handle_site_created(site)
-        else:
-            print("Not valid!")
-            print(form.errors)
-            self.object = None
-            context = self.get_context_data()
-            context['form'] = form
 
-            return self.render_to_response(context)
+        self.object = None
+        context = self.get_context_data()
+        context['form'] = form
+        return self.render_to_response(context)
 
     def post(self, *args, **kwargs):
         fase = self.request.GET.get('fase', None)
 
         if fase == "create_site":
             return self.handle_create_site()
-        else:
-            return self.handle_create()
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
+        return super().post(*args, **kwargs)
 
-        collection = self.get_object(queryset=Collection.objects.all())
-        context['collection'] = collection
-        context['site_create_form'] = SiteCreateForm()
-        context['site_list'] = self.get_site_list()
-
-        if 'site' in self.request.GET:
-            site = Site.objects.get(pk=self.request.GET['site'])
-            context['selected_site'] = site
-
+    def get_site_list_context(self):
         class SiteList(SeliaList):
-            prefix='sites'
+            prefix = 'sites'
 
             filter_class = site_utils.Filter
             search_fields = site_utils.search_fields
             ordering_fields = site_utils.ordering_fields
 
             queryset = self.request.user.site_created_by.exclude(
-                collectionsite__collection=collection)
+                collectionsite__collection=self.collection)
 
             list_item_template = 'selia/components/select_list_items/sites.html'
             filter_form_template = 'selia/components/filters/site.html'
 
         site_list = SiteList()
-        context['site_list'] = site_list.get_context_data(self.request)
+        return site_list.get_context_data(self.request)
+
+    def get_site_types(self):
+        collection_type = self.collection.collection_type
+
+        if collection_type.restrict_site_types:
+            return collection_type.site_types.all()
+
+        return SiteType.objects.all()
+
+    def get_site_type(self, context):
+        site_types = context['site_types']
+        if site_types.count() == 1:
+            return site_types.first()
+
+        if 'site_type' in self.request.GET:
+            site_type = SiteType.objects.get(
+                pk=self.request.GET['site_type'])
+            return site_type
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        self.collection = self.get_object(queryset=Collection.objects.all())
+
+        context['collection'] = self.collection
+        context['site_create_form'] = SiteCreateForm()
+        context['site_list'] = self.get_site_list_context()
+        context['site_types'] = self.get_site_types()
+
+        if 'site' in self.request.GET:
+            site = Site.objects.get(pk=self.request.GET['site'])
+            context['site'] = site
+
+        site_type = self.get_site_type(context)
+        context['site_type'] = site_type
+
+        if site_type:
+            context['form'].fields['metadata'].update_schema(
+                site_type.metadata_schema)
 
         return context

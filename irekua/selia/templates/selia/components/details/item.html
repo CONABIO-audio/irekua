@@ -1,7 +1,6 @@
 {% load json_tags %}
 {% load i18n %}
 
-<div class="border-top" style="padding-top:20px;">
 <div class="media">
   <div class="media-body mt-0">
     <h4 class="mt-0">{% trans 'Item ' %}{{ object.pk }}
@@ -32,7 +31,7 @@
       <p class="text-muted">{{ object.filesize }}</p>
     </div>
   </div>
-  <div class="row">    
+  <div class="row">
     <div class="col">
       <h5 class="mt-0">{% trans 'Captured on' %}</h5>
       <p class="text-muted">{{ object.captured_on }}</p>
@@ -55,7 +54,7 @@
           {% show_json object.media_info %}
         </div>
     </div>
-  </div> 
+  </div>
   {% if object.metadata %}
   <h4>{% trans 'Metadata' %}</h4>
   <div class="d-flex flex-wrap">
@@ -63,5 +62,4 @@
   </div>
   {% endif %}
 
-</div>
 </div>

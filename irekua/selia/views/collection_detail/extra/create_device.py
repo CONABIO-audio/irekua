@@ -59,12 +59,12 @@ class PhysicalDeviceCreateView(SeliaCreateView):
     success_url = 'selia:collection_devices'
     model = PhysicalDevice
     fields = [
-            'device',
-            'metadata',
-            'serial_number',
-            'identifier',
-            'bundle',
-        ]
+        'device',
+        'metadata',
+        'serial_number',
+        'identifier',
+        'bundle',
+    ]
 
     def get_success_url_args(self):
         return [self.kwargs['pk']]
@@ -73,7 +73,6 @@ class PhysicalDeviceCreateView(SeliaCreateView):
         permission = Permission.objects.get(name='Can add Device Brand')
         self.request.user.user_permissions.add(permission)
         return super().get(*args, **kwargs)
-
 
     def handle_finish_details_fase(self):
         selected_device = self.request.GET.get('selected_device')
@@ -131,7 +130,7 @@ class PhysicalDeviceCreateView(SeliaCreateView):
 
     def post(self, *args, **kwargs):
         fase = self.request.GET.get('fase', None)
-        next_url = self.request.GET.get('next', None)
+
         if fase == 'select_device':
             return self.handle_select_device_fase()
         else:
@@ -155,5 +154,5 @@ class PhysicalDeviceCreateView(SeliaCreateView):
             context['selected_device'] = device
 
         context['collection'] = Collection.objects.get(pk=self.kwargs['pk'])
-        
+
         return context
