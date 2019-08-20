@@ -39,10 +39,10 @@ urlpatterns = [
         'collections/detail/<pk>/devices/add/',
         collection_detail.CollectionDeviceCreateView.as_view(),
         name='collection_device_create'),
-    path(
-        'collections/detail/<pk>/sampling_events/add/',
-        collection_detail.SamplingEventCreateView.as_view(),
-        name='collection_sampling_event_create'),
+    # path(
+    #     'collections/detail/<pk>/sampling_events/add/',
+    #     collection_detail.SamplingEventCreateView.as_view(),
+    #     name='collection_sampling_event_create'),
     path(
         'collections/detail/<pk>/extra/physical_device/create/',
         collection_detail.PhysicalDeviceCreateView.as_view(),
