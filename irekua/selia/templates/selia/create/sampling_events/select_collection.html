@@ -1,0 +1,40 @@
+{% extends 'selia/create/sampling_events/base.html' %}
+{% load i18n %}
+
+{% block secondary-navbar %}
+{% include 'selia/user/components/secondary_navbar.html' %}
+{% endblock %}
+
+{% block toolbar-steps %}
+<li class="is-active">{% trans 'Select collection' %}</li>
+<li>{% trans 'Select sampling event type' %}</li>
+<li>{% trans 'Select collection site' %}</li>
+<li>{% trans 'Fill out details' %}</li>
+{% endblock %}
+
+{% block main-content %}
+  <div class="container">
+    <div class="jumbotron m-3">
+      <h1 class="display-6">{%trans 'Select one of your collections' %}</h1>
+        {% blocktrans %}
+          Choose a collection from the list.
+        {% endblocktrans %}
+    </div>
+
+    <div class="w-100 bg-light p-4 list-group mb-4">
+      {% for item in collection_list.queryset %}
+        <a class="stretched-link btn" href="{% url 'selia:create_sampling_event'%}?{{ request.GET.urlencode }}&collection={{ item.pk }}">
+          {% include collection_list.list_template with item=item %}
+        </a>
+        {% empty %}
+        <div class="container-fluid bg-light text-center">
+          <h4>{% trans 'No available collection' %}</h4>
+        </div>
+      {% endfor %}
+
+      <div class="container center w-100 p-4">
+        {% include 'selia/components/pagination.html' with list=collection_list.queryset %}
+      </div>
+    </div>
+  </div>
+{% endblock main-content %}

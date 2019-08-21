@@ -1,0 +1,59 @@
+{% extends 'selia/create/sampling_events/base.html' %}
+{% load i18n %}
+{% load selia_components %}
+
+{% block head-extra %}
+  {% include 'selia/components/media/map_media.html' %}
+{% endblock head-extra %}
+
+{% block toolbar-steps %}
+<li>
+  <a href="{% url 'selia:create_sampling_event' %}?{{ request.GET|remove_fields:'collection&sampling_event_type' }}">
+    {% trans 'Select collection' %}
+  </a>
+</li>
+<li>
+  <a href="{% url 'selia:create_sampling_event' %}?{{ request.GET|remove_fields:'sampling_event_type' }}">
+    {% trans 'Select sampling event type' %}
+  </a>
+</li>
+<li class="is-active">{% trans 'Select collection site' %}</li>
+<li>{% trans 'Fill out details' %}</li>
+{% endblock %}
+
+{% block main-content %}
+  <div class="container">
+    <div class="jumbotron m-3">
+      <h1 class="display-6">{%trans 'Select a registered site' %}</h1>
+      <p>{% blocktrans %}
+        Please select a collection site to associate or
+        {% endblocktrans %} <a href="{% url 'selia:create_collection_site' %}?{{ request.GET.urlencode }}"> {% trans 'add a new one' %}</a>.
+      </p>
+    </div>
+
+    <div class="container-fluid w-100 p-0 mb-4 rounded">
+      <div class="container-fluid w-100 bg-dark rounded">
+        {% with search_form=collection_site_list.search order_form=collection_site_list.order %}
+          {% filter_component collection_site_list.filter_template collection_site_list.filter %}
+        {% endwith %}
+      </div>
+
+      <div class="w-100 bg-light p-4 list-group">
+        {% for item in collection_site_list.queryset %}
+          <a class="stretched-link btn" href="{% url 'selia:create_sampling_event' %}?{{ request.GET.urlencode }}&collection_site={{ item.pk }}">
+            {% include collection_site_list.list_template with item=item %}
+          </a>
+          {% empty %}
+          <div class="container-fluid bg-light text-center">
+            <h4>{% trans 'No available sites. Please ' %}</h4>
+            <p><a href="#collapseSite" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSite"><i class="fas fa-plus"></i> {% trans 'register new site' %}</a></p>
+          </div>
+        {% endfor %}
+
+        <div class="container center w-100 p-4">
+          {% include 'selia/components/pagination.html' with list=collection_site_list.queryset %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock main-content %}

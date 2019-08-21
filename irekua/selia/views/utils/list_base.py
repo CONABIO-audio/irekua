@@ -27,7 +27,12 @@ class SeliaListView(ListView):
     def no_permission_redirect(self):
         return render(self.request, self.no_permission_template)
 
+    def clean_chain(self):
+        self.request.session['chain'] = ''
+
     def get(self, *args, **kwargs):
+        self.clean_chain()
+
         if not self.has_view_permission():
             return self.no_permission_redirect()
 

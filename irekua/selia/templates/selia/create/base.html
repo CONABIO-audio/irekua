@@ -1,0 +1,27 @@
+{% extends 'selia/base_with_toolbar.html' %}
+{% load i18n %}
+{% load static %}
+{% load selia_buttons %}
+
+{% block stylesheet %}
+{{ block.super }}
+
+<link rel="stylesheet" type="text/css" href="{% static 'selia/css/step-progress.css'%}">
+{% endblock stylesheet %}
+
+{% block toolbar-items%}
+<li>
+  <div class="container-fluid">
+    <ul class="list-unstyled multi-steps">
+      {% block toolbar-steps %}
+      {% endblock toolbar-steps %}
+    </ul>
+  </div>
+</li>
+
+<li class="nav-item mx-4">
+  <div class="h-100 py-auto align-middle">
+    {% back_button '' %}
+  </div>
+</li>
+{% endblock toolbar-items%}

@@ -1,7 +1,7 @@
 from .detail import CollectionDetailView
 
 from .sampling_events.list import CollectionSamplingEventListView
-# from .sampling_events.create import SamplingEventCreateView
+from .sampling_events.create import SamplingEventCreateView
 
 from .items.list import CollectionItemsListView
 from .items.create import CollectionItemCreateView

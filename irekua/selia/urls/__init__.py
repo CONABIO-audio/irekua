@@ -16,6 +16,8 @@ from . import collections_admin
 from . import about
 from . import collection_user_detail
 
+from . import create
+
 urlpatterns = (
     selia.urlpatterns +
     user.urlpatterns +
@@ -30,5 +32,6 @@ urlpatterns = (
     collections_admin.urlpatterns +
     item_detail.urlpatterns +
     about.urlpatterns +
-    collection_user_detail.urlpatterns
+    collection_user_detail.urlpatterns +
+    create.urlpatterns
 )

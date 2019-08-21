@@ -1,0 +1,86 @@
+{% extends 'selia/create/collection_sites/base.html' %}
+{% load i18n %}
+{% load selia_components %}
+
+{% block head-extra %}
+  {% include 'selia/components/media/map_media.html' %}
+{% endblock head-extra %}
+
+{% block toolbar-steps %}
+<li>
+  <a href="{% url 'selia:create_collection_site' %}?{{ request.GET|remove_fields:'site_type' }}">
+    {% trans 'Select site type' %}
+  </a>
+</li>
+<li class="is-active">{% trans 'Select site' %}</li>
+<li>{% trans 'Fill out details' %}</li>
+{% endblock %}
+
+{% block main-content %}
+  <div class="container">
+    <div class="jumbotron m-3">
+      <h1 class="display-6">{%trans 'Add site to collection' %}</h1>
+      <p>{% blocktrans %}
+        Please select a site to add or
+        {% endblocktrans %}<a href="#collapseSite" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSite">{% trans 'create a new one' %}</a>  </p>
+    </div>
+
+    <form action="?{{ request.GET.urlencode }}" method="post">
+      {% csrf_token %}
+      <div class="container-fluid px-4 pb-4">
+        <div class="collapse" id="collapseSite">
+          <div class="card card-body">
+            <h5 class="w-100 text-center">{% trans 'Create new site' %}</h5>
+            <div class="row">
+              <div class="col">
+                {% bootstrap_form form.latitude %}
+              </div>
+              <div class="col">
+                {% bootstrap_form form.longitude %}
+              </div>
+              <div class="col">
+                {% bootstrap_form form.altitude %}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                {% bootstrap_form form.locality %}
+              </div>
+              <div class="col">
+                {% bootstrap_form form.name %}
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <input type="submit" class="btn btn-primary" value="{% trans 'Create' %}">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="container-fluid w-100 p-0 mb-4 rounded">
+      <div class="container-fluid w-100 bg-dark rounded">
+        {% with search_form=site_list.search order_form=site_list.order %}
+          {% filter_component site_list.filter_template site_list.filter %}
+        {% endwith %}
+      </div>
+
+      <div class="w-100 bg-light p-4 list-group">
+        {% for item in site_list.queryset %}
+          <a class="stretched-link btn" href="{% url 'selia:create_collection_site' %}?{{ request.GET.urlencode }}&site={{ item.pk }}">
+            {% include site_list.list_template with item=item %}
+          </a>
+          {% empty %}
+          <div class="container-fluid bg-light text-center">
+            <h4>{% trans 'No available sites. Please ' %}</h4>
+            <p><a href="#collapseSite" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSite"><i class="fas fa-plus"></i> {% trans 'register new site' %}</a></p>
+          </div>
+        {% endfor %}
+
+        <div class="container center w-100 p-4">
+          {% include 'selia/components/pagination.html' with list=site_list.queryset %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock main-content %}

@@ -11,6 +11,9 @@ class SeliaDetailView(UpdateView):
 
     delete_redirect_url = 'selia:home'
 
+    def clean_chain(self):
+        self.request.session['chain'] = ''
+
     def get_update_form_template(self):
         if hasattr(self, 'update_form_template'):
             return self.update_form_template
@@ -91,6 +94,7 @@ class SeliaDetailView(UpdateView):
 
     def get(self, *args, **kwargs):
         self.object = self.get_object()
+        self.clean_chain()
 
         if not self.has_view_permission():
             return self.no_permission_redirect()

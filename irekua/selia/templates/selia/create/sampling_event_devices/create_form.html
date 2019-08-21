@@ -1,0 +1,80 @@
+{% extends 'selia/create/sampling_event_devices/base.html' %}
+{% load i18n %}
+{% load selia_components %}
+
+{% block secondary-navbar %}
+  {% include 'selia/sampling_event_detail/components/secondary_navbar.html' %}
+{% endblock %}
+
+{% block toolbar-steps %}
+<li>{% trans 'Select collection' %}</li>
+<li>{% trans 'Select sampling event' %}</li>
+<li>{% trans 'Select device' %}</li>
+<li class="is-active">{% trans 'Fill in details' %}</li>
+{% endblock %}
+
+{% block main-content %}
+<div class="container" id="devices">
+  <div class="jumbotron m-4">
+    <h1 class="display-6">{%trans 'Fill in details' %}</h1>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+
+  <div class="row w-100 my-2">
+    <div class="col">
+      <a class="w-100 text-center" href="#collapseSiteType" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSiteType"><h4>{% trans 'Selected device' %}: {{ collection_device.pk }}</h4></a>
+      <div class="collapse w-100" id="collapseSiteType">
+        <div class="d-flex justify-content-center w-100">
+          {% include 'selia/components/select_list_items/collection_devices.html' with item=collection_device %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row p-4 h-100">
+    <h4>{% trans 'Please fill out the following information:' %}</h4>
+  </div>
+
+  <div class="form-container mb-4">
+    <form action="?chain={{ chain }}" method="post">
+      {% csrf_token %}
+      <input type="hidden" id="collection_device_field" name="collection_device" value="{{ collection_device.pk }}">
+      <input type="hidden" id="sampling_event_field" name="sampling_event" value="{{ sampling_event.pk }}">
+
+      <div class="row">
+        <div class="col">
+          <div class="row px-5">
+              {% bootstrap_form form.commentaries %}
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+      <div class="row mb-3">
+        {% if collection_device.physical_device.device.configuration_schema %}
+        <div class="col-4 mx-5">
+          <h5>{% trans 'Device configuration' %}</h5>
+          <div class="container">
+            {{ form.configuration }}
+          </div>
+        </div>
+        {% endif %}
+        {% if collection_device.physical_device.device.metadata_schema %}
+        <div class="col-4 mx-5">
+          <h5>{% trans 'Metadata' %}</h5>
+          <div class="container">
+            {{ form.metadata }}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="row justify-content-center">
+        <button type="submit" class="btn btn-primary">{% trans 'Register device to sampling event' %}</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

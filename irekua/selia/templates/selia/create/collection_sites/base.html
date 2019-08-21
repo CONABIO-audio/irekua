@@ -1,0 +1,10 @@
+{% extends 'selia/create/base.html' %}
+{% load i18n %}
+
+{% block toolbar-title %}
+  {% trans 'Add site to collection' %}
+{% endblock toolbar-title %}
+
+{% block secondary-navbar %}
+  {% include 'selia/collection_detail/components/secondary_navbar.html' %}
+{% endblock %}

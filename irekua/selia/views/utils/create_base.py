@@ -19,71 +19,103 @@ class SeliaCreateView(CreateView, SingleObjectMixin):
         return []
 
     def get_chain(self):
-        if 'chain' in self.request.GET:
-            return self.request.GET.get('chain', None)
-
-        return ''
+        return self.request.session.get('chain', '')
 
     def get_new_chain(self):
         chain = self.get_chain()
-        if chain != "":
-            chain_arr = chain.split('|')
-        else:
-            chain_arr = []
 
-        chain_str = ''
-        next_url = ''
-        if chain_arr:
-            next_url = chain_arr[-1]
-            chain_arr.pop(-1)
+        if not chain:
+            return ''
 
-            if chain_arr:
-                chain_str = "|".join(chain_arr)
+        chain_arr = chain.split('|')
+        chain_arr.pop(-1)
+        self.request.session['chain'] = '|'.join(chain_arr)
 
-        return chain_str, next_url
+        try:
+            url = chain_arr.pop(-1)
+        except:
+            url = ''
+
+        print(url)
+        return url
 
     def get_back_url(self):
         if 'back' in self.request.GET:
             chain_str = self.get_chain()
             return self.request.GET['back']+"?&chain="+chain_str
 
-        chain_str, next_url = self.get_new_chain()
+        return ''
+
+        next_url = self.get_new_chain()
 
         if next_url == '':
             return self.get_success_url()
 
         return next_url+"?&chain="+chain_str
 
-    def handle_finish_create(self, new_object=None):
-        chain_str, next_url = self.get_new_chain()
-
-        if next_url == '':
-            return redirect(self.get_success_url())
-
-        if new_object is not None:
-            redirect_url = next_url+"?&chain="+chain_str+"&created_object="+str(new_object.pk)
-        else:
-            redirect_url = next_url+"?&chain="+chain_str
-
-        return redirect(redirect_url)
-
     def get_success_url(self):
         return reverse(self.success_url, args=self.get_success_url_args())
 
-    def post(self, *args, **kwargs):
-        return self.handle_create()
+    def get_fields_to_remove_on_sucess(self):
+        if hasattr(self, 'fields_to_remove'):
+            return self.fields_to_remove
+
+        form_class = self.get_form_class()
+        return form_class._meta.fields
+
+    def get_additional_query_on_sucess(self):
+        return {}
+
+    def modify_query_on_success(self, query):
+        query = query.copy()
+        fields_to_remove = self.get_fields_to_remove_on_sucess()
+
+        for field in fields_to_remove:
+            try:
+                query.pop(field)
+            except:
+                pass
+
+        query_to_add = self.get_additional_query_on_sucess()
+        for key, value in query_to_add.items():
+            query[key] = value
+
+        return query
+
+    def get_chain_url(self, next_url):
+        url = reverse(next_url)
+        query = self.modify_query_on_success(self.request.GET)
+
+        full_url = '{url}?{query}'.format(
+            url=url,
+            query=query.urlencode())
+        return full_url
+
+    def redirect_on_success(self):
+        next_url = self.get_new_chain()
+
+        if next_url:
+            return redirect(self.get_chain_url(next_url))
+
+        return redirect(self.get_success_url())
+
+    def save_form(self, form):
+        created_object = form.save(commit=False)
+        created_object.created_by = self.request.user
+        created_object.save()
+        return created_object
+
+    def form_valid(self, form):
+        self.object = self.save_form(form)
+        return self.redirect_on_success()
 
     def get(self, *args, **kwargs):
         if not self.has_view_permission():
             return self.no_permission_redirect()
 
-        if 'finalize' in self.request.GET:
-            return self.handle_finish_create()
-
         return super().get(*args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['chain'] = self.get_chain()
         context['back'] = self.get_back_url()
         return context

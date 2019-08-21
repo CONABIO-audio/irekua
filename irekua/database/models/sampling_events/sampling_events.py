@@ -97,6 +97,12 @@ class SamplingEvent(IrekuaModelBaseUser):
                 'Site does not belong to the declared collection')
             raise ValidationError(msg)
 
+    def validate_dates(self):
+        if self.started_on > self.ended_on:
+            msg = _(
+                'Starting date cannot be greater than ending date')
+            raise ValidationError(msg)
+
     def clean(self):
         collection = self.collection
 
@@ -104,6 +110,11 @@ class SamplingEvent(IrekuaModelBaseUser):
             self.validate_site()
         except ValidationError as error:
             raise ValidationError({'collection_site': str(error)})
+
+        try:
+            self.validate_dates()
+        except ValidationError as error:
+            raise ValidationError({'started_on': str(error)})
 
         try:
             self.sampling_event_type.validate_metadata(self.metadata)

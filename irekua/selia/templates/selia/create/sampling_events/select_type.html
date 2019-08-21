@@ -1,0 +1,32 @@
+{% extends 'selia/create/sampling_events/base.html' %}
+{% load i18n %}
+{% load selia_components %}
+
+{% block toolbar-steps %}
+<li>
+  <a href="{% url 'selia:create_sampling_event' %}?{{ request.GET|remove_fields:'collection' }}">
+    {% trans 'Select collection' %}
+  </a>
+</li>
+<li class="is-active">{% trans 'Select sampling event type' %}</li>
+<li>{% trans 'Select collection site' %}</li>
+<li>{% trans 'Fill out details' %}</li>
+{% endblock %}
+
+{% block main-content %}
+  <div class="container" id="sampling_event_types">
+    <div class="jumbotron m-4">
+      <h1 class="display-6">{%trans 'Select sampling event type' %}</h1>
+    </div>
+
+    <div class="form-container mb-4">
+      <div class="row d-flex flex-wrap justify-content-center">
+        {% for sampling_event_type in sampling_event_types %}
+        <a class="stretched-link btn btn-link" href="{% url 'selia:create_sampling_event' %}?{{ request.GET.urlencode }}&sampling_event_type={{ sampling_event_type.pk }}">
+          {% include 'selia/components/select_list_items/sampling_event_type.html' with item=sampling_event_type %}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

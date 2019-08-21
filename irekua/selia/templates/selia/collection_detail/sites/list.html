@@ -11,7 +11,7 @@
 
 {% block toolbar-items %}
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'selia:collection_site_create' collection.pk %}?">{% trans 'Add Site' %} <i class="fas fa-plus"></i> <i class="fas fa-map-marked-alt"></i></a>
+    <a class="nav-link" href="{% url 'selia:create_collection_site' %}?collection={{ collection.pk }}">{% trans 'Add Site' %} <i class="fas fa-plus"></i> <i class="fas fa-map-marked-alt"></i></a>
   </li>
   <li class="nav-item">
     {% help_button %}
