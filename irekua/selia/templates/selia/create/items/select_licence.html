@@ -6,6 +6,14 @@
   {% include 'selia/sampling_event_device_detail/components/secondary_navbar.html' %}
 {% endblock %}
 
+{% block toolbar-steps %}
+<li>{% trans 'Select collection' %}</li>
+<li>{% trans 'Select sampling event' %}</li>
+<li>{% trans 'Select deployed device' %}</li>
+<li class="is-active">{% trans 'Select licence' %}</li>
+<li>{% trans 'Upload files' %}</li>
+{% endblock %}
+
 
 {% block main-content %}
 <div class="container">
