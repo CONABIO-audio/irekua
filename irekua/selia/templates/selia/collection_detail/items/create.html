@@ -134,9 +134,9 @@
     <div class="w-100 bg-light p-4 list-group mb-4">
       {% for item in licence_list %}
       {% if item.pk == request.GET.licence %}
-      <a class="stretched-link btn btn-primary" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ selected_samplng_event_device.pk }}&licence={{ item.pk }}#addDetail">
+      <a class="stretched-link btn btn-primary" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ selected_sampling_event_device.pk }}&licence={{ item.pk }}#addDetail">
       {% else %}
-      <a class="stretched-link btn" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ selected_samplng_event_device.pk }}&licence={{ item.pk }}#addDetail">
+      <a class="stretched-link btn" href="?back={{ request.path }}&chain={{ chain }}&sampling_event={{ selected_sampling_event.pk }}&sampling_event_device={{ selected_sampling_event_device.pk }}&licence={{ item.pk }}#addDetail">
       {% endif %}
       {% include 'selia/components/select_list_items/licences.html' with item=item %}
       </a>
@@ -148,10 +148,11 @@
       {% endfor %}
 
       <div class="container center w-100 p-4">
-        {% include 'selia/components/pagination.html' with list=sampling_event_device_list %}
+        {% include 'selia/components/pagination.html' with list=licence_list %}
       </div>
     </div>
 </div>
+
 {% elif not success_count and not duplicate_count %}
 
 <div class="container" id="addDetail">
@@ -165,86 +166,78 @@
     </div>
   </div>
   <div id="selected_objects">
-  <div class="row h-100" align="center">
-    <div class="col">
-      <a href="#collapseSamplingEvent" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSamplingEvent"><h4>{% trans 'Selected sampling event: ' %}{{ selected_sampling_event.pk }}</h4></a>
-      <div class="collapse" id="collapseSamplingEvent">
-      {% include 'selia/components/select_list_items/sampling_events.html' with item=selected_sampling_event %}
+    <div class="row h-100" align="center">
+      <div class="col">
+        <a href="#collapseSamplingEvent" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSamplingEvent"><h4>{% trans 'Selected sampling event: ' %}{{ selected_sampling_event.pk }}</h4></a>
+        <div class="collapse" id="collapseSamplingEvent">
+        {% include 'selia/components/select_list_items/sampling_events.html' with item=selected_sampling_event %}
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row h-100" align="center">
-    <div class="col">
-      <a href="#collapseSamplingEventDevice" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSamplingEventDevice"><h4>{% trans 'Selected device: ' %}{{ selected_sampling_event_device.pk }}</h4></a>
-      <div class="collapse" id="collapseSamplingEventDevice">
-      {% include 'selia/components/select_list_items/sampling_event_devices.html' with item=selected_sampling_event_device %}
+    <div class="row h-100" align="center">
+      <div class="col">
+        <a href="#collapseSamplingEventDevice" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSamplingEventDevice"><h4>{% trans 'Selected device: ' %}{{ selected_sampling_event_device.pk }}</h4></a>
+        <div class="collapse" id="collapseSamplingEventDevice">
+        {% include 'selia/components/select_list_items/sampling_event_devices.html' with item=selected_sampling_event_device %}
+        </div>
       </div>
     </div>
-  </div>
+    <div class="row h-100" align="center">
+      <div class="col">
+        <a href="#collapseLicence" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseLicence"><h4>{% trans 'Selected licence: ' %}{{ selected_licence.pk }}</h4></a>
+        <div class="collapse" id="collapseLicence">
+        {% include 'selia/components/select_list_items/licences.html' with item=selected_licence %}
+        </div>
+      </div>
+    </div>
   </div>
 
-<div id="filePickerContainer" class="row">
-  <div class="col-4 mx-5">
-    <label for="item_typeInput">{% trans 'Files to upload: ' %}</label>
-    <input id='itemFilePicker' type='file' multiple/>
-  </div>
-  <div class="col-4 mx-5">
-    <label for="date_pattern_input">{% trans 'Date pattern: ' %}</label>
-    <input id='itemDatePattern' type='text' placeholder="{% trans 'Date from file name' %}"/>
-  </div>
-</div>
+  <form id="init_upload_form" novalidate>
+    <div id="filePickerContainer" class="row">
+      <div class="col-4 mx-5">
+        <label for="itemFilePicker">{% trans 'Files to upload: ' %}</label>
+        <input id='itemFilePicker' type='file' multiple/>
+      </div>
+      <div class="col-4 mx-5">
+        <div class="accordion" id="dateAccordion">
+            <div class="card">
+
+                    <h2 class="mb-0">
+                        <button id="collapseDatePatternBtn" type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseDatePattern">{% trans 'Date from file name' %}</button>
+                    </h2>
+
+                <div id="collapseDatePattern" class="collapse show" aria-labelledby="headingDatePattern" data-parent="#dateAccordion">
+                    <div class="card-body">
+                      <label for="itemDatePattern">{% trans 'Pattern: ' %}</label>
+                      <input id='itemDatePattern' class="incorrect_pattern" type='text' placeholder="{% trans 'Date from file name' %}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                    <h2 class="mb-0">
+                        <button id="collapseDateBtn" type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseDate">{% trans 'or pick a date' %}</button>
+                    </h2>
+
+                <div id="collapseDate" class="collapse" aria-labelledby="headingDate" data-parent="#dateAccordion">
+                    <div class="card-body">
+                      <label for="itemDate">{% trans 'Date: ' %}</label>
+                      <input id='itemDate' class="datepicker incorrect_pattern" type='text' placeholder="{% trans 'Choose a date' %}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </form>
+
 
       <form id="addItemForm" action="?chain={{ chain }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" id="sampling_event_device_field" name="sampling_event_device" value="{{ selected_sampling_event_device.pk }}">
+        <input type="hidden" id="licence_field" name="licence" value="{{ selected_licence.pk }}">
        <input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
-      <div class="row">
-        <div class="col-4 mx-5">
-          <div class="row d-flex justify-content-between">
-          <div class="p-3">
-            {{ form.item_type.errors }}
-            <label for="item_typeInput">{{ form.item_type.label_tag }}</label>
-            {{ form.item_type|add_class:"form-control" }}
-            <small id="item_typeHelp" class="form-text text-muted">{{ form.item_type.help_text|safe }} </small>
-          </div>
-          </div>
-          <div class="row d-flex justify-content-between">
-          <div class="p-3">
-            {{ form.source.errors }}
-            <label for="item_fileInput">{{ form.source.label_tag }}</label>
-            {{ form.source|add_class:"form-control" }}
-            <small id="sourceHelp" class="form-text text-muted">{{ form.source.help_text|safe }} </small>
-          </div>
-          </div>
-        </div>
-        <div class="col-4 mx-5">
-          <div class="row d-flex justify-content-between">
-          <div class="p-4">
-            {{ form.captured_on.errors }}
-            <label for="sampling_event_typeInput">{{ form.captured_on.label_tag }}</label>
-            {{ form.captured_on|add_class:"form-control" }}
-            <small id="sampling_event_type" class="form-text text-muted">{{ form.captured_on.help_text|safe }} </small>
-          </div>
-          </div>
-          <div class="row d-flex justify-content-between">
-          <div class="p-4">
-            {{ form.tags.errors }}
-            <label for="sampling_event_typeInput">{{ form.tags.label_tag }}</label>
-            {{ form.tags|add_class:"form-control" }}
-            <small id="sampling_event_type" class="form-text text-muted">{{ form.tags.help_text|safe }} </small>
-          </div>
-          </div>
-          <div class="row d-flex justify-content-between">
-          <div class="p-4">
-            {{ form.licence.errors }}
-            <label for="sampling_event_typeInput">{{ form.licence.label_tag }}</label>
-            {{ form.licence|add_class:"form-control" }}
-            <small id="sampling_event_type" class="form-text text-muted">{{ form.licence.help_text|safe }} </small>
-          </div>
-          </div>
 
-          </div>
-      </div>
       <div class="row p-6">
           <div class="row d-flex justify-content-between">
           <div class="p-4">
@@ -257,7 +250,8 @@
       </div>
         <div class="row p-6">
           <div class="col p-3 text-center">
-              <button type="submit" class="btn btn-primary">{% trans 'Add item' %}</button>
+
+              <button id="init_upload" type="button" class="btn btn-primary">{% trans 'Continue' %}</button>
           </div>
           <div class="col p-3 text-center">
               <a class="btn btn-danger" href="#">{% trans 'Cancel' %}</a>
@@ -274,6 +268,26 @@
           </div>
         </div>
       </div>
+  <div id="date_errors_container" class="list-group-item w-100 m-1 rounded border p-3" style="display:none;">
+    <h4>{% trans 'Please correct or omit the following errors before uploading:' %}</h4>
+    <div id="date_errors" class="row-6" align="center">
+
+    </div>
+    <div id="date_errors_paginator" class="row justify-content-center" align="center">
+          <div class="col p-3 text-center">
+             <button id="prev_error_page" type="button" class="btn btn-primary">{% trans 'Previous' %}</button>
+          </div>
+          <div class="col p-3 text-center">
+             <h6 id="error_paginator_label"></h6>
+          </div>
+          <div class="col p-3 text-center">
+             <button id="next_error_page" type="button" class="btn btn-primary">{% trans 'Next' %}</button>
+          </div>
+    </div>
+    <div class="row-6 justify-content-center" align="center">
+      <button id="ommit_errors" type="button" class="btn btn-primary omit_btn">{% trans 'Omit all and continue' %}</button>
+    </div>
+  </div>
 </div>
 
 {% else %}

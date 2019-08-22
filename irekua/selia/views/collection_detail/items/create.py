@@ -67,8 +67,13 @@ class CollectionItemCreateView(SeliaMultipleItemsCreateView):
 
             if 'sampling_event' in self.request.GET and 'sampling_event_device' in self.request.GET:
                 back_url = back_url + "sampling_event="+self.request.GET["sampling_event"]+"&"
+            if 'sampling_event' in self.request.GET and 'sampling_event_device' in self.request.GET and 'licence' in self.request.GET:
+                back_url = back_url + "sampling_event_device="+self.request.GET["sampling_event_device"]+"&"
 
             return back_url+"chain="+chain_str
+
+        elif 'sampling_event' in self.request.GET and 'sampling_event_device' in self.request.GET:
+            return reverse('selia:collection_item_create', args=[self.kwargs['pk']])+"?"+"sampling_event="+self.request.GET["sampling_event"]+"&"
         elif 'sampling_event' in self.request.GET:
             return reverse('selia:collection_item_create', args=[self.kwargs['pk']])
         else:
