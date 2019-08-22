@@ -8,7 +8,6 @@ from irekua_utils.filters.annotations import annotations
 from selia.views.utils import SeliaListView
 
 
-
 class CollectionAnnotationsListView(SeliaListView, SingleObjectMixin):
     paginate_by = 3
     template_name = 'selia/item_detail/annotations/list.html'

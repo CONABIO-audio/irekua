@@ -4,6 +4,7 @@ from . import items
 from . import sampling_event_devices
 from . import collection_devices
 from . import physical_devices
+from . import sites
 
 
 urlpatterns = (
@@ -12,5 +13,6 @@ urlpatterns = (
     items.urlpatterns +
     sampling_event_devices.urlpatterns +
     collection_devices.urlpatterns +
-    physical_devices.urlpatterns
+    physical_devices.urlpatterns +
+    sites.urlpatterns
 )
