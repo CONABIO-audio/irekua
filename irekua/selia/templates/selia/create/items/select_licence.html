@@ -11,26 +11,25 @@
 <div class="container">
   <div class="jumbotron m-4">
     <h1 class="display-6">{%trans 'Select licence' %}</h1>
-    <p>{% blocktrans %}
-      Please select a licence or
-      {% endblocktrans %} <a href="{% url 'selia:collection_licence_create' collection.pk %}?chain={{ chain }}|{{ request.path }}"></i> {% trans 'create a new one' %}</a>.
+    <p>
+      {% blocktrans %}
+        Please select a licence for the items you wish to upload.
+      {% endblocktrans %}
     </p>
   </div>
 
-  <div class="container-fluid w-100 p-4">
-      <h4>{% trans 'Available licences: ' %}</h4>
-      <div class="w-100 bg-light p-4 list-group mb-4">
+  <div class="container-fluid form-container w-100 p-4">
+      <div class="row d-flex justify-content-center flex-wrap">
         {% for item in licence_list %}
-
-          <a class="stretched-link btn btn-primary" href="{% url 'selia:create_item' %}?{{ request.GET.urlencode }}&licence={{ item.pk }}">
-            {% include 'selia/components/select_list_items/licences.html' with item=item %}
-          </a>
-
+          <div class="col-3 p-4 list_item m-2">
+            <a class="stretched-link" href="{% url 'selia:create_item' %}?{{ request.GET.urlencode }}&licence={{ item.pk }}">
+              {% include 'selia/components/select_list_items/licences.html' with item=item %}
+            </a>
+          </div>
         {% empty %}
 
         <div class="container-fluid bg-light text-center">
-            <h4>{% trans 'No available licences. Please ' %}</h4>
-            <p><a href="{% url 'selia:collection_licence_create' collection.pk %}?chain={{ chain }}|{{ request.path }}"><i class="fas fa-plus"></i> {% trans 'create a new licence' %}</a></p>
+            <h4>{% trans 'No available licences.' %}</h4>
         </div>
 
         {% endfor %}

@@ -5,8 +5,13 @@ from database.models import SamplingEventDevice
 from database.models import SamplingEvent
 from database.models import CollectionDevice
 
+from selia.forms.json_field import JsonField
+
 
 class CreateSamplingEventDeviceForm(forms.ModelForm):
+    metadata = JsonField()
+    configuration = JsonField()
+
     class Meta:
         model = SamplingEventDevice
         fields = [
@@ -27,7 +32,7 @@ class CreateSamplingEventDeviceView(SeliaCreateView):
     success_url = 'selia:sampling_event_devices'
 
     def get_success_url_args(self):
-        return [self.kwargs['pk']]
+        return [self.request.GET['sampling_event']]
 
     def get_additional_query_on_sucess(self):
         sampling_event = self.object.sampling_event
@@ -51,12 +56,14 @@ class CreateSamplingEventDeviceView(SeliaCreateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
+        context['collection'] = self.sampling_event.collection
         context['sampling_event'] = self.sampling_event
         context['collection_device'] = self.collection_device
 
+        device = self.collection_device.physical_device.device
         context['form'].fields['metadata'].update_schema(
-            self.collection_device.device.metadata_schema)
+            device.metadata_schema)
 
         context['form'].fields['configuration'].update_schema(
-            self.collection_device.device.configuration_schema)
+            device.configuration_schema)
         return context

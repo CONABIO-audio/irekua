@@ -12,7 +12,7 @@ class CreateSamplingEventDeviceManager(CreateManagerBase):
         if 'sampling_event' not in self.request.GET:
             return 'selia:create_sampling_event_device_select_sampling_event'
 
-        if 'collection_site' not in self.request.GET:
+        if 'collection_device' not in self.request.GET:
             return 'selia:create_sampling_event_device_select_collection_device'
 
         return 'selia:create_sampling_event_device_create_form'

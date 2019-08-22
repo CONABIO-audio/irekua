@@ -4,12 +4,10 @@ from django.contrib.auth.models import Permission
 from dal import autocomplete
 
 from database.models import PhysicalDevice
-from database.models import Collection
 from database.models import Device
 from database.models import DeviceBrand
 from database.models import DeviceType
 
-from selia.forms.json_field import JsonField
 from selia.views.utils import SeliaCreateView
 from selia.forms.type_field import TypeSelectField
 

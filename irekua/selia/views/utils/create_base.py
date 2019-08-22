@@ -32,12 +32,9 @@ class SeliaCreateView(CreateView, SingleObjectMixin):
         self.request.session['chain'] = '|'.join(chain_arr)
 
         try:
-            url = chain_arr.pop(-1)
+            return chain_arr.pop(-1)
         except:
-            url = ''
-
-        print(url)
-        return url
+            return ''
 
     def get_back_url(self):
         if 'back' in self.request.GET:

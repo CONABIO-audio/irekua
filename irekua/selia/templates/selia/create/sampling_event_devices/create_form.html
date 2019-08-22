@@ -17,14 +17,31 @@
 <div class="container" id="devices">
   <div class="jumbotron m-4">
     <h1 class="display-6">{%trans 'Fill in details' %}</h1>
-    <div class="progress">
-      <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+    <p>
+      {% blocktrans %}
+      Please provide information about the deployment of the device in the sampling event.
+      {% endblocktrans %}
+    </p>
+  </div>
+
+  <div class="row w-100 my-2">
+    <div class="col">
+      <a class="w-100 text-center" href="#collapseSamplingEvent" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSamplingEvent">
+        <h4>{% trans 'Selected sampling event' %}: {{ sampling_event.pk }}</h4>
+      </a>
+      <div class="collapse w-100" id="collapseSamplingEvent">
+        <div class="d-flex justify-content-center w-100">
+          {% include 'selia/components/select_list_items/sampling_events.html' with item=sampling_event %}
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="row w-100 my-2">
     <div class="col">
-      <a class="w-100 text-center" href="#collapseSiteType" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSiteType"><h4>{% trans 'Selected device' %}: {{ collection_device.pk }}</h4></a>
+      <a class="w-100 text-center" href="#collapseSiteType" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSiteType">
+        <h4>{% trans 'Selected device' %}: {{ collection_device.pk }}</h4>
+      </a>
       <div class="collapse w-100" id="collapseSiteType">
         <div class="d-flex justify-content-center w-100">
           {% include 'selia/components/select_list_items/collection_devices.html' with item=collection_device %}
@@ -38,7 +55,7 @@
   </div>
 
   <div class="form-container mb-4">
-    <form action="?chain={{ chain }}" method="post">
+    <form action="?{{ request.GET.urlencode }}" method="post">
       {% csrf_token %}
       <input type="hidden" id="collection_device_field" name="collection_device" value="{{ collection_device.pk }}">
       <input type="hidden" id="sampling_event_field" name="sampling_event" value="{{ sampling_event.pk }}">
