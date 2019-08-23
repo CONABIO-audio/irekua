@@ -1,24 +1,24 @@
-from django.views.generic import TemplateView
-
 from database.models import Collection
 from database.models import CollectionSite
 from database.models import SamplingEventType
 from irekua_utils.filters.data_collections import collection_sites as site_utils
 from selia.views.utils import SeliaList
+from selia.views.create_views.select_base import SeliaSelectView
 
 
-class SelectSamplingEventSiteView(TemplateView):
+class SelectSamplingEventSiteView(SeliaSelectView):
     template_name = 'selia/create/sampling_events/select_site.html'
+    prefix = 'collection_site'
+    create_url = 'selia:create_sampling_event'
 
     def get_context_data(self):
         context = super().get_context_data()
-        collection = Collection.objects.get(pk=self.request.GET['collection'])
-        context['collection'] = collection
-        context['collection_site_list'] = self.get_collection_site_list_list(collection)
+        context['collection'] = self.collection
         return context
 
-    def get_collection_site_list_list(self, collection):
-        collection_sites = CollectionSite.objects.filter(collection=collection)
+    def get_list_class(self):
+        self.collection = Collection.objects.get(pk=self.request.GET['collection'])
+        collection_sites = CollectionSite.objects.filter(collection=self.collection)
 
         sampling_event_type = SamplingEventType.objects.get(
             pk=self.request.GET['sampling_event_type'])
@@ -39,5 +39,4 @@ class SelectSamplingEventSiteView(TemplateView):
             list_item_template = 'selia/components/select_list_items/collection_sites.html'
             filter_form_template = 'selia/components/filters/collection_site.html'
 
-        collection_site_list = CollectionSiteList()
-        return collection_site_list.get_context_data(self.request)
+        return CollectionSiteList

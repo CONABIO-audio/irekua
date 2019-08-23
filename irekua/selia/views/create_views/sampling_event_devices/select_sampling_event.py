@@ -10,6 +10,7 @@ from selia.views.create_views import SeliaSelectView
 class SelectSamplingEventDeviceSamplingEventView(SeliaSelectView):
     template_name = 'selia/create/sampling_event_devices/select_sampling_event.html'
     prefix = 'sampling_event'
+    create_url = 'selia:create_sampling_event_device'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)

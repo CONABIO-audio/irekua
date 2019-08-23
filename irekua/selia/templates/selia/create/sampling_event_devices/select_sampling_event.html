@@ -1,49 +1,44 @@
-{% extends 'selia/create/sampling_event_devices/base.html' %}
+{% extends 'selia/create/base_select.html' %}
 {% load i18n %}
 {% load selia_components %}
+
+{% block toolbar-title %}
+  {% trans 'Add deployed device' %}
+{% endblock toolbar-title %}
 
 {% block secondary-navbar %}
   {% include 'selia/navbars/collection.html' %}
 {% endblock %}
 
 {% block toolbar-steps %}
-<li>{% trans 'Select collection' %}</li>
-<li class="is-active">{% trans 'Select sampling event' %}</li>
-<li>{% trans 'Select device' %}</li>
-<li>{% trans 'Fill in details' %}</li>
+  <li>
+    <a href="{% url 'selia:create_sampling_event_device' %}?{{ request.GET|remove_fields:'collection' }}">
+      {% trans 'Select collection' %}
+    </a>
+  </li>
+  <li class="is-active">{% trans 'Select sampling event' %}</li>
+  <li>{% trans 'Select device' %}</li>
+  <li>{% trans 'Fill in details' %}</li>
 {% endblock %}
 
-{% block main-content %}
-  <div class="container">
-    <div class="jumbotron m-3">
-      <h1 class="display-6">{%trans 'Select a sampling event' %}</h1>
-        {% blocktrans %}
-          Choose a sampling event from the collection
-        {% endblocktrans %}
-    </div>
+{% block step-title %}
+  {%trans 'Select a sampling event' %}
+{% endblock %}
 
-    <div class="container-fluid w-100 p-0 mb-4 rounded">
-      <div class="container-fluid w-100 bg-dark rounded">
-        {% with search_form=sampling_event_list.search order_form=sampling_event_list.order %}
-          {% filter_component sampling_event_list.filter_template sampling_event_list.filter %}
-        {% endwith %}
-      </div>
+{% block step-description %}
+  {% blocktrans %}
+    Choose a sampling event from the collection or
+  {% endblocktrans %}
+  <a href="{% url 'selia:create_sampling_event' %}?{{ request.GET.urlencode }}">
+    {% trans 'create a new one' %}.
+  </a>
+{% endblock %}
 
-      <div class="w-100 bg-light p-4 list-group">
-        {% for item in sampling_event_list.queryset %}
-          <a class="stretched-link btn" href="{% url 'selia:create_sampling_event_device' %}?{{ request.GET.urlencode }}&sampling_event={{ item.pk }}">
-            {% include sampling_event_list.list_template with item=item %}
-          </a>
-          {% empty %}
-          <div class="container-fluid bg-light text-center">
-            <h4>{% trans 'No available sampling events.' %}</h4>
-          </div>
-        {% endfor %}
-
-        <div class="container center w-100 p-4">
-          {% include 'selia/components/pagination.html' with list=sampling_event_list.queryset %}
-        </div>
-      </div>
-    </div>
-  </div>
-{% endblock main-content %}
+{% block empty-message %}
+<h4>{% trans 'No available sampling events.' %}</h4>
+<p>
+  <a href="{% url 'selia:create_sampling_event' %}?{{ request.GET.urlencode }}">
+    {% trans 'Add a new one' %}.
+  </a>
+</p>
+{% endblock %}

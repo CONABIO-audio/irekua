@@ -1,6 +1,14 @@
-{% extends 'selia/create/collection_sites/base.html' %}
+{% extends 'selia/create/base_select.html' %}
 {% load i18n %}
 {% load selia_components %}
+
+{% block toolbar-title %}
+  {% trans 'Add site to collection' %}
+{% endblock toolbar-title %}
+
+{% block secondary-navbar %}
+  {% include 'selia/navbars/collection.html' %}
+{% endblock %}
 
 {% block toolbar-steps %}
 <li class="is-active">{% trans 'Select site  type' %}</li>
@@ -8,20 +16,18 @@
 <li>{% trans 'Fill in details' %}</li>
 {% endblock %}
 
-{% block main-content %}
-  <div class="container">
-    <div class="jumbotron m-4">
-      <h1 class="display-6">{%trans 'Select site type' %}</h1>
-    </div>
+{% block step-title %}
+  {%  trans 'Select site type' %}
+{% endblock %}
 
-    <div class="form-container mb-4">
-      <div class="row d-flex flex-wrap justify-content-center">
-        {% for site_type in site_types %}
-        <a class="stretched-link btn btn-link" href="{% url 'selia:create_collection_site' %}?{{ request.GET.urlencode }}&site_type={{ site_type.pk }}">
-          {% include 'selia/components/select_list_items/site_type.html' with item=site_type %}
-        </a>
-        {% endfor %}
-      </div>
+{% block list-container %}
+  <div class="form-container mb-4">
+    <div class="row d-flex flex-wrap justify-content-center">
+      {% for site_type in list %}
+      <a class="stretched-link btn btn-link" href="{% url 'selia:create_collection_site' %}?{{ request.GET.urlencode }}&site_type={{ site_type.pk }}">
+        {% include 'selia/components/select_list_items/site_type.html' with item=site_type %}
+      </a>
+      {% endfor %}
     </div>
   </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'selia/create/items/base.html' %}
+{% extends 'selia/create/base_select.html' %}
 {% load i18n %}
 {% load selia_components %}
 
@@ -6,45 +6,44 @@
   {% include 'selia/navbars/sampling_event.html' %}
 {% endblock %}
 
+{% block toolbar-title %}
+  {% trans 'Add items' %}
+{% endblock toolbar-title %}
+
 {% block toolbar-steps %}
-<li>{% trans 'Select collection' %}</li>
-<li>{% trans 'Select sampling event' %}</li>
-<li class="is-active">{% trans 'Select deployed device' %}</li>
-<li>{% trans 'Select licence' %}</li>
-<li>{% trans 'Upload files' %}</li>
+  <li>
+    <a href="{% url 'selia:create_item' %}?{{ request.GET|remove_fields:'collection&sampling_event'}}">
+      {% trans 'Select collection' %}
+    </a>
+  </li>
+  <li>
+    <a href="{% url 'selia:create_item' %}?{{ request.GET|remove_fields:'sampling_event'}}">
+      {% trans 'Select sampling event' %}
+    </a>
+  </li>
+  <li class="is-active">{% trans 'Select deployed device' %}</li>
+  <li>{% trans 'Select licence' %}</li>
+  <li>{% trans 'Upload files' %}</li>
 {% endblock %}
 
-{% block main-content %}
-  <div class="container">
-    <div class="jumbotron m-3">
-      <h1 class="display-6">{%trans 'Select a deployed device' %}</h1>
-        {% blocktrans %}
-          Choose a device that was deployed in the sampling event.
-        {% endblocktrans %}
-    </div>
+{% block step-title %}
+  {% trans 'Select a deployed device' %}
+{% endblock %}
 
-    <div class="container-fluid w-100 p-0 mb-4 rounded">
-      <div class="container-fluid w-100 bg-dark rounded">
-        {% with search_form=sampling_event_device_list.search order_form=sampling_event_device_list.order %}
-          {% filter_component sampling_event_device_list.filter_template sampling_event_device_list.filter %}
-        {% endwith %}
-      </div>
+{% block step-description %}
+  {% blocktrans %}
+    Choose a device that was deployed in the sampling event or
+  {% endblocktrans %}
+  <a href="{% url 'selia:create_sampling_event_device' %}}?{{ request.GET.urlencode }}">
+    deploy a new one.
+  </a>
+{% endblock %}
 
-      <div class="w-100 bg-light p-4 list-group">
-        {% for item in sampling_event_device_list.queryset %}
-          <a class="stretched-link btn" href="{% url 'selia:create_item' %}?{{ request.GET.urlencode }}&sampling_event_device={{ item.pk }}">
-            {% include sampling_event_device_list.list_template with item=item %}
-          </a>
-          {% empty %}
-          <div class="container-fluid bg-light text-center">
-            <h4>{% trans 'No available deployed devices.' %}</h4>
-          </div>
-        {% endfor %}
-
-        <div class="container center w-100 p-4">
-          {% include 'selia/components/pagination.html' with list=sampling_event_device_list.queryset %}
-        </div>
-      </div>
-    </div>
-  </div>
-{% endblock main-content %}
+{% block empty-message %}
+  <h4>{% trans 'No deployed devices were found' %}.</h4>
+  <p>
+    <a href="{% url 'selia:create_sampling_event_device' %}}?{{ request.GET.urlencode }}">
+      Deploy a new device.
+    </a>
+  </p>
+{% endblock %}

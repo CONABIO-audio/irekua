@@ -1,7 +1,6 @@
 {% extends 'selia/base_with_toolbar.html' %}
 {% load i18n %}
 {% load static %}
-{% load selia_buttons %}
 
 {% block stylesheet %}
 {{ block.super }}
@@ -18,10 +17,40 @@
     </ul>
   </div>
 </li>
-
-<li class="nav-item mx-4">
-  <div class="h-100 py-auto align-middle">
-    {% back_button '' %}
-  </div>
-</li>
 {% endblock toolbar-items%}
+
+{% block main-content %}
+<div class="container">
+  <div class="jumbotron m-3">
+    <h1 class="display-6">
+      {% block step-title %}
+      {% endblock %}
+    </h1>
+    <p class="lead">
+      {% block step-description %}
+      {% endblock %}
+    </p>
+  </div>
+
+  {% block previously-selected %}
+  {% endblock previously-selected %}
+
+  <div class="form-container mb-4">
+    {% block form-errors %}
+    {% endblock form-errors%}
+
+    {% block form %}
+    <form action="?{{ request.GET.urlencode }}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      {% block form-content %}
+      {% endblock form-content %}
+
+      <div class="row justify-content-center">
+        <input type="submit" class="btn btn-primary" value="{% trans 'Create' %}">
+      </div>
+    </form>
+    {% endblock form %}
+  </div>
+</div>
+{% endblock main-content %}

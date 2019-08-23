@@ -10,44 +10,34 @@
 {% include 'selia/navbars/user.html' %}
 {% endblock %}
 
-{% block main-content %}
-<div class="container">
-  <div class="jumbotron m-3">
-    <h1 class="display-6">{%trans 'Create site' %}</h1>
-    <p class="lead">
-      {% blocktrans %}
-        Please fill in the following information
-      {% endblocktrans %}
-    </p>
-  </div>
+{% block step-title %}
+  {% trans 'Create site' %}
+{% endblock %}
 
-  <div class="form-container mb-4">
-    <form action="?chain={{ chain }}" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class="row">
-        <div class="col">
-          {% bootstrap_form form.latitude %}
-        </div>
-        <div class="col">
-          {% bootstrap_form form.longitude %}
-        </div>
-        <div class="col">
-          {% bootstrap_form form.altitude %}
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          {% bootstrap_form form.locality %}
-        </div>
-        <div class="col">
-          {% bootstrap_form form.name %}
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        <input type="submit" class="btn btn-primary" value="{% trans 'Create' %}">
-      </div>
-    </form>
-  </div>
-</div>
+{% block step-description %}
+  {% blocktrans %}
+    Please fill in the following information
+  {% endblocktrans %}
+{% endblock step-description %}
 
-{% endblock main-content %}
+{% block form-content %}
+  <div class="row">
+    <div class="col">
+      {% bootstrap_form form.latitude %}
+    </div>
+    <div class="col">
+      {% bootstrap_form form.longitude %}
+    </div>
+    <div class="col">
+      {% bootstrap_form form.altitude %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      {% bootstrap_form form.locality %}
+    </div>
+    <div class="col">
+      {% bootstrap_form form.name %}
+    </div>
+  </div>
+{% endblock form-content %}

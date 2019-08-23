@@ -1,44 +1,41 @@
-{% extends 'selia/create/collection_devices/base.html' %}
+{% extends 'selia/create/base_select.html' %}
 {% load i18n %}
 {% load selia_components %}
 
-{% block toolbar-steps %}
-<li>{% trans 'Select collection' %}</li>
-<li class="is-active">{% trans 'Select user device' %}</li>
-<li>{% trans 'Fill in details' %}</li>
+{% block toolbar-title %}
+  {% trans 'Add device to collection' %}
+{% endblock toolbar-title %}
+
+{% block secondary-navbar %}
+  {% include 'selia/navbars/collection.html' %}
 {% endblock %}
 
-{% block main-content %}
-  <div class="container">
-    <div class="jumbotron m-3">
-      <h1 class="display-6">{%trans 'Select a device' %}</h1>
-        {% blocktrans %}
-          Choose one of your device to register to the collection.
-        {% endblocktrans %}
-    </div>
+{% block toolbar-steps %}
+  <li>
+    <a href="{% url 'selia:create_collection_device' %}?{{ request.GET|remove_fields:'collection' }}">
+      {% trans 'Select collection' %}
+    </a>
+  </li>
+  <li class="is-active">{% trans 'Select user device' %}</li>
+  <li>{% trans 'Fill in details' %}</li>
+{% endblock %}
 
-    <div class="container-fluid w-100 p-0 mb-4 rounded">
-      <div class="container-fluid w-100 bg-dark rounded">
-        {% with search_form=device_list.search order_form=device_list.order %}
-          {% filter_component device_list.filter_template device_list.filter %}
-        {% endwith %}
-      </div>
+{% block step-title %}
+  {% trans 'Select a device' %}
+{% endblock %}
 
-      <div class="w-100 bg-light p-4 list-group">
-        {% for item in device_list.queryset %}
-          <a class="stretched-link btn" href="{% url 'selia:create_collection_device' %}?{{ request.GET.urlencode }}&physical_device={{ item.pk }}">
-            {% include device_list.list_template with item=item %}
-          </a>
-          {% empty %}
-          <div class="container-fluid bg-light text-center">
-            <h4>{% trans 'No available user devices.' %}</h4>
-          </div>
-        {% endfor %}
+{% block step-description %}
+  {% blocktrans %}
+    Choose one of your previously registered devices to register to the collection or
+  {% endblocktrans %}
+  <a href="{% url 'selia:create_physical_device' %}?{{ request.GET.urlencode }}">
+    {% trans 'add a new device' %}.
+  </a>
+{% endblock %}
 
-        <div class="container center w-100 p-4">
-          {% include 'selia/components/pagination.html' with list=device_list.queryset %}
-        </div>
-      </div>
-    </div>
-  </div>
-{% endblock main-content %}
+{% block empty-message %}
+  <h4>{% trans 'No user devices where found' %}.</h4>
+  <a href="{% url 'selia:create_physical_device' %}?{{ request.GET.urlencode }}">
+    {% trans 'Add a new device' %}.
+  </a>
+{% endblock %}

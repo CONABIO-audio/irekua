@@ -26,7 +26,7 @@ class CreatePhysicalDeviceView(SeliaCreateView):
     form_class = PhysicalDeviceCreateForm
 
     template_name = 'selia/create/physical_devices/create_form.html'
-    success_url = 'selia:user_devices'
+    success_url = 'selia:user_physical_devices'
 
     def get_success_url_args(self):
         return []

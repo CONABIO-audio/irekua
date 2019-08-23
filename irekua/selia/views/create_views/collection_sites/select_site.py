@@ -26,12 +26,16 @@ class SelectCollectionSiteSiteView(SeliaCreateView):
     model = Site
     form_class = SiteCreateForm
     template_name = 'selia/create/collection_sites/select_site.html'
+    prefix = 'site'
+    create_url = 'selia:create_collection_site'
 
     def get_context_data(self):
         context = super().get_context_data()
         self.collection = Collection.objects.get(pk=self.request.GET['collection'])
         context['collection'] = self.collection
-        context['site_list'] = self.get_site_list()
+        context['list'] = self.get_site_list()
+        context['prefix'] = self.prefix
+        context['create_url'] = self.create_url
         return context
 
     def redirect_on_success(self):

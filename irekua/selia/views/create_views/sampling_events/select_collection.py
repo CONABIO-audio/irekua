@@ -1,19 +1,15 @@
-from django.views.generic import TemplateView
-
 from database.models import Collection
 from irekua_utils.filters.data_collections import data_collections as collection_utils
 from selia.views.utils import SeliaList
+from selia.views.create_views.select_base import SeliaSelectView
 
 
-class SelectSamplingEventCollectionView(TemplateView):
+class SelectSamplingEventCollectionView(SeliaSelectView):
     template_name = 'selia/create/sampling_events/select_collection.html'
+    prefix = 'collection'
+    create_url = 'selia:create_sampling_event'
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context['collection_list'] = self.get_collection_list()
-        return context
-
-    def get_collection_list(self):
+    def get_list_class(self):
         class CollectionList(SeliaList):
             prefix = 'collection'
 
@@ -26,5 +22,4 @@ class SelectSamplingEventCollectionView(TemplateView):
             list_item_template = 'selia/components/select_list_items/user_collections.html'
             filter_form_template = 'selia/components/filters/collection.html'
 
-        collection_list = CollectionList()
-        return collection_list.get_context_data(self.request)
+        return CollectionList

@@ -7,6 +7,7 @@ from selia.views.create_views import SeliaSelectView
 class SelectCollectionDeviceCollectionView(SeliaSelectView):
     template_name = 'selia/create/collection_devices/select_collection.html'
     prefix = 'collection'
+    create_url = 'selia:create_collection_device'
 
     def get_list_class(self):
         class CollectionList(SeliaList):

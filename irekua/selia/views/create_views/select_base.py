@@ -5,6 +5,7 @@ from django.shortcuts import render
 class SeliaSelectView(TemplateView):
     no_permission_template = 'selia/no_permission.html'
     prefix = ''
+    create_url = ''
 
     def get_list_class(self):
         if hasattr(self, 'list_class'):
@@ -15,7 +16,9 @@ class SeliaSelectView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['{}_list'.format(self.prefix)] = self.get_list_context_data()
+        context['list'] = self.get_list_context_data()
+        context['prefix'] = self.prefix
+        context['create_url'] = self.create_url
         return context
 
     def get_list_context_data(self):

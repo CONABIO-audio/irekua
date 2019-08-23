@@ -1,6 +1,14 @@
-{% extends 'selia/create/collection_sites/base.html' %}
+{% extends 'selia/create/base.html' %}
 {% load i18n %}
 {% load selia_components %}
+
+{% block toolbar-title %}
+  {% trans 'Add site to collection' %}
+{% endblock toolbar-title %}
+
+{% block secondary-navbar %}
+  {% include 'selia/navbars/collection.html' %}
+{% endblock %}
 
 {% block head-extra %}
   {% include 'selia/components/media/map_media.html' %}

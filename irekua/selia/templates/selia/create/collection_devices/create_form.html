@@ -1,23 +1,30 @@
-{% extends 'selia/create/collection_devices/base.html' %}
+{% extends 'selia/create/base.html' %}
 {% load i18n %}
 {% load selia_components %}
 
+{% block toolbar-title %}
+  {% trans 'Add device to collection' %}
+{% endblock toolbar-title %}
+
+{% block secondary-navbar %}
+  {% include 'selia/navbars/collection.html' %}
+{% endblock %}
+
 {% block toolbar-steps %}
-<li>{% trans 'Select collection' %}</li>
-<li>{% trans 'Select user device' %}</li>
-<li class="is-active">{% trans 'Fill in details' %}</li>
+  <li>{% trans 'Select collection' %}</li>
+  <li>{% trans 'Select user device' %}</li>
+  <li class="is-active">{% trans 'Fill in details' %}</li>
 {% endblock %}
 
 {% block head-extra %}
   {% include 'selia/components/media/json_form_media.html' %}
 {% endblock head-extra %}
 
-{% block main-content %}
-<div class="container" id="devices">
-  <div class="jumbotron m-4">
-    <h1 class="display-6">{%trans 'Fill in details' %}</h1>
-  </div>
+{% block step-title %}
+  {% trans 'Fill in details' %}
+{% endblock %}
 
+{% block previously-selected %}
   <div class="row w-100 my-2">
     <div class="col">
       <a class="w-100 text-center" href="#collapseDevice" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseDevice">
@@ -30,45 +37,36 @@
       </div>
     </div>
   </div>
+{% endblock previously-selected %}
 
-  <div class="form-container mb-4">
-    <form action="?{{ request.GET.urlencode }}" method="post">
-      {% csrf_token %}
-      <input type="hidden" id="physical_device_field" name="physical_device" value="{{ physical_device.pk }}">
-      <input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
+{% block form-content %}
+<input type="hidden" id="physical_device_field" name="physical_device" value="{{ physical_device.pk }}">
+<input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
 
-      <div class="row w-100 p-4">
-        <div class="col">
-          {% if form.physical_device.errors %}
-          <div class="row">
-            {% for error in form.physical_device.errors %}
-            <p class="text-danger">
-              {{ error }}
-            </p>
-            {% endfor %}
-          </div>
-          {% endif %}
-          <div class="row">
-            {% bootstrap_form form.internal_id %}
-          </div>
-        </div>
-        {% if physical_device.device.metadata_schema %}
-        <div class="col">
-          <div class="row">
-            <h4 class="w-100 text-center">{% trans 'Metadata' %}</h4>
-          </div>
-          <div class="row px-5">
-            {{ form.metadata }}
-          </div>
-        </div>
-        {% endif %}
-      </div>
-
-      <div class="row justify-content-center">
-        <button type="submit" class="btn btn-primary">{% trans 'Add device' %}</button>
-      </div>
-    </form>
+<div class="row w-100 p-4">
+  <div class="col">
+    {% if form.physical_device.errors %}
+    <div class="row">
+      {% for error in form.physical_device.errors %}
+      <p class="text-danger">
+        {{ error }}
+      </p>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="row">
+      {% bootstrap_form form.internal_id %}
+    </div>
   </div>
+  {% if physical_device.device.metadata_schema %}
+  <div class="col">
+    <div class="row">
+      <h4 class="w-100 text-center">{% trans 'Metadata' %}</h4>
+    </div>
+    <div class="row px-5">
+      {{ form.metadata }}
+    </div>
+  </div>
+  {% endif %}
 </div>
-
-{% endblock main-content %}
+{% endblock form-content %}

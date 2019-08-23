@@ -38,5 +38,5 @@ class SelectCollectionSiteTypeView(TemplateView):
     def get_context_data(self):
         context = super().get_context_data()
         context['collection'] = self.collection
-        context['site_types'] = self.site_types
+        context['list'] = self.site_types
         return context

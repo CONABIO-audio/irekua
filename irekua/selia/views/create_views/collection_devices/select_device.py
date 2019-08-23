@@ -8,7 +8,8 @@ from selia.views.create_views import SeliaSelectView
 
 class SelectCollectionDevicePhysicalDeviceView(SeliaSelectView):
     template_name = 'selia/create/collection_devices/select_device.html'
-    prefix = 'device'
+    prefix = 'physical_device'
+    create_url = 'selia:create_collection_device'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, *kwargs)

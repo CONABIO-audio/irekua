@@ -7,6 +7,7 @@ from selia.views.create_views import SeliaSelectView
 class SelectItemLicenceView(SeliaSelectView):
     template_name = 'selia/create/items/select_licence.html'
     prefix = 'licence'
+    create_url = 'selia:create_item'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
