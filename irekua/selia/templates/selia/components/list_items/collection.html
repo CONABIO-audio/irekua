@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="col-2">
-          <a href="{% url 'selia:collection_site_create' item.pk %}"><i class="fas fa-plus"></i></a>
+          <a href="{% url 'selia:create_collection_site' %}?collection={{ item.pk }}"><i class="fas fa-plus"></i></a>
         </div>
         {% endif %}
       </div>
@@ -67,7 +67,7 @@
           </div>
         </div>
         <div class="col-2">
-            <a href="{% url 'selia:collection_sampling_event_create' item.pk %}"><i class="fas fa-plus"></i></a>
+            <a href="{% url 'selia:create_sampling_event' %}?collection={{ item.pk }}"><i class="fas fa-plus"></i></a>
         </div>
         {% endif %}
       </div>
@@ -83,7 +83,7 @@
           </div>
         </div>
         <div class="col-2">
-          <a href="{% url 'selia:collection_device_create' item.pk %}"><i class="fas fa-plus"></i></a>
+          <a href="{% url 'selia:create_collection_device' %}?collection={{ item.pk }}"><i class="fas fa-plus"></i></a>
         </div>
         {% endif %}
       </div>
@@ -99,7 +99,7 @@
           </div>
         </div>
         <div class="col-2">
-          <a href="{% url 'selia:collection_item_create' item.pk %}"><i class="fas fa-plus"></i></a>
+          <a href="{% url 'selia:create_item' %}?collection={{ item.pk }}"><i class="fas fa-plus"></i></a>
         </div>
         {% endif %}
       </div>

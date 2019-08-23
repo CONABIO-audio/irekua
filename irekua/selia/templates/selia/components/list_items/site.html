@@ -23,7 +23,7 @@
         {% if item.locality %}
         <div class="text-muted">{{ item.locality }}</div>
         {% endif %}
-        <a href="{% url 'selia:user_site_detail' item.pk %}">{% enter_button %}</a>
+        <a href="{% url 'selia:site_detail' item.pk %}">{% enter_button %}</a>
       </div>
     </div>
   </div>

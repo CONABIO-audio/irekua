@@ -47,7 +47,7 @@
   <div class="row w-100">
     <h4 class="w-100 text-center">{% trans 'Site info' %}</h4>
     {% if user == object.site.created_by %}
-    <a class="w-100 text-muted text-center" href="{% url 'selia:user_site_detail' object.site.pk %}">{% see_button %}{% trans 'site' %}</a>
+    <a class="w-100 text-muted text-center" href="{% url 'selia:site_detail' object.site.pk %}">{% see_button %}{% trans 'site' %}</a>
     {% endif %}
   </div>
 

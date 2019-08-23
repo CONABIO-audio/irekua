@@ -2,9 +2,9 @@
 {% load i18n %}
 {% load selia_components %}
 
-{% block secondary-navbar %}
-  {% include 'selia/user/components/secondary_navbar.html' %}
-{% endblock %}
+{% block head-extra %}
+  {% include 'selia/components/media/user.html' %}
+{% endblock head-extra %}
 
 {% block toolbar-steps %}
 <li class="is-active">{% trans 'Select collection' %}</li>

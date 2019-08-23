@@ -54,10 +54,10 @@
       </div>
         <div class="col-2">
           <div class="row">
-            <a href="{% url 'selia:sampling_event_device_items' item.pk %}">{% see_button %}</a>
+            <a href="{% url 'selia:collection_items' item.sampling_event.collection.pk %}?sampling_event_device={{ item.pk }}">{% see_button %}</a>
           </div>         </div>
         <div class="col-2">
-          <a href="{% url 'selia:sampling_event_device_item_create' item.pk %}"><i class="fas fa-plus"></i></a>
+          <a href="{% url 'selia:create_item' %}?collection={{ item.sampling_event.collection.pk }}&sampling_event={{ item.sampling_event.pk }}&sampling_event_device={{ item.pk }}"><i class="fas fa-plus"></i></a>
         </div>
     </div>
   </div>

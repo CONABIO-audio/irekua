@@ -1,0 +1,24 @@
+{% extends 'selia/list/base.html' %}
+{% load i18n %}
+
+{% block secondary-navbar %}
+{% include 'selia/navbars/collections.html' %}
+{% endblock secondary-navbar %}
+
+{% block toolbar-items %}
+  <li class="nav-item">
+    {% include 'selia/components/buttons/help.html' %}
+  </li>
+{% endblock toolbar-items %}
+
+{% block main-content %}
+  <div class="container-fluid w-100 p-0">
+    {% include 'selia/components/filter.html' with filter_template=filter_form_template filter=filter %}
+  </div>
+
+  {% include 'selia/components/list.html' with template_name=list_item_template item_list=object_list empty_message=empty_message %}
+{% endblock main-content %}
+
+{% block modals-extra %}
+  {% include 'selia/components/help.html' with help_template=help_template %}
+{% endblock modals-extra %}

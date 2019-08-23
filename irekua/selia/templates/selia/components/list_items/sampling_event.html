@@ -69,7 +69,7 @@
           </div>
         </div>
         <div class="col-2">
-          <a href="{% url 'selia:sampling_event_device_create' item.pk %}"><i class="fas fa-plus"></i></a>
+          <a href="{% url 'selia:create_sampling_event_device' %}?sampling_event={{ item.pk }}"><i class="fas fa-plus"></i></a>
         </div>
       </div>
       <div class="row">
@@ -82,7 +82,7 @@
             <a href="{% url 'selia:sampling_event_items' item.pk %}">{% see_button %}</a>
           </div>        </div>
         <div class="col-2">
-          <a href="{% url 'selia:sampling_event_item_create' item.pk %}"><i class="fas fa-plus"></i></a>
+          <a href="{% url 'selia:create_item' %}?sampling_event={{ item.pk }}"><i class="fas fa-plus"></i></a>
         </div>
       </div>
     </div>

@@ -12,7 +12,10 @@ from database.models import SamplingEvent
 
 
 def get_url(f):
-    return f.target_field.model.autocomplete_url
+    try:
+        return f.target_field.model.autocomplete_url
+    except:
+        return ''
 
 
 def get_queryset(f):
@@ -28,6 +31,7 @@ class Filter(FilterSet):
             'created_on': ['lt', 'gt'],
             'ended_on': ['lt', 'gt'],
             'started_on': ['lt', 'gt'],
+            'collection_site': ['exact'],
         }
 
 
