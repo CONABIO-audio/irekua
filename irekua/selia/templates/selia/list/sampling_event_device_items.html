@@ -1,14 +1,13 @@
 {% extends 'selia/list/base.html' %}
 {% load i18n %}
-{% load selia_components %}
 {% load selia_buttons %}
 
 {% block secondary-navbar %}
-{% include 'selia/navbars/sampling_event_device.html' %}
+  {% include 'selia/navbars/sampling_event_device.html' %}
 {% endblock secondary-navbar %}
 
 {% block toolbar-title %}
-{{ sampling_event_device.sampling_event.collection }}: {% trans 'Sampling Event' %} {{ sampling_event_device.sampling_event.pk }}: {% trans 'Device' %} {{ sampling_event_device.pk }}: {% trans 'Items' %}
+  {{ sampling_event_device.sampling_event.collection }}: {% trans 'Sampling Event' %} {{ sampling_event_device.sampling_event.pk }}: {% trans 'Device' %} {{ sampling_event_device.pk }}: {% trans 'Items' %}
 {% endblock %}
 
 {% block toolbar-items %}
@@ -20,14 +19,15 @@
   </li>
 {% endblock toolbar-items %}
 
-{% block main-content %}
-    <div class="container-fluid w-100 p-0">
-      {% filter_component filter_template=filter_form_template filter=filter %}
-    </div>
-
-  {% list_component template_name=list_item_template item_list=object_list empty_message=empty_message %}
-{% endblock main-content %}
-
-{% block modals-extra %}
-  {% help_component help_template=help_template %}
-{% endblock modals-extra %}
+{% block empty-message %}
+<h4>
+  {% blocktrans %}
+    No items have been captured in this deployed device
+  {% endblocktrans%}
+</h4>
+<p>
+  <a href="{% url 'selia:create_item' %}?collection={{ sampling_event_device.sampling_event.collection.pk }}&sampling_event={{ sampling_event_device.sampling_event.pk }}&sampling_event_device={{ sampling_event_device.pk }}">
+    {% trans 'Add item to the deployed device' %}
+  </a>
+</p>
+{% endblock %}

@@ -109,6 +109,12 @@ def autocomplete_media():
 def filter_bar(context, filter_form, search_form):
     search_field = search_form.fields['search']
     search_field = search_field.get_bound_field(search_form, 'search')
+
+    context['original_forms'] = {
+        'search': search_form,
+        'filter': filter_form,
+    }
+
     if search_field.data:
         context['search'] = search_field.data
         context['clear'] = True
@@ -159,6 +165,9 @@ def selia_form(form, label):
     custom_attrs = ' form-control'
     if widget.input_type == 'select':
         custom_attrs += ' custom-select'
+
+    if widget.input_type == 'file':
+        custom_attrs = 'custom-file-input'
 
     widget_attrs = widget.attrs.get('class', '')
     class_for_html = widget_attrs + custom_attrs
@@ -278,3 +287,25 @@ def add_fields(query, fields):
             pass
 
     return query_copy.urlencode()
+
+
+@register.simple_tag
+def remove_form_fields(query, filter_form, search_form):
+    query = query.copy()
+
+    print('search form', search_form, type(search_form), dir(search_form))
+
+    for field in filter_form._form.fields:
+        try:
+            query.pop(field)
+        except:
+            pass
+
+    # for field in search_form._form.fields:
+    #     print('search field', field)
+    #     try:
+    #         query.pop(field)
+    #     except:
+    #         pass
+
+    return query.urlencode()

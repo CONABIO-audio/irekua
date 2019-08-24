@@ -3,6 +3,10 @@
 {% load selia_components %}
 {% load selia_buttons %}
 
+{% block secondary-navbar %}
+  {% include 'selia/navbars/item.html' %}
+{% endblock secondary-navbar %}
+
 {% block toolbar-title %}{{ item.collection }}{% trans ': Item ' %} {{ item.pk }}{% endblock %}
 
 {% block toolbar-items %}

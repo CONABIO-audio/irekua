@@ -1,0 +1,18 @@
+{% load i18n %}
+<div class="container d-flex justify-content-center">
+  <div class="col-6">
+    <small class="text-muted text-left">
+      {% trans 'This list might be empty due to' %}:
+      <ul>
+        <li>
+          {% trans 'Only objects for which you have permission to see are displayed' %}.
+          <a href="{% url 'selia:about' %}">{% trans 'Read more information on permissions'%}</a>.
+        </li>
+        <li>
+          {% trans 'No object satisfies the applied filters' %}.
+          <a href="#">{% trans 'Clear the filters' %}</a>
+        </li>
+      </ul>
+    </small>
+  </div>
+</div>

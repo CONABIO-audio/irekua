@@ -24,7 +24,7 @@ class DetailItemView(SeliaDetailView, SingleObjectMixin):
     form_class = CollectionItemUpdateForm
     delete_redirect_url = 'selia:collection_items'
 
-    template_name = 'selia/item_detail/detail.html'
+    template_name = 'selia/detail/item.html'
     help_template = 'selia/components/help/collection_item_detail.html'
     detail_template = 'selia/components/details/item.html'
     summary_template = 'selia/components/summaries/item.html'
