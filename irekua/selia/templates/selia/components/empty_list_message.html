@@ -1,4 +1,6 @@
 {% load i18n %}
+{% load selia_components %}
+
 <div class="container d-flex justify-content-center">
   <div class="col-6">
     <small class="text-muted text-left">
@@ -10,7 +12,7 @@
         </li>
         <li>
           {% trans 'No object satisfies the applied filters' %}.
-          <a href="#">{% trans 'Clear the filters' %}</a>
+          <a href="?{% remove_form_fields request.GET forms %}">{% trans 'Clear the filters' %}</a>
         </li>
       </ul>
     </small>

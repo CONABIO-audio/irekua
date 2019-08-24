@@ -149,27 +149,34 @@ class SeliaListView(ListView):
         self.queryset = self.order_queryset(queryset)
         return self.queryset
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        new_context = {
-            'object_list': context,
-            'empty_message': self.empty_message
+    def get_permissions(self):
+        return {
+            'create': self.has_create_permission()
         }
 
+    def get_templates(self):
+        return {
+            'help': self.get_help_template(),
+            'list_item': self.get_list_item_template(),
+            'filter_form': self.get_filter_form_template(),
+        }
+
+    def get_forms(self):
+        forms = {}
         if hasattr(self, 'filter'):
-            new_context['filter'] = self.filter
+            forms['filter'] = self.filter
 
         if hasattr(self, 'search_form'):
-            new_context['search_form'] = self.search_form
+            forms['search'] = self.search_form
 
         if hasattr(self, 'order_form'):
-            new_context['order_form'] = self.order_form
+            forms['order'] = self.order_form
 
-        new_context['list_item_template'] = self.get_list_item_template()
-        new_context['help_template'] = self.get_help_template()
-        new_context['filter_form_template'] = self.get_filter_form_template()
-        new_context['permissions'] = {'create': self.has_create_permission()}
-        new_context['viewer_template'] = self.get_viewer_template()
+        return forms
 
-        return new_context
+    def get_context_data(self, **kwargs):
+        context = {'object_list': super().get_context_data(**kwargs)}
+        context['forms'] = self.get_forms()
+        context['templates'] = self.get_templates()
+        context['permissions'] = self.get_permissions()
+        return context

@@ -312,3 +312,7 @@ a {
 .p-auto {
   justify-content: center;
 }
+
+.empty-list-message {
+  background-color: var(--lavander);
+}

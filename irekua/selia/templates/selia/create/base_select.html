@@ -42,20 +42,22 @@
   {% block list-container %}
     <div class="container-fluid w-100 p-0 mb-4 rounded">
       <div class="container-fluid w-100 bg-dark rounded">
-        {% with search_form=list.search order_form=list.order %}
-          {% filter_component list.filter_template list.filter %}
-        {% endwith %}
+        {% filter_component list.templates.filter_form list.forms %}
       </div>
 
       <div class="w-100 bg-light p-4 list-group">
         {% for item in list.queryset %}
-          <a class="stretched-link btn" href="{% url create_url %}?{{ request.GET.urlencode }}&{{ prefix }}={{ item.pk }}">
-            {% include list.list_template with item=item %}
+          <a class="stretched-link btn" href="{% url create_url %}?{% remove_form_fields request.GET list.forms %}&{{ prefix }}={{ item.pk }}">
+            {% include list.templates.list_item with item=item %}
           </a>
           {% empty %}
           <div class="container-fluid bg-light text-center">
-            {% block empty-message %}
-            {% endblock %}
+            <div class="container p-4 empty-list-message rounded">
+              {% block empty-message %}
+              {% endblock %}
+
+              {% include 'selia/components/empty_list_message.html' with forms=list.forms %}
+            </div>
           </div>
         {% endfor %}
 

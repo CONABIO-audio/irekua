@@ -6,24 +6,26 @@
 {% block main-content %}
   <div class="container-fluid w-100 p-0">
     {% block filter-component %}
-      {% filter_component filter_form_template filter %}
+      {% filter_component templates.filter_form forms %}
     {% endblock filter-component %}
   </div>
 
   {% block list-component %}
-    <div class="w-100 bg-light p-4 list-group mb-4">
+    <div class="container-fluid bg-light p-4 list-group my-4">
       {% for item in object_list.object_list %}
 
-        {% include list_item_template with item=item %}
+        {% include templates.list_item with item=item %}
 
       {% empty %}
 
         <div class="container-fluid bg-light text-center">
-          {% block empty-message %}
-            <h4>{{ empty_message }}</h4>
-          {% endblock empty-message %}
+          <div class="container p-4 empty-list-message rounded">
+            {% block empty-message %}
+              <h4>{{ empty_message }}</h4>
+            {% endblock empty-message %}
 
-          {% include 'selia/components/empty_list_message.html' %}
+            {% include 'selia/components/empty_list_message.html' %}
+          </div>
         </div>
 
       {% endfor %}
@@ -36,7 +38,7 @@
 {% endblock main-content %}
 
 {% block modals-extra %}
-  {% help_component help_template=help_template %}
+  {% help_component help_template=templates.help %}
 {% endblock modals-extra %}
 
 {% block scripts-extra %}

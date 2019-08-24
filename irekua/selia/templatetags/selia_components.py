@@ -44,9 +44,9 @@ def summary_component(context, summary_template, object):
 
 
 @register.inclusion_tag('selia/components/filter.html', takes_context=True)
-def filter_component(context, filter_template, filter):
-    context['filter_template'] = filter_template
-    context['filter'] = filter
+def filter_component(context, template, forms):
+    context['template'] = template
+    context['forms'] = forms
     return context
 
 
@@ -106,20 +106,19 @@ def autocomplete_media():
 
 
 @register.inclusion_tag('selia/components/filter_bar.html', takes_context=True)
-def filter_bar(context, filter_form, search_form):
+def filter_bar(context, forms):
+    context['forms'] = forms
+
+    search_form = forms['search']
     search_field = search_form.fields['search']
     search_field = search_field.get_bound_field(search_form, 'search')
-
-    context['original_forms'] = {
-        'search': search_form,
-        'filter': filter_form,
-    }
 
     if search_field.data:
         context['search'] = search_field.data
         context['clear'] = True
 
     context['form'] = {}
+    filter_form = forms['filter']
     for field_name, field in filter_form._form.fields.items():
         bound_field = field.get_bound_field(filter_form._form, field_name)
         if bound_field.data:
@@ -290,22 +289,40 @@ def add_fields(query, fields):
 
 
 @register.simple_tag
-def remove_form_fields(query, filter_form, search_form):
+def remove_form_fields(query, forms):
     query = query.copy()
 
-    print('search form', search_form, type(search_form), dir(search_form))
+    if 'filter' in forms:
+        filter_form = forms['filter']
+        filter_prefix = filter_form._form.prefix
+        for field in filter_form._form.fields:
+            if filter_prefix:
+                field = '{}-{}'.format(filter_prefix, field)
+            try:
+                query.pop(field)
+            except:
+                pass
 
-    for field in filter_form._form.fields:
-        try:
-            query.pop(field)
-        except:
-            pass
+    if 'search' in forms:
+        search_form = forms['search']
+        search_prefix = search_form.prefix
+        for field in search_form.fields:
+            if search_prefix:
+                field = '{}-{}'.format(search_prefix, field)
+            try:
+                query.pop(field)
+            except:
+                pass
 
-    # for field in search_form._form.fields:
-    #     print('search field', field)
-    #     try:
-    #         query.pop(field)
-    #     except:
-    #         pass
+    if 'order' in forms:
+        order_form = forms['order']
+        order_prefix = order_form.prefix
+        for field in order_form.fields:
+            if order_prefix:
+                field = '{}-{}'.format(order_prefix, field)
+            try:
+                query.pop(field)
+            except:
+                pass
 
     return query.urlencode()

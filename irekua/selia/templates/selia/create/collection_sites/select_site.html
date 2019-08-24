@@ -16,6 +16,11 @@
 
 {% block toolbar-steps %}
 <li>
+  <a href="{% url 'selia:create_collection_site' %}?{{ request.GET|remove_fields:'site_type&collection' }}">
+    {% trans 'Select collection' %}
+  </a>
+</li>
+<li>
   <a href="{% url 'selia:create_collection_site' %}?{{ request.GET|remove_fields:'site_type' }}">
     {% trans 'Select site type' %}
   </a>
@@ -71,6 +76,10 @@
 {% endblock %}
 
 {% block empty-message %}
-<h4>{% trans 'No available sites. Please ' %}</h4>
-<p><a href="#collapseSite" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSite"><i class="fas fa-plus"></i> {% trans 'register new site' %}</a></p>
+<h4>{% trans 'No available sites.' %}</h4>
+<p>
+  <a href="#collapseSite" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSite">
+    <i class="fas fa-plus"></i> {% trans ' Please register new site' %}
+  </a>
+</p>
 {% endblock %}

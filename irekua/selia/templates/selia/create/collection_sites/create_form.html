@@ -17,6 +17,11 @@
 
 {% block toolbar-steps %}
 <li>
+  <a href="{% url 'selia:create_collection_site' %}?{{ request.GET|remove_fields:'site&site_type&collection' }}">
+    {% trans 'Select collection' %}
+  </a>
+</li>
+<li>
   <a href="{% url 'selia:create_collection_site' %}?{{ request.GET|remove_fields:'site&site_type' }}">
     {% trans 'Select site type' %}
   </a>

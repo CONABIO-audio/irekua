@@ -34,7 +34,7 @@
   {% blocktrans %}
     Choose a device that was deployed in the sampling event or
   {% endblocktrans %}
-  <a href="{% url 'selia:create_sampling_event_device' %}}?{{ request.GET.urlencode }}">
+  <a href="{% url 'selia:create_sampling_event_device' %}?{{ request.GET.urlencode }}">
     deploy a new one.
   </a>
 {% endblock %}
@@ -42,7 +42,7 @@
 {% block empty-message %}
   <h4>{% trans 'No deployed devices were found' %}.</h4>
   <p>
-    <a href="{% url 'selia:create_sampling_event_device' %}}?{{ request.GET.urlencode }}">
+    <a href="{% url 'selia:create_sampling_event_device' %}?{{ request.GET.urlencode }}">
       Deploy a new device.
     </a>
   </p>

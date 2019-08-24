@@ -11,6 +11,11 @@
 {% endblock %}
 
 {% block toolbar-steps %}
+<li>
+  <a href="{% url 'selia:create_collection_site' %}?{{ request.GET|remove_fields:'collection' }}">
+    {% trans 'Select collection' %}
+  </a>
+</li>
 <li class="is-active">{% trans 'Select site  type' %}</li>
 <li>{% trans 'Select site' %}</li>
 <li>{% trans 'Fill in details' %}</li>

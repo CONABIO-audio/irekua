@@ -2,10 +2,12 @@ from selia.views.create_views.manager_base import CreateManagerBase
 
 
 class CreateCollectionSiteManager(CreateManagerBase):
-    required_get_parameters = ['collection']
     manager_name = 'selia:create_collection_site'
 
     def view_from_request(self):
+        if 'collection' not in self.request.GET:
+            return 'selia:create_collection_site_select_collection'
+
         if 'site_type' not in self.request.GET:
             return 'selia:create_collection_site_select_type'
 
