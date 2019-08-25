@@ -4,7 +4,7 @@
 {% load selia_buttons %}
 
 {% block toolbar-title %}
-{{ sampling_event_device.sampling_event.collection }}: {% trans 'Sampling Event' %} {{ sampling_event_device.sampling_event.pk }}: {% trans 'Device' %} {{ sampling_event_device.pk }}
+{{ sampling_event_device.sampling_event.collection }}: {% trans 'Sampling Event' %} {{ sampling_event_device.sampling_event.pk }}: {% trans 'Deployed device' %} {{ sampling_event_device.pk }}
 {% endblock %}
 
 {% block secondary-navbar %}
@@ -21,15 +21,15 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
-  <div class="container pl-3 pr-3">
-      <div class="row mt-4 mb-5">
-        <div class="col-6">
-          {% detail_component detail_template=detail_template object=sampling_event_device %}
-        </div>
-        <div class="col-6">
-          {% summary_component summary_template=summary_template object=sampling_event_device %}
-        </div>
+  <div class="container-fluid pl-3 pr-3">
+    <div class="row mt-4 mb-5">
+      <div class="col-6">
+        {% detail_component detail_template=detail_template object=sampling_event_device %}
       </div>
+      <div class="col-6">
+        {% summary_component summary_template=summary_template object=sampling_event_device %}
+      </div>
+    </div>
   </div>
 {% endblock main-content %}
 

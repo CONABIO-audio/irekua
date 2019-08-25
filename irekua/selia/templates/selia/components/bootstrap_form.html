@@ -1,8 +1,14 @@
 {% load widget_tweaks %}
 
 <div class="form-group w-100">
-  {{ form.errors }}
   {{ form.label_tag }}
+  {% if form.errors %}
+  <div class="col px-4 m-0">
+    {% for error in form.errors %}
+    <span class="row text-danger text-center">{{ error }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
   {% if form.field.widget.input_type == 'file' %}
   {{ form }}
   {% else %}

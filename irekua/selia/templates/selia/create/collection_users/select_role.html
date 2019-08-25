@@ -1,0 +1,41 @@
+{% extends 'selia/create/base_select.html' %}
+{% load i18n %}
+{% load selia_components %}
+
+{% block toolbar-title %}
+  {% trans 'Add user to collection' %}
+{% endblock toolbar-title %}
+
+{% block secondary-navbar %}
+  {% include 'selia/navbars/collection.html' %}
+{% endblock secondary-navbar %}
+
+{% block toolbar-steps %}
+<li>
+  <a href="{% url 'selia:create_collection_user'%}?{{ request.GET | remove_fields:'user'}}">
+    {% trans 'Select user' %}
+  </a>
+</li>
+<li class="is-active">{% trans 'Select role' %}</li>
+<li>{% trans 'Fill in details' %}</li>
+{% endblock %}
+
+{% block step-title %}
+  {% trans 'Select role' %}
+{% endblock %}
+
+{% block list-container %}
+  <div class="container-fluid form-container mb-4 px-4 pb-5">
+    <div class="row d-flex justify-content-center flex-wrap">
+      {% for role in list %}
+      <div class="col-3 p-4 bg-light list_item m-2">
+        <a class="strected-link" href="{% url 'selia:create_collection_user' %}?{{ request.GET.urlencode }}&role={{ role.pk }}">
+          {% include 'selia/components/details/role.html' with object=role %}
+        </a>
+      </div>
+      {% empty %}
+      <h4>{% trans 'There are no available roles for this collection' %}</h4>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

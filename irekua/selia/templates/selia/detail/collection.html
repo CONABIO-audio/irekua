@@ -10,10 +10,6 @@
 
 {% block toolbar-title %}{{ collection }}{% endblock %}
 
-{% block head-extra %}
-  {% include 'selia/components/media/json_form_media.html' %}
-{% endblock head-extra %}
-
 {% block toolbar-items %}
   <li class="nav-item">
     <a class="nav-link" href="#">{% trans 'Download summary' %} <i class="fas fa-download"></i></a>

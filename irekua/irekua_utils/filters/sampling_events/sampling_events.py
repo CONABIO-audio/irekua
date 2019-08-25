@@ -62,7 +62,7 @@ search_fields = (
 
 
 ordering_fields = (
-    ('created_on', _('created on')),
+    ('created_on', _('added on')),
     ('started_on', _('started on')),
     ('ended_on', _('ended on')),
 )

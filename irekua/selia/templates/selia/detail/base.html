@@ -1,1 +1,6 @@
 {% extends 'selia/base_with_toolbar.html' %}
+
+{% block head-extra %}
+  {{ block.super }}
+  {% include 'selia/components/media/json_form_media.html' %}
+{% endblock head-extra %}

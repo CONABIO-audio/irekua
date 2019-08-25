@@ -79,20 +79,18 @@
     </div>
   </div>
 
-  {% if collection_device.physical_device.device.configuration_schema or collection_device.physical_device.device.metadata_schema %}
+  {% if collection_device.physical_device.device.configuration_schema or info.metadata_schema %}
   <hr/>
   <div class="row mb-3">
     {% if collection_device.physical_device.device.configuration_schema %}
-    <div class="col mx-5">
-      <h5>{% trans 'Device configuration' %}</h5>
+    <div class="col mx-1">
       <div class="container">
         {{ form.configuration }}
       </div>
     </div>
     {% endif %}
-    {% if collection_device.physical_device.device.metadata_schema %}
-    <div class="col mx-5">
-      <h5>{% trans 'Metadata' %}</h5>
+    {% if info.metadata_schema %}
+    <div class="col mx-1">
       <div class="container">
         {{ form.metadata }}
       </div>

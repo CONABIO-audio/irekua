@@ -33,7 +33,7 @@
   {% blocktrans %}
     Choose a registered collection device to deploy or
   {% endblocktrans %}
-  <a href="{% url 'selia:create_collection_device' %}?{{ request.GET }}">
+  <a href="{% url 'selia:create_collection_device' %}?{% remove_form_fields request.GET list.forms %}">
     {% trans 'add a new one to the collection' %}.
   </a>
 {% endblock %}
@@ -41,7 +41,7 @@
 {% block empty-message %}
   <h4>{% trans 'No collection devices were found.' %}</h4>
   <p>
-    <a href="{% url 'selia:create_collection_device' %}?{{ request.GET }}">
+    <a href="{% url 'selia:create_collection_device' %}?{% remove_form_fields request.GET list.forms %}">
       {% trans 'Add a new one' %}
     </a>
   </p>

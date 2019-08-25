@@ -191,3 +191,6 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'rest.exception_handler.custom_exception_handler',
     'DEFAULT_SCHEMA_CLASS': 'rest.utils.schemas.CustomSchema'
 }
+
+# Email configurations
+EMAIL = 'selia@conabio.gob.mx'

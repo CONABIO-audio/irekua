@@ -8,8 +8,8 @@
 {% endblock secondary-navbar %}
 
 {% block head-extra %}
+  {{ block.super }}
   {% include 'selia/components/media/map_media.html' %}
-  {% include 'selia/components/media/json_form_media.html' %}
 {% endblock head-extra %}
 
 {% block toolbar-title %}{{ sampling_event.collection }}{% trans ': Sampling Event ' %} {{ sampling_event.pk }}{% endblock %}

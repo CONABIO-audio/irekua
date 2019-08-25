@@ -7,10 +7,6 @@
 {% include 'selia/navbars/user.html' %}
 {% endblock secondary-navbar %}
 
-{% block head-extra %}
-  {% include 'selia/components/media/json_form_media.html' %}
-{% endblock head-extra %}
-
 {% block toolbar-title %}{% trans 'User device detail' %}{% endblock %}
 
 {% block toolbar-items %}
@@ -23,7 +19,7 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
-  <div class="container pl-3 pr-3">
+  <div class="container-fluid pl-3 pr-3">
       <div class="row mt-4 mb-5">
         <div class="col-6">
           {% detail_component detail_template=detail_template object=object %}

@@ -5,7 +5,7 @@ from database.models import Annotation
 from database.models import Item
 
 from irekua_utils.filters.annotations import annotations
-from selia.views.utils import SeliaListView
+from selia.views.list_views.base import SeliaListView
 
 
 class CollectionAnnotationsListView(SeliaListView, SingleObjectMixin):

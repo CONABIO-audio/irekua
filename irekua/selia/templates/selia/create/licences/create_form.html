@@ -33,6 +33,22 @@
   {% endblocktrans %}
 {% endblock %}
 
+
+{% block previously-selected %}
+  <div class="row w-100 my-2">
+    <div class="col">
+      <a class="w-100 text-center" href="#collapseSamplingEvent" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSamplingEvent">
+        <h4>{% trans 'Selected licence type' %}: {{ licence_type.pk }}</h4>
+      </a>
+      <div class="collapse w-100" id="collapseSamplingEvent">
+        <div class="d-flex justify-content-center w-100">
+          {% include 'selia/components/select_list_items/licence_type.html' with item=licence_type %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock previously-selected %}
+
 {% block form-content %}
   <input type="hidden" id="collection_field" name="collection" value="{{ collection }}">
   <input type="hidden" id="licence_type_field" name="licence_type" value="{{ licence_type.pk }}">
@@ -69,6 +85,12 @@
             {{ form.metadata }}
             <small id="metadataInput" class="form-text text-muted">{{ form.metadata.help_text }}</small>
           </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="col p-4">
+        <div class="row">
+          <h4 class="text-center w-100">{% trans 'No additional information is required'%}</h4>
         </div>
       </div>
     {% endif %}

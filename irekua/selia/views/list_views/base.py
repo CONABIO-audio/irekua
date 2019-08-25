@@ -70,20 +70,19 @@ class SeliaListView(ListView):
         for field, label in self.ordering_fields:
             orderings.append(
                 (
-                    field,
-                    '{order} {label}'.format(
-                        label=label, order=_('↑'))
-                )
-            )
-
-            orderings.append(
-                (
                     '-{field}'.format(field=field),
                     '{order} {label}'.format(
                         label=label, order=_('↓'))
                 )
             )
 
+            orderings.append(
+                (
+                    field,
+                    '{order} {label}'.format(
+                        label=label, order=_('↑'))
+                )
+            )
         return orderings
 
     def get_ordering_form(self):

@@ -3,10 +3,13 @@
 {% load static %}
 
 {% block stylesheet %}
-{{ block.super }}
-
-<link rel="stylesheet" type="text/css" href="{% static 'selia/css/step-progress.css'%}">
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static 'selia/css/step-progress.css'%}">
 {% endblock stylesheet %}
+
+{% block head-extra %}
+  {% include 'selia/components/media/json_form_media.html' %}
+{% endblock %}
 
 {% block toolbar-items%}
 <li>
@@ -37,6 +40,9 @@
 
   <div class="form-container mb-4">
     {% block form-errors %}
+      {% if form.non_field_errors %}
+        {% include 'selia/components/error_list.html' with errors=form.non_field_errors %}
+      {% endif %}
     {% endblock form-errors%}
 
     {% block form %}
@@ -46,8 +52,19 @@
       {% block form-content %}
       {% endblock form-content %}
 
-      <div class="row justify-content-center">
-        <input type="submit" class="btn btn-primary" value="{% trans 'Create' %}">
+      <div class="col mt-3">
+        {% block pre-submit-text %}
+        <div class="row">
+          <p class="text-muted w-100 text-center mb-1">
+            {% blocktrans %}
+            Please check that all provided information is correct before submitting.
+            {% endblocktrans %}
+          </p>
+        </div>
+        {% endblock %}
+        <div class="row justify-content-center">
+          <input type="submit" id="formSubmit" class="btn btn-primary" value="{% trans 'Create' %}">
+        </div>
       </div>
     </form>
     {% endblock form %}

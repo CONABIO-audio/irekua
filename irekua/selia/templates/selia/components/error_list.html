@@ -1,0 +1,9 @@
+{% load i18n %}
+<div class="col">
+  <h5>{% trans 'Additional errors' %}</h5>
+  {% for error in errors %}
+  <div class="row text-danger">
+    {{ error }}
+  </div>
+  {% endfor %}
+</div>

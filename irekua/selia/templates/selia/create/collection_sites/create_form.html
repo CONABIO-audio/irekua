@@ -72,26 +72,21 @@
       <input type="hidden" id="site_field" name="site" value="{{ site.pk }}">
       <input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
       <input type="hidden" id="site_type_field" name="site_type" value="{{ site_type.pk }}">
-      <div class="row">
-        {{ form.errors }}
-      </div>
+
+
       <div class="row w-100 p-4">
         <div class="col">
-          <div class="row">
-            {% bootstrap_form form.internal_id %}
-          </div>
+          {% bootstrap_form form.internal_id %}
         </div>
-        {% if site_type.metadata_schema %}
-        <div class="col">
-          <div class="row">
-            <h4 class="w-100 text-center">{% trans 'Metadata' %}</h4>
-          </div>
-          <div class="row px-5">
-            {{ form.metadata }}
-          </div>
-        </div>
-        {% endif %}
       </div>
+
+      {% if site_type.metadata_schema %}
+      <div class="row p-3">
+        <div class="col">
+          {{ form.metadata }}
+        </div>
+      </div>
+      {% endif %}
 
       <div class="row justify-content-center">
         <button type="submit" class="btn btn-primary">{% trans 'Register site' %}</button>

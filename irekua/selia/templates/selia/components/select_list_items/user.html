@@ -1,0 +1,63 @@
+{% extends 'selia/components/select_list_item.html' %}
+{% load i18n %}
+
+{% block list-item-content %}
+<div class="row w-100">
+  <div class="col">
+    <div class="row">
+      <div class="col">
+        <h5>
+          {% trans 'Username' %}
+        </h5>
+        <p class="text-muted">
+          {% if item.username %}
+            {{ item.username }}
+          {% else %}
+            {% trans 'pending...' %}
+          {% endif %}
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h5>
+          {% trans 'Email' %}
+        </h5>
+        <p class="text-muted">
+          {{ item.email }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+      <div class="col">
+        <h5>
+          {% trans 'First name' %}
+        </h5>
+        <p class="text-muted">
+          {% if item.first_name %}
+            {{ item.first_name }}
+          {% else %}
+            {% trans 'pending...' %}
+          {% endif %}
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h5>
+          {% trans 'Last name' %}
+        </h5>
+        <p class="text-muted">
+          {% if item.last_name %}
+            {{ item.last_name }}
+          {% else %}
+            {% trans 'pending...' %}
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock list-item-content %}

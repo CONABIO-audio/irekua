@@ -2,6 +2,7 @@ from django import forms
 
 from selia.views.utils import SeliaCreateView
 from database.models import Collection
+from database.models import CollectionRole
 from database.models import CollectionUser
 from database.models import Role
 from database.models import User
@@ -33,9 +34,9 @@ class CreateCollectionUserView(SeliaCreateView):
         self.collection = Collection.objects.get(
             name=self.request.GET['collection'])
         self.user = User.objects.get(
-            name=self.request.GET['user'])
+            pk=self.request.GET['user'])
         self.role = Role.objects.get(
-            name=self.request.GET['role'])
+            pk=self.request.GET['role'])
 
         return {
             'collection': self.collection,
@@ -53,6 +54,11 @@ class CreateCollectionUserView(SeliaCreateView):
         context['user'] = self.user
         context['role'] = self.role
 
+        role_info = CollectionRole.objects.get(
+            collection_type=self.collection.collection_type,
+            role=self.role)
+        context['role_info'] = role_info
+
         context['form'].fields['metadata'].update_schema(
-            self.role.metadata_schema)
+            role_info.metadata_schema)
         return context

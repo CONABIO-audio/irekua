@@ -7,6 +7,7 @@ from . import physical_devices
 from . import sites
 from . import licences
 from . import collection_users
+from . import users
 
 
 urlpatterns = (
@@ -18,5 +19,6 @@ urlpatterns = (
     physical_devices.urlpatterns +
     sites.urlpatterns +
     licences.urlpatterns +
-    collection_users.urlpatterns
+    collection_users.urlpatterns +
+    users.urlpatterns
 )

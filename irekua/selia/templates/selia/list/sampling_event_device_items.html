@@ -7,7 +7,7 @@
 {% endblock secondary-navbar %}
 
 {% block toolbar-title %}
-  {{ sampling_event_device.sampling_event.collection }}: {% trans 'Sampling Event' %} {{ sampling_event_device.sampling_event.pk }}: {% trans 'Device' %} {{ sampling_event_device.pk }}: {% trans 'Items' %}
+  {{ sampling_event_device.sampling_event.collection }}: {% trans 'Sampling Event' %} {{ sampling_event_device.sampling_event.pk }}: {% trans 'Deployed device' %} {{ sampling_event_device.pk }}: {% trans 'Items' %}
 {% endblock %}
 
 {% block toolbar-items %}

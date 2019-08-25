@@ -15,19 +15,32 @@ class SelectSamplingEventDeviceCollectionDeviceView(SeliaSelectView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
-        context['sampling_event'] = SamplingEvent.objects.get(
-            pk=self.request.GET['sampling_event'])
+        context['sampling_event'] = self.sampling_event
         return context
 
     def get_list_class(self):
         collection_pk = self.request.GET['collection']
+
+        self.sampling_event = SamplingEvent.objects.get(
+            pk=self.request.GET['sampling_event'])
+        sampling_event_type = self.sampling_event.sampling_event_type
+        device_types = sampling_event_type.device_types.all()
+
+        collection_devices = (
+            CollectionDevice.objects
+            .filter(collection__name=collection_pk)
+            .exclude(samplingeventdevice__sampling_event=self.sampling_event)
+        )
+
+        device_list = collection_devices.filter(
+            physical_device__device__device_type__in=device_types)
 
         class CollectionDeviceList(SeliaList):
             filter_class = device_utils.Filter
             search_fields = device_utils.search_fields
             ordering_fields = device_utils.ordering_fields
 
-            queryset = CollectionDevice.objects.filter(collection__name=collection_pk)
+            queryset = device_list
 
             list_item_template = 'selia/components/select_list_items/collection_devices.html'
             filter_form_template = 'selia/components/filters/collection_device.html'

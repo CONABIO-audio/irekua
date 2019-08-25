@@ -1,3 +1,4 @@
+from django import forms
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import SingleObjectMixin
 from django.shortcuts import redirect
@@ -103,8 +104,17 @@ class SeliaCreateView(CreateView, SingleObjectMixin):
         return created_object
 
     def form_valid(self, form):
-        self.object = self.save_form(form)
-        return self.redirect_on_success()
+        try:
+            self.object = self.save_form(form)
+            return self.redirect_on_success()
+        except forms.ValidationError as errors:
+            for field, error in dict(errors).items():
+                try:
+                    form.add_error(field, error)
+                except:
+                    pass
+
+            return self.form_invalid(form)
 
     def get(self, *args, **kwargs):
         if not self.has_view_permission():

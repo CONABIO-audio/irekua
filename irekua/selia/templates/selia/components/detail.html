@@ -8,7 +8,7 @@
         {% include detail_template with object=object %}
       </div>
     </div>
-    <div class="row m-2">
+    <div class="row m-2 d-flex justify-content-center">
       {% if permissions.change %}
       <button type="button" class="btn btn-link text-primary" data-toggle="modal" data-target="#changeModal">
         {% edit_button %}
@@ -19,6 +19,17 @@
         {% trans 'Delete '%}
       </button>
       {% endif %}
+    </div>
+    <div class="row">
+      <small class="text-muted w-100 text-right">
+        {% trans 'Added on'%} {{ object.created_on | date}}
+        {% if object.created_by %}
+        {% trans 'by'%} {{ object.created_by }}
+        {% endif %}
+      </small>
+      <small class="text-muted w-100 text-right">
+        {% trans 'Last modified on'%} {{ object.modified_on | date}}
+      </small>
     </div>
   </div>
 </div>

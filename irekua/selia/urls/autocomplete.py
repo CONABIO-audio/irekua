@@ -43,4 +43,8 @@ urlpatterns = [
         'autocomplete/sampling_event_types/',
         autocomplete.SamplingEventTypesAutocomplete.as_view(),
         name='sampling_event_types_autocomplete'),
+    path(
+        'autocomplete/users/',
+        autocomplete.UserAutocomplete.as_view(),
+        name='users_autocomplete'),
 ]

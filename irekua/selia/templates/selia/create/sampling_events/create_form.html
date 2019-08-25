@@ -10,14 +10,10 @@
 {% include 'selia/navbars/collection.html' %}
 {% endblock %}
 
-{% block head-extra %}
-  {% include 'selia/components/media/map_media.html' %}
-  {% include 'selia/components/media/json_form_media.html' %}
-{% endblock head-extra %}
-
 {% block scripts-extra %}
   {{ block.super }}
   {% include 'selia/components/media/datetime_media.html' %}
+  {% include 'selia/components/media/map_media.html' %}
 {% endblock scripts-extra%}
 
 {% block toolbar-steps %}
@@ -102,11 +98,6 @@
         <h4 class="w-100 text-center">{% trans 'Metadata' %}</h4>
       </div>
       <div class="row px-5">
-        {% if form.metadata.errors %}
-          {% for error in form.metadata.errors %}
-            <p class="text-danger">{{ error }}</p>
-          {% endfor %}
-        {% endif %}
         {{ form.metadata }}
       </div>
     </div>
