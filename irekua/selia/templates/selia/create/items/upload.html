@@ -10,6 +10,11 @@
   {% trans 'Add items' %}
 {% endblock toolbar-title %}
 
+{% block scripts-extra %}
+{{ block.super }}
+<script type="text/javascript" src="{% static 'selia/js/upload.js' %}"></script>
+{% endblock %}
+
 {% block toolbar-steps %}
   <li>
     <a href="{% url 'selia:create_item' %}?{{ request.GET|remove_fields:'collection&sampling_event&sampling_event_device&licence' }}">

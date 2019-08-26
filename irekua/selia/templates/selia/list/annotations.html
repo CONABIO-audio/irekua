@@ -1,10 +1,21 @@
-{% extends 'selia/item_detail/base.html' %}
+{% extends 'selia/list/base.html' %}
 {% load i18n %}
+{% load static %}
 {% load selia_components %}
 {% load selia_buttons %}
 
+{% block secondary-navbar %}
+  {% include 'selia/navbars/item.html' %}
+{% endblock secondary-navbar %}
 
-{% block toolbar-title %}{{ item.collection }}{% trans ': Item ' %}{{ item.pk }}{% trans ': Annotations' %}{% endblock %}
+{% block toolbar-title %}
+{{ item.collection }}: {% trans 'Item' %} {{ item.pk }}: {% trans 'Annotations' %}
+{% endblock %}
+
+{% block scripts-extra %}
+{{ block.super }}
+<script type="text/javascript" src="{% static 'selia/js/image_annotator.js' %}"></script>
+{% endblock scripts-extra %}
 
 {% block toolbar-items %}
   <li class="nav-item">
@@ -26,23 +37,37 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
-
-<div class="container-fluid w-100 p-0">
-    {% filter_component filter_template=filter_form_template filter=filter %}
-</div>
 <div class="row p-5 justify-content-center">
+
   <div class="col-6" align="center">
     <div class="container card p-2 bg-dark" align="center">
       <input type="hidden" id="img_url" name="img_url" add_ann_url="{% url 'selia:item_annotation_create' item.pk %}" value="{{ item.item_file.url }}">
       <canvas id="canvas" class="center-fit" width="800" height="600" style="background-image: url({{ item.item_file.url }}); background-size:cover; background-repeat:   no-repeat;background-position: center center;"></canvas>
     </div>
   </div>
+
   <div class="col-6">
-    {% list_component template_name=list_item_template item_list=object_list empty_message=empty_message %}
+    <div class="container-fluid bg-dark w-100 p-1 rounded">
+        {% filter_component templates.filter_form forms %}
+    </div>
+    <div class="container-fluid bg-light p-4 list-group my-4">
+      {% for item in object_list.object_list %}
+        {% include templates.list_item with item=item %}
+      {% empty %}
+        <div class="container-fluid bg-light text-center">
+          <h4>
+            {% blocktrans %}
+              No annotations
+            {% endblocktrans %}.
+          </h4>
+          {% include 'selia/components/empty_list_message.html' %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="container center w-100 p-4">
+      {% include 'selia/components/pagination.html' with list=object_list %}
+    </div>
   </div>
 </div>
 {% endblock main-content %}
-
-{% block modals-extra %}
-  {% help_component help_template=help_template %}
-{% endblock modals-extra %}

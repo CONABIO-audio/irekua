@@ -7,7 +7,7 @@ from database.models import Site
 from database.models import SiteType
 
 from irekua_utils.filters import sites as site_utils
-from selia.views.utils import SeliaCreateView
+from selia.views.create_views.create_base import SeliaCreateView
 from selia.views.utils import SeliaList
 
 

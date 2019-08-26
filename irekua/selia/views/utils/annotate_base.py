@@ -1,26 +1,41 @@
-from .create_base import SeliaCreateView
-from database.models import Item
-from database.models import Annotation
-from database.models import Term
-from django.shortcuts import redirect
-from django.shortcuts import render
-from django.shortcuts import reverse
+import json
+import requests
+
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django import forms
-import urllib
-import json
-import requests 
+
+from selia.views.create_views.create_base import SeliaCreateView
+from database.models import Item
+from database.models import Annotation
+from database.models import Term
+
 
 class CreateTermForm(forms.ModelForm):
     class Meta:
         model = Term
-        fields = ["term_type","value","description","metadata"]
+        fields = [
+            "term_type",
+            "value",
+            "description",
+            "metadata"]
+
 
 class CreateAnnotationForm(forms.ModelForm):
     class Meta:
         model = Annotation
-        fields = ["annotation_tool","item","event_type","label","annotation_type","annotation","annotation_configuration","certainty","quality","commentaries"]   
+        fields = [
+            "annotation_tool",
+            "item",
+            "event_type",
+            "label",
+            "annotation_type",
+            "annotation",
+            "annotation_configuration",
+            "certainty",
+            "quality",
+            "commentaries"]
+
 
 class SeliaAnnotationView(SeliaCreateView):
 
@@ -31,16 +46,19 @@ class SeliaAnnotationView(SeliaCreateView):
         query = self.request.GET.copy()
         del query['slr_service']
 
-        url = 'http://{}{}?{}'.format(server,slr_path,query.urlencode())
+        url = 'http://{}{}?{}'.format(server, slr_path, query.urlencode())
 
         def convert(s):
-            s = s.replace('HTTP_','',1)
-            s = s.replace('_','-')
+            s = s.replace('HTTP_', '', 1)
+            s = s.replace('_', '-')
             return s
 
-        request_headers = dict((convert(k),v) for k,v in self.request.META.items() if k.startswith('HTTP_'))
-        request_headers['CONTENT-TYPE'] = self.request.META.get('CONTENT_TYPE', '')
-        request_headers['CONTENT-LENGTH'] = self.request.META.get('CONTENT_LENGTH', '')
+        request_headers = dict(
+            (convert(k), v) for k, v in self.request.META.items() if k.startswith('HTTP_'))
+        request_headers['CONTENT-TYPE'] = self.request.META.get(
+            'CONTENT_TYPE', '')
+        request_headers['CONTENT-LENGTH'] = self.request.META.get(
+            'CONTENT_LENGTH', '')
         request_headers['USER-AGENT'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36'
 
         if self.request.method == "GET":
@@ -48,7 +66,7 @@ class SeliaAnnotationView(SeliaCreateView):
         else:
             data = self.request.raw_post_data
 
-        req = requests.get(url = url)
+        req = requests.get(url=url)
 
         response = HttpResponse(req.text)
 
@@ -75,7 +93,7 @@ class SeliaAnnotationView(SeliaCreateView):
 
     def get_success_url_args(self):
         return [self.kwargs['pk']]
-        
+
     def handle_create(self):
         if self.mode == "create":
             form = self.get_form()
@@ -84,7 +102,8 @@ class SeliaAnnotationView(SeliaCreateView):
 
             if not Term.objects.filter(term_type=label_keys[0], value=label[label_keys[0]]).exists():
                 print("CREATE!!!")
-                term_form = CreateTermForm({"term_type":label_keys[0],"value":label[label_keys[0]]})
+                term_form = CreateTermForm(
+                    {"term_type": label_keys[0], "value": label[label_keys[0]]})
                 if term_form.is_valid():
                     term = term_form.save(commit=False)
                     term.created_by = self.request.user
@@ -103,8 +122,10 @@ class SeliaAnnotationView(SeliaCreateView):
 
                 return self.render_to_response(context)
         else:
-            instance = get_object_or_404(Annotation, pk=self.request.GET["annotation"])
-            form = CreateAnnotationForm(self.request.POST or None, instance=instance)
+            instance = get_object_or_404(
+                Annotation, pk=self.request.GET["annotation"])
+            form = CreateAnnotationForm(
+                self.request.POST or None, instance=instance)
 
             if form.is_valid():
                 annotation = form.save(commit=False)
@@ -116,7 +137,7 @@ class SeliaAnnotationView(SeliaCreateView):
                 context = self.get_context_data()
                 context['form'] = form
 
-                return self.render_to_response(context)              
+                return self.render_to_response(context)
 
     def get_initial(self):
         item = Item.objects.get(pk=self.kwargs['pk'])
@@ -137,11 +158,13 @@ class SeliaAnnotationView(SeliaCreateView):
         raise NotImplementedError('No template for annotator was given')
 
     def get_next_object(self):
-        next_object = Item.objects.filter(pk__gt=self.kwargs['pk']).order_by('pk').first()
+        next_object = Item.objects.filter(
+            pk__gt=self.kwargs['pk']).order_by('pk').first()
         return next_object
 
     def get_prev_object(self):
-        prev_object = Item.objects.filter(pk__lt=self.kwargs['pk']).order_by('pk').last()
+        prev_object = Item.objects.filter(
+            pk__lt=self.kwargs['pk']).order_by('pk').last()
         return prev_object
 
     def get_context_data(self, *args, **kwargs):
@@ -154,11 +177,10 @@ class SeliaAnnotationView(SeliaCreateView):
         context["prev_object"] = self.get_prev_object()
 
         if self.mode == "edit":
-            instance = get_object_or_404(Annotation, pk=self.request.GET["annotation"])
+            instance = get_object_or_404(
+                Annotation, pk=self.request.GET["annotation"])
             form = CreateAnnotationForm(instance=instance)
             context["form"] = form
             context["annotation"] = instance
 
         return context
-
-

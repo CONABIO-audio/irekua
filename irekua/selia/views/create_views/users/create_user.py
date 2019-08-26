@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.conf import settings
 
-from selia.views.utils import SeliaCreateView
+from selia.views.create_views.create_base import SeliaCreateView
 from database.models import User
 
 

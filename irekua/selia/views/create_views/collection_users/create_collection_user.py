@@ -1,6 +1,6 @@
 from django import forms
 
-from selia.views.utils import SeliaCreateView
+from selia.views.create_views.create_base import SeliaCreateView
 from database.models import Collection
 from database.models import CollectionRole
 from database.models import CollectionUser

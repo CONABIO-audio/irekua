@@ -9,7 +9,6 @@ from irekua_utils.filters.data_collections import collection_devices
 
 class ListCollectionDevicesView(SeliaListView, SingleObjectMixin):
     template_name = 'selia/list/collection_devices.html'
-
     list_item_template = 'selia/components/list_items/collection_device.html'
     help_template = 'selia/components/help/collection_devices.html'
     filter_form_template = 'selia/components/filters/collection_device.html'
