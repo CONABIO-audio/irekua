@@ -61,7 +61,7 @@ class CollectionDevice(IrekuaModelBaseUser):
             device_type = self.collection.validate_and_get_device_type(
                 self.physical_device.device.device_type)
         except ValidationError as error:
-            raise ValidationError({'physical_device': str(error)})
+            raise ValidationError({'physical_device': error})
 
         if device_type is not None:
             try:

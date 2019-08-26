@@ -55,6 +55,9 @@ class User(AbstractUser):
     class Meta:
         verbose_name = _('User')
         verbose_name_plural = _('Users')
+        unique_together = [
+            ['email',],
+        ]
 
     @property
     def is_special(self):

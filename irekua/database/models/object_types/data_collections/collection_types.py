@@ -227,7 +227,7 @@ class CollectionType(IrekuaModelBase):
         except self.site_types.model.DoesNotExist:
             msg = _(
                 'Site type %(site_type)s is not accepted in collection of '
-                'type %(col_type)s or does not exist')
+                'type %(col_type)s')
             params = dict(
                 site_type=site_type,
                 col_type=str(self))
@@ -242,7 +242,7 @@ class CollectionType(IrekuaModelBase):
         except self.annotation_types.model.DoesNotExist:
             msg = _(
                 'Annotation type %(annotation_type)s is not accepted in '
-                'collection of type %(col_type)s or does not exist')
+                'collection of type %(col_type)s')
             params = dict(
                 annotation_type=annotation_type,
                 col_type=str(self))
@@ -257,7 +257,7 @@ class CollectionType(IrekuaModelBase):
         except self.licence_types.model.DoesNotExist:
             msg = _(
                 'Licence type %(licence_type)s is not accepted in collection '
-                'of type %(col_type)s or does not exist')
+                'of type %(col_type)s')
             params = dict(
                 licence_type=licence_type,
                 col_type=str(self))
@@ -272,7 +272,7 @@ class CollectionType(IrekuaModelBase):
         except self.event_types.model.DoesNotExist:
             msg = _(
                 'Event type %(event_type)s is not accepted in collection of '
-                'type %(col_type)s or does not exist')
+                'type %(col_type)s')
             params = dict(
                 event_type=event_type,
                 col_type=str(self))
@@ -289,7 +289,7 @@ class CollectionType(IrekuaModelBase):
         except CollectionItemType.DoesNotExist:
             msg = _(
                 'Item type %(item_type)s is not accepted in collection of '
-                'type %(col_type)s or does not exist')
+                'type %(col_type)s')
             params = dict(
                 item_type=item_type,
                 col_type=str(self))
@@ -306,7 +306,7 @@ class CollectionType(IrekuaModelBase):
         except CollectionDeviceType.DoesNotExist:
             msg = _(
                 'Device type %(device_type)s is not accepted in collection of '
-                'type %(col_type)s or does not exist')
+                'type %(col_type)s')
             params = dict(
                 device_type=device_type,
                 col_type=str(self))
@@ -321,7 +321,7 @@ class CollectionType(IrekuaModelBase):
         except self.sampling_event_types.model.DoesNotExist:
             msg = _(
                 'Sampling Event type %(sampling_event_type)s is not accepted '
-                'in collection of type %(col_type)s or does not exist')
+                'in collection of type %(col_type)s')
             params = dict(
                 sampling_event_type=sampling_event_type,
                 col_type=str(self))
@@ -335,7 +335,7 @@ class CollectionType(IrekuaModelBase):
         except CollectionRole.DoesNotExist:
             msg = _(
                 'Role type %(role)s is not accepted in collection of type '
-                '%(col_type)s or does not exist')
+                '%(col_type)s')
             params = dict(
                 role=role,
                 col_type=str(self))

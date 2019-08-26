@@ -8,7 +8,7 @@ from dal import autocomplete
 
 from database.models import Collection
 from database.models import Institution
-from selia.views.utils import SeliaListView
+from selia.views.list_views.base import SeliaListView
 
 
 class ManagedCollectionsView(SeliaListView):

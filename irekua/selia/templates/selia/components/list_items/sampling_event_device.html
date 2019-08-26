@@ -40,10 +40,6 @@
       <h6>{% trans 'Owner' %}</h6>
       <div class="text-muted ml-4">{{ item.collection_device.physical_device.created_by }}</div>
     </div>
-    <div class="row">
-      <h6>{% trans 'Added on' %}</h6>
-      <div class="text-muted ml-4">{{ item.collection_device.created_on }}</div>
-    </div>
   </div>
 
   <div class="col">
@@ -54,10 +50,10 @@
       </div>
         <div class="col-2">
           <div class="row">
-            <a href="{% url 'selia:sampling_event_device_items' item.pk %}">{% see_button %}</a>
+            <a href="{% url 'selia:collection_items' item.sampling_event.collection.pk %}?sampling_event_device={{ item.pk }}">{% see_button %}</a>
           </div>         </div>
         <div class="col-2">
-          <a href="{% url 'selia:sampling_event_device_item_create' item.pk %}"><i class="fas fa-plus"></i></a>
+          <a href="{% url 'selia:create_item' %}?collection={{ item.sampling_event.collection.pk }}&sampling_event={{ item.sampling_event.pk }}&sampling_event_device={{ item.pk }}"><i class="fas fa-plus"></i></a>
         </div>
     </div>
   </div>

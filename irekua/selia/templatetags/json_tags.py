@@ -29,7 +29,7 @@ def parse_annotation_label(data):
 def parse_json_object(data, level):
     if level == 0:
         header_level = 'h5'
-        div_class = 'd-block m-2 bg-light border rounded p-3 shadow-sm'
+        div_class = 'd-block m-1 bg-light border rounded p-3'
     else:
         header_level = 'h6'
         div_class = 'd-block'

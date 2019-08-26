@@ -1,4 +1,5 @@
 import re
+import uuid
 
 from django.utils.safestring import mark_safe
 from django import template
@@ -44,9 +45,9 @@ def summary_component(context, summary_template, object):
 
 
 @register.inclusion_tag('selia/components/filter.html', takes_context=True)
-def filter_component(context, filter_template, filter):
-    context['filter_template'] = filter_template
-    context['filter'] = filter
+def filter_component(context, template, forms):
+    context['template'] = template
+    context['forms'] = forms
     return context
 
 
@@ -106,14 +107,19 @@ def autocomplete_media():
 
 
 @register.inclusion_tag('selia/components/filter_bar.html', takes_context=True)
-def filter_bar(context, filter_form, search_form):
+def filter_bar(context, forms):
+    context['forms'] = forms
+
+    search_form = forms['search']
     search_field = search_form.fields['search']
     search_field = search_field.get_bound_field(search_form, 'search')
+
     if search_field.data:
         context['search'] = search_field.data
         context['clear'] = True
 
     context['form'] = {}
+    filter_form = forms['filter']
     for field_name, field in filter_form._form.fields.items():
         bound_field = field.get_bound_field(filter_form._form, field_name)
         if bound_field.data:
@@ -159,6 +165,9 @@ def selia_form(form, label):
     custom_attrs = ' form-control'
     if widget.input_type == 'select':
         custom_attrs += ' custom-select'
+
+    if widget.input_type == 'file':
+        custom_attrs = 'custom-file-input'
 
     widget_attrs = widget.attrs.get('class', '')
     class_for_html = widget_attrs + custom_attrs
@@ -278,3 +287,55 @@ def add_fields(query, fields):
             pass
 
     return query_copy.urlencode()
+
+
+@register.simple_tag
+def remove_form_fields(query, forms):
+    query = query.copy()
+
+    if 'filter' in forms:
+        filter_form = forms['filter']
+        filter_prefix = filter_form._form.prefix
+        for field in filter_form._form.fields:
+            if filter_prefix:
+                field = '{}-{}'.format(filter_prefix, field)
+            try:
+                query.pop(field)
+            except:
+                pass
+
+    if 'search' in forms:
+        search_form = forms['search']
+        search_prefix = search_form.prefix
+        for field in search_form.fields:
+            if search_prefix:
+                field = '{}-{}'.format(search_prefix, field)
+            try:
+                query.pop(field)
+            except:
+                pass
+
+    if 'order' in forms:
+        order_form = forms['order']
+        order_prefix = order_form.prefix
+        for field in order_form.fields:
+            if order_prefix:
+                field = '{}-{}'.format(order_prefix, field)
+            try:
+                query.pop(field)
+            except:
+                pass
+
+    return query.urlencode()
+
+
+@register.inclusion_tag('selia/components/selected_item.html')
+def selected_item(template, item, label):
+    random_id = uuid.uuid4().hex.lower()[0:8]
+    full_template_name = 'selia/components/select_list_items/{name}.html'
+    return {
+        'template': full_template_name.format(name=template),
+        'item': item,
+        'id': random_id,
+        'label': label
+    }

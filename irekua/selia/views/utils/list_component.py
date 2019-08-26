@@ -17,26 +17,44 @@ class SeliaList(object):
     prefix = ''
 
     def get_context_data(self, request):
-        context = {
-            'list_template': self.get_list_item_template(),
-            'filter_template': self.get_filter_form_template(),
+        return {
+            'templates': self.get_templates(),
             'queryset': self.get_queryset(request),
+            'forms': self.get_forms()
         }
 
+
+    def get_templates(self):
+        return {
+            'list_item': self.get_list_item_template(),
+            'filter_form': self.get_filter_form_template(),
+        }
+
+    def get_forms(self):
+        forms = {}
+
         if hasattr(self, 'filter'):
-            context['filter'] = self.filter
+            forms['filter'] = self.filter
 
         if hasattr(self, 'search_form'):
-            context['search'] = self.search_form
+            forms['search'] = self.search_form
 
         if hasattr(self, 'order_form'):
-            context['order'] = self.order_form
+            forms['order'] = self.order_form
 
-        return context
+        return forms
 
     def get_ordering_choices(self):
         orderings = []
         for field, label in self.ordering_fields:
+            orderings.append(
+                (
+                    '-{field}'.format(field=field),
+                    '{order} {label}'.format(
+                        label=label, order=_('↓'))
+                )
+            )
+
             orderings.append(
                 (
                     field,
@@ -44,15 +62,6 @@ class SeliaList(object):
                         label=label, order=_('↑'))
                     )
                 )
-
-            orderings.append(
-                (
-                    '-{field}'.format(field=field),
-                    '{order} {label}'.format(
-                        label=label, order=_('↓'))
-                    )
-                )
-
         return orderings
 
     def get_ordering_form_class(self):
@@ -60,8 +69,8 @@ class SeliaList(object):
 
         class OrderingForm(forms.Form):
             order = forms.ChoiceField(
-            label=_('ordering'),
-            choices=ordering_choices)
+                label=_('ordering'),
+                choices=ordering_choices)
 
         return OrderingForm
 

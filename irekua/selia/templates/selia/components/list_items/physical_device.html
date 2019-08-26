@@ -13,7 +13,7 @@
         <div class="media-body mt-0">
           <h4 class="mt-0">{{ item.device.brand }}</h4>
           <div class="text-muted">{{ item.device.model }}</div>
-          <div class="text-muted"><a href="{% url 'selia:user_device_detail' item.pk %}">{% enter_button %}</a></div>
+          <div class="text-muted"><a href="{% url 'selia:physical_device_detail' item.pk %}">{% enter_button %}</a></div>
         </div>
       </div>
     </div>
@@ -34,10 +34,6 @@
     </div>
 
     <div class="col-2 mx-5">
-      <div class="row d-flex justify-content-between">
-        <h6>{% trans 'Added on' %}</h6>
-        <div class="text-muted ml-4">{{ item.created_on.date|date:"SHORT_DATE_FORMAT" }}</div>
-      </div>
       <div class="row d-flex justify-content-between">
         <h6>{% trans 'Bundle' %}</h6>
         <div class="text-muted ml-4">{{ item.bundle|yesno }}</div>

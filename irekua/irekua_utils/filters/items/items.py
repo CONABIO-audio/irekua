@@ -1,13 +1,13 @@
 from django import forms
 from django.db import models
 from django.utils.translation import gettext as _
-from django_filters import FilterSet,DateFilter
+from django_filters import FilterSet
+from django_filters import DateFilter
 
 from database.models import Item
 
 
 class Filter(FilterSet):
-
     class Meta:
         model = Item
         fields = {
@@ -18,9 +18,13 @@ class Filter(FilterSet):
             'created_by__institution__institution_name': ['icontains'],
             'created_by__institution__institution_code': ['exact'],
             'created_by__institution__country': ['icontains'],
+            'sampling_event_device': ['exact'],
+            'sampling_event_device__sampling_event__collection_site': ['exact'],
+            'sampling_event_device__collection_device': ['exact'],
+            'sampling_event_device__sampling_event': ['exact'],
             'item_type': ['exact'],
             'created_on': ['gt', 'lt'],
-            }
+        }
 
         filter_overrides = {
             models.DateTimeField: {

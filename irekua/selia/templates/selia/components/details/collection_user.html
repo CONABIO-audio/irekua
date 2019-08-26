@@ -6,62 +6,46 @@
 
 <div class="row">
   <div class="col">
-    <h4>{% trans 'Collection user'%} {{ object.pk}} {% trans 'detail'%}</h4>
+    <h4>{% trans 'Collection user'%} {{ object.pk}}</h4>
   </div>
 </div>
 
 <div class="row w-100">
   <div class="col m-2">
-    <div class="row border-bottom">
-      <h6 class="text-center w-100">{% trans 'User info' %}</h6>
+    <div class="row mb-2">
+      <h4 class="text-center w-100">
+        <span class="border-bottom px-2">
+          {% trans 'User info' %}
+        </span>
+      </h4>
     </div>
 
     <div class="row">
-      <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125">
-          <strong class="d-block text-gray-dark">{% trans 'Username' %}</strong>
-          {{ object.user.username }}
-        </p>
+      <div class="col">
+        <h5 class="mt-0">{% trans 'Username' %}</h5>
+        <p class="text-muted">{{ object.user.username }}</p>
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col m-0 p-0">
-        <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125">
-            <strong class="d-block text-gray-dark">{% trans 'First name' %}</strong>
-            {{ object.user.first_name }}
-          </p>
-        </div>
-      </div>
-
-      <div class="col m-0 p-0">
-        <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125">
-            <strong class="d-block text-gray-dark">{% trans 'Last name' %}</strong>
-            {{ object.user.last_name }}
-          </p>
-        </div>
+      <div class="col">
+        <h5 class="mt-0">{% trans 'Institution' %}</h5>
+        <p class="text-muted">{{ object.user.institution }}</p>
       </div>
     </div>
 
     <div class="row">
-      <div class="col m-0 p-0">
-        <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125">
-            <strong class="d-block text-gray-dark">{% trans 'Email' %}</strong>
-            {{ object.user.email }}
-          </p>
-        </div>
+      <div class="col">
+        <h5 class="mt-0">{% trans 'First name' %}</h5>
+        <p class="text-muted">{{ object.user.first_name }}</p>
       </div>
+      <div class="col">
+        <h5 class="mt-0">{% trans 'Last name' %}</h5>
+        <p class="text-muted">{{ object.user.last_name }}</p>
+      </div>
+    </div>
 
-      <div class="col m-0 p-0">
-        <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125">
-            <strong class="d-block text-gray-dark">{% trans 'Institution' %}</strong>
-            {{ object.user.institution }}
-          </p>
-        </div>
+    <div class="row">
+      <div class="col">
+        <h5 class="mt-0">{% trans 'Email' %}</h5>
+        <p class="text-muted">{{ object.user.email }}</p>
       </div>
     </div>
   </div>
@@ -69,8 +53,12 @@
 
 <div class="row w-100">
   <div class="col m-2">
-    <div class="row border-bottom">
-      <h6 class="text-center w-100">{% trans 'Role' %}</h6>
+    <div class="row mb-2">
+      <h4 class="text-center w-100">
+        <span class="border-bottom px-2">
+          {% trans 'Role' %}
+        </span>
+      </h4>
     </div>
 
     <div class="row">
@@ -82,22 +70,14 @@
       </div>
       {% endif %}
 
-      <div class="col m-0 p-0">
-        <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125">
-            <strong class="d-block text-gray-dark">{% trans 'Role' %}</strong>
-            {{ object.role }}
-          </p>
-        </div>
+      <div class="col">
+        <h5 class="mt-0">{% trans 'Role' %}</h5>
+        <p class="text-muted">{{ object.role }}</p>
       </div>
 
-      <div class="col m-0 p-0">
-        <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125">
-            <strong class="d-block text-gray-dark">{% trans 'Description' %}</strong>
-            {{ object.role.description }}
-          </p>
-        </div>
+      <div class="col">
+        <h5 class="mt-0">{% trans 'Description' %}</h5>
+        <p class="text-muted">{{ object.role.description }}</p>
       </div>
     </div>
   </div>

@@ -114,3 +114,16 @@ class SamplingEventTypesAutocomplete(autocomplete.Select2QuerySetView):
             qs = qs.filter(name__istartswith=self.q)
 
         return qs
+
+
+class UserAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = irekua_models.User.objects.all()
+
+        if self.q:
+            qs = qs.filter(email__istartswith=self.q)
+
+        return qs
+
+    def get_result_label(self, item):
+        return item.email

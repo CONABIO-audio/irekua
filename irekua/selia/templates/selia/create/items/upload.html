@@ -1,27 +1,47 @@
-{% extends 'selia/create/items/base.html' %}
+{% extends 'selia/create/base.html' %}
 {% load i18n %}
 {% load selia_components %}
 
 {% block secondary-navbar %}
-  {% include 'selia/user/components/secondary_navbar.html' %}
+  {% include 'selia/navbars/user.html' %}
 {% endblock %}
 
+{% block toolbar-title %}
+  {% trans 'Add items' %}
+{% endblock toolbar-title %}
+
 {% block toolbar-steps %}
-<li>{% trans 'Select collection' %}</li>
-<li>{% trans 'Select sampling event' %}</li>
-<li>{% trans 'Select deployed device' %}</li>
-<li>{% trans 'Select licence' %}</li>
-<li class="is-active">{% trans 'Upload files' %}</li>
+  <li>
+    <a href="{% url 'selia:create_item' %}?{{ request.GET|remove_fields:'collection&sampling_event&sampling_event_device&licence' }}">
+      {% trans 'Select collection' %}
+    </a>
+  </li>
+  <li>
+    <a href="{% url 'selia:create_item' %}?{{ request.GET|remove_fields:'sampling_event&sampling_event_device&licence' }}">
+      {% trans 'Select sampling event' %}
+    </a>
+  </li>
+  <li>
+    <a href="{% url 'selia:create_item' %}?{{ request.GET|remove_fields:'sampling_event_device&licence' }}">
+      {% trans 'Select deployed device' %}
+    </a>
+  </li>
+  <li>
+    <a href="{% url 'selia:create_item' %}?{{ request.GET|remove_fields:'licence' }}">
+      {% trans 'Select licence' %}
+    </a>
+  </li>
+  <li class="is-active">{% trans 'Upload files' %}</li>
 {% endblock %}
 
 {% block main-content %}
-<form id="upload_item_form" action="?sampling_event_device={{ sampling_event_device.pk }}&licence={{ licence.pk }}" method="post" enctype="multipart/form-data" style="display:none;">
-{% csrf_token %}
-	<input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
-	<input type="hidden" id="sampling_event_device_field" name="sampling_event_device" value="{{ sampling_event_device.pk }}">
-	<input type="hidden" id="licence_field" name="licence" value="{{ licence.pk }}">
-	<input type="hidden" id="item_type_field" name="item_type" value="">
-	<input type="hidden" id="captured_on_field" name="captured_on" value="">
-</form>
-<div id="uploader_section" class="container-fluid"></div>
+  <form id="upload_item_form" action="?sampling_event_device={{ sampling_event_device.pk }}&licence={{ licence.pk }}" method="post" enctype="multipart/form-data" style="display:none;">
+  {% csrf_token %}
+  	<input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
+  	<input type="hidden" id="sampling_event_device_field" name="sampling_event_device" value="{{ sampling_event_device.pk }}">
+  	<input type="hidden" id="licence_field" name="licence" value="{{ licence.pk }}">
+  	<input type="hidden" id="item_type_field" name="item_type" value="">
+  	<input type="hidden" id="captured_on_field" name="captured_on" value="">
+  </form>
+  <div id="uploader_section" class="container-fluid"></div>
 {% endblock main-content %}

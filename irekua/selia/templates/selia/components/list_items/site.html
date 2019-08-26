@@ -23,7 +23,7 @@
         {% if item.locality %}
         <div class="text-muted">{{ item.locality }}</div>
         {% endif %}
-        <a href="{% url 'selia:user_site_detail' item.pk %}">{% enter_button %}</a>
+        <a href="{% url 'selia:site_detail' item.pk %}">{% enter_button %}</a>
       </div>
     </div>
   </div>
@@ -39,10 +39,6 @@
     <div class="row d-flex justify-content-between">
       <h6>{% trans 'Altitude' %}</h6>
       <div class="text-muted ml-4">{{ item.altitude|floatformat:'1' }}</div>
-    </div>
-    <div class="row d-flex justify-content-between">
-      <h6>{% trans 'Created on' %}</h6>
-      <div class="text-muted ml-4">{{ item.created_on|date:"SHORT_DATE_FORMAT" }}</div>
     </div>
   </div>
 

@@ -1,78 +1,72 @@
-{% extends 'selia/create/physical_devices/base.html' %}
+{% extends 'selia/create/base.html' %}
 {% load i18n %}
 {% load selia_components %}
 
+{% block toolbar-title %}
+  {% trans 'Add user device' %}
+{% endblock toolbar-title %}
+
+{% block secondary-navbar %}
+  {% include 'selia/navbars/user.html' %}
+{% endblock secondary-navbar %}
+
 {% block toolbar-steps %}
-<li>{% trans 'Select hardware' %}</li>
+<li>
+  <a href="{% url 'selia:create_physical_device' %}?{{ request.GET|remove_fields:'device'}}">
+    {% trans 'Select hardware' %}
+  </a>
+</li>
 <li class="is-active">{% trans 'Fill in details' %}</li>
 {% endblock %}
 
-{% block main-content %}
-<div class="container">
-  <div class="jumbotron m-4">
-    <h1 class="display-6">{% trans 'Fill in details' %}</h1>
-    <p class="lead">
-      {% blocktrans %}
-        Register any individual traits
-      {% endblocktrans %}
-    </p>
+{% block step-title %}
+  {% trans 'Fill in details' %}
+{% endblock %}
+
+{% block step-description %}
+  {% blocktrans %}
+    Register any individual traits
+  {% endblocktrans %}
+{% endblock %}
+
+{% block previously-selected %}
+  {% trans 'Selected hardware' as label %}
+  {% selected_item 'devices' device label %}
+{% endblock previously-selected %}
+
+{% block form-content %}
+  <input type="hidden" id="device_field" name="device" value="{{ device.pk }}">
+
+  <div class="form-row">
+    <div class="col-1"></div>
+    <div class="col">
+      {% bootstrap_form form.serial_number%}
+    </div>
+    <div class="col">
+      {% bootstrap_form form.identifier %}
+    </div>
+    <div class="col-1"></div>
   </div>
 
-  <div class="row w-100 my-2">
+  <div class="form-row">
+    <div class="col-1"></div>
     <div class="col">
-      <a class="w-100 text-center" href="#collapseDevice" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseDevice">
-        <h4>{% trans 'Selected device' %}: {{ device }}</h4>
-      </a>
-      <div class="collapse w-100" id="collapseDevice">
-        <div class="d-flex justify-content-center w-100">
-          {% include 'selia/components/select_list_items/devices.html' with item=device %}
-        </div>
-      </div>
+      {% bootstrap_form form.bundle %}
     </div>
   </div>
 
-  <div class="form-container mb-4">
-    <form action="?{{ request.GET.urlencode }}" method="post">
-      {% csrf_token %}
-      <input type="hidden" id="device_field" name="device" value="{{ device.pk }}">
-
-      <div class="form-row">
-        <div class="col-1"></div>
-        <div class="col">
-          {% bootstrap_form form.serial_number%}
-        </div>
-        <div class="col">
-          {% bootstrap_form form.identifier %}
-        </div>
-        <div class="col-1"></div>
+  {% if device.device_type.metadata_schema %}
+  <hr/>
+  <div class="form-row">
+    <div class="form-group col">
+      <div class="row">
+        <h5>{% trans 'Metadata' %}</h5>
       </div>
-
-      <div class="form-row">
-        <div class="col-1"></div>
-        <div class="col">
-          {% bootstrap_form form.bundle %}
-        </div>
+      <div class="row">
+        {{ form.metadata }}
       </div>
-
-      {% if device.device_type.metadata_schema %}
-      <hr/>
-      <div class="form-row">
-        <div class="form-group col">
-          <div class="row">
-            <h5>{% trans 'Metadata' %}</h5>
-          </div>
-          <div class="row">
-            {{ form.metadata }}
-          </div>
-          <small id="brandInput" class="form-text text-muted">{{ form.metadata.help_text }}</small>
-        </div>
-      </div>
-      {% endif %}
-
-      <div class="row justify-content-center">
-        <button type="submit" class="btn btn-primary">{% trans 'Register device' %}</button>
-      </div>
-    </form>
+      <small id="brandInput" class="form-text text-muted">{{ form.metadata.help_text }}</small>
+    </div>
   </div>
-</div>
-{% endblock main-content %}
+  {% endif %}
+{% endblock form-content %}

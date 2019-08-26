@@ -1,4 +1,0 @@
-from .create_collection_site import CollectionSiteCreateView
-from .select_site import SelectCollectionSiteSiteView
-from .select_type import SelectCollectionSiteTypeView
-from .manager import CreateCollectionSiteManager

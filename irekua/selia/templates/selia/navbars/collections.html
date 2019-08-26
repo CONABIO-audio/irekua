@@ -1,0 +1,47 @@
+{% extends 'selia/components/secondary_navbar.html' %}
+{% load i18n %}
+
+{% block navbar-brand %}
+<a class="navbar-brand" id="dropdownMenuButton" href={% url 'selia:about_collections' %}>{% trans 'Collections' %}</a>
+
+{% endblock navbar-brand %}
+
+{% block navbar-items %}
+{% url 'selia:about_collections' as about_url %}
+<li class="nav-item">
+  {% if about_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ about_url }}>
+  {% else %}
+  <a class="nav-link" href={{ about_url }}>
+  {% endif %}
+    <i class="fas fa-info"></i>
+    {% trans 'About' %}
+  </a>
+</li>
+
+{% if user.is_authenticated %}
+{% url 'selia:user_collections' as user_url %}
+<li class="nav-item">
+  {% if user_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ user_url }}>
+  {% else %}
+  <a class="nav-link" href={{ user_url }}>
+  {% endif %}
+    <i class="fas fa-archive"></i>
+    {% trans 'My Collections' %}
+  </a>
+</li>
+{% endif %}
+
+{% url 'selia:open_collections' as open_url %}
+<li class="nav-item">
+  {% if open_url == request.path|urlencode %}
+  <a class="nav-link active" href={{ open_url }}>
+  {% else %}
+  <a class="nav-link" href={{ open_url }}>
+  {% endif %}
+    <i class="fas fa-lock-open"></i>
+    {% trans 'Open Collections' %}
+  </a>
+</li>
+{% endblock navbar-items %}

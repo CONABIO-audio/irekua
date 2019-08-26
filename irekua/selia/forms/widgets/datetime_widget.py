@@ -1,5 +1,6 @@
 from django.forms import DateTimeInput
 
+
 class BootstrapDateTimePickerInput(DateTimeInput):
     template_name = 'selia/widgets/bootstrap_datetimepicker.html'
 
@@ -9,6 +10,7 @@ class BootstrapDateTimePickerInput(DateTimeInput):
             attrs = dict()
         attrs['data-target'] = '#{id}'.format(id=datetimepicker_id)
         attrs['class'] = 'form-control datetimepicker-input'
+
         context = super().get_context(name, value, attrs)
         context['widget']['datetimepicker_id'] = datetimepicker_id
         return context

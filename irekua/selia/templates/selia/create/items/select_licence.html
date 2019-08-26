@@ -1,34 +1,60 @@
-{% extends 'selia/create/items/base.html' %}
+{% extends 'selia/create/base_select.html' %}
 {% load i18n %}
 {% load selia_components %}
 
 {% block secondary-navbar %}
-  {% include 'selia/sampling_event_device_detail/components/secondary_navbar.html' %}
+  {% include 'selia/navbars/sampling_event_device.html' %}
 {% endblock %}
+
+{% block toolbar-title %}
+  {% trans 'Add items' %}
+{% endblock toolbar-title %}
 
 {% block toolbar-steps %}
-<li>{% trans 'Select collection' %}</li>
-<li>{% trans 'Select sampling event' %}</li>
-<li>{% trans 'Select deployed device' %}</li>
-<li class="is-active">{% trans 'Select licence' %}</li>
-<li>{% trans 'Upload files' %}</li>
+  <li>
+    <a href="{% url 'selia:create_item' %}?{{ request.GET|remove_fields:'collection&sampling_event&sampling_event_device' }}">
+      {% trans 'Select collection' %}
+    </a>
+  </li>
+  <li>
+    <a href="{% url 'selia:create_item' %}?{{ request.GET|remove_fields:'sampling_event&sampling_event_device' }}">
+      {% trans 'Select sampling event' %}
+    </a>
+  </li>
+  <li>
+    <a href="{% url 'selia:create_item' %}?{{ request.GET|remove_fields:'sampling_event_device' }}">
+      {% trans 'Select deployed device' %}
+    </a>
+  </li>
+  <li class="is-active">{% trans 'Select licence' %}</li>
+  <li>{% trans 'Upload files' %}</li>
 {% endblock %}
 
+{% block step-title %}
+  {% trans 'Select licence' %}
+{% endblock %}
 
-{% block main-content %}
-<div class="container">
-  <div class="jumbotron m-4">
-    <h1 class="display-6">{%trans 'Select licence' %}</h1>
-    <p>
-      {% blocktrans %}
-        Please select a licence for the items you wish to upload.
-      {% endblocktrans %}
-    </p>
-  </div>
+{% block step-description %}
+  {% blocktrans %}
+    Please select a licence for the items you wish to upload.
+  {% endblocktrans %}
+{% endblock %}
 
+{% block previously-selected %}
+  {% trans 'Selected collection' as label %}
+  {% selected_item 'collection' sampling_event_device.sampling_event.collection label %}
+
+  {% trans 'Selected sampling event' as label %}
+  {% selected_item 'sampling_events' sampling_event_device.sampling_event label %}
+
+  {% trans 'Selected deployed device' as label %}
+  {% selected_item 'sampling_event_devices' sampling_event_device label %}
+{% endblock previously-selected %}
+
+{% block list-container %}
   <div class="container-fluid form-container w-100 p-4">
       <div class="row d-flex justify-content-center flex-wrap">
-        {% for item in licence_list %}
+        {% for item in list %}
           <div class="col-3 p-4 list_item m-2">
             <a class="stretched-link" href="{% url 'selia:create_item' %}?{{ request.GET.urlencode }}&licence={{ item.pk }}">
               {% include 'selia/components/select_list_items/licences.html' with item=item %}
@@ -43,5 +69,4 @@
         {% endfor %}
       </div>
   </div>
-</div>
 {% endblock %}

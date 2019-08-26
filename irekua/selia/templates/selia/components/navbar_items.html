@@ -9,7 +9,7 @@
   {% endif %}
 </li>
 
-{% url 'selia:collections_about' as selia_collections %}
+{% url 'selia:about_collections' as selia_collections %}
 <li class="nav-item">
   {% if selia_collections in request.path %}
   <a class="nav-link active" href={{ selia_collections|urlencode }}>{% trans "Collections" %}</a>

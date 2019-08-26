@@ -17,6 +17,8 @@
   </div>
 
   <div class="col-1 container-fluid">
-    <a class="btn btn-link text-light" href="?#">{% trans 'Clean' %} <i class="fas fa-eraser"></i></a>
+    <a class="btn btn-link text-light" href="?{% remove_form_fields request.GET forms %}">
+      {% trans 'Clean' %} <i class="fas fa-eraser"></i>
+    </a>
   </div>
 {% endif %}

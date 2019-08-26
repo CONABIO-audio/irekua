@@ -24,17 +24,17 @@
       <p class="text-muted">{{ object.institution }}</p>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <h5 class="mt-0">{% trans 'Created on' %}</h5>
-      <p class="text-muted">{{ object.created_on }}</p>
-    </div>
-  </div>
 
   {% if object.metadata %}
-  <h4>{% trans 'Metadata' %}</h4>
-  <div class="d-flex flex-wrap">
-    {% show_json object.metadata %}
+  <div class="row">
+    <h4 class="w-100 text-center">
+      <span class="border-bottom px-2">
+        {% trans 'Metadata' %}
+      </span>
+    </h4>
+    <div class="d-flex flex-wrap">
+      {% show_json object.metadata %}
+    </div>
   </div>
   {% endif %}
 </div>

@@ -1,6 +1,14 @@
-{% extends 'selia/create/collection_sites/base.html' %}
+{% extends 'selia/create/base.html' %}
 {% load i18n %}
 {% load selia_components %}
+
+{% block toolbar-title %}
+  {% trans 'Add site to collection' %}
+{% endblock toolbar-title %}
+
+{% block secondary-navbar %}
+  {% include 'selia/navbars/collection.html' %}
+{% endblock %}
 
 {% block head-extra %}
   {% include 'selia/components/media/map_media.html' %}
@@ -8,6 +16,11 @@
 {% endblock head-extra %}
 
 {% block toolbar-steps %}
+<li>
+  <a href="{% url 'selia:create_collection_site' %}?{{ request.GET|remove_fields:'site&site_type&collection' }}">
+    {% trans 'Select collection' %}
+  </a>
+</li>
 <li>
   <a href="{% url 'selia:create_collection_site' %}?{{ request.GET|remove_fields:'site&site_type' }}">
     {% trans 'Select site type' %}
@@ -18,72 +31,40 @@
     {% trans 'Select site' %}
   </a>
 </li>
-<li class="is-active">{% trans 'Fill out details' %}</li>
+<li class="is-active">{% trans 'Fill in details' %}</li>
 {% endblock %}
 
-{% block main-content %}
-<div class="container" id="sites">
-  <div class="jumbotron m-4">
-    <h1 class="display-6">{%trans 'Add site to collection' %}</h1>
-  </div>
+{% block step-title %}
+{% trans 'Add site to collection' %}
+{% endblock %}
 
-  <div class="row w-100 my-2">
+{% block previously-selected %}
+  {% trans 'Selected collection' as label %}
+  {% selected_item 'collection' collection label %}
+
+  {% trans 'Selected site type' as label %}
+  {% selected_item 'site_type' site_type label %}
+
+  {% trans 'Selected site' as label %}
+  {% selected_item 'sites' site label %}
+{% endblock previously-selected %}
+
+{% block form-content %}
+  <input type="hidden" id="site_field" name="site" value="{{ site.pk }}">
+  <input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
+  <input type="hidden" id="site_type_field" name="site_type" value="{{ site_type.pk }}">
+
+  <div class="row w-100 p-4">
     <div class="col">
-      <a class="w-100 text-center" href="#collapseSite" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSite"><h4>{% trans 'Selected site' %}: {{ site.pk }}</h4></a>
-      <div class="collapse w-100" id="collapseSite">
-        <div class="d-flex justify-content-center w-100">
-          {% include 'selia/components/select_list_items/sites.html' with item=site %}
-        </div>
-      </div>
+      {% bootstrap_form form.internal_id %}
     </div>
   </div>
 
-  <div class="row w-100 my-2">
+  {% if site_type.metadata_schema %}
+  <div class="row p-3">
     <div class="col">
-      <a class="w-100 text-center" href="#collapseSiteType" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSiteType"><h4>{% trans 'Selected site type' %}: {{ site_type.pk }}</h4></a>
-      <div class="collapse w-100" id="collapseSiteType">
-        <div class="d-flex justify-content-center w-100">
-          {% include 'selia/components/select_list_items/site_type.html' with item=site_type %}
-        </div>
-      </div>
+      {{ form.metadata }}
     </div>
   </div>
-
-  <div class="row p-4 h-100">
-    <h4>{% trans 'Please fill out the following information:' %}</h4>
-  </div>
-
-  <div class="form-container mb-4">
-    <form action="?{{ request.GET.urlencode }}" method="post">
-      {% csrf_token %}
-      <input type="hidden" id="site_field" name="site" value="{{ site.pk }}">
-      <input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
-      <input type="hidden" id="site_type_field" name="site_type" value="{{ site_type.pk }}">
-      <div class="row">
-        {{ form.errors }}
-      </div>
-      <div class="row w-100 p-4">
-        <div class="col">
-          <div class="row">
-            {% bootstrap_form form.internal_id %}
-          </div>
-        </div>
-        {% if site_type.metadata_schema %}
-        <div class="col">
-          <div class="row">
-            <h4 class="w-100 text-center">{% trans 'Metadata' %}</h4>
-          </div>
-          <div class="row px-5">
-            {{ form.metadata }}
-          </div>
-        </div>
-        {% endif %}
-      </div>
-
-      <div class="row justify-content-center">
-        <button type="submit" class="btn btn-primary">{% trans 'Register site' %}</button>
-      </div>
-    </form>
-  </div>
-</div>
-{% endblock %}
+  {% endif %}
+{% endblock form-content %}

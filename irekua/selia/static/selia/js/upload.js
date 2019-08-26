@@ -35,6 +35,7 @@ class FileUploader {
 		var row = document.createElement('div');
 		row.className = "row p-2";
 
+
 		var file_picker_col = document.createElement('div');
 		file_picker_col.className = "col";
 
@@ -204,7 +205,7 @@ class FileUploader {
 		row.appendChild(date_toggle_col);
 
 
-        var row2 = document.createElement("div");
+    var row2 = document.createElement("div");
 		row2.className = "row p-2 collapse";
 		row2.id = "date_tools";
 
@@ -426,7 +427,7 @@ class FileUploader {
 			var parser_map = widget.validate_parser_map(widget.date_pattern_input.value);
 			if (parser_map){
 				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
-				
+
 				for (var i=0;i<check_boxes.length;i++){
 					if (check_boxes[i].file_id != "all"){
 						var file = widget.get_file_by_id(check_boxes[i].file_id);
@@ -597,7 +598,7 @@ class FileUploader {
 
 		this.error_container = document.createElement('div');
 		this.error_list_container = document.createElement('div');
-		this.error_list_container.className = "row container-fluid";		
+		this.error_list_container.className = "row container-fluid";
 		this.error_list_container.style.display = "none";
 
 		this.duplicate_container = document.createElement('div');
@@ -627,7 +628,7 @@ class FileUploader {
 				widget.current_results_tab = widget.error_container;
 				widget.current_results_tab.style.display = "block";
 				$(this).addClass('active');
-			} 
+			}
 		});
 
 		this.duplicate_link.addEventListener('click',function(e){
@@ -637,7 +638,7 @@ class FileUploader {
 				widget.current_results_tab = widget.duplicate_container;
 				widget.current_results_tab.style.display = "block";
 				$(this).addClass('active');
-			} 
+			}
 		});
 
 		this.upload_link.addEventListener('click',function(e){
@@ -647,7 +648,7 @@ class FileUploader {
 				widget.current_results_tab = widget.upload_container;
 				widget.current_results_tab.style.display = "block";
 				$(this).addClass('active');
-			} 
+			}
 		});
 
 		this.error_container.appendChild(this.error_list_container);
@@ -697,7 +698,7 @@ class FileUploader {
 		file_picker_col.appendChild(this.alter_file_picker);
 
 		this.blank_file_list.appendChild(file_picker_col);
-		
+
 		var paginator = document.createElement('div');
 		paginator.className = "row justify-content-center w-100";
 		paginator.align = "center";
@@ -781,7 +782,7 @@ class FileUploader {
 		paginator.appendChild(prev_col);
 		paginator.appendChild(page_col);
 		paginator.appendChild(next_col);
-		
+
 		var widget = this;
 
 		this.next_error_btn.onclick = function(e){
@@ -837,7 +838,7 @@ class FileUploader {
 		paginator.appendChild(prev_col);
 		paginator.appendChild(page_col);
 		paginator.appendChild(next_col);
-		
+
 		var widget = this;
 
 		this.next_duplicate_btn.onclick = function(e){
@@ -893,7 +894,7 @@ class FileUploader {
 		paginator.appendChild(prev_col);
 		paginator.appendChild(page_col);
 		paginator.appendChild(next_col);
-		
+
 		var widget = this;
 
 		this.next_upload_btn.onclick = function(e){
@@ -918,7 +919,7 @@ class FileUploader {
 
 		var blank_message = document.createElement('a');
 		blank_message.innerHTML = "No new uploads"
-		this.blank_upload_list.appendChild(blank_message);		
+		this.blank_upload_list.appendChild(blank_message);
 	}
 	get_file_page(page, per_page, filter_function) {
 		var page = page || 1;
@@ -993,7 +994,7 @@ class FileUploader {
         	dateTitle.textContent = 'Captured on';
         	dateTitle.className = 'ml-4 ellipsise text-light header_title';
         	header_dateCol.appendChild(dateTitle);
-		    
+
 		    var statusTitle = document.createElement('div');
 		    statusTitle.className = 'ml-4 ellipsise text-light header_title';
 		    statusTitle.textContent = "Status";
@@ -1395,7 +1396,7 @@ class FileUploader {
 
 		} else {
 			this.upload_list_container.style.display = "none";
-			this.blank_upload_list.style.display = "flex";		
+			this.blank_upload_list.style.display = "flex";
 		}
 	}
 	parse_date(fileName,parser_map){
@@ -1421,7 +1422,7 @@ class FileUploader {
 			var widget = this;
 			fr.onloadend = function(){
 				var exif = EXIF.readFromBinaryFile(this.result);
-				
+
           		if (exif) {
 
           			file.media_info = exif;
@@ -1458,7 +1459,7 @@ class FileUploader {
 	      var date_regexp = null;
 
 	      if (map_string.includes('<') && map_string.includes('>')){
-	        
+
 	        for(var i=0; i<map_string.length;i++) {
 	          if (map_string[i] == "<"){
 	            pattern_mask = pattern_mask + map_string[i];
@@ -1477,7 +1478,7 @@ class FileUploader {
 	            pattern_mask = pattern_mask + "_";
 	          }
 	        }
-	        
+
 	        if (pieces.length > 0){
 	          date_regexp = map_string.substring(pieces[0][0]-1,pieces[pieces.length-1][1]+1);
 	          var cut_pattern = pattern_mask.substring(pieces[0][0]-1,pieces[pieces.length-1][1]+1).replace(/</g,"").replace(/>/g,"");
@@ -1503,7 +1504,7 @@ class FileUploader {
 	                    parser_key = 'month';
 	                  } else {
 	                    bad_date_map = true;
-	                  }                    
+	                  }
 	                  break;
 	                }
 	                case 'D':{
@@ -1549,7 +1550,7 @@ class FileUploader {
 	                start = cut_pattern.indexOf(substr);
 	                date_parser_map[parser_key] = {'limits':[start,start+substr_length],'length':substr_length,"order":p};
 	              }
-	              
+
 	            } else {
 	              bad_date_map = true;
 	            }
@@ -1657,7 +1658,7 @@ class FileUploader {
 				return true;
 			}
 		}
-		return false;		
+		return false;
 	}
 	is_duplicate(file){
 		if (file.upload_response){
@@ -1685,7 +1686,7 @@ class FileUploader {
 		if (file.force){
 			return true;
 		}
-		return false;		
+		return false;
 	}
 	has_media_info(file){
 		if (file.media_info){
@@ -1746,7 +1747,7 @@ class FileUploader {
 		}
 		if (name_arr.includes('duplicates')){
 			var duplicate_page = this.get_file_page(this.duplicate_page_number, this.per_page, this.is_duplicate);
-			this.render_duplicate_list(duplicate_page);			
+			this.render_duplicate_list(duplicate_page);
 		}
 		if (name_arr.includes('uploads')){
 			var upload_page = this.get_file_page(this.upload_page_number, this.per_page, this.is_uploaded);
@@ -1804,7 +1805,7 @@ class FileUploader {
 	}
 	get_file_by_id(file_id) {
 		var result = this.files.filter(function(f){return f.file_id==file_id});
-		
+
 		if (result.length > 0){
 			return result[0];
 		}
