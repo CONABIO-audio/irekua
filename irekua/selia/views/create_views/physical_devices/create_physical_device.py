@@ -4,7 +4,7 @@ from database.models import Device
 from database.models import PhysicalDevice
 
 from selia.forms.json_field import JsonField
-from selia.views.utils import SeliaCreateView
+from selia.views.create_views.create_base import SeliaCreateView
 
 
 class PhysicalDeviceCreateForm(forms.ModelForm):

@@ -1,5 +1,4 @@
 from django.views.generic.detail import SingleObjectMixin
-from django.utils.translation import gettext as _
 
 from database.models import Annotation
 from database.models import Item
@@ -8,14 +7,13 @@ from irekua_utils.filters.annotations import annotations
 from selia.views.list_views.base import SeliaListView
 
 
-class CollectionAnnotationsListView(SeliaListView, SingleObjectMixin):
+class ListAnnotationView(SeliaListView, SingleObjectMixin):
     paginate_by = 3
-    template_name = 'selia/item_detail/annotations/list.html'
+
+    template_name = 'selia/list/annotations.html'
     list_item_template = 'selia/components/list_items/annotation.html'
     help_template = 'selia/components/help/item_annotations.html'
     filter_form_template = 'selia/components/filters/annotation.html'
-
-    empty_message = _('There are no annotations for this item')
 
     filter_class = annotations.Filter
     search_fields = annotations.search_fields

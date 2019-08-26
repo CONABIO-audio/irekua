@@ -1,8 +1,7 @@
 from django.urls import path
-from selia import views
 
 from . import selia
-from . import item_detail
+from . import annotator
 from . import autocomplete
 from . import collections_admin
 from . import about
@@ -15,7 +14,7 @@ urlpatterns = (
     selia.urlpatterns +
     autocomplete.urlpatterns +
     collections_admin.urlpatterns +
-    item_detail.urlpatterns +
+    annotator.urlpatterns +
     about.urlpatterns +
     create_views.urlpatterns +
     detail_views.urlpatterns +

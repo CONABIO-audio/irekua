@@ -7,7 +7,7 @@ from database.models import Device
 from database.models import DeviceBrand
 from database.models import DeviceType
 
-from selia.views.utils import SeliaCreateView
+from selia.views.create_views.create_base import SeliaCreateView
 from selia.forms.type_field import TypeSelectField
 
 

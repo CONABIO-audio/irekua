@@ -13,6 +13,7 @@ from .user_devices import ListUserPhysicalDeviceView
 from .user_items import ListUserItemsView
 from .user_sampling_events import ListUserSamplingEventsView
 from .user_sites import ListUserSitesView
+from .annotations import ListAnnotationView
 
 
 __all__ = [
@@ -31,4 +32,5 @@ __all__ = [
     'ListUserItemsView',
     'ListUserSamplingEventsView',
     'ListUserSitesView',
+    'ListAnnotationView',
 ]

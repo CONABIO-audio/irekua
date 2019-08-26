@@ -6,7 +6,7 @@ from django.utils.translation import gettext as _
 from database.models import Collection
 from database.models import User
 
-from selia.views.utils.create_base import SeliaCreateView
+from selia.views.create_views.create_base import SeliaCreateView
 
 
 class SelectUserForm(forms.Form):

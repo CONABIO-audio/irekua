@@ -4,7 +4,7 @@ from django.shortcuts import reverse
 
 from django.http import HttpResponse
 from database.models import Item, SamplingEventDevice, Licence
-from selia.views.utils import SeliaCreateView
+from selia.views.create_views.create_base import SeliaCreateView
 import json
 
 class ItemUploadView(SeliaCreateView):

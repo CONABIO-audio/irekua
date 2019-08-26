@@ -171,8 +171,6 @@ class FileUploader {
 
 		remove_col.appendChild(remove_dropdown);
 
-
-
 		var date_toggle_col = document.createElement('div');
 		date_toggle_col.className = "col";
 
