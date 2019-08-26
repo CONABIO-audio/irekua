@@ -29,6 +29,11 @@
   {% endblocktrans %}
 {% endblock %}
 
+{% block previously-selected %}
+  {% trans 'Selected hardware' as label %}
+  {% selected_item 'devices' device label %}
+{% endblock previously-selected %}
+
 {% block form-content %}
   <input type="hidden" id="device_field" name="device" value="{{ device.pk }}">
 

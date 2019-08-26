@@ -1,9 +1,15 @@
 {% load i18n %}
-<div class="col">
-  <h5>{% trans 'Additional errors' %}</h5>
-  {% for error in errors %}
-  <div class="row text-danger">
+<div class="w-100 m-3 p-4 error-container rounded">
+
+  <h5 class="text-center">{% trans 'Errors' %}</h5>
+  {% for field, error_list in errors.items %}
+
+  <h6 class="text-danger">{{ field }}</h6>
+  {% for error in error_list %}
+  <p class="text-danger pl-4">
     {{ error }}
-  </div>
+  </p>
   {% endfor %}
+  {% endfor %}
+
 </div>

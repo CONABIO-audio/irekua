@@ -40,6 +40,14 @@
   <a href="#collapseSite" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSite">{% trans 'create a new one' %}</a>
 {% endblock %}
 
+{% block previously-selected %}
+  {% trans 'Selected collection' as label %}
+  {% selected_item 'collection' collection label %}
+
+  {% trans 'Selected site type' as label %}
+  {% selected_item 'site_type' site_type label %}
+{% endblock previously-selected %}
+
 {% block extra-forms %}
 <form action="?{{ request.GET.urlencode }}" method="post">
   {% csrf_token %}

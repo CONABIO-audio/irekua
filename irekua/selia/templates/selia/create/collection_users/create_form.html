@@ -12,6 +12,11 @@
 
 {% block toolbar-steps %}
 <li>
+  <a href="{% url 'selia:create_collection_user'%}?{{ request.GET | remove_fields:'user&role&collection'}}">
+    {% trans 'Select collection' %}
+  </a>
+</li>
+<li>
   <a href="{% url 'selia:create_collection_user'%}?{{ request.GET | remove_fields:'user&role'}}">
     {% trans 'Select user' %}
   </a>
@@ -29,44 +34,14 @@
 {% endblock step-title %}
 
 {% block previously-selected %}
-  <div class="row w-100 my-2">
-    <div class="col">
-      <a class="w-100 text-center" href="#collapseCollection" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCollection">
-        <h4>{% trans 'Selected collection' %}: {{ collection }}</h4>
-      </a>
-      <div class="collapse w-100" id="collapseCollection">
-        <div class="d-flex justify-content-center w-100">
-          {% include 'selia/components/select_list_items/collection.html' with item=collection %}
-        </div>
-      </div>
-    </div>
-  </div>
+  {% trans 'Selected collection' as label %}
+  {% selected_item 'collection' collection label %}
 
-  <div class="row w-100 my-2">
-    <div class="col">
-      <a class="w-100 text-center" href="#collapseUser" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseUser">
-        <h4>{% trans 'Selected user' %}: {{ user.email }}</h4>
-      </a>
-      <div class="collapse w-100" id="collapseUser">
-        <div class="d-flex justify-content-center w-100">
-          {% include 'selia/components/select_list_items/user.html' with item=user %}
-        </div>
-      </div>
-    </div>
-  </div>
+  {% trans 'Selected user' as label %}
+  {% selected_item 'user' user.email label %}
 
-  <div class="row w-100 my-2">
-    <div class="col">
-      <a class="w-100 text-center" href="#collapseRole" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseRole">
-        <h4>{% trans 'Selected role' %}: {{ role.name }}</h4>
-      </a>
-      <div class="collapse w-100" id="collapseRole">
-        <div class="d-flex justify-content-center w-100">
-          {% include 'selia/components/select_list_items/role.html' with item=role %}
-        </div>
-      </div>
-    </div>
-  </div>
+  {% trans 'Selected role' as label %}
+  {% selected_item 'role' role label %}
 {% endblock previously-selected %}
 
 {% block form-content %}

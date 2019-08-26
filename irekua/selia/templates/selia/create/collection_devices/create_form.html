@@ -11,8 +11,16 @@
 {% endblock %}
 
 {% block toolbar-steps %}
-  <li>{% trans 'Select collection' %}</li>
-  <li>{% trans 'Select user device' %}</li>
+  <li>
+    <a href="{% url 'selia:create_collection_device' %}?{{ request.GET | remove_fields:'physical_device&collection'}}">
+      {% trans 'Select collection' %}
+    </a>
+  </li>
+  <li>
+    <a href="{% url 'selia:create_collection_device' %}?{{ request.GET | remove_fields:'physical_device'}}">
+      {% trans 'Select user device' %}
+    </a>
+  </li>
   <li class="is-active">{% trans 'Fill in details' %}</li>
 {% endblock %}
 
@@ -25,18 +33,11 @@
 {% endblock %}
 
 {% block previously-selected %}
-  <div class="row w-100 my-2">
-    <div class="col">
-      <a class="w-100 text-center" href="#collapseDevice" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseDevice">
-        <h4>{% trans 'Selected device' %}: {{ physical_device.pk }}</h4>
-      </a>
-      <div class="collapse w-100" id="collapseDevice">
-        <div class="d-flex justify-content-center w-100">
-          {% include 'selia/components/select_list_items/physical_devices.html' with item=physical_device %}
-        </div>
-      </div>
-    </div>
-  </div>
+  {% trans 'Selected collection' as label %}
+  {% selected_item 'collection' collection label %}
+
+  {% trans 'Selected device' as label %}
+  {% selected_item 'physical_devices' physical_device label %}
 {% endblock previously-selected %}
 
 {% block form-content %}
@@ -45,15 +46,6 @@
 
 <div class="row w-100 p-4">
   <div class="col">
-    {% if form.physical_device.errors %}
-    <div class="row">
-      {% for error in form.physical_device.errors %}
-      <p class="text-danger">
-        {{ error }}
-      </p>
-      {% endfor %}
-    </div>
-    {% endif %}
     <div class="row">
       {% bootstrap_form form.internal_id %}
     </div>

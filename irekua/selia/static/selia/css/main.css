@@ -316,3 +316,7 @@ a {
 .empty-list-message {
   background-color: var(--lavander);
 }
+
+.error-container {
+  background-color: OldLace;
+}

@@ -40,6 +40,16 @@
   {% endblocktrans %}
 {% endblock %}
 
+{% block previously-selected %}
+  {% trans 'Selected collection' as label %}
+  {% selected_item 'collection' sampling_event_device.sampling_event.collection label %}
+
+  {% trans 'Selected sampling event' as label %}
+  {% selected_item 'sampling_events' sampling_event_device.sampling_event label %}
+
+  {% trans 'Selected deployed device' as label %}
+  {% selected_item 'sampling_event_devices' sampling_event_device label %}
+{% endblock previously-selected %}
 
 {% block list-container %}
   <div class="container-fluid form-container w-100 p-4">

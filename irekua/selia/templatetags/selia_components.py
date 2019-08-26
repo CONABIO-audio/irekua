@@ -1,4 +1,5 @@
 import re
+import uuid
 
 from django.utils.safestring import mark_safe
 from django import template
@@ -326,3 +327,15 @@ def remove_form_fields(query, forms):
                 pass
 
     return query.urlencode()
+
+
+@register.inclusion_tag('selia/components/selected_item.html')
+def selected_item(template, item, label):
+    random_id = uuid.uuid4().hex.lower()[0:8]
+    full_template_name = 'selia/components/select_list_items/{name}.html'
+    return {
+        'template': full_template_name.format(name=template),
+        'item': item,
+        'id': random_id,
+        'label': label
+    }

@@ -4,6 +4,7 @@ from django.shortcuts import reverse
 
 from database.models import Collection
 from database.models import Site
+from database.models import SiteType
 
 from irekua_utils.filters import sites as site_utils
 from selia.views.utils import SeliaCreateView
@@ -33,6 +34,7 @@ class SelectCollectionSiteSiteView(SeliaCreateView):
         context = super().get_context_data()
         self.collection = Collection.objects.get(pk=self.request.GET['collection'])
         context['collection'] = self.collection
+        context['site_type'] = SiteType.objects.get(pk=self.request.GET['site_type'])
         context['list'] = self.get_site_list()
         context['prefix'] = self.prefix
         context['create_url'] = self.create_url

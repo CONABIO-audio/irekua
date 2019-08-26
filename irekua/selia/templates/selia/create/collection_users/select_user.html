@@ -15,11 +15,20 @@
 {% endblock %}
 
 {% block toolbar-steps %}
+<li>
+  <a href="{% url 'selia:create_collection_user'%}?{{ request.GET | remove_fields:'collection'}}">
+    {% trans 'Select collection' %}
+  </a>
+</li>
 <li class="is-active">{% trans 'Select user' %}</li>
 <li>{% trans 'Select role' %}</li>
 <li>{% trans 'Fill in details' %}</li>
 {% endblock %}
 
+{% block previously-selected %}
+  {% trans 'Selected collection' as label %}
+  {% selected_item 'collection' collection label %}
+{% endblock previously-selected %}
 
 {% block step-description %}
 {% blocktrans %}

@@ -38,13 +38,15 @@
   {% block previously-selected %}
   {% endblock previously-selected %}
 
-  <div class="form-container mb-4">
-    {% block form-errors %}
-      {% if form.non_field_errors %}
-        {% include 'selia/components/error_list.html' with errors=form.non_field_errors %}
-      {% endif %}
-    {% endblock form-errors%}
+  {% block form-errors %}
+    {% if form.errors %}
+    <div class="row">
+      {% include 'selia/components/error_list.html' with errors=form.errors %}
+    </div>
+    {% endif %}
+  {% endblock form-errors%}
 
+  <div class="form-container mb-4">
     {% block form %}
     <form action="?{{ request.GET.urlencode }}" method="post" enctype="multipart/form-data">
       {% csrf_token %}

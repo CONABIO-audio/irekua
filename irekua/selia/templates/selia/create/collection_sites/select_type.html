@@ -25,6 +25,11 @@
   {%  trans 'Select site type' %}
 {% endblock %}
 
+{% block previously-selected %}
+  {% trans 'Selected collection' as label %}
+  {% selected_item 'collection' collection label %}
+{% endblock previously-selected %}
+
 {% block list-container %}
   <div class="form-container mb-4">
     <div class="row d-flex flex-wrap justify-content-center">

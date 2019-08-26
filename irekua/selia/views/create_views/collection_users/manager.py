@@ -2,7 +2,6 @@ from selia.views.create_views.manager_base import CreateManagerBase
 
 
 class CreateCollectionUserManager(CreateManagerBase):
-    required_get_parameters = ['collection']
     manager_name = 'selia:create_collection_user'
 
     def view_from_request(self):

@@ -33,6 +33,11 @@
   <a href="{% url 'selia:create_sampling_event' %}?{{ request.GET.urlencode }}">{% trans 'create a new one' %}.</a>
 {% endblock %}
 
+{% block previously-selected %}
+  {% trans 'Selected collection' as label %}
+  {% selected_item 'collection' collection label %}
+{% endblock previously-selected %}
+
 {% block empty-message %}
 <h4>{% trans 'No available sampling events.' %}</h4>
 <p>

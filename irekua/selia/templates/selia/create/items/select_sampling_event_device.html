@@ -39,6 +39,14 @@
   </a>
 {% endblock %}
 
+{% block previously-selected %}
+  {% trans 'Selected collection' as label %}
+  {% selected_item 'collection' sampling_event.collection label %}
+
+  {% trans 'Selected sampling event' as label %}
+  {% selected_item 'sampling_events' sampling_event label %}
+{% endblock previously-selected %}
+
 {% block empty-message %}
   <h4>{% trans 'No deployed devices were found' %}.</h4>
   <p>
