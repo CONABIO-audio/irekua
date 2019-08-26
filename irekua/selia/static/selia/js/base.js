@@ -346,21 +346,25 @@ function asigna_autocomplete_tax($elems) {
   });
 }
 
-
-
 function distinctStr(str) {
   return String.prototype.concat(...new Set(str))
 }
 
 $(document).ready(function() {
   var sort_submit = document.getElementsByClassName('sort_submit');
-  var itemFilePicker = document.getElementById('itemFilePicker');
-  var addItemForm = document.getElementById('addItemForm');
+  //var itemFilePicker = document.getElementById('itemFilePicker');
+  //var addItemForm = document.getElementById('addItemForm');
   var datepicker = document.getElementById('ui-datepicker-div');
-  var datePattern = document.getElementById('itemDatePattern');
-  var dateInput = document.getElementById('itemDate');
-  var dateErrorsContainer = document.getElementById('date_errors_container');
-  var dateErrors = document.getElementById('date_errors')
+  // var datePattern = document.getElementById('itemDatePattern');
+  // var dateInput = document.getElementById('itemDate');
+  // var dateErrorsContainer = document.getElementById('date_errors_container');
+  // var dateErrors = document.getElementById('date_errors')
+  var upload_item_form = document.getElementById('upload_item_form');
+  var uploader_section = document.getElementById('uploader_section');
+
+  if (upload_item_form && uploader_section){
+    var uploader = new FileUploader(uploader_section,upload_item_form,"Upload items");
+  }
 
   function renderErrorList(page,parent){
     while (parent.firstChild) {
@@ -428,8 +432,8 @@ $(document).ready(function() {
           var new_input = document.createElement('input');
           new_input.type = "text";
           new_input.id = "date_input_file_"+page.data[i]["file_index"];
-          $(new_input).datepicker({dateFormat: 'yy-mm-dd'});
-          new_input.placeholder = "New date";
+          $(new_input).datepicker({dateFormat: 'YYYY-MM-DD'});
+          new_input.placeholder = "YYYY-MM-DD";
 
           var fixBtn = document.createElement('button');
           fixBtn.className = "btn btn-primary"
@@ -507,158 +511,159 @@ $(document).ready(function() {
     }
   }
 
-  if (itemFilePicker && addItemForm) {
-    errorList = [];
-    successList = [];
-    itemFileList = [];
-    req_count = 0;
-    error_page_number = 0;
-    total_error_pages = 0;
-    error_page_step = 5;
+  // if (itemFilePicker && addItemForm) {
+  //   errorList = [];
+  //   successList = [];
+  //   itemFileList = [];
+  //   req_count = 0;
+  //   error_page_number = 0;
+  //   total_error_pages = 0;
+  //   error_page_step = 5;
 
-    if (datePattern){
-      document.getElementById('collapseDatePatternBtn').onclick = function(e){
-        if ($("#collapseDatePattern").hasClass("show")){
-            e.stopPropagation();
-        } else {
-            dateInput.value = "";
-            $(dateInput).addClass('incorrect_pattern');
-        }
-      }
-      document.getElementById('collapseDateBtn').onclick = function(e){
-        if ($("#collapseDate").hasClass("show")){
-            e.stopPropagation();
-        } else {
-            datePattern.value = "";
-        }
-      }
-      document.getElementById('next_error_page').onclick = function(e){
-        error_page_number = Math.min(total_error_pages,error_page_number+1);
-        var error_page = get_file_page(itemFileList,error_page_number,error_page_step,filter=check_errors);
-          if (error_page.data.length > 0){
-            total_error_pages = error_page["total_pages"];
-            renderErrorList(error_page,dateErrors);
-            $('#error_paginator_label').html("Page "+error_page["page"]+"/"+error_page["total_pages"]);
-            dateErrorsContainer.style.display = "block";
-        }
-      }
-      document.getElementById('prev_error_page').onclick = function(e){
-        error_page_number = Math.max(0,error_page_number-1);
-        var error_page = get_file_page(itemFileList,error_page_number,error_page_step,filter=check_errors);
-          if (error_page.data.length > 0){
-            total_error_pages = error_page["total_pages"];
-            renderErrorList(error_page,dateErrors);
-            $('#error_paginator_label').html("Page "+error_page["page"]+"/"+error_page["total_pages"]);
-            dateErrorsContainer.style.display = "block";
-        }
-      }
-      document.getElementById('init_upload').onclick = function(e){
-        var url = addItemForm.action + '&init_upload_session';
-        var total_files = itemFileList.length;
-        var parser_map = validate_parser_map(datePattern.value);
-        var date_input = validate_date(dateInput.value);
-        var go_on = true;
-        var date_mode = "parse";
+  //   if (datePattern){
+  //     document.getElementById('collapseDatePatternBtn').onclick = function(e){
+  //       if ($("#collapseDatePattern").hasClass("show")){
+  //           e.stopPropagation();
+  //       } else {
+  //           dateInput.value = "";
+  //           $(dateInput).addClass('incorrect_pattern');
+  //       }
+  //     }
+  //     document.getElementById('collapseDateBtn').onclick = function(e){
+  //       if ($("#collapseDate").hasClass("show")){
+  //           e.stopPropagation();
+  //       } else {
+  //           datePattern.value = "";
+  //       }
+  //     }
+  //     document.getElementById('next_error_page').onclick = function(e){
+  //       error_page_number = Math.min(total_error_pages,error_page_number+1);
+  //       var error_page = get_file_page(itemFileList,error_page_number,error_page_step,filter=check_errors);
+  //         if (error_page.data.length > 0){
+  //           total_error_pages = error_page["total_pages"];
+  //           renderErrorList(error_page,dateErrors);
+  //           $('#error_paginator_label').html("Page "+error_page["page"]+"/"+error_page["total_pages"]);
+  //           dateErrorsContainer.style.display = "block";
+  //       }
+  //     }
+  //     document.getElementById('prev_error_page').onclick = function(e){
+  //       error_page_number = Math.max(0,error_page_number-1);
+  //       var error_page = get_file_page(itemFileList,error_page_number,error_page_step,filter=check_errors);
+  //         if (error_page.data.length > 0){
+  //           total_error_pages = error_page["total_pages"];
+  //           renderErrorList(error_page,dateErrors);
+  //           $('#error_paginator_label').html("Page "+error_page["page"]+"/"+error_page["total_pages"]);
+  //           dateErrorsContainer.style.display = "block";
+  //       }
+  //     }
+  //     document.getElementById('init_upload').onclick = function(e){
+  //       var url = addItemForm.action + '&init_upload_session';
+  //       var total_files = itemFileList.length;
+  //       var parser_map = validate_parser_map(datePattern.value);
+  //       var date_input = validate_date(dateInput.value);
+  //       var go_on = true;
+  //       var date_mode = "parse";
 
-        if (total_files <= 0){
-          alert('Please select at least one file');
-          go_on = false;
-        }
+  //       if (total_files <= 0){
+  //         alert('Please select at least one file');
+  //         go_on = false;
+  //       }
 
-        if ($("#collapseDatePattern").hasClass("show")){
-            if (!parser_map){
-              alert('Incorrect date pattern');
-              go_on = false;
-            }
-        } else {
-            date_mode = "input";
-            if (!date_input){
-              alert('Incorrect date');
-              go_on = false;
-            }
-        }
+  //       if ($("#collapseDatePattern").hasClass("show")){
+  //           if (!parser_map){
+  //             alert('Incorrect date pattern');
+  //             go_on = false;
+  //           }
+  //       } else {
+  //           date_mode = "input";
+  //           if (!date_input){
+  //             alert('Incorrect date');
+  //             go_on = false;
+  //           }
+  //       }
 
 
-        if (go_on) {
-          document.getElementById('selected_objects').style.display = 'none';
-          document.getElementById('filePickerContainer').style.display = 'none';
-          addItemForm.style.display = 'none';
-          //document.getElementById('progress_upload').style.display = 'block';
-          for (var i = 0; i < total_files; i++) {
-            if (date_mode=="input"){
-              validateFile(i, itemFileList[i], url, total_files,date=date_input);
-            } else {
-              validateFile(i, itemFileList[i], url, total_files,date_parser_map=parser_map);
-            }
-          }
+  //       if (go_on) {
+  //         document.getElementById('selected_objects').style.display = 'none';
+  //         document.getElementById('filePickerContainer').style.display = 'none';
+  //         addItemForm.style.display = 'none';
+  //         //document.getElementById('progress_upload').style.display = 'block';
+  //         for (var i = 0; i < total_files; i++) {
+  //           if (date_mode=="input"){
+  //             validateFile(i, itemFileList[i], url, total_files,date=date_input);
+  //           } else {
+  //             validateFile(i, itemFileList[i], url, total_files,date_parser_map=parser_map);
+  //           }
+  //         }
 
-          var error_page = get_file_page(itemFileList,0,5,filter=check_errors);
-          if (error_page.data.length > 0){
-            total_error_pages = error_page["total_pages"];
-            renderErrorList(error_page,dateErrors);
-            $('#error_paginator_label').html("Page "+error_page["page"]+"/"+error_page["total_pages"]);
-            dateErrorsContainer.style.display = "block";
-          }
-        }
-      };
-      $(datePattern).bind('invalid', function() {
-        return false;
-      });
-      datePattern.addEventListener('input',function(e){
-        var parser_map = validate_parser_map(datePattern.value);
-        if (parser_map){
-          $(this).removeClass('incorrect_pattern')
-        } else {
-          $(this).addClass('incorrect_pattern')
-        }
-      });
+  //         var error_page = get_file_page(itemFileList,0,5,filter=check_errors);
+  //         if (error_page.data.length > 0){
+  //           total_error_pages = error_page["total_pages"];
+  //           renderErrorList(error_page,dateErrors);
+  //           $('#error_paginator_label').html("Page "+error_page["page"]+"/"+error_page["total_pages"]);
+  //           dateErrorsContainer.style.display = "block";
+  //         }
+  //       }
+  //     };
+  //     $(datePattern).bind('invalid', function() {
+  //       return false;
+  //     });
+  //     datePattern.addEventListener('input',function(e){
+  //       var parser_map = validate_parser_map(datePattern.value);
+  //       if (parser_map){
+  //         $(this).removeClass('incorrect_pattern')
+  //       } else {
+  //         $(this).addClass('incorrect_pattern')
+  //       }
+  //     });
 
-      $(dateInput).datepicker("option", "onSelect", function(){
-        var date_input = validate_date(dateInput.value);
-        if (date_input){
-          $(dateInput).removeClass('incorrect_pattern');
-        } else {
-          $(dateInput).addClass('incorrect_pattern');
-        }
-      });
+  //     $(dateInput).datepicker("option", "onSelect", function(){
+  //       var date_input = validate_date(dateInput.value);
+  //       if (date_input){
+  //         $(dateInput).removeClass('incorrect_pattern');
+  //       } else {
+  //         $(dateInput).addClass('incorrect_pattern');
+  //       }
+  //     });
 
-      dateInput.addEventListener('input',function(e){
-        var date_input = validate_date(dateInput.value);
-        if (date_input){
-          $(this).removeClass('incorrect_pattern');
-        } else {
-          $(this).addClass('incorrect_pattern');
-        }
-      });
-    }
+  //     dateInput.addEventListener('input',function(e){
+  //       var date_input = validate_date(dateInput.value);
+  //       if (date_input){
+  //         $(this).removeClass('incorrect_pattern');
+  //       } else {
+  //         $(this).addClass('incorrect_pattern');
+  //       }
+  //     });
+  //   }
 
-    itemFilePicker.addEventListener('change', function(e) {
-      itemFileList = [];
-      for (var i = 0; i < itemFilePicker.files.length; i++) {
-        itemFileList.push(itemFilePicker.files[i]);
+  //   itemFilePicker.addEventListener('change', function(e) {
+  //     itemFileList = [];
+  //     for (var i = 0; i < itemFilePicker.files.length; i++) {
+  //       itemFileList.push(itemFilePicker.files[i]);
 
-      }
-    });
+  //     }
+  //   });
 
-    addItemForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var url = this.action + '&async=true';
-      var total_files = itemFileList.length;
+  //   addItemForm.addEventListener('submit', function(e) {
+  //     e.preventDefault();
+  //     var url = this.action + '&async=true';
+  //     var total_files = itemFileList.length;
 
-      if (total_files > 0) {
-        document.getElementById('selected_objects').style.display = 'none';
-        document.getElementById('filePickerContainer').style.display = 'none';
-        addItemForm.style.display = 'none';
-        document.getElementById('progress_upload').style.display = 'block';
+  //     if (total_files > 0) {
+  //       document.getElementById('selected_objects').style.display = 'none';
+  //       document.getElementById('filePickerContainer').style.display = 'none';
+  //       addItemForm.style.display = 'none';
+  //       document.getElementById('progress_upload').style.display = 'block';
 
-        for (var i = 0; i < total_files; i++) {
-          submitSingle(i, itemFileList[i], url, total_files);
-        }
-      } else {
-        alert('Please select at least one file');
-      }
-    });
-  }
+  //       for (var i = 0; i < total_files; i++) {
+  //         submitSingle(i, itemFileList[i], url, total_files);
+  //       }
+  //     } else {
+  //       alert('Please select at least one file');
+  //     }
+  //   });
+  // }
+
 
   if (sort_submit.length > 0) {
     sort_submit[0].onchange = function() {
