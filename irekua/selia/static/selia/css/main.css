@@ -80,6 +80,30 @@
   flex-direction: row;
   display: table-cell;
 }
+.error_item {
+  border-radius: 10px;
+  background-color: #ffdacc !important;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  display: table-cell;
+}
+.duplicate_item {
+  border-radius: 10px;
+  background-color: #eaeafb !important;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  display: table-cell;
+}
+.uploaded_item {
+  border-radius: 10px;
+  background-color: #e2f0c1 !important;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  display: table-cell;
+}
 .header_item {
   border-radius: 10px;
   background-color: transparent !important;
@@ -170,7 +194,7 @@ select option {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
-  width: 150px;
+  width: 120px;
 }
 
 .itemimage {
@@ -288,7 +312,7 @@ select option {
 }
 
 .header_title {
-    border-radius: 10px;
+    border-radius: 0px;
     padding: 5px;
     background-color: #cc1f00 !important;
 }
