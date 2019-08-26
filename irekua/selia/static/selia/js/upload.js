@@ -30,13 +30,13 @@ class FileUploader {
 		var widget = this;
 
 		this.top_toolbar = document.createElement('div');
-		this.top_toolbar.className = "row container-fluid w-100 bg-dark rounded";
+		this.top_toolbar.className = "container-fluid p-2 w-100 bg-dark rounded";
 		
 		var row = document.createElement('div');
-		row.className = "row-12 p-2 d-flex";
+		row.className = "row p-2";
 
 		var file_picker_col = document.createElement('div');
-		file_picker_col.className = "col-3";
+		file_picker_col.className = "col";
 
 		var file_btn = document.createElement('label');
 		file_btn.htmlFor = "file_picker";
@@ -59,7 +59,7 @@ class FileUploader {
 
 
 		var upload_col = document.createElement('div');
-		upload_col.className = "col-4";
+		upload_col.className = "col";
 
 		var upload_dropdown = document.createElement('div');
 		upload_dropdown.className = "dropdown";
@@ -115,7 +115,7 @@ class FileUploader {
 
 
 		var remove_col = document.createElement('div');
-		remove_col.className = "col-4";
+		remove_col.className = "col";
 
 		var remove_dropdown = document.createElement('div');
 		remove_dropdown.className = "dropdown";
@@ -174,7 +174,7 @@ class FileUploader {
 
 
 		var date_toggle_col = document.createElement('div');
-		date_toggle_col.className = "col-4";
+		date_toggle_col.className = "col";
 
 		var date_toggle_dropdown = document.createElement('div');
 		date_toggle_dropdown.className = "mb-0";
@@ -272,7 +272,7 @@ class FileUploader {
 		date_pattern_apply_dropdown.appendChild(date_pattern_apply_dropdown_menu);
 
 		var date_pattern_row = document.createElement('div');
-		date_pattern_row.className = "row-6 d-flex";
+		date_pattern_row.className = "row d-flex";
 
 		date_pattern_row.appendChild(date_pattern_label);
 		date_pattern_row.appendChild(this.date_pattern_input);
@@ -511,7 +511,6 @@ class FileUploader {
 				$(this).addClass('incorrect_pattern');
 			}
 		});
-
 	}
 	build_body() {
 		if (this.body){
@@ -1415,7 +1414,6 @@ class FileUploader {
 	  }
 
 	  return "";
-
 	}
 	retrieve_media_info(file,callback) {
 		if (file.type == 'image/jpeg'){
@@ -1733,7 +1731,6 @@ class FileUploader {
 	  } catch (error) {
 	  	file["upload_response"] = null;
 	  }
-
 	}
 	render_by_name(name_arr){
 		if (!name_arr){
@@ -1756,13 +1753,12 @@ class FileUploader {
 			this.render_upload_list(upload_page);
 		}
 	}
-	render_all_lists(){this.render_by_name()}
 	upload_multiple(filter_function){
 		var filteredItems = this.files.filter(filter_function);
 		for (var i=0;i<filteredItems.length;i++){
 			this.submitSingle(filteredItems[i]);
 		}
-		this.render_all_lists();
+		this.render_by_name();
 	}
 	add_file(file,callback){
 		file["captured_on"] = null;
