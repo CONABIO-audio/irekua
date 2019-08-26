@@ -417,7 +417,7 @@ class FileUploader {
 
 		var metadata_date_btn_label = document.createElement('label');
 		metadata_date_btn_label.className ="upload_tool text-light";
-		var metadata_date_label = document.createTextNode('Native ');
+		var metadata_date_label = document.createTextNode('Restore ');
 		var metadata_date_icon = document.createElement('i');
 
 		metadata_date_icon.className = "fas fa-cog";
