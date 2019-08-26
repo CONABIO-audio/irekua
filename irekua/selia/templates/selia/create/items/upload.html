@@ -15,10 +15,13 @@
 {% endblock %}
 
 {% block main-content %}
-<div class="container p-5">
-  <h1 class="text-danger text-center w-100">
-    AQUI VA LA APP
-  </h1>
-</div>
-
+<form id="upload_item_form" action="?sampling_event_device={{ sampling_event_device.pk }}&licence={{ licence.pk }}" method="post" enctype="multipart/form-data" style="display:none;">
+{% csrf_token %}
+	<input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
+	<input type="hidden" id="sampling_event_device_field" name="sampling_event_device" value="{{ sampling_event_device.pk }}">
+	<input type="hidden" id="licence_field" name="licence" value="{{ licence.pk }}">
+	<input type="hidden" id="item_type_field" name="item_type" value="">
+	<input type="hidden" id="captured_on_field" name="captured_on" value="">
+</form>
+<div id="uploader_section" class="container-fluid"></div>
 {% endblock main-content %}
