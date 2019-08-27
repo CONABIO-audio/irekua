@@ -29,11 +29,11 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
-  <div class="row p-5 w-100">
-    <div class="col-6">
+  <div class="row p-4">
+    <div class="col p-2">
       {% detail_component detail_template=detail_template object=collection_device %}
     </div>
-    <div class="col-6">
+    <div class="col p-2">
       {% summary_component summary_template=summary_template object=collection_device %}
     </div>
   </div>
