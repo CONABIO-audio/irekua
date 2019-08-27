@@ -8,6 +8,7 @@ from django import forms
 from selia.views.create_views.create_base import SeliaCreateView
 from database.models import Item
 from database.models import Annotation
+from database.models import AnnotationTool
 from database.models import Term
 
 
@@ -38,7 +39,6 @@ class CreateAnnotationForm(forms.ModelForm):
 
 
 class SeliaAnnotationView(SeliaCreateView):
-
     def proxy_to_slr(self):
         server = "snmb.conabio.gob.mx"
         slr_path = '/solr/taxonomia/select'
@@ -61,15 +61,9 @@ class SeliaAnnotationView(SeliaCreateView):
             'CONTENT_LENGTH', '')
         request_headers['USER-AGENT'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36'
 
-        if self.request.method == "GET":
-            data = None
-        else:
-            data = self.request.raw_post_data
-
         req = requests.get(url=url)
 
         response = HttpResponse(req.text)
-
         return response
 
     def get(self, *args, **kwargs):
@@ -101,7 +95,6 @@ class SeliaAnnotationView(SeliaCreateView):
             label_keys = list(label.keys())
 
             if not Term.objects.filter(term_type=label_keys[0], value=label[label_keys[0]]).exists():
-                print("CREATE!!!")
                 term_form = CreateTermForm(
                     {"term_type": label_keys[0], "value": label[label_keys[0]]})
                 if term_form.is_valid():
@@ -110,6 +103,7 @@ class SeliaAnnotationView(SeliaCreateView):
                     term.save()
 
             if form.is_valid():
+                print('form is valid')
                 annotation = form.save(commit=False)
                 annotation.created_by = self.request.user
                 annotation.save()
@@ -140,9 +134,14 @@ class SeliaAnnotationView(SeliaCreateView):
                 return self.render_to_response(context)
 
     def get_initial(self):
-        item = Item.objects.get(pk=self.kwargs['pk'])
+        self.item = Item.objects.get(pk=self.kwargs['pk'])
+        self.annotation_tool = AnnotationTool.objects.get_or_create(
+            name='Selia Annotation Tool',
+            version='0.1',
+            description='Selia annotation tool development version')
         initial = {
-            'item': item
+            'item': self.item,
+            'annotation_tool': self.annotation_tool
         }
 
         return initial
@@ -169,12 +168,14 @@ class SeliaAnnotationView(SeliaCreateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
+
         context['mode'] = self.mode
         context['item'] = self.get_object(queryset=Item.objects.all())
         context["annotation_list"] = self.get_annotation_list()
         context['annotator_template'] = self.get_annotator_template()
         context["next_object"] = self.get_next_object()
         context["prev_object"] = self.get_prev_object()
+        context["annotation_tool"] = self.annotation_tool
 
         if self.mode == "edit":
             instance = get_object_or_404(

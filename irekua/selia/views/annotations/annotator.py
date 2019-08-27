@@ -1,4 +1,4 @@
-from selia.views.utils import SeliaAnnotationView
+from .base import SeliaAnnotationView
 from database.models import Annotation
 
 
