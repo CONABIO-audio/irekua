@@ -24,7 +24,7 @@ class SelectLicenceTypeView(SeliaSelectView):
         return self.licence_types.count() == 1
 
     def handle_single_type_redirect(self):
-        url = reverse('selia:create_collection_site')
+        url = reverse('selia:create_licence')
 
         query = self.request.GET.copy()
         query['licence_type'] = self.licence_types.first().pk

@@ -36,7 +36,8 @@ class DeviceAutocomplete(autocomplete.Select2QuerySetView):
         if self.q:
             brand_query = models.Q(brand__name__istartswith=self.q)
             model_query = models.Q(model__istartswith=self.q)
-            qs = qs.filter(brand_query | model_query)
+            type_query = models.Q(device_type__name__istartswith=self.q)
+            qs = qs.filter(brand_query | model_query | type_query)
 
         return qs
 

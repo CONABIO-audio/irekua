@@ -1,94 +1,78 @@
 {% load i18n %}
 {% load country_tags %}
 
+<div class="row">
+  <h4 class="text-center h-100">{% trans 'User Details' %}</h4>
+</div>
 
 <div class="row w-100">
-  <div class="col m-2">
-    <div class="row border-bottom">
-      <h6 class="text-center w-100">{% trans 'User info' %}</h6>
-    </div>
+  <div class="col">
     <div class="row">
-      <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125">
-          <strong class="d-block text-gray-dark">{% trans 'Username' %}</strong>
-          {{ object.username }}
-        </p>
+      <h4 class="text-center w-100">
+        <span class="border-bottom">
+          {% trans 'User info' %}
+        </span>
+      </h4>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <h5 class="mt-0">{% trans 'Username' %}</h5>
+        <p class="text-muted">{{ object.username }}</p>
+      </div>
+
+      <div class="col">
+        <h5 class="mt-0">{% trans 'Email' %}</h5>
+        <p class="text-muted">{{ object.email }}</p>
       </div>
     </div>
 
     <div class="row">
-      <div class="col m-0 p-0">
-        <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125">
-            <strong class="d-block text-gray-dark">{% trans 'First name' %}</strong>
-            {{ object.first_name }}
-          </p>
-        </div>
+      <div class="col">
+        <h5 class="mt-0">{% trans 'First name' %}</h5>
+        <p class="text-muted">{{ object.first_name }}</p>
       </div>
 
-      <div class="col m-0 p-0">
-        <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125">
-            <strong class="d-block text-gray-dark">{% trans 'Last name' %}</strong>
-            {{ object.last_name }}
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125">
-          <strong class="d-block text-gray-dark">{% trans 'Email' %}</strong>
-          {{ object.email }}
-        </p>
+      <div class="col">
+        <h5 class="mt-0">{% trans 'Last name' %}</h5>
+        <p class="text-muted">{{ object.last_name }}</p>
       </div>
     </div>
   </div>
 
   {% if object.institution %}
-  <div class="col m-2">
-    <div class="row border-bottom">
-      <h6 class="text-center w-100">{% trans 'Institution info' %}</h6>
+  <div class="col">
+    <div class="row">
+      <h4 class="text-center w-100">
+        <span class="border-bottom">
+          {% trans 'Institution info' %}
+        </span>
+      </h4>
     </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">{% trans 'Institution name' %}</strong>
-        {{ object.institution.institution_name }}
-      </p>
+    <div class="row">
+      <div class="col">
+        <h5 class="mt-0">{% trans 'Name' %}</h5>
+        <p class="text-muted">{{ object.institution.institution_name }}</p>
+      </div>
     </div>
-    {% if object.institution.institution_code %}
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">{% trans 'Institution code' %}</strong>
-        {{ object.institution.institution_code }}
-      </p>
+    <div class="row">
+      <div class="col">
+        <h5 class="mt-0">{% trans 'Institution code' %}</h5>
+        <p class="text-muted">{{ object.institution.institution_code }}</p>
+      </div>
     </div>
-    {% endif %}
-    {% if object.institution.subdependency %}
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">{% trans 'Subdependency' %}</strong>
-        {{ object.institution.subdependency }}
-      </p>
+    <div class="row">
+      <div class="col">
+        <h5 class="mt-0">{% trans 'Subdependency' %}</h5>
+        <p class="text-muted">{{ object.institution.subdependency }}</p>
+      </div>
     </div>
-    {% endif %}
-    {% if object.institution.country %}
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">{% trans 'Country' %}</strong>
-        {{ object.institution.country | get_country_name }}
-      </p>
+    <div class="row">
+      <div class="col">
+        <h5 class="mt-0">{% trans 'Country' %}</h5>
+        <p class="text-muted">{{ object.institution.country }}</p>
+      </div>
     </div>
-    {% endif %}
-    {% if object.institution.website %}
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">{% trans 'Website' %}</strong>
-        {{ object.institution.website }}
-      </p>
-    </div>
-    {% endif %}
   </div>
   {% endif %}
 

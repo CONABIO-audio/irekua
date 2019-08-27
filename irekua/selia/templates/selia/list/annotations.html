@@ -37,30 +37,32 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
-<div class="row p-5 justify-content-center">
+<div class="container-fluid bg-dark w-100">
+  {% filter_component templates.filter_form forms %}
+</div>
 
+<div class="row p-5 justify-content-center">
   <div class="col-6" align="center">
-    <div class="container card p-2 bg-dark" align="center">
+    <div class="container shadow-sm card p-2" align="center">
       <input type="hidden" id="img_url" name="img_url" add_ann_url="{% url 'selia:item_annotation_create' item.pk %}" value="{{ item.item_file.url }}">
       <canvas id="canvas" class="center-fit" width="800" height="600" style="background-image: url({{ item.item_file.url }}); background-size:cover; background-repeat:   no-repeat;background-position: center center;"></canvas>
     </div>
   </div>
 
   <div class="col-6">
-    <div class="container-fluid bg-dark w-100 p-1 rounded">
-        {% filter_component templates.filter_form forms %}
-    </div>
-    <div class="container-fluid bg-light p-4 list-group my-4">
+    <div class="container-fluid bg-light p-4 list-group">
       {% for item in object_list.object_list %}
         {% include templates.list_item with item=item %}
       {% empty %}
         <div class="container-fluid bg-light text-center">
-          <h4>
-            {% blocktrans %}
-              No annotations
-            {% endblocktrans %}.
-          </h4>
-          {% include 'selia/components/empty_list_message.html' %}
+          <div class="container p-2 empty-list-message rounded">
+            <h4>
+              {% blocktrans %}
+                No annotations
+              {% endblocktrans %}.
+            </h4>
+            {% include 'selia/components/empty_list_message.html' %}
+          </div>
         </div>
       {% endfor %}
     </div>
