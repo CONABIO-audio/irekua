@@ -101,7 +101,6 @@ class SeliaAnnotationView(SeliaCreateView):
             label_keys = list(label.keys())
 
             if not Term.objects.filter(term_type=label_keys[0], value=label[label_keys[0]]).exists():
-                print("CREATE!!!")
                 term_form = CreateTermForm(
                     {"term_type": label_keys[0], "value": label[label_keys[0]]})
                 if term_form.is_valid():
