@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-16 09:33-0500\n"
+"POT-Creation-Date: 2019-08-27 11:31-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,24 +20,26 @@ msgstr ""
 
 #: database/admin.py:59
 msgid "Password"
-msgstr "Contraseña"
+msgstr ""
 
 #: database/admin.py:60
 msgid "Password confirmation"
-msgstr "Confirmación de contraseña"
+msgstr ""
 
 #: database/admin.py:74
 msgid "Passwords don't match"
-msgstr "Las contraseñas no coinciden"
+msgstr ""
 
 #: database/admin.py:130
 msgid "Personal info"
-msgstr "Información personal"
+msgstr ""
 
 #: database/admin.py:135
 #: selia/templates/selia/components/details/licence_type.html:25
+#: selia/templates/selia/components/details/role.html:19
+#: selia/templates/selia/components/select_list_items/licences.html:29
 msgid "Permissions"
-msgstr "Permisos"
+msgstr ""
 
 #: database/models/annotations/annotation_tools.py:17
 #: database/models/data_collections/data_collections.py:30
@@ -56,19 +58,19 @@ msgstr "Permisos"
 #: irekua_utils/filters/data_collections/data_collections.py:57
 #: irekua_utils/filters/sites.py:40
 msgid "name"
-msgstr "Nombre"
+msgstr ""
 
 #: database/models/annotations/annotation_tools.py:18
 msgid "Name of annotation tool"
-msgstr "Nombre de la herramienta de anotación"
+msgstr ""
 
 #: database/models/annotations/annotation_tools.py:23
 msgid "version"
-msgstr "versión"
+msgstr ""
 
 #: database/models/annotations/annotation_tools.py:24
 msgid "Version of annotation tool"
-msgstr "Versión de la herramienta de anotación"
+msgstr ""
 
 #: database/models/annotations/annotation_tools.py:28
 #: database/models/data_collections/data_collections.py:35
@@ -87,11 +89,11 @@ msgstr "Versión de la herramienta de anotación"
 #: database/models/terms/term_suggestions.py:28
 #: database/models/terms/terms.py:28 database/models/users/roles.py:19
 msgid "description"
-msgstr "descripción"
+msgstr ""
 
 #: database/models/annotations/annotation_tools.py:29
 msgid "Description of annotation tool"
-msgstr "Descripción de la herramienta de anotación"
+msgstr ""
 
 #: database/models/annotations/annotation_tools.py:33
 #: database/models/data_collections/data_collections.py:55
@@ -99,190 +101,189 @@ msgstr "Descripción de la herramienta de anotación"
 #: database/models/object_types/data_collections/collection_types.py:57
 #: database/models/users/institutions.py:59
 msgid "logo"
-msgstr "logo"
+msgstr ""
 
 #: database/models/annotations/annotation_tools.py:34
 msgid "Annotation tool logo"
-msgstr "Logo de herramienta de anotación"
+msgstr ""
 
 #: database/models/annotations/annotation_tools.py:40
 #: database/models/devices/device_brands.py:17
 #: database/models/users/institutions.py:55
 msgid "website"
-msgstr "sitio web"
+msgstr ""
 
 #: database/models/annotations/annotation_tools.py:41
 msgid "Annotation tool website"
-msgstr "Sitio web de la herramienta de anotación"
+msgstr ""
 
 #: database/models/annotations/annotation_tools.py:46
 #: database/models/devices/devices.py:45
 msgid "configuration schema"
-msgstr "esquema de configuración"
+msgstr ""
 
 #: database/models/annotations/annotation_tools.py:47
 msgid "JSON schema for annotation tool configuration info"
 msgstr ""
-"Esquema JSON para la información de configuración de la herramienta de "
-"anotación"
 
 #: database/models/annotations/annotation_tools.py:54
 msgid "Annotation Tool"
-msgstr "Herramienta de Anotación"
+msgstr ""
 
 #: database/models/annotations/annotation_tools.py:55
 msgid "Annotation Tools"
-msgstr "Herramientas de Anotación"
+msgstr ""
 
 #: database/models/annotations/annotation_tools.py:73
 #, python-format
 msgid "Invalid annotation tool configuration. Error: %(error)s"
-msgstr "Configuración de herramienta de anotación invalida. Error: %(error)s"
+msgstr ""
 
 #: database/models/annotations/annotation_votes.py:15
 #: database/models/annotations/annotations.py:57
 msgid "annotation"
-msgstr "anotación"
+msgstr ""
 
 #: database/models/annotations/annotation_votes.py:16
 msgid "Reference to annotation being voted"
-msgstr "Referencia a la anotación que se está votando"
+msgstr ""
 
 #: database/models/annotations/annotation_votes.py:21
 #: database/models/annotations/annotations.py:43
 msgid "label"
-msgstr "etiqueta"
+msgstr ""
 
 #: database/models/annotations/annotation_votes.py:23
 msgid "Labels associated to annotation vote"
-msgstr "Etiquetas asociadas al voto de anotación"
+msgstr ""
 
 #: database/models/annotations/annotation_votes.py:29
 msgid "Annotation Vote"
-msgstr "Voto de Anotación"
+msgstr ""
 
 #: database/models/annotations/annotation_votes.py:30
 msgid "Annotation Votes"
-msgstr "Votos de Anotaciones"
+msgstr ""
 
 #: database/models/annotations/annotation_votes.py:33
 #, python-format
 msgid "Vote %(id)s on annotation %(annotation)s"
-msgstr "Voto %(id)s de la anotación %(annotation)s"
+msgstr ""
 
 #: database/models/annotations/annotation_votes.py:41
 #, python-format
 msgid "Invalid label for event type %(type)s. Error: %(error)s"
-msgstr "Etiqueta invalida para el tipo de evento %(type)s. Error: %(error)s"
+msgstr ""
 
 #: database/models/annotations/annotations.py:15
 msgid "low"
-msgstr "baja"
+msgstr ""
 
 #: database/models/annotations/annotations.py:16
 msgid "medium"
-msgstr "media"
+msgstr ""
 
 #: database/models/annotations/annotations.py:17
 msgid "high"
-msgstr "alta"
+msgstr ""
 
 #: database/models/annotations/annotations.py:24
 msgid "annotation tool"
-msgstr "herramienta de anotación"
+msgstr ""
 
 #: database/models/annotations/annotations.py:25
 msgid "Annotation tool used"
-msgstr "Herramienta de anotación utilizada"
+msgstr ""
 
 #: database/models/annotations/annotations.py:30
 #: database/models/temp/upload_event.py:26
 msgid "item"
-msgstr "item"
+msgstr ""
 
 #: database/models/annotations/annotations.py:31
 msgid "Annotated item"
-msgstr "Item anotado"
+msgstr ""
 
 #: database/models/annotations/annotations.py:38
 #: irekua_utils/filters/annotations/annotations.py:42
 msgid "event type"
-msgstr "tipo de evento"
+msgstr ""
 
 #: database/models/annotations/annotations.py:39
 msgid "Type of event being annotated"
-msgstr "Tipo de evento que está siendo anotado"
+msgstr ""
 
 #: database/models/annotations/annotations.py:44
 msgid "Labels associated to annotation"
-msgstr "Etiqueta asociada a la anotación"
+msgstr ""
 
 #: database/models/annotations/annotations.py:52
 #: irekua_utils/filters/annotations/annotations.py:41
 msgid "annotation type"
-msgstr "tipo de anotación"
+msgstr ""
 
 #: database/models/annotations/annotations.py:53
 msgid "Type of annotation"
-msgstr "Tipo de Anotación"
+msgstr ""
 
 #: database/models/annotations/annotations.py:59
 msgid "Information of annotation location within item"
-msgstr "Información de la ubicación de la anotación dentro del item"
+msgstr ""
 
 #: database/models/annotations/annotations.py:64
 msgid "annotation configuration"
-msgstr "configuración de anotación"
+msgstr ""
 
 #: database/models/annotations/annotations.py:66
 msgid "Configuration of annotation tool"
-msgstr "Configuración de la herramienta de anotación"
+msgstr ""
 
 #: database/models/annotations/annotations.py:71
 msgid "certainty"
-msgstr "certeza"
+msgstr ""
 
 #: database/models/annotations/annotations.py:73
 msgid "Level of certainty of location or labelling of annotation"
-msgstr "Nivel de certeza de la ubicación o el etiquetado de la anotación"
+msgstr ""
 
 #: database/models/annotations/annotations.py:79
 msgid "quality"
-msgstr "calidad"
+msgstr ""
 
 #: database/models/annotations/annotations.py:80
 msgid "Quality of item content inside annotation"
-msgstr "Calidad del contenido del item dentro de la anotación"
+msgstr ""
 
 #: database/models/annotations/annotations.py:86
 #: database/models/sampling_events/sampling_event_devices.py:30
 #: database/models/sampling_events/sampling_events.py:31
 msgid "commentaries"
-msgstr "comentarios"
+msgstr ""
 
 #: database/models/annotations/annotations.py:87
 msgid "Commentaries of annotator"
-msgstr "Comentarios del anotador"
+msgstr ""
 
 #: database/models/annotations/annotations.py:91
 msgid "Annotation"
-msgstr "Anotación"
+msgstr ""
 
 #: database/models/annotations/annotations.py:92
 #: selia/templates/selia/components/list_items/item.html:69
 #: selia/templates/selia/components/summaries/item.html:6
-#: selia/templates/selia/item_detail/components/secondary_navbar.html:40
+#: selia/templates/selia/list/annotations.html:12
+#: selia/templates/selia/navbars/item.html:40
 msgid "Annotations"
-msgstr "Anotaciones"
+msgstr ""
 
 #: database/models/annotations/annotations.py:97
 msgid "Can vote annotation"
-msgstr "Puede votar la anotación"
+msgstr ""
 
 #: database/models/annotations/annotations.py:101
 #, python-format
 msgid "Annotation %(annotation_id)s of item %(item_id)s"
-msgstr "Anotación %(annotation_id)s del item %(item_id)s"
+msgstr ""
 
 #: database/models/annotations/annotations.py:146
 #, python-format
@@ -290,22 +291,17 @@ msgid ""
 "Label contains a term (of type %(type)s) that is not valid for the event "
 "type or does not exist"
 msgstr ""
-"La etiqueta contiene un termino (de tipo %(type)s) que no es valido para "
-" el tipo de evento, o no existe"
 
 #: database/models/annotations/annotations.py:154
 #, python-format
 msgid "Invalid label. Error: %(error)s"
-msgstr "Etiqueta invalida. Error: %(error)s"
+msgstr ""
 
 #: database/models/base.py:8
 #: irekua_utils/filters/data_collections/data_collections.py:56
-#: irekua_utils/filters/devices/physical_devices.py:39
-#: irekua_utils/filters/sampling_events/sampling_events.py:61
-#: irekua_utils/filters/sites.py:39
 #: selia/views/collections_admin/collections.py:27
 msgid "created on"
-msgstr "creado en"
+msgstr ""
 
 #: database/models/base.py:9
 #: selia/templates/selia/components/filters/annotation.html:110
@@ -320,46 +316,40 @@ msgstr "creado en"
 #: selia/templates/selia/components/filters/sampling_event.html:69
 #: selia/templates/selia/components/filters/sampling_event_device.html:106
 #: selia/templates/selia/components/filters/site.html:93
-#, fuzzy
-#| msgid "Date of entry creation"
 msgid "Date of creation"
-msgstr "Fecha de creación del registro"
+msgstr ""
 
 #: database/models/base.py:14
 msgid "modified on"
-msgstr "modificado en"
+msgstr ""
 
 #: database/models/base.py:15
 msgid "Date of last modification"
-msgstr "Fecha de última modificación"
+msgstr ""
 
 #: database/models/base.py:29
 msgid "creator"
-msgstr "creador"
+msgstr ""
 
 #: database/models/base.py:32
-#, fuzzy
-#| msgid "Creator of annotation"
 msgid "Creator of object"
-msgstr "Creador de la anotación"
+msgstr ""
 
 #: database/models/base.py:39
 msgid "modified by"
-msgstr "modificado por"
+msgstr ""
 
 #: database/models/base.py:40
-#, fuzzy
-#| msgid "User that modified the annotation last"
 msgid "User who made modifications last"
-msgstr "Usuario que modifico por ultima vez"
+msgstr ""
 
 #: database/models/data_collections/collection_devices.py:16
 msgid "physical device"
-msgstr "dispositivo físico"
+msgstr ""
 
 #: database/models/data_collections/collection_devices.py:17
 msgid "Reference to physical device"
-msgstr "Referencia al dispositivo físico"
+msgstr ""
 
 #: database/models/data_collections/collection_devices.py:24
 #: database/models/data_collections/collection_sites.py:33
@@ -367,22 +357,22 @@ msgstr "Referencia al dispositivo físico"
 #: database/models/licences.py:62
 #: database/models/sampling_events/sampling_events.py:57
 msgid "collection"
-msgstr "colección"
+msgstr ""
 
 #: database/models/data_collections/collection_devices.py:25
 msgid "Collection to which the device belongs"
-msgstr "Colección a la cual pertenece el dispositivo"
+msgstr ""
 
 #: database/models/data_collections/collection_devices.py:31
 #: database/models/data_collections/collection_sites.py:47
 #: irekua_utils/filters/data_collections/collection_devices.py:42
 #: irekua_utils/filters/data_collections/collection_sites.py:35
 msgid "internal id"
-msgstr "id interno"
+msgstr ""
 
 #: database/models/data_collections/collection_devices.py:32
 msgid "ID of device within the collection"
-msgstr "ID del dispositivo dentro de la colección"
+msgstr ""
 
 #: database/models/data_collections/collection_devices.py:38
 #: database/models/data_collections/collection_sites.py:39
@@ -398,105 +388,102 @@ msgstr "ID del dispositivo dentro de la colección"
 #: database/models/terms/term_suggestions.py:35
 #: database/models/terms/terms.py:33
 msgid "metadata"
-msgstr "metadatos"
+msgstr ""
 
 #: database/models/data_collections/collection_devices.py:39
 msgid "Metadata associated with device within collection"
-msgstr "Metadatos asociados con el dispositivo dentro de la colección"
+msgstr ""
 
 #: database/models/data_collections/collection_devices.py:43
 msgid "Collection Device"
-msgstr "Dispositivo de colección"
+msgstr ""
 
 #: database/models/data_collections/collection_devices.py:44
 msgid "Collection Devices"
-msgstr "Dispositivos de colección"
+msgstr ""
 
 #: database/models/data_collections/collection_sites.py:17
 msgid "site type"
-msgstr "tipo de sitio"
+msgstr ""
 
 #: database/models/data_collections/collection_sites.py:18
 msgid "Type of site"
-msgstr "Tipo de sitio"
+msgstr ""
 
 #: database/models/data_collections/collection_sites.py:25
-#: selia/templates/selia/components/details/collection_site.html:50
 msgid "site"
-msgstr "sitio"
+msgstr ""
 
 #: database/models/data_collections/collection_sites.py:26
 msgid "Reference to Site"
-msgstr "Referencia al sitio"
+msgstr ""
 
 #: database/models/data_collections/collection_sites.py:34
 msgid "Collection to which the site belongs"
-msgstr "Colección a la cual pertenece el sitio"
+msgstr ""
 
 #: database/models/data_collections/collection_sites.py:40
-#, fuzzy
-#| msgid "Labels associated to annotation"
 msgid "Metadata associated to site in collection"
-msgstr "Etiqueta asociada a la anotación"
+msgstr ""
 
 #: database/models/data_collections/collection_sites.py:48
 msgid "ID of site within the collection"
-msgstr "ID del sitio dentro de la colección"
+msgstr ""
 
 #: database/models/data_collections/collection_sites.py:52
 msgid "Collection Site"
-msgstr "Sitio de colección"
+msgstr ""
 
 #: database/models/data_collections/collection_sites.py:53
 msgid "Collection Sites"
-msgstr "Sitios de colección"
+msgstr ""
 
 #: database/models/data_collections/collection_sites.py:61
 #, python-format
 msgid "Site %(site)s of collection %(collection)s"
-msgstr "Sitio %(site)s de la colección %(collection)s"
+msgstr ""
 
 #: database/models/data_collections/collection_users.py:15
 msgid "Collection to which user belongs"
-msgstr "Colección a la cual pertenece el usuario"
+msgstr ""
 
 #: database/models/data_collections/collection_users.py:21
 msgid "user"
-msgstr "usuario"
+msgstr ""
 
 #: database/models/data_collections/collection_users.py:22
 msgid "User of collection"
-msgstr "Usuario de colección"
+msgstr ""
 
 #: database/models/data_collections/collection_users.py:29
 #: database/models/object_types/data_collections/collection_roles.py:25
 msgid "role"
-msgstr "rol"
+msgstr ""
 
 #: database/models/data_collections/collection_users.py:30
 msgid "Role of user in collection"
-msgstr "Rol del usuario en la colección"
+msgstr ""
 
 #: database/models/data_collections/collection_users.py:37
 msgid "Metadata associated to user in collection"
-msgstr "Metadatos asociados al usuario en la colección"
+msgstr ""
 
 #: database/models/data_collections/collection_users.py:41
 msgid "Collection User"
-msgstr "Usuario de colección"
+msgstr ""
 
 #: database/models/data_collections/collection_users.py:42
 msgid "Collection Users"
-msgstr "Usuarios de colección"
+msgstr ""
 
 #: database/models/data_collections/collection_users.py:49
 #, python-format
 msgid "User %(user)s of collection %(collection)s"
-msgstr "Usuario %(user)s de la colección %(collection)s"
+msgstr ""
 
 #: database/models/data_collections/collection_users.py:59
 msgid "Role is not valid for this collection's type"
-msgstr "Este rol no es válido para este tipo de colección"
+msgstr ""
 
 #: database/models/data_collections/collection_users.py:66
 #, python-format
@@ -504,139 +491,134 @@ msgid ""
 "Invalid metadata for user of role type %(role)s in collection "
 "%(collection)s. Error: %(error)s"
 msgstr ""
-"Metadatos de usuario invalidos para el tipo de rol %(role)s en "
-"la colección %(collection)s. Error: %(error)s"
 
 #: database/models/data_collections/data_collections.py:22
 #: database/models/object_types/data_collections/collection_device_types.py:17
 #: database/models/object_types/data_collections/collection_item_types.py:17
 #: database/models/object_types/data_collections/collection_roles.py:17
 msgid "collection type"
-msgstr "tipo de colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:23
 msgid "Type of collection"
-msgstr "Tipo de colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:31
 msgid "Name of collection"
-msgstr "Nombre de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:36
 msgid "Description of collection"
-msgstr "Descripción de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:41
 msgid "Metadata associated to collection"
-msgstr "Metadatos asociados a la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:49
 #: database/models/users/users.py:29
 msgid "institution"
-msgstr "institución"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:50
 msgid "Institution to which the collection belogs"
-msgstr "Institución a la cual pertenece la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:56
 msgid "Logo of data collection"
-msgstr "Logo de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:80
 #: database/models/object_types/data_collections/collection_types.py:82
 msgid "administrators"
-msgstr "administradores"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:81
 msgid "Administrators of collection"
-msgstr "Administrador de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:86
 msgid "is open"
-msgstr "es abierta"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:88
 msgid "Boolean flag indicating whether contents of the collection are public."
-msgstr "Indica si los contenidos de la colección son públicos"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:94
-#: selia/templates/selia/components/create/navbar.html:6
-#: selia/templates/selia/components/details/collection_device.html:19
-#: selia/templates/selia/components/details/collection_site.html:20
+#: selia/templates/selia/components/details/collection_device.html:15
+#: selia/templates/selia/components/details/collection_site.html:15
 #: selia/templates/selia/components/details/sampling_event.html:18
-#: selia/templates/selia/components/details/sampling_event_device.html:23
+#: selia/templates/selia/components/details/sampling_event_device.html:28
 #: selia/templates/selia/components/filters/sampling_event.html:22
 #: selia/templates/selia/components/list_items/collection_device.html:36
 #: selia/templates/selia/components/list_items/collection_site.html:40
 #: selia/templates/selia/components/list_items/licence.html:24
 #: selia/templates/selia/components/list_items/sampling_event.html:20
 #: selia/templates/selia/components/list_items/sampling_event_device.html:36
-#: selia/templates/selia/components/select_list_items/licences.html:24
-#: selia/templates/selia/components/select_list_items/sampling_event_devices.html:36
-#: selia/templates/selia/components/select_list_items/sampling_events.html:24
+#: selia/templates/selia/components/select_list_items/sampling_event_devices.html:35
+#: selia/templates/selia/components/select_list_items/sampling_events.html:23
 msgid "Collection"
-msgstr "Colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:95
 #: irekua/templates/irekua/content/about.html:82
-#: selia/templates/selia/collection_detail/components/secondary_navbar.html:11
-#: selia/templates/selia/collection_device_detail/components/secondary_navbar.html:12
-#: selia/templates/selia/collection_site_detail/components/secondary_navbar.html:12
-#: selia/templates/selia/collections/components/secondary_navbar.html:5
 #: selia/templates/selia/collections_admin/components/secondary_navbar.html:29
-#: selia/templates/selia/components/list_items/physical_device.html:49
-#: selia/templates/selia/components/list_items/site.html:51
+#: selia/templates/selia/components/list_items/physical_device.html:45
+#: selia/templates/selia/components/list_items/site.html:47
 #: selia/templates/selia/components/navbar_items.html:15
 #: selia/templates/selia/components/navbar_items.html:17
 #: selia/templates/selia/components/summaries/user.html:6
-#: selia/templates/selia/item_detail/components/secondary_navbar.html:12
-#: selia/templates/selia/items/components/secondary_navbar.html:5
-#: selia/templates/selia/licence_detail/components/secondary_navbar.html:12
-#: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:12
-#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:15
+#: selia/templates/selia/navbars/collection.html:11
+#: selia/templates/selia/navbars/collection_device.html:12
+#: selia/templates/selia/navbars/collection_site.html:12
+#: selia/templates/selia/navbars/collections.html:5
+#: selia/templates/selia/navbars/item.html:12
+#: selia/templates/selia/navbars/licence.html:12
+#: selia/templates/selia/navbars/sampling_event.html:12
+#: selia/templates/selia/navbars/sampling_event_device.html:15
 msgid "Collections"
-msgstr "Colecciones"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:100
 msgid "Can add site to collection"
-msgstr "Puede añadir un sitio a la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:103
 msgid "Can add item to collection"
-msgstr "Puede añadir un item a la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:106
 msgid "Can add device to collection"
-msgstr "Puede añadir un dispositivo a la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:109
 msgid "Can add user to collection"
-msgstr "Puede añadir un usuario a la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:112
 msgid "Can add licence to collection"
-msgstr "Puede añadir una licencia a la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:115
 msgid "Can annotate items in collection"
-msgstr "Puede anotar items de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:118
 msgid "Can vote on annotations of items in collection"
-msgstr "Puede votar anotaciones de items de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:121
 msgid "Can view sites in collection"
-msgstr "Puede ver sitios de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:124
 msgid "Can view items in collection"
-msgstr "Puede ver items de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:127
 msgid "Can view devices in collection"
-msgstr "Puede ver dispositivos de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:130
 msgid "Can view sampling event in collection"
@@ -644,121 +626,121 @@ msgstr ""
 
 #: database/models/data_collections/data_collections.py:133
 msgid "Can view annotations of items in collection"
-msgstr "Puede ver anotaciones de los items de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:136
 msgid "Can change sites in collection"
-msgstr "Puede cambiar los sitios de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:139
 msgid "Can change user info in collection"
-msgstr "Puede cambiar los usuarios de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:142
 msgid "Can change items in collection"
-msgstr "Puede cambiar los items de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:145
 msgid "Can change devices in collection"
-msgstr "Puede cambiar los dispositivos de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:148
 msgid "Can change annotations of items in collection"
-msgstr "Puede cambiar las anotaciones de items en la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:151
 msgid "Can change sampling events in collection"
-msgstr "Puede cambiar los eventos de muestreo de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:154
 msgid "Can download annotation items"
-msgstr "Puede descargar las anotaciones de los items de la colección"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:167
 #, python-brace-format
 msgid "Invalid metadata for collection of type {type}. Error: {error}"
-msgstr "Metadatos invalidos para el tipo de coleccion {type}. Error: {error}"
+msgstr ""
 
 #: database/models/data_collections/data_collections.py:237
 #, python-format
 msgid "Licence %(licence)s is not part of collection %(collection)s."
-msgstr "La licencia %(licence)s no es parte de la colección %(collection)s"
+msgstr ""
 
 #: database/models/data_collections/metacollections.py:13
 msgid "Name of meta collection"
-msgstr "Nombre de la metacolección"
+msgstr ""
 
 #: database/models/data_collections/metacollections.py:19
 msgid "Description of Meta Collection"
-msgstr "Descripción de la metacolección"
+msgstr ""
 
 #: database/models/data_collections/metacollections.py:24
 msgid "items"
-msgstr "items"
+msgstr ""
 
 #: database/models/data_collections/metacollections.py:25
 msgid "Items belonging to MetaCollection"
-msgstr "Items pertenecientes a la metacolección"
+msgstr ""
 
 #: database/models/data_collections/metacollections.py:31
 msgid "Curators of metacollection"
-msgstr "Curadores de la metacolección"
+msgstr ""
 
 #: database/models/data_collections/metacollections.py:35
 msgid "Meta Collection"
-msgstr "Metacolección"
+msgstr ""
 
 #: database/models/data_collections/metacollections.py:36
 msgid "Meta Collections"
-msgstr "Metacolecciones"
+msgstr ""
 
 #: database/models/devices/device_brands.py:12
 msgid "Name of device brand"
-msgstr "Nombre de la marca del dispositivo"
+msgstr ""
 
 #: database/models/devices/device_brands.py:18
 msgid "Brand's website"
-msgstr "Sitio web de la marca"
+msgstr ""
 
 #: database/models/devices/device_brands.py:24
 msgid "Logo of device brand"
-msgstr "Logo de la marca del dispositivo"
+msgstr ""
 
 #: database/models/devices/device_brands.py:30
 msgid "Device Brand"
-msgstr "Marca de dispositivo"
+msgstr ""
 
 #: database/models/devices/device_brands.py:31
 msgid "Device Brands"
-msgstr "Marcas de dispositivos"
+msgstr ""
 
 #: database/models/devices/devices.py:18
 #: database/models/object_types/data_collections/collection_device_types.py:25
 #: database/models/object_types/sampling_events/sampling_event_type_devices.py:27
 msgid "device type"
-msgstr "tipo de dispositivo"
+msgstr ""
 
 #: database/models/devices/devices.py:19
 msgid "Type of device"
-msgstr "Tipo de dispositivo"
+msgstr ""
 
 #: database/models/devices/devices.py:26
 #: irekua_utils/filters/devices/physical_devices.py:42
 msgid "brand"
-msgstr "marca"
+msgstr ""
 
 #: database/models/devices/devices.py:27
 msgid "Brand of device"
-msgstr "Marca de dispositivo"
+msgstr ""
 
 #: database/models/devices/devices.py:32
 #: irekua_utils/filters/devices/physical_devices.py:43
 msgid "model"
-msgstr "modelo"
+msgstr ""
 
 #: database/models/devices/devices.py:33
 msgid "Model of device"
-msgstr "Modelo del dispositivo"
+msgstr ""
 
 #: database/models/devices/devices.py:37
 #: database/models/object_types/data_collections/collection_device_types.py:31
@@ -772,228 +754,220 @@ msgstr "Modelo del dispositivo"
 #: database/models/object_types/site_types.py:27
 #: database/models/object_types/term_types.py:43
 msgid "metadata schema"
-msgstr "esquema de metadatos"
+msgstr ""
 
 #: database/models/devices/devices.py:38
 msgid "JSON Schema for metadata of device info"
-msgstr "Esquema JSON para los metadatos asociados a un dispositivo"
+msgstr ""
 
 #: database/models/devices/devices.py:46
 msgid "JSON Schema for configuration info of device"
-msgstr "Esquema JSON para la información de configuración del dispositivo"
+msgstr ""
 
 #: database/models/devices/devices.py:53
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:38
-#: selia/templates/selia/components/create/physical_device.html:24
-#: selia/templates/selia/components/create/physical_device.html:91
-#: selia/templates/selia/components/create/physical_device/1.html:16
-#: selia/templates/selia/components/create/user_physical_device.html:24
-#: selia/templates/selia/components/create/user_physical_device.html:91
 #: selia/templates/selia/components/details/item.html:20
 #: selia/templates/selia/components/list_items/item.html:52
-#: selia/templates/selia/components/select_list_items/items.html:44
-#: selia/templates/selia/user/devices/create.html:35
+#: selia/templates/selia/components/select_list_items/items.html:42
+#: selia/templates/selia/create/physical_devices/select_device.html:41
 msgid "Device"
-msgstr "Dispositivo"
+msgstr ""
 
 #: database/models/devices/devices.py:54
 #: irekua/templates/irekua/content/about.html:112
-#: selia/templates/selia/collection_detail/components/secondary_navbar.html:50
-#: selia/templates/selia/components/list_items/collection.html:76
-#: selia/templates/selia/components/list_items/sampling_event.html:63
+#: selia/templates/selia/components/list_items/collection.html:72
 #: selia/templates/selia/components/summaries/collection.html:22
 #: selia/templates/selia/components/summaries/sampling_event.html:6
 #: selia/templates/selia/components/summaries/user.html:38
-#: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:49
+#: selia/templates/selia/list/collection_devices.html:10
+#: selia/templates/selia/list/user_physical_devices.html:10
+#: selia/templates/selia/navbars/collection.html:50
 msgid "Devices"
-msgstr "Dispositivos"
+msgstr ""
 
 #: database/models/devices/devices.py:73
 #, python-format
 msgid "Invalid device configuration. Error: %(error)s"
-msgstr "Configuración de dispositivo inválida. Error: %(error)s"
+msgstr ""
 
 #: database/models/devices/devices.py:83
 #, python-format
 msgid "Invalid device metadata. Error: %(error)s"
-msgstr "Metadatos de dispositivo invalidos. Error: %(error)s"
+msgstr ""
 
 #: database/models/devices/physical_devices.py:16
 #: irekua_utils/filters/devices/physical_devices.py:41
 msgid "custom id"
-msgstr "id personal"
+msgstr ""
 
 #: database/models/devices/physical_devices.py:17
 msgid "Simple device identifier"
-msgstr "Nombre personal para fines de identificación"
+msgstr ""
 
 #: database/models/devices/physical_devices.py:23
 #: irekua_utils/filters/devices/physical_devices.py:40
 msgid "serial number"
-msgstr "número de serie"
+msgstr ""
 
 #: database/models/devices/physical_devices.py:24
 msgid "Serial number of device"
-msgstr "Número de serie del dispositivo"
+msgstr ""
 
 #: database/models/devices/physical_devices.py:31
 msgid "device"
-msgstr "dispositivo"
+msgstr ""
 
 #: database/models/devices/physical_devices.py:32
 msgid "Brand and model of device"
-msgstr "Marca y modelo del dispositivo"
+msgstr ""
 
 #: database/models/devices/physical_devices.py:38
 msgid "Metadata associated to device"
-msgstr "Metadatos asociados al dispositivo"
+msgstr ""
 
 #: database/models/devices/physical_devices.py:44
 msgid "bundle"
-msgstr "manojo"
+msgstr ""
 
 #: database/models/devices/physical_devices.py:46
 msgid "Does this device possibly represents many physical devices?"
-msgstr "¿Es posible que este dispositivo consista de varios dispositivos físicos?"
+msgstr ""
 
 #: database/models/devices/physical_devices.py:51
 msgid "Physical Device"
-msgstr "Dispositivo físico"
+msgstr ""
 
 #: database/models/devices/physical_devices.py:52
 msgid "Physical Devices"
-msgstr "Dispositivo físico"
+msgstr ""
 
 #: database/models/devices/physical_devices.py:60
 #, python-format
 msgid "Device %(id)s of type %(device)s"
-msgstr "Dispositivo %(id)s de tipo %(device)s"
+msgstr ""
 
 #: database/models/items/items.py:49
 msgid "file size"
-msgstr "tamaño de archivo"
+msgstr ""
 
 #: database/models/items/items.py:50
 msgid "Size of resource in Bytes"
-msgstr "Tamaño del recurso en bytes"
+msgstr ""
 
 #: database/models/items/items.py:55
 #: database/models/items/secondary_items.py:51
 msgid "hash"
-msgstr "hash"
+msgstr ""
 
 #: database/models/items/items.py:56
 msgid "Hash of resource file"
-msgstr "Hash del archivo"
+msgstr ""
 
 #: database/models/items/items.py:65
 #: database/models/items/secondary_items.py:65
 #: database/models/object_types/data_collections/collection_item_types.py:25
 msgid "item type"
-msgstr "tipo de item"
+msgstr ""
 
 #: database/models/items/items.py:66
 msgid "Type of resource"
-msgstr "Tipo de recurso"
+msgstr ""
 
 #: database/models/items/items.py:71
 #: database/models/items/secondary_items.py:57
 msgid "item file"
-msgstr "archivo del item"
+msgstr ""
 
 #: database/models/items/items.py:72
 #: database/models/items/secondary_items.py:58
 msgid "Upload file associated to file"
-msgstr "Sube el archivo asociado al item"
+msgstr ""
 
 #: database/models/items/items.py:78
 #: database/models/items/secondary_items.py:79
 msgid "media info"
-msgstr "información de media"
+msgstr ""
 
 #: database/models/items/items.py:79
 msgid "Information of resource file"
-msgstr "Información del archivo"
+msgstr ""
 
 #: database/models/items/items.py:85 database/models/temp/upload_session.py:13
 msgid "sampling event device"
-msgstr "dispositivo de evento de muestreo"
+msgstr ""
 
 #: database/models/items/items.py:86 database/models/temp/upload_session.py:14
 msgid "Sampling event device used to create item"
-msgstr "Dispositivo de evento de muestreo usado para crear el item"
+msgstr ""
 
 #: database/models/items/items.py:93 database/models/terms/entailments.py:15
 #: database/models/terms/synonyms.py:16
 msgid "source"
-msgstr "fuente"
+msgstr ""
 
 #: database/models/items/items.py:94
 msgid "Source of item (parsing function and parent directory)"
-msgstr "Fuente de item (funcián de parseo y directorio)"
+msgstr ""
 
 #: database/models/items/items.py:100
 msgid "source foreign key"
-msgstr "llave foránea de fuente"
+msgstr ""
 
 #: database/models/items/items.py:101
 msgid "Foreign key of file in source database"
-msgstr "Llave foránea de archivo en la base de datos de fuente"
+msgstr ""
 
 #: database/models/items/items.py:108
 msgid "Metadata associated to item"
-msgstr "Metadatos asociados al item"
+msgstr ""
 
-#: database/models/items/items.py:113 irekua_utils/filters/items/items.py:43
+#: database/models/items/items.py:113 irekua_utils/filters/items/items.py:47
 msgid "captured on"
-msgstr "capturado el"
+msgstr ""
 
 #: database/models/items/items.py:114
 msgid "Date on which item was produced"
-msgstr "Fecha en la cual fue producido el item"
+msgstr ""
 
 #: database/models/items/items.py:120
 #: database/models/sampling_events/sampling_event_devices.py:51
 #: database/models/sampling_events/sampling_events.py:65
 msgid "licence"
-msgstr "lincencia"
+msgstr ""
 
 #: database/models/items/items.py:121
 msgid "Licence of item"
-msgstr "Licencia de item"
+msgstr ""
 
 #: database/models/items/items.py:128
 msgid "tags"
-msgstr "etiquetas"
+msgstr ""
 
 #: database/models/items/items.py:129
 msgid "Tags for item"
-msgstr "Etiquetas para el item"
+msgstr ""
 
 #: database/models/items/items.py:133
 msgid "ready event types"
-msgstr "tipos de evento finalizados"
+msgstr ""
 
 #: database/models/items/items.py:134
 msgid "Types of event for which item has been fully annotated"
-msgstr "Tipos de evento para el cual el item ya ha sido completamente anotado"
+msgstr ""
 
 #: database/models/items/items.py:138
+#: selia/templates/selia/list/annotations.html:12
 msgid "Item"
-msgstr "Item"
+msgstr ""
 
 #: database/models/items/items.py:139
 #: irekua/templates/irekua/content/about.html:102
-#: selia/templates/selia/collection_detail/components/secondary_navbar.html:38
-#: selia/templates/selia/collection_device_detail/components/secondary_navbar.html:38
-#: selia/templates/selia/collection_site_detail/components/secondary_navbar.html:38
-#: selia/templates/selia/components/list_items/collection.html:92
-#: selia/templates/selia/components/list_items/collection_device.html:52
-#: selia/templates/selia/components/list_items/collection_site.html:72
-#: selia/templates/selia/components/list_items/licence.html:43
-#: selia/templates/selia/components/list_items/managed_collection.html:42
-#: selia/templates/selia/components/list_items/sampling_event.html:77
-#: selia/templates/selia/components/list_items/sampling_event_device.html:52
+#: selia/templates/selia/components/list_items/collection.html:88
+#: selia/templates/selia/components/list_items/collection_device.html:48
+#: selia/templates/selia/components/list_items/collection_site.html:68
+#: selia/templates/selia/components/list_items/licence.html:39
+#: selia/templates/selia/components/list_items/managed_collection.html:38
+#: selia/templates/selia/components/list_items/sampling_event.html:73
+#: selia/templates/selia/components/list_items/sampling_event_device.html:48
 #: selia/templates/selia/components/summaries/collection.html:54
 #: selia/templates/selia/components/summaries/collection_device.html:6
 #: selia/templates/selia/components/summaries/collection_site.html:6
@@ -1002,26 +976,31 @@ msgstr "Item"
 #: selia/templates/selia/components/summaries/sampling_event_device.html:6
 #: selia/templates/selia/components/summaries/site.html:6
 #: selia/templates/selia/components/summaries/user.html:70
-#: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:38
-#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:41
+#: selia/templates/selia/list/collection_items.html:10
+#: selia/templates/selia/list/sampling_event_device_items.html:10
+#: selia/templates/selia/list/sampling_event_items.html:6
+#: selia/templates/selia/list/user_items.html:10
+#: selia/templates/selia/navbars/collection.html:38
+#: selia/templates/selia/navbars/collection_device.html:38
+#: selia/templates/selia/navbars/collection_site.html:38
+#: selia/templates/selia/navbars/sampling_event.html:38
+#: selia/templates/selia/navbars/sampling_event_device.html:41
 msgid "Items"
-msgstr "Items"
+msgstr ""
 
 #: database/models/items/items.py:144
 msgid "Can download item"
-msgstr "Puede descargar el item"
+msgstr ""
 
 #: database/models/items/items.py:145
 msgid "Can annotate item"
-msgstr "Puede anotar el item"
+msgstr ""
 
 #: database/models/items/items.py:157
 msgid ""
 "Item creator was not specified and is not determined by sampling event "
 "device."
 msgstr ""
-"El creador del item no fue especificado y no pudo ser determinado por el "
-"dispositivo utilizado"
 
 #: database/models/items/items.py:224
 #, python-brace-format
@@ -1029,71 +1008,69 @@ msgid ""
 "File MIME type does not coincide with declared item type (file: {file_type} !"
 "= {item_type} :item_type)"
 msgstr ""
-"El tipo MIME del archivo no coincide con el tipo de item declarado (archivo: {file_type}"
-" != {item_type} :tipo de item)"
 
 #: database/models/items/items.py:240
 msgid "Licence was not provided to item nor to sampling event"
-msgstr "No se designaron licencias al item y no se pudieron inferir del evento de muestreo"
+msgstr ""
 
 #: database/models/items/items.py:251
 #: database/models/items/secondary_items.py:101
 msgid "If no file is provided, a hash must be given"
-msgstr "Si el archivo no fue provisto es obligatorio determinar el hash"
+msgstr ""
 
 #: database/models/items/items.py:267
 #: database/models/items/secondary_items.py:114
 msgid "Hash of file and recorded hash do not coincide"
-msgstr "El hash del archivo y el hash previamente registrado no coinciden"
+msgstr ""
 
 #: database/models/items/secondary_items.py:52
 msgid "Hash of secondary resource file"
-msgstr "Hash de archivo"
+msgstr ""
 
 #: database/models/items/secondary_items.py:66
 msgid "Type of file of secondary item"
-msgstr "Tipo de archivo de item secundario"
+msgstr ""
 
 #: database/models/items/secondary_items.py:72
 msgid "item id"
-msgstr "id de item"
+msgstr ""
 
 #: database/models/items/secondary_items.py:73
 msgid "Reference to primary item associated to secondary item"
-msgstr "Referencia al item primario asociado al item secundario"
+msgstr ""
 
 #: database/models/items/secondary_items.py:80
 msgid "Media information of secondary item file"
-msgstr "Información de media del archivo del item secundario"
+msgstr ""
 
 #: database/models/items/secondary_items.py:86
 msgid "Secondary Item"
-msgstr "Item secundario"
+msgstr ""
 
 #: database/models/items/secondary_items.py:87
 msgid "Secondary Items"
-msgstr "Items secundarios"
+msgstr ""
 
 #: database/models/items/secondary_items.py:92
 #, python-format
 msgid "Secondary Item %(id)s derived from %(itemid)s"
-msgstr "Item secundario %(id)s derivado de %(itemid)s"
+msgstr ""
 
 #: database/models/items/sources.py:13
 msgid "directory"
-msgstr "directorio"
+msgstr ""
 
 #: database/models/items/sources.py:14
 msgid "Directory containing all files in source"
-msgstr "Directorio que contiene todos los archivos en la fuente"
+msgstr ""
 
 #: database/models/items/sources.py:19
 msgid "source file"
-msgstr "archivo fuente"
+msgstr ""
 
 #: database/models/items/sources.py:20
 msgid "File containing metadata for files in source directory"
-msgstr "Archivo que contiene los metadatos de los archivos "
+msgstr ""
 
 #: database/models/items/sources.py:25
 msgid "parse function"
@@ -1222,13 +1199,13 @@ msgstr ""
 #: database/models/licences.py:77
 #: selia/templates/selia/components/list_items/item.html:65
 #: selia/templates/selia/components/list_items/licence.html:12
-#: selia/templates/selia/components/select_list_items/items.html:54
-#: selia/templates/selia/components/select_list_items/licences.html:12
+#: selia/templates/selia/components/select_list_items/items.html:52
 msgid "Licence"
 msgstr ""
 
 #: database/models/licences.py:78
-#: selia/templates/selia/collection_detail/components/secondary_navbar.html:86
+#: selia/templates/selia/list/collection_licences.html:10
+#: selia/templates/selia/navbars/collection.html:86
 msgid "Licences"
 msgstr ""
 
@@ -1539,57 +1516,52 @@ msgstr ""
 #: database/models/object_types/data_collections/collection_types.py:229
 #, python-format
 msgid ""
-"Site type %(site_type)s is not accepted in collection of type %(col_type)s "
-"or does not exist"
+"Site type %(site_type)s is not accepted in collection of type %(col_type)s"
 msgstr ""
 
 #: database/models/object_types/data_collections/collection_types.py:244
 #, python-format
 msgid ""
 "Annotation type %(annotation_type)s is not accepted in collection of type "
-"%(col_type)s or does not exist"
+"%(col_type)s"
 msgstr ""
 
 #: database/models/object_types/data_collections/collection_types.py:259
 #, python-format
 msgid ""
 "Licence type %(licence_type)s is not accepted in collection of type "
-"%(col_type)s or does not exist"
+"%(col_type)s"
 msgstr ""
 
 #: database/models/object_types/data_collections/collection_types.py:274
 #, python-format
 msgid ""
-"Event type %(event_type)s is not accepted in collection of type %(col_type)s "
-"or does not exist"
+"Event type %(event_type)s is not accepted in collection of type %(col_type)s"
 msgstr ""
 
 #: database/models/object_types/data_collections/collection_types.py:291
 #, python-format
 msgid ""
-"Item type %(item_type)s is not accepted in collection of type %(col_type)s "
-"or does not exist"
+"Item type %(item_type)s is not accepted in collection of type %(col_type)s"
 msgstr ""
 
 #: database/models/object_types/data_collections/collection_types.py:308
 #, python-format
 msgid ""
 "Device type %(device_type)s is not accepted in collection of type "
-"%(col_type)s or does not exist"
+"%(col_type)s"
 msgstr ""
 
 #: database/models/object_types/data_collections/collection_types.py:323
 #, python-format
 msgid ""
 "Sampling Event type %(sampling_event_type)s is not accepted in collection of "
-"type %(col_type)s or does not exist"
+"type %(col_type)s"
 msgstr ""
 
 #: database/models/object_types/data_collections/collection_types.py:337
 #, python-format
-msgid ""
-"Role type %(role)s is not accepted in collection of type %(col_type)s or "
-"does not exist"
+msgid "Role type %(role)s is not accepted in collection of type %(col_type)s"
 msgstr ""
 
 #: database/models/object_types/device_types.py:13
@@ -1895,18 +1867,20 @@ msgid "Sampling Event Types"
 msgstr ""
 
 #: database/models/object_types/sampling_events/sampling_event_types.py:93
-msgid "Invalid metadata for sampling event of type %(type)s. Error: %(error)"
+#, python-format
+msgid "Invalid metadata for sampling event of type %(type)s. Error: %(error)s"
 msgstr ""
 
 #: database/models/object_types/sampling_events/sampling_event_types.py:107
 #, python-format
 msgid ""
-"Device type %(device_type) is not valid for sampling event of type %(type)s"
+"Device type %(device_type)s is not valid for sampling event of type %(type)s"
 msgstr ""
 
 #: database/models/object_types/sampling_events/sampling_event_types.py:122
 #, python-format
-msgid "Site type %(site_type) is not valid for sampling event of type %(type)s"
+msgid ""
+"Site type %(site_type)s is not valid for sampling event of type %(type)s"
 msgstr ""
 
 #: database/models/object_types/site_types.py:18
@@ -2064,7 +2038,7 @@ msgstr ""
 
 #: database/models/sampling_events/sampling_events.py:43
 #: irekua_utils/filters/data_collections/collection_sampling_events.py:46
-#: irekua_utils/filters/sampling_events/sampling_events.py:62
+#: irekua_utils/filters/sampling_events/sampling_events.py:66
 msgid "started on"
 msgstr ""
 
@@ -2074,7 +2048,7 @@ msgstr ""
 
 #: database/models/sampling_events/sampling_events.py:49
 #: irekua_utils/filters/data_collections/collection_sampling_events.py:47
-#: irekua_utils/filters/sampling_events/sampling_events.py:63
+#: irekua_utils/filters/sampling_events/sampling_events.py:67
 msgid "ended on"
 msgstr ""
 
@@ -2087,11 +2061,17 @@ msgid "Collection to which sampling event belongs"
 msgstr ""
 
 #: database/models/sampling_events/sampling_events.py:71
+#: selia/templates/selia/detail/sampling_event_device.html:7
+#: selia/templates/selia/list/sampling_event_device_items.html:10
+#: selia/templates/selia/list/sampling_event_devices.html:10
+#: selia/templates/selia/list/sampling_event_items.html:6
 msgid "Sampling Event"
 msgstr ""
 
 #: database/models/sampling_events/sampling_events.py:72
-#: selia/templates/selia/components/list_items/collection.html:60
+#: selia/templates/selia/components/list_items/collection.html:56
+#: selia/templates/selia/list/sampling_events.html:10
+#: selia/templates/selia/list/user_sampling_events.html:10
 msgid "Sampling Events"
 msgstr ""
 
@@ -2102,6 +2082,10 @@ msgstr ""
 
 #: database/models/sampling_events/sampling_events.py:97
 msgid "Site does not belong to the declared collection"
+msgstr ""
+
+#: database/models/sampling_events/sampling_events.py:103
+msgid "Starting date cannot be greater than ending date"
 msgstr ""
 
 #: database/models/sites.py:17
@@ -2122,22 +2106,6 @@ msgid ""
 "event.\n"
 "    "
 msgstr ""
-"\n"
-"        Modelo de Sitio\n"
-"\n"
-"        Un sitio consiste de la especificación de coordenadas. Se asume que "
-"el datum de referencia\n"
-"        es WGS-84. Es posible asociar un nombre al sitio para facilitar la "
-"referencia futura.\n"
-"        Adicionalmente, un campo opcional de localidad posibilita localizar "
-"el sitio dentro de\n"
-"        una región y permite una organización jerárquica de sitios.\n"
-"\n"
-"        El creador del sitio es almacenado de modo que los usuarios sean "
-"capaces de buscar dentro\n"
-"        de sus sitios previamente creados al momento de planear un nuevo "
-"evento de monitoreo. \n"
-"    "
 
 #: database/models/sites.py:33
 msgid "Name of site"
@@ -2184,25 +2152,25 @@ msgid "Altitude of site (in meters)"
 msgstr ""
 
 #: database/models/sites.py:66
-#: selia/templates/selia/components/create/collection_site.html:24
-#: selia/templates/selia/components/create/collection_site.html:115
-#: selia/templates/selia/components/details/sampling_event.html:42
 #: selia/templates/selia/components/filters/collection_sampling_event.html:28
 #: selia/templates/selia/components/list_items/collection_site.html:20
 #: selia/templates/selia/components/list_items/item.html:40
 #: selia/templates/selia/components/list_items/sampling_event.html:25
 #: selia/templates/selia/components/list_items/site.html:20
 #: selia/templates/selia/components/select_list_items/collection_sites.html:19
-#: selia/templates/selia/components/select_list_items/items.html:29
+#: selia/templates/selia/components/select_list_items/items.html:27
 #: selia/templates/selia/components/select_list_items/sites.html:19
+#: selia/templates/selia/detail/collection_site.html:15
 msgid "Site"
 msgstr ""
 
 #: database/models/sites.py:67
-#: selia/templates/selia/collection_detail/components/secondary_navbar.html:74
-#: selia/templates/selia/components/list_items/collection.html:44
+#: selia/templates/selia/components/list_items/collection.html:40
 #: selia/templates/selia/components/summaries/collection.html:6
 #: selia/templates/selia/components/summaries/user.html:22
+#: selia/templates/selia/list/collection_sites.html:14
+#: selia/templates/selia/list/user_sites.html:6
+#: selia/templates/selia/navbars/collection.html:74
 msgid "Sites"
 msgstr ""
 
@@ -2250,10 +2218,8 @@ msgid "UploadEvent creator was not specified"
 msgstr ""
 
 #: database/models/temp/upload_session.py:21
-#, fuzzy
-#| msgid "Configuration of annotation tool"
 msgid "Configuration for this upload session"
-msgstr "Configuración de la herramienta de anotación"
+msgstr ""
 
 #: database/models/temp/upload_session.py:43
 msgid "Session creator was not specified"
@@ -2456,13 +2422,14 @@ msgstr ""
 
 #: database/models/users/institutions.py:67
 #: selia/templates/selia/components/details/collection.html:23
-#: selia/templates/selia/components/details/collection_user.html:61
+#: selia/templates/selia/components/details/collection_user.html:29
 #: selia/templates/selia/components/filters/collection.html:56
 #: selia/templates/selia/components/filters/item.html:70
 #: selia/templates/selia/components/filters/managed_collection.html:26
 #: selia/templates/selia/components/list_items/collection.html:26
 #: selia/templates/selia/components/list_items/collection_user.html:52
 #: selia/templates/selia/components/list_items/managed_collection.html:24
+#: selia/templates/selia/components/select_list_items/collection.html:24
 #: selia/templates/selia/components/select_list_items/user_collections.html:24
 msgid "Institution"
 msgstr ""
@@ -2492,8 +2459,8 @@ msgid "Permissions associated to role"
 msgstr ""
 
 #: database/models/users/roles.py:37
-#: selia/templates/selia/components/details/collection_user.html:73
-#: selia/templates/selia/components/details/collection_user.html:88
+#: selia/templates/selia/components/details/collection_user.html:59
+#: selia/templates/selia/components/details/collection_user.html:74
 #: selia/templates/selia/components/list_items/collection_user.html:48
 msgid "Role"
 msgstr ""
@@ -2548,21 +2515,26 @@ msgid "Flag to indicate if user is an AI model"
 msgstr ""
 
 #: database/models/users/users.py:56
-#: selia/templates/selia/collection_detail/users/detail.html:11
 #: selia/templates/selia/components/filters/annotation.html:68
 #: selia/templates/selia/components/filters/collection_device.html:64
 #: selia/templates/selia/components/filters/collection_sampling_event.html:84
 #: selia/templates/selia/components/filters/item.html:29
 #: selia/templates/selia/components/filters/licence.html:27
 #: selia/templates/selia/components/filters/sampling_event_device.html:11
-#: selia/templates/selia/user/home.html:7
+#: selia/templates/selia/detail/collection_user.html:11
+#: selia/templates/selia/detail/user.html:10
+#: selia/templates/selia/list/user_items.html:10
+#: selia/templates/selia/list/user_physical_devices.html:10
+#: selia/templates/selia/list/user_sampling_events.html:10
+#: selia/templates/selia/list/user_sites.html:6
 msgid "User"
 msgstr ""
 
 #: database/models/users/users.py:57
-#: selia/templates/selia/collection_detail/components/secondary_navbar.html:98
-#: selia/templates/selia/components/list_items/collection.html:37
-#: selia/templates/selia/components/list_items/managed_collection.html:38
+#: selia/templates/selia/components/list_items/collection.html:33
+#: selia/templates/selia/components/list_items/managed_collection.html:34
+#: selia/templates/selia/list/collection_users.html:10
+#: selia/templates/selia/navbars/collection.html:98
 msgid "Users"
 msgstr ""
 
@@ -2590,25 +2562,23 @@ msgstr ""
 
 #: irekua/templates/irekua/components/tab_items.html:7
 #: irekua/templates/irekua/components/tab_items.html:9
-#: selia/templates/selia/about/components/secondary_navbar.html:5
-#: selia/templates/selia/collection_detail/components/secondary_navbar.html:26
-#: selia/templates/selia/collection_device_detail/components/secondary_navbar.html:27
-#: selia/templates/selia/collection_site_detail/components/secondary_navbar.html:27
-#: selia/templates/selia/collections/components/secondary_navbar.html:18
-#: selia/templates/selia/components/create/navbar.html:13
 #: selia/templates/selia/components/navbar_items.html:6
 #: selia/templates/selia/components/navbar_items.html:8
-#: selia/templates/selia/item_detail/components/secondary_navbar.html:28
-#: selia/templates/selia/items/components/secondary_navbar.html:17
-#: selia/templates/selia/licence_detail/components/secondary_navbar.html:27
-#: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:27
-#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:30
+#: selia/templates/selia/navbars/about.html:5
+#: selia/templates/selia/navbars/collection.html:26
+#: selia/templates/selia/navbars/collection_device.html:27
+#: selia/templates/selia/navbars/collection_site.html:27
+#: selia/templates/selia/navbars/collections.html:18
+#: selia/templates/selia/navbars/item.html:28
+#: selia/templates/selia/navbars/licence.html:26
+#: selia/templates/selia/navbars/sampling_event.html:27
+#: selia/templates/selia/navbars/sampling_event_device.html:30
 msgid "About"
 msgstr ""
 
 #: irekua/templates/irekua/components/tab_items.html:14
 #: irekua/templates/irekua/components/tab_items.html:16
-#: selia/templates/selia/about/components/secondary_navbar.html:39
+#: selia/templates/selia/navbars/about.html:39
 msgid "Contact"
 msgstr ""
 
@@ -2663,25 +2633,24 @@ msgid "Licenced Data"
 msgstr ""
 
 #: irekua/templates/irekua/content/about.html:60
-#, fuzzy
-#| msgid "event type"
 msgid "Site Specific"
-msgstr "tipo de evento"
+msgstr ""
 
 #: irekua/templates/irekua/content/about.html:67
 msgid "Device Dependent"
 msgstr ""
 
 #: irekua/templates/irekua/content/about.html:112
-#: selia/templates/selia/collection_detail/components/secondary_navbar.html:62
-#: selia/templates/selia/components/list_items/collection_device.html:66
-#: selia/templates/selia/components/list_items/collection_site.html:86
-#: selia/templates/selia/components/list_items/physical_device.html:57
-#: selia/templates/selia/components/list_items/site.html:59
+#: selia/templates/selia/components/list_items/collection_device.html:62
+#: selia/templates/selia/components/list_items/collection_site.html:82
+#: selia/templates/selia/components/list_items/physical_device.html:53
+#: selia/templates/selia/components/list_items/site.html:55
 #: selia/templates/selia/components/summaries/collection.html:38
 #: selia/templates/selia/components/summaries/collection_site.html:22
 #: selia/templates/selia/components/summaries/site.html:19
 #: selia/templates/selia/components/summaries/user.html:54
+#: selia/templates/selia/navbars/collection.html:62
+#: selia/templates/selia/navbars/sampling_event_device.html:13
 msgid "Sampling events"
 msgstr ""
 
@@ -2690,10 +2659,8 @@ msgid "Adjustable Metadata Schemes"
 msgstr ""
 
 #: irekua/templates/irekua/content/about.html:142
-#, fuzzy
-#| msgid "Annotations"
 msgid "Item Annotations"
-msgstr "Anotaciones"
+msgstr ""
 
 #: irekua_utils/filters/annotations/annotations.py:40
 #: irekua_utils/filters/data_collections/collection_devices.py:41
@@ -2701,32 +2668,27 @@ msgstr "Anotaciones"
 #: irekua_utils/filters/data_collections/collection_sampling_events.py:45
 #: irekua_utils/filters/data_collections/collection_sites.py:34
 #: irekua_utils/filters/data_collections/collection_users.py:33
-#: irekua_utils/filters/items/items.py:44
+#: irekua_utils/filters/devices/physical_devices.py:39
+#: irekua_utils/filters/items/items.py:48
 #: irekua_utils/filters/sampling_events/sampling_event_devices.py:32
-#, fuzzy
-#| msgid "created on"
+#: irekua_utils/filters/sampling_events/sampling_events.py:65
+#: irekua_utils/filters/sites.py:39
 msgid "added on"
-msgstr "creado en"
+msgstr ""
 
 #: irekua_utils/filters/data_collections/collection_users.py:34
-#, fuzzy
-#| msgid "name"
 msgid "first name"
-msgstr "Nombre"
+msgstr ""
 
 #: irekua_utils/filters/data_collections/collection_users.py:35
-#, fuzzy
-#| msgid "name"
 msgid "last name"
-msgstr "Nombre"
+msgstr ""
 
 #: irekua_utils/filters/data_collections/collection_users.py:36
-#, fuzzy
-#| msgid "name"
 msgid "username"
-msgstr "Nombre"
+msgstr ""
 
-#: irekua_utils/filters/items/items.py:45
+#: irekua_utils/filters/items/items.py:49
 msgid "filesize"
 msgstr ""
 
@@ -2751,915 +2713,53 @@ msgid "Altitude less than"
 msgstr ""
 
 #: rest/filters/utils.py:10
-#, fuzzy
-#| msgid "created on"
 msgid "Created before than"
-msgstr "creado en"
+msgstr ""
 
 #: rest/filters/utils.py:15
 msgid "Created after than"
 msgstr ""
 
 #: rest/filters/utils.py:20
-#, fuzzy
-#| msgid "modified on"
 msgid "Modified before than"
-msgstr "modificado en"
+msgstr ""
 
 #: rest/filters/utils.py:25
-#, fuzzy
-#| msgid "modified on"
 msgid "Modified after than"
-msgstr "modificado en"
-
-#: selia/templates/selia/collection_detail/detail.html:14
-#: selia/templates/selia/collection_detail/users/detail.html:15
-#: selia/templates/selia/collection_device_detail/detail.html:14
-#: selia/templates/selia/collection_site_detail/detail.html:16
-#: selia/templates/selia/components/summaries/collection.html:69
-#: selia/templates/selia/components/summaries/collection_device.html:21
-#: selia/templates/selia/components/summaries/collection_site.html:37
-#: selia/templates/selia/components/summaries/collection_user.html:77
-#: selia/templates/selia/components/summaries/item.html:20
-#: selia/templates/selia/components/summaries/licence.html:17
-#: selia/templates/selia/components/summaries/physical_device.html:18
-#: selia/templates/selia/components/summaries/sampling_event.html:37
-#: selia/templates/selia/components/summaries/sampling_event_device.html:21
-#: selia/templates/selia/components/summaries/site.html:31
-#: selia/templates/selia/components/summaries/user.html:85
-#: selia/templates/selia/item_detail/detail.html:10
-#: selia/templates/selia/licence_detail/detail.html:14
-#: selia/templates/selia/sampling_event_detail/detail.html:15
-#: selia/templates/selia/sampling_event_device_detail/detail.html:11
-msgid "Download summary"
 msgstr ""
 
-#: selia/templates/selia/collection_detail/devices/create.html:7
-msgid "Add device to collection"
+#: selia/templates/selia/annotations/annotator.html:21
+#: selia/templates/selia/detail/item.html:10
+msgid ": Item "
 msgstr ""
 
-#: selia/templates/selia/collection_detail/devices/create.html:12
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:13
-#: selia/templates/selia/collection_detail/items/create.html:10
-#: selia/templates/selia/collection_detail/licences/create.html:10
-#: selia/templates/selia/collection_detail/sampling_events/create.html:16
-#: selia/templates/selia/collection_detail/sites/create.html:16
-#: selia/templates/selia/collection_device_detail/items/create.html:10
-#: selia/templates/selia/collection_site_detail/items/create.html:11
+#: selia/templates/selia/annotations/annotator.html:21
+msgid ": Annotations: Add"
+msgstr ""
+
+#: selia/templates/selia/annotations/annotator.html:25
 #: selia/templates/selia/components/buttons/back.html:2
-#: selia/templates/selia/item_detail/annotations/annotator.html:10
-#: selia/templates/selia/item_detail/annotations/edit.html:10
-#: selia/templates/selia/sampling_event_detail/devices/create.html:11
-#: selia/templates/selia/sampling_event_detail/items/create.html:9
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:10
-#: selia/templates/selia/user/devices/create.html:10
-#: selia/templates/selia/user/items/create.html:11
-#: selia/templates/selia/user/sampling_events/create.html:11
-#: selia/templates/selia/user/sites/create.html:10
 msgid "Back"
 msgstr ""
 
-#: selia/templates/selia/collection_detail/devices/create.html:21
-#: selia/templates/selia/collection_detail/devices/create.html:62
-msgid "Add device to collection: Part"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/devices/create.html:22
-msgid ""
-"\n"
-"      Please select one of your registered devices or\n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/devices/create.html:24
-msgid "register new device"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/devices/create.html:46
-#: selia/templates/selia/collection_detail/sampling_events/create.html:48
-#: selia/templates/selia/collection_detail/sites/create.html:81
-#: selia/templates/selia/sampling_event_detail/devices/create.html:43
-msgid "No available sites. Please "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/devices/create.html:47
-#: selia/templates/selia/collection_detail/sampling_events/create.html:49
-#: selia/templates/selia/collection_detail/sites/create.html:82
-#: selia/templates/selia/sampling_event_detail/devices/create.html:44
-msgid "register new site"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/devices/create.html:63
-msgid ""
-"\n"
-"      Fill out the following form\n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/devices/create.html:74
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:97
-#: selia/templates/selia/sampling_event_detail/devices/create.html:67
-#: selia/templates/selia/user/devices/create.html:94
-msgid "Selected device"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/devices/create.html:107
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:134
-#: selia/templates/selia/collection_detail/sampling_events/create.html:149
-#: selia/templates/selia/collection_detail/sites/create.html:164
-#: selia/templates/selia/components/details/collection.html:35
-#: selia/templates/selia/components/details/collection_device.html:58
-#: selia/templates/selia/components/details/collection_site.html:86
-#: selia/templates/selia/components/details/collection_user.html:110
-#: selia/templates/selia/components/details/item.html:59
-#: selia/templates/selia/components/details/licence.html:42
-#: selia/templates/selia/components/details/physical_device.html:58
-#: selia/templates/selia/components/details/sampling_event.html:76
-#: selia/templates/selia/components/details/sampling_event_device.html:62
-#: selia/templates/selia/components/update/collection_site.html:13
-#: selia/templates/selia/components/update/collection_user.html:13
-#: selia/templates/selia/components/update/licence.html:10
-#: selia/templates/selia/sampling_event_detail/devices/create.html:106
-#: selia/templates/selia/user/devices/create.html:131
-msgid "Metadata"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/devices/create.html:117
-#: selia/templates/selia/sampling_event_detail/devices/list.html:10
-msgid "Add device"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/devices/list.html:6
-#: selia/templates/selia/collection_device_detail/components/secondary_navbar.html:10
-#: selia/templates/selia/sampling_event_detail/devices/list.html:6
-#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:11
-#, fuzzy
-#| msgid "event type"
-msgid ": Devices"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/collection_detail/devices/list.html:10
-msgid "Add Device"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:9
-#: selia/templates/selia/components/create/physical_device/1.html:34
-#: selia/templates/selia/user/devices/create.html:6
-msgid "Register new device"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:21
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:84
-#: selia/templates/selia/components/create/physical_device.html:8
-#: selia/templates/selia/components/create/physical_device.html:78
-#: selia/templates/selia/components/create/user_physical_device.html:8
-#: selia/templates/selia/components/create/user_physical_device.html:78
-#: selia/templates/selia/user/devices/create.html:18
-#: selia/templates/selia/user/devices/create.html:81
-msgid "Register new device: Part"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:21
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:84
-#: selia/templates/selia/components/create/collection_site.html:8
-#: selia/templates/selia/components/create/collection_site.html:102
-#: selia/templates/selia/components/create/physical_device.html:8
-#: selia/templates/selia/components/create/physical_device.html:78
-#: selia/templates/selia/components/create/physical_device/1.html:2
-#: selia/templates/selia/components/create/physical_device/2.html:2
-#: selia/templates/selia/components/create/user_physical_device.html:8
-#: selia/templates/selia/components/create/user_physical_device.html:78
-#: selia/templates/selia/user/devices/create.html:18
-#: selia/templates/selia/user/devices/create.html:81
-msgid "of"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:23
-#: selia/templates/selia/components/create/physical_device.html:10
-#: selia/templates/selia/components/create/user_physical_device.html:10
-msgid ""
-"\n"
-"      Select the brand, model and device type.\n"
-"    "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:44
-#: selia/templates/selia/components/create/collection_site.html:30
-#: selia/templates/selia/components/create/physical_device.html:30
-#: selia/templates/selia/components/create/physical_device/1.html:22
-#: selia/templates/selia/components/create/user_physical_device.html:30
-#: selia/templates/selia/user/devices/create.html:41
-msgid "Select"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:48
-#: selia/templates/selia/components/create/physical_device.html:34
-#: selia/templates/selia/components/create/physical_device/1.html:26
-#: selia/templates/selia/components/create/user_physical_device.html:34
-#: selia/templates/selia/user/devices/create.html:45
-msgid "Please search for the device"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:48
-#: selia/templates/selia/components/create/collection_site.html:34
-#: selia/templates/selia/components/create/physical_device.html:34
-#: selia/templates/selia/components/create/physical_device/1.html:26
-#: selia/templates/selia/components/create/user_physical_device.html:34
-#: selia/templates/selia/user/devices/create.html:45
-msgid "or"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:48
-#: selia/templates/selia/collection_detail/items/create.html:107
-#: selia/templates/selia/collection_detail/sites/create.html:27
-#: selia/templates/selia/components/create/collection_site.html:34
-#: selia/templates/selia/components/create/physical_device.html:34
-#: selia/templates/selia/components/create/user_physical_device.html:34
-#: selia/templates/selia/user/devices/create.html:45
-#, fuzzy
-#| msgid "created on"
-msgid "create a new one"
-msgstr "creado en"
-
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:56
-#: selia/templates/selia/components/create/physical_device.html:42
-#: selia/templates/selia/components/create/user_physical_device.html:42
-#: selia/templates/selia/user/devices/create.html:53
-msgid "Create new device"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:73
-#: selia/templates/selia/components/buttons/add.html:2
-#: selia/templates/selia/components/create/physical_device.html:68
-#: selia/templates/selia/components/create/physical_device/1.html:60
-#: selia/templates/selia/components/create/user_physical_device.html:68
-#: selia/templates/selia/user/devices/create.html:70
-msgid "Add"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:86
-#: selia/templates/selia/components/create/collection_site.html:104
-#: selia/templates/selia/components/create/physical_device.html:80
-#: selia/templates/selia/components/create/user_physical_device.html:80
-msgid ""
-"\n"
-"      Register any individual traits\n"
-"    "
-msgstr ""
-
-=================
-
-#: selia/templates/selia/collection_detail/extra/create_physical_device.html:145
-#: selia/templates/selia/components/create/physical_device.html:128
-#: selia/templates/selia/components/create/user_physical_device.html:128
-#: selia/templates/selia/user/devices/create.html:142
-msgid "Register device"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/extra/create_site.html:7
-msgid "Register new site"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/item_list.html:6
-#: selia/templates/selia/collection_detail/items/list.html:7
-#: selia/templates/selia/collection_device_detail/items/list.html:7
-#: selia/templates/selia/collection_site_detail/items/list.html:6
-#: selia/templates/selia/item_detail/components/secondary_navbar.html:10
-#: selia/templates/selia/sampling_event_detail/items/list.html:6
-#: selia/templates/selia/sampling_event_device_detail/items/list.html:6
-#, fuzzy
-#| msgid "item"
-msgid ": Items"
-msgstr "item"
-
-#: selia/templates/selia/collection_detail/item_list.html:10
-#: selia/templates/selia/collection_device_detail/items/list.html:11
-#: selia/templates/selia/collection_site_detail/items/list.html:10
-#: selia/templates/selia/sampling_event_detail/items/list.html:10
-#: selia/templates/selia/sampling_event_device_detail/items/list.html:9
-msgid "Add Items"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:5
-#, fuzzy
-#| msgid "item"
-msgid "Add new item"
-msgstr "item"
-
-#: selia/templates/selia/collection_detail/items/create.html:18
-#: selia/templates/selia/collection_detail/items/create.html:59
-#: selia/templates/selia/collection_detail/items/create.html:104
-#: selia/templates/selia/collection_detail/items/create.html:159
-msgid "Add items to collection: Part"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:19
-msgid ""
-"\n"
-"      Please select a sampling event to associate or \n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:21
-#: selia/templates/selia/collection_detail/items/create.html:62
-#: selia/templates/selia/collection_detail/sampling_events/create.html:27
-#: selia/templates/selia/collection_device_detail/items/create.html:21
-#: selia/templates/selia/collection_site_detail/items/create.html:116
-msgid "add a new one"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:31
-#: selia/templates/selia/collection_device_detail/items/create.html:32
-msgid "Sampling events whithin this collection: "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:43
-#: selia/templates/selia/collection_device_detail/items/create.html:44
-#: selia/templates/selia/collection_site_detail/items/create.html:97
-msgid "No available sampling events. Please "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:44
-#: selia/templates/selia/collection_device_detail/items/create.html:45
-msgid "register new sampling event"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:60
-#: selia/templates/selia/collection_site_detail/items/create.html:114
-msgid ""
-"\n"
-"      Please select a device declared within this sampling event or \n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:70
-#: selia/templates/selia/collection_detail/items/create.html:116
-#: selia/templates/selia/collection_detail/items/create.html:170
-#: selia/templates/selia/collection_device_detail/items/create.html:71
-#: selia/templates/selia/collection_device_detail/items/create.html:180
-#: selia/templates/selia/collection_site_detail/items/create.html:124
-#: selia/templates/selia/collection_site_detail/items/create.html:171
-#, fuzzy
-#| msgid "event type"
-msgid "Selected sampling event: "
-msgstr "tipo de evento"
-
-#: selia/templates/selia/collection_detail/items/create.html:78
-#: selia/templates/selia/collection_site_detail/items/create.html:132
-#: selia/templates/selia/sampling_event_detail/items/create.html:30
-msgid "Devices whithin this sampling event: "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:90
-#: selia/templates/selia/collection_site_detail/items/create.html:144
-#: selia/templates/selia/sampling_event_detail/items/create.html:42
-msgid "No available devices in this sampling event. Please "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:91
-#: selia/templates/selia/collection_site_detail/items/create.html:145
-#: selia/templates/selia/sampling_event_detail/items/create.html:43
-msgid "register add a new device"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:105
-msgid ""
-"\n"
-"      Please select a licence or \n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:124
-#: selia/templates/selia/collection_detail/items/create.html:178
-#: selia/templates/selia/collection_device_detail/items/create.html:188
-#: selia/templates/selia/collection_site_detail/items/create.html:179
-#: selia/templates/selia/sampling_event_detail/items/create.html:69
-msgid "Selected device: "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:133
-msgid "Available licences: "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:145
-msgid "No available licences. Please "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:146
-msgid "create a new licence"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:160
-#: selia/templates/selia/collection_device_detail/items/create.html:170
-msgid ""
-"\n"
-"      Please complete the information below \n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:188
-#: selia/templates/selia/collection_device_detail/items/create.html:198
-#: selia/templates/selia/collection_site_detail/items/create.html:189
-#: selia/templates/selia/sampling_event_detail/items/create.html:78
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:32
-msgid "Files to upload: "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:192
-msgid "Date pattern: "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:193
-msgid "Date from file name"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:260
-#: selia/templates/selia/collection_device_detail/items/create.html:266
-#: selia/templates/selia/collection_site_detail/items/create.html:257
-#: selia/templates/selia/sampling_event_detail/items/create.html:145
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:99
-#, fuzzy
-#| msgid "item"
-msgid "Add item"
-msgstr "item"
-
-#: selia/templates/selia/collection_detail/items/create.html:263
-#: selia/templates/selia/collection_detail/sampling_events/create.html:163
-#: selia/templates/selia/collection_device_detail/items/create.html:269
-#: selia/templates/selia/collection_site_detail/items/create.html:260
-#: selia/templates/selia/components/delete.html:19
-#: selia/templates/selia/components/update.html:18
-#: selia/templates/selia/sampling_event_detail/items/create.html:148
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:102
-msgid "Cancel"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:269
-#: selia/templates/selia/collection_device_detail/items/create.html:275
-#: selia/templates/selia/collection_site_detail/items/create.html:266
-#: selia/templates/selia/sampling_event_detail/items/create.html:154
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:109
-msgid "Upload progress: "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:282
-msgid "Add items to collection: Complete"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:290
-#: selia/templates/selia/collection_device_detail/items/create.html:295
-#: selia/templates/selia/collection_site_detail/items/create.html:287
-#: selia/templates/selia/sampling_event_detail/items/create.html:175
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:129
-msgid "Done"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:296
-#: selia/templates/selia/collection_detail/items/create.html:325
-#: selia/templates/selia/collection_detail/items/create.html:352
-#: selia/templates/selia/collection_device_detail/items/create.html:301
-#: selia/templates/selia/collection_device_detail/items/create.html:330
-#: selia/templates/selia/collection_device_detail/items/create.html:357
-#: selia/templates/selia/collection_site_detail/items/create.html:293
-#: selia/templates/selia/collection_site_detail/items/create.html:322
-#: selia/templates/selia/collection_site_detail/items/create.html:349
-#: selia/templates/selia/sampling_event_detail/items/create.html:181
-#: selia/templates/selia/sampling_event_detail/items/create.html:210
-#: selia/templates/selia/sampling_event_detail/items/create.html:237
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:135
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:164
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:191
-msgid "Result summary: "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:298
-#: selia/templates/selia/collection_detail/items/create.html:327
-#: selia/templates/selia/collection_detail/items/create.html:354
-#: selia/templates/selia/collection_device_detail/items/create.html:303
-#: selia/templates/selia/collection_device_detail/items/create.html:332
-#: selia/templates/selia/collection_device_detail/items/create.html:359
-#: selia/templates/selia/collection_site_detail/items/create.html:295
-#: selia/templates/selia/collection_site_detail/items/create.html:324
-#: selia/templates/selia/collection_site_detail/items/create.html:351
-#: selia/templates/selia/sampling_event_detail/items/create.html:183
-#: selia/templates/selia/sampling_event_detail/items/create.html:212
-#: selia/templates/selia/sampling_event_detail/items/create.html:239
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:137
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:166
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:193
-#, fuzzy
-#| msgid "item"
-msgid "Added items: "
-msgstr "item"
-
-#: selia/templates/selia/collection_detail/items/create.html:299
-#: selia/templates/selia/collection_detail/items/create.html:328
-#: selia/templates/selia/collection_detail/items/create.html:355
-#: selia/templates/selia/collection_device_detail/items/create.html:304
-#: selia/templates/selia/collection_device_detail/items/create.html:333
-#: selia/templates/selia/collection_device_detail/items/create.html:360
-#: selia/templates/selia/collection_site_detail/items/create.html:296
-#: selia/templates/selia/collection_site_detail/items/create.html:325
-#: selia/templates/selia/collection_site_detail/items/create.html:352
-#: selia/templates/selia/sampling_event_detail/items/create.html:184
-#: selia/templates/selia/sampling_event_detail/items/create.html:213
-#: selia/templates/selia/sampling_event_detail/items/create.html:240
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:138
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:167
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:194
-msgid "Duplicate items: "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:313
-#: selia/templates/selia/collection_detail/items/create.html:341
-#: selia/templates/selia/collection_device_detail/items/create.html:318
-#: selia/templates/selia/collection_device_detail/items/create.html:346
-#: selia/templates/selia/collection_site_detail/items/create.html:310
-#: selia/templates/selia/collection_site_detail/items/create.html:338
-#: selia/templates/selia/sampling_event_detail/items/create.html:198
-#: selia/templates/selia/sampling_event_detail/items/create.html:226
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:152
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:180
-msgid "No new items"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/create.html:368
-#: selia/templates/selia/collection_device_detail/items/create.html:373
-#: selia/templates/selia/collection_site_detail/items/create.html:365
-#: selia/templates/selia/sampling_event_detail/items/create.html:253
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:207
-msgid "No duplicates"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/items/list.html:11
-#, fuzzy
-#| msgid "item"
-msgid "Add items"
-msgstr "item"
-
-#: selia/templates/selia/collection_detail/licences/create.html:6
-msgid "Add licence to collection"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/licences/create.html:18
-#: selia/templates/selia/collection_detail/licences/create.html:45
-msgid "Add licence to collection: Part"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/licences/create.html:20
-msgid ""
-"\n"
-"        Select licence type\n"
-"        "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/licences/create.html:39
-msgid "No licence types are valid for this collection"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/licences/create.html:47
-msgid ""
-"\n"
-"        Please fill in the following information and upload a copy of the "
-"original licence contract\n"
-"        "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/licences/create.html:58
-#, fuzzy
-#| msgid "event type"
-msgid "Selected licence type"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/collection_detail/licences/create.html:74
-msgid "Create new licence"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/licences/create.html:80
-msgid ""
-"\n"
-"                Please download the licence document template and upload a "
-"filled in version.\n"
-"                "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/licences/create.html:85
-msgid "Template"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/licences/create.html:110
-#: selia/templates/selia/collection_detail/sites/create.html:60
-#: selia/templates/selia/collection_site_detail/items/create.html:75
-#: selia/templates/selia/components/create/base.html:9
-#: selia/templates/selia/components/create/collection_site.html:92
-#: selia/templates/selia/user/sites/create.html:49
-#, fuzzy
-#| msgid "created on"
-msgid "Create"
-msgstr "creado en"
-
-#: selia/templates/selia/collection_detail/licences/list.html:6
-#: selia/templates/selia/licence_detail/components/secondary_navbar.html:10
-#, fuzzy
-#| msgid "event type"
-msgid ": Licences"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/collection_detail/licences/list.html:10
-msgid "Add licence"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/sampling_events/create.html:11
-#, fuzzy
-#| msgid "event type"
-msgid "Add new sampling event"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/collection_detail/sampling_events/create.html:24
-#: selia/templates/selia/collection_detail/sampling_events/create.html:83
-msgid "Add sampling event to collection: Part"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/sampling_events/create.html:25
-msgid ""
-"\n"
-"      Please select a collection site to associate or\n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/sampling_events/create.html:63
-#, fuzzy
-#| msgid "event type"
-msgid "Select sampling event type: Part"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/collection_detail/sampling_events/create.html:91
-#: selia/templates/selia/collection_detail/sites/create.html:124
-msgid "Selected site"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/sampling_events/create.html:102
-#, fuzzy
-#| msgid "event type"
-msgid "Selected sampling event type"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/collection_detail/sampling_events/create.html:112
-#: selia/templates/selia/collection_detail/sites/create.html:145
-#: selia/templates/selia/sampling_event_detail/devices/create.html:77
-msgid "Please fill out the following information:"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/sampling_events/create.html:126
-#: selia/templates/selia/components/details/sampling_event.html:24
-#: selia/templates/selia/components/filters/collection_sampling_event.html:50
-#: selia/templates/selia/components/filters/sampling_event.html:35
-#: selia/templates/selia/components/list_items/sampling_event.html:47
-#: selia/templates/selia/components/select_list_items/sampling_events.html:35
-#: selia/templates/selia/components/update/sampling_event.html:6
-#, fuzzy
-#| msgid "created on"
-msgid "Started on"
-msgstr "creado en"
-
-#: selia/templates/selia/collection_detail/sampling_events/create.html:136
-#: selia/templates/selia/components/details/sampling_event.html:28
-#: selia/templates/selia/components/filters/collection_sampling_event.html:66
-#: selia/templates/selia/components/filters/sampling_event.html:52
-#: selia/templates/selia/components/list_items/sampling_event.html:51
-#: selia/templates/selia/components/select_list_items/sampling_events.html:39
-#: selia/templates/selia/components/update/sampling_event.html:15
-#, fuzzy
-#| msgid "modified on"
-msgid "Ended on"
-msgstr "modificado en"
-
-#: selia/templates/selia/collection_detail/sampling_events/create.html:160
-#: selia/templates/selia/user/sampling_events/list.html:9
-#, fuzzy
-#| msgid "event type"
-msgid "Create sampling event"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/collection_detail/sampling_events/list.html:7
-#, fuzzy
-#| msgid "event type"
-msgid ": Sampling Events"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/collection_detail/sampling_events/list.html:11
-msgid "Add sampling event"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/sites/create.html:12
-#, fuzzy
-#| msgid "Labels associated to annotation"
-msgid "Add site to collection"
-msgstr "Etiqueta asociada a la anotación"
-
-#: selia/templates/selia/collection_detail/sites/create.html:24
-#: selia/templates/selia/collection_detail/sites/create.html:116
-msgid "Add site to collection: Part"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/sites/create.html:25
-msgid ""
-"\n"
-"      Please select a site to add or\n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/collection_detail/sites/create.html:39
-#: selia/templates/selia/components/create/collection_site.html:42
-#: selia/templates/selia/user/sites/create.html:28
-#, fuzzy
-#| msgid "created on"
-msgid "Create new site"
-msgstr "creado en"
-
-#: selia/templates/selia/collection_detail/sites/create.html:96
-msgid "Select site type: Part"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/sites/create.html:135
-#, fuzzy
-#| msgid "event type"
-msgid "Selected site type"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/collection_detail/sites/create.html:174
-#: selia/templates/selia/components/create/collection_site.html:147
-msgid "Register site"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/sites/list.html:10
-#: selia/templates/selia/collection_site_detail/components/secondary_navbar.html:10
-msgid ": Sites"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/sites/list.html:14
-msgid "Add Site"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/sites/list.html:20
-msgid "List"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/sites/list.html:23
-msgid "Map"
-msgstr ""
-
-#: selia/templates/selia/collection_detail/users/list.html:10
-#, fuzzy
-#| msgid "item"
-msgid "Add User"
-msgstr "item"
-
-#: selia/templates/selia/collection_device_detail/components/secondary_navbar.html:6
-#: selia/templates/selia/collection_device_detail/components/secondary_navbar.html:9
-#: selia/templates/selia/components/details/physical_device.html:9
-#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:6
-#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:9
-#, fuzzy
-#| msgid "event type"
-msgid "Device "
-msgstr "tipo de evento"
-
-#: selia/templates/selia/collection_device_detail/detail.html:10
-#: selia/templates/selia/collection_device_detail/items/list.html:7
-#: selia/templates/selia/sampling_event_device_detail/detail.html:7
-#: selia/templates/selia/sampling_event_device_detail/items/list.html:6
-#, fuzzy
-#| msgid "event type"
-msgid ": Device "
-msgstr "tipo de evento"
-
-#: selia/templates/selia/collection_device_detail/items/create.html:5
-msgid "Add items to collection device"
-msgstr ""
-
-#: selia/templates/selia/collection_device_detail/items/create.html:18
-#: selia/templates/selia/collection_device_detail/items/create.html:60
-#: selia/templates/selia/collection_device_detail/items/create.html:169
-msgid "Add items to collection device: Part"
-msgstr ""
-
-#: selia/templates/selia/collection_device_detail/items/create.html:19
-msgid ""
-"\n"
-"      Please select a sampling event or \n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/collection_device_detail/items/create.html:61
-msgid ""
-"\n"
-"      Please select an instance of this device within the selected sampling "
-"event or fill in the \n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/collection_device_detail/items/create.html:63
-#: selia/templates/selia/collection_device_detail/items/create.html:153
-msgid "association form"
-msgstr ""
-
-#: selia/templates/selia/collection_device_detail/items/create.html:80
-msgid "Association form"
-msgstr ""
-
-#: selia/templates/selia/collection_device_detail/items/create.html:131
-msgid "Submit"
-msgstr ""
-
-#: selia/templates/selia/collection_device_detail/items/create.html:140
-msgid ""
-"Instances of this collection device whithin the selected sampling event: "
-msgstr ""
-
-#: selia/templates/selia/collection_device_detail/items/create.html:152
-msgid "No available instances of this device. Please fill in the "
-msgstr ""
-
-#: selia/templates/selia/collection_device_detail/items/create.html:287
-msgid "Add items to collection device: Complete"
-msgstr ""
-
-#: selia/templates/selia/collection_site_detail/components/secondary_navbar.html:6
-#: selia/templates/selia/collection_site_detail/components/secondary_navbar.html:9
-#: selia/templates/selia/components/details/site.html:9
-#, fuzzy
-#| msgid "event type"
-msgid "Site "
-msgstr "tipo de evento"
-
-#: selia/templates/selia/collection_site_detail/detail.html:12
-#: selia/templates/selia/collection_site_detail/items/list.html:6
-#, fuzzy
-#| msgid "event type"
-msgid ": Site "
-msgstr "tipo de evento"
-
-#: selia/templates/selia/collection_site_detail/items/create.html:5
-msgid "Add items to collection site"
-msgstr ""
-
-#: selia/templates/selia/collection_site_detail/items/create.html:19
-#: selia/templates/selia/collection_site_detail/items/create.html:113
-#: selia/templates/selia/collection_site_detail/items/create.html:159
-msgid "Add items to collection site: Part"
-msgstr ""
-
-#: selia/templates/selia/collection_site_detail/items/create.html:20
-msgid ""
-"\n"
-"      Please select a sampling event within this site to associate or \n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/collection_site_detail/items/create.html:22
-msgid "create a new sampling event in this site"
-msgstr ""
-
-#: selia/templates/selia/collection_site_detail/items/create.html:34
-msgid "Create new sampling in this site"
-msgstr ""
-
-#: selia/templates/selia/collection_site_detail/items/create.html:98
-msgid "register new sampling event in this site"
-msgstr ""
-
-#: selia/templates/selia/collection_site_detail/items/create.html:160
-#: selia/templates/selia/sampling_event_detail/items/create.html:59
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:19
-msgid ""
-"\n"
-"      Please fill complete the information below \n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/collection_site_detail/items/create.html:279
-msgid "Add items to collection site: Complete"
-msgstr ""
-
-#: selia/templates/selia/collections/components/secondary_navbar.html:31
-#: selia/templates/selia/items/components/secondary_navbar.html:29
-msgid "My Collections"
-msgstr ""
-
-#: selia/templates/selia/collections/components/secondary_navbar.html:44
-#: selia/templates/selia/items/components/secondary_navbar.html:41
-msgid "Open Collections"
+#: selia/templates/selia/annotations/annotator.html:32
+#: selia/templates/selia/annotations/annotator.html:37
+#: selia/templates/selia/components/details/item.html:6
+#: selia/templates/selia/detail/item.html:21
+#: selia/templates/selia/detail/item.html:26
+#: selia/templates/selia/list/annotations.html:29
+#: selia/templates/selia/list/annotations.html:34
+#: selia/templates/selia/navbars/item.html:6
+#: selia/templates/selia/navbars/item.html:9
+msgid "Item "
 msgstr ""
 
 #: selia/templates/selia/collections_admin/components/secondary_navbar.html:5
-#, fuzzy
-#| msgid "annotation type"
 msgid "Collections Admin"
-msgstr "tipo de anotación"
+msgstr ""
 
 #: selia/templates/selia/collections_admin/components/secondary_navbar.html:17
-#: selia/templates/selia/user/components/secondary_navbar.html:5
+#: selia/templates/selia/navbars/user.html:5
 msgid "Home"
 msgstr ""
 
@@ -3668,16 +2768,12 @@ msgid "Manager page"
 msgstr ""
 
 #: selia/templates/selia/collections_admin/home.html:20
-#, fuzzy
-#| msgid "annotation type"
 msgid "Create collection "
-msgstr "tipo de anotación"
+msgstr ""
 
 #: selia/templates/selia/collections_admin/home.html:25
-#, fuzzy
-#| msgid "Annotation"
 msgid "Add administrator"
-msgstr "Anotación"
+msgstr ""
 
 #: selia/templates/selia/collections_admin/home.html:38
 msgid "Managed collections"
@@ -3688,70 +2784,61 @@ msgid "You currently manage"
 msgstr ""
 
 #: selia/templates/selia/collections_admin/home.html:45
-#, fuzzy
-#| msgid "annotation type"
 msgid "collection types"
-msgstr "tipo de anotación"
+msgstr ""
 
 #: selia/templates/selia/collections_admin/home.html:74
 msgid "admin"
 msgstr ""
 
 #: selia/templates/selia/collections_admin/home.html:80
-#, fuzzy
-#| msgid "annotation type"
 msgid "No collections"
-msgstr "tipo de anotación"
+msgstr ""
 
 #: selia/templates/selia/collections_admin/home.html:93
-#, fuzzy
-#| msgid "created on"
 msgid "Create collection"
-msgstr "creado en"
+msgstr ""
 
 #: selia/templates/selia/collections_admin/home.html:96
 msgid "See more"
 msgstr ""
 
-#: selia/templates/selia/components/annotators/image.html:19
+#: selia/templates/selia/components/annotators/image.html:21
 msgid "Clear"
 msgstr ""
 
-#: selia/templates/selia/components/annotators/image.html:25
-#, fuzzy
-#| msgid "Type of annotation"
+#: selia/templates/selia/components/annotators/image.html:30
 msgid "New image annotation:"
-msgstr "Tipo de Anotación"
+msgstr ""
 
-#: selia/templates/selia/components/annotators/image.html:28
-#, fuzzy
-#| msgid "Can vote annotation"
+#: selia/templates/selia/components/annotators/image.html:32
 msgid "Edit image annotation:"
-msgstr "Puede votar la anotación"
+msgstr ""
 
-#: selia/templates/selia/components/annotators/image.html:40
-#, fuzzy
-#| msgid "label"
+#: selia/templates/selia/components/annotators/image.html:45
 msgid "Label:"
-msgstr "etiqueta"
+msgstr ""
 
-#: selia/templates/selia/components/annotators/image.html:41
+#: selia/templates/selia/components/annotators/image.html:46
 msgid " Species common or scientific name"
 msgstr ""
 
-#: selia/templates/selia/components/annotators/image.html:70
-#: selia/templates/selia/item_detail/annotations/list.html:11
-#, fuzzy
-#| msgid "annotation"
+#: selia/templates/selia/components/annotators/image.html:69
+#: selia/templates/selia/list/annotations.html:22
 msgid "Add annotation"
-msgstr "anotación"
+msgstr ""
 
-#: selia/templates/selia/components/annotators/image.html:70
+#: selia/templates/selia/components/annotators/image.html:71
 msgid "Save changes"
 msgstr ""
 
-#: selia/templates/selia/components/annotators/image.html:74
+#: selia/templates/selia/components/annotators/image.html:78
 msgid "Restore"
+msgstr ""
+
+#: selia/templates/selia/components/buttons/add.html:2
+#: selia/templates/selia/create/physical_devices/select_device.html:76
+msgid "Add"
 msgstr ""
 
 #: selia/templates/selia/components/buttons/edit.html:2
@@ -3765,55 +2852,16 @@ msgstr ""
 
 #: selia/templates/selia/components/buttons/help.html:4
 #: selia/templates/selia/components/help.html:7
-#: selia/templates/selia/item_detail/detail.html:13
-#: selia/templates/selia/licence_detail/detail.html:17
-#: selia/templates/selia/sampling_event_detail/detail.html:18
-#: selia/templates/selia/sampling_event_detail/devices/list.html:13
-#: selia/templates/selia/sampling_event_device_detail/detail.html:14
+#: selia/templates/selia/detail/item.html:17
+#: selia/templates/selia/detail/licence.html:17
+#: selia/templates/selia/detail/sampling_event.html:22
+#: selia/templates/selia/detail/sampling_event_device.html:19
+#: selia/templates/selia/list/sampling_event_devices.html:18
 msgid "Help"
 msgstr ""
 
 #: selia/templates/selia/components/buttons/see.html:2
 msgid "See"
-msgstr ""
-
-#: selia/templates/selia/components/create/collection_site.html:8
-#: selia/templates/selia/components/create/collection_site.html:102
-msgid "Register new site: Part"
-msgstr ""
-
-#: selia/templates/selia/components/create/collection_site.html:10
-msgid ""
-"\n"
-"      Select a site to add\n"
-"    "
-msgstr ""
-
-#: selia/templates/selia/components/create/collection_site.html:34
-msgid "Please search for the site"
-msgstr ""
-
-#: selia/templates/selia/components/create/physical_device/1.html:2
-#: selia/templates/selia/components/create/physical_device/2.html:2
-msgid "Part"
-msgstr ""
-
-#: selia/templates/selia/components/create/physical_device/1.html:4
-msgid ""
-"\n"
-"    Select the brand, model and device type.\n"
-"    "
-msgstr ""
-
-#: selia/templates/selia/components/create/physical_device/1.html:26
-msgid "add a new device"
-msgstr ""
-
-#: selia/templates/selia/components/create/physical_device/2.html:4
-msgid ""
-"\n"
-"    Register any individual traits\n"
-"    "
 msgstr ""
 
 #: selia/templates/selia/components/delete.html:7
@@ -3825,18 +2873,39 @@ msgstr ""
 msgid "Are you sure you want to delete this object"
 msgstr ""
 
+#: selia/templates/selia/components/delete.html:19
+#: selia/templates/selia/components/update.html:18
+msgid "Cancel"
+msgstr ""
+
 #: selia/templates/selia/components/detail.html:19
 msgid "Delete "
 msgstr ""
 
+#: selia/templates/selia/components/detail.html:25
+#: selia/templates/selia/components/list_item.html:10
+#: selia/templates/selia/components/select_list_items/collection_devices.html:39
+#: selia/templates/selia/components/select_list_items/physical_devices.html:34
+#: selia/templates/selia/components/select_list_items/sampling_event_devices.html:43
+msgid "Added on"
+msgstr ""
+
+#: selia/templates/selia/components/detail.html:27
+msgid "by"
+msgstr ""
+
+#: selia/templates/selia/components/detail.html:31
+msgid "Last modified on"
+msgstr ""
+
 #: selia/templates/selia/components/details/administrators.html:4
-#, fuzzy
-#| msgid "annotation type"
 msgid "Collection administrators"
-msgstr "tipo de anotación"
+msgstr ""
 
 #: selia/templates/selia/components/details/administrators.html:13
+#: selia/templates/selia/components/details/physical_device.html:38
 #: selia/templates/selia/components/details/site.html:16
+#: selia/templates/selia/components/details/user.html:54
 #: selia/templates/selia/components/filters/annotation.html:73
 #: selia/templates/selia/components/filters/collection.html:43
 #: selia/templates/selia/components/filters/collection_device.html:69
@@ -3849,13 +2918,15 @@ msgstr "tipo de anotación"
 #: selia/templates/selia/components/filters/sampling_event_device.html:16
 #: selia/templates/selia/components/filters/site.html:14
 #: selia/templates/selia/components/list_items/collection_site.html:49
+#: selia/templates/selia/components/list_items/physical_device.html:27
 msgid "Name"
 msgstr ""
 
 #: selia/templates/selia/components/details/administrators.html:22
-#: selia/templates/selia/components/details/collection_user.html:52
-#: selia/templates/selia/components/details/user.html:43
+#: selia/templates/selia/components/details/collection_user.html:47
+#: selia/templates/selia/components/details/user.html:25
 #: selia/templates/selia/components/list_items/collection_user.html:40
+#: selia/templates/selia/components/select_list_items/user.html:24
 msgid "Email"
 msgstr ""
 
@@ -3864,34 +2935,47 @@ msgstr ""
 #: selia/templates/selia/components/filters/managed_collection.html:9
 #: selia/templates/selia/components/list_items/collection.html:22
 #: selia/templates/selia/components/list_items/managed_collection.html:20
+#: selia/templates/selia/components/select_list_items/collection.html:20
 #: selia/templates/selia/components/select_list_items/user_collections.html:20
-#, fuzzy
-#| msgid "annotation type"
 msgid "Collection type"
-msgstr "tipo de anotación"
+msgstr ""
 
-#: selia/templates/selia/components/details/collection.html:29
-#: selia/templates/selia/components/list_items/collection.html:30
-#: selia/templates/selia/components/list_items/managed_collection.html:28
-#: selia/templates/selia/components/list_items/sampling_event.html:55
-#: selia/templates/selia/components/list_items/site.html:44
-#: selia/templates/selia/components/select_list_items/collection_sites.html:47
-#: selia/templates/selia/components/select_list_items/sites.html:47
-#: selia/templates/selia/components/select_list_items/user_collections.html:28
-#, fuzzy
-#| msgid "created on"
-msgid "Created on"
-msgstr "creado en"
+#: selia/templates/selia/components/details/collection.html:32
+#: selia/templates/selia/components/details/collection_device.html:64
+#: selia/templates/selia/components/details/collection_site.html:81
+#: selia/templates/selia/components/details/collection_user.html:90
+#: selia/templates/selia/components/details/item.html:59
+#: selia/templates/selia/components/details/licence.html:42
+#: selia/templates/selia/components/details/physical_device.html:49
+#: selia/templates/selia/components/details/sampling_event.html:76
+#: selia/templates/selia/components/update/collection_site.html:13
+#: selia/templates/selia/components/update/collection_user.html:13
+#: selia/templates/selia/components/update/licence.html:10
+#: selia/templates/selia/create/collection_devices/create_form.html:56
+#: selia/templates/selia/create/collection_users/create_form.html:56
+#: selia/templates/selia/create/physical_devices/create_form.html:63
+#: selia/templates/selia/create/sampling_events/create_form.html:98
+msgid "Metadata"
+msgstr ""
 
-#: selia/templates/selia/components/details/collection_device.html:9
-#, fuzzy
-#| msgid "annotation type"
-msgid "Collection device "
-msgstr "tipo de anotación"
+#: selia/templates/selia/components/details/collection_device.html:7
+msgid "Collection device"
+msgstr ""
 
-#: selia/templates/selia/components/details/collection_device.html:25
+#: selia/templates/selia/components/details/collection_device.html:19
+#: selia/templates/selia/components/details/collection_site.html:23
+#: selia/templates/selia/components/details/sampling_event.html:52
+msgid "Collection ID"
+msgstr ""
+
+#: selia/templates/selia/components/details/collection_device.html:27
+#: selia/templates/selia/components/details/sampling_event_device.html:37
+msgid "Device info"
+msgstr ""
+
+#: selia/templates/selia/components/details/collection_device.html:34
 #: selia/templates/selia/components/details/physical_device.html:19
-#: selia/templates/selia/components/details/sampling_event_device.html:29
+#: selia/templates/selia/components/details/sampling_event_device.html:43
 #: selia/templates/selia/components/filters/collection_device.html:11
 #: selia/templates/selia/components/filters/sampling_event_device.html:51
 #: selia/templates/selia/components/list_items/collection_device.html:22
@@ -3899,134 +2983,84 @@ msgstr "tipo de anotación"
 #: selia/templates/selia/components/list_items/sampling_event_device.html:22
 #: selia/templates/selia/components/select_list_items/collection_devices.html:21
 #: selia/templates/selia/components/select_list_items/physical_devices.html:20
-#: selia/templates/selia/components/select_list_items/sampling_event_devices.html:22
-#, fuzzy
-#| msgid "event type"
+#: selia/templates/selia/components/select_list_items/sampling_event_devices.html:21
 msgid "Device type"
-msgstr "tipo de evento"
+msgstr ""
 
-#: selia/templates/selia/components/details/collection_device.html:29
+#: selia/templates/selia/components/details/collection_device.html:38
 #: selia/templates/selia/components/details/physical_device.html:23
-#: selia/templates/selia/components/details/sampling_event_device.html:33
-msgid "Device brand"
+#: selia/templates/selia/components/details/sampling_event_device.html:49
+#: selia/templates/selia/components/filters/collection_device.html:28
+#: selia/templates/selia/components/filters/physical_device.html:57
+#: selia/templates/selia/components/filters/sampling_event_device.html:70
+msgid "Brand"
 msgstr ""
 
-#: selia/templates/selia/components/details/collection_device.html:33
+#: selia/templates/selia/components/details/collection_device.html:42
 #: selia/templates/selia/components/details/physical_device.html:27
-#: selia/templates/selia/components/details/sampling_event_device.html:37
-msgid "Device model"
+#: selia/templates/selia/components/details/sampling_event_device.html:53
+#: selia/templates/selia/components/filters/collection_device.html:47
+#: selia/templates/selia/components/filters/physical_device.html:69
+#: selia/templates/selia/components/filters/sampling_event_device.html:87
+#: selia/templates/selia/components/select_list_items/devices.html:14
+msgid "Model"
 msgstr ""
 
-#: selia/templates/selia/components/details/collection_device.html:40
+#: selia/templates/selia/components/details/collection_device.html:49
 #: selia/templates/selia/components/details/physical_device.html:34
-#: selia/templates/selia/components/details/sampling_event_device.html:44
+#: selia/templates/selia/components/details/sampling_event_device.html:59
 #: selia/templates/selia/components/filters/physical_device.html:14
 msgid "Serial number"
 msgstr ""
 
-#: selia/templates/selia/components/details/collection_device.html:44
-#: selia/templates/selia/components/details/sampling_event_device.html:48
-#: selia/templates/selia/components/list_items/collection_device.html:30
-#: selia/templates/selia/components/list_items/sampling_event_device.html:30
-#: selia/templates/selia/components/select_list_items/collection_devices.html:29
-#: selia/templates/selia/components/select_list_items/sampling_event_devices.html:30
-msgid "Collection Device id"
-msgstr ""
-
-#: selia/templates/selia/components/details/collection_device.html:48
-#: selia/templates/selia/components/details/collection_site.html:64
-#: selia/templates/selia/components/details/physical_device.html:48
-#: selia/templates/selia/components/details/sampling_event_device.html:52
-#: selia/templates/selia/components/details/site.html:42
+#: selia/templates/selia/components/details/collection_device.html:54
+#: selia/templates/selia/components/details/collection_site.html:56
+#: selia/templates/selia/components/details/sampling_event_device.html:63
 #: selia/templates/selia/components/list_items/annotation.html:43
 #: selia/templates/selia/components/list_items/collection_device.html:40
 #: selia/templates/selia/components/list_items/collection_site.html:60
 #: selia/templates/selia/components/list_items/item.html:61
 #: selia/templates/selia/components/list_items/sampling_event_device.html:40
 #: selia/templates/selia/components/select_list_items/collection_devices.html:35
-#: selia/templates/selia/components/select_list_items/items.html:50
+#: selia/templates/selia/components/select_list_items/items.html:48
 #: selia/templates/selia/components/select_list_items/physical_devices.html:30
-#: selia/templates/selia/components/select_list_items/sampling_event_devices.html:40
+#: selia/templates/selia/components/select_list_items/sampling_event_devices.html:39
 msgid "Owner"
 msgstr ""
 
-#: selia/templates/selia/components/details/collection_device.html:52
-#: selia/templates/selia/components/details/physical_device.html:52
-#: selia/templates/selia/components/details/sampling_event_device.html:56
-#: selia/templates/selia/components/details/site.html:46
-#: selia/templates/selia/components/list_items/collection_device.html:44
-#: selia/templates/selia/components/list_items/physical_device.html:38
-#: selia/templates/selia/components/list_items/sampling_event_device.html:44
-#: selia/templates/selia/components/select_list_items/collection_devices.html:39
-#: selia/templates/selia/components/select_list_items/physical_devices.html:34
-#: selia/templates/selia/components/select_list_items/sampling_event_devices.html:44
-#, fuzzy
-#| msgid "modified on"
-msgid "Added on"
-msgstr "modificado en"
-
 #: selia/templates/selia/components/details/collection_site.html:7
-#, fuzzy
-#| msgid "annotation type"
 msgid "Collection site "
-msgstr "tipo de anotación"
-
-#: selia/templates/selia/components/details/collection_site.html:13
-#, fuzzy
-#| msgid "Date of entry creation"
-msgid "Site info for collection"
-msgstr "Fecha de creación del registro"
-
-#: selia/templates/selia/components/details/collection_site.html:24
-#, fuzzy
-#| msgid "annotation type"
-msgid "Collection site id"
-msgstr "tipo de anotación"
-
-#: selia/templates/selia/components/details/collection_site.html:30
-#: selia/templates/selia/components/filters/collection_site.html:9
-#: selia/templates/selia/components/list_items/collection_site.html:32
-#, fuzzy
-#| msgid "event type"
-msgid "Site type"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/components/details/collection_site.html:36
-msgid "Added to collection on"
 msgstr ""
 
+#: selia/templates/selia/components/details/collection_site.html:27
+#: selia/templates/selia/components/filters/collection_site.html:9
+#: selia/templates/selia/components/list_items/collection_site.html:32
+msgid "Site type"
+msgstr ""
+
+#: selia/templates/selia/components/details/collection_site.html:36
 #: selia/templates/selia/components/details/collection_site.html:40
-msgid "Added to collection by"
+#: selia/templates/selia/components/details/sampling_event.html:36
+msgid "Site info"
 msgstr ""
 
 #: selia/templates/selia/components/details/collection_site.html:48
-#: selia/templates/selia/components/details/sampling_event.html:36
-#, fuzzy
-#| msgid "event type"
-msgid "Site info"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/components/details/collection_site.html:56
-#: selia/templates/selia/components/details/sampling_event.html:51
+#: selia/templates/selia/components/details/sampling_event.html:42
 #: selia/templates/selia/components/list_items/sampling_event.html:29
-#, fuzzy
-#| msgid "name"
 msgid "Site name"
-msgstr "Nombre"
+msgstr ""
 
-#: selia/templates/selia/components/details/collection_site.html:60
+#: selia/templates/selia/components/details/collection_site.html:52
 #: selia/templates/selia/components/details/site.html:20
 #: selia/templates/selia/components/filters/collection_site.html:44
 #: selia/templates/selia/components/filters/site.html:26
 #: selia/templates/selia/components/list_items/collection_site.html:55
 #: selia/templates/selia/components/select_list_items/collection_sites.html:43
 #: selia/templates/selia/components/select_list_items/sites.html:43
-#, fuzzy
-#| msgid "quality"
 msgid "Locality"
-msgstr "calidad"
+msgstr ""
 
-#: selia/templates/selia/components/details/collection_site.html:71
+#: selia/templates/selia/components/details/collection_site.html:63
 #: selia/templates/selia/components/details/site.html:27
 #: selia/templates/selia/components/filters/collection_site.html:64
 #: selia/templates/selia/components/filters/site.html:46
@@ -4036,7 +3070,7 @@ msgstr "calidad"
 msgid "Latitude"
 msgstr ""
 
-#: selia/templates/selia/components/details/collection_site.html:75
+#: selia/templates/selia/components/details/collection_site.html:67
 #: selia/templates/selia/components/details/site.html:31
 #: selia/templates/selia/components/filters/collection_site.html:78
 #: selia/templates/selia/components/filters/site.html:60
@@ -4046,7 +3080,7 @@ msgstr ""
 msgid "Longitude"
 msgstr ""
 
-#: selia/templates/selia/components/details/collection_site.html:79
+#: selia/templates/selia/components/details/collection_site.html:71
 #: selia/templates/selia/components/details/site.html:35
 #: selia/templates/selia/components/filters/collection_site.html:92
 #: selia/templates/selia/components/filters/site.html:74
@@ -4057,32 +3091,23 @@ msgid "Altitude"
 msgstr ""
 
 #: selia/templates/selia/components/details/collection_user.html:9
-#, fuzzy
-#| msgid "annotation type"
 msgid "Collection user"
-msgstr "tipo de anotación"
-
-#: selia/templates/selia/components/details/collection_user.html:9
-msgid "detail"
 msgstr ""
 
-#: selia/templates/selia/components/details/collection_user.html:16
-#: selia/templates/selia/components/details/user.html:8
-#, fuzzy
-#| msgid "Personal info"
-msgid "User info"
-msgstr "Información personal"
-
-#: selia/templates/selia/components/details/collection_user.html:22
+#: selia/templates/selia/components/details/collection_user.html:18
 #: selia/templates/selia/components/details/user.html:13
-#: selia/templates/selia/components/list_items/collection_user.html:36
-#, fuzzy
-#| msgid "name"
-msgid "Username"
-msgstr "Nombre"
+msgid "User info"
+msgstr ""
 
-#: selia/templates/selia/components/details/collection_user.html:32
-#: selia/templates/selia/components/details/user.html:24
+#: selia/templates/selia/components/details/collection_user.html:25
+#: selia/templates/selia/components/details/user.html:20
+#: selia/templates/selia/components/list_items/collection_user.html:36
+#: selia/templates/selia/components/select_list_items/user.html:10
+msgid "Username"
+msgstr ""
+
+#: selia/templates/selia/components/details/collection_user.html:36
+#: selia/templates/selia/components/details/user.html:32
 #: selia/templates/selia/components/filters/annotation.html:83
 #: selia/templates/selia/components/filters/collection_device.html:79
 #: selia/templates/selia/components/filters/collection_sampling_event.html:99
@@ -4090,11 +3115,12 @@ msgstr "Nombre"
 #: selia/templates/selia/components/filters/licence.html:42
 #: selia/templates/selia/components/filters/sampling_event_device.html:26
 #: selia/templates/selia/components/list_items/collection_user.html:25
+#: selia/templates/selia/components/select_list_items/user.html:36
 msgid "First name"
 msgstr ""
 
-#: selia/templates/selia/components/details/collection_user.html:41
-#: selia/templates/selia/components/details/user.html:33
+#: selia/templates/selia/components/details/collection_user.html:40
+#: selia/templates/selia/components/details/user.html:37
 #: selia/templates/selia/components/filters/annotation.html:93
 #: selia/templates/selia/components/filters/collection_device.html:89
 #: selia/templates/selia/components/filters/collection_sampling_event.html:109
@@ -4102,45 +3128,30 @@ msgstr ""
 #: selia/templates/selia/components/filters/licence.html:52
 #: selia/templates/selia/components/filters/sampling_event_device.html:36
 #: selia/templates/selia/components/list_items/collection_user.html:29
-#, fuzzy
-#| msgid "name"
+#: selia/templates/selia/components/select_list_items/user.html:50
 msgid "Last name"
-msgstr "Nombre"
+msgstr ""
 
-#: selia/templates/selia/components/details/collection_user.html:97
+#: selia/templates/selia/components/details/collection_user.html:79
 #: selia/templates/selia/components/details/licence_type.html:16
-#, fuzzy
-#| msgid "description"
 msgid "Description"
-msgstr "descripción"
-
-#: selia/templates/selia/components/details/item.html:6
-#: selia/templates/selia/item_detail/annotations/annotator.html:17
-#: selia/templates/selia/item_detail/annotations/annotator.html:22
-#: selia/templates/selia/item_detail/annotations/list.html:18
-#: selia/templates/selia/item_detail/annotations/list.html:23
-#: selia/templates/selia/item_detail/components/secondary_navbar.html:6
-#: selia/templates/selia/item_detail/components/secondary_navbar.html:9
-#: selia/templates/selia/item_detail/detail.html:17
-#: selia/templates/selia/item_detail/detail.html:22
-msgid "Item "
 msgstr ""
 
 #: selia/templates/selia/components/details/item.html:16
-#: selia/templates/selia/components/details/sampling_event_device.html:19
+#: selia/templates/selia/components/details/sampling_event_device.html:22
 #: selia/templates/selia/components/list_items/item.html:46
 #: selia/templates/selia/components/list_items/sampling_event.html:12
-#: selia/templates/selia/components/select_list_items/items.html:35
+#: selia/templates/selia/components/select_list_items/items.html:33
 #: selia/templates/selia/components/select_list_items/sampling_events.html:12
+#: selia/templates/selia/navbars/sampling_event_device.html:11
+#: selia/templates/selia/navbars/sampling_event_device.html:12
 msgid "Sampling event"
 msgstr ""
 
 #: selia/templates/selia/components/details/item.html:26
 #: selia/templates/selia/components/filters/item.html:10
-#, fuzzy
-#| msgid "event type"
 msgid "Item type"
-msgstr "tipo de evento"
+msgstr ""
 
 #: selia/templates/selia/components/details/item.html:30
 msgid "File size"
@@ -4148,45 +3159,38 @@ msgstr ""
 
 #: selia/templates/selia/components/details/item.html:36
 #: selia/templates/selia/components/list_items/item.html:25
-#: selia/templates/selia/components/select_list_items/items.html:18
-#, fuzzy
-#| msgid "created on"
+#: selia/templates/selia/components/select_list_items/items.html:16
 msgid "Captured on"
-msgstr "creado en"
+msgstr ""
 
 #: selia/templates/selia/components/details/item.html:40
 msgid "File"
 msgstr ""
 
 #: selia/templates/selia/components/details/item.html:52
-#, fuzzy
-#| msgid "Personal info"
 msgid "Media info"
-msgstr "Información personal"
+msgstr ""
 
 #: selia/templates/selia/components/details/licence.html:6
-#: selia/templates/selia/licence_detail/components/secondary_navbar.html:6
-#: selia/templates/selia/licence_detail/components/secondary_navbar.html:9
+#: selia/templates/selia/navbars/licence.html:6
+#: selia/templates/selia/navbars/licence.html:9
 msgid "Licence "
 msgstr ""
 
 #: selia/templates/selia/components/details/licence.html:13
-#: selia/templates/selia/components/list_items/licence.html:35
-#, fuzzy
-#| msgid "modified on"
 msgid "Signed on"
-msgstr "modificado en"
+msgstr ""
 
 #: selia/templates/selia/components/details/licence.html:17
 msgid "Signer"
 msgstr ""
 
 #: selia/templates/selia/components/details/licence.html:24
+#: selia/templates/selia/components/select_list_items/licences.html:16
 msgid "Valid until"
 msgstr ""
 
 #: selia/templates/selia/components/details/licence.html:32
-#: selia/templates/selia/components/select_list_items/licences.html:31
 #: selia/templates/selia/components/viewers/licence.html:7
 msgid "Document"
 msgstr ""
@@ -4195,59 +3199,54 @@ msgstr ""
 #: selia/templates/selia/components/details/licence_type.html:5
 #: selia/templates/selia/components/filters/licence.html:10
 #: selia/templates/selia/components/list_items/licence.html:20
-#: selia/templates/selia/components/select_list_items/licences.html:20
-#, fuzzy
-#| msgid "event type"
+#: selia/templates/selia/components/select_list_items/licences.html:5
 msgid "Licence type"
-msgstr "tipo de evento"
+msgstr ""
 
 #: selia/templates/selia/components/details/licence_type.html:9
 msgid "Years valid for"
 msgstr ""
 
 #: selia/templates/selia/components/details/licence_type.html:31
+#: selia/templates/selia/components/select_list_items/licences.html:35
 msgid "Can view items"
 msgstr ""
 
 #: selia/templates/selia/components/details/licence_type.html:35
-#, fuzzy
-#| msgid "Annotated item"
+#: selia/templates/selia/components/select_list_items/licences.html:39
 msgid "Can download items"
-msgstr "Item anotado"
+msgstr ""
 
 #: selia/templates/selia/components/details/licence_type.html:39
-#, fuzzy
-#| msgid "Can vote annotation"
+#: selia/templates/selia/components/select_list_items/licences.html:43
 msgid "Can view annotations"
-msgstr "Puede votar la anotación"
+msgstr ""
 
 #: selia/templates/selia/components/details/licence_type.html:43
-#, fuzzy
-#| msgid "Can vote annotation"
+#: selia/templates/selia/components/select_list_items/licences.html:47
 msgid "Can annotate"
-msgstr "Puede votar la anotación"
+msgstr ""
 
 #: selia/templates/selia/components/details/licence_type.html:47
-#, fuzzy
-#| msgid "Can vote annotation"
+#: selia/templates/selia/components/select_list_items/licences.html:51
 msgid "Can vote annotations"
-msgstr "Puede votar la anotación"
+msgstr ""
 
-#: selia/templates/selia/components/details/physical_device.html:38
-#: selia/templates/selia/components/list_items/physical_device.html:27
-msgid "Identifier"
+#: selia/templates/selia/components/details/physical_device.html:9
+#: selia/templates/selia/detail/collection_device.html:15
+#: selia/templates/selia/navbars/collection_device.html:6
+#: selia/templates/selia/navbars/collection_device.html:9
+msgid "Device "
 msgstr ""
 
 #: selia/templates/selia/components/details/physical_device.html:42
-#: selia/templates/selia/components/list_items/physical_device.html:42
+#: selia/templates/selia/components/list_items/physical_device.html:38
 msgid "Bundle"
 msgstr ""
 
 #: selia/templates/selia/components/details/sampling_event.html:7
-#: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:6
-#: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:9
-#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:11
-#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:12
+#: selia/templates/selia/navbars/sampling_event.html:6
+#: selia/templates/selia/navbars/sampling_event.html:9
 msgid "Sampling event "
 msgstr ""
 
@@ -4255,100 +3254,135 @@ msgstr ""
 #: selia/templates/selia/components/filters/collection_sampling_event.html:11
 #: selia/templates/selia/components/filters/sampling_event.html:9
 #: selia/templates/selia/components/list_items/sampling_event.html:43
-#: selia/templates/selia/components/select_list_items/sampling_events.html:20
-#, fuzzy
-#| msgid "event type"
+#: selia/templates/selia/components/select_list_items/sampling_events.html:19
 msgid "Sampling event type"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/components/details/sampling_event.html:41
-#: selia/templates/selia/components/list_items/sampling_event.html:24
-#: selia/templates/selia/components/select_list_items/sampling_events.html:28
-msgid "Collection site"
 msgstr ""
 
-#: selia/templates/selia/components/details/sampling_event.html:45
-#, fuzzy
-#| msgid "annotation type"
-msgid "Collection site internal ID"
-msgstr "tipo de anotación"
+#: selia/templates/selia/components/details/sampling_event.html:24
+#: selia/templates/selia/components/filters/collection_sampling_event.html:50
+#: selia/templates/selia/components/filters/sampling_event.html:35
+#: selia/templates/selia/components/list_items/sampling_event.html:47
+#: selia/templates/selia/components/select_list_items/sampling_events.html:34
+#: selia/templates/selia/components/update/sampling_event.html:6
+#: selia/templates/selia/create/sampling_events/create_form.html:74
+msgid "Started on"
+msgstr ""
 
-#: selia/templates/selia/components/details/sampling_event.html:55
+#: selia/templates/selia/components/details/sampling_event.html:28
+#: selia/templates/selia/components/filters/collection_sampling_event.html:66
+#: selia/templates/selia/components/filters/sampling_event.html:52
+#: selia/templates/selia/components/list_items/sampling_event.html:51
+#: selia/templates/selia/components/select_list_items/sampling_events.html:38
+#: selia/templates/selia/components/update/sampling_event.html:15
+#: selia/templates/selia/create/sampling_events/create_form.html:85
+msgid "Ended on"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event.html:46
 #: selia/templates/selia/components/list_items/sampling_event.html:35
-#, fuzzy
-#| msgid "event type"
 msgid "Site locality"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/components/details/sampling_event.html:61
-#, fuzzy
-#| msgid "event type"
-msgid "Site latitude"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/components/details/sampling_event.html:65
-#, fuzzy
-#| msgid "event type"
-msgid "Site longitude"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/components/details/sampling_event.html:69
-#, fuzzy
-#| msgid "event type"
-msgid "Site altitude"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/components/details/sampling_event_device.html:9
-msgid "Sampling event device "
 msgstr ""
 
-#: selia/templates/selia/components/details/user.html:53
+#: selia/templates/selia/components/details/sampling_event.html:56
+msgid "Site altitude"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event.html:62
+msgid "Site latitude"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event.html:66
+msgid "Site longitude"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event_device.html:6
+#: selia/templates/selia/detail/sampling_event_device.html:7
+#: selia/templates/selia/list/sampling_event_device_items.html:10
+#: selia/templates/selia/navbars/sampling_event_device.html:6
+#: selia/templates/selia/navbars/sampling_event_device.html:9
+msgid "Deployed device"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event_device.html:16
+msgid "Sampling event info"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event_device.html:74
+msgid "Deployment metadata"
+msgstr ""
+
+#: selia/templates/selia/components/details/sampling_event_device.html:84
+msgid "Device configuration"
+msgstr ""
+
+#: selia/templates/selia/components/details/site.html:9
+#: selia/templates/selia/navbars/collection_site.html:6
+#: selia/templates/selia/navbars/collection_site.html:9
+msgid "Site "
+msgstr ""
+
+#: selia/templates/selia/components/details/user.html:5
+msgid "User Details"
+msgstr ""
+
+#: selia/templates/selia/components/details/user.html:48
 msgid "Institution info"
 msgstr ""
 
-#: selia/templates/selia/components/details/user.html:57
-#: selia/templates/selia/components/filters/collection.html:63
-msgid "Institution name"
-msgstr ""
-
-#: selia/templates/selia/components/details/user.html:64
+#: selia/templates/selia/components/details/user.html:60
 #: selia/templates/selia/components/filters/collection.html:86
 msgid "Institution code"
 msgstr ""
 
-#: selia/templates/selia/components/details/user.html:72
+#: selia/templates/selia/components/details/user.html:66
 msgid "Subdependency"
 msgstr ""
 
-#: selia/templates/selia/components/details/user.html:80
+#: selia/templates/selia/components/details/user.html:72
 #: selia/templates/selia/components/filters/item.html:86
 msgid "Country"
 msgstr ""
 
-#: selia/templates/selia/components/details/user.html:88
-#, fuzzy
-#| msgid "website"
-msgid "Website"
-msgstr "sitio web"
+#: selia/templates/selia/components/empty_list_message.html:7
+msgid "This list might be empty due to"
+msgstr ""
 
-#: selia/templates/selia/components/filter.html:17
+#: selia/templates/selia/components/empty_list_message.html:10
+msgid "Only objects for which you have viewing permissions are displayed"
+msgstr ""
+
+#: selia/templates/selia/components/empty_list_message.html:11
+msgid "Read more information on permissions"
+msgstr ""
+
+#: selia/templates/selia/components/empty_list_message.html:14
+msgid "No object satisfies the applied filters"
+msgstr ""
+
+#: selia/templates/selia/components/empty_list_message.html:15
+msgid "Clear the filters"
+msgstr ""
+
+#: selia/templates/selia/components/error_list.html:4
+msgid "Errors"
+msgstr ""
+
+#: selia/templates/selia/components/filter.html:22
 msgid "Filters"
 msgstr ""
 
-#: selia/templates/selia/components/filter.html:26
+#: selia/templates/selia/components/filter.html:31
 msgid "Search"
 msgstr ""
 
-#: selia/templates/selia/components/filter_bar.html:20
+#: selia/templates/selia/components/filter_bar.html:21
 msgid "Clean"
 msgstr ""
 
 #: selia/templates/selia/components/filters/annotation.html:11
 #: selia/templates/selia/components/list_items/annotation.html:24
-#, fuzzy
-#| msgid "event type"
 msgid "Event type"
-msgstr "tipo de evento"
+msgstr ""
 
 #: selia/templates/selia/components/filters/annotation.html:17
 #: selia/templates/selia/components/filters/annotation.html:34
@@ -4362,24 +3396,18 @@ msgstr "tipo de evento"
 #: selia/templates/selia/components/filters/item.html:101
 #: selia/templates/selia/components/filters/licence.html:16
 #: selia/templates/selia/components/filters/sampling_event_device.html:57
-#, fuzzy
-#| msgid "quality"
 msgid "Equals"
-msgstr "calidad"
+msgstr ""
 
 #: selia/templates/selia/components/filters/annotation.html:28
 #: selia/templates/selia/components/list_items/annotation.html:28
-#, fuzzy
-#| msgid "annotation type"
 msgid "Annotation type"
-msgstr "tipo de anotación"
+msgstr ""
 
 #: selia/templates/selia/components/filters/annotation.html:47
 #: selia/templates/selia/components/list_items/annotation.html:35
-#, fuzzy
-#| msgid "certainty"
 msgid "Certainty"
-msgstr "certeza"
+msgstr ""
 
 #: selia/templates/selia/components/filters/annotation.html:53
 #: selia/templates/selia/components/filters/collection_site.html:68
@@ -4388,10 +3416,8 @@ msgstr "certeza"
 #: selia/templates/selia/components/filters/site.html:50
 #: selia/templates/selia/components/filters/site.html:64
 #: selia/templates/selia/components/filters/site.html:78
-#, fuzzy
-#| msgid "created on"
 msgid "Greater than"
-msgstr "creado en"
+msgstr ""
 
 #: selia/templates/selia/components/filters/annotation.html:57
 #: selia/templates/selia/components/filters/collection_site.html:72
@@ -4486,21 +3512,12 @@ msgstr ""
 msgid "Is open?"
 msgstr ""
 
+#: selia/templates/selia/components/filters/collection.html:63
+msgid "Institution name"
+msgstr ""
+
 #: selia/templates/selia/components/filters/collection.html:74
 msgid "Institution country"
-msgstr ""
-
-#: selia/templates/selia/components/filters/collection_device.html:28
-#: selia/templates/selia/components/filters/physical_device.html:57
-#: selia/templates/selia/components/filters/sampling_event_device.html:70
-msgid "Brand"
-msgstr ""
-
-#: selia/templates/selia/components/filters/collection_device.html:47
-#: selia/templates/selia/components/filters/physical_device.html:69
-#: selia/templates/selia/components/filters/sampling_event_device.html:87
-#: selia/templates/selia/components/select_list_items/devices.html:14
-msgid "Model"
 msgstr ""
 
 #: selia/templates/selia/components/filters/collection_site.html:27
@@ -4510,26 +3527,20 @@ msgstr ""
 
 #: selia/templates/selia/components/filters/collection_site.html:59
 #: selia/templates/selia/components/filters/site.html:41
-#, fuzzy
-#| msgid "annotation"
 msgid "Location"
-msgstr "anotación"
+msgstr ""
 
 #: selia/templates/selia/components/filters/item.html:97
 msgid "Code"
 msgstr ""
 
 #: selia/templates/selia/components/filters/physical_device.html:9
-#, fuzzy
-#| msgid "event type"
 msgid "Device details"
-msgstr "tipo de evento"
+msgstr ""
 
 #: selia/templates/selia/components/filters/physical_device.html:26
-#, fuzzy
-#| msgid "name"
 msgid "Custom name"
-msgstr "Nombre"
+msgstr ""
 
 #: selia/templates/selia/components/filters/physical_device.html:38
 msgid "Is bundle"
@@ -4540,58 +3551,62 @@ msgid "Hardware details"
 msgstr ""
 
 #: selia/templates/selia/components/list_items/annotation.html:13
-#, fuzzy
-#| msgid "Annotation"
 msgid "Annotation "
-msgstr "Anotación"
+msgstr ""
 
 #: selia/templates/selia/components/list_items/annotation.html:39
-#, fuzzy
-#| msgid "quality"
 msgid "Quality"
-msgstr "calidad"
+msgstr ""
 
 #: selia/templates/selia/components/list_items/collection_device.html:26
 #: selia/templates/selia/components/list_items/physical_device.html:31
 #: selia/templates/selia/components/list_items/sampling_event_device.html:26
 #: selia/templates/selia/components/select_list_items/collection_devices.html:25
 #: selia/templates/selia/components/select_list_items/physical_devices.html:24
-#: selia/templates/selia/components/select_list_items/sampling_event_devices.html:26
+#: selia/templates/selia/components/select_list_items/sampling_event_devices.html:25
 msgid "Serial Number"
 msgstr ""
 
-#: selia/templates/selia/components/list_items/collection_site.html:36
-#, fuzzy
-#| msgid "annotation type"
-msgid "Collection Site ID"
-msgstr "tipo de anotación"
+#: selia/templates/selia/components/list_items/collection_device.html:30
+#: selia/templates/selia/components/list_items/sampling_event_device.html:30
+#: selia/templates/selia/components/select_list_items/collection_devices.html:29
+#: selia/templates/selia/components/select_list_items/sampling_event_devices.html:29
+msgid "Collection Device id"
+msgstr ""
 
-#: selia/templates/selia/components/list_items/collection_site.html:64
-#, fuzzy
-#| msgid "created on"
-msgid "Registered on"
-msgstr "creado en"
+#: selia/templates/selia/components/list_items/collection_site.html:36
+msgid "Collection Site ID"
+msgstr ""
 
 #: selia/templates/selia/components/list_items/item.html:29
-#: selia/templates/selia/components/select_list_items/items.html:22
+#: selia/templates/selia/components/select_list_items/items.html:20
 msgid "Type"
 msgstr ""
 
 #: selia/templates/selia/components/list_items/licence.html:31
-#, fuzzy
-#| msgid "modified by"
+#: selia/templates/selia/components/select_list_items/licences.html:9
 msgid "Signed by"
-msgstr "modificado por"
+msgstr ""
 
-#: selia/templates/selia/components/list_items/managed_collection.html:34
-#, fuzzy
-#| msgid "Annotation"
+#: selia/templates/selia/components/list_items/managed_collection.html:30
 msgid "Admins"
-msgstr "Anotación"
+msgstr ""
 
-#: selia/templates/selia/components/list_items/physical_device.html:53
-#: selia/templates/selia/components/list_items/site.html:55
+#: selia/templates/selia/components/list_items/physical_device.html:49
+#: selia/templates/selia/components/list_items/site.html:51
 msgid "Items captured"
+msgstr ""
+
+#: selia/templates/selia/components/list_items/sampling_event.html:24
+#: selia/templates/selia/components/select_list_items/sampling_events.html:27
+msgid "Collection site"
+msgstr ""
+
+#: selia/templates/selia/components/list_items/sampling_event.html:59
+#: selia/templates/selia/list/sampling_event_devices.html:10
+#: selia/templates/selia/navbars/sampling_event.html:49
+#: selia/templates/selia/navbars/sampling_event_device.html:11
+msgid "Deployed devices"
 msgstr ""
 
 #: selia/templates/selia/components/navbar_items.html:25
@@ -4601,10 +3616,8 @@ msgstr ""
 
 #: selia/templates/selia/components/navbar_items.html:36
 #: selia/templates/selia/components/navbar_items.html:38
-#, fuzzy
-#| msgid "annotation type"
 msgid "Admin Collections"
-msgstr "tipo de anotación"
+msgstr ""
 
 #: selia/templates/selia/components/pagination.html:5
 #: selia/templates/selia/components/pagination.html:7
@@ -4616,11 +3629,17 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: selia/templates/selia/components/select_list_items/licences.html:35
-#, fuzzy
-#| msgid "created by"
-msgid "Created by"
-msgstr "creado por"
+#: selia/templates/selia/components/select_list_items/collection_sites.html:47
+#: selia/templates/selia/components/select_list_items/sites.html:47
+#: selia/templates/selia/components/select_list_items/user_collections.html:28
+msgid "Created on"
+msgstr ""
+
+#: selia/templates/selia/components/select_list_items/user.html:16
+#: selia/templates/selia/components/select_list_items/user.html:42
+#: selia/templates/selia/components/select_list_items/user.html:56
+msgid "pending..."
+msgstr ""
 
 #: selia/templates/selia/components/summaries/collection.html:9
 #: selia/templates/selia/components/summaries/collection.html:25
@@ -4664,10 +3683,30 @@ msgstr ""
 #: selia/templates/selia/components/summaries/user.html:44
 #: selia/templates/selia/components/summaries/user.html:60
 #: selia/templates/selia/components/summaries/user.html:76
-#, fuzzy
-#| msgid "created on"
 msgid "Last added on"
-msgstr "creado en"
+msgstr ""
+
+#: selia/templates/selia/components/summaries/collection.html:69
+#: selia/templates/selia/components/summaries/collection_device.html:21
+#: selia/templates/selia/components/summaries/collection_site.html:37
+#: selia/templates/selia/components/summaries/collection_user.html:77
+#: selia/templates/selia/components/summaries/item.html:20
+#: selia/templates/selia/components/summaries/licence.html:17
+#: selia/templates/selia/components/summaries/physical_device.html:18
+#: selia/templates/selia/components/summaries/sampling_event.html:37
+#: selia/templates/selia/components/summaries/sampling_event_device.html:21
+#: selia/templates/selia/components/summaries/site.html:31
+#: selia/templates/selia/components/summaries/user.html:85
+#: selia/templates/selia/detail/collection.html:15
+#: selia/templates/selia/detail/collection_device.html:24
+#: selia/templates/selia/detail/collection_site.html:19
+#: selia/templates/selia/detail/collection_user.html:15
+#: selia/templates/selia/detail/item.html:14
+#: selia/templates/selia/detail/licence.html:14
+#: selia/templates/selia/detail/sampling_event.html:19
+#: selia/templates/selia/detail/sampling_event_device.html:16
+msgid "Download summary"
+msgstr ""
 
 #: selia/templates/selia/components/summaries/collection_user.html:8
 msgid "Sites added to collection"
@@ -4678,20 +3717,16 @@ msgid "Devices added to collection"
 msgstr ""
 
 #: selia/templates/selia/components/summaries/collection_user.html:36
-#, fuzzy
-#| msgid "event type"
 msgid "Sampling events created in collection"
-msgstr "tipo de evento"
+msgstr ""
 
 #: selia/templates/selia/components/summaries/collection_user.html:49
 msgid "Items added to collection"
 msgstr ""
 
 #: selia/templates/selia/components/summaries/collection_user.html:62
-#, fuzzy
-#| msgid "Annotation tool logo"
 msgid "Annotations added to collection"
-msgstr "Logo de herramienta de anotación"
+msgstr ""
 
 #: selia/templates/selia/components/summaries/licence.html:6
 msgid "Items under this licence"
@@ -4702,60 +3737,863 @@ msgid "Last added"
 msgstr ""
 
 #: selia/templates/selia/components/summary.html:6
-#: selia/templates/selia/user/components/secondary_navbar.html:17
+#: selia/templates/selia/navbars/user.html:17
 msgid "Summary"
 msgstr ""
 
 #: selia/templates/selia/components/summary.html:14
-#, fuzzy
-#| msgid "created on"
 msgid "Updated on"
-msgstr "creado en"
+msgstr ""
 
 #: selia/templates/selia/components/update.html:9
 msgid "Update"
 msgstr ""
 
-#: selia/templates/selia/item_detail/annotations/annotator.html:6
-#: selia/templates/selia/item_detail/annotations/edit.html:6
-#: selia/templates/selia/item_detail/annotations/list.html:7
-#: selia/templates/selia/item_detail/detail.html:6
-msgid ": Item "
+#: selia/templates/selia/create/base.html:61
+msgid ""
+"\n"
+"            Please check that all provided information is correct before "
+"submitting.\n"
+"            "
 msgstr ""
 
-#: selia/templates/selia/item_detail/annotations/annotator.html:6
-#, fuzzy
-#| msgid "Annotations"
-msgid ": Annotations: Add"
-msgstr "Anotaciones"
-
-#: selia/templates/selia/item_detail/annotations/edit.html:6
-#, fuzzy
-#| msgid "Annotation"
-msgid ": Annotation "
-msgstr "Anotación"
-
-#: selia/templates/selia/item_detail/annotations/edit.html:6
-msgid ": Edit "
+#: selia/templates/selia/create/base.html:68
+#: selia/templates/selia/create/collection_sites/select_site.html:78
+msgid "Create"
 msgstr ""
 
-#: selia/templates/selia/item_detail/annotations/list.html:7
-#, fuzzy
-#| msgid "Annotations"
-msgid ": Annotations"
-msgstr "Anotaciones"
+#: selia/templates/selia/create/collection_devices/create_form.html:6
+#: selia/templates/selia/create/collection_devices/select_collection.html:6
+#: selia/templates/selia/create/collection_devices/select_device.html:6
+#: selia/templates/selia/create/collection_sites/select_collection.html:6
+msgid "Add device to collection"
+msgstr ""
 
-#: selia/templates/selia/licence_detail/detail.html:10
-#, fuzzy
-#| msgid "event type"
+#: selia/templates/selia/create/collection_devices/create_form.html:16
+#: selia/templates/selia/create/collection_devices/select_collection.html:18
+#: selia/templates/selia/create/collection_devices/select_device.html:16
+#: selia/templates/selia/create/collection_sites/create_form.html:21
+#: selia/templates/selia/create/collection_sites/select_collection.html:18
+#: selia/templates/selia/create/collection_sites/select_site.html:20
+#: selia/templates/selia/create/collection_sites/select_type.html:16
+#: selia/templates/selia/create/collection_users/create_form.html:16
+#: selia/templates/selia/create/collection_users/select_collection.html:14
+#: selia/templates/selia/create/collection_users/select_role.html:16
+#: selia/templates/selia/create/collection_users/select_user.html:20
+#: selia/templates/selia/create/items/select_collection.html:14
+#: selia/templates/selia/create/items/select_licence.html:16
+#: selia/templates/selia/create/items/select_sampling_event.html:16
+#: selia/templates/selia/create/items/select_sampling_event_device.html:16
+#: selia/templates/selia/create/items/upload.html:22
+#: selia/templates/selia/create/sampling_event_devices/create_form.html:16
+#: selia/templates/selia/create/sampling_event_devices/select_collection.html:24
+#: selia/templates/selia/create/sampling_event_devices/select_collection_device.html:16
+#: selia/templates/selia/create/sampling_event_devices/select_sampling_event.html:16
+#: selia/templates/selia/create/sampling_events/create_form.html:22
+#: selia/templates/selia/create/sampling_events/select_collection.html:13
+#: selia/templates/selia/create/sampling_events/select_site.html:20
+#: selia/templates/selia/create/sampling_events/select_type.html:16
+msgid "Select collection"
+msgstr ""
+
+#: selia/templates/selia/create/collection_devices/create_form.html:21
+#: selia/templates/selia/create/collection_devices/select_collection.html:19
+#: selia/templates/selia/create/collection_devices/select_device.html:19
+msgid "Select user device"
+msgstr ""
+
+#: selia/templates/selia/create/collection_devices/create_form.html:24
+#: selia/templates/selia/create/collection_devices/create_form.html:32
+#: selia/templates/selia/create/collection_devices/select_collection.html:20
+#: selia/templates/selia/create/collection_devices/select_device.html:20
+#: selia/templates/selia/create/collection_sites/create_form.html:34
+#: selia/templates/selia/create/collection_sites/select_collection.html:21
+#: selia/templates/selia/create/collection_sites/select_site.html:29
+#: selia/templates/selia/create/collection_sites/select_type.html:21
+#: selia/templates/selia/create/collection_users/create_form.html:29
+#: selia/templates/selia/create/collection_users/create_form.html:33
+#: selia/templates/selia/create/collection_users/select_collection.html:17
+#: selia/templates/selia/create/collection_users/select_role.html:25
+#: selia/templates/selia/create/collection_users/select_user.html:25
+#: selia/templates/selia/create/licences/create_form.html:19
+#: selia/templates/selia/create/licences/create_form.html:27
+#: selia/templates/selia/create/licences/select_type.html:15
+#: selia/templates/selia/create/physical_devices/create_form.html:19
+#: selia/templates/selia/create/physical_devices/create_form.html:23
+#: selia/templates/selia/create/physical_devices/select_device.html:19
+#: selia/templates/selia/create/sampling_event_devices/create_form.html:29
+#: selia/templates/selia/create/sampling_event_devices/create_form.html:33
+#: selia/templates/selia/create/sampling_event_devices/select_collection.html:27
+#: selia/templates/selia/create/sampling_event_devices/select_collection_device.html:25
+#: selia/templates/selia/create/sampling_event_devices/select_sampling_event.html:21
+#: selia/templates/selia/create/sampling_events/create_form.html:35
+#: selia/templates/selia/create/sampling_events/create_form.html:39
+#: selia/templates/selia/create/sampling_events/select_collection.html:16
+#: selia/templates/selia/create/sampling_events/select_site.html:29
+#: selia/templates/selia/create/sampling_events/select_type.html:21
+msgid "Fill in details"
+msgstr ""
+
+#: selia/templates/selia/create/collection_devices/create_form.html:36
+#: selia/templates/selia/create/collection_devices/select_device.html:37
+#: selia/templates/selia/create/collection_sites/create_form.html:42
+#: selia/templates/selia/create/collection_sites/select_site.html:44
+#: selia/templates/selia/create/collection_sites/select_type.html:29
+#: selia/templates/selia/create/collection_users/create_form.html:37
+#: selia/templates/selia/create/collection_users/select_role.html:33
+#: selia/templates/selia/create/collection_users/select_user.html:29
+#: selia/templates/selia/create/items/select_licence.html:44
+#: selia/templates/selia/create/items/select_sampling_event.html:37
+#: selia/templates/selia/create/items/select_sampling_event_device.html:43
+msgid "Selected collection"
+msgstr ""
+
+#: selia/templates/selia/create/collection_devices/create_form.html:39
+#: selia/templates/selia/create/sampling_event_devices/create_form.html:59
+msgid "Selected device"
+msgstr ""
+
+#: selia/templates/selia/create/collection_devices/select_collection.html:24
+#: selia/templates/selia/create/collection_sites/select_collection.html:25
+#: selia/templates/selia/create/collection_users/select_collection.html:21
+#: selia/templates/selia/create/items/select_collection.html:22
+#: selia/templates/selia/create/sampling_event_devices/select_collection.html:14
+#: selia/templates/selia/create/sampling_events/select_collection.html:20
+msgid "Select one of your collections"
+msgstr ""
+
+#: selia/templates/selia/create/collection_devices/select_collection.html:28
+#: selia/templates/selia/create/collection_sites/select_collection.html:29
+#: selia/templates/selia/create/collection_users/select_collection.html:25
+#: selia/templates/selia/create/items/select_collection.html:26
+#: selia/templates/selia/create/sampling_event_devices/select_collection.html:18
+#: selia/templates/selia/create/sampling_events/select_collection.html:24
+msgid ""
+"\n"
+"    Choose a collection from the list.\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/create/collection_devices/select_collection.html:34
+#: selia/templates/selia/create/collection_sites/select_collection.html:35
+#: selia/templates/selia/create/collection_users/select_collection.html:31
+msgid "No available collections"
+msgstr ""
+
+#: selia/templates/selia/create/collection_devices/select_device.html:24
+msgid "Select a device"
+msgstr ""
+
+#: selia/templates/selia/create/collection_devices/select_device.html:28
+msgid ""
+"\n"
+"    Choose one of your previously registered devices to register to the "
+"collection or\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/create/collection_devices/select_device.html:32
+msgid "add a new device"
+msgstr ""
+
+#: selia/templates/selia/create/collection_devices/select_device.html:42
+msgid "No user devices where found"
+msgstr ""
+
+#: selia/templates/selia/create/collection_devices/select_device.html:44
+msgid "Add a new device"
+msgstr ""
+
+#: selia/templates/selia/create/collection_sites/create_form.html:6
+#: selia/templates/selia/create/collection_sites/create_form.html:38
+#: selia/templates/selia/create/collection_sites/select_site.html:6
+#: selia/templates/selia/create/collection_sites/select_site.html:33
+#: selia/templates/selia/create/collection_sites/select_type.html:6
+msgid "Add site to collection"
+msgstr ""
+
+#: selia/templates/selia/create/collection_sites/create_form.html:26
+#: selia/templates/selia/create/collection_sites/select_site.html:25
+#: selia/templates/selia/create/collection_sites/select_type.html:25
+msgid "Select site type"
+msgstr ""
+
+#: selia/templates/selia/create/collection_sites/create_form.html:31
+#: selia/templates/selia/create/collection_sites/select_collection.html:20
+#: selia/templates/selia/create/collection_sites/select_site.html:28
+#: selia/templates/selia/create/collection_sites/select_type.html:20
+msgid "Select site"
+msgstr ""
+
+#: selia/templates/selia/create/collection_sites/create_form.html:45
+#: selia/templates/selia/create/collection_sites/select_site.html:47
+msgid "Selected site type"
+msgstr ""
+
+#: selia/templates/selia/create/collection_sites/create_form.html:48
+#: selia/templates/selia/create/sampling_events/create_form.html:45
+msgid "Selected site"
+msgstr ""
+
+#: selia/templates/selia/create/collection_sites/select_collection.html:19
+#: selia/templates/selia/create/collection_sites/select_type.html:19
+msgid "Select site  type"
+msgstr ""
+
+#: selia/templates/selia/create/collection_sites/select_site.html:37
+msgid ""
+"\n"
+"  Please select a site to add or\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/create/collection_sites/select_site.html:40
+#: selia/templates/selia/create/items/select_sampling_event.html:33
+#: selia/templates/selia/create/physical_devices/select_device.html:51
+#: selia/templates/selia/create/sampling_event_devices/select_sampling_event.html:33
+msgid "create a new one"
+msgstr ""
+
+#: selia/templates/selia/create/collection_sites/select_site.html:57
+msgid "Create new site"
+msgstr ""
+
+#: selia/templates/selia/create/collection_sites/select_site.html:87
+msgid "No available sites."
+msgstr ""
+
+#: selia/templates/selia/create/collection_sites/select_site.html:90
+msgid " Please register new site"
+msgstr ""
+
+#: selia/templates/selia/create/collection_users/create_form.html:6
+#: selia/templates/selia/create/collection_users/select_collection.html:6
+#: selia/templates/selia/create/collection_users/select_role.html:6
+#: selia/templates/selia/create/collection_users/select_user.html:10
+msgid "Add user to collection"
+msgstr ""
+
+#: selia/templates/selia/create/collection_users/create_form.html:21
+#: selia/templates/selia/create/collection_users/select_collection.html:15
+#: selia/templates/selia/create/collection_users/select_role.html:21
+#: selia/templates/selia/create/collection_users/select_user.html:23
+msgid "Select user"
+msgstr ""
+
+#: selia/templates/selia/create/collection_users/create_form.html:26
+#: selia/templates/selia/create/collection_users/select_collection.html:16
+#: selia/templates/selia/create/collection_users/select_role.html:24
+#: selia/templates/selia/create/collection_users/select_role.html:29
+#: selia/templates/selia/create/collection_users/select_user.html:24
+msgid "Select role"
+msgstr ""
+
+#: selia/templates/selia/create/collection_users/create_form.html:40
+#: selia/templates/selia/create/collection_users/select_role.html:36
+msgid "Selected user"
+msgstr ""
+
+#: selia/templates/selia/create/collection_users/create_form.html:43
+msgid "Selected role"
+msgstr ""
+
+#: selia/templates/selia/create/collection_users/create_form.html:65
+msgid "No additional information required"
+msgstr ""
+
+#: selia/templates/selia/create/collection_users/select_role.html:50
+msgid "There are no available roles for this collection"
+msgstr ""
+
+#: selia/templates/selia/create/collection_users/select_user.html:14
+msgid "Select a user"
+msgstr ""
+
+#: selia/templates/selia/create/collection_users/select_user.html:34
+msgid ""
+"\n"
+"Search for a user to add to the collection, or\n"
+msgstr ""
+
+#: selia/templates/selia/create/collection_users/select_user.html:37
+msgid "invite a user to selia"
+msgstr ""
+
+#: selia/templates/selia/create/collection_users/select_user.html:49
+msgid ""
+"\n"
+"        No user with the given email was found. Do you wish to\n"
+"        "
+msgstr ""
+
+#: selia/templates/selia/create/collection_users/select_user.html:52
+msgid "invite a new user"
+msgstr ""
+
+#: selia/templates/selia/create/items/select_collection.html:10
+#: selia/templates/selia/create/items/select_licence.html:10
+#: selia/templates/selia/create/items/select_sampling_event.html:10
+#: selia/templates/selia/create/items/select_sampling_event_device.html:10
+#: selia/templates/selia/create/items/upload.html:11
+msgid "Add items"
+msgstr ""
+
+#: selia/templates/selia/create/items/select_collection.html:15
+#: selia/templates/selia/create/items/select_licence.html:21
+#: selia/templates/selia/create/items/select_sampling_event.html:19
+#: selia/templates/selia/create/items/select_sampling_event_device.html:21
+#: selia/templates/selia/create/items/upload.html:27
+#: selia/templates/selia/create/sampling_event_devices/create_form.html:21
+#: selia/templates/selia/create/sampling_event_devices/select_collection.html:25
+#: selia/templates/selia/create/sampling_event_devices/select_collection_device.html:21
+#: selia/templates/selia/create/sampling_event_devices/select_sampling_event.html:19
+msgid "Select sampling event"
+msgstr ""
+
+#: selia/templates/selia/create/items/select_collection.html:16
+#: selia/templates/selia/create/items/select_licence.html:26
+#: selia/templates/selia/create/items/select_sampling_event.html:20
+#: selia/templates/selia/create/items/select_sampling_event_device.html:24
+#: selia/templates/selia/create/items/upload.html:32
+msgid "Select deployed device"
+msgstr ""
+
+#: selia/templates/selia/create/items/select_collection.html:17
+#: selia/templates/selia/create/items/select_licence.html:29
+#: selia/templates/selia/create/items/select_licence.html:34
+#: selia/templates/selia/create/items/select_sampling_event.html:21
+#: selia/templates/selia/create/items/select_sampling_event_device.html:25
+#: selia/templates/selia/create/items/upload.html:37
+msgid "Select licence"
+msgstr ""
+
+#: selia/templates/selia/create/items/select_collection.html:18
+#: selia/templates/selia/create/items/select_licence.html:30
+#: selia/templates/selia/create/items/select_sampling_event.html:22
+#: selia/templates/selia/create/items/select_sampling_event_device.html:26
+#: selia/templates/selia/create/items/upload.html:40
+msgid "Upload files"
+msgstr ""
+
+#: selia/templates/selia/create/items/select_collection.html:32
+msgid "No collections were found"
+msgstr ""
+
+#: selia/templates/selia/create/items/select_licence.html:38
+msgid ""
+"\n"
+"    Please select a licence for the items you wish to upload.\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/create/items/select_licence.html:47
+#: selia/templates/selia/create/items/select_sampling_event_device.html:46
+#: selia/templates/selia/create/sampling_event_devices/create_form.html:46
+msgid "Selected sampling event"
+msgstr ""
+
+#: selia/templates/selia/create/items/select_licence.html:50
+msgid "Selected deployed device"
+msgstr ""
+
+#: selia/templates/selia/create/items/select_licence.html:66
+msgid "No available licences."
+msgstr ""
+
+#: selia/templates/selia/create/items/select_sampling_event.html:26
+#: selia/templates/selia/create/sampling_event_devices/select_sampling_event.html:25
+msgid "Select a sampling event"
+msgstr ""
+
+#: selia/templates/selia/create/items/select_sampling_event.html:30
+#: selia/templates/selia/create/sampling_event_devices/select_sampling_event.html:29
+msgid ""
+"\n"
+"    Choose a sampling event from the collection or\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/create/items/select_sampling_event.html:42
+#: selia/templates/selia/create/sampling_event_devices/select_sampling_event.html:38
+msgid "No available sampling events."
+msgstr ""
+
+#: selia/templates/selia/create/items/select_sampling_event.html:44
+msgid "Create a new one"
+msgstr ""
+
+#: selia/templates/selia/create/items/select_sampling_event_device.html:30
+msgid "Select a deployed device"
+msgstr ""
+
+#: selia/templates/selia/create/items/select_sampling_event_device.html:34
+msgid ""
+"\n"
+"    Choose a device that was deployed in the sampling event or\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/create/items/select_sampling_event_device.html:51
+msgid "No deployed devices were found"
+msgstr ""
+
+#: selia/templates/selia/create/licences/create_form.html:6
+#: selia/templates/selia/create/licences/select_type.html:6
+#: selia/templates/selia/list/collection_licences.html:15
+msgid "Add licence"
+msgstr ""
+
+#: selia/templates/selia/create/licences/create_form.html:16
+#: selia/templates/selia/create/licences/select_type.html:14
+#: selia/templates/selia/create/licences/select_type.html:19
+msgid "Select licence type"
+msgstr ""
+
+#: selia/templates/selia/create/licences/create_form.html:31
+msgid ""
+"\n"
+"  Please download a copy of licence template, fill it in and upload the "
+"completed document.\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/create/licences/create_form.html:41
+msgid "Selected licence type"
+msgstr ""
+
+#: selia/templates/selia/create/licences/create_form.html:60
+msgid ""
+"\n"
+"          Please download the licence document template and upload a filled "
+"in version.\n"
+"          "
+msgstr ""
+
+#: selia/templates/selia/create/licences/create_form.html:67
+msgid "Template"
+msgstr ""
+
+#: selia/templates/selia/create/licences/create_form.html:93
+msgid "No additional information is required"
+msgstr ""
+
+#: selia/templates/selia/create/licences/select_type.html:32
+msgid "No licence types are valid for this collection"
+msgstr ""
+
+#: selia/templates/selia/create/physical_devices/create_form.html:6
+#: selia/templates/selia/create/physical_devices/select_device.html:6
+msgid "Add user device"
+msgstr ""
+
+#: selia/templates/selia/create/physical_devices/create_form.html:16
+#: selia/templates/selia/create/physical_devices/select_device.html:18
+#: selia/templates/selia/create/physical_devices/select_device.html:23
+msgid "Select hardware"
+msgstr ""
+
+#: selia/templates/selia/create/physical_devices/create_form.html:27
+msgid ""
+"\n"
+"    Register any individual traits\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/create/physical_devices/create_form.html:33
+msgid "Selected hardware"
+msgstr ""
+
+#: selia/templates/selia/create/physical_devices/select_device.html:27
+msgid ""
+"\n"
+"    Select the brand, model and device type.\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/create/physical_devices/select_device.html:47
+msgid "Select"
+msgstr ""
+
+#: selia/templates/selia/create/physical_devices/select_device.html:51
+msgid "Please search for the device"
+msgstr ""
+
+#: selia/templates/selia/create/physical_devices/select_device.html:51
+msgid "or"
+msgstr ""
+
+#: selia/templates/selia/create/physical_devices/select_device.html:59
+msgid "Create new device"
+msgstr ""
+
+#: selia/templates/selia/create/sampling_event_devices/create_form.html:6
+#: selia/templates/selia/create/sampling_event_devices/select_collection.html:6
+#: selia/templates/selia/create/sampling_event_devices/select_collection_device.html:6
+#: selia/templates/selia/create/sampling_event_devices/select_sampling_event.html:6
+msgid "Add deployed device"
+msgstr ""
+
+#: selia/templates/selia/create/sampling_event_devices/create_form.html:26
+#: selia/templates/selia/create/sampling_event_devices/select_collection.html:26
+#: selia/templates/selia/create/sampling_event_devices/select_collection_device.html:24
+#: selia/templates/selia/create/sampling_event_devices/select_sampling_event.html:20
+msgid "Select device"
+msgstr ""
+
+#: selia/templates/selia/create/sampling_event_devices/create_form.html:37
+msgid ""
+"\n"
+"  Please provide information about the deployment of the device in the "
+"sampling event.\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/create/sampling_event_devices/select_collection.html:31
+msgid "No available collections."
+msgstr ""
+
+#: selia/templates/selia/create/sampling_event_devices/select_collection_device.html:29
+msgid "Select device to deploy"
+msgstr ""
+
+#: selia/templates/selia/create/sampling_event_devices/select_collection_device.html:33
+msgid ""
+"\n"
+"    Choose a registered collection device to deploy or\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/create/sampling_event_devices/select_collection_device.html:37
+msgid "add a new one to the collection"
+msgstr ""
+
+#: selia/templates/selia/create/sampling_event_devices/select_collection_device.html:42
+msgid "No collection devices were found."
+msgstr ""
+
+#: selia/templates/selia/create/sampling_event_devices/select_collection_device.html:45
+#: selia/templates/selia/create/sampling_event_devices/select_sampling_event.html:41
+msgid "Add a new one"
+msgstr ""
+
+#: selia/templates/selia/create/sampling_events/create_form.html:6
+#: selia/templates/selia/create/sampling_events/select_collection.html:9
+#: selia/templates/selia/create/sampling_events/select_site.html:14
+#: selia/templates/selia/create/sampling_events/select_type.html:6
+msgid "Create sampling event"
+msgstr ""
+
+#: selia/templates/selia/create/sampling_events/create_form.html:27
+#: selia/templates/selia/create/sampling_events/select_collection.html:14
+#: selia/templates/selia/create/sampling_events/select_site.html:25
+#: selia/templates/selia/create/sampling_events/select_type.html:19
+#: selia/templates/selia/create/sampling_events/select_type.html:25
+msgid "Select sampling event type"
+msgstr ""
+
+#: selia/templates/selia/create/sampling_events/create_form.html:32
+#: selia/templates/selia/create/sampling_events/select_collection.html:15
+#: selia/templates/selia/create/sampling_events/select_site.html:28
+#: selia/templates/selia/create/sampling_events/select_type.html:20
+msgid "Select collection site"
+msgstr ""
+
+#: selia/templates/selia/create/sampling_events/create_form.html:56
+msgid "Selected sampling event type"
+msgstr ""
+
+#: selia/templates/selia/create/sampling_events/select_collection.html:30
+msgid ""
+"\n"
+"    No collections where found.\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/create/sampling_events/select_site.html:33
+msgid "Select a registered site"
+msgstr ""
+
+#: selia/templates/selia/create/sampling_events/select_site.html:37
+msgid ""
+"\n"
+"  Please select a collection site to associate or\n"
+msgstr ""
+
+#: selia/templates/selia/create/sampling_events/select_site.html:39
+msgid "add a new one"
+msgstr ""
+
+#: selia/templates/selia/create/sampling_events/select_site.html:43
+msgid "No collection sites found."
+msgstr ""
+
+#: selia/templates/selia/create/sampling_events/select_site.html:46
+msgid "register new site"
+msgstr ""
+
+#: selia/templates/selia/create/sites/create_form.html:6
+#: selia/templates/selia/create/sites/create_form.html:14
+msgid "Create site"
+msgstr ""
+
+#: selia/templates/selia/create/sites/create_form.html:18
+msgid ""
+"\n"
+"    Please fill in the following information\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/create/users/create_form.html:6
+#: selia/templates/selia/create/users/create_form.html:14
+msgid "Invite user"
+msgstr ""
+
+#: selia/templates/selia/detail/collection_device.html:20
+msgid "See items"
+msgstr ""
+
+#: selia/templates/selia/detail/licence.html:10
 msgid ": Licence "
-msgstr "tipo de evento"
+msgstr ""
+
+#: selia/templates/selia/detail/physical_device.html:10
+msgid "User device detail"
+msgstr ""
+
+#: selia/templates/selia/detail/physical_device.html:14
+#: selia/templates/selia/detail/site.html:18
+#: selia/templates/selia/detail/user.html:14
+msgid "Download Summary"
+msgstr ""
+
+#: selia/templates/selia/detail/sampling_event.html:15
+msgid ": Sampling Event "
+msgstr ""
+
+#: selia/templates/selia/detail/site.html:14
+msgid "User Site Detail"
+msgstr ""
+
+#: selia/templates/selia/list/annotations.html:60
+msgid ""
+"\n"
+"                No annotations\n"
+"              "
+msgstr ""
+
+#: selia/templates/selia/list/collection_devices.html:16
+msgid "Add Device"
+msgstr ""
+
+#: selia/templates/selia/list/collection_devices.html:26
+msgid ""
+"\n"
+"    No devices registered to the collection were found.\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/list/collection_devices.html:32
+msgid "Add devices to the collection"
+msgstr ""
+
+#: selia/templates/selia/list/collection_items.html:15
+#: selia/templates/selia/list/user_items.html:15
+msgid "Create item"
+msgstr ""
+
+#: selia/templates/selia/list/collection_items.html:24
+msgid ""
+"\n"
+"    No items were found\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/list/collection_licences.html:24
+msgid ""
+"\n"
+"    No signed licences for the collection were found.\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/list/collection_licences.html:30
+msgid "Add licence to the collection"
+msgstr ""
+
+#: selia/templates/selia/list/collection_sites.html:19
+msgid "Add Site"
+msgstr ""
+
+#: selia/templates/selia/list/collection_sites.html:28
+msgid ""
+"\n"
+"    No sites registered to the collection were found.\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/list/collection_sites.html:34
+msgid "Add site to the collection"
+msgstr ""
+
+#: selia/templates/selia/list/collection_users.html:15
+msgid "Add User"
+msgstr ""
+
+#: selia/templates/selia/list/collection_users.html:25
+msgid ""
+"\n"
+"    No collection users were found.\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/list/collection_users.html:31
+msgid "Add user to the collection"
+msgstr ""
+
+#: selia/templates/selia/list/sampling_event_device_items.html:15
+#: selia/templates/selia/list/sampling_event_items.html:15
+msgid "Add Items"
+msgstr ""
+
+#: selia/templates/selia/list/sampling_event_device_items.html:24
+msgid ""
+"\n"
+"    No items have been captured in this deployed device\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/list/sampling_event_device_items.html:30
+msgid "Add item to the deployed device"
+msgstr ""
+
+#: selia/templates/selia/list/sampling_event_devices.html:15
+msgid "Deploy device"
+msgstr ""
+
+#: selia/templates/selia/list/sampling_event_devices.html:24
+msgid ""
+"\n"
+"    No deployed device was found for this sampling event.\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/list/sampling_event_devices.html:30
+#: selia/templates/selia/list/sampling_event_items.html:30
+msgid "Deploy a device in this sampling event"
+msgstr ""
+
+#: selia/templates/selia/list/sampling_event_items.html:24
+msgid ""
+"\n"
+"    No items captured in this sampling event were found.\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/list/sampling_events.html:15
+msgid "Add sampling event"
+msgstr ""
+
+#: selia/templates/selia/list/sampling_events.html:24
+msgid ""
+"\n"
+"    No sampling events were found in this collection.\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/list/sampling_events.html:30
+#: selia/templates/selia/list/user_sampling_events.html:15
+#: selia/templates/selia/list/user_sampling_events.html:30
+#: selia/templates/selia/list/user_sites.html:34
+msgid "Add a sampling event"
+msgstr ""
+
+#: selia/templates/selia/list/user_items.html:24
+msgid ""
+"\n"
+"    No user ites were found.\n"
+"  "
+msgstr ""
+
+#: selia/templates/selia/list/user_items.html:30
+msgid "Add a item"
+msgstr ""
+
+#: selia/templates/selia/list/user_physical_devices.html:16
+#: selia/templates/selia/list/user_physical_devices.html:32
+msgid "Add a device"
+msgstr ""
+
+#: selia/templates/selia/list/user_physical_devices.html:26
+msgid ""
+"\n"
+"      No user devices were found.\n"
+"    "
+msgstr ""
+
+#: selia/templates/selia/list/user_sampling_events.html:24
+msgid ""
+"\n"
+"      No user sampling events were found.\n"
+"    "
+msgstr ""
+
+#: selia/templates/selia/list/user_sites.html:19
+msgid "Add a site"
+msgstr ""
+
+#: selia/templates/selia/list/user_sites.html:28
+msgid ""
+"\n"
+"      No user sites were found.\n"
+"    "
+msgstr ""
+
+#: selia/templates/selia/navbars/collection_device.html:10
+msgid ": Devices"
+msgstr ""
+
+#: selia/templates/selia/navbars/collection_site.html:10
+msgid ": Sites"
+msgstr ""
+
+#: selia/templates/selia/navbars/collections.html:31
+msgid "My Collections"
+msgstr ""
+
+#: selia/templates/selia/navbars/collections.html:44
+msgid "Open Collections"
+msgstr ""
+
+#: selia/templates/selia/navbars/item.html:10
+msgid ": Items"
+msgstr ""
+
+#: selia/templates/selia/navbars/licence.html:10
+msgid ": Licences"
+msgstr ""
+
+#: selia/templates/selia/navbars/sampling_event.html:10
+msgid ": Sampling events"
+msgstr ""
+
+#: selia/templates/selia/navbars/user.html:29
+msgid "My Devices"
+msgstr ""
+
+#: selia/templates/selia/navbars/user.html:41
+msgid "My Sites"
+msgstr ""
+
+#: selia/templates/selia/navbars/user.html:53
+msgid "My Sampling events"
+msgstr ""
+
+#: selia/templates/selia/navbars/user.html:65
+msgid "My Items"
+msgstr ""
 
 #: selia/templates/selia/no_permission.html:8
-#, fuzzy
-#| msgid "Permissions"
 msgid "Permission Denied"
-msgstr "Permisos"
+msgstr ""
 
 #: selia/templates/selia/no_permission.html:14
 msgid ""
@@ -4777,216 +4615,6 @@ msgid ""
 "      "
 msgstr ""
 
-#: selia/templates/selia/sampling_event_detail/components/secondary_navbar.html:10
-#: selia/templates/selia/sampling_event_device_detail/components/secondary_navbar.html:13
-#, fuzzy
-#| msgid "event type"
-msgid ": Sampling events"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/sampling_event_detail/detail.html:11
-#: selia/templates/selia/sampling_event_detail/devices/list.html:6
-#: selia/templates/selia/sampling_event_detail/items/list.html:6
-#: selia/templates/selia/sampling_event_device_detail/detail.html:7
-#: selia/templates/selia/sampling_event_device_detail/items/list.html:6
-#, fuzzy
-#| msgid "event type"
-msgid ": Sampling Event "
-msgstr "tipo de evento"
-
-#: selia/templates/selia/sampling_event_detail/devices/create.html:6
-msgid "Add device to sampling event"
-msgstr ""
-
-#: selia/templates/selia/sampling_event_detail/devices/create.html:19
-#: selia/templates/selia/sampling_event_detail/devices/create.html:59
-msgid "Add device to sampling event: Part"
-msgstr ""
-
-#: selia/templates/selia/sampling_event_detail/devices/create.html:20
-msgid ""
-"\n"
-"      Please select a collection device to associate or\n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/sampling_event_detail/devices/create.html:22
-msgid "register a new one"
-msgstr ""
-
-#: selia/templates/selia/sampling_event_detail/devices/create.html:98
-#, fuzzy
-#| msgid "annotation configuration"
-msgid "Device configuration"
-msgstr "configuración de anotación"
-
-#: selia/templates/selia/sampling_event_detail/devices/create.html:115
-msgid "Register device to sampling event"
-msgstr ""
-
-#: selia/templates/selia/sampling_event_detail/items/create.html:5
-msgid "Add new item to sampling event"
-msgstr ""
-
-#: selia/templates/selia/sampling_event_detail/items/create.html:17
-#: selia/templates/selia/sampling_event_detail/items/create.html:58
-msgid "Add items to sampling event: Part"
-msgstr ""
-
-#: selia/templates/selia/sampling_event_detail/items/create.html:18
-msgid ""
-"\n"
-"      Please select a device within this sampling event to associate or \n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/sampling_event_detail/items/create.html:20
-msgid "add a new device to sampling event"
-msgstr ""
-
-#: selia/templates/selia/sampling_event_detail/items/create.html:167
-msgid "Add items to sampling event: Complete"
-msgstr ""
-
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:5
-msgid "Add new item to sampling event device"
-msgstr ""
-
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:18
-msgid "Add items to sampling event device: Part"
-msgstr ""
-
-#: selia/templates/selia/sampling_event_device_detail/items/create.html:121
-msgid "Add items to sampling event device: Complete"
-msgstr ""
-
-#: selia/templates/selia/user/components/secondary_navbar.html:29
-msgid "My Devices"
-msgstr ""
-
-#: selia/templates/selia/user/components/secondary_navbar.html:41
-msgid "My Sites"
-msgstr ""
-
-#: selia/templates/selia/user/components/secondary_navbar.html:53
-msgid "My Sampling events"
-msgstr ""
-
-#: selia/templates/selia/user/components/secondary_navbar.html:65
-msgid "My Items"
-msgstr ""
-
-#: selia/templates/selia/user/devices/create.html:20
-msgid ""
-"\n"
-"        Select the brand, model and device type.\n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/user/devices/create.html:83
-msgid ""
-"\n"
-"        Register any individual traits\n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/user/devices/detail.html:10
-msgid "User device detail"
-msgstr ""
-
-#: selia/templates/selia/user/devices/detail.html:14
-#: selia/templates/selia/user/home.html:11
-#: selia/templates/selia/user/items/detail.html:14
-#: selia/templates/selia/user/sampling_events/detail.html:14
-#: selia/templates/selia/user/sites/detail.html:14
-msgid "Download Summary"
-msgstr ""
-
-#: selia/templates/selia/user/devices/list.html:6
-msgid "User: Devices"
-msgstr ""
-
-#: selia/templates/selia/user/devices/list.html:10
-#, fuzzy
-#| msgid "created on"
-msgid "Create device"
-msgstr "creado en"
-
-#: selia/templates/selia/user/items/create.html:6
-#, fuzzy
-#| msgid "created on"
-msgid "Create new item"
-msgstr "creado en"
-
-#: selia/templates/selia/user/items/create.html:18
-#: selia/templates/selia/user/sampling_events/create.html:18
-msgid "Select one of your collections"
-msgstr ""
-
-#: selia/templates/selia/user/items/create.html:19
-#: selia/templates/selia/user/sampling_events/create.html:19
-msgid ""
-"\n"
-"      Choose a collection from the list. \n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/user/items/create.html:34
-#: selia/templates/selia/user/sampling_events/create.html:34
-msgid "No available collections."
-msgstr ""
-
-#: selia/templates/selia/user/items/detail.html:10
-msgid "User Item Detail"
-msgstr ""
-
-#: selia/templates/selia/user/items/list.html:6
-msgid "User: Items"
-msgstr ""
-
-#: selia/templates/selia/user/items/list.html:9
-#, fuzzy
-#| msgid "created on"
-msgid "Create item"
-msgstr "creado en"
-
-#: selia/templates/selia/user/sampling_events/create.html:6
-msgid "Create new sampling event"
-msgstr ""
-
-#: selia/templates/selia/user/sampling_events/detail.html:10
-msgid "User Sampling Event Detail"
-msgstr ""
-
-#: selia/templates/selia/user/sampling_events/list.html:6
-#, fuzzy
-#| msgid "event type"
-msgid "User: Sampling Events"
-msgstr "tipo de evento"
-
-#: selia/templates/selia/user/sites/create.html:5
-#: selia/templates/selia/user/sites/create.html:17
-#: selia/templates/selia/user/sites/list.html:14
-#, fuzzy
-#| msgid "created on"
-msgid "Create site"
-msgstr "creado en"
-
-#: selia/templates/selia/user/sites/create.html:18
-msgid ""
-"\n"
-"      Please fill in the following information\n"
-"      "
-msgstr ""
-
-#: selia/templates/selia/user/sites/detail.html:10
-msgid "User Site Detail"
-msgstr ""
-
-#: selia/templates/selia/user/sites/list.html:7
-msgid "User: Sites"
-msgstr ""
-
 #: selia/templatetags/json_tags.py:70
 msgid "yes"
 msgstr ""
@@ -4995,84 +4623,89 @@ msgstr ""
 msgid "no"
 msgstr ""
 
-#: selia/templatetags/selia_components.py:193
+#: selia/templatetags/selia_components.py:202
 msgid "add"
 msgstr ""
 
-#: selia/views/collection_detail/item_list.py:18
-#: selia/views/collection_detail/items/list.py:18
-msgid "No items are registered in this collection"
+#: selia/views/create_views/collection_users/select_user.py:14
+msgid "User email"
 msgstr ""
 
-#: selia/views/collection_device_detail/items/list.py:18
-msgid "No items are registered in this collection device"
+#: selia/views/create_views/collection_users/select_user.py:39
+msgid "No user with this email was found"
 msgstr ""
 
-#: selia/views/collection_site_detail/items/list.py:18
-msgid "No items are registered in this collection site"
+#: selia/views/create_views/users/create_user.py:14
+msgid "Invitation to join Selia"
 msgstr ""
 
-#: selia/views/item_detail/annotations/list.py:19
-#, fuzzy
-#| msgid "Creator of annotation vote"
-msgid "There are no annotations for this item"
-msgstr "Creador del voto de anotación"
-
-#: selia/views/sampling_event_detail/devices/list.py:17
-msgid "No devices are registered in this sampling event"
+#: selia/views/create_views/users/create_user.py:18
+#, python-format
+msgid ""
+"Hi!\n"
+"You have been invited to join Selia by %(inviter)s! A temporal password has "
+"been created for you. To access your temporal account please enter the "
+"following site %(url)s with the info provided.\n"
+"\n"
+"PASSWORD: %(password)s\n"
+"USERNAME: %(username)s\n"
+"\n"
+"Cheers!\n"
+"The Selia team"
 msgstr ""
 
-#: selia/views/sampling_event_detail/items/list.py:18
-msgid "No items are registered in this sampling event"
-msgstr ""
-
-#: selia/views/sampling_event_device_detail/items/list.py:16
-msgid "No items are registered to this sampling event device"
-msgstr ""
-
-#: selia/views/user/devices/list.py:15
-msgid "User has no registered devices"
-msgstr ""
-
-#: selia/views/user/items/list.py:16
-msgid "User has no registered items"
-msgstr ""
-
-#: selia/views/user/sampling_events/list.py:15
-msgid "User has no registered sampling events"
-msgstr ""
-
-#: selia/views/user/sites/list.py:15
-msgid "User has no registered sites"
-msgstr ""
-
-#: selia/views/utils/list_base.py:11 selia/views/utils/list_component.py:10
+#: selia/views/list_views/base.py:11 selia/views/utils/list_component.py:10
 msgid "search"
 msgstr ""
 
-#: selia/views/utils/list_base.py:18
+#: selia/views/list_views/base.py:18
 msgid "Empty list"
 msgstr ""
 
-#: selia/views/utils/list_base.py:70 selia/views/utils/list_component.py:44
-msgid "↑"
-msgstr ""
-
-#: selia/views/utils/list_base.py:78 selia/views/utils/list_component.py:52
+#: selia/views/list_views/base.py:75 selia/views/utils/list_component.py:54
 msgid "↓"
 msgstr ""
 
-#: selia/views/utils/list_base.py:89 selia/views/utils/list_component.py:63
+#: selia/views/list_views/base.py:83 selia/views/utils/list_component.py:62
+msgid "↑"
+msgstr ""
+
+#: selia/views/list_views/base.py:93 selia/views/utils/list_component.py:72
 msgid "ordering"
 msgstr ""
 
-#~ msgid "Date of entry creation"
-#~ msgstr "Fecha de creación del registro"
+#: selia/views/list_views/collection_items.py:18
+msgid "No items are registered in this collection"
+msgstr ""
 
-#~ msgid "Date of creation of annotation"
-#~ msgstr "Fecha de creación de la anotación"
+#: selia/views/list_views/sampling_event_device_items.py:17
+msgid "No items are registered to this sampling event device"
+msgstr ""
 
-#, fuzzy
-#~| msgid "Annotated item"
-#~ msgid "Annotate Item"
-#~ msgstr "Item anotado"
+#: selia/views/list_views/sampling_event_devices.py:16
+msgid "No devices are registered in this sampling event"
+msgstr ""
+
+#: selia/views/list_views/sampling_event_items.py:18
+msgid "No items are registered in this sampling event"
+msgstr ""
+
+#: selia/views/list_views/sampling_events.py:16
+msgid "No sampling events are registered in this sampling event"
+msgstr ""
+
+#: selia/views/list_views/user_devices.py:16
+msgid "User has no registered devices"
+msgstr ""
+
+#: selia/views/list_views/user_items.py:17
+msgid "User has no registered items"
+msgstr ""
+
+#: selia/views/list_views/user_sampling_events.py:16
+msgid "User has no registered sampling events"
+msgstr ""
+
+#: selia/views/list_views/user_sites.py:16
+msgid "User has no registered sites"
+msgstr ""

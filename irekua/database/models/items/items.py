@@ -1,17 +1,15 @@
-import mimetypes
 import os
 
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.translation import gettext_lazy as _
 
 from database.utils import empty_JSON
 from database.utils import hash_file
 from database.models.base import IrekuaModelBaseUser
 
-
-mimetypes.init()
 
 
 def get_item_path(instance, filename):
@@ -22,8 +20,7 @@ def get_item_path(instance, filename):
         '{sampling_event_device}',
         '{hash}{ext}')
 
-    extension = mimetypes.guess_extension(
-        instance.item_type.media_type)
+    _, extension = os.path.splitext(filename)
     sampling_event_device = instance.sampling_event_device
     sampling_event = sampling_event_device.sampling_event
     collection = sampling_event.collection
@@ -108,12 +105,69 @@ class Item(IrekuaModelBaseUser):
         help_text=_('Metadata associated to item'),
         blank=True,
         null=True)
+
     captured_on = models.DateTimeField(
         db_column='captured_on',
         verbose_name=_('captured on'),
         help_text=_('Date on which item was produced'),
         blank=True,
         null=True)
+
+    captured_on_year = models.IntegerField(
+        db_column='captured_on_year',
+        verbose_name=_('year'),
+        help_text=_('Year in which the item was captured (YYYY)'),
+        blank=True,
+        null=True,
+        validators=[
+            MinValueValidator(1800),
+            MaxValueValidator(3000)])
+    captured_on_month = models.IntegerField(
+        db_column='captured_on_month',
+        verbose_name=_('month'),
+        help_text=_('Month in which the item was captured (1-12)'),
+        blank=True,
+        null=True,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(12)])
+    captured_on_day = models.IntegerField(
+        db_column='captured_on_day',
+        verbose_name=_('day'),
+        help_text=_('Day in which the item was captured'),
+        blank=True,
+        null=True,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(32)])
+    captured_on_hour = models.IntegerField(
+        db_column='captured_on_hour',
+        verbose_name=_('hour'),
+        help_text=_('Hour of the day in which the item was captured (0 - 23)'),
+        blank=True,
+        null=True,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(23)])
+    captured_on_minute = models.IntegerField(
+        db_column='captured_on_minute',
+        verbose_name=_('minute'),
+        help_text=_('Minute in which the item was captured (0-59)'),
+        blank=True,
+        null=True,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(59)])
+    captured_on_second = models.IntegerField(
+        db_column='captured_on_second',
+        verbose_name=_('second'),
+        help_text=_('Second in which the item was captured (0-59)'),
+        blank=True,
+        null=True,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(59)])
+
     licence = models.ForeignKey(
         'Licence',
         db_column='licence_id',
@@ -158,13 +212,39 @@ class Item(IrekuaModelBaseUser):
                 'by sampling event device.')
             raise ValidationError(msg)
 
-        # TODO: Validate User
-
     @property
     def collection(self):
         return self.sampling_event_device.sampling_event.collection
 
+    def check_captured_on(self):
+        if (
+                self.captured_on_year and
+                self.captured_on_month and
+                self.captured_on_day):
+
+            if (
+                    self.captured_on_hour and
+                    self.captured_on_minute and
+                    self.captured_on_second):
+
+                self.captured_on = '{year}-{month}-{day} {hour}:{minute}:{second}'.format(
+                    year=self.captured_on_year,
+                    month=self.captured_on_month,
+                    day=self.captured_on_day,
+                    hour=self.captured_on_hour,
+                    minute=self.captured_on_minute,
+                    second=self.captured_on_second)
+
+            else:
+                self.captured_on = '{year}-{month}-{day}'.format(
+                    year=self.captured_on_year,
+                    month=self.captured_on_month,
+                    day=self.captured_on_day)
+
+
     def clean(self):
+        self.check_captured_on()
+
         try:
             self.validate_hash_and_filesize()
         except ValidationError as error:
@@ -174,11 +254,6 @@ class Item(IrekuaModelBaseUser):
             self.validate_user()
         except ValidationError as error:
             raise ValidationError({'created_by': error})
-
-        try:
-            self.item_type.validate_media_info(self.media_info)  # pylint: disable=E1101
-        except ValidationError as error:
-            raise ValidationError({'media_info': error})
 
         collection = (
             self.sampling_event_device  # pylint: disable=E1101
@@ -208,25 +283,11 @@ class Item(IrekuaModelBaseUser):
             raise ValidationError({'licence': error})
 
         try:
-            self.validate_mime_type()
+            self.item_type.validate_item_type(self)  # pylint: disable=E1101
         except ValidationError as error:
-            raise ValidationError({'item_file': error})
+            raise ValidationError({'media_info': error})
 
         super(Item, self).clean()
-
-    def validate_mime_type(self):
-        if self.item_file.name is None:
-            return
-
-        file_mime_type, enc = mimetypes.guess_type(self.item_file.name)
-        if self.item_type.media_type != file_mime_type:  # pylint: disable=E1101
-            msg = _(
-                'File MIME type does not coincide with declared item type '
-                '(file: {file_type} != {item_type} :item_type)')
-            params = dict(
-                file_type=file_mime_type,
-                item_type=self.item_type.media_type)  # pylint: disable=E1101
-            raise ValidationError(msg % params)
 
     def validate_and_get_event_type(self, event_type):
         return self.item_type.validate_and_get_event_type(event_type)  # pylint: disable=E1101
@@ -257,7 +318,6 @@ class Item(IrekuaModelBaseUser):
         self.item_file.open() # pylint: disable=E1101
         hash_string = hash_file(self.item_file)
         item_size = self.item_file.size  # pylint: disable=E1101
-        print('item size', item_size)
 
         if self.hash is '':
             self.hash = hash_string

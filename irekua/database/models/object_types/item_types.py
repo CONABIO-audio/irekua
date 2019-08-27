@@ -2,11 +2,6 @@ import mimetypes
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from django.contrib.postgres.fields import JSONField
-
-from database.utils import validate_JSON_schema
-from database.utils import validate_JSON_instance
-from database.utils import simple_JSON_schema
 
 from database.models.base import IrekuaModelBase
 
@@ -15,11 +10,6 @@ mimetypes.init()
 
 
 class ItemType(IrekuaModelBase):
-    MIME_TYPES = [
-        (value, value) for value in
-        sorted(list(set(mimetypes.types_map.values())))
-    ]
-
     name = models.CharField(
         max_length=64,
         db_column='name',
@@ -32,21 +22,6 @@ class ItemType(IrekuaModelBase):
         verbose_name=_('description'),
         help_text=_('Description of item type'),
         blank=False)
-    media_info_schema = JSONField(
-        db_column='media_info_schema',
-        verbose_name=_('media info schema'),
-        help_text=_('JSON Schema for item type media info'),
-        blank=True,
-        null=False,
-        default=simple_JSON_schema,
-        validators=[validate_JSON_schema])
-    media_type = models.CharField(
-        max_length=128,
-        db_column='media_type',
-        verbose_name=_('media type'),
-        help_text=_('MIME type associated with item type'),
-        blank=False,
-        choices=MIME_TYPES)
     icon = models.ImageField(
         db_column='icon',
         verbose_name=_('icon'),
@@ -55,6 +30,12 @@ class ItemType(IrekuaModelBase):
         blank=True,
         null=True)
 
+    mime_types = models.ManyToManyField(
+        'MimeType',
+        db_column='mime_types',
+        verbose_name=_('mime types'),
+        help_text=_('Mime types of files for this item type'),
+        blank=True)
     event_types = models.ManyToManyField(
         'EventType',
         db_column='event_types',
@@ -71,17 +52,21 @@ class ItemType(IrekuaModelBase):
     def __str__(self):
         return self.name
 
-    def validate_media_info(self, media_info):
+    def validate_item_type(self, item):
+        mime_type_from_file, encoding = mimetypes.guess_type(item.item_file.url)
+        print('mimte type', mime_type_from_file)
         try:
-            validate_JSON_instance(
-                schema=self.media_info_schema,
-                instance=media_info)
-        except ValidationError as error:
+            mime_type = self.mime_types.get(mime_type=mime_type_from_file)
+        except self.mime_types.model.DoesNotExist:
             msg = _(
-                'Invalid media info for item of type %(type)s. '
-                'Error %(error)s')
-            params = dict(type=str(self), error=str(error))
+                'This item type does not accept files of type %(mime_type)s')
+            params = dict(mime_type=mime_type_from_file)
             raise ValidationError(msg, params=params)
+
+        mime_type.validate_media_info(item.media_info)
+
+    def validate_mime_type(self, item):
+        pass
 
     def validate_and_get_event_type(self, event_type):
         try:
@@ -98,3 +83,9 @@ class ItemType(IrekuaModelBase):
 
     def remove_event_type(self, event_type):
         self.event_types.remove(event_type)
+
+    def add_event_type(self, mime_type):
+        self.mime_types.add(mime_type)
+
+    def remove_event_type(self, mime_type):
+        self.mime_types.remove(mime_type)
