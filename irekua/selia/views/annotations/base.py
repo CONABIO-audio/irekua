@@ -78,6 +78,8 @@ class SeliaAnnotationView(SeliaCreateView):
         return super().get(*args, **kwargs)
 
     def post(self, *args, **kwargs):
+        print(self.request.POST)
+
         if "mode" in self.request.GET:
             if self.request.GET["mode"] == "edit":
                 self.template_name = 'selia/item_detail/annotations/edit.html'
@@ -90,6 +92,7 @@ class SeliaAnnotationView(SeliaCreateView):
 
     def handle_create(self):
         if self.mode == "create":
+            print('in create mode')
             form = self.get_form()
             label = json.loads(form.data["label"])
             label_keys = list(label.keys())
@@ -126,11 +129,9 @@ class SeliaAnnotationView(SeliaCreateView):
                 annotation.save()
                 return self.handle_finish_create(annotation)
             else:
-                print(form.errors)
                 self.object = None
                 context = self.get_context_data()
                 context['form'] = form
-
                 return self.render_to_response(context)
 
     def get_initial(self):

@@ -21,7 +21,33 @@ class FileUploader {
 	}
 	build_view() {
 		this.build_top_toolbar();
+		this.build_progress_bar();
 		this.build_body();
+	}
+	build_progress_bar() {
+		this.progress_container = document.createElement('div');
+		this.progress_container.className = "row p-2 w-100";
+		this.progress_container.style.display = "none";
+
+		var progress_outer = document.createElement('div');
+		progress_outer.className = "progress w-100";
+
+		this.progress_bar = document.createElement('div');
+		this.progress_bar.className = "progress-bar progress-bar-success progress-bar-striped";
+		this.progress_bar.role = "progressbar";
+		this.progress_bar.style.width = "0%";
+		this.progress_bar.setAttribute('aria-valuenow','0');
+		this.progress_bar.setAttribute('aria-valuemin','0');
+		this.progress_bar.setAttribute('aria-valuemax','100');
+		
+		this.progress_bar_label = document.createElement('span');
+		this.progress_bar_label.innerHTML = '0%';
+
+		this.progress_bar.appendChild(this.progress_bar_label);
+		progress_outer.appendChild(this.progress_bar);
+
+		this.progress_container.appendChild(progress_outer);
+
 	}
 	build_top_toolbar() {
 		if (this.top_toolbar){
@@ -30,10 +56,14 @@ class FileUploader {
 		var widget = this;
 
 		this.top_toolbar = document.createElement('div');
-		this.top_toolbar.className = "container-fluid w-100 bg-dark rounded";
+		this.top_toolbar.className = 'row justify-content-center w-100';
 
+		var toolbar_container = document.createElement('div');
+		toolbar_container.className = "container-fluid p-2 w-100 bg-dark rounded";
+		
 		var row = document.createElement('div');
-		row.className = "row";
+		row.className = "row p-2";
+
 
 		var file_picker_col = document.createElement('div');
 		file_picker_col.className = "col";
@@ -42,7 +72,7 @@ class FileUploader {
 		file_btn.htmlFor = "file_picker";
 		file_btn.className ="upload_tool text-light";
 
-		var add_label = document.createTextNode("Add ");
+		var add_label = document.createTextNode("Add files");
 		var add_icon = document.createElement('i');
 		add_icon.className = "fas fa-plus";
 		file_btn.appendChild(add_label);
@@ -83,7 +113,8 @@ class FileUploader {
 		upload_dropdown.appendChild(upload_anchor);
 
 		var upload_dropdown_menu = document.createElement('div');
-		upload_dropdown_menu.className = "dropdown-menu bg-secondary text-light";
+		upload_dropdown_menu.className = "dropdown-menu text-light";
+		upload_dropdown_menu.style["background-color"] = "#454d54";
 		upload_dropdown_menu.style.width = "auto";
 		upload_dropdown_menu.setAttribute('aria-labelledby','dropdownMenuButton');
 
@@ -141,7 +172,8 @@ class FileUploader {
 		remove_dropdown.appendChild(remove_anchor);
 
 		var remove_dropdown_menu = document.createElement('div');
-		remove_dropdown_menu.className = "dropdown-menu bg-secondary text-light";
+		remove_dropdown_menu.className = "dropdown-menu text-light";
+		remove_dropdown_menu.style["background-color"] = "#454d54";
 		remove_dropdown_menu.style.width = "auto";
 		remove_dropdown_menu.setAttribute('aria-labelledby','dropdownMenuButton');
 
@@ -202,8 +234,9 @@ class FileUploader {
 		row.appendChild(date_toggle_col);
 
 
-    var row2 = document.createElement("div");
-		row2.className = "row p-2 collapse";
+    	var row2 = document.createElement("div");
+		row2.className = "row collapse";
+		row2.style["padding-left"] = "20px";
 		row2.id = "date_tools";
 
 		var date_pattern_col = document.createElement('div');
@@ -241,7 +274,8 @@ class FileUploader {
 		date_pattern_apply_dropdown.appendChild(date_pattern_apply_anchor);
 
 		var date_pattern_apply_dropdown_menu = document.createElement('div');
-		date_pattern_apply_dropdown_menu.className = "dropdown-menu bg-secondary text-light";
+		date_pattern_apply_dropdown_menu.className = "dropdown-menu text-light";
+		date_pattern_apply_dropdown_menu.style["background-color"] = "#454d54";
 		date_pattern_apply_dropdown_menu.style.width = "auto";
 		date_pattern_apply_dropdown_menu.setAttribute('aria-labelledby','dropdownMenuButton');
 
@@ -270,7 +304,7 @@ class FileUploader {
 		date_pattern_apply_dropdown.appendChild(date_pattern_apply_dropdown_menu);
 
 		var date_pattern_row = document.createElement('div');
-		date_pattern_row.className = "row-6 d-flex";
+		date_pattern_row.className = "row d-flex";
 
 		date_pattern_row.appendChild(date_pattern_label);
 		date_pattern_row.appendChild(this.date_pattern_input);
@@ -284,7 +318,7 @@ class FileUploader {
 		date_col.className = "col";
 		var date_label = document.createElement('label');
 		date_label.className = "upload_tool text-light";
-		date_label.appendChild(document.createTextNode('Date: '));
+		date_label.appendChild(document.createTextNode('Fixed: '));
 		date_label.htmlFor = "itemDate";
 
 		this.date_input = document.createElement('input');
@@ -327,7 +361,8 @@ class FileUploader {
 		date_apply_dropdown.appendChild(date_apply_anchor);
 
 		var date_apply_dropdown_menu = document.createElement('div');
-		date_apply_dropdown_menu.className = "dropdown-menu bg-secondary text-light";
+		date_apply_dropdown_menu.className = "dropdown-menu text-light";
+		date_apply_dropdown_menu.style["background-color"] = "#454d54";
 		date_apply_dropdown_menu.style.width = "auto";
 		date_apply_dropdown_menu.setAttribute('aria-labelledby','dropdownMenuButton');
 
@@ -364,11 +399,74 @@ class FileUploader {
 
 		date_col.appendChild(date_row);
 
-		row2.appendChild(date_pattern_col);
-		row2.appendChild(date_col)
 
-		this.top_toolbar.appendChild(row);
-		this.top_toolbar.appendChild(row2);
+
+		var metadata_date_col = document.createElement('div');
+		metadata_date_col.className = "col";
+
+		var metadata_date_dropdown = document.createElement('div');
+		metadata_date_dropdown.className = "dropdown";
+
+		var metadata_date_anchor = document.createElement('a');
+		metadata_date_anchor.setAttribute('data-toggle','dropdown');
+		metadata_date_anchor.setAttribute('role','button');
+		metadata_date_anchor.setAttribute('aria-expanded',false);
+		metadata_date_anchor.setAttribute('aria-controls','collapseUpload')
+
+		var metadata_date_btn_label = document.createElement('label');
+		metadata_date_btn_label.className ="upload_tool text-light";
+		var metadata_date_label = document.createTextNode('Restore ');
+		var metadata_date_icon = document.createElement('i');
+
+		metadata_date_icon.className = "fas fa-cog";
+		metadata_date_btn_label.appendChild(metadata_date_label);
+		metadata_date_btn_label.appendChild(metadata_date_icon);
+
+
+		metadata_date_anchor.appendChild(metadata_date_btn_label);
+		metadata_date_dropdown.appendChild(metadata_date_anchor);
+
+		var metadata_date_dropdown_menu = document.createElement('div');
+		metadata_date_dropdown_menu.className = "dropdown-menu text-light";
+		metadata_date_dropdown_menu.style["background-color"] = "#454d54";
+		metadata_date_dropdown_menu.style.width = "auto";
+		metadata_date_dropdown_menu.setAttribute('aria-labelledby','dropdownMenuButton');
+
+		var metadata_date_dropdown_menu_inner = document.createElement('div');
+		metadata_date_dropdown_menu_inner.className = "container-fluid";
+
+		var metadata_date_all_btn_row = document.createElement('div');
+		metadata_date_all_btn_row.className = "row upload_tool justify-content-center";
+
+		this.metadata_date_all_btn = document.createElement("a");
+		this.metadata_date_all_btn.innerHTML = "<h6>Set all</h6>";
+
+		metadata_date_all_btn_row.appendChild(this.metadata_date_all_btn);
+
+		var metadata_date_selected_btn_row = document.createElement('div');
+		metadata_date_selected_btn_row.className = "row upload_tool justify-content-center";
+
+		this.metadata_date_selected_btn = document.createElement("a");
+		this.metadata_date_selected_btn.innerHTML = "<h6>Set selected</h6>";
+		metadata_date_selected_btn_row.appendChild(this.metadata_date_selected_btn);
+
+		metadata_date_dropdown_menu_inner.appendChild(metadata_date_selected_btn_row);
+		metadata_date_dropdown_menu_inner.appendChild(metadata_date_all_btn_row);
+
+		metadata_date_dropdown_menu.appendChild(metadata_date_dropdown_menu_inner);
+		metadata_date_dropdown.appendChild(metadata_date_dropdown_menu);
+
+		metadata_date_col.appendChild(metadata_date_dropdown);
+
+
+		row2.appendChild(date_pattern_col);
+		row2.appendChild(date_col);
+		row2.appendChild(metadata_date_col);
+
+		toolbar_container.appendChild(row);
+		toolbar_container.appendChild(row2);
+
+		this.top_toolbar.appendChild(toolbar_container);
 
 
 	    this.date_input.addEventListener('input',function(e){
@@ -380,44 +478,67 @@ class FileUploader {
 	        }
 	      });
 
+	    this.metadata_date_all_btn.addEventListener('click',function(e){
+	    	var fixable = widget.files.filter(widget.is_fixable);
+
+	    	for (var i=0;i<fixable.length;i++){
+	    		if (fixable[i].media_info){
+	    			var valid_date = fixable[i].media_info.DateTimeOriginalParsed;
+	    			if (typeof(valid_date) !== 'undefined'){
+	    				fixable[i].captured_on = valid_date;
+	    			} else {
+	    				fixable[i].captured_on = null;
+	    			}
+
+	    		}
+	    	}
+
+	    	widget.render_by_name(['files']);
+
+		});
+
+	    this.metadata_date_selected_btn.addEventListener('click',function(e){
+	    	var id_arr = widget.remove_multiple(widget.get_checked_ids());
+
+	    	for (var i=0;i<id_arr.length;i++){
+	    		var file = widget.get_file_by_id(id_arr[i]);
+	    		if (file){
+		    		if (file.media_info){
+		    			var valid_date = file.media_info.DateTimeOriginalParsed;
+		    			if (typeof(valid_date) !== 'undefined'){
+		    				file.captured_on = valid_date;
+		    			} else {
+		    				file.captured_on = null;
+		    			}
+
+		    		}	
+	    		}
+
+	    	}
+
+	    	widget.render_by_name(['files']);
+
+		});
+
 	    this.upload_all_btn.addEventListener('click',function(e){
 	    	widget.upload_multiple(widget.is_uploadable);
 		});
 
 	    this.upload_selected_btn.addEventListener('click',function(e){
-	    	var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
-			var id_arr = [];
-			for (var i=0;i<check_boxes.length;i++){
-				if (check_boxes[i].file_id != "all"){
-					id_arr.push(check_boxes[i].file_id);
-				}
-			}
+	        var id_arr = widget.get_checked_ids();
 
 	    	widget.upload_multiple(function(f){return widget.is_uploadable(f) && id_arr.includes(f.file_id); });
 		});
 
 		this.remove_selected_btn.addEventListener('click',function(e){
-			var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
-			var id_arr = [];
-			for (var i=0;i<check_boxes.length;i++){
-				if (check_boxes[i].file_id != "all"){
-					id_arr.push(check_boxes[i].file_id);
-				}
-			}
-
-			widget.remove_multiple(id_arr);
-
-			var page = widget.get_file_page(widget.file_page_number, widget.per_page, widget.is_fixable);
-
-			widget.render_file_list(page);
+			widget.remove_multiple(widget.get_checked_ids());
+			widget.render_by_name(['files']);
 		});
 
 		this.remove_all_btn.addEventListener('click',function(e){
 			widget.remove_all();
 
-			var page = widget.get_file_page(widget.file_page_number, widget.per_page, widget.is_fixable);
-
-			widget.render_file_list(page);
+			widget.render_by_name(['files']);
 		});
 
 		this.date_pattern_apply_selected_btn.addEventListener('click',function(e){
@@ -454,9 +575,8 @@ class FileUploader {
 						files[i].captured_on = valid_date;
 					}
 				}
-				var page = widget.get_file_page(widget.file_page_number, widget.per_page, widget.is_fixable);
+				widget.render_by_name(['files']);
 
-				widget.render_file_list(page);
 			}
 		});
 
@@ -467,9 +587,7 @@ class FileUploader {
 				for (var i=0;i<files.length;i++){
 					files[i].captured_on = valid_date;
 				}
-				var page = widget.get_file_page(widget.file_page_number, widget.per_page, widget.is_fixable);
-
-				widget.render_file_list(page);
+				widget.render_by_name(['files']);
 			}
 		});
 
@@ -509,7 +627,6 @@ class FileUploader {
 				$(this).addClass('incorrect_pattern');
 			}
 		});
-
 	}
 	build_body() {
 		if (this.body){
@@ -536,15 +653,18 @@ class FileUploader {
 		section_col.className = "col-8 w-100";
 
 		this.files_section = document.createElement('div');
-		this.files_section.className = "row container-fluid justify-content-center p-2";
+		this.files_section.className = "container-fluid justify-content-center p-2";
 
 		this.file_list_container = document.createElement('div');
-		this.file_list_container.className = "row container-fluid justify-content-center";
+		this.file_list_container.className = "row container-fluid";
 		this.file_list_container.style.display = "none";
 
 
+
 		this.build_file_list();
+
 		section_col.appendChild(this.top_toolbar);
+		section_col.appendChild(this.progress_container);
 		section_col.appendChild(this.files_section);
 		this.body.appendChild(section_col);
 	}
@@ -665,16 +785,14 @@ class FileUploader {
 	}
 	build_file_list(){
 		this.file_list = document.createElement('div');
-		this.file_list.className = "row justify-content-center w-100";
+		this.file_list.className = "justify-content-center w-100";
 
 		this.blank_file_list = document.createElement('div');
-		this.blank_file_list.className = "row blank_item_list justify-content-center w-100";
+		this.blank_file_list.className = "row justify-content-center blank_item_list w-100";
 		this.blank_file_list.height = "300px";
 
 
 		var file_picker_col = document.createElement('div');
-		file_picker_col.className = "col-6";
-
 		var file_btn = document.createElement('label');
 		file_btn.htmlFor = "alter_file_picker";
 		file_btn.className ="upload_tool";
@@ -960,7 +1078,7 @@ class FileUploader {
 			this.file_list_container.style.display = "flex";
 
 			var header = document.createElement('div');
-			header.className = 'row d-flex justify-content-center header_item w-100';
+			header.className = 'row d-flex justify-content-between header_item w-100';
 			header.align = "center";
 			header.style["margin"] = "10px";
 
@@ -971,10 +1089,10 @@ class FileUploader {
 			header_descrCol.className = 'col-3 text-center item_col';
 
 			var header_dateCol = document.createElement('div');
-			header_dateCol.className = 'col-4 text-center item_col';
+			header_dateCol.className = 'col-3 text-center item_col';
 
 			var header_statusCol = document.createElement('div');
-			header_statusCol.className = 'col-4 text-center item_col';
+			header_statusCol.className = 'col-3 text-center item_col';
 
 
 			var header_checkFile = document.createElement('input');
@@ -1011,7 +1129,7 @@ class FileUploader {
 			var widget = this;
 			for (var i=0;i<page.data.length;i++){
 				var row = document.createElement('div');
-				row.className = 'row d-flex justify-content-center list_item w-100';
+				row.className = 'row d-flex justify-content-between list_item w-100';
 				row.align = "center";
 				row.style["margin"] = "10px";
 
@@ -1022,11 +1140,11 @@ class FileUploader {
 				descrCol.className = 'col-3 text-center item_col';
 
 				var dateCol = document.createElement('div');
-				dateCol.className = 'col-4 text-center item_col';
+				dateCol.className = 'col-3 text-center item_col w-100';
 				dateCol.align = "center";
 
 				var statusCol = document.createElement('div');
-				statusCol.className = 'col-4 text-center item_col';
+				statusCol.className = 'col-3 text-center item_col';
 
 
 				var checkFile = document.createElement('input');
@@ -1195,7 +1313,7 @@ class FileUploader {
 			var widget = this;
 			for (var i=0;i<page.data.length;i++){
 				var row = document.createElement('div');
-				row.className = 'row d-flex justify-content-between list_item w-100';
+				row.className = 'row d-flex justify-content-between error_item w-100';
 				row.align = "center";
 				row.style["margin"] = "10px";
 
@@ -1277,7 +1395,7 @@ class FileUploader {
 			var widget = this;
 			for (var i=0;i<page.data.length;i++){
 				var row = document.createElement('div');
-				row.className = 'row d-flex justify-content-between list_item w-100';
+				row.className = 'row d-flex justify-content-between duplicate_item w-100';
 				row.align = "center";
 				row.style["margin"] = "10px";
 
@@ -1357,7 +1475,7 @@ class FileUploader {
 			var widget = this;
 			for (var i=0;i<page.data.length;i++){
 				var row = document.createElement('div');
-				row.className = 'row d-flex justify-content-between list_item w-100';
+				row.className = 'row d-flex justify-content-between uploaded_item w-100';
 				row.align = "center";
 				row.style["margin"] = "10px";
 
@@ -1397,6 +1515,17 @@ class FileUploader {
 			this.blank_upload_list.style.display = "flex";
 		}
 	}
+	get_checked_ids(){
+    	var check_boxes = this.file_list.querySelectorAll('input[type=checkbox]:checked');
+		var id_arr = [];
+		for (var i=0;i<check_boxes.length;i++){
+			if (check_boxes[i].file_id != "all"){
+				id_arr.push(check_boxes[i].file_id);
+			}
+		}
+
+		return id_arr;
+	}
 	parse_date(fileName,parser_map){
 	  var date_context = fileName.match(parser_map["regexp"]);
 	  if (date_context){
@@ -1413,14 +1542,20 @@ class FileUploader {
 	  }
 
 	  return "";
-
 	}
 	retrieve_media_info(file,callback) {
 		if (file.type == 'image/jpeg'){
 			var fr = new FileReader();
 			var widget = this;
 			fr.onloadend = function(){
-				var exif = EXIF.readFromBinaryFile(this.result);
+				var exif = null;
+
+				try {
+					exif = EXIF.readFromBinaryFile(this.result);
+				} catch(error) {
+					exif = null;
+				}
+				
 
           		if (exif) {
 
@@ -1434,6 +1569,7 @@ class FileUploader {
           				var valid_date = widget.validate_date(date+" "+time);
 
 				        if (valid_date){
+				        	file.media_info["DateTimeOriginalParsed"] = valid_date;
 				        	file.captured_on = valid_date;
 				        }
           			}
@@ -1659,18 +1795,31 @@ class FileUploader {
 		}
 		return false;
 	}
+	is_uploading(file){
+		if (file.upload_response){
+			if (file.upload_response != "uploading"){
+				return true;
+			}
+		}
+
+		return false;
+	}
 	is_duplicate(file){
 		if (file.upload_response){
-			if (file.upload_response.result_type == "duplicate"){
-				return true;
+			if (file.upload_response != "uploading"){
+				if (file.upload_response.result_type == "duplicate"){
+					return true;
+				}
 			}
 		}
 		return false;
 	}
 	is_uploaded(file){
 		if (file.upload_response){
-			if (file.upload_response.result_type == "success"){
-				return true;
+			if (file.upload_response != "uploading"){
+				if (file.upload_response.result_type == "success"){
+					return true;
+				}
 			}
 		}
 		return false;
@@ -1714,24 +1863,50 @@ class FileUploader {
 	    }
 	  }
 	}
-	submitSingle(file) {
+	upload_single(file,callback) {
 	  var url = this.form.action;
 	  var formData = new FormData($(this.form)[0]);
-	  var request = new XMLHttpRequest();
 
 	  formData.set('item_file', file);
 	  formData.set('captured_on',file.captured_on);
 	  formData.set('item_type',file.item_type);
-	  request.open('POST', url, false);
-	  request.send(formData);
 
-	  try {
-	    var response_obj = JSON.parse(request.responseText);
-	    file["upload_response"] = response_obj;
-	  } catch (error) {
-	  	file["upload_response"] = null;
-	  }
+	  $.ajax({
+		  url: url,
+		  data: formData,
+		  processData: false,
+		  contentType: false,
+		  cache: false,
+		  enctype: 'multipart/form-data',
+		  type: 'POST',
 
+		  success: function(data){
+	  	  	  var response_obj = null;
+			  try {
+			    response_obj = JSON.parse(data.responseText);
+			    file["upload_response"] = response_obj;
+			  } catch (error) {
+			  	file["upload_response"] = null;
+			  }
+
+			  if (callback){
+			  	callback(response_obj);
+			  }
+	      },
+	      error: function(data){
+	  	  	  var response_obj = null;
+			  try {
+			    response_obj = JSON.parse(data.responseText);
+			    file["upload_response"] = response_obj;
+			  } catch (error) {
+			  	file["upload_response"] = null;
+			  }
+
+			  if (callback){
+			  	callback(response_obj);
+			  }
+	      }
+	  });
 	}
 	render_by_name(name_arr){
 		if (!name_arr){
@@ -1754,13 +1929,46 @@ class FileUploader {
 			this.render_upload_list(upload_page);
 		}
 	}
-	render_all_lists(){this.render_by_name()}
-	upload_multiple(filter_function){
-		var filteredItems = this.files.filter(filter_function);
-		for (var i=0;i<filteredItems.length;i++){
-			this.submitSingle(filteredItems[i]);
+	progress_upload(count,total){
+  		var percent = Math.round((count * 100) / total);
+  		$(this.progress_bar)
+    		.css('width', percent + '%')
+    		.attr('aria-valuenow', percent);
+  		$(this.progress_bar_label).html(percent + '%');
+	}
+
+	upload_multiple(filter_function,finalize_callback){
+		var to_upload = this.files.filter(filter_function);
+
+		for (var i=0;i<to_upload.length;i++){
+			to_upload[i]["upload_response"] = "uploading";
 		}
-		this.render_all_lists();
+
+		this.render_by_name(['files']);
+
+		var file_count = 0;
+		var total_files = to_upload.length;
+
+		var widget = this;
+
+		function gather(response){
+			file_count++;
+			widget.render_by_name(['errors','duplicates','uploads']);
+			widget.progress_upload(file_count,total_files);
+			
+			if (file_count >= total_files-1){
+				setTimeout(function() {
+					widget.progress_container.style.display = "none";
+					widget.progress_upload(0,total_files);
+				}, 2000);
+			}
+		}
+
+		this.progress_container.style.display = "block";
+
+		for (var i=0;i<to_upload.length;i++){
+			this.upload_single(to_upload[i],gather);
+		}
 	}
 	add_file(file,callback){
 		file["captured_on"] = null;

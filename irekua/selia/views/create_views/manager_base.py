@@ -48,7 +48,6 @@ class CreateManagerBase(View):
 
     def get(self, request):
         self.request = request
-
         self.check_chain()
 
         if not self.has_view_permission():
