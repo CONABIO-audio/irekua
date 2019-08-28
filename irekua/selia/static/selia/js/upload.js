@@ -1779,7 +1779,7 @@ class FileUploader {
 		        itemLink.className = "btn-link ml-4 ellipsise";
 		        itemLink.setAttribute('href',page.data[i].upload_response.result.item.detail_url)
 		        itemLink.setAttribute('target','_blank');
-		        itemLink.innerHTML = "<h4>Item "+page.data[i].upload_response.result.item.pk+"</h4>";
+		        itemLink.innerHTML = "<h4>Artículo "+page.data[i].upload_response.result.item.pk+"</h4>";
 
 		        statusCol.appendChild(itemLink);
 
