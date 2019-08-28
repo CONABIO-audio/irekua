@@ -13,7 +13,6 @@ class PhysicalDeviceUpdateForm(forms.ModelForm):
         fields = [
             'identifier',
             'serial_number',
-            'bundle',
         ]
 
 
@@ -22,7 +21,7 @@ class DetailPhysicalDeviceView(SeliaDetailView):
     form_class = PhysicalDeviceUpdateForm
 
     template_name = 'selia/detail/physical_device.html'
-    
+
     help_template = 'selia/components/help/physical_device.html'
     detail_template = 'selia/components/details/physical_device.html'
     summary_template = 'selia/components/summaries/physical_device.html'

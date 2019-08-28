@@ -17,7 +17,6 @@ class PhysicalDeviceCreateForm(forms.ModelForm):
             'metadata',
             'serial_number',
             'identifier',
-            'bundle',
         ]
 
 

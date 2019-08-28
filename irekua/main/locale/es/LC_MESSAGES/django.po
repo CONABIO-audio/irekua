@@ -283,7 +283,7 @@ msgstr "Puede votar anotación"
 #: database/models/annotations/annotations.py:101
 #, python-format
 msgid "Annotation %(annotation_id)s of item %(item_id)s"
-msgstr "Anotación %(annotationid)s de artículo %(itemid)s"
+msgstr "Anotación %(annotation_id)s de artículo %(item_id)s"
 
 #: database/models/annotations/annotations.py:146
 #, python-format
@@ -661,7 +661,7 @@ msgstr "Puede descargar elementos de anotación"
 #: database/models/data_collections/data_collections.py:167
 #, python-brace-format
 msgid "Invalid metadata for collection of type {type}. Error: {error}"
-msgstr "Metadatos no válidos para la colección de tipo {type}. Error: error"
+msgstr "Metadatos no válidos para la colección de tipo {type}. Error: {error}"
 
 #: database/models/data_collections/data_collections.py:237
 #, python-format
@@ -799,7 +799,7 @@ msgstr "Metadatos de dispositivo inválidos. Error: %(error)s"
 #: database/models/devices/physical_devices.py:16
 #: irekua_utils/filters/devices/physical_devices.py:41
 msgid "custom id"
-msgstr "id personalizada"
+msgstr "Nombre personalizado"
 
 #: database/models/devices/physical_devices.py:17
 msgid "Simple device identifier"
@@ -1239,7 +1239,7 @@ msgstr "Licencias"
 #: database/models/licences.py:83
 #, python-brace-format
 msgid "Licence of type {type} created on {date}"
-msgstr "Licencia de tipo creado en fecha"
+msgstr "Licencia de tipo {type} creado en {date}"
 
 #: database/models/object_types/annotation_types.py:18
 msgid "Name for type of annotation"
@@ -1299,7 +1299,7 @@ msgstr "Tipos de dispositivos de recolección"
 #: database/models/object_types/data_collections/collection_device_types.py:48
 #, python-format
 msgid "Device type %(device_type)s for collection type %(collection_type)s"
-msgstr "Dispositivo tipo %(devicetype)s para colección tipo %(collectiontype)s"
+msgstr "Dispositivo tipo %(device_type)s para colección tipo %(collection_type)s"
 
 #: database/models/object_types/data_collections/collection_device_types.py:61
 #, python-format
@@ -1548,52 +1548,52 @@ msgstr "Metadatos inválidos para colección de tipo %(type)s. Error: %(error)s"
 #, python-format
 msgid ""
 "Site type %(site_type)s is not accepted in collection of type %(col_type)s"
-msgstr "Sitio %(sitetype)s no es aceptado en colección de tipo %(coltype)s"
+msgstr "Sitio %(site_type)s no es aceptado en colección de tipo %(col_type)s"
 
 #: database/models/object_types/data_collections/collection_types.py:244
 #, python-format
 msgid ""
 "Annotation type %(annotation_type)s is not accepted in collection of type "
 "%(col_type)s"
-msgstr "Anotación tipo %(annotationtype)s no es aceptado en colección de tipo %(coltype)s"
+msgstr "Anotación tipo %(annotation_type)s no es aceptado en colección de tipo %(col_type)s"
 
 #: database/models/object_types/data_collections/collection_types.py:259
 #, python-format
 msgid ""
 "Licence type %(licence_type)s is not accepted in collection of type "
 "%(col_type)s"
-msgstr "Licencia tipo %(licencetype)s no es aceptada en colección de tipo %(coltype)s"
+msgstr "Licencia tipo %(licence_type)s no es aceptada en colección de tipo %(col_type)s"
 
 #: database/models/object_types/data_collections/collection_types.py:274
 #, python-format
 msgid ""
 "Event type %(event_type)s is not accepted in collection of type %(col_type)s"
-msgstr "Evento tipo %(eventtype)s no es aceptado en colección de tipo %(coltype)s"
+msgstr "Evento tipo %(event_type)s no es aceptado en colección de tipo %(col_type)s"
 
 #: database/models/object_types/data_collections/collection_types.py:291
 #, python-format
 msgid ""
 "Item type %(item_type)s is not accepted in collection of type %(col_type)s"
-msgstr "Artículo %(itemtype)s no es aceptado en colección de tipo %(coltype)s"
+msgstr "Artículo %(item_type)s no es aceptado en colección de tipo %(col_type)s"
 
 #: database/models/object_types/data_collections/collection_types.py:308
 #, python-format
 msgid ""
 "Device type %(device_type)s is not accepted in collection of type "
 "%(col_type)s"
-msgstr "Dispositivo %(devicetype)s no es aceptado en colección de tipo %(coltype)s"
+msgstr "Dispositivo %(device_type)s no es aceptado en colección de tipo %(col_type)s"
 
 #: database/models/object_types/data_collections/collection_types.py:323
 #, python-format
 msgid ""
 "Sampling Event type %(sampling_event_type)s is not accepted in collection of "
 "type %(col_type)s"
-msgstr "Evento de muestreo %(samplingeventtype)s no es aceptado en colección de tipo %(coltype)s"
+msgstr "Evento de muestreo %(sampling_event_type)s no es aceptado en colección de tipo %(col_type)s"
 
 #: database/models/object_types/data_collections/collection_types.py:337
 #, python-format
 msgid "Role type %(role)s is not accepted in collection of type %(col_type)s"
-msgstr "Rol %(role)s no es aceptado en colección de tipo %(coltype)s"
+msgstr "Rol %(role)s no es aceptado en colección de tipo %(col_type)s"
 
 #: database/models/object_types/device_types.py:13
 msgid "Name for device type"
@@ -1685,7 +1685,7 @@ msgstr "Tipos de eventos"
 #: database/models/object_types/event_types.py:52
 #, python-format
 msgid "Term type %(term_type)s is invalid for event type %(event_type)s"
-msgstr "Término tipo %(termtype)s es inválido para evento tipo %(eventtype)s"
+msgstr "Término tipo %(term_type)s es inválido para evento tipo %(event_type)s"
 
 #: database/models/object_types/item_types.py:28
 msgid "Name of item type"
@@ -1735,7 +1735,7 @@ msgstr "Inválida info de media para artículo de tipo %(type)s. Error %(error)s
 #: database/models/object_types/item_types.py:91
 #, python-format
 msgid "Event type %(event_type)s is invalid for item type %(item_type)s"
-msgstr "Evento tipo %(eventtype)s es inválido para artítulo de tipo %(itemtype)s"
+msgstr "Evento tipo %(event_type)s es inválido para artítulo de tipo %(item_type)s"
 
 #: database/models/object_types/licence_types.py:19
 msgid "Licence type name"
@@ -1906,13 +1906,13 @@ msgstr "Inválido metadatos para muestreo evento de tipo %(type)s. error: %(erro
 #, python-format
 msgid ""
 "Device type %(device_type)s is not valid for sampling event of type %(type)s"
-msgstr "Dispositivo tipo %(devicetype)s es no válido para muestreo evento de tipo %(type)s"
+msgstr "Dispositivo tipo %(device_type)s es no válido para muestreo evento de tipo %(type)s"
 
 #: database/models/object_types/sampling_events/sampling_event_types.py:122
 #, python-format
 msgid ""
 "Site type %(site_type)s is not valid for sampling event of type %(type)s"
-msgstr "Sitio tipo %(sitetype)s es no válido para muestreo evento de tipo %(type)s"
+msgstr "Sitio tipo %(site_type)s es no válido para muestreo evento de tipo %(type)s"
 
 #: database/models/object_types/site_types.py:18
 msgid "Name of site type"
@@ -2049,7 +2049,7 @@ msgstr "Dispositivos de eventos de muestreo"
 #: database/models/sampling_events/sampling_event_devices.py:67
 #, python-brace-format
 msgid "Collection device {device} in Sampling Event {event}"
-msgstr "Dispositivo de dispositivo de recolección en evento de evento de muestreo"
+msgstr "Dispositivo {device} desplegado en el evento de evento {event}"
 
 #: database/models/sampling_events/sampling_events.py:17
 msgid "Type of sampling event"
@@ -2299,7 +2299,7 @@ msgstr "Implicaciones"
 #, python-format
 msgid ""
 "Entailment between types %(source_type)s and %(target_type)s is not possible"
-msgstr "Vinculación Entre tipos %(sourcetype)s y %(targettype)s no es posible"
+msgstr "Vinculación Entre tipos %(source_type)s y %(target_type)s no es posible"
 
 #: database/models/terms/entailments.py:62
 #, python-format
@@ -2333,7 +2333,7 @@ msgstr "Sugerencias de sinónimos"
 #: database/models/terms/synonym_suggestions.py:42
 #, python-brace-format
 msgid "Suggestion: {term} = {suggestion}"
-msgstr "Sugerencia: sugerencia de término"
+msgstr "Sugerencia: {term} = {suggestion}"
 
 #: database/models/terms/synonyms.py:17
 msgid "Reference to the source of synonym"
@@ -2400,7 +2400,7 @@ msgstr "Sugerencias de término"
 #: database/models/terms/term_suggestions.py:45
 #, python-format
 msgid "Suggestion: %(term_type)s: %(value)s"
-msgstr "Sugerencia: %(termtype)s: %(value)s"
+msgstr "Sugerencia: %(term_type)s: %(value)s"
 
 #: database/models/terms/terms.py:41
 msgid "Term"
@@ -2672,7 +2672,7 @@ msgid ""
 "      "
 msgstr ""
 "\n"
-"      "Un modelo de base de datos para datos generados en sistemas de monitoreo de biodiversidad"
+"      Un modelo de base de datos para datos generados en sistemas de monitoreo de biodiversidad"
 "      "
 
 #: irekua/templates/irekua/content/about.html:20
@@ -2680,7 +2680,9 @@ msgid ""
 "\n"
 "Irekua data model stems from the requirements of most passive monitoring "
 "systems\n"
-msgstr "El modelo de datos irekua se deriva de los requisitos de la mayoría de los sistemas de monitoreo pasivo\n"
+msgstr ""
+"\n"
+"El modelo de datos irekua se deriva de los requisitos de la mayoría de los sistemas de monitoreo pasivo\n"
 
 #: irekua/templates/irekua/content/about.html:30
 msgid "Distributed"
@@ -3678,7 +3680,7 @@ msgstr "Dispositivos desplegados"
 #: selia/templates/selia/components/navbar_items.html:25
 #: selia/templates/selia/components/navbar_items.html:27
 msgid "User Home"
-msgstr "Casa de usuario"
+msgstr "Hogar"
 
 #: selia/templates/selia/components/navbar_items.html:36
 #: selia/templates/selia/components/navbar_items.html:38
@@ -4023,7 +4025,9 @@ msgid ""
 "\n"
 "  Please select a site to add or\n"
 "  "
-msgstr "Seleccione un sitio para agregar o"
+msgstr ""
+"\n"
+"Seleccione un sitio para agregar o"
 
 #: selia/templates/selia/create/collection_sites/select_site.html:40
 #: selia/templates/selia/create/items/select_sampling_event.html:33
@@ -4104,7 +4108,10 @@ msgid ""
 "\n"
 "        No user with the given email was found. Do you wish to\n"
 "        "
-msgstr "No se encontró ningún usuario con el correo electrónico proporcionado. Deseas\n"
+msgstr ""
+"\n"
+"        No se encontró ningún usuario con el correo electrónico proporcionado. Deseas\n"
+"        "
 
 #: selia/templates/selia/create/collection_users/select_user.html:52
 msgid "invite a new user"
@@ -4194,7 +4201,7 @@ msgid ""
 "\n"
 "    Choose a sampling event from the collection or\n"
 "  "
-msgstr "
+msgstr ""
 "\n"
 "    Elija un evento de muestreo de la colección o\n"
 "  "
@@ -4294,7 +4301,9 @@ msgid ""
 "\n"
 "    Register any individual traits\n"
 "  "
-msgstr "Registrar cualquier rasgo individual"
+msgstr ""
+"\n"
+"Registrar cualquier rasgo individual"
 
 #: selia/templates/selia/create/physical_devices/create_form.html:33
 msgid "Selected hardware"
@@ -4305,7 +4314,9 @@ msgid ""
 "\n"
 "    Select the brand, model and device type.\n"
 "  "
-msgstr "Seleccione la marca, modelo y tipo de dispositivo."
+msgstr ""
+"\n"
+"Seleccione la marca, modelo y tipo de dispositivo."
 
 #: selia/templates/selia/create/physical_devices/select_device.html:47
 msgid "Select"
@@ -4343,7 +4354,9 @@ msgid ""
 "  Please provide information about the deployment of the device in the "
 "sampling event.\n"
 "  "
-msgstr "Proporcione información sobre la implementación del dispositivo en el evento de muestreo."
+msgstr ""
+"\n"
+"Proporcione información sobre la implementación del dispositivo en el evento de muestreo."
 
 #: selia/templates/selia/create/sampling_event_devices/select_collection.html:31
 msgid "No available collections."
@@ -4420,7 +4433,9 @@ msgstr "Seleccione un sitio registrado"
 msgid ""
 "\n"
 "  Please select a collection site to associate or\n"
-msgstr "Seleccione un sitio de colección para asociar o"
+msgstr ""
+"\n"
+"Seleccione un sitio de colección para asociar o\n"
 
 #: selia/templates/selia/create/sampling_events/select_site.html:39
 msgid "add a new one"
@@ -4666,7 +4681,9 @@ msgid ""
 "\n"
 "      No user devices were found.\n"
 "    "
-msgstr "No se encontraron dispositivos de usuario."
+msgstr ""
+"\n"
+"No se encontraron dispositivos de usuario."
 
 #: selia/templates/selia/list/user_sampling_events.html:24
 msgid ""
@@ -4734,7 +4751,7 @@ msgstr "Mis eventos de muestreo"
 
 #: selia/templates/selia/navbars/user.html:65
 msgid "My Items"
-msgstr "Mis cosas"
+msgstr "Mis artículos"
 
 #: selia/templates/selia/no_permission.html:8
 msgid "Permission Denied"

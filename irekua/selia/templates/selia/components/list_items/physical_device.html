@@ -20,23 +20,19 @@
 
     <div class="col-md-2 mx-5">
       <div class="row d-flex justify-content-between">
-        <h6>{% trans 'Device type' %}</h6>
-        <div class="text-muted ml-4">{{ item.device.device_type }}</div>
-      </div>
-      <div class="row d-flex justify-content-between">
         <h6>{% trans 'Name' %}</h6>
         <div class="text-muted ml-4">{{ item.identifier }}</div>
-      </div>
-      <div class="row d-flex justify-content-between">
-        <h6>{% trans 'Serial Number' %}</h6>
-        <div class="text-muted ml-4">{{ item.serial_number }}</div>
       </div>
     </div>
 
     <div class="col-2 mx-5">
       <div class="row d-flex justify-content-between">
-        <h6>{% trans 'Bundle' %}</h6>
-        <div class="text-muted ml-4">{{ item.bundle|yesno }}</div>
+        <h6>{% trans 'Device type' %}</h6>
+        <div class="text-muted ml-4">{{ item.device.device_type }}</div>
+      </div>
+      <div class="row d-flex justify-content-between">
+        <h6>{% trans 'Serial Number' %}</h6>
+        <div class="text-muted ml-4">{{ item.serial_number }}</div>
       </div>
     </div>
 
