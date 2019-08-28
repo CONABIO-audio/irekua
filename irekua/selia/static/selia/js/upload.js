@@ -1212,17 +1212,23 @@ class FileUploader {
 		blank_message.innerHTML = "No se ha subido ningún archivo nuevo"
 		this.blank_upload_list.appendChild(blank_message);
 	}
-	get_file_page(page, per_page, filter_function) {
+	get_file_page(page, per_page, filter_function,sort_function=this.compare_names) {
 		var page = page || 1;
 		if (page <= 0){
 			page = 1;
 		}
 		var per_page = per_page || 10;
+
 		if (filter_function){
 			var filteredItems = this.files.filter(filter_function);
 		} else {
 			var filteredItems = this.files;
 		}
+		if (sort_function){
+			filteredItems.sort(sort_function);
+		}
+		
+
 		var total_pages = Math.ceil(filteredItems.length / per_page);
 
 		if (filteredItems.length <= per_page && filteredItems.length > 0){
@@ -1701,8 +1707,8 @@ class FileUploader {
 		        itemLink.className = "btn-link ml-4 ellipsise";
 		        itemLink.setAttribute('href',page.data[i].upload_response.result.item.detail_url)
 		        itemLink.setAttribute('target','_blank');
-		        itemLink.innerHTML = "<h4>Artículo "+page.data[i].upload_response.result.item.pk+"</h4>";
-
+		        itemLink.innerHTML = "<h6>Artículo "+page.data[i].upload_response.result.item.pk+"</h6>";
+		        
 		        statusCol.appendChild(itemLink);
 
 				row.appendChild(descrCol);
@@ -1782,7 +1788,7 @@ class FileUploader {
 		        itemLink.className = "btn-link ml-4 ellipsise";
 		        itemLink.setAttribute('href',page.data[i].upload_response.result.item.detail_url)
 		        itemLink.setAttribute('target','_blank');
-		        itemLink.innerHTML = "<h4>Artículo "+page.data[i].upload_response.result.item.pk+"</h4>";
+		        itemLink.innerHTML = "<h6>Artículo "+page.data[i].upload_response.result.item.pk+"</h6>";
 
 		        statusCol.appendChild(itemLink);
 
@@ -2213,6 +2219,15 @@ class FileUploader {
 			return true;
 		}
 		return false;
+	}
+	compare_names(f1,f2){
+		if (f1.name < f2.name){
+			return -1;
+		}
+		if (f1.name > f2.name){
+			return 1;
+		}
+		return 0;
 	}
 	get_item_type(file){
 	  switch (file.type){
