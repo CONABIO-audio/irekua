@@ -9,8 +9,6 @@
     <div class="media">
       {% if item.role.icon %}
       <img class="img-thumbnail mr-4" src="{{ item.role.icon.url }}" alt="logo" style="max-height: 100px; max-width: 100px; object-fit: contain;">
-      {% else %}
-      <img class="img-thumbnail mr-4" src="https://via.placeholder.com/150" alt="logo" style="max-height: 100px; max-width: 100px; object-fit: contain;">
       {% endif %}
       <div class="media-body mt-0">
         <h4 class="mt-0">{{ item.user.last_name }}</h4>
@@ -34,7 +32,7 @@
   <div class="col-2 mx-5">
     <div class="row d-flex justify-content-between">
       <h6>{% trans 'Username' %}</h6>
-      <div class="text-muted ml-4">{{ item.username }}</div>
+      <div class="text-muted ml-4">{{ item.user.username }}</div>
     </div>
     <div class="row d-flex justify-content-between">
       <h6>{% trans 'Email' %}</h6>
