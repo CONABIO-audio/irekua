@@ -19,7 +19,7 @@ class SeliaListView(ListView):
     no_permission_template = 'selia/no_permission.html'
 
     def has_view_permission(self):
-        return True
+        return self.request.user.is_authenticated
 
     def has_create_permission(self):
         return True
