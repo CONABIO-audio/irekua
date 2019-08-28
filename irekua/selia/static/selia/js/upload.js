@@ -72,7 +72,7 @@ class FileUploader {
 		file_btn.htmlFor = "file_picker";
 		file_btn.className ="upload_tool text-light";
 
-		var add_label = document.createTextNode("Add files ");
+		var add_label = document.createTextNode("Agregar ");
 		var add_icon = document.createElement('i');
 		add_icon.className = "fas fa-plus";
 		file_btn.appendChild(add_label);
@@ -102,7 +102,7 @@ class FileUploader {
 
 		var upload_btn_label = document.createElement('label');
 		upload_btn_label.className ="upload_tool text-light";
-		var upload_label = document.createTextNode('Upload ');
+		var upload_label = document.createTextNode('Subir ');
 		var upload_icon = document.createElement('i');
 
 		upload_icon.className = "fas fa-upload";
@@ -125,14 +125,14 @@ class FileUploader {
 		upload_all_btn_row.className = "row upload_tool justify-content-center";
 
 		this.upload_all_btn = document.createElement("a");
-		this.upload_all_btn.innerHTML = "<h6>Ready</h6";
+		this.upload_all_btn.innerHTML = "<h6>Listos</h6";
 		upload_all_btn_row.appendChild(this.upload_all_btn);
 
 		var upload_selected_btn_row = document.createElement('div');
 		upload_selected_btn_row.className = "row upload_tool justify-content-center";
 
 		this.upload_selected_btn = document.createElement("a");
-		this.upload_selected_btn.innerHTML = "<h6>Selection</h6>";
+		this.upload_selected_btn.innerHTML = "<h6>Selección</h6>";
 		upload_selected_btn_row.appendChild(this.upload_selected_btn);
 
 		upload_dropdown_menu_inner.appendChild(upload_selected_btn_row);
@@ -159,7 +159,7 @@ class FileUploader {
 
 		var remove_btn_label = document.createElement('label');
 		remove_btn_label.className ="upload_tool text-light";
-		var remove_label = document.createTextNode('Cancel ');
+		var remove_label = document.createTextNode('Cancelar ');
 		var remove_icon = document.createElement('i');
 
 		remove_icon.className = "fas fa-trash";
@@ -184,7 +184,7 @@ class FileUploader {
 		remove_all_btn_row.className = "row upload_tool justify-content-center";
 
 		this.remove_all_btn = document.createElement("a");
-		this.remove_all_btn.innerHTML = "<h6>All</h6>";
+		this.remove_all_btn.innerHTML = "<h6>Todo</h6>";
 
 		remove_all_btn_row.appendChild(this.remove_all_btn);
 
@@ -192,7 +192,7 @@ class FileUploader {
 		remove_selected_btn_row.className = "row upload_tool justify-content-center";
 
 		this.remove_selected_btn = document.createElement("a");
-		this.remove_selected_btn.innerHTML = "<h6>Selection</h6>";
+		this.remove_selected_btn.innerHTML = "<h6>Selección</h6>";
 		remove_selected_btn_row.appendChild(this.remove_selected_btn);
 
 		remove_dropdown_menu_inner.appendChild(remove_selected_btn_row);
@@ -216,7 +216,7 @@ class FileUploader {
 
 		var date_toggle_btn_label = document.createElement('label');
 		date_toggle_btn_label.className ="upload_tool text-light";
-		var date_toggle_label = document.createTextNode('Date tools ');
+		var date_toggle_label = document.createTextNode('Editar momento ');
 		//var date_toggle_icon = document.createElement('i');
 
 		//date_toggle_icon.className = "fas fa-trash";
@@ -250,7 +250,7 @@ class FileUploader {
 		date_pattern_col.className = "col";
 		var date_pattern_label = document.createElement('label');
 		date_pattern_label.className = "upload_tool text-light";
-		date_pattern_label.appendChild(document.createTextNode('Pattern: '));
+		date_pattern_label.appendChild(document.createTextNode('Patrón: '));
 		date_pattern_label.htmlFor = "itemDatePattern";
 
 		this.date_pattern_input = document.createElement('input');
@@ -293,7 +293,7 @@ class FileUploader {
 		date_pattern_apply_all_btn_row.className = "row upload_tool justify-content-center";
 
 		this.date_pattern_apply_all_btn = document.createElement("a");
-		this.date_pattern_apply_all_btn.innerHTML = "<h6>Set all</h6>";
+		this.date_pattern_apply_all_btn.innerHTML = "<h6>Todo</h6>";
 
 		date_pattern_apply_all_btn_row.appendChild(this.date_pattern_apply_all_btn);
 
@@ -301,7 +301,7 @@ class FileUploader {
 		date_pattern_apply_selected_btn_row.className = "row upload_tool justify-content-center";
 
 		this.date_pattern_apply_selected_btn = document.createElement("a");
-		this.date_pattern_apply_selected_btn.innerHTML = "<h6>Set selected</h6>";
+		this.date_pattern_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
 		date_pattern_apply_selected_btn_row.appendChild(this.date_pattern_apply_selected_btn);
 
 		date_pattern_apply_dropdown_menu_inner.appendChild(date_pattern_apply_selected_btn_row);
@@ -325,7 +325,7 @@ class FileUploader {
 		date_col.className = "col";
 		var date_label = document.createElement('label');
 		date_label.className = "upload_tool text-light";
-		date_label.appendChild(document.createTextNode('Date: '));
+		date_label.appendChild(document.createTextNode('Fecha: '));
 		date_label.htmlFor = "itemDate";
 
 		this.date_input = document.createElement('input');
@@ -347,6 +347,7 @@ class FileUploader {
 		        }
 		    }
 		});
+
 
         this.date_input.placeholder = "YYYY-MM-DD";
 
@@ -384,7 +385,7 @@ class FileUploader {
 		date_apply_all_btn_row.className = "row upload_tool justify-content-center";
 
 		this.date_apply_all_btn = document.createElement("a");
-		this.date_apply_all_btn.innerHTML = "<h6>Set all</h6>";
+		this.date_apply_all_btn.innerHTML = "<h6>Todo</h6>";
 
 		date_apply_all_btn_row.appendChild(this.date_apply_all_btn);
 
@@ -392,7 +393,7 @@ class FileUploader {
 		date_apply_selected_btn_row.className = "row upload_tool justify-content-center";
 
 		this.date_apply_selected_btn = document.createElement("a");
-		this.date_apply_selected_btn.innerHTML = "<h6>Set selected</h6>";
+		this.date_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
 		date_apply_selected_btn_row.appendChild(this.date_apply_selected_btn);
 
 		date_apply_dropdown_menu_inner.appendChild(date_apply_selected_btn_row);
@@ -417,7 +418,7 @@ class FileUploader {
 		time_col.className = "col";
 		var time_label = document.createElement('label');
 		time_label.className = "upload_tool text-light";
-		time_label.appendChild(document.createTextNode('Time: '));
+		time_label.appendChild(document.createTextNode('Tiempo: '));
 		time_label.htmlFor = "itemDate";
 
 		this.time_input = document.createElement('input');
@@ -476,7 +477,7 @@ class FileUploader {
 		time_apply_all_btn_row.className = "row upload_tool justify-content-center";
 
 		this.time_apply_all_btn = document.createElement("a");
-		this.time_apply_all_btn.innerHTML = "<h6>Set all</h6>";
+		this.time_apply_all_btn.innerHTML = "<h6>Todo</h6>";
 
 		time_apply_all_btn_row.appendChild(this.time_apply_all_btn);
 
@@ -484,7 +485,7 @@ class FileUploader {
 		time_apply_selected_btn_row.className = "row upload_tool justify-content-center";
 
 		this.time_apply_selected_btn = document.createElement("a");
-		this.time_apply_selected_btn.innerHTML = "<h6>Set selected</h6>";
+		this.time_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
 		time_apply_selected_btn_row.appendChild(this.time_apply_selected_btn);
 
 		time_apply_dropdown_menu_inner.appendChild(time_apply_selected_btn_row);
@@ -517,7 +518,7 @@ class FileUploader {
 
 		var metadata_date_btn_label = document.createElement('label');
 		metadata_date_btn_label.className ="upload_tool text-light";
-		var metadata_date_label = document.createTextNode('Restore ');
+		var metadata_date_label = document.createTextNode('Restaurar ');
 		var metadata_date_icon = document.createElement('i');
 
 		metadata_date_icon.className = "fas fa-cog";
@@ -541,7 +542,7 @@ class FileUploader {
 		metadata_date_all_btn_row.className = "row upload_tool justify-content-center";
 
 		this.metadata_date_all_btn = document.createElement("a");
-		this.metadata_date_all_btn.innerHTML = "<h6>Set all</h6>";
+		this.metadata_date_all_btn.innerHTML = "<h6>Todo</h6>";
 
 		metadata_date_all_btn_row.appendChild(this.metadata_date_all_btn);
 
@@ -549,7 +550,7 @@ class FileUploader {
 		metadata_date_selected_btn_row.className = "row upload_tool justify-content-center";
 
 		this.metadata_date_selected_btn = document.createElement("a");
-		this.metadata_date_selected_btn.innerHTML = "<h6>Set selected</h6>";
+		this.metadata_date_selected_btn.innerHTML = "<h6>Selección</h6>";
 		metadata_date_selected_btn_row.appendChild(this.metadata_date_selected_btn);
 
 		metadata_date_dropdown_menu_inner.appendChild(metadata_date_selected_btn_row);
@@ -674,7 +675,7 @@ class FileUploader {
 		this.date_pattern_apply_selected_btn.addEventListener('click',function(e){
 			var parser_map = widget.validate_parser_map(widget.date_pattern_input.value);
 			if (parser_map){
-				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
+				var check_boxes = widget.file_list.querySelectorTodo('input[type=checkbox]:checked');
 
 				for (var i=0;i<check_boxes.length;i++){
 					if (check_boxes[i].file_id != "all"){
@@ -741,7 +742,7 @@ class FileUploader {
 		this.time_apply_selected_btn.addEventListener('click',function(e){
 			var valid_time = widget.validate_datetime(widget.time_input.value,'time');
 			if (valid_time){
-				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
+				var check_boxes = widget.file_list.querySelectorTodo('input[type=checkbox]:checked');
 				for (var i=0;i<check_boxes.length;i++){
 					if (check_boxes[i].file_id != "all"){
 						var file = widget.get_file_by_id(check_boxes[i].file_id);
@@ -770,7 +771,7 @@ class FileUploader {
 		this.date_apply_selected_btn.addEventListener('click',function(e){
 			var valid_date = widget.validate_datetime(widget.date_input.value);
 			if (valid_date){
-				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
+				var check_boxes = widget.file_list.querySelectorTodo('input[type=checkbox]:checked');
 				for (var i=0;i<check_boxes.length;i++){
 					if (check_boxes[i].file_id != "all"){
 						var file = widget.get_file_by_id(check_boxes[i].file_id);
@@ -860,7 +861,7 @@ class FileUploader {
 		this.error_link = document.createElement('a');
 		this.error_link.className = "nav-link active";
 		this.error_link.href = "#";
-		this.error_link.innerHTML = "Errors (0)";
+		this.error_link.innerHTML = "Errores (0)";
 		error_tab.appendChild(this.error_link);
 
 
@@ -869,7 +870,7 @@ class FileUploader {
 		this.duplicate_link = document.createElement('a');
 		this.duplicate_link.className = "nav-link";
 		this.duplicate_link.href = "#";
-		this.duplicate_link.innerHTML = "Duplicates (0)";
+		this.duplicate_link.innerHTML = "Duplicados (0)";
 		duplicate_tab.appendChild(this.duplicate_link);
 
 
@@ -878,7 +879,7 @@ class FileUploader {
 		this.upload_link = document.createElement('a');
 		this.upload_link.className = "nav-link";
 		this.upload_link.href = "#";
-		this.upload_link.innerHTML = "Uploads (0)";
+		this.upload_link.innerHTML = "Subidos (0)";
 		upload_tab.appendChild(this.upload_link);
 
 
@@ -972,7 +973,7 @@ class FileUploader {
 		file_btn.className ="upload_tool";
 
 
-		var add_label = document.createTextNode("Add files ");
+		var add_label = document.createTextNode("Agregar archivos ");
 		var add_icon = document.createElement('i');
 		add_icon.className = "fas fa-plus";
 		file_btn.appendChild(add_label);
@@ -997,7 +998,7 @@ class FileUploader {
 		prev_col.className = "col p-3 text-center";
 		this.prev_file_btn = document.createElement('button');
 		this.prev_file_btn.className = "btn btn-primary";
-		var prev_label = document.createTextNode("Previous");
+		var prev_label = document.createTextNode("Anterior");
 		this.prev_file_btn.appendChild(prev_label);
 		prev_col.appendChild(this.prev_file_btn);
 
@@ -1010,7 +1011,7 @@ class FileUploader {
 		next_col.className = "col p-3 text-center";
 		this.next_file_btn = document.createElement('button');
 		this.next_file_btn.className = "btn btn-primary";
-		var next_label = document.createTextNode("Next");
+		var next_label = document.createTextNode("Siguiente");
 		this.next_file_btn.appendChild(next_label);
 		next_col.appendChild(this.next_file_btn);
 
@@ -1052,7 +1053,7 @@ class FileUploader {
 		prev_col.className = "col p-3 text-center";
 		this.prev_error_btn = document.createElement('button');
 		this.prev_error_btn.className = "btn btn-primary";
-		var prev_label = document.createTextNode("Previous");
+		var prev_label = document.createTextNode("Anterior");
 		this.prev_error_btn.appendChild(prev_label);
 		prev_col.appendChild(this.prev_error_btn);
 
@@ -1065,7 +1066,7 @@ class FileUploader {
 		next_col.className = "col p-3 text-center";
 		this.next_error_btn = document.createElement('button');
 		this.next_error_btn.className = "btn btn-primary";
-		var next_label = document.createTextNode("Next");
+		var next_label = document.createTextNode("Siguiente");
 		this.next_error_btn.appendChild(next_label);
 		next_col.appendChild(this.next_error_btn);
 
@@ -1096,7 +1097,7 @@ class FileUploader {
 		this.blank_error_list.height = "300px";
 
 		var blank_message = document.createElement('a');
-		blank_message.innerHTML = "No errors"
+		blank_message.innerHTML = "No hay errores"
 		this.blank_error_list.appendChild(blank_message);
 	}
 	build_duplicate_list(){
@@ -1108,7 +1109,7 @@ class FileUploader {
 		prev_col.className = "col p-3 text-center";
 		this.prev_duplicate_btn = document.createElement('button');
 		this.prev_duplicate_btn.className = "btn btn-primary";
-		var prev_label = document.createTextNode("Previous");
+		var prev_label = document.createTextNode("Anterior");
 		this.prev_duplicate_btn.appendChild(prev_label);
 		prev_col.appendChild(this.prev_duplicate_btn);
 
@@ -1121,7 +1122,7 @@ class FileUploader {
 		next_col.className = "col p-3 text-center";
 		this.next_duplicate_btn = document.createElement('button');
 		this.next_duplicate_btn.className = "btn btn-primary";
-		var next_label = document.createTextNode("Next");
+		var next_label = document.createTextNode("Siguiente");
 		this.next_duplicate_btn.appendChild(next_label);
 		next_col.appendChild(this.next_duplicate_btn);
 
@@ -1152,7 +1153,7 @@ class FileUploader {
 		this.blank_duplicate_list.height = "300px";
 
 		var blank_message = document.createElement('a');
-		blank_message.innerHTML = "No duplicates"
+		blank_message.innerHTML = "No hay duplicados"
 		this.blank_duplicate_list.appendChild(blank_message);
 	}
 	build_upload_list(){
@@ -1164,7 +1165,7 @@ class FileUploader {
 		prev_col.className = "col p-3 text-center";
 		this.prev_upload_btn = document.createElement('button');
 		this.prev_upload_btn.className = "btn btn-primary";
-		var prev_label = document.createTextNode("Previous");
+		var prev_label = document.createTextNode("Aanterior");
 		this.prev_upload_btn.appendChild(prev_label);
 		prev_col.appendChild(this.prev_upload_btn);
 
@@ -1177,7 +1178,7 @@ class FileUploader {
 		next_col.className = "col p-3 text-center";
 		this.next_upload_btn = document.createElement('button');
 		this.next_upload_btn.className = "btn btn-primary";
-		var next_label = document.createTextNode("Next");
+		var next_label = document.createTextNode("Siguiente");
 		this.next_upload_btn.appendChild(next_label);
 		next_col.appendChild(this.next_upload_btn);
 
@@ -1208,7 +1209,7 @@ class FileUploader {
 		this.blank_upload_list.height = "300px";
 
 		var blank_message = document.createElement('a');
-		blank_message.innerHTML = "No new uploads"
+		blank_message.innerHTML = "No se ha subido ningún archivo nuevo"
 		this.blank_upload_list.appendChild(blank_message);
 	}
 	get_file_page(page, per_page, filter_function) {
@@ -1279,23 +1280,23 @@ class FileUploader {
 			header_checkCol.appendChild(header_checkFile);
 
 			var fileTitle = document.createElement('div');
-        	fileTitle.textContent = 'File';
+        	fileTitle.textContent = 'Archivo';
         	fileTitle.className = 'ml-4 ellipsise text-light header_title';
         	header_descrCol.appendChild(fileTitle);
 
 			var dateTitle = document.createElement('div');
-        	dateTitle.textContent = 'Date';
+        	dateTitle.textContent = 'Fecha';
         	dateTitle.className = 'ml-4 ellipsise text-light header_title';
         	header_dateCol.appendChild(dateTitle);
 
 			var timeTitle = document.createElement('div');
-        	timeTitle.textContent = 'Time';
+        	timeTitle.textContent = 'Tiempo';
         	timeTitle.className = 'ml-4 ellipsise text-light header_title';
         	header_timeCol.appendChild(timeTitle);
 
 		    var statusTitle = document.createElement('div');
 		    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-		    statusTitle.textContent = "Status";
+		    statusTitle.textContent = "Estado";
 		    header_statusCol.appendChild(statusTitle);
 
 		    header.appendChild(header_checkCol);
@@ -1424,7 +1425,7 @@ class FileUploader {
 				status_btn.style.display = "none";
 				status_btn.style.cursor = "pointer";
 
-				var status_label = document.createTextNode("Ready ");
+				var status_label = document.createTextNode("Listo ");
 				var status_icon = document.createElement('i');
 				status_icon.className = "fas fa-upload";
 				
@@ -1442,18 +1443,18 @@ class FileUploader {
 		        var status = "";
 
 		        if (!page.data[i].captured_on_time && !page.data[i].captured_on_date){
-		        	status = "Missing all";
+		        	status = "Sin momento";
 		        } else if (!page.data[i].captured_on_time) {
-		        	status = "Missing time";
+		        	status = "Sin tiempo";
 		        } else if (!page.data[i].captured_on_date) {
-		        	status = "Missing date";
+		        	status = "Sin fecha";
 		        } else {
-		        	status = "Ready";
+		        	status = "Listo";
 		        }
 
 		        statusText.textContent = status;
 
-		        if (status == "Ready"){
+		        if (status == "Listo"){
 		        	statusText.style.display = "none";
 					status_btn.style.display = "inline-block";
 		        	$(timeInput).removeClass('incorrect_pattern');
@@ -1532,7 +1533,7 @@ class FileUploader {
 			}
 
 			header_checkFile.addEventListener('input',function(e){
-				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]');
+				var check_boxes = widget.file_list.querySelectorTodo('input[type=checkbox]');
 				if (this.checked){
 					for (var i=0;i<check_boxes.length;i++){
 						check_boxes[i].checked = true;
@@ -1555,7 +1556,7 @@ class FileUploader {
 			this.error_list.removeChild(this.error_list.firstChild);
 		}
 
-		this.error_link.innerHTML = "Errors ("+page.total+")";
+		this.error_link.innerHTML = "Errores ("+page.total+")";
 
 		if (page.data.length > 0){
 			this.blank_error_list.style.display = "none";
@@ -1573,13 +1574,13 @@ class FileUploader {
 			header_statusCol.className = 'col-6 text-center item_col';
 
 			var fileTitle = document.createElement('div');
-        	fileTitle.textContent = 'File';
+        	fileTitle.textContent = 'Archivo';
         	fileTitle.className = 'ml-4 ellipsise text-light header_title';
         	header_descrCol.appendChild(fileTitle);
 
 		    var statusTitle = document.createElement('div');
 		    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-		    statusTitle.textContent = "Description";
+		    statusTitle.textContent = "Descripción";
 		    header_statusCol.appendChild(statusTitle);
 
 		    header.appendChild(header_descrCol);
@@ -1614,7 +1615,7 @@ class FileUploader {
 
 		        var status = "";
 		        if (!page.data[i].item_type){
-		        	status = "Wrong file type";
+		        	status = "Tipo incorrecto";
 		        }
 		        statusText.textContent = status;
 
@@ -1637,7 +1638,7 @@ class FileUploader {
 			this.duplicate_list.removeChild(this.duplicate_list.firstChild);
 		}
 
-		this.duplicate_link.innerHTML = "Duplicates ("+page.total+")";
+		this.duplicate_link.innerHTML = "Duplicados ("+page.total+")";
 
 		if (page.data.length > 0){
 			this.blank_duplicate_list.style.display = "none";
@@ -1655,7 +1656,7 @@ class FileUploader {
 			header_statusCol.className = 'col-5 text-center item_col';
 
 			var fileTitle = document.createElement('div');
-        	fileTitle.textContent = 'Item';
+        	fileTitle.textContent = 'Artículo';
         	fileTitle.className = 'ml-4 ellipsise text-light header_title';
         	header_descrCol.appendChild(fileTitle);
 
@@ -1697,7 +1698,7 @@ class FileUploader {
 		        itemLink.className = "btn-link ml-4 ellipsise";
 		        itemLink.setAttribute('href',page.data[i].upload_response.result.item.detail_url)
 		        itemLink.setAttribute('target','_blank');
-		        itemLink.innerHTML = "<h4>Item "+page.data[i].upload_response.result.item.pk+"</h4>";
+		        itemLink.innerHTML = "<h4>Artículo "+page.data[i].upload_response.result.item.pk+"</h4>";
 
 		        statusCol.appendChild(itemLink);
 
@@ -1717,7 +1718,7 @@ class FileUploader {
 		while (this.upload_list.firstChild) {
 			this.upload_list.removeChild(this.upload_list.firstChild);
 		}
-		this.upload_link.innerHTML = "Uploads ("+page.total+")";
+		this.upload_link.innerHTML = "Subidos ("+page.total+")";
 
 		if (page.data.length > 0){
 			this.blank_upload_list.style.display = "none";
@@ -1735,7 +1736,7 @@ class FileUploader {
 			header_statusCol.className = 'col-5 text-center item_col';
 
 			var fileTitle = document.createElement('div');
-        	fileTitle.textContent = 'Item';
+        	fileTitle.textContent = 'Artículo';
         	fileTitle.className = 'ml-4 ellipsise text-light header_title';
         	header_descrCol.appendChild(fileTitle);
 
@@ -1795,7 +1796,7 @@ class FileUploader {
 		}
 	}
 	get_checked_ids(){
-    	var check_boxes = this.file_list.querySelectorAll('input[type=checkbox]:checked');
+    	var check_boxes = this.file_list.querySelectorTodo('input[type=checkbox]:checked');
 		var id_arr = [];
 		for (var i=0;i<check_boxes.length;i++){
 			if (check_boxes[i].file_id != "all"){
@@ -2217,7 +2218,7 @@ class FileUploader {
 	      return "Foto de Camara Trampa (jpg)";
 	    }
 	    case 'image/png':{
-	      return "Foto de Camara Trampa p(ng)";
+	      return "Foto de Camara Trampa (png)";
 	    }
 	    default:{
 	      return null;
@@ -2434,7 +2435,7 @@ class FileUploader {
 	toggle_status(file_id) {
 		var file = this.get_file_by_id(file_id);
 		if (file){
-			var message = "Ready";
+			var message = "Listo";
 			var date_ready = true;
 			var time_ready = true;
 			var tinput = document.getElementById("time_input_file_"+file_id);
@@ -2457,17 +2458,17 @@ class FileUploader {
 			}
 
 			if (!date_ready && !time_ready){
-				message = "Missing all";
+				message = "Sin momento";
 			} else if (!date_ready){
-				message = "Missing date";
+				message = "Sin fecha";
 			} else if (!time_ready) {
-				message = "Missing time";
+				message = "Sin tiempo";
 			}
 
 			
 			statustext.textContent = message;
 
-			if (message == "Ready"){
+			if (message == "Listo"){
 				statustext.style.display = "none";
 				status_btn.style.display = "inline-block";
 			} else {
