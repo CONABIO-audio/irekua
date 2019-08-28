@@ -8,13 +8,18 @@ from database.models.base import IrekuaModelBaseUser
 
 
 class Annotation(IrekuaModelBaseUser):
-    LOW_QUALITY = 'L'
-    MEDIUM_QUALITY = 'M'
-    HIGH_QUALITY = 'H'
+    LOW = 'L'
+    MEDIUM = 'M'
+    HIGH = 'H'
+    CERTAINTY_OPTIONS = [
+        (LOW, _('uncertain')),
+        (MEDIUM, _('somewhat certain')),
+        (HIGH, _('certain')),
+     ]
     QUALITY_OPTIONS = [
-        (LOW_QUALITY, _('low')),
-        (MEDIUM_QUALITY, _('medium')),
-        (HIGH_QUALITY, _('high')),
+        (LOW, _('low')),
+        (MEDIUM, _('medium')),
+        (HIGH, _('high')),
     ]
 
     annotation_tool = models.ForeignKey(
@@ -66,13 +71,15 @@ class Annotation(IrekuaModelBaseUser):
         help_text=_('Configuration of annotation tool'),
         blank=True,
         null=False)
-    certainty = models.FloatField(
+    certainty = models.CharField(
+        max_length=16,
         db_column='certainty',
         verbose_name=_('certainty'),
         help_text=_(
             'Level of certainty of location or labelling '
             'of annotation'),
         blank=True,
+        choices=CERTAINTY_OPTIONS,
         null=True)
     quality = models.CharField(
         db_column='quality',
