@@ -3008,7 +3008,7 @@ msgstr "Ver más"
 
 #: selia/templates/selia/components/annotators/image.html:21
 msgid "Clear"
-msgstr "Claro"
+msgstr "Limpiar"
 
 #: selia/templates/selia/components/annotators/image.html:30
 msgid "New image annotation:"
