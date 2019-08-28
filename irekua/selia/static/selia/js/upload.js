@@ -72,7 +72,7 @@ class FileUploader {
 		file_btn.htmlFor = "file_picker";
 		file_btn.className ="upload_tool text-light";
 
-		var add_label = document.createTextNode("Add files");
+		var add_label = document.createTextNode("Add files ");
 		var add_icon = document.createElement('i');
 		add_icon.className = "fas fa-plus";
 		file_btn.appendChild(add_label);
@@ -239,6 +239,12 @@ class FileUploader {
 		row2.style["padding-left"] = "20px";
 		row2.id = "date_tools";
 
+    	var row3 = document.createElement("div");
+		row3.className = "row collapse";
+		row3.style["padding-left"] = "20px";
+		row3.style["padding-top"] = "20px"
+		row3.id = "date_tools";
+
 		var date_pattern_col = document.createElement('div');
 
 		date_pattern_col.className = "col";
@@ -248,6 +254,7 @@ class FileUploader {
 		date_pattern_label.htmlFor = "itemDatePattern";
 
 		this.date_pattern_input = document.createElement('input');
+		this.date_pattern_input.style.width = "300px";
 		this.date_pattern_input.className = "incorrect_pattern";
 		this.date_pattern_input.type = "text";
 		this.date_pattern_input.id = "itemDatePattern";
@@ -318,17 +325,21 @@ class FileUploader {
 		date_col.className = "col";
 		var date_label = document.createElement('label');
 		date_label.className = "upload_tool text-light";
-		date_label.appendChild(document.createTextNode('Fixed: '));
+		date_label.appendChild(document.createTextNode('Date: '));
 		date_label.htmlFor = "itemDate";
 
 		this.date_input = document.createElement('input');
 		this.date_input.className = "incorrect_pattern";
+		this.date_input.style.width = "110px";
 		this.date_input.type = "text";
 
 		$(this.date_input).datetimepicker({
-			format:'Y-m-d H:i:s',
+			format:'Y-m-d',
+			timepicker: false,
+			closeOnDateSelect: true,
+			validateOnBlur: false,
 			onChangeDateTime: function(dp,$input){
-		        var date_input = widget.validate_date($input.val());
+		        var date_input = widget.validate_datetime($input.val());
 		        if (date_input){
 		          $($input).removeClass('incorrect_pattern');
 		        } else {
@@ -337,7 +348,7 @@ class FileUploader {
 		    }
 		});
 
-        this.date_input.placeholder = "YYYY-MM-DD hh:mm:ss";
+        this.date_input.placeholder = "YYYY-MM-DD";
 
 
 		var date_apply_dropdown = document.createElement('div');
@@ -401,6 +412,97 @@ class FileUploader {
 
 
 
+
+		var time_col = document.createElement('div');
+		time_col.className = "col";
+		var time_label = document.createElement('label');
+		time_label.className = "upload_tool text-light";
+		time_label.appendChild(document.createTextNode('Time: '));
+		time_label.htmlFor = "itemDate";
+
+		this.time_input = document.createElement('input');
+		this.time_input.className = "incorrect_pattern";
+		this.time_input.style.width = "80px";
+		this.time_input.type = "text";
+
+		$(this.time_input).datetimepicker({
+			format:'H:i:s',
+			datepicker: false,
+			closeOnDateSelect: true,
+			validateOnBlur: false,
+			onChangeDateTime: function(dp,$input){
+		        var time_input = widget.validate_datetime($input.val(),'time');
+		        if (time_input){
+		          $($input).removeClass('incorrect_pattern');
+		        } else {
+		          $($input).addClass('incorrect_pattern');
+		        }
+		    }
+		});
+
+        this.time_input.placeholder = "hh:mm:ss";
+
+
+		var time_apply_dropdown = document.createElement('div');
+		time_apply_dropdown.className = "dropdown";
+
+		var time_apply_anchor = document.createElement('a');
+		time_apply_anchor.setAttribute('data-toggle','dropdown');
+		time_apply_anchor.setAttribute('role','button');
+		time_apply_anchor.setAttribute('aria-expanded',false);
+		time_apply_anchor.setAttribute('aria-controls','collapseUpload')
+
+		var time_apply_btn_label = document.createElement('label');
+		time_apply_btn_label.className ="upload_tool text-light";
+		var time_apply_icon = document.createElement('i');
+		time_apply_icon.className = "fas fa-arrow-alt-circle-right";
+
+		time_apply_btn_label.appendChild(time_apply_icon);
+
+
+		time_apply_anchor.appendChild(time_apply_btn_label);
+		time_apply_dropdown.appendChild(time_apply_anchor);
+
+		var time_apply_dropdown_menu = document.createElement('div');
+		time_apply_dropdown_menu.className = "dropdown-menu text-light";
+		time_apply_dropdown_menu.style["background-color"] = "#454d54";
+		time_apply_dropdown_menu.style.width = "auto";
+		time_apply_dropdown_menu.setAttribute('aria-labelledby','dropdownMenuButton');
+
+		var time_apply_dropdown_menu_inner = document.createElement('div');
+		time_apply_dropdown_menu_inner.className = "container-fluid";
+
+		var time_apply_all_btn_row = document.createElement('div');
+		time_apply_all_btn_row.className = "row upload_tool justify-content-center";
+
+		this.time_apply_all_btn = document.createElement("a");
+		this.time_apply_all_btn.innerHTML = "<h6>Set all</h6>";
+
+		time_apply_all_btn_row.appendChild(this.time_apply_all_btn);
+
+		var time_apply_selected_btn_row = document.createElement('div');
+		time_apply_selected_btn_row.className = "row upload_tool justify-content-center";
+
+		this.time_apply_selected_btn = document.createElement("a");
+		this.time_apply_selected_btn.innerHTML = "<h6>Set selected</h6>";
+		time_apply_selected_btn_row.appendChild(this.time_apply_selected_btn);
+
+		time_apply_dropdown_menu_inner.appendChild(time_apply_selected_btn_row);
+		time_apply_dropdown_menu_inner.appendChild(time_apply_all_btn_row);
+
+		time_apply_dropdown_menu.appendChild(time_apply_dropdown_menu_inner);
+		time_apply_dropdown.appendChild(time_apply_dropdown_menu);
+
+		var time_row = document.createElement('div');
+		time_row.className = "row d-flex";
+
+		time_row.appendChild(time_label);
+		time_row.appendChild(this.time_input);
+		time_row.appendChild(time_apply_dropdown)
+
+		time_col.appendChild(time_row);
+
+
 		var metadata_date_col = document.createElement('div');
 		metadata_date_col.className = "col";
 
@@ -459,19 +561,31 @@ class FileUploader {
 		metadata_date_col.appendChild(metadata_date_dropdown);
 
 
-		row2.appendChild(date_pattern_col);
 		row2.appendChild(date_col);
+		row2.appendChild(time_col);
 		row2.appendChild(metadata_date_col);
+		row3.appendChild(date_pattern_col);
+
 
 		toolbar_container.appendChild(row);
 		toolbar_container.appendChild(row2);
+		toolbar_container.appendChild(row3);
 
 		this.top_toolbar.appendChild(toolbar_container);
 
 
 	    this.date_input.addEventListener('input',function(e){
-	        var date_input = widget.validate_date(this.value);
+	        var date_input = widget.validate_datetime(this.value);
 	        if (date_input){
+	          $(this).removeClass('incorrect_pattern');
+	        } else {
+	          $(this).addClass('incorrect_pattern');
+	        }
+	      });
+
+	    this.time_input.addEventListener('input',function(e){
+	        var time_input = widget.validate_datetime(this.value,'time');
+	        if (time_input){
 	          $(this).removeClass('incorrect_pattern');
 	        } else {
 	          $(this).addClass('incorrect_pattern');
@@ -483,11 +597,16 @@ class FileUploader {
 
 	    	for (var i=0;i<fixable.length;i++){
 	    		if (fixable[i].media_info){
-	    			var valid_date = fixable[i].media_info.DateTimeOriginalParsed;
-	    			if (typeof(valid_date) !== 'undefined'){
-	    				fixable[i].captured_on = valid_date;
+	    			var datetime_original = fixable[i].media_info.DateTimeOriginalParsed;
+
+	    			if (typeof(datetime_original) !== 'undefined'){
+	    				var datetime_arr = datetime_original.split(" ");
+	    				fixable[i].captured_on_date = datetime_arr[0];
+	    				fixable[i].captured_on_time = datetime_arr[1];
+
 	    			} else {
-	    				fixable[i].captured_on = null;
+	    				fixable[i].captured_on_date = null;
+	    				fixable[i].captured_on_time = null;
 	    			}
 
 	    		}
@@ -498,25 +617,36 @@ class FileUploader {
 		});
 
 	    this.metadata_date_selected_btn.addEventListener('click',function(e){
-	    	var id_arr = widget.remove_multiple(widget.get_checked_ids());
+	    	var id_arr = widget.get_checked_ids();
 
 	    	for (var i=0;i<id_arr.length;i++){
 	    		var file = widget.get_file_by_id(id_arr[i]);
 	    		if (file){
 		    		if (file.media_info){
-		    			var valid_date = file.media_info.DateTimeOriginalParsed;
-		    			if (typeof(valid_date) !== 'undefined'){
-		    				file.captured_on = valid_date;
+		    			var datetime_original = file.media_info.DateTimeOriginalParsed;
+						var dinput = document.getElementById("date_input_file_"+file.file_id);
+						var tinput = document.getElementById("time_input_file_"+file.file_id);
+							
+		    			if (typeof(datetime_original) !== 'undefined'){
+		    				var datetime_arr = datetime_original.split(" ");
+		    				file.captured_on_date = datetime_arr[0];
+		    				file.captured_on_time = datetime_arr[1];
+		    				dinput.value = datetime_arr[0];
+		    				tinput.value = datetime_arr[1];
 		    			} else {
-		    				file.captured_on = null;
+		    				file.captured_on_date = null;
+		    				file.captured_on_time = null;
+		    				dinput.value = "";
+		    				tinput.value = "";
 		    			}
+
+		    			widget.toggle_status(file.file_id);
 
 		    		}	
 	    		}
 
 	    	}
 
-	    	widget.render_by_name(['files']);
 
 		});
 
@@ -550,15 +680,24 @@ class FileUploader {
 					if (check_boxes[i].file_id != "all"){
 						var file = widget.get_file_by_id(check_boxes[i].file_id);
 						if (file){
-							var valid_date = widget.validate_date(widget.parse_date(file.name,parser_map));
+							var dinput = document.getElementById("date_input_file_"+check_boxes[i].file_id);
+							var tinput = document.getElementById("time_input_file_"+check_boxes[i].file_id);
+							var datetime_obj = widget.parse_datetime(file.name,parser_map);
+
+							var valid_date = widget.validate_datetime(datetime_obj.date);
+							var valid_time = widget.validate_datetime(datetime_obj.time,'time');
+
 							if (valid_date){
-								file.captured_on = valid_date;
-								var dinput = document.getElementById("date_input_file_"+check_boxes[i].file_id);
-								var statustext = document.getElementById("status_text_"+check_boxes[i].file_id);
+								file.captured_on_date = valid_date;
 								dinput.value = valid_date;
-								$(dinput).removeClass('incorrect_pattern');
-								statustext.textContent = "Ready";
 							}
+
+							if (valid_time){
+								file.captured_on_time = valid_time;
+								tinput.value = valid_time;							
+							}
+
+							widget.toggle_status(check_boxes[i].file_id);
 						}
 					}
 				}
@@ -570,41 +709,76 @@ class FileUploader {
 			if (parser_map){
 				var files = widget.files.filter(widget.is_fixable);
 				for (var i=0;i<files.length;i++){
-					var valid_date = widget.validate_date(widget.parse_date(files[i].name,parser_map));
+					var datetime_obj = widget.parse_datetime(file.name,parser_map);
+					var valid_date = widget.validate_datetime(datetime_obj.date);
+					var valid_time = widget.validate_datetime(datetime_obj.time,'time');
+					
 					if (valid_date){
-						files[i].captured_on = valid_date;
+						file.captured_on_date = valid_date;
+					}
+
+					if (valid_time){
+						file.captured_on_time = valid_time;
 					}
 				}
+
 				widget.render_by_name(['files']);
 
 			}
 		});
 
+		this.time_apply_all_btn.addEventListener('click',function(e){
+			var valid_time = widget.validate_datetime(widget.time_input.value,'time');
+			if (valid_time){
+				var files = widget.files.filter(widget.is_fixable);
+				for (var i=0;i<files.length;i++){
+					files[i].captured_on_time = valid_time;
+				}
+				widget.render_by_name(['files']);
+			}
+		});
+
+		this.time_apply_selected_btn.addEventListener('click',function(e){
+			var valid_time = widget.validate_datetime(widget.time_input.value,'time');
+			if (valid_time){
+				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
+				for (var i=0;i<check_boxes.length;i++){
+					if (check_boxes[i].file_id != "all"){
+						var file = widget.get_file_by_id(check_boxes[i].file_id);
+						if (file){
+							file.captured_on_time = valid_time;
+							var dinput = document.getElementById("time_input_file_"+check_boxes[i].file_id);
+							dinput.value = valid_time;
+							widget.toggle_status(check_boxes[i].file_id);
+						}
+					}
+				}
+			}
+		});
+
 		this.date_apply_all_btn.addEventListener('click',function(e){
-			var valid_date = widget.validate_date(widget.date_input.value);
+			var valid_date = widget.validate_datetime(widget.date_input.value);
 			if (valid_date){
 				var files = widget.files.filter(widget.is_fixable);
 				for (var i=0;i<files.length;i++){
-					files[i].captured_on = valid_date;
+					files[i].captured_on_date = valid_date;
 				}
 				widget.render_by_name(['files']);
 			}
 		});
 
 		this.date_apply_selected_btn.addEventListener('click',function(e){
-			var valid_date = widget.validate_date(widget.date_input.value);
+			var valid_date = widget.validate_datetime(widget.date_input.value);
 			if (valid_date){
 				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
 				for (var i=0;i<check_boxes.length;i++){
 					if (check_boxes[i].file_id != "all"){
 						var file = widget.get_file_by_id(check_boxes[i].file_id);
 						if (file){
-							file.captured_on = valid_date;
+							file.captured_on_date = valid_date;
 							var dinput = document.getElementById("date_input_file_"+check_boxes[i].file_id);
-							var statustext = document.getElementById("status_text_"+check_boxes[i].file_id);
 							dinput.value = valid_date;
-							$(dinput).removeClass('incorrect_pattern');
-							statustext.textContent = "Ready";
+							widget.toggle_status(check_boxes[i].file_id);
 						}
 					}
 				}
@@ -633,7 +807,7 @@ class FileUploader {
 			$(this.body).remove();
 		}
 		this.body = document.createElement('div');
-		this.body.className = "row";
+		this.body.className = "row justify-content-center";
 
 		this.body.style["padding-top"] = "10px";
 		this.body.style["padding-bottom"] = "10px";
@@ -650,13 +824,13 @@ class FileUploader {
 			$(this.files_section).remove();
 		}
 		var section_col = document.createElement('div');
-		section_col.className = "col-8 w-100";
+		section_col.className = "col-8 justify-content-center w-100";
 
 		this.files_section = document.createElement('div');
 		this.files_section.className = "container-fluid justify-content-center p-2";
 
 		this.file_list_container = document.createElement('div');
-		this.file_list_container.className = "row container-fluid";
+		this.file_list_container.className = "row justify-content-center container-fluid";
 		this.file_list_container.style.display = "none";
 
 
@@ -1083,16 +1257,19 @@ class FileUploader {
 			header.style["margin"] = "10px";
 
 			var header_checkCol = document.createElement('div');
-			header_checkCol.className = 'col-1 text-center item_col';
+			header_checkCol.className = 'col-1  justify-content-center text-center item_col';
 
 			var header_descrCol = document.createElement('div');
-			header_descrCol.className = 'col-3 text-center item_col';
+			header_descrCol.className = 'col-3  justify-content-center text-center item_col';
 
 			var header_dateCol = document.createElement('div');
-			header_dateCol.className = 'col-3 text-center item_col';
+			header_dateCol.className = 'col-2  justify-content-center text-center item_col';
+
+			var header_timeCol = document.createElement('div');
+			header_timeCol.className = 'col-2  justify-content-center text-center item_col';
 
 			var header_statusCol = document.createElement('div');
-			header_statusCol.className = 'col-3 text-center item_col';
+			header_statusCol.className = 'col-3  justify-content-center text-center item_col';
 
 
 			var header_checkFile = document.createElement('input');
@@ -1107,9 +1284,14 @@ class FileUploader {
         	header_descrCol.appendChild(fileTitle);
 
 			var dateTitle = document.createElement('div');
-        	dateTitle.textContent = 'Captured on';
+        	dateTitle.textContent = 'Date';
         	dateTitle.className = 'ml-4 ellipsise text-light header_title';
         	header_dateCol.appendChild(dateTitle);
+
+			var timeTitle = document.createElement('div');
+        	timeTitle.textContent = 'Time';
+        	timeTitle.className = 'ml-4 ellipsise text-light header_title';
+        	header_timeCol.appendChild(timeTitle);
 
 		    var statusTitle = document.createElement('div');
 		    statusTitle.className = 'ml-4 ellipsise text-light header_title';
@@ -1119,10 +1301,10 @@ class FileUploader {
 		    header.appendChild(header_checkCol);
 		    header.appendChild(header_descrCol);
 		    header.appendChild(header_dateCol);
+		    header.appendChild(header_timeCol);
 		    header.appendChild(header_statusCol);
 
 		    this.file_list.appendChild(header);
-
 
 			this.total_file_pages = page.total_pages;
 			$(this.file_page_label).html(page.page+"/"+page.total_pages);
@@ -1134,17 +1316,21 @@ class FileUploader {
 				row.style["margin"] = "10px";
 
 				var checkCol = document.createElement('div');
-				checkCol.className = 'col-1 text-center item_col';
+				checkCol.className = 'col-1 justify-content-center text-center item_col';
 
 				var descrCol = document.createElement('div');
-				descrCol.className = 'col-3 text-center item_col';
+				descrCol.className = 'col-3 justify-content-center  text-center item_col';
 
 				var dateCol = document.createElement('div');
-				dateCol.className = 'col-3 text-center item_col w-100';
+				dateCol.className = 'col-2 justify-content-center  text-center item_col w-100';
 				dateCol.align = "center";
 
+				var timeCol = document.createElement('div');
+				timeCol.className = 'col-2 justify-content-center  text-center item_col w-100';
+				timeCol.align = "center";
+
 				var statusCol = document.createElement('div');
-				statusCol.className = 'col-3 text-center item_col';
+				statusCol.className = 'col-3 justify-content-center  text-center item_col';
 
 
 				var checkFile = document.createElement('input');
@@ -1163,90 +1349,183 @@ class FileUploader {
 		        var dateInput = document.createElement('input');
 		        dateInput.type = "text";
 		        dateInput.style["text-align"]="center";
+		        dateInput.style.width = "115px";
 		        dateInput.className = "incorrect_pattern ml-4 file_title";
 		        dateInput.id = "date_input_file_"+page.data[i]["file_id"];
-          		dateInput.placeholder = "YYYY-MM-DD hh:mm:ss";
+          		dateInput.placeholder = "YYYY-MM-DD";
           		dateInput["file_id"] = page.data[i]["file_id"];
 
           		var valid_date = false;
 
 		        $(dateInput).datetimepicker({
-					format:'Y-m-d H:i:s',
+					format:'Y-m-d',
 					file_id: page.data[i]["file_id"],
+					validateOnBlur: false,
+					timepicker: false,
 					onChangeDateTime: function(dp,$input){
-				        var date_input = widget.validate_date($input.val());
+				        var date_input = widget.validate_datetime($input.val());
 
-				        var input_status = document.getElementById("status_text_"+$input[0].file_id);
 				        if (date_input){
 				          var file = widget.get_file_by_id($input[0].file_id);
-				          file.captured_on = date_input;
-				          $($input).removeClass('incorrect_pattern');
-				          input_status.textContent = "Ready"
-				        } else {
-				          $($input).addClass('incorrect_pattern');
-				          input_status.textContent = "Date is missing"
+				          file.captured_on_date = date_input;
 				        }
+
+				        widget.toggle_status($input[0].file_id);
 				    }
 				});
 
-		        if (page.data[i].captured_on){
-		        	dateInput.value = page.data[i].captured_on;
+		        if (page.data[i].captured_on_date){
+		        	dateInput.value = page.data[i].captured_on_date;
 		        	$(dateInput).removeClass('incorrect_pattern');
 		        }
 
 		        dateCol.appendChild(dateInput);
 
+
+
+
+		        var timeInput = document.createElement('input');
+		        timeInput.type = "text";
+		        timeInput.style["text-align"]="center";
+		        timeInput.style.width = "110px";
+		        timeInput.className = "incorrect_pattern ml-4 file_title";
+		        timeInput.id = "time_input_file_"+page.data[i]["file_id"];
+          		timeInput.placeholder = "hh:mm:ss";
+          		timeInput["file_id"] = page.data[i]["file_id"];
+
+          		var valid_time = false;
+
+		        $(timeInput).datetimepicker({
+					format:'H:i:s',
+					datepicker: false,
+					file_id: page.data[i]["file_id"],
+					validateOnBlur: false,
+					onChangeDateTime: function(dp,$input){
+				        var time_input = widget.validate_datetime($input.val(),'time');
+				        if (time_input){
+				          var file = widget.get_file_by_id($input[0].file_id);
+				          file.captured_on_time = time_input;
+				        }
+				        widget.toggle_status($input[0].file_id);
+				    }
+				});
+
+		        if (page.data[i].captured_on_time){
+		        	timeInput.value = page.data[i].captured_on_time;
+		        	$(timeInput).removeClass('incorrect_pattern');
+		        }
+
+		        timeCol.appendChild(timeInput);
+
+				var status_btn = document.createElement('div');
+				status_btn.className ="col text-muted ml-4 ellipsise file_title";
+				status_btn.id = "status_btn_"+page.data[i]["file_id"];
+				status_btn["file_id"] = page.data[i].file_id;
+				status_btn.style.display = "none";
+				status_btn.style.cursor = "pointer";
+
+				var status_label = document.createTextNode("Ready ");
+				var status_icon = document.createElement('i');
+				status_icon.className = "fas fa-upload";
+				
+
+				status_btn.appendChild(status_label);
+				status_btn.appendChild(status_icon);
+
+				var status_div =  document.createElement('div');
+				status_div.className = "row";
+
 		        var statusText = document.createElement('div');
-		        statusText.className = "text-muted ml-4 ellipsise file_title";
+		        statusText.className = "col text-muted ml-4 ellipsise file_title";
 		        statusText.id = "status_text_"+page.data[i]["file_id"];
 
 		        var status = "";
-		        if (!page.data[i].captured_on){
-		        	status = "Date is missing";
-		        }
 
-		        if (status == ""){
-		        	$(dateInput).removeClass('incorrect_pattern');
-		        	statusText.textContent = "Ready";
+		        if (!page.data[i].captured_on_time && !page.data[i].captured_on_date){
+		        	status = "Missing all";
+		        } else if (!page.data[i].captured_on_time) {
+		        	status = "Missing time";
+		        } else if (!page.data[i].captured_on_date) {
+		        	status = "Missing date";
 		        } else {
-		        	statusText.textContent = status;
+		        	status = "Ready";
 		        }
 
-		        statusCol.appendChild(statusText);
+		        statusText.textContent = status;
+
+		        if (status == "Ready"){
+		        	statusText.style.display = "none";
+					status_btn.style.display = "inline-block";
+		        	$(timeInput).removeClass('incorrect_pattern');
+		        } else {
+		        	statusText.style.display = "inline-block";
+					status_btn.style.display = "none";     	
+		        }
+		        
+		        
+
+		        status_div.appendChild(statusText);
+		        status_div.appendChild(status_btn);
+		        statusCol.appendChild(status_div);
+
 
 			    $(dateInput).datetimepicker("option", "onSelect", function(){
-			        var date_input = widget.validate_date(this.value);
-			        var input_status = document.getElementById("status_text_"+this.file_id);
+			        var date_input = widget.validate_datetime(this.value);
+
 			        if (date_input){
 			          var file = widget.get_file_by_id(this.file_id);
-			          file.captured_on = date_input;
-			          $(this).removeClass('incorrect_pattern');
-			          input_status.textContent = "Ready"
-			        } else {
-			          $(this).addClass('incorrect_pattern');
-			          input_status.textContent = "Date is missing"
+			          file.captured_on_date = date_input;
 			        }
+
+			        widget.toggle_status($input[0].file_id);
 			    });
 
 			      dateInput.addEventListener('input',function(e){
-			        var date_input = widget.validate_date(this.value);
-			        var input_status = document.getElementById("status_text_"+this.file_id);
+			        var date_input = widget.validate_datetime(this.value);
 			        var file = widget.get_file_by_id(this.file_id);
 
 			        if (date_input){
-			          file.captured_on = date_input;
-			          $(this).removeClass('incorrect_pattern');
-			          input_status.textContent = "Ready"
+			          file.captured_on_date = date_input;
 			        } else {
-			          file.captured_on = null;
-			          $(this).addClass('incorrect_pattern');
-			          input_status.textContent = "Date is missing"
+			          file.captured_on_date = null;
 			        }
+
+			        widget.toggle_status(this.file_id);
+
+			      });
+
+			    $(timeInput).datetimepicker("option", "onSelect", function(){
+			        var time_input = widget.validate_datetime(this.value,'time');
+
+			        if (time_input){
+			          var file = widget.get_file_by_id(this.file_id);
+			          file.captured_on_time = time_input;
+			        }
+
+			        widget.toggle_status(this.file_id);
+			    });
+
+			      timeInput.addEventListener('input',function(e){
+			        var time_input = widget.validate_datetime(this.value,'time');
+			        var file = widget.get_file_by_id(this.file_id);
+
+			        if (time_input){
+			          file.captured_on_time = time_input;
+			        } else {
+			          file.captured_on_time = null;
+			        }
+			        widget.toggle_status(this.file_id);
+			      });
+
+			      status_btn.addEventListener('click',function(e){
+			      		var file_id = this.file_id;
+			      		widget.upload_multiple(function(f){return f.file_id == file_id});
 			      });
 
 		        row.appendChild(checkCol);
 				row.appendChild(descrCol);
 				row.appendChild(dateCol);
+				row.appendChild(timeCol);
 				row.appendChild(statusCol);
 
 				this.file_list.appendChild(row);
@@ -1526,22 +1805,40 @@ class FileUploader {
 
 		return id_arr;
 	}
-	parse_date(fileName,parser_map){
+	parse_datetime(fileName,parser_map){
 	  var date_context = fileName.match(parser_map["regexp"]);
+	  var date = "";
+	  var time = "";
+
 	  if (date_context){
-	    var date = ""
+	    if ("year" in parser_map){
+		    date = date + date_context.toString().substring(parser_map["year"]["limits"][0],parser_map["year"]["limits"][1]);
+		    if ("month" in parser_map){
+			    date = date + "-" + date_context.toString().substring(parser_map["month"]["limits"][0],parser_map["month"]["limits"][1]);
+			    if ("day" in parser_map){
+			    	date = date + "-" + date_context.toString().substring(parser_map["day"]["limits"][0],parser_map["day"]["limits"][1]);
+			    }
+			    
+		    }
 
-	    date = date + date_context.toString().substring(parser_map["year"]["limits"][0],parser_map["year"]["limits"][1]);
-	    date = date + "-" + date_context.toString().substring(parser_map["month"]["limits"][0],parser_map["month"]["limits"][1]);
-	    date = date + "-" + date_context.toString().substring(parser_map["day"]["limits"][0],parser_map["day"]["limits"][1]);
-	    date = date+" "+date_context.toString().substring(parser_map["hour"]["limits"][0],parser_map["hour"]["limits"][1]);
-	    date = date + ":" + date_context.toString().substring(parser_map["minute"]["limits"][0],parser_map["minute"]["limits"][1])
-	    date = date + ":" + date_context.toString().substring(parser_map["second"]["limits"][0],parser_map["second"]["limits"][1])
+	    }
 
-	    return date;
+	    if ("hour" in parser_map){
+		    time = time + date_context.toString().substring(parser_map["hour"]["limits"][0],parser_map["hour"]["limits"][1]);
+		    if ("minute" in parser_map){
+			    time = time + ":" + date_context.toString().substring(parser_map["minute"]["limits"][0],parser_map["minute"]["limits"][1]);
+			    if ("second" in parser_map){
+			    	time = time + ":" + date_context.toString().substring(parser_map["second"]["limits"][0],parser_map["second"]["limits"][1]);
+			    }
+			    
+		    }
+	    }
+
+
+	    return {"date":date,"time":time};
 	  }
 
-	  return "";
+	  return {"date":"","time":""};
 	}
 	retrieve_media_info(file,callback) {
 		if (file.type == 'image/jpeg'){
@@ -1566,11 +1863,14 @@ class FileUploader {
           				var date_time_arr = date_time_original.split(" ");
           				var date = date_time_arr[0].replace(/:/g,'-');
           				var time = date_time_arr[1]
-          				var valid_date = widget.validate_date(date+" "+time);
+          				var valid_date = widget.validate_datetime(date);
+          				var valid_time = widget.validate_datetime(time,'time');
 
-				        if (valid_date){
-				        	file.media_info["DateTimeOriginalParsed"] = valid_date;
-				        	file.captured_on = valid_date;
+				        if (valid_date && valid_time){
+				        	file.media_info["DateTimeOriginalParsed"] = valid_date+" "+valid_time;
+				        	file.captured_on_date = valid_date;
+				        	file.captured_on_time = valid_time;
+
 				        }
           			}
           		}
@@ -1692,23 +1992,84 @@ class FileUploader {
 
 	          }
 	          if (!bad_date_map){
-	            if ('year' in date_parser_map && 'month' in date_parser_map && 'day' in date_parser_map && 'second' in date_parser_map){
-	              date_parser_map["regexp"] = date_regexp;
-	              return date_parser_map;
-	            }
+	              if ('year' in date_parser_map || ('hour' in date_parser_map && 'minute' in date_parser_map)){
+		       	      if ('month' in date_parser_map && !('year' in date_parser_map)){
+		              	bad_date_map = true;
+		              }
+		              if ('day' in date_parser_map && !('month' in date_parser_map)){
+		              	bad_date_map = true;
+		              }
+
+		              if ('minute' in date_parser_map && !('hour' in date_parser_map)){
+		              	bad_date_map = true;
+		              }
+
+		              if ('second' in date_parser_map && !('minute' in date_parser_map)){
+		              	bad_date_map = true;
+		              }
+
+		              if (!bad_date_map){
+		              	date_parser_map["regexp"] = date_regexp;
+		              	return date_parser_map;
+		              }
+	              }
 	          }
 	        }
 	      }
 
 	      return false;
 	}
-	validate_date(dateString,format="YYYY-MM-DD HH:mm:ss"){
+	validate_datetime(dateString,type="date"){
 	  if (dateString != ""){
-	    if (moment(dateString,format,true).isValid()){
+	  	var formats = [];
+	  	var aux_obj = "";
+	  	switch(type){
+	  		case "date": {
+	  			var date_arr = dateString.split("-");
+	  			var date_len = date_arr.length;
 
-	      return dateString;
-	    }
+	  			switch (date_len){
+		  				case 1:{
+		  					aux_obj = dateString + "-01-01";
+		  					break;
+		  				}
+		  				case 2:{
+		  					aux_obj = dateString + "-01";
+		  					break;
+		  				}
+		  				case 3:{
+		  					aux_obj = dateString;
+		  					break;
+		  				}
+		  				default:{
+		  					break;
+		  				}
+	  			}
+
+	  			formats = ["YYYY-MM-DD"]
+	  			break;
+	  		}
+	  		case "time": {
+	  			aux_obj = "2019-01-01 "+dateString;
+	  			formats = ["YYYY-MM-DD HH:ss","YYYY-MM-DD HH:mm:ss"]
+	  			break;
+	  		}
+
+	  		default: {
+	  			aux_obj = dateString;
+	  			formats = ["YYYY-MM-DD HH:ss","YYYY-MM-DD HH:mm:ss"]
+	  			break;
+	  		}
+	  	}
+
+
+		for (var i=0;i<formats.length;i++){
+			if (moment(aux_obj,formats[i],true).isValid()){
+				return dateString;
+			}
+		}
 	  }
+
 	  return false;
 	}
 	get_next_page(list_name){
@@ -1789,7 +2150,7 @@ class FileUploader {
 	}
 	is_uploadable(file){
 		if (file.item_type){
-			if (file.captured_on || file.force_upload){
+			if ((file.captured_on_date && file.captured_on_time) || file.force_upload){
 				return true;
 			}
 		}
@@ -1866,10 +2227,48 @@ class FileUploader {
 	upload_single(file,callback) {
 	  var url = this.form.action;
 	  var formData = new FormData($(this.form)[0]);
-
+	  
 	  formData.set('item_file', file);
-	  formData.set('captured_on',file.captured_on);
 	  formData.set('item_type',file.item_type);
+
+	  if (file.captured_on_date){
+	  	var date_arr = file.captured_on_date.split("-");
+	  	var date_len = date_arr.length;
+	  	switch (date_len){
+	  		case 1:{
+				formData.set('captured_on_year',date_arr[0]);
+	  			break;
+	  		}
+	  		case 2:{
+				formData.set('captured_on_year',date_arr[0]);
+				formData.set('captured_on_month',date_arr[1]);
+	  			break;
+	  		}
+	  		case 3:{
+				formData.set('captured_on_year',date_arr[0]);
+				formData.set('captured_on_month',date_arr[1]);
+				formData.set('captured_on_day',date_arr[2]);
+	  			break;
+	  		}
+	  	}
+	  }
+	  if (file.captured_on_time){
+	  	var time_arr = file.captured_on_time.split(":");
+	  	var time_len = time_arr.length;
+	  	switch (time_len){
+	  		case 2:{
+				formData.set('captured_on_hour',time_arr[0]);
+				formData.set('captured_on_minute',time_arr[1]);
+	  			break;
+	  		}
+	  		case 3:{
+				formData.set('captured_on_hour',time_arr[0]);
+				formData.set('captured_on_minute',time_arr[1]);
+				formData.set('captured_on_second',time_arr[2]);
+	  			break;
+	  		}
+	  	}
+	  }
 
 	  $.ajax({
 		  url: url,
@@ -1971,7 +2370,8 @@ class FileUploader {
 		}
 	}
 	add_file(file,callback){
-		file["captured_on"] = null;
+		file["captured_on_date"] = null;
+		file["captured_on_time"] = null;
 		file["item_type"] = this.get_item_type(file);
 		file["media_info"] = null;
 		file["veto_upload"] = false;
@@ -2012,15 +2412,6 @@ class FileUploader {
 
 		return true;
 	}
-	get_file_by_id(file_id) {
-		var result = this.files.filter(function(f){return f.file_id==file_id});
-
-		if (result.length > 0){
-			return result[0];
-		}
-
-		return null;
-	}
 	remove_files(filter_function) {
 		var result = this.files.findIndex(filter_function);
 		var removed_ids = []
@@ -2030,5 +2421,63 @@ class FileUploader {
 		}
 		this.refresh_view();
 		return removed_ids;
+	}
+	get_file_by_id(file_id) {
+		var result = this.files.filter(function(f){return f.file_id==file_id});
+
+		if (result.length > 0){
+			return result[0];
+		}
+
+		return null;
+	}
+	toggle_status(file_id) {
+		var file = this.get_file_by_id(file_id);
+		if (file){
+			var message = "Ready";
+			var date_ready = true;
+			var time_ready = true;
+			var tinput = document.getElementById("time_input_file_"+file_id);
+			var dinput = document.getElementById("date_input_file_"+file_id);
+			var status_btn = document.getElementById("status_btn_"+file_id);
+			var statustext = document.getElementById("status_text_"+file_id);
+			
+
+			if (!file.captured_on_date){
+				date_ready = false;
+				$(dinput).addClass("incorrect_pattern");
+			} else {
+				$(dinput).removeClass("incorrect_pattern");
+			}
+			if (!file.captured_on_time){
+				time_ready = false;
+				$(tinput).addClass("incorrect_pattern");
+			} else {
+				$(tinput).removeClass("incorrect_pattern");
+			}
+
+			if (!date_ready && !time_ready){
+				message = "Missing all";
+			} else if (!date_ready){
+				message = "Missing date";
+			} else if (!time_ready) {
+				message = "Missing time";
+			}
+
+			
+			statustext.textContent = message;
+
+			if (message == "Ready"){
+				statustext.style.display = "none";
+				status_btn.style.display = "inline-block";
+			} else {
+				statustext.style.display = "inline-block";
+				status_btn.style.display = "none";
+			}
+
+						
+		}
+
+
 	}
 }

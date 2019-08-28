@@ -31,10 +31,10 @@
       {% else %}
         <h4>{% trans 'Edit image annotation:' %}</h4>
       {% endif %}
-
+      <input type="hidden" id="term_type" name="term_type" value="especie">
       <form id="addAnnForm" action="?chain={{ chain }}{% if mode == 'edit' %}&mode=edit&annotation={{ annotation.pk }}{% endif %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="hidden" id="item_field" name="item" value="{{ item.pk }}">
+        <input type="hidden" id="item_field" name="item" value="{{ item.pk }}" term_type="">
         <input type="hidden" id="event_type_field" name="event_type" value="Animal en Foto">
         <input type="hidden" id="annotation_type_field" name="annotation_type" value="Bounding Box">
         <input type="hidden" id="annotation_field" name="annotation" value="{}">

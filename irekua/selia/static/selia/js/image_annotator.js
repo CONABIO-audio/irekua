@@ -105,7 +105,23 @@ $(document).ready(function() {
       }
       if (prev_label) {
         var label_json = JSON.parse(prev_label.value.replace(/\'/g, '"'));
-        document.getElementById("tax_label").value = label_json["especie"];
+        var key = "especie";
+
+        if ("genero" in label_json){
+        	key = "genero";
+        } else if ("familia" in label_json){
+        	key = "familia";
+        } else if ("orden" in label_json){
+        	key = "orden";
+        } else if ("clase" in label_json){
+        	key = "clase";
+        } else if ("phylum" in label_json){
+        	key = "phylum";
+        } else if ("reino" in label_json){
+        	key = "reino";
+        }
+
+        document.getElementById("tax_label").value = label_json[key];
       }
 
       addAnnForm.addEventListener('submit', function(e) {
@@ -113,6 +129,7 @@ $(document).ready(function() {
 
         var url = this.action;
         var raw_label = document.getElementById('tax_label').value;
+        var term_type = document.getElementById('term_type').value;
         var annotation = document.getElementById('annotation_field').value;
 
         form_complete = true;
@@ -133,9 +150,9 @@ $(document).ready(function() {
         if (form_complete) {
           var formData = new FormData($('#addAnnForm')[0]);
           var request = new XMLHttpRequest();
-          var label_obj = {
-            "especie": raw_label
-          }
+          var label_obj = {};
+          label_obj[term_type] = raw_label;
+
           formData.set('label', JSON.stringify(label_obj));
           request.open("POST", url, false);
           request.send(formData);

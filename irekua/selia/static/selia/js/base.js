@@ -304,6 +304,9 @@ function asigna_autocomplete_tax($elems) {
   $elems.each(function() {
     if ($(this).autocomplete('instance')) $(this).autocomplete('destroy');
     $(this).autocomplete({
+      select: function(event,ui){
+        document.getElementById('term_type').value = ui.item.tax_obj.categoria_taxonomica;
+      },
       source: function(request, response) {
         var termino = request.term + '*';
         $.ajax({

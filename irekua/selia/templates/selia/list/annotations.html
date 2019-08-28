@@ -45,7 +45,7 @@
   <div class="col-6" align="center">
     <div class="container shadow-sm card p-2" align="center">
       <input type="hidden" id="img_url" name="img_url" add_ann_url="{% url 'selia:item_annotation_create' item.pk %}" value="{{ item.item_file.url }}">
-      <canvas id="canvas" class="center-fit" width="800" height="600" style="background-image: url({{ item.item_file.url }}); background-size:cover; background-repeat:   no-repeat;background-position: center center;"></canvas>
+      <canvas id="canvas" class="center-fit" width="800" height="" style="background-image: url({{ item.item_file.url }}); background-size:cover; background-repeat:   no-repeat;background-position: center center;"></canvas>
     </div>
   </div>
 
