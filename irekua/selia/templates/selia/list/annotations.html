@@ -45,7 +45,7 @@
   <div class="col-6" align="center">
     <div class="container shadow-sm bg-light rounded p-2" align="center">
       <input type="hidden" id="img_url" name="img_url" add_ann_url="{% url 'selia:item_annotation_create' item.pk %}" value="{{ item.item_file.url }}">
-      <canvas id="canvas" class="border w-100" style="background-image: url({{ item.item_file.url }}); background-size: contain;"></canvas>
+      <canvas id="canvas" class="border w-100" width="1000" style="background-image: url({{ item.item_file.url }}); background-size: contain; background-repeat: no-repeat;"></canvas>
     </div>
   </div>
 
