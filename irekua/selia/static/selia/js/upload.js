@@ -1344,6 +1344,8 @@ class FileUploader {
 		        var fileName = document.createElement('div');
 		        fileName.className = "text-muted ml-4 ellipsise file_title";
 		        fileName.textContent = page.data[i].name;
+		        fileName.title = page.data[i].name;
+
 
 		        descrCol.appendChild(fileName);
 
@@ -1606,6 +1608,7 @@ class FileUploader {
 		        var fileName = document.createElement('div');
 		        fileName.className = "text-muted ml-4 ellipsise";
 		        fileName.textContent = page.data[i].name;
+		        fileName.title = page.data[i].name;
 
 		        descrCol.appendChild(fileName);
 
