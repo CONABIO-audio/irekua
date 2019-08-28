@@ -119,6 +119,8 @@ $(document).ready(function() {
         	key = "phylum";
         } else if ("reino" in label_json){
         	key = "reino";
+        } else if ("division" in label_json){
+          key = "division";
         }
 
         document.getElementById("tax_label").value = label_json[key];
