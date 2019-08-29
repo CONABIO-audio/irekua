@@ -8,6 +8,7 @@ from . import sites
 from . import terms
 from . import data_collections
 from . import sampling_events
+from . import mime_types
 
 
 __all__ = [
@@ -21,4 +22,5 @@ __all__ = [
     'terms',
     'data_collections',
     'sampling_events',
+    'mime_types',
 ]

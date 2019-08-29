@@ -22,8 +22,8 @@ class MimeType(IrekuaModelBase):
 
     mime_type = models.CharField(
         max_length=128,
+        unique=True,
         choices=MIME_TYPES,
-        primary_key=True,
         db_column='media_type',
         verbose_name=_('media type'),
         help_text=_('MIME types associated with item type'),
@@ -42,6 +42,9 @@ class MimeType(IrekuaModelBase):
         verbose_name_plural = _('Mime Types')
 
         ordering = ['mime_type']
+
+    def __str__(self):
+        return self.mime_type
 
     def validate_media_info(self, media_info):
         try:

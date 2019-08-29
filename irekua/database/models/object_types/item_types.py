@@ -65,9 +65,6 @@ class ItemType(IrekuaModelBase):
 
         mime_type.validate_media_info(item.media_info)
 
-    def validate_mime_type(self, item):
-        pass
-
     def validate_and_get_event_type(self, event_type):
         try:
             return self.event_types.get(name=event_type.name)

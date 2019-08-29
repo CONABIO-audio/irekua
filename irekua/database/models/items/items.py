@@ -1,4 +1,5 @@
 import os
+import mimetypes
 
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
@@ -11,6 +12,8 @@ from database.utils import hash_file
 from database.models.base import IrekuaModelBaseUser
 
 
+mimetypes.init()
+
 
 def get_item_path(instance, filename):
     path_fmt = os.path.join(
@@ -20,7 +23,9 @@ def get_item_path(instance, filename):
         '{sampling_event_device}',
         '{hash}{ext}')
 
-    _, extension = os.path.splitext(filename)
+    mime_type, encoding = mimetypes.guess_type(filename)
+    extension = mimetypes.guess_extension(mime_type)
+
     sampling_event_device = instance.sampling_event_device
     sampling_event = sampling_event_device.sampling_event
     collection = sampling_event.collection
@@ -217,6 +222,9 @@ class Item(IrekuaModelBaseUser):
         return self.sampling_event_device.sampling_event.collection
 
     def check_captured_on(self):
+        if self.captured_on is not None:
+            return
+
         if (
                 self.captured_on_year and
                 self.captured_on_month and

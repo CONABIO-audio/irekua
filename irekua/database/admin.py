@@ -48,6 +48,7 @@ from . import models
     models.Term,
     models.TermSuggestion,
     models.TermType,
+    models.MimeType,
 )
 class DatabaseAdmin(admin.ModelAdmin):
     pass
