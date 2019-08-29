@@ -248,7 +248,7 @@ def make_test_data(apps, schema_editor):
     for site in collection_sites:
         timedelta1 = datetime.timedelta(days=int(400 * random()))
         timedelta2 = datetime.timedelta(days=int(60 * random()))
-        start = timezone.now() - timedelta1 - timedelta2
+        start = timezone.datetime.now() - timedelta1 - timedelta2
         end = timezone.datetime.now() - timedelta1
 
         sampling_event, _ = models.SamplingEvent.objects.get_or_create(

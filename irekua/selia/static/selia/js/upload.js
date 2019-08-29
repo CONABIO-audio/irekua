@@ -39,7 +39,7 @@ class FileUploader {
 		this.progress_bar.setAttribute('aria-valuenow','0');
 		this.progress_bar.setAttribute('aria-valuemin','0');
 		this.progress_bar.setAttribute('aria-valuemax','100');
-		
+
 		this.progress_bar_label = document.createElement('span');
 		this.progress_bar_label.innerHTML = '0%';
 
@@ -60,7 +60,7 @@ class FileUploader {
 
 		var toolbar_container = document.createElement('div');
 		toolbar_container.className = "container-fluid p-2 w-100 bg-dark rounded";
-		
+
 		var row = document.createElement('div');
 		row.className = "row p-2";
 
@@ -627,7 +627,7 @@ class FileUploader {
 		    			var datetime_original = file.media_info.DateTimeOriginalParsed;
 						var dinput = document.getElementById("date_input_file_"+file.file_id);
 						var tinput = document.getElementById("time_input_file_"+file.file_id);
-							
+
 		    			if (typeof(datetime_original) !== 'undefined'){
 		    				var datetime_arr = datetime_original.split(" ");
 		    				file.captured_on_date = datetime_arr[0];
@@ -643,7 +643,7 @@ class FileUploader {
 
 		    			widget.toggle_status(file.file_id);
 
-		    		}	
+		    		}
 	    		}
 
 	    	}
@@ -695,7 +695,7 @@ class FileUploader {
 
 							if (valid_time){
 								file.captured_on_time = valid_time;
-								tinput.value = valid_time;							
+								tinput.value = valid_time;
 							}
 
 							widget.toggle_status(check_boxes[i].file_id);
@@ -713,7 +713,7 @@ class FileUploader {
 					var datetime_obj = widget.parse_datetime(file.name,parser_map);
 					var valid_date = widget.validate_datetime(datetime_obj.date);
 					var valid_time = widget.validate_datetime(datetime_obj.time,'time');
-					
+
 					if (valid_date){
 						file.captured_on_date = valid_date;
 					}
@@ -1227,7 +1227,7 @@ class FileUploader {
 		if (sort_function){
 			filteredItems.sort(sort_function);
 		}
-		
+
 
 		var total_pages = Math.ceil(filteredItems.length / per_page);
 
@@ -1436,7 +1436,7 @@ class FileUploader {
 				var status_label = document.createTextNode("Listo ");
 				var status_icon = document.createElement('i');
 				status_icon.className = "fas fa-upload";
-				
+
 
 				status_btn.appendChild(status_label);
 				status_btn.appendChild(status_icon);
@@ -1468,10 +1468,10 @@ class FileUploader {
 		        	$(timeInput).removeClass('incorrect_pattern');
 		        } else {
 		        	statusText.style.display = "inline-block";
-					status_btn.style.display = "none";     	
+					status_btn.style.display = "none";
 		        }
-		        
-		        
+
+
 
 		        status_div.appendChild(statusText);
 		        status_div.appendChild(status_btn);
@@ -1708,7 +1708,7 @@ class FileUploader {
 		        itemLink.setAttribute('href',page.data[i].upload_response.result.item.detail_url)
 		        itemLink.setAttribute('target','_blank');
 		        itemLink.innerHTML = "<h6>Artículo "+page.data[i].upload_response.result.item.pk+"</h6>";
-		        
+
 		        statusCol.appendChild(itemLink);
 
 				row.appendChild(descrCol);
@@ -1828,7 +1828,7 @@ class FileUploader {
 			    if ("day" in parser_map){
 			    	date = date + "-" + date_context.toString().substring(parser_map["day"]["limits"][0],parser_map["day"]["limits"][1]);
 			    }
-			    
+
 		    }
 
 	    }
@@ -1840,7 +1840,7 @@ class FileUploader {
 			    if ("second" in parser_map){
 			    	time = time + ":" + date_context.toString().substring(parser_map["second"]["limits"][0],parser_map["second"]["limits"][1]);
 			    }
-			    
+
 		    }
 	    }
 
@@ -1862,7 +1862,7 @@ class FileUploader {
 				} catch(error) {
 					exif = null;
 				}
-				
+
 
           		if (exif) {
 
@@ -2233,10 +2233,10 @@ class FileUploader {
 	  switch (file.type){
 	    case 'image/jpeg':
 	    case 'image/jpg':{
-	      return "Foto de Camara Trampa (jpg)";
+	      return "Foto de Camara Trampa";
 	    }
 	    case 'image/png':{
-	      return "Foto de Camara Trampa (png)";
+	      return "Foto de Camara Trampa";
 	    }
 	    default:{
 	      return null;
@@ -2246,7 +2246,7 @@ class FileUploader {
 	upload_single(file,callback) {
 	  var url = this.form.action;
 	  var formData = new FormData($(this.form)[0]);
-	  
+
 	  formData.set('item_file', file);
 	  formData.set('item_type',file.item_type);
 
@@ -2373,7 +2373,7 @@ class FileUploader {
 			file_count++;
 			widget.render_by_name(['errors','duplicates','uploads']);
 			widget.progress_upload(file_count,total_files);
-			
+
 			if (file_count >= total_files-1){
 				setTimeout(function() {
 					widget.progress_container.style.display = "none";
@@ -2460,7 +2460,7 @@ class FileUploader {
 			var dinput = document.getElementById("date_input_file_"+file_id);
 			var status_btn = document.getElementById("status_btn_"+file_id);
 			var statustext = document.getElementById("status_text_"+file_id);
-			
+
 
 			if (!file.captured_on_date){
 				date_ready = false;
@@ -2483,7 +2483,7 @@ class FileUploader {
 				message = "Sin tiempo";
 			}
 
-			
+
 			statustext.textContent = message;
 
 			if (message == "Listo"){
@@ -2494,7 +2494,7 @@ class FileUploader {
 				status_btn.style.display = "none";
 			}
 
-						
+
 		}
 
 

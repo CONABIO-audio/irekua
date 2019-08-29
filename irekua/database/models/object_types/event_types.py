@@ -44,9 +44,9 @@ class EventType(IrekuaModelBase):
     def __str__(self):
         return self.name
 
-    def validate_and_get_term_type(self, term_type):
+    def validate_term_type(self, term_type):
         try:
-            return self.term_types.get(name=term_type)
+            self.term_types.get(name=term_type)
         except self.term_types.model.DoesNotExist:
             msg = _(
                 'Term type %(term_type)s is invalid for event '

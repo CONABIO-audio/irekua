@@ -23,7 +23,7 @@ def get_item_path(instance, filename):
         '{sampling_event_device}',
         '{hash}{ext}')
 
-    mime_type, encoding = mimetypes.guess_type(filename)
+    mime_type, __ = mimetypes.guess_type(filename)
     extension = mimetypes.guess_extension(mime_type)
 
     sampling_event_device = instance.sampling_event_device
@@ -325,7 +325,7 @@ class Item(IrekuaModelBaseUser):
         hash_string = hash_file(self.item_file)
         item_size = self.item_file.size  # pylint: disable=E1101
 
-        if self.hash is '':
+        if not self.hash:
             self.hash = hash_string
             self.filesize = item_size
 
@@ -352,25 +352,3 @@ class Item(IrekuaModelBaseUser):
     def delete(self, *args, **kwargs):
         self.item_file.delete()
         super().delete(*args, **kwargs)
-
-    def check_captured_on(self):
-        if self.captured_on is not None:
-            return
-
-        if (self.captured_on_year and self.captured_on_month and self.captured_on_day):
-
-            if (self.captured_on_hour is not None and self.captured_on_minute is not None and self.captured_on_second is not None):
-
-                self.captured_on = '{year}-{month}-{day} {hour}:{minute}:{second}'.format(
-                    year=self.captured_on_year,
-                    month=self.captured_on_month,
-                    day=self.captured_on_day,
-                    hour=self.captured_on_hour,
-                    minute=self.captured_on_minute,
-                    second=self.captured_on_second)
-
-            else:
-                self.captured_on = '{year}-{month}-{day}'.format(
-                    year=self.captured_on_year,
-                    month=self.captured_on_month,
-                    day=self.captured_on_day)

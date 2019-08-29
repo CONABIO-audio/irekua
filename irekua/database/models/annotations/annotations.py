@@ -1,4 +1,4 @@
-from django.contrib.postgres.fields import JSONField, HStoreField
+from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -43,13 +43,7 @@ class Annotation(IrekuaModelBaseUser):
         verbose_name=_('event type'),
         help_text=_('Type of event being annotated'),
         blank=False)
-    label = HStoreField(
-        db_column='label',
-        verbose_name=_('label'),
-        help_text=_('Labels associated to annotation'),
-        default=empty_JSON,
-        blank=False,
-        null=False)
+
     annotation_type = models.ForeignKey(
         'AnnotationType',
         on_delete=models.PROTECT,
@@ -92,6 +86,13 @@ class Annotation(IrekuaModelBaseUser):
         db_column='commentaries',
         verbose_name=_('commentaries'),
         help_text=_('Commentaries of annotator'),
+        blank=True)
+
+    labels = models.ManyToManyField(
+        'Term',
+        db_column='labels',
+        verbose_name=_('labels'),
+        help_text=_('Labels associated with annotation'),
         blank=True)
 
     class Meta:
@@ -138,26 +139,20 @@ class Annotation(IrekuaModelBaseUser):
             raise ValidationError({'annotation_configuration': error})
 
         try:
-            self.validate_label(self.label)
+            self.validate_labels(self.labels)
         except ValidationError as error:
-            raise ValidationError({'label': error})
+            raise ValidationError({'labels': error})
 
         super(Annotation, self).clean()
 
-    def validate_label(self, label):
-        for key, value in label.items():
+    def validate_labels(self, labels):
+        for term in labels:
+            term_type = term.term_type.name
             try:
-                term_type = self.event_type.validate_and_get_term_type(key)
+                self.event_type.validate_term_type(term_type)
             except ValidationError:
                 msg = _(
-                    'Label contains a term (of type %(type)s) that is not '
-                    'valid for the event type or does not exist')
-                params = dict(type=key)
-                raise ValidationError(msg % params)
-
-            try:
-                term_type.validate_value(value)
-            except ValidationError as error:
-                msg = _('Invalid label. Error: %(error)s')
-                params = dict(error=str(error))
-                raise ValidationError(msg % params)
+                    'Labels contain a term (of type %(type)s) that is not '
+                    'valid for the event type')
+                params = dict(type=term_type)
+                raise ValidationError(msg, params=params)
