@@ -24,6 +24,7 @@ def make_test_data(apps, schema_editor):
         username='conanp_admin',
         first_name='conanp',
         last_name='admin',
+        email='conanp_admin@conabio.gob.mx',
         password='conanpadmin',
         email='1@gmail.com',
         institution=CONANP)
@@ -31,6 +32,7 @@ def make_test_data(apps, schema_editor):
         username='conanp_user_1',
         first_name='conanp',
         last_name='usuario uno',
+        email='conanp_user_1@conabio.gob.mx',
         password='conanpuser',
         email='2@gmail.com',
         institution=CONANP)
@@ -38,6 +40,7 @@ def make_test_data(apps, schema_editor):
         username='conanp_user_2',
         first_name='conanp',
         last_name='usuario dos',
+        email='conanp_user_2@conabio.gob.mx',
         password='conanpuser',
         email='3@gmail.com',
         institution=CONANP)
@@ -45,6 +48,7 @@ def make_test_data(apps, schema_editor):
         username='conanp_user_3',
         first_name='conanp',
         last_name='usuario tres',
+        email='conanp_user_3@conabio.gob.mx',
         password='conanpuser',
         email='4@gmail.com',
         institution=CONANP)
@@ -52,6 +56,7 @@ def make_test_data(apps, schema_editor):
         username='conabio_admin',
         first_name='conabio',
         last_name='admin',
+        email='conanp_user_4@conabio.gob.mx',
         password='conabioadmin',
         email='5@gmail.com',
         institution=CONABIO,

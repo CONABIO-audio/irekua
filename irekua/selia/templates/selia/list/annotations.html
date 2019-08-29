@@ -43,9 +43,9 @@
 
 <div class="row p-5 justify-content-center">
   <div class="col-6" align="center">
-    <div class="container shadow-sm card p-2" align="center">
+    <div class="container shadow-sm bg-light rounded p-2" align="center">
       <input type="hidden" id="img_url" name="img_url" add_ann_url="{% url 'selia:item_annotation_create' item.pk %}" value="{{ item.item_file.url }}">
-      <canvas id="canvas" class="center-fit" width="800" height="600" style="background-image: url({{ item.item_file.url }}); background-size:cover; background-repeat:   no-repeat;background-position: center center;"></canvas>
+      <canvas id="canvas" class="border w-100" width="1000" style="background-image: url({{ item.item_file.url }}); background-size: contain; background-repeat: no-repeat;"></canvas>
     </div>
   </div>
 

@@ -31,7 +31,7 @@ class SeliaSelectView(TemplateView):
         return list_instance.get_context_data(self.request)
 
     def has_view_permission(self):
-        return True
+        return self.request.user.is_authenticated
 
     def no_permission_redirect(self):
         return render(self.request, self.no_permission_template)

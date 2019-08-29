@@ -72,7 +72,7 @@ class SeliaAnnotationView(SeliaCreateView):
 
         if "mode" in self.request.GET:
             if self.request.GET["mode"] == "edit":
-                self.template_name = 'selia/item_detail/annotations/edit.html'
+                self.template_name = 'selia/annotations/edit.html'
                 self.mode = "edit"
 
         return super().get(*args, **kwargs)
@@ -82,10 +82,10 @@ class SeliaAnnotationView(SeliaCreateView):
 
         if "mode" in self.request.GET:
             if self.request.GET["mode"] == "edit":
-                self.template_name = 'selia/item_detail/annotations/edit.html'
+                self.template_name = 'selia/annotations/edit.html'
                 self.mode = "edit"
 
-        return super().post(*args, **kwargs)
+        return self.handle_create()
 
     def get_success_url_args(self):
         return [self.kwargs['pk']]
@@ -110,7 +110,7 @@ class SeliaAnnotationView(SeliaCreateView):
                 annotation = form.save(commit=False)
                 annotation.created_by = self.request.user
                 annotation.save()
-                return self.handle_finish_create(annotation)
+                return self.redirect_on_success()
             else:
                 print(form.errors)
                 self.object = None
@@ -127,7 +127,7 @@ class SeliaAnnotationView(SeliaCreateView):
             if form.is_valid():
                 annotation = form.save(commit=False)
                 annotation.save()
-                return self.handle_finish_create(annotation)
+                return self.redirect_on_success()
             else:
                 self.object = None
                 context = self.get_context_data()

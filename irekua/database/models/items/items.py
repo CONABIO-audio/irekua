@@ -117,7 +117,6 @@ class Item(IrekuaModelBaseUser):
         help_text=_('Date on which item was produced'),
         blank=True,
         null=True)
-
     captured_on_year = models.IntegerField(
         db_column='captured_on_year',
         verbose_name=_('year'),
@@ -172,7 +171,6 @@ class Item(IrekuaModelBaseUser):
         validators=[
             MinValueValidator(0),
             MaxValueValidator(59)])
-
     licence = models.ForeignKey(
         'Licence',
         db_column='licence_id',
@@ -354,3 +352,25 @@ class Item(IrekuaModelBaseUser):
     def delete(self, *args, **kwargs):
         self.item_file.delete()
         super().delete(*args, **kwargs)
+
+    def check_captured_on(self):
+        if self.captured_on is not None:
+            return
+
+        if (self.captured_on_year and self.captured_on_month and self.captured_on_day):
+
+            if (self.captured_on_hour is not None and self.captured_on_minute is not None and self.captured_on_second is not None):
+
+                self.captured_on = '{year}-{month}-{day} {hour}:{minute}:{second}'.format(
+                    year=self.captured_on_year,
+                    month=self.captured_on_month,
+                    day=self.captured_on_day,
+                    hour=self.captured_on_hour,
+                    minute=self.captured_on_minute,
+                    second=self.captured_on_second)
+
+            else:
+                self.captured_on = '{year}-{month}-{day}'.format(
+                    year=self.captured_on_year,
+                    month=self.captured_on_month,
+                    day=self.captured_on_day)

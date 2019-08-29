@@ -43,13 +43,13 @@ class SeliaDetailView(UpdateView):
         raise NotImplementedError('No template for help was given')
 
     def has_view_permission(self):
-        return True
+        return self.request.user.is_authenticated
 
     def has_change_permission(self):
-        return True
+        return self.request.user.is_authenticated
 
     def has_delete_permission(self):
-        return True
+        return self.request.user.is_authenticated
 
     def get_delete_redirect_url(self):
         if hasattr(self, 'delete_redirect_url'):
