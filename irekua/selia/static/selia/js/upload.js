@@ -16,7 +16,7 @@ class FileUploader {
 		this.total_duplicate_pages = 0;
 		this.total_error_pages = 0;
 		this.total_upload_pages = 0;
-		this.per_page = 5;
+		this.per_page = 10;
 		this.build_view();
 	}
 	build_view() {
@@ -56,13 +56,14 @@ class FileUploader {
 		var widget = this;
 
 		this.top_toolbar = document.createElement('div');
-		this.top_toolbar.className = 'row justify-content-center w-100';
+		this.top_toolbar.className = 'row w-100';
 
 		var toolbar_container = document.createElement('div');
 		toolbar_container.className = "container-fluid p-2 w-100 bg-dark rounded";
 		
 		var row = document.createElement('div');
-		row.className = "row p-2";
+		row.className = "row";
+		row.align = "center";
 
 
 		var file_picker_col = document.createElement('div');
@@ -235,15 +236,9 @@ class FileUploader {
 
 
     	var row2 = document.createElement("div");
-		row2.className = "row collapse";
-		row2.style["padding-left"] = "20px";
+		row2.className = "row collapse justify-content-between";
 		row2.id = "date_tools";
-
-    	var row3 = document.createElement("div");
-		row3.className = "row collapse";
-		row3.style["padding-left"] = "20px";
-		row3.style["padding-top"] = "20px"
-		row3.id = "date_tools";
+		row2.style["padding-left"] = "60px";
 
 		var date_pattern_col = document.createElement('div');
 
@@ -506,6 +501,7 @@ class FileUploader {
 
 		var metadata_date_col = document.createElement('div');
 		metadata_date_col.className = "col";
+		metadata_date_col.align = "center";
 
 		var metadata_date_dropdown = document.createElement('div');
 		metadata_date_dropdown.className = "dropdown";
@@ -564,13 +560,13 @@ class FileUploader {
 
 		row2.appendChild(date_col);
 		row2.appendChild(time_col);
+		row2.appendChild(date_pattern_col);
 		row2.appendChild(metadata_date_col);
-		row3.appendChild(date_pattern_col);
+
 
 
 		toolbar_container.appendChild(row);
 		toolbar_container.appendChild(row2);
-		toolbar_container.appendChild(row3);
 
 		this.top_toolbar.appendChild(toolbar_container);
 
@@ -802,19 +798,21 @@ class FileUploader {
 				$(this).addClass('incorrect_pattern');
 			}
 		});
+
+		this.parent.appendChild(this.top_toolbar);
 	}
 	build_body() {
 		if (this.body){
 			$(this.body).remove();
 		}
 		this.body = document.createElement('div');
-		this.body.className = "row justify-content-center";
+		this.body.className = "row justify-content-between w-100";
 
 		this.body.style["padding-top"] = "10px";
 		this.body.style["padding-bottom"] = "10px";
 
-		this.body.style["padding-left"] = "10px";
-		this.body.style["padding-right"] = "10px";
+		this.body.style["padding-left"] = "20px";
+		this.body.style["padding-right"] = "20px";
 
 		this.build_files_section();
 		this.build_results_section();
@@ -834,11 +832,8 @@ class FileUploader {
 		this.file_list_container.className = "row justify-content-center container-fluid";
 		this.file_list_container.style.display = "none";
 
-
-
 		this.build_file_list();
 
-		section_col.appendChild(this.top_toolbar);
 		section_col.appendChild(this.progress_container);
 		section_col.appendChild(this.files_section);
 		this.body.appendChild(section_col);
@@ -959,12 +954,12 @@ class FileUploader {
 		this.body.appendChild(this.results_section);
 	}
 	build_file_list(){
-		this.file_list = document.createElement('div');
-		this.file_list.className = "justify-content-center w-100";
+		this.file_list_table = document.createElement('div');
+		this.file_list_table.className = "justify-content-center w-100";
 
 		this.blank_file_list = document.createElement('div');
 		this.blank_file_list.className = "row justify-content-center blank_item_list w-100";
-		this.blank_file_list.height = "300px";
+		this.blank_file_list.height = "600px";
 
 
 		var file_picker_col = document.createElement('div');
@@ -1038,7 +1033,81 @@ class FileUploader {
 			widget.add_file_multiple(this.files,finalize_callback);
 		});
 
-		this.file_list_container.appendChild(this.file_list);
+		var header = document.createElement('div');
+		header.className = 'row d-flex justify-content-between header_item w-100';
+		header.align = "center";
+		header.style["margin"] = "10px";
+
+		var header_checkCol = document.createElement('div');
+		header_checkCol.className = 'col-1  justify-content-center text-center item_col';
+
+		var header_descrCol = document.createElement('div');
+		header_descrCol.className = 'col-3  justify-content-center text-center item_col';
+
+		var header_dateCol = document.createElement('div');
+		header_dateCol.className = 'col-2  justify-content-center text-center item_col';
+
+		var header_timeCol = document.createElement('div');
+		header_timeCol.className = 'col-2  justify-content-center text-center item_col';
+
+		var header_statusCol = document.createElement('div');
+		header_statusCol.className = 'col-3  justify-content-center text-center item_col';
+
+		var header_checkFile = document.createElement('input');
+		header_checkFile.type = 'checkbox';
+		header_checkFile.className = 'item_checkbox header_title';
+		header_checkFile["file_id"] = "all";
+		header_checkCol.appendChild(header_checkFile);
+
+		var fileTitle = document.createElement('div');
+    	fileTitle.textContent = 'Archivo';
+    	fileTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_descrCol.appendChild(fileTitle);
+
+		var dateTitle = document.createElement('div');
+    	dateTitle.textContent = 'Fecha';
+    	dateTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_dateCol.appendChild(dateTitle);
+
+		var timeTitle = document.createElement('div');
+    	timeTitle.textContent = 'Tiempo';
+    	timeTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_timeCol.appendChild(timeTitle);
+
+	    var statusTitle = document.createElement('div');
+	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
+	    statusTitle.textContent = "Estado";
+	    header_statusCol.appendChild(statusTitle);
+
+		header_checkFile.addEventListener('input',function(e){
+			var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]');
+			if (this.checked){
+				for (var i=0;i<check_boxes.length;i++){
+					check_boxes[i].checked = true;
+				}
+			} else {
+				for (var i=0;i<check_boxes.length;i++){
+					check_boxes[i].checked = false;
+				}
+			}
+
+		});
+
+	    header.appendChild(header_checkCol);
+	    header.appendChild(header_descrCol);
+	    header.appendChild(header_dateCol);
+	    header.appendChild(header_timeCol);
+	    header.appendChild(header_statusCol);
+
+	    this.file_list = document.createElement('div');
+	    this.file_list.className = "upload_list";
+	    this.file_list.style["min-height"] = "450px";
+	    this.file_list.style["max-height"] = "450px";
+
+	    this.file_list_table.appendChild(header);
+	    this.file_list_table.appendChild(this.file_list);
+
+		this.file_list_container.appendChild(this.file_list_table);
 		this.file_list_container.appendChild(paginator);
 
 		this.files_section.appendChild(this.blank_file_list);
@@ -1085,10 +1154,41 @@ class FileUploader {
 			widget.render_error_list(page);
 		}
 
-		this.error_list = document.createElement('div');
-		this.error_list.className = "row justify-content-center w-100";
+		this.error_list_table = document.createElement('div');
+		this.error_list_table.className = "row justify-content-center w-100";
 
-		this.error_list_container.appendChild(this.error_list);
+		var header = document.createElement('div');
+		header.className = 'row d-flex justify-content-between header_item w-100';
+		header.align = "center";
+		header.style["margin"] = "10px";
+
+		var header_descrCol = document.createElement('div');
+		header_descrCol.className = 'col-6 text-center item_col';
+
+		var header_statusCol = document.createElement('div');
+		header_statusCol.className = 'col-6 text-center item_col';
+
+		var fileTitle = document.createElement('div');
+    	fileTitle.textContent = 'Archivo';
+    	fileTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_descrCol.appendChild(fileTitle);
+
+	    var statusTitle = document.createElement('div');
+	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
+	    statusTitle.textContent = "Descripción";
+	    header_statusCol.appendChild(statusTitle);
+
+	    header.appendChild(header_descrCol);
+	    header.appendChild(header_statusCol);
+
+	    this.error_list = document.createElement('div');
+	    this.error_list.className = "upload_list";
+
+	    this.error_list_table.appendChild(header);
+	    this.error_list_table.appendChild(this.error_list);
+
+
+		this.error_list_container.appendChild(this.error_list_table);
 		this.error_list_container.appendChild(paginator);
 
 		this.blank_error_list = document.createElement('div');
@@ -1141,10 +1241,41 @@ class FileUploader {
 			widget.render_duplicate_list(page);
 		}
 
-		this.duplicate_list = document.createElement('div');
-		this.duplicate_list.className = "row justify-content-center w-100";
+		this.duplicate_list_table = document.createElement('div');
+		this.duplicate_list_table.className = "row justify-content-center w-100";
 
-		this.duplicate_list_container.appendChild(this.duplicate_list);
+		var header = document.createElement('div');
+		header.className = 'row d-flex justify-content-between header_item w-100';
+		header.align = "center";
+		header.style["margin"] = "10px";
+		header.style["padding-right"] = "0px !important";
+
+		var header_descrCol = document.createElement('div');
+		header_descrCol.className = 'col-5 text-center item_col';
+
+		var header_statusCol = document.createElement('div');
+		header_statusCol.className = 'col-5 text-center item_col';
+
+		var fileTitle = document.createElement('div');
+    	fileTitle.textContent = 'Artículo';
+    	fileTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_descrCol.appendChild(fileTitle);
+
+	    var statusTitle = document.createElement('div');
+	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
+	    statusTitle.textContent = "Link";
+	    header_statusCol.appendChild(statusTitle);
+
+	    header.appendChild(header_descrCol);
+	    header.appendChild(header_statusCol);
+
+	    this.duplicate_list = document.createElement('div');
+	    this.duplicate_list.className = "upload_list";
+
+	    this.duplicate_list_table.appendChild(header);
+	    this.duplicate_list_table.appendChild(this.duplicate_list);
+
+		this.duplicate_list_container.appendChild(this.duplicate_list_table);
 		this.duplicate_list_container.appendChild(paginator);
 
 		this.blank_duplicate_list = document.createElement('div');
@@ -1197,10 +1328,40 @@ class FileUploader {
 			widget.render_upload_list(page);
 		}
 
-		this.upload_list = document.createElement('div');
-		this.upload_list.className = "row justify-content-center w-100";
+		this.upload_list_table = document.createElement('div');
+		this.upload_list_table.className = "row justify-content-center w-100";
 
-		this.upload_list_container.appendChild(this.upload_list);
+		var header = document.createElement('div');
+		header.className = 'row d-flex justify-content-between header_item w-100';
+		header.align = "center";
+		header.style["margin"] = "10px";
+
+		var header_descrCol = document.createElement('div');
+		header_descrCol.className = 'col-5 text-center item_col';
+
+		var header_statusCol = document.createElement('div');
+		header_statusCol.className = 'col-5 text-center item_col';
+
+		var fileTitle = document.createElement('div');
+    	fileTitle.textContent = 'Artículo';
+    	fileTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_descrCol.appendChild(fileTitle);
+
+	    var statusTitle = document.createElement('div');
+	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
+	    statusTitle.textContent = "Link";
+	    header_statusCol.appendChild(statusTitle);
+
+	    header.appendChild(header_descrCol);
+	    header.appendChild(header_statusCol);
+
+	    this.upload_list = document.createElement('div');
+	    this.upload_list.className = "upload_list";
+
+		this.upload_list_table.appendChild(header);
+	    this.upload_list_table.appendChild(this.upload_list);
+
+		this.upload_list_container.appendChild(this.upload_list_table);
 		this.upload_list_container.appendChild(paginator);
 
 		this.blank_upload_list = document.createElement('div');
@@ -1257,65 +1418,10 @@ class FileUploader {
 		if (page.data.length > 0){
 			this.blank_file_list.style.display = "none";
 			this.file_list_container.style.display = "flex";
-
-			var header = document.createElement('div');
-			header.className = 'row d-flex justify-content-between header_item w-100';
-			header.align = "center";
-			header.style["margin"] = "10px";
-
-			var header_checkCol = document.createElement('div');
-			header_checkCol.className = 'col-1  justify-content-center text-center item_col';
-
-			var header_descrCol = document.createElement('div');
-			header_descrCol.className = 'col-3  justify-content-center text-center item_col';
-
-			var header_dateCol = document.createElement('div');
-			header_dateCol.className = 'col-2  justify-content-center text-center item_col';
-
-			var header_timeCol = document.createElement('div');
-			header_timeCol.className = 'col-2  justify-content-center text-center item_col';
-
-			var header_statusCol = document.createElement('div');
-			header_statusCol.className = 'col-3  justify-content-center text-center item_col';
-
-
-			var header_checkFile = document.createElement('input');
-			header_checkFile.type = 'checkbox';
-			header_checkFile.className = 'item_checkbox header_title';
-			header_checkFile["file_id"] = "all";
-			header_checkCol.appendChild(header_checkFile);
-
-			var fileTitle = document.createElement('div');
-        	fileTitle.textContent = 'Archivo';
-        	fileTitle.className = 'ml-4 ellipsise text-light header_title';
-        	header_descrCol.appendChild(fileTitle);
-
-			var dateTitle = document.createElement('div');
-        	dateTitle.textContent = 'Fecha';
-        	dateTitle.className = 'ml-4 ellipsise text-light header_title';
-        	header_dateCol.appendChild(dateTitle);
-
-			var timeTitle = document.createElement('div');
-        	timeTitle.textContent = 'Tiempo';
-        	timeTitle.className = 'ml-4 ellipsise text-light header_title';
-        	header_timeCol.appendChild(timeTitle);
-
-		    var statusTitle = document.createElement('div');
-		    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-		    statusTitle.textContent = "Estado";
-		    header_statusCol.appendChild(statusTitle);
-
-		    header.appendChild(header_checkCol);
-		    header.appendChild(header_descrCol);
-		    header.appendChild(header_dateCol);
-		    header.appendChild(header_timeCol);
-		    header.appendChild(header_statusCol);
-
-		    this.file_list.appendChild(header);
-
 			this.total_file_pages = page.total_pages;
 			$(this.file_page_label).html(page.page+"/"+page.total_pages);
 			var widget = this;
+
 			for (var i=0;i<page.data.length;i++){
 				var row = document.createElement('div');
 				row.className = 'row d-flex justify-content-between list_item w-100';
@@ -1389,9 +1495,6 @@ class FileUploader {
 		        }
 
 		        dateCol.appendChild(dateInput);
-
-
-
 
 		        var timeInput = document.createElement('input');
 		        timeInput.type = "text";
@@ -1471,8 +1574,6 @@ class FileUploader {
 					status_btn.style.display = "none";     	
 		        }
 		        
-		        
-
 		        status_div.appendChild(statusText);
 		        status_div.appendChild(status_btn);
 		        statusCol.appendChild(status_div);
@@ -1536,23 +1637,12 @@ class FileUploader {
 				row.appendChild(dateCol);
 				row.appendChild(timeCol);
 				row.appendChild(statusCol);
-
-				this.file_list.appendChild(row);
+				this.file_list.appendChild(row)
+				
 			}
 
-			header_checkFile.addEventListener('input',function(e){
-				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]');
-				if (this.checked){
-					for (var i=0;i<check_boxes.length;i++){
-						check_boxes[i].checked = true;
-					}
-				} else {
-					for (var i=0;i<check_boxes.length;i++){
-						check_boxes[i].checked = false;
-					}
-				}
 
-			});
+
 
 		} else {
 			this.file_list_container.style.display = "none";
@@ -1569,36 +1659,10 @@ class FileUploader {
 		if (page.data.length > 0){
 			this.blank_error_list.style.display = "none";
 			this.error_list_container.style.display = "flex";
-
-			var header = document.createElement('div');
-			header.className = 'row d-flex justify-content-between header_item w-100';
-			header.align = "center";
-			header.style["margin"] = "10px";
-
-			var header_descrCol = document.createElement('div');
-			header_descrCol.className = 'col-6 text-center item_col';
-
-			var header_statusCol = document.createElement('div');
-			header_statusCol.className = 'col-6 text-center item_col';
-
-			var fileTitle = document.createElement('div');
-        	fileTitle.textContent = 'Archivo';
-        	fileTitle.className = 'ml-4 ellipsise text-light header_title';
-        	header_descrCol.appendChild(fileTitle);
-
-		    var statusTitle = document.createElement('div');
-		    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-		    statusTitle.textContent = "Descripción";
-		    header_statusCol.appendChild(statusTitle);
-
-		    header.appendChild(header_descrCol);
-		    header.appendChild(header_statusCol);
-
-		    this.error_list.appendChild(header);
-
 			this.total_error_pages = page.total_pages;
 			$(this.error_page_label).html(page.page+"/"+page.total_pages);
 			var widget = this;
+			
 			for (var i=0;i<page.data.length;i++){
 				var row = document.createElement('div');
 				row.className = 'row d-flex justify-content-between error_item w-100';
@@ -1652,36 +1716,10 @@ class FileUploader {
 		if (page.data.length > 0){
 			this.blank_duplicate_list.style.display = "none";
 			this.duplicate_list_container.style.display = "flex";
-
-			var header = document.createElement('div');
-			header.className = 'row d-flex justify-content-between header_item w-100';
-			header.align = "center";
-			header.style["margin"] = "10px";
-
-			var header_descrCol = document.createElement('div');
-			header_descrCol.className = 'col-5 text-center item_col';
-
-			var header_statusCol = document.createElement('div');
-			header_statusCol.className = 'col-5 text-center item_col';
-
-			var fileTitle = document.createElement('div');
-        	fileTitle.textContent = 'Artículo';
-        	fileTitle.className = 'ml-4 ellipsise text-light header_title';
-        	header_descrCol.appendChild(fileTitle);
-
-		    var statusTitle = document.createElement('div');
-		    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-		    statusTitle.textContent = "Link";
-		    header_statusCol.appendChild(statusTitle);
-
-		    header.appendChild(header_descrCol);
-		    header.appendChild(header_statusCol);
-
-		    this.duplicate_list.appendChild(header);
-
 			this.total_duplicate_pages = page.total_pages;
 			$(this.duplicate_page_label).html(page.page+"/"+page.total_pages);
 			var widget = this;
+
 			for (var i=0;i<page.data.length;i++){
 				var row = document.createElement('div');
 				row.className = 'row d-flex justify-content-between duplicate_item w-100';
@@ -1717,8 +1755,8 @@ class FileUploader {
 				this.duplicate_list.appendChild(row);
 
 			}
-
 		} else {
+			
 			this.duplicate_list_container.style.display = "none";
 			this.blank_duplicate_list.style.display = "flex";
 		}
@@ -1727,41 +1765,16 @@ class FileUploader {
 		while (this.upload_list.firstChild) {
 			this.upload_list.removeChild(this.upload_list.firstChild);
 		}
+
 		this.upload_link.innerHTML = "Subidos ("+page.total+")";
 
 		if (page.data.length > 0){
 			this.blank_upload_list.style.display = "none";
 			this.upload_list_container.style.display = "flex";
-
-			var header = document.createElement('div');
-			header.className = 'row d-flex justify-content-between header_item w-100';
-			header.align = "center";
-			header.style["margin"] = "10px";
-
-			var header_descrCol = document.createElement('div');
-			header_descrCol.className = 'col-5 text-center item_col';
-
-			var header_statusCol = document.createElement('div');
-			header_statusCol.className = 'col-5 text-center item_col';
-
-			var fileTitle = document.createElement('div');
-        	fileTitle.textContent = 'Artículo';
-        	fileTitle.className = 'ml-4 ellipsise text-light header_title';
-        	header_descrCol.appendChild(fileTitle);
-
-		    var statusTitle = document.createElement('div');
-		    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-		    statusTitle.textContent = "Link";
-		    header_statusCol.appendChild(statusTitle);
-
-		    header.appendChild(header_descrCol);
-		    header.appendChild(header_statusCol);
-
-		    this.upload_list.appendChild(header);
-
 			this.total_upload_pages = page.total_pages;
 			$(this.upload_page_label).html(page.page+"/"+page.total_pages);
 			var widget = this;
+
 			for (var i=0;i<page.data.length;i++){
 				var row = document.createElement('div');
 				row.className = 'row d-flex justify-content-between uploaded_item w-100';
@@ -1798,7 +1811,6 @@ class FileUploader {
 				this.upload_list.appendChild(row);
 
 			}
-
 		} else {
 			this.upload_list_container.style.display = "none";
 			this.blank_upload_list.style.display = "flex";

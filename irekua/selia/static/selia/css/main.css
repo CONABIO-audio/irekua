@@ -107,11 +107,23 @@
 .header_item {
   border-radius: 10px;
   background-color: transparent !important;
-  padding: 20px;
+  padding-top: 0px;
+  padding-bottom: 20px;
+  padding-right: 55px;
+  padding-left: 20px;
   display: flex;
   flex-direction: row;
   display: table-cell;
 }
+.upload_list {
+  overflow-y: scroll;
+  min-height:415px;
+  max-height:415px;
+  overflow-x:hidden;
+  padding-right: 15px;
+}
+
+
 .omit_btn {
   background-color: #B22222 !important;
 }
