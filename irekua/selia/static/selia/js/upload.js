@@ -675,7 +675,7 @@ class FileUploader {
 		this.date_pattern_apply_selected_btn.addEventListener('click',function(e){
 			var parser_map = widget.validate_parser_map(widget.date_pattern_input.value);
 			if (parser_map){
-				var check_boxes = widget.file_list.querySelectorTodo('input[type=checkbox]:checked');
+				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
 
 				for (var i=0;i<check_boxes.length;i++){
 					if (check_boxes[i].file_id != "all"){
@@ -742,7 +742,7 @@ class FileUploader {
 		this.time_apply_selected_btn.addEventListener('click',function(e){
 			var valid_time = widget.validate_datetime(widget.time_input.value,'time');
 			if (valid_time){
-				var check_boxes = widget.file_list.querySelectorTodo('input[type=checkbox]:checked');
+				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
 				for (var i=0;i<check_boxes.length;i++){
 					if (check_boxes[i].file_id != "all"){
 						var file = widget.get_file_by_id(check_boxes[i].file_id);
@@ -771,7 +771,7 @@ class FileUploader {
 		this.date_apply_selected_btn.addEventListener('click',function(e){
 			var valid_date = widget.validate_datetime(widget.date_input.value);
 			if (valid_date){
-				var check_boxes = widget.file_list.querySelectorTodo('input[type=checkbox]:checked');
+				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
 				for (var i=0;i<check_boxes.length;i++){
 					if (check_boxes[i].file_id != "all"){
 						var file = widget.get_file_by_id(check_boxes[i].file_id);
@@ -1541,7 +1541,7 @@ class FileUploader {
 			}
 
 			header_checkFile.addEventListener('input',function(e){
-				var check_boxes = widget.file_list.querySelectorTodo('input[type=checkbox]');
+				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]');
 				if (this.checked){
 					for (var i=0;i<check_boxes.length;i++){
 						check_boxes[i].checked = true;
@@ -1805,7 +1805,7 @@ class FileUploader {
 		}
 	}
 	get_checked_ids(){
-    	var check_boxes = this.file_list.querySelectorTodo('input[type=checkbox]:checked');
+    	var check_boxes = this.file_list.querySelectorAll('input[type=checkbox]:checked');
 		var id_arr = [];
 		for (var i=0;i<check_boxes.length;i++){
 			if (check_boxes[i].file_id != "all"){
