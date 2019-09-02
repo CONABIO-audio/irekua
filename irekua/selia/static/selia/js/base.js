@@ -365,9 +365,9 @@ $(document).ready(function() {
   var upload_item_form = document.getElementById('upload_item_form');
   var uploader_section = document.getElementById('uploader_section');
 
-  if (upload_item_form && uploader_section){
-    var uploader = new FileUploader(uploader_section,upload_item_form,"Upload items");
-  }
+  //if (upload_item_form && uploader_section){
+    //var uploader = new FileUploader(uploader_section,upload_item_form,"Upload items");
+  //}
 
   function renderErrorList(page,parent){
     while (parent.firstChild) {

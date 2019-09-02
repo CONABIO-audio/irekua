@@ -88,7 +88,9 @@ class ItemUploadView(SeliaCreateView):
             'collection' : sampling_event_device.collection_device.collection,
             'sampling_event': sampling_event_device.sampling_event,
             'sampling_event_device': sampling_event_device,
-            'licence': licence
+            'licence': licence,
+            'started_on': sampling_event_device.sampling_event.started_on.strftime('%Y-%m-%d %H:%M:%S'),
+            'ended_on': sampling_event_device.sampling_event.ended_on.strftime('%Y-%m-%d %H:%M:%S')
         }
          
         return initial
@@ -111,6 +113,8 @@ class ItemUploadView(SeliaCreateView):
         context["sampling_event_device"] = sampling_event_device
         context["sampling_event"] = sampling_event_device.sampling_event
         context["licence"] = licence
+        context["started_on"] = sampling_event_device.sampling_event.started_on.strftime('%Y-%m-%d %H:%M:%S');
+        context["ended_on"] = sampling_event_device.sampling_event.ended_on.strftime('%Y-%m-%d %H:%M:%S');
 
         return context
 
