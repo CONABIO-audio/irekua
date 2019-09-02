@@ -18,6 +18,10 @@
 let started_on = "{{ started_on }}";
 let ended_on = "{{ ended_on }}";
 
+window.onbeforeunload = function() {
+   return "Al cambiar de página se perderán las cargas pendientes.";
+};
+
 $(document).ready(function() {
   var upload_item_form = document.getElementById('upload_item_form');
   var uploader_section = document.getElementById('uploader_section');
