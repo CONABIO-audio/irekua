@@ -13,6 +13,10 @@ class EntailmentSerializer(serializers.Serializer):
         source='target.description')
     value = serializers.CharField(
         source='target.value')
+    id = serializers.IntegerField(
+        source='target.id')
+    scope = serializers.CharField(
+        source='target.scope')
 
 
 class TermSerializer(serializers.ModelSerializer):
@@ -21,6 +25,8 @@ class TermSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Term
         fields = [
+            'id',
+            'scope',
             'term_type',
             'value',
             'description',
@@ -50,6 +56,8 @@ class ComplexTermSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Term
         fields = [
+            'id',
+            'scope',
             'term_type',
             'value',
             'description',

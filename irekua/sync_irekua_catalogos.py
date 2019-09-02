@@ -76,7 +76,7 @@ def update_database(db_models):
 def parse_data(data):
     logging.info('Parsing data...')
     terms = {
-        datum['id']: Term(datum)
+        str(datum['id']): Term(datum)
         for datum in data
         if datum['nombre']
     }
@@ -95,6 +95,7 @@ def get_all_data(num_rows=ROWS_PER_PETITION):
         'nombres_comunes',
         'subcategoria_taxonomica',
         'sinonimos',
+        'id_asc',
         '_version_'
     ]
 
@@ -106,6 +107,7 @@ def get_all_data(num_rows=ROWS_PER_PETITION):
 
     logging.info('done.')
     return data
+
 
 def get_num_rows():
     response = solr.query(HOST, COLLECTION, rows=0)
@@ -127,10 +129,11 @@ def create_all_terms(all_terms, db_models):
 def process_term(all_terms, term, db_models):
     term_type = get_term_type(term.term_type, db_models)
 
-    if term.scope is None:
-        scope = None
-    else:
+    try:
         scope = all_terms[term.scope].term
+    except KeyError:
+        print(term.scope)
+        scope = None
 
     db_term = create_term(
         term_type,
@@ -173,10 +176,11 @@ def create_term(term_type, value, scope, metadata, db_models):
 def create_common_names(all_terms, term, db_term, db_models):
     common_name_type = get_term_type('nombre común', db_models)
 
-    if term.scope is None:
-        scope = None
-    else:
+    try:
         scope = all_terms[term.scope].term
+    except KeyError:
+        print(term.scope)
+        scope = None
 
     for common_name in term.common_names:
         common_name_term = create_term(
@@ -210,10 +214,11 @@ def get_term_type(term_type, db_models):
 def create_synonyms(all_terms, term, db_term, db_models):
     term_type = db_term.term_type
 
-    if term.scope is None:
-        scope = None
-    else:
+    try:
         scope = all_terms[term.scope].term
+    except KeyError:
+        print(term.scope)
+        scope = None
 
     for synonym in term.synonyms:
         synonym_term = create_term(
@@ -251,10 +256,10 @@ def create_term_entailments(term, mapping, db_models):
             parent_term = mapping[parent_id]
             create_entailment(db_term, parent_term, db_models)
 
-            for synonym_id, synonym in term.synonyms_terms.items():
+            for synonym in term.synonyms_terms.values():
                 create_entailment(synonym, parent_term, db_models)
 
-            for common_name_id, common_name in term.common_names_terms.items():
+            for common_name in term.common_names_terms.values():
                 create_entailment(common_name, parent_term, db_models)
         except KeyError:
             pass
@@ -263,7 +268,6 @@ def create_term_entailments(term, mapping, db_models):
 
 def create_entailment(source, target, db_models):
     check_entailment_type(source, target, db_models)
-
     return db_models.Entailment.objects.get_or_create(
         source=source,
         target=target)
@@ -300,7 +304,7 @@ class Term(object):
 
         self.common_names = data.get('nombres_comunes', [])
         self.synonyms = data.get('sinonimos', [])
-        self.scope = data.get('id_asc', None)
+        self.scope = str(data.get('id_asc', ''))
 
         self.parents = [
             str(sid) for sid in data['ascendentes'].split(',')
