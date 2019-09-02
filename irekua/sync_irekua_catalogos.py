@@ -3,8 +3,13 @@ from django.db import transaction
 from tqdm import tqdm
 import solr_conabio.solr_api as solr
 
+
+logging.basicConfig(level=logging.INFO)
+
+
 HOST = 'http://snmb.conabio.gob.mx'
 COLLECTION = 'taxonomia'
+ROWS_PER_PETITION = 1000
 
 TERM_FMT = (
     'Term type: {type}\n'
@@ -57,83 +62,7 @@ TERM_METADATA_SCHEMA = {
         }
     }
 }
-TERM_ENTAILMENT_METADATA_SCHEMA = {
-    "definitions": {},
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://example.com/term_entailment_schema.json",
-    "type": "object",
-    "title": "Esquema de metadatos para implicaciones taxonómicas",
-    "required": [
-        "target_id",
-        "target_version",
-        "target_origin",
-        "source_id",
-        "source_version",
-        "source_origin"
-    ],
-    "properties": {
-        "target_id": {
-            "$id": "#/properties/target_id",
-            "type": "string",
-            "title": "target_id",
-            "default": "",
-            "examples": [
-                "term.id"
-            ],
-            "pattern": "^(.*)$"
-        },
-        "target_version": {
-            "$id": "#/properties/target_version",
-            "type": "string",
-            "title": "target_version",
-            "default": "",
-            "examples": [
-                "term.version"
-            ],
-            "pattern": "^(.*)$"
-        },
-        "target_origin": {
-            "$id": "#/properties/target_origin",
-            "type": "string",
-            "title": "target_origin",
-            "default": "",
-            "examples": [
-                "juancarlos-catálogos"
-            ],
-            "pattern": "^(.*)$"
-        },
-        "source_id": {
-            "$id": "#/properties/source_id",
-            "type": "string",
-            "title": "source_id",
-            "default": "",
-            "examples": [
-                "term.id"
-            ],
-            "pattern": "^(.*)$"
-        },
-        "source_version": {
-            "$id": "#/properties/source_version",
-            "type": "string",
-            "title": "source_version",
-            "default": "",
-            "examples": [
-                "term.version"
-            ],
-            "pattern": "^(.*)$"
-        },
-        "source_origin": {
-            "$id": "#/properties/source_origin",
-            "type": "string",
-            "title": "source_origin",
-            "default": "",
-            "examples": [
-                "juancarlos-catálogos"
-            ],
-            "pattern": "^(.*)$"
-        }
-    }
-}
+
 
 
 @transaction.atomic
@@ -146,7 +75,7 @@ def update_database(db_models):
 
 def parse_data(data):
     logging.info('Parsing data...')
-    terms =  {
+    terms = {
         datum['id']: Term(datum)
         for datum in data
         if datum['nombre']
@@ -155,7 +84,7 @@ def parse_data(data):
     return terms
 
 
-def get_all_data(num_rows=50000):
+def get_all_data(num_rows=ROWS_PER_PETITION):
     total_rows = get_num_rows()
 
     fl = [
@@ -188,65 +117,113 @@ def create_all_terms(all_terms, db_models):
 
     logging.info('Creating terms...')
     for term in tqdm(all_terms.values()):
-        db_term = process_term(term, db_models)
+        db_term = process_term(all_terms, term, db_models)
         pk_map[term.id] = db_term
     logging.info('done')
 
     return pk_map
 
 
-def process_term(term, db_models):
-    term_type, _ = get_term_type(term.term_type, db_models)
-    db_term, _ = create_term(term_type, term.term, term.metadata, db_models)
+def process_term(all_terms, term, db_models):
+    term_type = get_term_type(term.term_type, db_models)
+
+    if term.scope is None:
+        scope = None
+    else:
+        scope = all_terms[term.scope].term
+
+    db_term = create_term(
+        term_type,
+        term.term,
+        scope,
+        term.metadata,
+        db_models)
 
     if term.synonyms:
-        create_synonyms(term, db_term, db_models)
+        create_synonyms(all_terms, term, db_term, db_models)
 
     if term.common_names:
-        create_common_names(term, db_term, db_models)
+        create_common_names(all_terms, term, db_term, db_models)
 
     return db_term
 
 
-def create_term(term_type, value, metadata, db_models):
-    return db_models.Term.objects.get_or_create(
+def create_term(term_type, value, scope, metadata, db_models):
+    if scope is None:
+        db_term, _ = db_models.Term.objects.get_or_create(
+            term_type=term_type,
+            value=value,
+            defaults={
+                'metadata': metadata
+            }
+        )
+        return db_term
+
+    db_term, _ = db_models.Term.objects.get_or_create(
         term_type=term_type,
         value=value,
+        scope=scope,
         defaults={
             'metadata': metadata
         }
     )
+    return db_term
 
 
-def create_common_names(term, db_term, db_models):
-    common_name_type, _ = get_term_type('nombre común', db_models)
+def create_common_names(all_terms, term, db_term, db_models):
+    common_name_type = get_term_type('nombre común', db_models)
+
+    if term.scope is None:
+        scope = None
+    else:
+        scope = all_terms[term.scope].term
+
     for common_name in term.common_names:
-        common_name_term, _ = create_term(
+        common_name_term = create_term(
             common_name_type,
             common_name,
+            scope,
             term.metadata,
             db_models)
+        term.common_names_terms[common_name_term.pk] = common_name_term
         create_entailment(common_name_term, db_term, db_models)
 
 
+TERM_TYPES = {}
 def get_term_type(term_type, db_models):
-    return db_models.TermType.objects.get_or_create(
-        name=term_type,
-        defaults={
-            'description': 'Nivel taxonómico: {}'.format(term_type),
-            'is_categorical': True,
-            'metadata_schema': TERM_METADATA_SCHEMA,
-            'synonym_metadata_schema': TERM_METADATA_SCHEMA
-        }
-    )
+    if term_type not in TERM_TYPES:
+        db_term_type, _ = db_models.TermType.objects.get_or_create(
+            name=term_type,
+            defaults={
+                'description': 'Nivel taxonómico: {}'.format(term_type),
+                'is_categorical': True,
+                'metadata_schema': TERM_METADATA_SCHEMA,
+                'synonym_metadata_schema': TERM_METADATA_SCHEMA
+            }
+        )
+        TERM_TYPES[term_type] = db_term_type
+        return db_term_type
+
+    return TERM_TYPES[term_type]
 
 
-def create_synonyms(term, db_term, db_models):
+def create_synonyms(all_terms, term, db_term, db_models):
     term_type = db_term.term_type
 
+    if term.scope is None:
+        scope = None
+    else:
+        scope = all_terms[term.scope].term
+
     for synonym in term.synonyms:
-        synonym_term, _ = create_term(term_type, synonym, term.metadata, db_models)
-        create_synonym(synonym_term, db_term, term.metadata, db_models)
+        synonym_term = create_term(
+            term_type,
+            synonym,
+            scope,
+            term.metadata,
+            db_models)
+        term.synonyms_terms[synonym_term.pk] = synonym_term
+        synonym, _ = create_synonym(synonym_term, db_term, term.metadata, db_models)
 
 
 def create_synonym(source, target, metadata, db_models):
@@ -273,39 +250,36 @@ def create_term_entailments(term, mapping, db_models):
         try:
             parent_term = mapping[parent_id]
             create_entailment(db_term, parent_term, db_models)
+
+            for synonym_id, synonym in term.synonyms_terms.items():
+                create_entailment(synonym, parent_term, db_models)
+
+            for common_name_id, common_name in term.common_names_terms.items():
+                create_entailment(common_name, parent_term, db_models)
         except KeyError:
             pass
+
 
 
 def create_entailment(source, target, db_models):
     check_entailment_type(source, target, db_models)
 
-    metadata = {
-        "target_id": target.metadata['id'],
-        "target_version": target.metadata['version'],
-        "target_origin": target.metadata['origin'],
-        "source_id": source.metadata['id'],
-        "source_version": source.metadata['version'],
-        "source_origin": source.metadata['origin']
-    }
-
     return db_models.Entailment.objects.get_or_create(
         source=source,
-        target=target,
-        defaults={
-            'metadata': metadata
-        }
-    )
+        target=target)
 
 
+ENTAILMENT_TYPES = {}
 def check_entailment_type(source, target, db_models):
-    return db_models.EntailmentType.objects.get_or_create(
-        source_type=source.term_type,
-        target_type=target.term_type,
-        defaults={
-            'metadata_schema': TERM_ENTAILMENT_METADATA_SCHEMA
-        }
-    )
+    label = (source.term_type.pk, target.term_type.pk)
+
+    if label not in ENTAILMENT_TYPES:
+        entailment_type, _ = db_models.EntailmentType.objects.get_or_create(
+            source_type=source.term_type,
+            target_type=target.term_type)
+        ENTAILMENT_TYPES[label] = entailment_type
+
+    return ENTAILMENT_TYPES[label]
 
 
 class Term(object):
@@ -326,12 +300,16 @@ class Term(object):
 
         self.common_names = data.get('nombres_comunes', [])
         self.synonyms = data.get('sinonimos', [])
-
+        self.scope = data.get('id_asc', None)
 
         self.parents = [
             str(sid) for sid in data['ascendentes'].split(',')
             if str(sid) != str(self.id)
         ]
+
+        self.parents_terms = {}
+        self.synonyms_terms = {}
+        self.common_names_terms = {}
 
     @property
     def metadata(self):

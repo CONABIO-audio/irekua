@@ -268,7 +268,7 @@ class Item(IrekuaModelBaseUser):
                 'year': self.captured_on_year,
                 'month': self.captured_on_month,
                 'day': self.captured_on_day,
-                'hour': self.catpured_on_hour,
+                'hour': self.captured_on_hour,
                 'minute': self.captured_on_minute,
                 'second': self.captured_on_second})
         except ValidationError as error:
@@ -352,7 +352,7 @@ class Item(IrekuaModelBaseUser):
     def validate_mime_type(self):
         physical_device = self.sampling_event_device.collection_device.physical_device
         device_type = physical_device.device.device_type
-        mime_type = mimetypes.guess_type(self.item_file.name)
+        mime_type, _ = mimetypes.guess_type(self.item_file.name)
         device_type.validate_mime_type(mime_type)
 
     def add_ready_event_type(self, event_type):

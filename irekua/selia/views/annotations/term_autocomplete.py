@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
+from django_filters import FilterSet
 
 from database import models
 
@@ -25,12 +26,26 @@ class TermSerializer(serializers.ModelSerializer):
             'description',
         ]
 
+
+class SynonymSerializer(serializers.ModelSerializer):
+    target = TermSerializer()
+
+    class Meta:
+        model = models.Term
+        fields = [
+            'target',
+        ]
+
+
 class ComplexTermSerializer(serializers.ModelSerializer):
     term_type = serializers.StringRelatedField(many=False)
     entailments = EntailmentSerializer(
         many=True,
         read_only=True,
         source='entailment_source')
+    synonyms = SynonymSerializer(
+        many=True,
+        source='synonym_source')
 
     class Meta:
         model = models.Term
@@ -38,69 +53,33 @@ class ComplexTermSerializer(serializers.ModelSerializer):
             'term_type',
             'value',
             'description',
-            'entailments'
+            'entailments',
+            'synonyms',
         ]
 
 
-class SynonymSerializer(serializers.ModelSerializer):
-    source = TermSerializer()
-    target = ComplexTermSerializer()
-
+class TermFilter(FilterSet):
     class Meta:
         model = models.Term
-        fields = [
-            'source',
-            'target',
-        ]
-
-
-class TermListView(APIView):
-    rows = 7
-
-    def get_term_queryset(self):
-        name = self.request.GET['name']
-        term_type = self.request.GET.get('term_type', '')
-
-        if term_type:
-            queryset = models.Term.objects.filter(
-                value__icontains=name,
-                term_type__name=term_type)
-        else:
-            queryset = models.Term.objects.filter(
-                value__icontains=name)
-
-        rows = self.request.GET.get('rows', self.rows)
-        return queryset[:rows]
-
-    def get_synonym_queryset(self):
-        name = self.request.GET['name']
-        term_type = self.request.GET.get('term_type', '')
-
-        if term_type:
-            queryset = models.Synonym.objects.filter(
-                source__value__icontains=name,
-                source__term_type__name=term_type)
-        else:
-            queryset = models.Synonym.objects.filter(
-                source__value__icontains=name)
-
-        rows = self.request.GET.get('rows', self.rows)
-        return queryset[:rows]
-
-    def get(self, request, format=None):
-        term_queryset = self.get_term_queryset()
-        synonym_queryset = self.get_synonym_queryset()
-
-        term_serializer = ComplexTermSerializer(
-            term_queryset,
-            many=True)
-        synonym_serializer = SynonymSerializer(
-            synonym_queryset,
-            many=True)
-
-        query_results = {
-            'terms': term_serializer.data,
-            'synonyms': synonym_serializer.data
+        fields = {
+            'value': ['icontains'],
+            'term_type': ['exact']
         }
 
-        return Response(query_results)
+
+class TermListView(GenericAPIView):
+    rows = 7
+    serializer_class = ComplexTermSerializer
+    filterset_class = TermFilter
+    queryset = models.Term.objects.all()
+
+    def get(self, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
