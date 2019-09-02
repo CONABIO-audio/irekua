@@ -11,7 +11,8 @@ class CollectionItemAnnotatorView(SeliaAnnotationView):
     def get_urls(self):
         return {
             'item': reverse('rest-api:item-detail', args=['item_pk']),
-            'item_type': reverse('rest-api:itemtype-detail', args=[mark_safe('item_type_pk')])
+            'item_type': reverse('rest-api:itemtype-detail', args=[mark_safe('item_type_pk')]),
+            'terms_autocomplete': reverse('selia:term_autocomplete')
         }
 
     def get_context_data(self, *args, **kwargs):

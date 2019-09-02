@@ -28,6 +28,11 @@ class Term(IrekuaModelBase):
         verbose_name=_('description'),
         help_text=_('Description of term'),
         blank=True)
+    url = models.URLField(
+        db_column='url',
+        verbose_name=_('term url'),
+        help_text=_('URL for term description'),
+        blank=True)
     metadata = JSONField(
         db_column='metadata',
         verbose_name=_('metadata'),

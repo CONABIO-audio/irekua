@@ -261,9 +261,20 @@ class Item(IrekuaModelBaseUser):
         except ValidationError as error:
             raise ValidationError({'created_by': error})
 
-        collection = (
-            self.sampling_event_device  # pylint: disable=E1101
-            .sampling_event.collection)
+        sampling_event = self.sampling_event_device.sampling_event
+
+        try:
+            sampling_event.validate_date({
+                'year': self.captured_on_year,
+                'month': self.captured_on_month,
+                'day': self.captured_on_day,
+                'hour': self.catpured_on_hour,
+                'minute': self.captured_on_minute,
+                'second': self.captured_on_second})
+        except ValidationError as error:
+            raise ValidationError({'captured_on': error})
+
+        collection = sampling_event.collection
 
         try:
             collection.validate_and_get_sampling_event_type(
@@ -292,6 +303,11 @@ class Item(IrekuaModelBaseUser):
             self.item_type.validate_item_type(self)  # pylint: disable=E1101
         except ValidationError as error:
             raise ValidationError({'media_info': error})
+
+        try:
+            self.validate_mime_type()
+        except ValidationError as error:
+            raise ValidationError({'item_file': error})
 
         super(Item, self).clean()
 
@@ -332,6 +348,12 @@ class Item(IrekuaModelBaseUser):
         if self.hash != hash_string:
             msg = _('Hash of file and recorded hash do not coincide')
             raise ValidationError(msg)
+
+    def validate_mime_type(self):
+        physical_device = self.sampling_event_device.collection_device.physical_device
+        device_type = physical_device.device.device_type
+        mime_type = mimetypes.guess_type(self.item_file.name)
+        device_type.validate_mime_type(mime_type)
 
     def add_ready_event_type(self, event_type):
         self.ready_event_types.add(event_type)  # pylint: disable=E1101

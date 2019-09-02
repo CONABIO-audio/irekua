@@ -7,7 +7,7 @@
   --toolbar-color: #CC8B86;
   --lavander: #eaeafb;
   --teal: #005580;
-  --light-green: #eff5f5;
+  --light-green: #dfecec;
   --dark-brown: #595959;
   --dark-ash: #45484c;
 }
@@ -150,7 +150,7 @@ select option {
 }
 
 #view_content {
-  background-color: #eff5f5!important;
+  background-color: var(--light-green)!important;
 }
 
 .navbar-brand {

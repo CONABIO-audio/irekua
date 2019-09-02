@@ -107,19 +107,19 @@ $(document).ready(function() {
         var label_json = JSON.parse(prev_label.value.replace(/\'/g, '"'));
         var key = "especie";
 
-        if ("genero" in label_json){
-        	key = "genero";
-        } else if ("familia" in label_json){
-        	key = "familia";
-        } else if ("orden" in label_json){
-        	key = "orden";
-        } else if ("clase" in label_json){
-        	key = "clase";
-        } else if ("phylum" in label_json){
-        	key = "phylum";
-        } else if ("reino" in label_json){
-        	key = "reino";
-        } else if ("division" in label_json){
+        if ("genero" in label_json) {
+          key = "genero";
+        } else if ("familia" in label_json) {
+          key = "familia";
+        } else if ("orden" in label_json) {
+          key = "orden";
+        } else if ("clase" in label_json) {
+          key = "clase";
+        } else if ("phylum" in label_json) {
+          key = "phylum";
+        } else if ("reino" in label_json) {
+          key = "reino";
+        } else if ("division" in label_json) {
           key = "division";
         }
 

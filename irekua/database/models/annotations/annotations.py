@@ -43,7 +43,6 @@ class Annotation(IrekuaModelBaseUser):
         verbose_name=_('event type'),
         help_text=_('Type of event being annotated'),
         blank=False)
-
     annotation_type = models.ForeignKey(
         'AnnotationType',
         on_delete=models.PROTECT,
