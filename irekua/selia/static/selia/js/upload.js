@@ -4,6 +4,8 @@ class FileUploader {
 		this.ended_on = ended_on;
 		this.parent = parent;
 		this.item_types = item_types;
+		alert(JSON.stringify(this.item_types))
+		alert(this.item_types.length)
 		this.form = form;
 		this.title = title;
 		this.initialize();
@@ -710,7 +712,8 @@ class FileUploader {
 							}
 
 							if (file.captured_on_time){
-								tinput.value = file.captured_on_time;							
+								tinput.value = file.captured_on_time;
+							}							
 							if (valid_time){
 								file.captured_on_time = valid_time;
 								tinput.value = valid_time;
@@ -1979,9 +1982,7 @@ class FileUploader {
 		} else {
 			return {"date":"","time":""};
 		}
-	  }
-
-	  return {"date":"","time":""};
+		return {"date":"","time":""};
 	}
 	retrieve_media_info(file,callback) {
 		if (file.type == 'image/jpeg'){
@@ -2207,7 +2208,6 @@ class FileUploader {
         }
 
         file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time);
-		
 	}
 	datetime_in_range(date,time){
 		if (!date){
@@ -2276,7 +2276,6 @@ class FileUploader {
 		}
 
 		return false;
-
 	}
 	validate_datetime(dateString,type="date"){
 	  if (dateString != ""){
@@ -2451,7 +2450,7 @@ class FileUploader {
 		}
 		return false;
 	}
-	is_force(file){
+	is_forced(file){
 		if (file.force){
 			return true;
 		}
@@ -2478,6 +2477,98 @@ class FileUploader {
 			return 1;
 		}
 		return 0;
+	}
+	compare_times(f1,f2){
+		if (!f1.captured_on_time && !f2.captured_on_time){
+			return 0;
+		} else if (!f1.captured_on_time){
+			return -1;
+		} else if (!f2.captured_on_time){
+			return 1;
+		} else {
+			function get_seconds(timestring){
+				var time_arr = timestring.split(":");
+				var time_len  = time_arr.length;
+				var seconds = 0;
+				switch(time_len){
+					case 1:{
+						seconds = parseInt(time_arr[0])*60*60;
+						break;
+					}
+					case 2:{
+						seconds = parseInt(time_arr[0])*60*60+parseInt(time_arr[1])*60;
+						break;
+					}
+					case 3:{
+						seconds = parseInt(time_arr[0])*60*60+parseInt(time_arr[1])*60+parseInt(time_arr[2]);
+						break;
+					}
+				}
+
+				return seconds;
+			}
+			var seconds1 = get_seconds(f1.captured_on_time);
+			var seconds2 = get_seconds(f2.captured_on_time);
+
+			if (seconds1 < seconds2){
+				return -1;
+			} else if (seconds2 < seconds1){
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	}
+	compare_dates(f1,f2){
+		if (!f1.captured_on_date && !f2.captured_on_date){
+			return 0;
+		} else if (!f1.captured_on_date){
+			return -1;
+		} else if (!f2.captured_on_date){
+			return 1;
+		} else {
+			function lazy_moment(datestring){
+				var date_arr = datestring.split("-");
+				var date_len = date_arr.length;
+				var extended_date = datestring;
+
+				switch (date_len){
+					case 1:{
+						extended_date += "-01-01";
+						break;
+					}
+					case 2:{
+						extended_date += "-01"; 
+						break;
+					}
+					default:{
+						break;
+					}
+				}
+
+				return {'moment':moment(extended_date,"YYYY-MM-DD",true),'valid_up_to':date_len}
+			}
+
+			var lazy_moment1 = lazy_moment(f1.captured_on);
+			var lazy_moment2 = lazy_moment(f2.captured_on);
+
+			var level = 'year';
+			var valid_up_to = Math.min(lazy_moment1.valid_up_to,lazy_moment2.valid_up_to)
+
+			if (valid_up_to == 2){
+				level = 'month';
+			} else if (valid_up_to == 3){
+				level = 'day';
+			}
+
+			if (lazy_moment1.moment.isBefore(lazy_moment2.moment,level)){
+				return -1;
+			} else if (lazy_moment2.moment.isBefore(lazy_moment1.moment,level)){
+				return 1;
+			} else {
+				return 0;
+			}
+		}
 	}
 	get_item_type(file){
 	  switch (file.type){
@@ -2615,30 +2706,19 @@ class FileUploader {
 
 			var file_count = 0;
 			var total_files = to_upload.length;
-
 			var widget = this;
 
 			function gather(response){
 				file_count++;
 				widget.render_by_name(['errors','duplicates','uploads']);
 				widget.progress_upload(file_count,total_files);
-				
+
 				if (file_count >= total_files-1){
 					setTimeout(function() {
 						widget.progress_container.style.display = "none";
 						widget.progress_upload(0,total_files);
 					}, 2000);
 				}
-		function gather(response){
-			file_count++;
-			widget.render_by_name(['errors','duplicates','uploads']);
-			widget.progress_upload(file_count,total_files);
-
-			if (file_count >= total_files-1){
-				setTimeout(function() {
-					widget.progress_container.style.display = "none";
-					widget.progress_upload(0,total_files);
-				}, 2000);
 			}
 
 			this.progress_container.style.display = "block";
@@ -2647,7 +2727,6 @@ class FileUploader {
 				this.upload_single(to_upload[i],gather);
 			}
 		}
-
 	}
 	add_file(file,callback){
 		file["captured_on_date"] = null;
@@ -2655,7 +2734,6 @@ class FileUploader {
 		file["captured_on_inrange"] = false;
 		file["item_type"] = this.get_item_type(file);
 		file["media_info"] = null;
-		file["veto_upload"] = false;
 		file["force_upload"] = false;
 		file["checked"] = false;
 		file["upload_response"] = null;

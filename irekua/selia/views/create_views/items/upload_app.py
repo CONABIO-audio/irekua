@@ -4,8 +4,8 @@ import json
 from django.shortcuts import get_object_or_404
 from django.shortcuts import reverse
 from django.http import HttpResponse
+from rest.serializers.object_types.data_collections.items import ListSerializer
 from database.models import Item, SamplingEventDevice, Licence, CollectionItemType
-
 from database.models import Item
 from database.models import SamplingEventDevice
 from database.models import Licence
@@ -119,9 +119,11 @@ class ItemUploadView(SeliaCreateView):
         return initial
 
     def get_item_types(self,sampling_event_device):
-        collection_item_types = CollectionItemType.objects.filter(collection_type=sampling_event_device.collection_device.collection.collection_type)
+        collection_item_types = CollectionItemType.objects.filter(collection_type=sampling_event_device.collection_device.collection.collection_type, item_type__mime_types__in=sampling_event_device.collection_device.physical_device.device.device_type.mime_types.all()).distinct()
 
-        return serializers.serialize('json',collection_item_types)
+        serialized = ListSerializer(collection_item_types, many=True, context={'request':self.request})
+
+        return serialized.data
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
