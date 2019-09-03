@@ -12,5 +12,4 @@ class Filter(BaseFilter):
         model = ItemType
         fields = (
             'name',
-            'media_type'
         )

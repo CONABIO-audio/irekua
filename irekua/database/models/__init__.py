@@ -21,6 +21,7 @@ from .object_types.device_types import DeviceType
 from .object_types.entailment_types import EntailmentType
 from .object_types.event_types import EventType
 from .object_types.item_types import ItemType
+from .object_types.mime_types import MimeType
 from .object_types.licence_types import LicenceType
 from .object_types.sampling_events.sampling_event_type_devices import SamplingEventTypeDeviceType
 from .object_types.sampling_events.sampling_event_types import SamplingEventType
@@ -88,4 +89,5 @@ __all__ = [
     'UploadEvent',
     'UploadSession',
     'User',
+    'MimeType',
 ]

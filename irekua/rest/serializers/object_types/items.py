@@ -6,6 +6,7 @@ from rest_framework import serializers
 from database.models import ItemType
 
 from . import events
+from . import mime_types
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -32,6 +33,9 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
     event_types = events.SelectSerializer(
         many=True,
         read_only=True)
+    mime_types = mime_types.SelectSerializer(
+        many=True,
+        read_only=True)
 
     class Meta:
         model = ItemType
@@ -39,8 +43,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'name',
             'description',
-            'media_info_schema',
-            'media_type',
+            'mime_types',
             'icon',
             'event_types',
             'created_on',
@@ -54,8 +57,6 @@ class CreateSerializer(serializers.ModelSerializer):
         fields = (
             'name',
             'description',
-            'media_info_schema',
-            'media_type',
             'icon',
         )
 

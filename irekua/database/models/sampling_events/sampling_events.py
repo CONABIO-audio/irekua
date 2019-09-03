@@ -103,6 +103,9 @@ class SamplingEvent(IrekuaModelBaseUser):
                 'Starting date cannot be greater than ending date')
             raise ValidationError(msg)
 
+    def validate_date(self, date_info):
+        pass
+
     def clean(self):
         collection = self.collection
 

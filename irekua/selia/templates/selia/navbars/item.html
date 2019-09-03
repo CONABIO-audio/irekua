@@ -3,17 +3,15 @@
 
 {% block navbar-brand %}
 <div class="dropdown">
-  <a class="navbar-brand text-nowrap dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans 'Item ' %}{{ item.pk }}
+  <a class="navbar-brand text-nowrap dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans 'Item' %} {{ item.pk }}
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item active" href={% url 'selia:item_detail' item.pk %}>{% trans 'Item ' %}{{ item.pk }}</a>
-    <a class="dropdown-item" href={% url 'selia:collection_items' item.sampling_event_device.sampling_event.collection.pk %}>{{item.sampling_event_device.sampling_event.collection.pk}}{% trans ': Items' %}</a>
+    <a class="dropdown-item active" href={% url 'selia:item_detail' item.pk %}>{% trans 'Item' %} {{ item.pk }}</a>
+    <a class="dropdown-item" href={% url 'selia:collection_items' item.sampling_event_device.sampling_event.collection.pk %}>{{item.sampling_event_device.sampling_event.collection.pk}}: {% trans 'Items' %}</a>
     <a class="dropdown-item" href={% url 'selia:collection_detail' item.sampling_event_device.sampling_event.collection.pk %}>{{item.sampling_event_device.sampling_event.collection.pk}}</a>
     <a class="dropdown-item" href={% url 'selia:user_collections' %}>{% trans 'Collections' %}</a>
   </div>
 </div>
-
-
 {% endblock navbar-brand %}
 
 {% block navbar-items %}

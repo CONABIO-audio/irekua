@@ -28,6 +28,7 @@ from .object_types.device_types import DeviceTypeViewSet
 from .object_types.entailment_types import EntailmentTypeViewSet
 from .object_types.event_types import EventTypeViewSet
 from .object_types.item_types import ItemTypeViewSet
+from .object_types.mime_types import MimeTypeViewSet
 from .object_types.licence_types import LicenceTypeViewSet
 from .object_types.sampling_events.sampling_event_type_device_types import SamplingEventTypeDeviceTypeViewSet
 from .object_types.sampling_events.sampling_event_type_site_types import SamplingEventTypeSiteTypeViewSet
@@ -47,8 +48,6 @@ from .terms.terms import TermViewSet
 from .users.institutions import InstitutionViewSet
 from .users.roles import RoleViewSet
 from .users.users import UserViewSet
-
-
 
 
 
@@ -101,4 +100,5 @@ __all__ = [
     'CollectionTypeDeviceTypeViewSet',
     'CollectionTypeRoleViewSet',
     'CollectionAdministratorViewSet',
+    'MimeTypeViewSet',
 ]

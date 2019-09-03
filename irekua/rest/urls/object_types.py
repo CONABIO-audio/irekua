@@ -3,6 +3,9 @@ from rest import views
 
 object_types_router = routers.DefaultRouter()
 object_types_router.register(
+    r'mime_types',
+    views.MimeTypeViewSet)
+object_types_router.register(
     r'annotation_types',
     views.AnnotationTypeViewSet)
 object_types_router.register(

@@ -1,6 +1,8 @@
 from django.urls import path
 from selia.views import autocomplete
 
+from selia.views.annotations.term_autocomplete import TermListView
+
 
 urlpatterns = [
     path(
@@ -47,4 +49,8 @@ urlpatterns = [
         'autocomplete/users/',
         autocomplete.UserAutocomplete.as_view(),
         name='users_autocomplete'),
+    path(
+        'autocomplete/full_terms/',
+        TermListView.as_view(),
+        name='term_autocomplete')
 ]

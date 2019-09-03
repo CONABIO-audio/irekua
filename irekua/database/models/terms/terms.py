@@ -23,10 +23,21 @@ class Term(IrekuaModelBase):
         verbose_name=_('value'),
         help_text=_('Value of term'),
         blank=False)
+    scope = models.CharField(
+        max_length=128,
+        db_column='scope',
+        verbose_name=_('scope'),
+        help_text=_('Scope of term. Use for disambiguation.'),
+        blank=True)
     description = models.TextField(
         db_column='description',
         verbose_name=_('description'),
         help_text=_('Description of term'),
+        blank=True)
+    url = models.URLField(
+        db_column='url',
+        verbose_name=_('term url'),
+        help_text=_('URL for term description'),
         blank=True)
     metadata = JSONField(
         db_column='metadata',
@@ -40,7 +51,7 @@ class Term(IrekuaModelBase):
         ordering = ['term_type', 'value']
         verbose_name = _('Term')
         verbose_name_plural = _('Terms')
-        unique_together = (('term_type', 'value'))
+        unique_together = (('term_type', 'value', 'scope'))
 
     def __str__(self):
         msg = '{term_type}: {value}'.format(

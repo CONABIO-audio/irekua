@@ -23,7 +23,6 @@ class Filter(BaseFilter):
         fields = (
             'is_uploaded',
             'item_type',
-            'item_type__media_type',
             'sampling_event_device__sampling_event__sampling_event_type',
             'sampling_event_device__sampling_event__collection',
             'sampling_event_device__sampling_event__collection__collection_type',

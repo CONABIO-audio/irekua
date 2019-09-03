@@ -1,39 +1,22 @@
-from django import forms
-from .base import SeliaAnnotationView
-from database.models import Annotation
+from django.urls import reverse
+from django.utils.html import mark_safe
 
-
-class BootstrapRadioSelect(forms.RadioSelect):
-    template_name = 'selia/widgets/bootstrap_radio.html'
-
-
-class AnnotationCreateForm(forms.ModelForm):
-    class Meta:
-        model = Annotation
-        fields = [
-            "annotation_tool",
-            "item",
-            "event_type",
-            "label",
-            "annotation_type",
-            "annotation",
-            "annotation_configuration",
-            "certainty",
-            "quality",
-            "commentaries"
-        ]
-        widgets = {
-            "certainty": BootstrapRadioSelect,
-            "quality": BootstrapRadioSelect
-        }
+from database.models import Item
+from selia.views.annotations.base import SeliaAnnotationView
 
 
 class CollectionItemAnnotatorView(SeliaAnnotationView):
     template_name = 'selia/annotations/annotator.html'
-    annotator_template = 'selia/components/annotators/image.html'
-    success_url = 'selia:item_annotations'
-    mode = 'create'
 
-    model = Annotation
-    form_class = AnnotationCreateForm
+    def get_urls(self):
+        return {
+            'item': reverse('rest-api:item-detail', args=['item_pk']),
+            'item_type': reverse('rest-api:itemtype-detail', args=[mark_safe('item_type_pk')]),
+            'terms_autocomplete': reverse('selia:term_autocomplete')
+        }
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['item'] = Item.objects.get(pk=self.kwargs['pk'])
+        context['urls'] = self.get_urls()
+        return context

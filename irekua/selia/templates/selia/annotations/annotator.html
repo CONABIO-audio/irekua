@@ -13,12 +13,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'selia/css/image_annotator.css'%}">
 {% endblock stylesheet-extra %}
 
-{% block scripts-extra %}
-{{ block.super }}
-<script type="text/javascript" src="{% static 'selia/js/image_annotator.js' %}"></script>
-{% endblock scripts-extra %}
-
-{% block toolbar-title %}{{ item.collection }}{% trans ': Item ' %}{{ item.pk }}{% trans ': Annotations: Add' %}{% endblock %}
+{% block toolbar-title %}{{ item.collection }}: {% trans 'Item' %} {{ item.pk }}: {% trans 'Annotations: Add' %}{% endblock %}
 
 {% block toolbar-items %}
 	<li class="nav-item">
@@ -40,9 +35,30 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
-	{% annotator_component annotator_template=annotator_template item=item annotation_list=annotation_list mode=mode %}
+	<div id="annotator">
+  </div>
 {% endblock main-content %}
 
-{% block modals-extra %}
+{% block scripts-extra %}
+{{ block.super }}
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script type="text/javascript" src="{% static 'selia/js/annotator/annotator.js' %}"></script>
 
-{% endblock modals-extra %}
+<script type="text/javascript">
+  let Annotator = annotator.default;
+
+  let urls = {{% for key, url in urls.items %}
+    {{ key }}: '{{ url }}',{% endfor %}
+  }
+
+  let info = {
+    item: "{{ item.pk }}",
+    item_type: "{{ item.item_type.pk }}",
+  }
+
+  ReactDOM.render(
+    React.createElement(Annotator, {urls: urls, info: info}, null),
+    document.getElementById('annotator'));
+</script>
+{% endblock scripts-extra %}

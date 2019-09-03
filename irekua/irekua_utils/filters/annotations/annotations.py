@@ -40,6 +40,4 @@ ordering_fields = (
     ('created_on', _('added on')),
     ('annotation_type', _('annotation type')),
     ('event_type', _('event type')),
-
-
 )

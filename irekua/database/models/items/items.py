@@ -1,5 +1,5 @@
-import mimetypes
 import os
+import mimetypes
 
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
@@ -23,8 +23,9 @@ def get_item_path(instance, filename):
         '{sampling_event_device}',
         '{hash}{ext}')
 
-    extension = mimetypes.guess_extension(
-        instance.item_type.media_type)
+    mime_type, __ = mimetypes.guess_type(filename)
+    extension = mimetypes.guess_extension(mime_type)
+
     sampling_event_device = instance.sampling_event_device
     sampling_event = sampling_event_device.sampling_event
     collection = sampling_event.collection
@@ -109,6 +110,7 @@ class Item(IrekuaModelBaseUser):
         help_text=_('Metadata associated to item'),
         blank=True,
         null=True)
+
     captured_on = models.DateTimeField(
         db_column='captured_on',
         verbose_name=_('captured on'),
@@ -213,14 +215,42 @@ class Item(IrekuaModelBaseUser):
                 'by sampling event device.')
             raise ValidationError(msg)
 
-        # TODO: Validate User
-
     @property
     def collection(self):
         return self.sampling_event_device.sampling_event.collection
 
+    def check_captured_on(self):
+        if self.captured_on is not None:
+            return
+
+        if (
+                self.captured_on_year and
+                self.captured_on_month and
+                self.captured_on_day):
+
+            if (
+                    self.captured_on_hour and
+                    self.captured_on_minute and
+                    self.captured_on_second):
+
+                self.captured_on = '{year}-{month}-{day} {hour}:{minute}:{second}'.format(
+                    year=self.captured_on_year,
+                    month=self.captured_on_month,
+                    day=self.captured_on_day,
+                    hour=self.captured_on_hour,
+                    minute=self.captured_on_minute,
+                    second=self.captured_on_second)
+
+            else:
+                self.captured_on = '{year}-{month}-{day}'.format(
+                    year=self.captured_on_year,
+                    month=self.captured_on_month,
+                    day=self.captured_on_day)
+
+
     def clean(self):
         self.check_captured_on()
+
         try:
             self.validate_hash_and_filesize()
         except ValidationError as error:
@@ -231,14 +261,20 @@ class Item(IrekuaModelBaseUser):
         except ValidationError as error:
             raise ValidationError({'created_by': error})
 
-        try:
-            self.item_type.validate_media_info(self.media_info)  # pylint: disable=E1101
-        except ValidationError as error:
-            raise ValidationError({'media_info': error})
+        sampling_event = self.sampling_event_device.sampling_event
 
-        collection = (
-            self.sampling_event_device  # pylint: disable=E1101
-            .sampling_event.collection)
+        try:
+            sampling_event.validate_date({
+                'year': self.captured_on_year,
+                'month': self.captured_on_month,
+                'day': self.captured_on_day,
+                'hour': self.captured_on_hour,
+                'minute': self.captured_on_minute,
+                'second': self.captured_on_second})
+        except ValidationError as error:
+            raise ValidationError({'captured_on': error})
+
+        collection = sampling_event.collection
 
         try:
             collection.validate_and_get_sampling_event_type(
@@ -264,25 +300,16 @@ class Item(IrekuaModelBaseUser):
             raise ValidationError({'licence': error})
 
         try:
+            self.item_type.validate_item_type(self)  # pylint: disable=E1101
+        except ValidationError as error:
+            raise ValidationError({'media_info': error})
+
+        try:
             self.validate_mime_type()
         except ValidationError as error:
             raise ValidationError({'item_file': error})
 
         super(Item, self).clean()
-
-    def validate_mime_type(self):
-        if self.item_file.name is None:
-            return
-
-        file_mime_type, enc = mimetypes.guess_type(self.item_file.name)
-        if self.item_type.media_type != file_mime_type:  # pylint: disable=E1101
-            msg = _(
-                'File MIME type does not coincide with declared item type '
-                '(file: {file_type} != {item_type} :item_type)')
-            params = dict(
-                file_type=file_mime_type,
-                item_type=self.item_type.media_type)  # pylint: disable=E1101
-            raise ValidationError(msg % params)
 
     def validate_and_get_event_type(self, event_type):
         return self.item_type.validate_and_get_event_type(event_type)  # pylint: disable=E1101
@@ -313,15 +340,20 @@ class Item(IrekuaModelBaseUser):
         self.item_file.open() # pylint: disable=E1101
         hash_string = hash_file(self.item_file)
         item_size = self.item_file.size  # pylint: disable=E1101
-        print('item size', item_size)
 
-        if self.hash is '':
+        if not self.hash:
             self.hash = hash_string
             self.filesize = item_size
 
         if self.hash != hash_string:
             msg = _('Hash of file and recorded hash do not coincide')
             raise ValidationError(msg)
+
+    def validate_mime_type(self):
+        physical_device = self.sampling_event_device.collection_device.physical_device
+        device_type = physical_device.device.device_type
+        mime_type, _ = mimetypes.guess_type(self.item_file.name)
+        device_type.validate_mime_type(mime_type)
 
     def add_ready_event_type(self, event_type):
         self.ready_event_types.add(event_type)  # pylint: disable=E1101
@@ -342,25 +374,3 @@ class Item(IrekuaModelBaseUser):
     def delete(self, *args, **kwargs):
         self.item_file.delete()
         super().delete(*args, **kwargs)
-
-    def check_captured_on(self):
-        if self.captured_on is not None:
-            return
-
-        if (self.captured_on_year and self.captured_on_month and self.captured_on_day):
-
-            if (self.captured_on_hour is not None and self.captured_on_minute is not None and self.captured_on_second is not None):
-
-                self.captured_on = '{year}-{month}-{day} {hour}:{minute}:{second}'.format(
-                    year=self.captured_on_year,
-                    month=self.captured_on_month,
-                    day=self.captured_on_day,
-                    hour=self.captured_on_hour,
-                    minute=self.captured_on_minute,
-                    second=self.captured_on_second)
-
-            else:
-                self.captured_on = '{year}-{month}-{day}'.format(
-                    year=self.captured_on_year,
-                    month=self.captured_on_month,
-                    day=self.captured_on_day)

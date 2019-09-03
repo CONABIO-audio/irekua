@@ -25,30 +25,35 @@ def make_test_data(apps, schema_editor):
         first_name='conanp',
         last_name='admin',
         password='conanpadmin',
+        email='1@gmail.com',
         institution=CONANP)
     conanp_user_1 = models.User.objects.create_user(
         username='conanp_user_1',
         first_name='conanp',
         last_name='usuario uno',
         password='conanpuser',
+        email='2@gmail.com',
         institution=CONANP)
     conanp_user_2 = models.User.objects.create_user(
         username='conanp_user_2',
         first_name='conanp',
         last_name='usuario dos',
         password='conanpuser',
+        email='3@gmail.com',
         institution=CONANP)
     conanp_user_3 = models.User.objects.create_user(
         username='conanp_user_3',
         first_name='conanp',
         last_name='usuario tres',
         password='conanpuser',
+        email='4@gmail.com',
         institution=CONANP)
     conabio_admin = models.User.objects.create_user(
         username='conabio_admin',
         first_name='conabio',
         last_name='admin',
         password='conabioadmin',
+        email='5@gmail.com',
         institution=CONABIO,
         is_superuser=True)
 
@@ -96,18 +101,19 @@ def make_test_data(apps, schema_editor):
         description='Ocurrencia de animal en una fotografía')
     animal_in_photo.term_types.set([term_type_species, term_type_genus])
 
-    png_camera_trap_item, _ = models.ItemType.objects.get_or_create(
-        name='Foto de Camara Trampa (png)',
-        description='Foto en formato png tomada con camara trampa',
+    png_mime_type, _ = models.MimeType.objects.get_or_create(
         media_info_schema=simple_JSON_schema(),
-        media_type='image/png')
-    jpg_camera_trap_item, _ = models.ItemType.objects.get_or_create(
-        name='Foto de Camara Trampa (jpg)',
-        description='Foto en formato jpg tomada con camara trampa',
+        mime_type='image/png')
+    jpg_mime_type, _ = models.MimeType.objects.get_or_create(
         media_info_schema=simple_JSON_schema(),
-        media_type='image/jpeg')
-    png_camera_trap_item.event_types.set([animal_in_photo])
-    jpg_camera_trap_item.event_types.set([animal_in_photo])
+        mime_type='image/jpeg')
+
+    camera_trap_item, _ = models.ItemType.objects.get_or_create(
+        name='Foto de Camara Trampa',
+        description='Foto en formato png tomada con camara trampa')
+
+    camera_trap_item.mime_types.add(png_mime_type, jpg_mime_type)
+    camera_trap_item.event_types.set([animal_in_photo])
 
     camera, _ = models.DeviceType.objects.get_or_create(
         name='camara',
@@ -178,8 +184,7 @@ def make_test_data(apps, schema_editor):
         restrict_event_types=True,
         restrict_sampling_event_types=True)
     procer_collection_type.add_site_type(procer_site)
-    procer_collection_type.add_item_type(png_camera_trap_item)
-    procer_collection_type.add_item_type(jpg_camera_trap_item)
+    procer_collection_type.add_item_type(camera_trap_item)
     procer_collection_type.add_annotation_type(bbox)
     procer_collection_type.add_device_type(camera)
     procer_collection_type.add_licence_type(open_licence_type)
@@ -243,7 +248,7 @@ def make_test_data(apps, schema_editor):
     for site in collection_sites:
         timedelta1 = datetime.timedelta(days=int(400 * random()))
         timedelta2 = datetime.timedelta(days=int(60 * random()))
-        start = timezone.now() - timedelta1 - timedelta2
+        start = timezone.datetime.now() - timedelta1 - timedelta2
         end = timezone.datetime.now() - timedelta1
 
         sampling_event, _ = models.SamplingEvent.objects.get_or_create(
