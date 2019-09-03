@@ -123,7 +123,10 @@
   padding-right: 15px;
 }
 
-
+.xdsoft_disabled {
+    color:white !important;
+    background-color:black !important;
+}
 .omit_btn {
   background-color: #B22222 !important;
 }

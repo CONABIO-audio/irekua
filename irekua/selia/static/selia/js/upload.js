@@ -1,8 +1,9 @@
 class FileUploader {
-	constructor(parent,form,started_on,ended_on,title){
+	constructor(parent,form,item_types,started_on,ended_on,title){
 		this.started_on = started_on;
 		this.ended_on = ended_on;
 		this.parent = parent;
+		this.item_types = item_types;
 		this.form = form;
 		this.title = title;
 		this.initialize();
@@ -260,7 +261,7 @@ class FileUploader {
 		var date_patterns = document.createElement('datalist');
 		date_patterns.id = "date_patterns";
 
-		var patterns = ["<YYYY>-<MM>-<DD>_<HH>:<mm>:<ss>","<YYYY>-<MM>-<DD>","<YYYY>/<MM>/<DD>_<HH>:<mm>:<ss>","<YYYY>/<MM>/<DD>","<HH>:<mm>:<ss>","<HH>:<mm>"]
+		var patterns = ["<YYYY>-<MM>-<DD> <HH>:<mm>:<ss>","<YYYY>-<MM>-<DD>","<YYYY>_<MM>_<DD>_<HH>_<mm>_<ss>","<YYYY>_<MM>_<DD>","<YYYY>/<MM>/<DD>_<HH>:<mm>:<ss>","<YYYY>/<MM>/<DD>","<HH>:<mm>:<ss>","<HH>:<mm>","<YYYY><MM><DD><HH><mm><ss>","<YYYY><MM><DD>"]
 		var options = ''
 		for (var i=0;i<patterns.length;i++){
 			options += '<option value="'+patterns[i]+'" />';

@@ -1,9 +1,10 @@
 from django import forms
+from django.core import serializers
 from django.shortcuts import get_object_or_404
 from django.shortcuts import reverse
 
 from django.http import HttpResponse
-from database.models import Item, SamplingEventDevice, Licence
+from database.models import Item, SamplingEventDevice, Licence, CollectionItemType
 from selia.views.create_views.create_base import SeliaCreateView
 import json
 
@@ -95,6 +96,11 @@ class ItemUploadView(SeliaCreateView):
          
         return initial
 
+    def get_item_types(self,sampling_event_device):
+        collection_item_types = CollectionItemType.objects.filter(collection_type=sampling_event_device.collection_device.collection.collection_type)
+
+        return serializers.serialize('json',collection_item_types)
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         sampling_event_device_pk = None
@@ -115,6 +121,7 @@ class ItemUploadView(SeliaCreateView):
         context["licence"] = licence
         context["started_on"] = sampling_event_device.sampling_event.started_on.strftime('%Y-%m-%d %H:%M:%S');
         context["ended_on"] = sampling_event_device.sampling_event.ended_on.strftime('%Y-%m-%d %H:%M:%S');
+        context["item_types"] = self.get_item_types(sampling_event_device)
 
         return context
 
