@@ -22,6 +22,8 @@ class SelectSerializer(serializers.ModelSerializer):
 
 
 class ListSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name='rest-api:collectionitemtype-detail')
     event_types = events.SelectSerializer(
         many=True,
         read_only=True,

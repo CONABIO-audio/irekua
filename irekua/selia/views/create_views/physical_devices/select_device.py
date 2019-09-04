@@ -12,21 +12,21 @@ from selia.forms.type_field import TypeSelectField
 
 
 class SelectDeviceForm(forms.Form):
-    device = forms.ModelChoiceField(
-        required=False,
-        queryset=Device.objects.all(),
-        widget=autocomplete.ModelSelect2(
-            url='selia:devices_autocomplete',
-            attrs={'style': 'width: 100%'}))
-    device_type = TypeSelectField(
-        required=False,
-        queryset=DeviceType.objects.all())
-    brand = forms.ModelChoiceField(
-        required=False,
-        queryset=DeviceBrand.objects.all(),
-        widget=autocomplete.ModelSelect2(
-            url='selia:device_brands_autocomplete',
-            attrs={'style': 'width: 100%'}))
+    # device = forms.ModelChoiceField(
+    #     required=False,
+    #     queryset=Device.objects.all(),
+    #     widget=autocomplete.ModelSelect2(
+    #         url='selia:devices_autocomplete',
+    #         attrs={'style': 'width: 100%'}))
+    # device_type = TypeSelectField(
+    #     required=False,
+    #     queryset=DeviceType.objects.all())
+    # brand = forms.ModelChoiceField(
+    #     required=False,
+    #     queryset=DeviceBrand.objects.all(),
+    #     widget=autocomplete.ModelSelect2(
+    #         url='selia:device_brands_autocomplete',
+    #         attrs={'style': 'width: 100%'}))
     model = forms.CharField(required=False)
 
     def clean(self):

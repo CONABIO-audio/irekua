@@ -1,12 +1,14 @@
+from django import forms
+from django.core import serializers
 import json
 from django.shortcuts import get_object_or_404
 from django.shortcuts import reverse
 from django.http import HttpResponse
-
+from rest.serializers.object_types.data_collections.items import ListSerializer
+from database.models import Item, SamplingEventDevice, Licence, CollectionItemType
 from database.models import Item
 from database.models import SamplingEventDevice
 from database.models import Licence
-
 from selia.views.create_views.create_base import SeliaCreateView
 
 
@@ -110,9 +112,18 @@ class ItemUploadView(SeliaCreateView):
             'sampling_event': sampling_event_device.sampling_event,
             'sampling_event_device': sampling_event_device,
             'licence': licence,
+            'started_on': sampling_event_device.sampling_event.started_on.strftime('%Y-%m-%d %H:%M:%S'),
+            'ended_on': sampling_event_device.sampling_event.ended_on.strftime('%Y-%m-%d %H:%M:%S')
         }
 
         return initial
+
+    def get_item_types(self,sampling_event_device):
+        collection_item_types = CollectionItemType.objects.filter(collection_type=sampling_event_device.collection_device.collection.collection_type, item_type__mime_types__in=sampling_event_device.collection_device.physical_device.device.device_type.mime_types.all()).distinct()
+
+        serialized = ListSerializer(collection_item_types, many=True, context={'request':self.request})
+
+        return json.dumps(serialized.data)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -133,5 +144,8 @@ class ItemUploadView(SeliaCreateView):
         context["sampling_event_device"] = sampling_event_device
         context["sampling_event"] = sampling_event_device.sampling_event
         context["licence"] = licence
+        context["started_on"] = sampling_event_device.sampling_event.started_on.strftime('%Y-%m-%d %H:%M:%S');
+        context["ended_on"] = sampling_event_device.sampling_event.ended_on.strftime('%Y-%m-%d %H:%M:%S');
+        context["item_types"] = self.get_item_types(sampling_event_device)
 
         return context

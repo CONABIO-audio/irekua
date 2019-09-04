@@ -9,6 +9,8 @@ from . import terms
 
 
 class SelectSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name='rest-api:eventtype-detail')
     name = serializers.PrimaryKeyRelatedField(
         many=False,
         read_only=False,
