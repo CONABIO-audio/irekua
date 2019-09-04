@@ -1,6 +1,15 @@
 class FileUploader {
-	constructor(parent,form,title){
+	constructor(parent,form,item_types,started_on,ended_on,title){
+		this.started_on = started_on;
+		this.ended_on = ended_on;
 		this.parent = parent;
+		this.item_types = item_types;
+		this.mime_types = [];
+		for (var i=0;i<this.item_types.length;i++){
+			for (var j=0;j<this.item_types[i].mime_types.length;j++){
+				this.mime_types.push(this.item_types[i].mime_types[j].mime_type)
+			}
+		}
 		this.form = form;
 		this.title = title;
 		this.initialize();
@@ -16,7 +25,7 @@ class FileUploader {
 		this.total_duplicate_pages = 0;
 		this.total_error_pages = 0;
 		this.total_upload_pages = 0;
-		this.per_page = 5;
+		this.per_page = 10;
 		this.build_view();
 	}
 	build_view() {
@@ -47,7 +56,6 @@ class FileUploader {
 		progress_outer.appendChild(this.progress_bar);
 
 		this.progress_container.appendChild(progress_outer);
-
 	}
 	build_top_toolbar() {
 		if (this.top_toolbar){
@@ -56,13 +64,15 @@ class FileUploader {
 		var widget = this;
 
 		this.top_toolbar = document.createElement('div');
-		this.top_toolbar.className = 'row justify-content-center w-100';
+		this.top_toolbar.className = 'row w-100';
 
 		var toolbar_container = document.createElement('div');
 		toolbar_container.className = "container-fluid p-2 w-100 bg-dark rounded";
 
 		var row = document.createElement('div');
-		row.className = "row p-2";
+		row.className = "row";
+		row.align = "center";
+		row.style.padding = "10px";
 
 
 		var file_picker_col = document.createElement('div');
@@ -216,7 +226,7 @@ class FileUploader {
 
 		var date_toggle_btn_label = document.createElement('label');
 		date_toggle_btn_label.className ="upload_tool text-light";
-		var date_toggle_label = document.createTextNode('Editar momento ');
+		var date_toggle_label = document.createTextNode('Herramientas de edición ');
 		//var date_toggle_icon = document.createElement('i');
 
 		//date_toggle_icon.className = "fas fa-trash";
@@ -228,6 +238,88 @@ class FileUploader {
 
 		date_toggle_col.appendChild(date_toggle_dropdown);
 
+		var item_type_col = document.createElement('div');
+
+		item_type_col.className = "col-3";
+		var item_type_label = document.createElement('label');
+		item_type_label.className = "upload_tool text-light";
+		item_type_label.appendChild(document.createTextNode('Tipo: '));
+		item_type_label.htmlFor = "itemDate";
+
+		this.item_type_input = document.createElement('select');
+		this.item_type_input.style.width = "200px";
+
+		var options = ''
+		for (var i=0;i<this.item_types.length;i++){
+			options += '<option value="'+this.item_types[i].item_type+'">'+this.item_types[i].item_type+"<option/>";
+		}
+
+		this.item_type_input.innerHTML = options;
+
+		var item_type_apply_dropdown = document.createElement('div');
+		item_type_apply_dropdown.className = "dropdown";
+
+		var item_type_apply_anchor = document.createElement('a');
+		item_type_apply_anchor.setAttribute('data-toggle','dropdown');
+		item_type_apply_anchor.setAttribute('role','button');
+		item_type_apply_anchor.setAttribute('aria-expanded',false);
+		item_type_apply_anchor.setAttribute('aria-controls','collapseUpload')
+
+		var item_type_apply_btn_label = document.createElement('label');
+		item_type_apply_btn_label.className ="upload_tool text-light";
+		var item_type_apply_icon = document.createElement('i');
+		item_type_apply_icon.className = "fas fa-arrow-alt-circle-right";
+
+		item_type_apply_btn_label.appendChild(item_type_apply_icon);
+
+
+		item_type_apply_anchor.appendChild(item_type_apply_btn_label);
+		item_type_apply_dropdown.appendChild(item_type_apply_anchor);
+
+		var item_type_apply_dropdown_menu = document.createElement('div');
+		item_type_apply_dropdown_menu.className = "dropdown-menu text-light";
+		item_type_apply_dropdown_menu.style["background-color"] = "#454d54";
+		item_type_apply_dropdown_menu.style.width = "auto";
+		item_type_apply_dropdown_menu.setAttribute('aria-labelledby','dropdownMenuButton');
+
+		var item_type_apply_dropdown_menu_inner = document.createElement('div');
+		item_type_apply_dropdown_menu_inner.className = "container-fluid";
+
+		var item_type_apply_all_btn_row = document.createElement('div');
+		item_type_apply_all_btn_row.className = "row upload_tool justify-content-center";
+
+		this.item_type_apply_all_btn = document.createElement("a");
+		this.item_type_apply_all_btn.innerHTML = "<h6>Todo</h6>";
+
+		item_type_apply_all_btn_row.appendChild(this.item_type_apply_all_btn);
+
+		var item_type_apply_selected_btn_row = document.createElement('div');
+		item_type_apply_selected_btn_row.className = "row upload_tool justify-content-center";
+
+		this.item_type_apply_selected_btn = document.createElement("a");
+		this.item_type_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
+		item_type_apply_selected_btn_row.appendChild(this.item_type_apply_selected_btn);
+
+		item_type_apply_dropdown_menu_inner.appendChild(item_type_apply_selected_btn_row);
+		item_type_apply_dropdown_menu_inner.appendChild(item_type_apply_all_btn_row);
+
+		item_type_apply_dropdown_menu.appendChild(item_type_apply_dropdown_menu_inner);
+		item_type_apply_dropdown.appendChild(item_type_apply_dropdown_menu);
+
+		var item_type_row = document.createElement('div');
+		item_type_row.className = "row d-flex";
+
+		item_type_row.appendChild(item_type_label);
+		item_type_row.appendChild(this.item_type_input);
+		item_type_row.appendChild(item_type_apply_dropdown)
+
+		item_type_col.appendChild(item_type_row);
+
+		//if (this.item_types.length == 1){
+		//	item_type_col.style.display = "none";
+		//}
+
+
 		row.appendChild(file_picker_col);
 		row.appendChild(upload_col);
 		row.appendChild(remove_col);
@@ -235,30 +327,37 @@ class FileUploader {
 
 
     	var row2 = document.createElement("div");
-		row2.className = "row collapse";
-		row2.style["padding-left"] = "20px";
+		row2.className = "row collapse justify-content-between";
 		row2.id = "date_tools";
-
-    	var row3 = document.createElement("div");
-		row3.className = "row collapse";
-		row3.style["padding-left"] = "20px";
-		row3.style["padding-top"] = "20px"
-		row3.id = "date_tools";
+		row2.style["padding-left"] = "60px";
 
 		var date_pattern_col = document.createElement('div');
 
-		date_pattern_col.className = "col";
+		date_pattern_col.className = "col-4";
 		var date_pattern_label = document.createElement('label');
 		date_pattern_label.className = "upload_tool text-light";
 		date_pattern_label.appendChild(document.createTextNode('Patrón: '));
 		date_pattern_label.htmlFor = "itemDatePattern";
 
+
 		this.date_pattern_input = document.createElement('input');
 		this.date_pattern_input.style.width = "300px";
 		this.date_pattern_input.className = "incorrect_pattern";
-		this.date_pattern_input.type = "text";
 		this.date_pattern_input.id = "itemDatePattern";
-		this.date_pattern_input.placeholder = "<YYYY>-<MM>-<DD>_<hh>:<mm>:<ss>_.wav";
+		this.date_pattern_input.setAttribute('list','date_patterns');
+		this.date_pattern_input.placeholder = "Patrón de fecha en nombre del archivo";
+
+
+		var date_patterns = document.createElement('datalist');
+		date_patterns.id = "date_patterns";
+
+		var patterns = ["<YYYY>-<MM>-<DD> <HH>:<mm>:<ss>","<YYYY>-<MM>-<DD>","<YYYY>_<MM>_<DD>_<HH>_<mm>_<ss>","<YYYY>_<MM>_<DD>","<YYYY>/<MM>/<DD>_<HH>:<mm>:<ss>","<YYYY>/<MM>/<DD>","<HH>:<mm>:<ss>","<HH>:<mm>","<YYYY><MM><DD><HH><mm><ss>","<YYYY><MM><DD>"]
+		var options = ''
+		for (var i=0;i<patterns.length;i++){
+			options += '<option value="'+patterns[i]+'" />';
+		}
+
+		date_patterns.innerHTML = options;
 
 		var date_pattern_apply_dropdown = document.createElement('div');
 		date_pattern_apply_dropdown.className = "dropdown";
@@ -315,6 +414,7 @@ class FileUploader {
 
 		date_pattern_row.appendChild(date_pattern_label);
 		date_pattern_row.appendChild(this.date_pattern_input);
+		date_pattern_row.appendChild(date_patterns);
 		date_pattern_row.appendChild(date_pattern_apply_dropdown)
 
 		date_pattern_col.appendChild(date_pattern_row);
@@ -333,11 +433,21 @@ class FileUploader {
 		this.date_input.style.width = "110px";
 		this.date_input.type = "text";
 
+		var minDate = new Date(this.started_on.split(" ")[0]);
+		minDate.setDate(minDate.getDate()+1);
+		var maxDate = new Date(this.ended_on.split(" ")[0]);
+		maxDate.setDate(maxDate.getDate()+1);
+		var startDate = new Date(this.started_on.split(" ")[0]);
+		startDate.setDate(startDate.getDate()+1);
+
 		$(this.date_input).datetimepicker({
 			format:'Y-m-d',
 			timepicker: false,
 			closeOnDateSelect: true,
 			validateOnBlur: false,
+			minDate: minDate,
+			maxDate: maxDate,
+			startDate: startDate,
 			onChangeDateTime: function(dp,$input){
 		        var date_input = widget.validate_datetime($input.val());
 		        if (date_input){
@@ -411,9 +521,6 @@ class FileUploader {
 
 		date_col.appendChild(date_row);
 
-
-
-
 		var time_col = document.createElement('div');
 		time_col.className = "col";
 		var time_label = document.createElement('label');
@@ -441,7 +548,7 @@ class FileUploader {
 		    }
 		});
 
-        this.time_input.placeholder = "hh:mm:ss";
+        this.time_input.placeholder = "HH:mm:ss";
 
 
 		var time_apply_dropdown = document.createElement('div');
@@ -506,6 +613,7 @@ class FileUploader {
 
 		var metadata_date_col = document.createElement('div');
 		metadata_date_col.className = "col";
+		metadata_date_col.align = "center";
 
 		var metadata_date_dropdown = document.createElement('div');
 		metadata_date_dropdown.className = "dropdown";
@@ -564,13 +672,14 @@ class FileUploader {
 
 		row2.appendChild(date_col);
 		row2.appendChild(time_col);
+		row2.appendChild(date_pattern_col);
+		row2.appendChild(item_type_col);
 		row2.appendChild(metadata_date_col);
-		row3.appendChild(date_pattern_col);
+
 
 
 		toolbar_container.appendChild(row);
 		toolbar_container.appendChild(row2);
-		toolbar_container.appendChild(row3);
 
 		this.top_toolbar.appendChild(toolbar_container);
 
@@ -597,20 +706,18 @@ class FileUploader {
 	    	var fixable = widget.files.filter(widget.is_fixable);
 
 	    	for (var i=0;i<fixable.length;i++){
+	    		fixable[i].item_type = widget.get_item_type(fixable[i]);
+	    		var new_date = "";
+	    		var new_time = "";
 	    		if (fixable[i].media_info){
 	    			var datetime_original = fixable[i].media_info.DateTimeOriginalParsed;
-
 	    			if (typeof(datetime_original) !== 'undefined'){
 	    				var datetime_arr = datetime_original.split(" ");
-	    				fixable[i].captured_on_date = datetime_arr[0];
-	    				fixable[i].captured_on_time = datetime_arr[1];
-
-	    			} else {
-	    				fixable[i].captured_on_date = null;
-	    				fixable[i].captured_on_time = null;
+	    				new_date = datetime_arr[0];
+	    				new_time = datetime_arr[1];
 	    			}
-
 	    		}
+	    		widget.set_file_datetime(fixable[i],new_date,new_time);
 	    	}
 
 	    	widget.render_by_name(['files']);
@@ -622,28 +729,40 @@ class FileUploader {
 
 	    	for (var i=0;i<id_arr.length;i++){
 	    		var file = widget.get_file_by_id(id_arr[i]);
+
 	    		if (file){
+					var typeinput = document.getElementById("item_type_input_file_"+file.file_id);
+					file.item_type = widget.get_item_type(file);
+
+					var new_val = "";
+					if (file.item_type){
+						new_val = file.item_type;
+					}
+					var selectOptions = typeinput.options;
+				    for (var opt, j = 0; opt = selectOptions[j]; j++) {
+				        if (opt.value == new_val) {
+				            typeinput.selectedIndex = j;
+				            break;
+				        }
+				    }
+					var dinput = document.getElementById("date_input_file_"+file.file_id);
+					var tinput = document.getElementById("time_input_file_"+file.file_id);
+		    		var new_date = "";
+		    		var new_time = "";
+
 		    		if (file.media_info){
 		    			var datetime_original = file.media_info.DateTimeOriginalParsed;
-						var dinput = document.getElementById("date_input_file_"+file.file_id);
-						var tinput = document.getElementById("time_input_file_"+file.file_id);
-
 		    			if (typeof(datetime_original) !== 'undefined'){
 		    				var datetime_arr = datetime_original.split(" ");
-		    				file.captured_on_date = datetime_arr[0];
-		    				file.captured_on_time = datetime_arr[1];
-		    				dinput.value = datetime_arr[0];
-		    				tinput.value = datetime_arr[1];
-		    			} else {
-		    				file.captured_on_date = null;
-		    				file.captured_on_time = null;
-		    				dinput.value = "";
-		    				tinput.value = "";
+		    				new_date = datetime_arr[0];
+		    				new_time = datetime_arr[1];
 		    			}
-
-		    			widget.toggle_status(file.file_id);
-
 		    		}
+
+		    		widget.set_file_datetime(file,new_date,new_time);
+		    		dinput.value = new_date;
+		    		tinput.value = new_time;
+		    		widget.toggle_status(file.file_id);
 	    		}
 
 	    	}
@@ -675,7 +794,7 @@ class FileUploader {
 		this.date_pattern_apply_selected_btn.addEventListener('click',function(e){
 			var parser_map = widget.validate_parser_map(widget.date_pattern_input.value);
 			if (parser_map){
-				var check_boxes = widget.file_list.querySelectorTodo('input[type=checkbox]:checked');
+				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
 
 				for (var i=0;i<check_boxes.length;i++){
 					if (check_boxes[i].file_id != "all"){
@@ -684,19 +803,16 @@ class FileUploader {
 							var dinput = document.getElementById("date_input_file_"+check_boxes[i].file_id);
 							var tinput = document.getElementById("time_input_file_"+check_boxes[i].file_id);
 							var datetime_obj = widget.parse_datetime(file.name,parser_map);
+	    					
+	    					widget.set_file_datetime(file,datetime_obj.date,datetime_obj.time);
 
-							var valid_date = widget.validate_datetime(datetime_obj.date);
-							var valid_time = widget.validate_datetime(datetime_obj.time,'time');
-
-							if (valid_date){
-								file.captured_on_date = valid_date;
-								dinput.value = valid_date;
+							if (file.captured_on_date){
+								dinput.value = file.captured_on_date;
 							}
 
-							if (valid_time){
-								file.captured_on_time = valid_time;
-								tinput.value = valid_time;
-							}
+							if (file.captured_on_time){
+								tinput.value = file.captured_on_time;
+							}							
 
 							widget.toggle_status(check_boxes[i].file_id);
 						}
@@ -710,22 +826,64 @@ class FileUploader {
 			if (parser_map){
 				var files = widget.files.filter(widget.is_fixable);
 				for (var i=0;i<files.length;i++){
-					var datetime_obj = widget.parse_datetime(file.name,parser_map);
-					var valid_date = widget.validate_datetime(datetime_obj.date);
-					var valid_time = widget.validate_datetime(datetime_obj.time,'time');
+					var datetime_obj = widget.parse_datetime(files[i].name,parser_map);
+					widget.set_file_datetime(files[i],datetime_obj.date,datetime_obj.time);
 
-					if (valid_date){
-						file.captured_on_date = valid_date;
-					}
-
-					if (valid_time){
-						file.captured_on_time = valid_time;
-					}
 				}
 
 				widget.render_by_name(['files']);
 
 			}
+		});
+
+		this.item_type_apply_all_btn.addEventListener('click',function(e){
+			var item_type = widget.item_type_input.value;
+			var selected_index = widget.item_type_input.selectedIndex;
+			var new_val = null;
+			if (item_type != ""){
+				new_val = item_type;
+			}
+
+			var files = widget.files.filter(widget.is_fixable);
+			for (var i=0;i<files.length;i++){
+				files[i].item_type = new_val;
+			}
+
+			var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]');
+			for (var i=0;i<check_boxes.length;i++){
+				if (check_boxes[i].file_id != "all"){
+					var file = widget.get_file_by_id(check_boxes[i].file_id);
+					if (file){
+						var dinput = document.getElementById("item_type_input_file_"+check_boxes[i].file_id);
+						dinput.selectedIndex = selected_index;
+						widget.toggle_status(check_boxes[i].file_id);
+					}
+				}
+			}
+			
+		});
+
+		this.item_type_apply_selected_btn.addEventListener('click',function(e){
+			var item_type = widget.item_type_input.value;
+			var selected_index = widget.item_type_input.selectedIndex;
+			var new_val = null;
+			if (item_type != ""){
+				new_val = item_type;
+			}
+					
+			var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
+			for (var i=0;i<check_boxes.length;i++){
+				if (check_boxes[i].file_id != "all"){
+					var file = widget.get_file_by_id(check_boxes[i].file_id);
+					if (file){
+						file.item_type = new_val;
+						var dinput = document.getElementById("item_type_input_file_"+check_boxes[i].file_id);
+						dinput.selectedIndex = selected_index;
+						widget.toggle_status(check_boxes[i].file_id);
+					}
+				}
+			}
+			
 		});
 
 		this.time_apply_all_btn.addEventListener('click',function(e){
@@ -733,21 +891,31 @@ class FileUploader {
 			if (valid_time){
 				var files = widget.files.filter(widget.is_fixable);
 				for (var i=0;i<files.length;i++){
-					files[i].captured_on_time = valid_time;
+					widget.set_file_time(files[i],valid_time)
 				}
-				widget.render_by_name(['files']);
+				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]');
+				for (var i=0;i<check_boxes.length;i++){
+					if (check_boxes[i].file_id != "all"){
+						var file = widget.get_file_by_id(check_boxes[i].file_id);
+						if (file){
+							var dinput = document.getElementById("time_input_file_"+check_boxes[i].file_id);
+							dinput.value = valid_time;
+							widget.toggle_status(check_boxes[i].file_id);
+						}
+					}
+				}
 			}
 		});
 
 		this.time_apply_selected_btn.addEventListener('click',function(e){
 			var valid_time = widget.validate_datetime(widget.time_input.value,'time');
 			if (valid_time){
-				var check_boxes = widget.file_list.querySelectorTodo('input[type=checkbox]:checked');
+				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
 				for (var i=0;i<check_boxes.length;i++){
 					if (check_boxes[i].file_id != "all"){
 						var file = widget.get_file_by_id(check_boxes[i].file_id);
 						if (file){
-							file.captured_on_time = valid_time;
+							widget.set_file_time(file,valid_time);
 							var dinput = document.getElementById("time_input_file_"+check_boxes[i].file_id);
 							dinput.value = valid_time;
 							widget.toggle_status(check_boxes[i].file_id);
@@ -762,21 +930,31 @@ class FileUploader {
 			if (valid_date){
 				var files = widget.files.filter(widget.is_fixable);
 				for (var i=0;i<files.length;i++){
-					files[i].captured_on_date = valid_date;
+					widget.set_file_date(files[i],valid_date);
 				}
-				widget.render_by_name(['files']);
+				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]');
+				for (var i=0;i<check_boxes.length;i++){
+					if (check_boxes[i].file_id != "all"){
+						var file = widget.get_file_by_id(check_boxes[i].file_id);
+						if (file){
+							var dinput = document.getElementById("date_input_file_"+check_boxes[i].file_id);
+							dinput.value = valid_date;
+							widget.toggle_status(check_boxes[i].file_id);
+						}
+					}
+				}
 			}
 		});
 
 		this.date_apply_selected_btn.addEventListener('click',function(e){
 			var valid_date = widget.validate_datetime(widget.date_input.value);
 			if (valid_date){
-				var check_boxes = widget.file_list.querySelectorTodo('input[type=checkbox]:checked');
+				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
 				for (var i=0;i<check_boxes.length;i++){
 					if (check_boxes[i].file_id != "all"){
 						var file = widget.get_file_by_id(check_boxes[i].file_id);
 						if (file){
-							file.captured_on_date = valid_date;
+							widget.set_file_date(file,valid_date);
 							var dinput = document.getElementById("date_input_file_"+check_boxes[i].file_id);
 							dinput.value = valid_date;
 							widget.toggle_status(check_boxes[i].file_id);
@@ -802,19 +980,21 @@ class FileUploader {
 				$(this).addClass('incorrect_pattern');
 			}
 		});
+
+		this.parent.appendChild(this.top_toolbar);
 	}
 	build_body() {
 		if (this.body){
 			$(this.body).remove();
 		}
 		this.body = document.createElement('div');
-		this.body.className = "row justify-content-center";
+		this.body.className = "row justify-content-between w-100";
 
 		this.body.style["padding-top"] = "10px";
 		this.body.style["padding-bottom"] = "10px";
 
-		this.body.style["padding-left"] = "10px";
-		this.body.style["padding-right"] = "10px";
+		this.body.style["padding-left"] = "20px";
+		this.body.style["padding-right"] = "20px";
 
 		this.build_files_section();
 		this.build_results_section();
@@ -834,11 +1014,8 @@ class FileUploader {
 		this.file_list_container.className = "row justify-content-center container-fluid";
 		this.file_list_container.style.display = "none";
 
-
-
 		this.build_file_list();
 
-		section_col.appendChild(this.top_toolbar);
 		section_col.appendChild(this.progress_container);
 		section_col.appendChild(this.files_section);
 		this.body.appendChild(section_col);
@@ -849,7 +1026,7 @@ class FileUploader {
 		}
 
 		this.results_section = document.createElement('div');
-		this.results_section.className = "col";
+		this.results_section.className = "col justify-content-center w-100";
 
 		var header = document.createElement('div');
 		header.className = "row";
@@ -859,7 +1036,7 @@ class FileUploader {
 		var error_tab = document.createElement('li');
 		error_tab.className = "nav-item";
 		this.error_link = document.createElement('a');
-		this.error_link.className = "nav-link active";
+		this.error_link.className = "nav-link";
 		this.error_link.href = "#";
 		this.error_link.innerHTML = "Errores (0)";
 		error_tab.appendChild(this.error_link);
@@ -877,40 +1054,40 @@ class FileUploader {
 		var upload_tab = document.createElement('li');
 		upload_tab.className = "nav-item";
 		this.upload_link = document.createElement('a');
-		this.upload_link.className = "nav-link";
+		this.upload_link.className = "nav-link active";
 		this.upload_link.href = "#";
 		this.upload_link.innerHTML = "Subidos (0)";
 		upload_tab.appendChild(this.upload_link);
 
-
-		this.results_header_tabs.appendChild(error_tab);
-		this.results_header_tabs.appendChild(duplicate_tab);
 		this.results_header_tabs.appendChild(upload_tab);
+		this.results_header_tabs.appendChild(duplicate_tab);
+		this.results_header_tabs.appendChild(error_tab);
+
 
 		header.appendChild(this.results_header_tabs);
 
 		this.error_container = document.createElement('div');
+		this.error_container.style.display = "none";
 		this.error_list_container = document.createElement('div');
-		this.error_list_container.className = "row container-fluid";
+		this.error_list_container.className = "row justify-content-center container-fluid w-100";
 		this.error_list_container.style.display = "none";
 
 		this.duplicate_container = document.createElement('div');
 		this.duplicate_container.style.display = "none";
 		this.duplicate_list_container = document.createElement('div');
-		this.duplicate_list_container.className = "row container-fluid";
+		this.duplicate_list_container.className = "row justify-content-center container-fluid w-100";
 		this.duplicate_list_container.style.display = "none";
 
 		this.upload_container = document.createElement('div');
-		this.upload_container.style.display = "none";
 		this.upload_list_container = document.createElement('div');
-		this.upload_list_container.className = "row container-fluid";
+		this.upload_list_container.className = "row justify-content-center container-fluid w-100";
 		this.upload_list_container.style.display = "none";
 
 		this.build_error_list();
 		this.build_duplicate_list();
 		this.build_upload_list();
 
-		this.current_results_tab = this.error_container;
+		this.current_results_tab = this.upload_container;
 
 		var widget = this;
 
@@ -959,12 +1136,12 @@ class FileUploader {
 		this.body.appendChild(this.results_section);
 	}
 	build_file_list(){
-		this.file_list = document.createElement('div');
-		this.file_list.className = "justify-content-center w-100";
+		this.file_list_table = document.createElement('div');
+		this.file_list_table.className = "justify-content-center w-100";
 
 		this.blank_file_list = document.createElement('div');
 		this.blank_file_list.className = "row justify-content-center blank_item_list w-100";
-		this.blank_file_list.height = "300px";
+		this.blank_file_list.height = "600px";
 
 
 		var file_picker_col = document.createElement('div');
@@ -1022,10 +1199,22 @@ class FileUploader {
 		var widget = this;
 
 		this.next_file_btn.onclick = function(e){
+			if (widget.file_page_number+1 == widget.total_file_pages){
+				this.disabled = true;
+			} else {
+				this.disabled = false;
+			}
+			widget.prev_file_btn.disabled = false;
 			var page = widget.get_next_page("file_list");
 			widget.render_file_list(page);
 		}
 		this.prev_file_btn.onclick = function(e){
+			if (widget.file_page_number-1 <= 0){
+				this.disabled = true;
+			} else {
+				this.disabled = false;
+			}
+			widget.next_file_btn.disabled = false;
 			var page = widget.get_prev_page("file_list");
 			widget.render_file_list(page);
 		}
@@ -1038,7 +1227,88 @@ class FileUploader {
 			widget.add_file_multiple(this.files,finalize_callback);
 		});
 
-		this.file_list_container.appendChild(this.file_list);
+		var header = document.createElement('div');
+		header.className = 'row d-flex justify-content-between header_item w-100';
+		header.align = "center";
+		header.style["margin"] = "10px";
+
+		var header_checkCol = document.createElement('div');
+		header_checkCol.className = 'col-1  justify-content-center text-center item_col';
+
+		var header_descrCol = document.createElement('div');
+		header_descrCol.className = 'col-2  justify-content-center text-center item_col';
+
+		var header_itemtypeCol = document.createElement('div');
+		header_itemtypeCol.className = 'col-3  justify-content-center text-center item_col'
+
+		var header_dateCol = document.createElement('div');
+		header_dateCol.className = 'col-2  justify-content-center text-center item_col';
+
+		var header_timeCol = document.createElement('div');
+		header_timeCol.className = 'col-2  justify-content-center text-center item_col';
+
+		var header_statusCol = document.createElement('div');
+		header_statusCol.className = 'col-2  justify-content-center text-center item_col';
+
+		this.header_checkFile = document.createElement('input');
+		this.header_checkFile.type = 'checkbox';
+		this.header_checkFile.className = 'item_checkbox header_title';
+		this.header_checkFile["file_id"] = "all";
+		header_checkCol.appendChild(this.header_checkFile);
+
+		var fileTitle = document.createElement('div');
+    	fileTitle.textContent = 'Archivo';
+    	fileTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_descrCol.appendChild(fileTitle);
+
+		var itemtypeTitle = document.createElement('div');
+    	itemtypeTitle.textContent = 'Tipo';
+    	itemtypeTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_itemtypeCol.appendChild(itemtypeTitle);
+
+		var dateTitle = document.createElement('div');
+    	dateTitle.textContent = 'Fecha';
+    	dateTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_dateCol.appendChild(dateTitle);
+
+		var timeTitle = document.createElement('div');
+    	timeTitle.textContent = 'Tiempo';
+    	timeTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_timeCol.appendChild(timeTitle);
+
+	    var statusTitle = document.createElement('div');
+	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
+	    statusTitle.textContent = "Estado";
+	    header_statusCol.appendChild(statusTitle);
+
+		this.header_checkFile.addEventListener('input',function(e){
+			var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]');
+			for (var i=0;i<check_boxes.length;i++){
+				check_boxes[i].checked = this.checked;
+			}
+			var files = widget.files.filter(widget.is_fixable);
+			for (var i=0;i<files.length;i++){
+				files[i].checked = this.checked;
+			}
+
+		});
+
+	    header.appendChild(header_checkCol);
+	    header.appendChild(header_descrCol);
+	    header.appendChild(header_itemtypeCol);
+	    header.appendChild(header_dateCol);
+	    header.appendChild(header_timeCol);
+	    header.appendChild(header_statusCol);
+
+	    this.file_list = document.createElement('div');
+	    this.file_list.className = "upload_list";
+	    this.file_list.style["min-height"] = "450px";
+	    this.file_list.style["max-height"] = "450px";
+
+	    this.file_list_table.appendChild(header);
+	    this.file_list_table.appendChild(this.file_list);
+
+		this.file_list_container.appendChild(this.file_list_table);
 		this.file_list_container.appendChild(paginator);
 
 		this.files_section.appendChild(this.blank_file_list);
@@ -1077,18 +1347,61 @@ class FileUploader {
 		var widget = this;
 
 		this.next_error_btn.onclick = function(e){
+			if (widget.error_page_number+1 == widget.total_error_pages){
+				this.disabled = true;
+			} else {
+				this.disabled = false;
+			}
+			widget.prev_error_btn.disabled = false;
 			var page = widget.get_next_page("error_list");
 			widget.render_error_list(page);
 		}
 		this.prev_error_btn.onclick = function(e){
+			if (widget.error_page_number-1 <= 0){
+				this.disabled = true;
+			} else {
+				this.disabled = false;
+			}
+			widget.next_error_btn.disabled = false;
 			var page = widget.get_prev_page("error_list");
 			widget.render_error_list(page);
 		}
 
-		this.error_list = document.createElement('div');
-		this.error_list.className = "row justify-content-center w-100";
+		this.error_list_table = document.createElement('div');
+		this.error_list_table.className = "justify-content-center w-100";
 
-		this.error_list_container.appendChild(this.error_list);
+		var header = document.createElement('div');
+		header.className = 'row d-flex justify-content-between header_item w-100';
+		header.align = "center";
+		header.style["margin"] = "10px";
+
+		var header_descrCol = document.createElement('div');
+		header_descrCol.className = 'col-6  justify-content-center text-center item_col';
+
+		var header_statusCol = document.createElement('div');
+		header_statusCol.className = 'col-6  justify-content-center text-center item_col';
+
+		var fileTitle = document.createElement('div');
+    	fileTitle.textContent = 'Archivo';
+    	fileTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_descrCol.appendChild(fileTitle);
+
+	    var statusTitle = document.createElement('div');
+	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
+	    statusTitle.textContent = "Descripción";
+	    header_statusCol.appendChild(statusTitle);
+
+	    header.appendChild(header_descrCol);
+	    header.appendChild(header_statusCol);
+
+	    this.error_list = document.createElement('div');
+	    this.error_list.className = "upload_list";
+
+	    this.error_list_table.appendChild(header);
+	    this.error_list_table.appendChild(this.error_list);
+
+
+		this.error_list_container.appendChild(this.error_list_table);
 		this.error_list_container.appendChild(paginator);
 
 		this.blank_error_list = document.createElement('div');
@@ -1133,18 +1446,61 @@ class FileUploader {
 		var widget = this;
 
 		this.next_duplicate_btn.onclick = function(e){
+			if (widget.duplicate_page_number+1 == widget.total_duplicate_pages){
+				this.disabled = true;
+			} else {
+				this.disabled = false;
+			}
+			widget.prev_duplicate_btn.disabled = false;
 			var page = widget.get_next_page("duplicate_list");
 			widget.render_duplicate_list(page);
 		}
 		this.prev_duplicate_btn.onclick = function(e){
+			if (widget.duplicate_page_number-1 <= 0){
+				this.disabled = true;
+			} else {
+				this.disabled = false;
+			}
+			widget.next_duplicate_btn.disabled = false;
 			var page = widget.get_prev_page("duplicate_list");
 			widget.render_duplicate_list(page);
 		}
 
-		this.duplicate_list = document.createElement('div');
-		this.duplicate_list.className = "row justify-content-center w-100";
+		this.duplicate_list_table = document.createElement('div');
+		this.duplicate_list_table.className = "justify-content-center w-100";
 
-		this.duplicate_list_container.appendChild(this.duplicate_list);
+		var header = document.createElement('div');
+		header.className = 'row d-flex justify-content-between header_item w-100';
+		header.align = "center";
+		header.style["margin"] = "10px";
+		header.style["padding-right"] = "0px !important";
+
+		var header_descrCol = document.createElement('div');
+		header_descrCol.className = 'col-5 justify-content-center text-center item_col';
+
+		var header_statusCol = document.createElement('div');
+		header_statusCol.className = 'col-5 justify-content-center text-center item_col';
+
+		var fileTitle = document.createElement('div');
+    	fileTitle.textContent = 'Artículo';
+    	fileTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_descrCol.appendChild(fileTitle);
+
+	    var statusTitle = document.createElement('div');
+	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
+	    statusTitle.textContent = "Link";
+	    header_statusCol.appendChild(statusTitle);
+
+	    header.appendChild(header_descrCol);
+	    header.appendChild(header_statusCol);
+
+	    this.duplicate_list = document.createElement('div');
+	    this.duplicate_list.className = "upload_list";
+
+	    this.duplicate_list_table.appendChild(header);
+	    this.duplicate_list_table.appendChild(this.duplicate_list);
+
+		this.duplicate_list_container.appendChild(this.duplicate_list_table);
 		this.duplicate_list_container.appendChild(paginator);
 
 		this.blank_duplicate_list = document.createElement('div');
@@ -1189,18 +1545,60 @@ class FileUploader {
 		var widget = this;
 
 		this.next_upload_btn.onclick = function(e){
+			if (widget.upload_page_number+1 == widget.total_upload_pages){
+				this.disabled = true;
+			} else {
+				this.disabled = false;
+			}
+			widget.prev_upload_btn.disabled = false;
 			var page = widget.get_next_page("upload_list");
 			widget.render_upload_list(page);
 		}
 		this.prev_upload_btn.onclick = function(e){
+			if (widget.upload_page_number-1 <= 0){
+				this.disabled = true;
+			} else {
+				this.disabled = false;
+			}
+			widget.next_upload_btn.disabled = false;
 			var page = widget.get_prev_page("upload_list");
 			widget.render_upload_list(page);
 		}
 
-		this.upload_list = document.createElement('div');
-		this.upload_list.className = "row justify-content-center w-100";
+		this.upload_list_table = document.createElement('div');
+		this.upload_list_table.className = "justify-content-center w-100";
 
-		this.upload_list_container.appendChild(this.upload_list);
+		var header = document.createElement('div');
+		header.className = 'row d-flex justify-content-between header_item w-100';
+		header.align = "center";
+		header.style["margin"] = "10px";
+
+		var header_descrCol = document.createElement('div');
+		header_descrCol.className = 'col-5  justify-content-center text-center item_col';
+
+		var header_statusCol = document.createElement('div');
+		header_statusCol.className = 'col-5  justify-content-center text-center item_col';
+
+		var fileTitle = document.createElement('div');
+    	fileTitle.textContent = 'Artículo';
+    	fileTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_descrCol.appendChild(fileTitle);
+
+	    var statusTitle = document.createElement('div');
+	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
+	    statusTitle.textContent = "Link";
+	    header_statusCol.appendChild(statusTitle);
+
+	    header.appendChild(header_descrCol);
+	    header.appendChild(header_statusCol);
+
+	    this.upload_list = document.createElement('div');
+	    this.upload_list.className = "upload_list";
+
+		this.upload_list_table.appendChild(header);
+	    this.upload_list_table.appendChild(this.upload_list);
+
+		this.upload_list_container.appendChild(this.upload_list_table);
 		this.upload_list_container.appendChild(paginator);
 
 		this.blank_upload_list = document.createElement('div');
@@ -1254,68 +1652,26 @@ class FileUploader {
 		while (this.file_list.firstChild) {
 			this.file_list.removeChild(this.file_list.firstChild);
 		}
+
+		if (page.page == 1){
+			this.prev_file_btn.disabled = true;
+		} else {
+			this.prev_file_btn.disabled = false;
+		}
+
+		if (page.page == page.total_pages){
+			this.next_file_btn.disabled = true;
+		} else {
+			this.next_file_btn.disabled = false;
+		}
+
 		if (page.data.length > 0){
 			this.blank_file_list.style.display = "none";
 			this.file_list_container.style.display = "flex";
-
-			var header = document.createElement('div');
-			header.className = 'row d-flex justify-content-between header_item w-100';
-			header.align = "center";
-			header.style["margin"] = "10px";
-
-			var header_checkCol = document.createElement('div');
-			header_checkCol.className = 'col-1  justify-content-center text-center item_col';
-
-			var header_descrCol = document.createElement('div');
-			header_descrCol.className = 'col-3  justify-content-center text-center item_col';
-
-			var header_dateCol = document.createElement('div');
-			header_dateCol.className = 'col-2  justify-content-center text-center item_col';
-
-			var header_timeCol = document.createElement('div');
-			header_timeCol.className = 'col-2  justify-content-center text-center item_col';
-
-			var header_statusCol = document.createElement('div');
-			header_statusCol.className = 'col-3  justify-content-center text-center item_col';
-
-
-			var header_checkFile = document.createElement('input');
-			header_checkFile.type = 'checkbox';
-			header_checkFile.className = 'item_checkbox header_title';
-			header_checkFile["file_id"] = "all";
-			header_checkCol.appendChild(header_checkFile);
-
-			var fileTitle = document.createElement('div');
-        	fileTitle.textContent = 'Archivo';
-        	fileTitle.className = 'ml-4 ellipsise text-light header_title';
-        	header_descrCol.appendChild(fileTitle);
-
-			var dateTitle = document.createElement('div');
-        	dateTitle.textContent = 'Fecha';
-        	dateTitle.className = 'ml-4 ellipsise text-light header_title';
-        	header_dateCol.appendChild(dateTitle);
-
-			var timeTitle = document.createElement('div');
-        	timeTitle.textContent = 'Tiempo';
-        	timeTitle.className = 'ml-4 ellipsise text-light header_title';
-        	header_timeCol.appendChild(timeTitle);
-
-		    var statusTitle = document.createElement('div');
-		    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-		    statusTitle.textContent = "Estado";
-		    header_statusCol.appendChild(statusTitle);
-
-		    header.appendChild(header_checkCol);
-		    header.appendChild(header_descrCol);
-		    header.appendChild(header_dateCol);
-		    header.appendChild(header_timeCol);
-		    header.appendChild(header_statusCol);
-
-		    this.file_list.appendChild(header);
-
 			this.total_file_pages = page.total_pages;
 			$(this.file_page_label).html(page.page+"/"+page.total_pages);
 			var widget = this;
+
 			for (var i=0;i<page.data.length;i++){
 				var row = document.createElement('div');
 				row.className = 'row d-flex justify-content-between list_item w-100';
@@ -1326,8 +1682,12 @@ class FileUploader {
 				checkCol.className = 'col-1 justify-content-center text-center item_col';
 
 				var descrCol = document.createElement('div');
-				descrCol.className = 'col-3 justify-content-center  text-center item_col';
+				descrCol.className = 'col-2 justify-content-center  text-center  item_col';
 
+				var itemTypeCol = document.createElement('div');
+				itemTypeCol.className = 'col-3 justify-content-center  text-center item_col';
+				itemTypeCol.style["padding-left"] = "40px"
+ 
 				var dateCol = document.createElement('div');
 				dateCol.className = 'col-2 justify-content-center  text-center item_col w-100';
 				dateCol.align = "center";
@@ -1337,23 +1697,59 @@ class FileUploader {
 				timeCol.align = "center";
 
 				var statusCol = document.createElement('div');
-				statusCol.className = 'col-3 justify-content-center  text-center item_col';
+				statusCol.className = 'col-2 justify-content-center  text-center item_col';
 
 
 				var checkFile = document.createElement('input');
 				checkFile.type = 'checkbox';
 				checkFile.className = 'item_checkbox file_title';
 				checkFile["file_id"] = page.data[i].file_id;
+				checkFile.checked = page.data[i].checked;
 
 				checkCol.appendChild(checkFile);
 
-		        var fileName = document.createElement('div');
-		        fileName.className = "text-muted ml-4 ellipsise file_title";
-		        fileName.textContent = page.data[i].name;
-		        fileName.title = page.data[i].name;
+
+		        var fileImage_div = document.createElement('div');
+		        fileImage_div.className = "justify-content-center media";
+		        var fileImage = document.createElement('img');
+		        fileImage.className = "itemimage_tiny ml-4";
+		        fileImage_div.appendChild(fileImage);
+		        fileImage_div.title = page.data[i].name;
+
+		        this.read_file_to_img(page.data[i],fileImage);
 
 
-		        descrCol.appendChild(fileName);
+		        descrCol.appendChild(fileImage_div);
+
+
+		       
+				var item_type_input = document.createElement('select');
+				item_type_input.style.height = "40px";
+				item_type_input.id = "item_type_input_file_"+page.data[i].file_id;
+				item_type_input.file_id = page.data[i].file_id;
+
+				var doptions = ''
+				for (var o=0;o<this.item_types.length;o++){
+					doptions += '<option value="'+this.item_types[o].item_type+'">'+this.item_types[o].item_type+"<option/>";
+				}
+
+				item_type_input.innerHTML = doptions;
+
+				if (page.data[i].item_type){
+				    var selectOptions = item_type_input.options;
+				    for (var opt, j = 0; opt = selectOptions[j]; j++) {
+				        if (opt.value == page.data[i].item_type) {
+				            item_type_input.selectedIndex = j;
+				            break;
+				        }
+				    }					
+				}
+
+
+				itemTypeCol.appendChild(item_type_input)
+
+
+
 
 		        var dateInput = document.createElement('input');
 		        dateInput.type = "text";
@@ -1365,20 +1761,24 @@ class FileUploader {
           		dateInput["file_id"] = page.data[i]["file_id"];
 
           		var valid_date = false;
+				var minDate = new Date(this.started_on.split(" ")[0]);
+				minDate.setDate(minDate.getDate()+1);
+				var maxDate = new Date(this.ended_on.split(" ")[0]);
+				maxDate.setDate(maxDate.getDate()+1);
+				var startDate = new Date(this.started_on.split(" ")[0]);
+				startDate.setDate(startDate.getDate()+1);
 
 		        $(dateInput).datetimepicker({
 					format:'Y-m-d',
 					file_id: page.data[i]["file_id"],
 					validateOnBlur: false,
 					timepicker: false,
+					minDate: minDate,
+					maxDate: maxDate,
+					startDate: startDate,
 					onChangeDateTime: function(dp,$input){
-				        var date_input = widget.validate_datetime($input.val());
-
-				        if (date_input){
-				          var file = widget.get_file_by_id($input[0].file_id);
-				          file.captured_on_date = date_input;
-				        }
-
+						var file = widget.get_file_by_id($input[0].file_id);
+						widget.set_file_date(file,$input.val());
 				        widget.toggle_status($input[0].file_id);
 				    }
 				});
@@ -1390,16 +1790,13 @@ class FileUploader {
 
 		        dateCol.appendChild(dateInput);
 
-
-
-
 		        var timeInput = document.createElement('input');
 		        timeInput.type = "text";
 		        timeInput.style["text-align"]="center";
 		        timeInput.style.width = "110px";
 		        timeInput.className = "incorrect_pattern ml-4 file_title";
 		        timeInput.id = "time_input_file_"+page.data[i]["file_id"];
-          		timeInput.placeholder = "hh:mm:ss";
+          		timeInput.placeholder = "HH:mm:ss";
           		timeInput["file_id"] = page.data[i]["file_id"];
 
           		var valid_time = false;
@@ -1410,11 +1807,8 @@ class FileUploader {
 					file_id: page.data[i]["file_id"],
 					validateOnBlur: false,
 					onChangeDateTime: function(dp,$input){
-				        var time_input = widget.validate_datetime($input.val(),'time');
-				        if (time_input){
-				          var file = widget.get_file_by_id($input[0].file_id);
-				          file.captured_on_time = time_input;
-				        }
+						var file = widget.get_file_by_id($input[0].file_id);
+						widget.set_file_time(file,$input.val());
 				        widget.toggle_status($input[0].file_id);
 				    }
 				});
@@ -1452,13 +1846,29 @@ class FileUploader {
 
 		        if (!page.data[i].captured_on_time && !page.data[i].captured_on_date){
 		        	status = "Sin momento";
-		        } else if (!page.data[i].captured_on_time) {
-		        	status = "Sin tiempo";
 		        } else if (!page.data[i].captured_on_date) {
 		        	status = "Sin fecha";
+		        } else if (!page.data[i].captured_on_time) {
+					if (!page.data[i].captured_on_inrange){
+						status = "Fuera de rango";
+					} else {
+						status = "Sin tiempo";
+					}
 		        } else {
-		        	status = "Listo";
+					if (!page.data[i].captured_on_inrange){
+						status = "Fuera de rango";
+					} else {
+						status = "Listo";
+					}
 		        }
+
+				if (!page.data[i].item_type){
+					if (status == "Listo"){
+						status = "Sin tipo"
+					} else {
+						status += " y sin tipo"
+					}
+				}
 
 		        statusText.textContent = status;
 
@@ -1473,90 +1883,73 @@ class FileUploader {
 
 
 
+
 		        status_div.appendChild(statusText);
 		        status_div.appendChild(status_btn);
 		        statusCol.appendChild(status_div);
 
 
 			    $(dateInput).datetimepicker("option", "onSelect", function(){
-			        var date_input = widget.validate_datetime(this.value);
-
-			        if (date_input){
-			          var file = widget.get_file_by_id(this.file_id);
-			          file.captured_on_date = date_input;
-			        }
-
+			    	var file = widget.get_file_by_id(this.file_id);
+			    	widget.set_file_date(file,this.value);
 			        widget.toggle_status($input[0].file_id);
 			    });
 
-			      dateInput.addEventListener('input',function(e){
-			        var date_input = widget.validate_datetime(this.value);
+			    dateInput.addEventListener('input',function(e){
 			        var file = widget.get_file_by_id(this.file_id);
-
-			        if (date_input){
-			          file.captured_on_date = date_input;
-			        } else {
-			          file.captured_on_date = null;
-			        }
-
-			        widget.toggle_status(this.file_id);
-
-			      });
-
-			    $(timeInput).datetimepicker("option", "onSelect", function(){
-			        var time_input = widget.validate_datetime(this.value,'time');
-
-			        if (time_input){
-			          var file = widget.get_file_by_id(this.file_id);
-			          file.captured_on_time = time_input;
-			        }
-
+			        widget.set_file_date(file,this.value);
 			        widget.toggle_status(this.file_id);
 			    });
 
-			      timeInput.addEventListener('input',function(e){
-			        var time_input = widget.validate_datetime(this.value,'time');
-			        var file = widget.get_file_by_id(this.file_id);
+			    $(timeInput).datetimepicker("option", "onSelect", function(){
+			    	var file = widget.get_file_by_id(this.file_id);
+					widget.set_file_time(file,this.value);
+			        widget.toggle_status(this.file_id);
+			    });
 
-			        if (time_input){
-			          file.captured_on_time = time_input;
-			        } else {
-			          file.captured_on_time = null;
-			        }
+			    timeInput.addEventListener('input',function(e){
+			    	var file = widget.get_file_by_id(this.file_id);
+					widget.set_file_time(file,this.value);
 			        widget.toggle_status(this.file_id);
 			      });
 
 			      status_btn.addEventListener('click',function(e){
 			      		var file_id = this.file_id;
-			      		widget.upload_multiple(function(f){return f.file_id == file_id});
-			      });
+			      		widget.upload_multiple(function(f){return widget.is_uploadable(f) && f.file_id == file_id});
+			      		
+			    });
+
+			    item_type_input.addEventListener('change',function(e){
+			      	var file = widget.get_file_by_id(this.file_id);
+			      	var new_val = null;
+			      	if (this.value != ""){
+			      		new_val = this.value;
+			      	}
+			      	file.item_type = new_val;
+			      	widget.toggle_status(this.file_id);
+			    });
+
+			    checkFile.addEventListener('input',function(e){
+			    	var file = widget.get_file_by_id(this.file_id);
+			    	if (file){
+			    		file.checked = this.checked;			    		
+			    	}
+
+				});
 
 		        row.appendChild(checkCol);
 				row.appendChild(descrCol);
+				row.appendChild(itemTypeCol);
 				row.appendChild(dateCol);
 				row.appendChild(timeCol);
 				row.appendChild(statusCol);
-
-				this.file_list.appendChild(row);
+				this.file_list.appendChild(row)
+				
 			}
-
-			header_checkFile.addEventListener('input',function(e){
-				var check_boxes = widget.file_list.querySelectorTodo('input[type=checkbox]');
-				if (this.checked){
-					for (var i=0;i<check_boxes.length;i++){
-						check_boxes[i].checked = true;
-					}
-				} else {
-					for (var i=0;i<check_boxes.length;i++){
-						check_boxes[i].checked = false;
-					}
-				}
-
-			});
-
 		} else {
 			this.file_list_container.style.display = "none";
 			this.blank_file_list.style.display = "flex";
+			this.header_checkFile.checked = false;
 		}
 	}
 	render_error_list(page) {
@@ -1565,40 +1958,25 @@ class FileUploader {
 		}
 
 		this.error_link.innerHTML = "Errores ("+page.total+")";
+		if (page.page == 1){
+			this.prev_error_btn.disabled = true;
+		} else {
+			this.prev_error_btn.disabled = false;
+		}
+
+		if (page.page == page.total_pages){
+			this.next_error_btn.disabled = true;
+		} else {
+			this.next_error_btn.disabled = false;
+		}
 
 		if (page.data.length > 0){
 			this.blank_error_list.style.display = "none";
 			this.error_list_container.style.display = "flex";
-
-			var header = document.createElement('div');
-			header.className = 'row d-flex justify-content-between header_item w-100';
-			header.align = "center";
-			header.style["margin"] = "10px";
-
-			var header_descrCol = document.createElement('div');
-			header_descrCol.className = 'col-6 text-center item_col';
-
-			var header_statusCol = document.createElement('div');
-			header_statusCol.className = 'col-6 text-center item_col';
-
-			var fileTitle = document.createElement('div');
-        	fileTitle.textContent = 'Archivo';
-        	fileTitle.className = 'ml-4 ellipsise text-light header_title';
-        	header_descrCol.appendChild(fileTitle);
-
-		    var statusTitle = document.createElement('div');
-		    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-		    statusTitle.textContent = "Descripción";
-		    header_statusCol.appendChild(statusTitle);
-
-		    header.appendChild(header_descrCol);
-		    header.appendChild(header_statusCol);
-
-		    this.error_list.appendChild(header);
-
 			this.total_error_pages = page.total_pages;
 			$(this.error_page_label).html(page.page+"/"+page.total_pages);
 			var widget = this;
+			
 			for (var i=0;i<page.data.length;i++){
 				var row = document.createElement('div');
 				row.className = 'row d-flex justify-content-between error_item w-100';
@@ -1606,10 +1984,10 @@ class FileUploader {
 				row.style["margin"] = "10px";
 
 				var descrCol = document.createElement('div');
-				descrCol.className = 'col-6 text-center item_col';
+				descrCol.className = 'col-6  justify-content-center text-center item_col';
 
 				var statusCol = document.createElement('div');
-				statusCol.className = 'col-6 text-center item_col';
+				statusCol.className = 'col-6  justify-content-center text-center item_col';
 
 		        var fileName = document.createElement('div');
 		        fileName.className = "text-muted ml-4 ellipsise";
@@ -1623,7 +2001,7 @@ class FileUploader {
 		        statusText.id = "status_text_"+page.data[i]["file_id"];
 
 		        var status = "";
-		        if (!page.data[i].item_type){
+		        if (page.data[i].wrong_mime_type){
 		        	status = "Tipo incorrecto";
 		        }
 		        statusText.textContent = status;
@@ -1648,40 +2026,25 @@ class FileUploader {
 		}
 
 		this.duplicate_link.innerHTML = "Duplicados ("+page.total+")";
+		if (page.page == 1){
+			this.prev_duplicate_btn.disabled = true;
+		} else {
+			this.prev_duplicate_btn.disabled = false;
+		}
+
+		if (page.page == page.total_pages){
+			this.next_duplicate_btn.disabled = true;
+		} else {
+			this.next_duplicate_btn.disabled = false;
+		}
 
 		if (page.data.length > 0){
 			this.blank_duplicate_list.style.display = "none";
 			this.duplicate_list_container.style.display = "flex";
-
-			var header = document.createElement('div');
-			header.className = 'row d-flex justify-content-between header_item w-100';
-			header.align = "center";
-			header.style["margin"] = "10px";
-
-			var header_descrCol = document.createElement('div');
-			header_descrCol.className = 'col-5 text-center item_col';
-
-			var header_statusCol = document.createElement('div');
-			header_statusCol.className = 'col-5 text-center item_col';
-
-			var fileTitle = document.createElement('div');
-        	fileTitle.textContent = 'Artículo';
-        	fileTitle.className = 'ml-4 ellipsise text-light header_title';
-        	header_descrCol.appendChild(fileTitle);
-
-		    var statusTitle = document.createElement('div');
-		    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-		    statusTitle.textContent = "Link";
-		    header_statusCol.appendChild(statusTitle);
-
-		    header.appendChild(header_descrCol);
-		    header.appendChild(header_statusCol);
-
-		    this.duplicate_list.appendChild(header);
-
 			this.total_duplicate_pages = page.total_pages;
 			$(this.duplicate_page_label).html(page.page+"/"+page.total_pages);
 			var widget = this;
+
 			for (var i=0;i<page.data.length;i++){
 				var row = document.createElement('div');
 				row.className = 'row d-flex justify-content-between duplicate_item w-100';
@@ -1692,7 +2055,7 @@ class FileUploader {
 				descrCol.className = 'col-5 justify-content-center text-center item_col';
 
 				var statusCol = document.createElement('div');
-				statusCol.className = 'col-5 text-center item_col';
+				statusCol.className = 'col-5  justify-content-center text-center item_col';
 
 		        var fileImage_div = document.createElement('div');
 		        fileImage_div.className = "justify-content-center media";
@@ -1717,8 +2080,8 @@ class FileUploader {
 				this.duplicate_list.appendChild(row);
 
 			}
-
 		} else {
+			
 			this.duplicate_list_container.style.display = "none";
 			this.blank_duplicate_list.style.display = "flex";
 		}
@@ -1727,41 +2090,27 @@ class FileUploader {
 		while (this.upload_list.firstChild) {
 			this.upload_list.removeChild(this.upload_list.firstChild);
 		}
+
 		this.upload_link.innerHTML = "Subidos ("+page.total+")";
+		if (page.page == 1){
+			this.prev_upload_btn.disabled = true;
+		} else {
+			this.prev_upload_btn.disabled = false;
+		}
+
+		if (page.page == page.total_pages){
+			this.next_upload_btn.disabled = true;
+		} else {
+			this.next_upload_btn.disabled = false;
+		}
 
 		if (page.data.length > 0){
 			this.blank_upload_list.style.display = "none";
 			this.upload_list_container.style.display = "flex";
-
-			var header = document.createElement('div');
-			header.className = 'row d-flex justify-content-between header_item w-100';
-			header.align = "center";
-			header.style["margin"] = "10px";
-
-			var header_descrCol = document.createElement('div');
-			header_descrCol.className = 'col-5 text-center item_col';
-
-			var header_statusCol = document.createElement('div');
-			header_statusCol.className = 'col-5 text-center item_col';
-
-			var fileTitle = document.createElement('div');
-        	fileTitle.textContent = 'Artículo';
-        	fileTitle.className = 'ml-4 ellipsise text-light header_title';
-        	header_descrCol.appendChild(fileTitle);
-
-		    var statusTitle = document.createElement('div');
-		    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-		    statusTitle.textContent = "Link";
-		    header_statusCol.appendChild(statusTitle);
-
-		    header.appendChild(header_descrCol);
-		    header.appendChild(header_statusCol);
-
-		    this.upload_list.appendChild(header);
-
 			this.total_upload_pages = page.total_pages;
 			$(this.upload_page_label).html(page.page+"/"+page.total_pages);
 			var widget = this;
+
 			for (var i=0;i<page.data.length;i++){
 				var row = document.createElement('div');
 				row.className = 'row d-flex justify-content-between uploaded_item w-100';
@@ -1769,10 +2118,10 @@ class FileUploader {
 				row.style["margin"] = "10px";
 
 				var descrCol = document.createElement('div');
-				descrCol.className = 'col-5 text-center item_col';
+				descrCol.className = 'col-5  justify-content-center text-center item_col';
 
 				var statusCol = document.createElement('div');
-				statusCol.className = 'col-5 text-center item_col';
+				statusCol.className = 'col-5  justify-content-center text-center item_col';
 
 
 		        var fileImage_div = document.createElement('div');
@@ -1798,57 +2147,62 @@ class FileUploader {
 				this.upload_list.appendChild(row);
 
 			}
-
 		} else {
 			this.upload_list_container.style.display = "none";
 			this.blank_upload_list.style.display = "flex";
 		}
 	}
 	get_checked_ids(){
-    	var check_boxes = this.file_list.querySelectorTodo('input[type=checkbox]:checked');
+    	var checked_files = this.files.filter(function(f){return f.checked;});
 		var id_arr = [];
-		for (var i=0;i<check_boxes.length;i++){
-			if (check_boxes[i].file_id != "all"){
-				id_arr.push(check_boxes[i].file_id);
+		for (var i=0;i<checked_files.length;i++){
+			if (checked_files[i].file_id != "all"){
+				id_arr.push(checked_files[i].file_id);
 			}
 		}
-
 		return id_arr;
 	}
 	parse_datetime(fileName,parser_map){
-	  var date_context = fileName.match(parser_map["regexp"]);
+	  var regexp_obj = new RegExp(parser_map["regexp"],"g");
+	  var date_context = fileName.match(regexp_obj);
 	  var date = "";
 	  var time = "";
 
 	  if (date_context){
-	    if ("year" in parser_map){
-		    date = date + date_context.toString().substring(parser_map["year"]["limits"][0],parser_map["year"]["limits"][1]);
-		    if ("month" in parser_map){
-			    date = date + "-" + date_context.toString().substring(parser_map["month"]["limits"][0],parser_map["month"]["limits"][1]);
-			    if ("day" in parser_map){
-			    	date = date + "-" + date_context.toString().substring(parser_map["day"]["limits"][0],parser_map["day"]["limits"][1]);
+	  	if (date_context.length == 1){
+		    if ("year" in parser_map){
+			    date = date + date_context.toString().substring(parser_map["year"]["limits"][0],parser_map["year"]["limits"][1]);
+			    if ("month" in parser_map){
+				    date = date + "-" + date_context.toString().substring(parser_map["month"]["limits"][0],parser_map["month"]["limits"][1]);
+				    if ("day" in parser_map){
+				    	date = date + "-" + date_context.toString().substring(parser_map["day"]["limits"][0],parser_map["day"]["limits"][1]);
+				    }
+				    
+			    }
+
+
+		    }
+
+		    }
+
+		    if ("hour" in parser_map){
+			    time = time + date_context.toString().substring(parser_map["hour"]["limits"][0],parser_map["hour"]["limits"][1]);
+			    if ("minute" in parser_map){
+				    time = time + ":" + date_context.toString().substring(parser_map["minute"]["limits"][0],parser_map["minute"]["limits"][1]);
+				    if ("second" in parser_map){
+				    	time = time + ":" + date_context.toString().substring(parser_map["second"]["limits"][0],parser_map["second"]["limits"][1]);
+				    }
+				    
 			    }
 
 		    }
 
-	    }
 
-	    if ("hour" in parser_map){
-		    time = time + date_context.toString().substring(parser_map["hour"]["limits"][0],parser_map["hour"]["limits"][1]);
-		    if ("minute" in parser_map){
-			    time = time + ":" + date_context.toString().substring(parser_map["minute"]["limits"][0],parser_map["minute"]["limits"][1]);
-			    if ("second" in parser_map){
-			    	time = time + ":" + date_context.toString().substring(parser_map["second"]["limits"][0],parser_map["second"]["limits"][1]);
-			    }
-
-		    }
-	    }
-
-
-	    return {"date":date,"time":time};
-	  }
-
-	  return {"date":"","time":""};
+		    return {"date":date,"time":time};
+		} else {
+			return {"date":"","time":""};
+		}
+		return {"date":"","time":""};
 	}
 	retrieve_media_info(file,callback) {
 		if (file.type == 'image/jpeg'){
@@ -1873,14 +2227,13 @@ class FileUploader {
           				var date_time_arr = date_time_original.split(" ");
           				var date = date_time_arr[0].replace(/:/g,'-');
           				var time = date_time_arr[1]
+
           				var valid_date = widget.validate_datetime(date);
           				var valid_time = widget.validate_datetime(time,'time');
 
 				        if (valid_date && valid_time){
 				        	file.media_info["DateTimeOriginalParsed"] = valid_date+" "+valid_time;
-				        	file.captured_on_date = valid_date;
-				        	file.captured_on_time = valid_time;
-
+				        	widget.set_file_datetime(file,valid_date,valid_time);
 				        }
           			}
           		}
@@ -1933,12 +2286,14 @@ class FileUploader {
 	            var substr_length = substr.length;
 	            var cat = distinctStr(substr);
 	            var parser_key = null;
+	            var sub_regexp = "";
 	            var start = 0;
 	            if (substr_length > 0 && cat.length == 1){
 	              switch(cat){
 	                case 'Y':{
 	                  if (substr_length == 4 || substr_length == 2){
 	                    parser_key = 'year';
+	                    sub_regexp = "([0-9]{4})";
 	                  } else {
 	                    bad_date_map = true;
 	                  }
@@ -1947,6 +2302,7 @@ class FileUploader {
 	                case 'M':{
 	                  if (substr_length == 2){
 	                    parser_key = 'month';
+	                    sub_regexp = "(0[1-9]{1}|[10-12]{2})";
 	                  } else {
 	                    bad_date_map = true;
 	                  }
@@ -1955,14 +2311,16 @@ class FileUploader {
 	                case 'D':{
 	                  if (substr_length == 2){
 	                    parser_key = 'day';
+	                    sub_regexp = "(0[1-9]{1}|[10-31]{2})";
 	                  } else {
 	                    bad_date_map = true;
 	                  }
 	                  break;
 	                }
-	                case 'h':{
+	                case 'H':{
 	                  if (substr_length == 2){
 	                    parser_key = 'hour';
+	                    sub_regexp = "(0[0-9]{1}|[10-23]{2})"
 	                  } else {
 	                    bad_date_map = true;
 	                  }
@@ -1971,6 +2329,7 @@ class FileUploader {
 	                case 'm':{
 	                  if (substr_length == 2){
 	                    parser_key = 'minute';
+	                    sub_regexp = "(0[0-9]{1}|[10-59]{2})";
 	                  } else {
 	                    bad_date_map = true;
 	                  }
@@ -1979,6 +2338,7 @@ class FileUploader {
 	                case 's':{
 	                  if (substr_length == 2){
 	                    parser_key = 'second';
+	                    sub_regexp = "(0[0-9]{1}|[10-59]{2})";
 	                  } else {
 	                    bad_date_map = true;
 	                  }
@@ -1991,7 +2351,7 @@ class FileUploader {
 	              }
 
 	              if (!bad_date_map){
-	                date_regexp = date_regexp.replace("<"+substr+">","\\d{"+substr_length+"}");
+	                date_regexp = date_regexp.replace("<"+substr+">",sub_regexp);
 	                start = cut_pattern.indexOf(substr);
 	                date_parser_map[parser_key] = {'limits':[start,start+substr_length],'length':substr_length,"order":p};
 	              }
@@ -2028,6 +2388,114 @@ class FileUploader {
 	      }
 
 	      return false;
+	}
+	set_file_time(file,time){
+        var valid_time = this.validate_datetime(time,'time');
+
+        if (valid_time){
+			file.captured_on_time = valid_time;
+        } else {
+        	file.captured_on_time = null;
+        }
+
+        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time);
+	}
+	set_file_date(file,date){
+        var valid_date = this.validate_datetime(date);
+
+        if (valid_date){
+			file.captured_on_date = valid_date;
+        } else {
+        	file.captured_on_date = null;
+        }
+
+        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time);
+	}
+	set_file_datetime(file,date,time){		
+        var valid_date = this.validate_datetime(date);
+        var valid_time = this.validate_datetime(time,'time');
+
+        if (valid_date){
+			file.captured_on_date = valid_date;
+        } else {
+        	file.captured_on_date = null;
+        }
+
+        if (valid_time){
+			file.captured_on_time = valid_time;
+        } else {
+        	file.captured_on_time = null;
+        }
+
+        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time);
+	}
+	datetime_in_range(date,time){
+		if (!date){
+			date = "";
+		}
+		if (!time){
+			time = "";
+		}
+
+		var started_on = moment(this.started_on,"YYYY-MM-DD HH:mm:ss",true);
+		var ended_on = moment(this.ended_on,"YYYY-MM-DD HH:mm:ss",true);
+		var date_arr = date.split("-");
+		var date_len = date_arr.length;
+		var time_arr = time.split(":");
+		var time_len = time_arr.length;
+
+		var helper_moment = null;
+
+		switch (date_len){
+			case 1:{
+				helper_moment = moment(date + "-01-01","YYYY-MM-DD",true);
+				if ( !(helper_moment.isBefore(started_on,"year") || helper_moment.isAfter(ended_on,"year"))){
+					return true;
+				} 
+				break;
+			}
+			case 2:{
+				helper_moment = moment(date + "-01","YYYY-MM-DD",true);
+				if ( !(helper_moment.isBefore(started_on,"month") || helper_moment.isAfter(ended_on,"month"))){
+					return true;
+				} 
+				break;
+			}
+			case 3:{
+				switch(time_len){
+					case 1: {
+						helper_moment = moment(date,"YYYY-MM-DD",true);
+						if ( !(helper_moment.isBefore(started_on,"day") || helper_moment.isAfter(ended_on,"day"))){
+							return true;
+						}
+						break;
+					}
+					case 2:{
+						helper_moment = moment(date+" "+time,"YYYY-MM-DD HH:mm",true);
+						if ( !(helper_moment.isBefore(started_on,"minute") || helper_moment.isAfter(ended_on,"minute"))){
+							return true;
+						}		
+						break;
+					}
+					case 3:{
+						helper_moment = moment(date+" "+time,"YYYY-MM-DD HH:mm:ss",true);
+						if ( !(helper_moment.isBefore(started_on,"second") || helper_moment.isAfter(ended_on,"second"))){
+							return true;
+						}			
+						break;
+					}
+					default:{
+						break;
+					}
+				}
+				break;
+			}
+			default:{
+				break;
+			}
+		}
+
+		return false;
 	}
 	validate_datetime(dateString,type="date"){
 	  if (dateString != ""){
@@ -2160,8 +2628,9 @@ class FileUploader {
 	}
 	is_uploadable(file){
 		if (file.item_type){
-			if ((file.captured_on_date && file.captured_on_time) || file.force_upload){
+			if ((file.captured_on_date && file.captured_on_time && file.captured_on_inrange && !file.upload_response) || file.force_upload){
 				return true;
+				
 			}
 		}
 		return false;
@@ -2196,12 +2665,12 @@ class FileUploader {
 		return false;
 	}
 	is_fixable(file){
-		if (file.item_type && !file.upload_response){
+		if (!file.wrong_mime_type && !file.upload_response){
 			return true;
 		}
 		return false;
 	}
-	is_force(file){
+	is_forced(file){
 		if (file.force){
 			return true;
 		}
@@ -2215,7 +2684,7 @@ class FileUploader {
 		return false;
 	}
 	has_errors(file){
-		if (!file.item_type){
+		if (file.wrong_mime_type){
 			return true;
 		}
 		return false;
@@ -2229,19 +2698,115 @@ class FileUploader {
 		}
 		return 0;
 	}
+	compare_times(f1,f2){
+		if (!f1.captured_on_time && !f2.captured_on_time){
+			return 0;
+		} else if (!f1.captured_on_time){
+			return -1;
+		} else if (!f2.captured_on_time){
+			return 1;
+		} else {
+			function get_seconds(timestring){
+				var time_arr = timestring.split(":");
+				var time_len  = time_arr.length;
+				var seconds = 0;
+				switch(time_len){
+					case 1:{
+						seconds = parseInt(time_arr[0])*60*60;
+						break;
+					}
+					case 2:{
+						seconds = parseInt(time_arr[0])*60*60+parseInt(time_arr[1])*60;
+						break;
+					}
+					case 3:{
+						seconds = parseInt(time_arr[0])*60*60+parseInt(time_arr[1])*60+parseInt(time_arr[2]);
+						break;
+					}
+				}
+
+				return seconds;
+			}
+			var seconds1 = get_seconds(f1.captured_on_time);
+			var seconds2 = get_seconds(f2.captured_on_time);
+
+			if (seconds1 < seconds2){
+				return -1;
+			} else if (seconds2 < seconds1){
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	}
+	compare_dates(f1,f2){
+		if (!f1.captured_on_date && !f2.captured_on_date){
+			return 0;
+		} else if (!f1.captured_on_date){
+			return -1;
+		} else if (!f2.captured_on_date){
+			return 1;
+		} else {
+			function lazy_moment(datestring){
+				var date_arr = datestring.split("-");
+				var date_len = date_arr.length;
+				var extended_date = datestring;
+
+				switch (date_len){
+					case 1:{
+						extended_date += "-01-01";
+						break;
+					}
+					case 2:{
+						extended_date += "-01"; 
+						break;
+					}
+					default:{
+						break;
+					}
+				}
+
+				return {'moment':moment(extended_date,"YYYY-MM-DD",true),'valid_up_to':date_len}
+			}
+
+			var lazy_moment1 = lazy_moment(f1.captured_on);
+			var lazy_moment2 = lazy_moment(f2.captured_on);
+
+			var level = 'year';
+			var valid_up_to = Math.min(lazy_moment1.valid_up_to,lazy_moment2.valid_up_to)
+
+			if (valid_up_to == 2){
+				level = 'month';
+			} else if (valid_up_to == 3){
+				level = 'day';
+			}
+
+			if (lazy_moment1.moment.isBefore(lazy_moment2.moment,level)){
+				return -1;
+			} else if (lazy_moment2.moment.isBefore(lazy_moment1.moment,level)){
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	}
 	get_item_type(file){
-	  switch (file.type){
-	    case 'image/jpeg':
-	    case 'image/jpg':{
-	      return "Foto de Camara Trampa";
-	    }
-	    case 'image/png':{
-	      return "Foto de Camara Trampa";
-	    }
-	    default:{
-	      return null;
-	    }
+	  if (this.item_types.length == 1){
+	  	for (var i=0;i<this.item_types[0].mime_types.length;i++){
+	  		if (file.type == this.item_types[0].mime_types[i].mime_type){
+	  			return this.item_types[0].item_type;
+	  			break;
+	  		}
+	  	}
+	  } else {
+	  	return null;
 	  }
+	}
+	is_mime_type_wrong(file){
+		if (!this.mime_types.includes(file.type)){
+			return true;
+		}
+		return false;
 	}
 	upload_single(file,callback) {
 	  var url = this.form.action;
@@ -2354,47 +2919,48 @@ class FileUploader {
     		.attr('aria-valuenow', percent);
   		$(this.progress_bar_label).html(percent + '%');
 	}
-
 	upload_multiple(filter_function,finalize_callback){
 		var to_upload = this.files.filter(filter_function);
-
-		for (var i=0;i<to_upload.length;i++){
-			to_upload[i]["upload_response"] = "uploading";
-		}
-
-		this.render_by_name(['files']);
-
-		var file_count = 0;
-		var total_files = to_upload.length;
-
-		var widget = this;
-
-		function gather(response){
-			file_count++;
-			widget.render_by_name(['errors','duplicates','uploads']);
-			widget.progress_upload(file_count,total_files);
-
-			if (file_count >= total_files-1){
-				setTimeout(function() {
-					widget.progress_container.style.display = "none";
-					widget.progress_upload(0,total_files);
-				}, 2000);
+		if (to_upload.length > 0){
+			for (var i=0;i<to_upload.length;i++){
+				to_upload[i]["upload_response"] = "uploading";
 			}
-		}
 
-		this.progress_container.style.display = "block";
+			this.render_by_name(['files']);
 
-		for (var i=0;i<to_upload.length;i++){
-			this.upload_single(to_upload[i],gather);
+			var file_count = 0;
+			var total_files = to_upload.length;
+			var widget = this;
+
+			function gather(response){
+				file_count++;
+				widget.render_by_name(['errors','duplicates','uploads']);
+				widget.progress_upload(file_count,total_files);
+
+				if (file_count >= total_files-1){
+					setTimeout(function() {
+						widget.progress_container.style.display = "none";
+						widget.progress_upload(0,total_files);
+					}, 2000);
+				}
+			}
+
+			this.progress_container.style.display = "block";
+
+			for (var i=0;i<to_upload.length;i++){
+				this.upload_single(to_upload[i],gather);
+			}
 		}
 	}
 	add_file(file,callback){
 		file["captured_on_date"] = null;
 		file["captured_on_time"] = null;
+		file["captured_on_inrange"] = false;
+		file["wrong_mime_type"] = this.is_mime_type_wrong(file);
 		file["item_type"] = this.get_item_type(file);
 		file["media_info"] = null;
-		file["veto_upload"] = false;
 		file["force_upload"] = false;
+		file["checked"] = false;
 		file["upload_response"] = null;
 		file["file_id"] = this.generate_id();
 		this.files.push(file);
@@ -2450,6 +3016,15 @@ class FileUploader {
 
 		return null;
 	}
+	read_file_to_img(file,img) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $(img).attr('src', e.target.result);
+         };
+
+        reader.readAsDataURL(file);
+    }
 	toggle_status(file_id) {
 		var file = this.get_file_by_id(file_id);
 		if (file){
@@ -2460,7 +3035,6 @@ class FileUploader {
 			var dinput = document.getElementById("date_input_file_"+file_id);
 			var status_btn = document.getElementById("status_btn_"+file_id);
 			var statustext = document.getElementById("status_text_"+file_id);
-
 
 			if (!file.captured_on_date){
 				date_ready = false;
@@ -2480,9 +3054,24 @@ class FileUploader {
 			} else if (!date_ready){
 				message = "Sin fecha";
 			} else if (!time_ready) {
-				message = "Sin tiempo";
+				if (!file.captured_on_inrange){
+					message = "Fuera de rango";
+				} else {
+					message = "Sin tiempo";
+				}
+			} else {
+				if (!file.captured_on_inrange){
+					message = "Fuera de rango";
+				}
 			}
 
+			if (!file.item_type){
+				if (message == "Listo"){
+					message = "Sin tipo"
+				} else {
+					message += " y sin tipo"
+				}
+			}
 
 			statustext.textContent = message;
 
@@ -2496,7 +3085,5 @@ class FileUploader {
 
 
 		}
-
-
 	}
 }

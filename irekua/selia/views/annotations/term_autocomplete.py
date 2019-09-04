@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from rest_framework.generics import GenericAPIView
-from rest_framework.response import Response
+from rest_framework.generics import ListAPIView
 from django_filters import FilterSet
 
 from database import models
@@ -33,8 +32,26 @@ class TermSerializer(serializers.ModelSerializer):
         ]
 
 
+class ComplexTermSerializer(serializers.ModelSerializer):
+    term_type = serializers.StringRelatedField(many=False)
+    entailments = EntailmentSerializer(
+        many=True,
+        read_only=True,
+        source='entailment_source')
+
+    class Meta:
+        model = models.Term
+        fields = [
+            'id',
+            'scope',
+            'term_type',
+            'value',
+            'description',
+            'entailments',
+        ]
+
 class SynonymSerializer(serializers.ModelSerializer):
-    target = TermSerializer()
+    target = ComplexTermSerializer()
 
     class Meta:
         model = models.Term
@@ -43,7 +60,7 @@ class SynonymSerializer(serializers.ModelSerializer):
         ]
 
 
-class ComplexTermSerializer(serializers.ModelSerializer):
+class FullTermSerializer(serializers.ModelSerializer):
     term_type = serializers.StringRelatedField(many=False)
     entailments = EntailmentSerializer(
         many=True,
@@ -75,19 +92,7 @@ class TermFilter(FilterSet):
         }
 
 
-class TermListView(GenericAPIView):
-    rows = 7
-    serializer_class = ComplexTermSerializer
+class TermListView(ListAPIView):
+    serializer_class = FullTermSerializer
     filterset_class = TermFilter
     queryset = models.Term.objects.all()
-
-    def get(self, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)

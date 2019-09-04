@@ -6,7 +6,10 @@ from rest_framework import serializers
 from database.models import CollectionItemType
 
 from rest.serializers.object_types import items
+
 from . import types
+from rest.serializers.object_types import events
+from rest.serializers.object_types import mime_types
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -19,8 +22,17 @@ class SelectSerializer(serializers.ModelSerializer):
 
 
 class ListSerializer(serializers.ModelSerializer):
-    media_type = serializers.CharField(
-        source='item_type.media_type')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='rest-api:collectionitemtype-detail')
+    event_types = events.SelectSerializer(
+        many=True,
+        read_only=True,
+        source='item_type.event_types')
+    mime_types = mime_types.SelectSerializer(
+        many=True,
+        read_only=True,
+        source='item_type.mime_types')
+
 
     class Meta:
         model = CollectionItemType
@@ -28,7 +40,8 @@ class ListSerializer(serializers.ModelSerializer):
             'url',
             'id',
             'item_type',
-            'media_type',
+            'event_types',
+            'mime_types',
             'metadata_schema',
         )
 
@@ -40,6 +53,14 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
     collection_type = types.SelectSerializer(
         many=False,
         read_only=True)
+    event_types = events.SelectSerializer(
+        many=True,
+        read_only=True,
+        source='item_type.event_types')
+    mime_types = mime_types.SelectSerializer(
+        many=True,
+        read_only=True,
+        source='item_type.mime_types')
 
     class Meta:
         model = CollectionItemType
@@ -49,6 +70,8 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'collection_type',
             'item_type',
             'metadata_schema',
+            'event_types',
+            'mime_types',
         )
 
 
