@@ -123,7 +123,7 @@ class ItemUploadView(SeliaCreateView):
 
         serialized = ListSerializer(collection_item_types, many=True, context={'request':self.request})
 
-        return serialized.data
+        return json.dumps(serialized.data)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)

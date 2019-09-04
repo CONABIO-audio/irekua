@@ -7,6 +7,8 @@ from database.models import MimeType
 
 
 class SelectSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name='rest-api:mimetype-detail')
     class Meta:
         model = MimeType
         fields = (
