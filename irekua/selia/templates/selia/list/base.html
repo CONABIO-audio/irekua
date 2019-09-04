@@ -44,4 +44,17 @@
 {% block scripts-extra %}
   {{ block.super }}
   {% autocomplete_media %}
+  <script charset="utf-8">
+    $(function() {
+      $("#filter_form").submit(function() {
+        $(this).find(':input[value=""]').attr("disabled", true);
+        $(this).find(':selected[value=""]').parent().attr("disabled", "disabled");
+        $(this).find(':selected[value=""]').attr("disabled", "disabled");
+
+        console.log(this);
+
+        return true; // ensure form still submits
+      });
+    });
+  </script>
 {% endblock%}

@@ -20,6 +20,7 @@
       </button>
       {% endif %}
     </div>
+    {% if object.created_on %}
     <div class="row">
       <small class="text-muted w-100 text-right">
         {% trans 'Added on'%} {{ object.created_on | date}}
@@ -31,5 +32,6 @@
         {% trans 'Last modified on'%} {{ object.modified_on | date}}
       </small>
     </div>
+    {% endif %}
   </div>
 </div>

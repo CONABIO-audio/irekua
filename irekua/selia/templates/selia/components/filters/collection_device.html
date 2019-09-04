@@ -111,6 +111,8 @@
 
           {% trans 'To' as label %}
           {{ filter.form.created_on__lt | selia_form:label }}
+
+          {% bootstrap_form filter.form.is_own %}
           </div>
         </div>
       </div>
