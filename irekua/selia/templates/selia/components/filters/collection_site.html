@@ -124,7 +124,13 @@
   <div class="col">
       <label class="text-light">
         {% trans 'Mine: ' %}
-        {{ filter.form.is_own | add_class:"mine_submit"}}
+        {% if filter.form.is_own.value %}
+          <input type="hidden" id="id_is_own_field" name="is_own" value="on">
+          <input type="checkbox" id="id_is_own" checked>
+        {% else %}
+          <input type="hidden" id="id_is_own_field" name="is_own" value="">
+          <input type="checkbox" id="id_is_own">
+        {% endif %}
       </label>
   </div>
 

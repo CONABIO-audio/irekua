@@ -355,7 +355,7 @@ function distinctStr(str) {
 
 $(document).ready(function() {
   var sort_submit = document.getElementsByClassName('sort_submit');
-  var mine_submit = document.getElementsByClassName('mine_submit');
+  var mine_submit = document.getElementById('id_is_own');
   //var itemFilePicker = document.getElementById('itemFilePicker');
   //var addItemForm = document.getElementById('addItemForm');
   var datepicker = document.getElementById('ui-datepicker-div');
@@ -514,15 +514,25 @@ $(document).ready(function() {
       }
     }
   }
+  var filterForm = document.getElementById('filter_form');
+  if (filterForm){
+      if (sort_submit.length > 0) {
+        sort_submit[0].onchange = function() {
+          filterForm.submit();
+        };
+      }
+      if (mine_submit){
+        mine_submit.addEventListener('change',function(event){
+          if (this.checked){
+            document.getElementById('id_is_own_field').value = "on";
+          } else {
+            document.getElementById('id_is_own_field').value = "";
+          }
 
-  if (sort_submit.length > 0) {
-    sort_submit[0].onchange = function() {
-      document.getElementById('filter_form').submit();
-    };
+
+          filterForm.submit();
+        });
+      }
   }
-  if (mine_submit.length >0){
-    mine_submit[0].onchange = function(){
-      document.getElementById('filter_form').submit();
-    }
-  }
+
 });
