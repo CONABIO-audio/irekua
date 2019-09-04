@@ -112,7 +112,8 @@ class SeliaCreateView(CreateView, SingleObjectMixin):
                 try:
                     form.add_error(field, error)
                 except:
-                    pass
+                    form.add_error(None, '{} ({})'.format(
+                        str(error), field))
 
             return self.form_invalid(form)
 
