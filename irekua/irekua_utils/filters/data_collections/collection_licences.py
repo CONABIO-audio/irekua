@@ -2,11 +2,16 @@ from django import forms
 from django.db import models
 from django.utils.translation import gettext as _
 from django_filters import FilterSet,DateFilter
+from django_filters import BooleanFilter
 
 from database.models import Licence
 
 
 class Filter(FilterSet):
+    is_own = BooleanFilter(
+        method='user_owns_object',
+        label=_('Mine'),
+        widget=forms.CheckboxInput())
     class Meta:
         model = Licence
         fields = {
@@ -25,6 +30,10 @@ class Filter(FilterSet):
                 }
             }
         }
+
+    def user_owns_object(self, queryset, name, value):
+        user = self.request.user
+        return queryset.filter(created_by=user)
 
 search_fields = (
     'internal_id',

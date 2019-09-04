@@ -116,4 +116,10 @@
         </div>
       </div>
   </div>
+    <div class="col">
+      <label class="text-light">
+        {% trans 'Mine: ' %}
+        {{ filter.form.is_own | add_class:"mine_submit"}}
+      </label>
+  </div>
 </div>

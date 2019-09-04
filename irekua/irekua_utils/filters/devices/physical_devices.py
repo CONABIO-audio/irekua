@@ -7,6 +7,7 @@ from database.models import PhysicalDevice
 
 
 class Filter(FilterSet):
+
     class Meta:
         model = PhysicalDevice
         fields = {

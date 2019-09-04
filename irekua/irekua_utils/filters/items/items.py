@@ -3,11 +3,16 @@ from django.db import models
 from django.utils.translation import gettext as _
 from django_filters import FilterSet
 from django_filters import DateFilter
+from django_filters import BooleanFilter
 
 from database.models import Item
 
 
 class Filter(FilterSet):
+    is_own = BooleanFilter(
+        method='user_owns_object',
+        label=_('Mine'),
+        widget=forms.CheckboxInput())
     class Meta:
         model = Item
         fields = {
@@ -34,6 +39,9 @@ class Filter(FilterSet):
                 }
             }
         }
+    def user_owns_object(self, queryset, name, value):
+        user = self.request.user
+        return queryset.filter(created_by=user)
 
 search_fields = (
     'item_type__name',

@@ -123,6 +123,12 @@
         </div>
       </div>
   </div>
-
-
+  {% if 'user' not in request.path %}
+  <div class="col">
+      <label class="text-light">
+        {% trans 'Mine: ' %}
+        {{ filter.form.is_own | add_class:"mine_submit"}}
+      </label>
+  </div>
+  {% endif %}
 </div>
