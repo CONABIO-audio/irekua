@@ -813,10 +813,6 @@ class FileUploader {
 							if (file.captured_on_time){
 								tinput.value = file.captured_on_time;
 							}							
-							if (valid_time){
-								file.captured_on_time = valid_time;
-								tinput.value = valid_time;
-							}
 
 							widget.toggle_status(check_boxes[i].file_id);
 						}
@@ -832,17 +828,7 @@ class FileUploader {
 				for (var i=0;i<files.length;i++){
 					var datetime_obj = widget.parse_datetime(files[i].name,parser_map);
 					widget.set_file_datetime(files[i],datetime_obj.date,datetime_obj.time);
-					var datetime_obj = widget.parse_datetime(file.name,parser_map);
-					var valid_date = widget.validate_datetime(datetime_obj.date);
-					var valid_time = widget.validate_datetime(datetime_obj.time,'time');
 
-					if (valid_date){
-						file.captured_on_date = valid_date;
-					}
-
-					if (valid_time){
-						file.captured_on_time = valid_time;
-					}
 				}
 
 				widget.render_by_name(['files']);
