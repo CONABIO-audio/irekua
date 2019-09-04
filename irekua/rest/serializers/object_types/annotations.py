@@ -12,6 +12,7 @@ class SelectSerializer(serializers.ModelSerializer):
         fields = (
             'url',
             'name',
+            'icon',
         )
 
 

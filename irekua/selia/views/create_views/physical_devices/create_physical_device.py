@@ -17,6 +17,7 @@ class PhysicalDeviceCreateForm(forms.ModelForm):
             'metadata',
             'serial_number',
             'identifier',
+            'bundle'
         ]
 
 
@@ -36,6 +37,7 @@ class CreatePhysicalDeviceView(SeliaCreateView):
 
         return {
             'device': self.device,
+            'bundle': True,
         }
 
     def get_additional_query_on_sucess(self):

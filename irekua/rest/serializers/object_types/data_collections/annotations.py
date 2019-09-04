@@ -14,11 +14,14 @@ MODEL = CollectionType.annotation_types.through  # pylint: disable=E1101
 
 
 class SelectSerializer(serializers.ModelSerializer):
+    icon = serializers.URLField(source='annotationtype.icon.url')
+
     class Meta:
         model = MODEL
         fields = (
             'url',
             'id',
+            'icon',
         )
 
 
@@ -27,6 +30,10 @@ class ListSerializer(serializers.ModelSerializer):
         many=False,
         read_only=True,
         source='annotationtype')
+    icon = serializers.URLField(
+        source='annotationtype.icon.url')
+    annotation_schema = serializers.JSONField(
+        source='annotationtype.annotation_schema')
 
     class Meta:
         model = MODEL
@@ -34,6 +41,8 @@ class ListSerializer(serializers.ModelSerializer):
             'url',
             'id',
             'annotation_type',
+            'annotation_schema',
+            'icon',
         )
 
 

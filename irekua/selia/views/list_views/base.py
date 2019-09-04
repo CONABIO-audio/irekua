@@ -116,7 +116,10 @@ class SeliaListView(ListView):
     def filter_queryset_with_query(self, queryset):
         try:
             filter_class = self.get_filter_class()
-            self.filter = filter_class(self.request.GET, queryset=queryset)
+            self.filter = filter_class(
+                self.request.GET,
+                queryset=queryset,
+                request=self.request)
             queryset = self.filter.qs
         except NotImplementedError:
             pass
