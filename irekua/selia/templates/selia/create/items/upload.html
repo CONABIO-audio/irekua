@@ -18,6 +18,7 @@
 let started_on = '{{ started_on }}';
 let ended_on = '{{ ended_on }}';
 let item_types = {{ item_types | safe }};
+let tz_info = {{ tz_info | safe }};
 
 window.onbeforeunload = function() {
    return "Al cambiar de página se perderán las cargas pendientes.";
@@ -28,7 +29,7 @@ $(document).ready(function() {
   var uploader_section = document.getElementById('uploader_section');
 
   if (upload_item_form && uploader_section){
-    var uploader = new FileUploader(uploader_section,upload_item_form,item_types,started_on,ended_on,"Upload items");
+    var uploader = new FileUploader(uploader_section,upload_item_form,item_types,tz_info,started_on,ended_on,"Upload items");
   }
 });
 </script>

@@ -132,6 +132,7 @@ class SeliaList(object):
             prefix = self.get_filter_form_prefix()
             self.filter = filter_class(
                 request.GET,
+                request=request,
                 queryset=queryset,
                 prefix=prefix)
             queryset = self.filter.qs

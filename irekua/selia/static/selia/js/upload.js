@@ -1,6 +1,8 @@
 class FileUploader {
-	constructor(parent,form,item_types,started_on,ended_on,title){
+	constructor(parent,form,item_types,tz_info,started_on,ended_on,title){
 		this.started_on = started_on;
+		this.site_timezone = tz_info["site_timezone"];
+		this.tz_list = tz_info["tz_list"]
 		this.ended_on = ended_on;
 		this.parent = parent;
 		this.item_types = item_types;
@@ -239,7 +241,7 @@ class FileUploader {
 		date_toggle_col.appendChild(date_toggle_dropdown);
 
 		var item_type_col = document.createElement('div');
-
+		item_type_col.align = "left";
 		item_type_col.className = "col-3";
 		var item_type_label = document.createElement('label');
 		item_type_label.className = "upload_tool text-light";
@@ -330,10 +332,11 @@ class FileUploader {
 		row2.className = "row collapse justify-content-between";
 		row2.id = "date_tools";
 		row2.style["padding-left"] = "60px";
+		row2.style["padding-bottom"] = "20px";
 
 		var date_pattern_col = document.createElement('div');
 
-		date_pattern_col.className = "col-4";
+		date_pattern_col.className = "col";
 		var date_pattern_label = document.createElement('label');
 		date_pattern_label.className = "upload_tool text-light";
 		date_pattern_label.appendChild(document.createTextNode('Patrón: '));
@@ -610,6 +613,98 @@ class FileUploader {
 
 		time_col.appendChild(time_row);
 
+		var tz_col = document.createElement('div');
+		tz_col.className = "col";
+		var tz_label = document.createElement('label');
+		tz_label.className = "upload_tool text-light";
+		tz_label.appendChild(document.createTextNode('Zona horaria: '));
+		tz_label.htmlFor = "itemDate";
+
+		this.tz_input = document.createElement('input');
+		this.tz_input.style.width = "160px";
+		this.tz_input.type = "text";
+
+		if (this.site_timezone){
+			this.tz_input.value = this.site_timezone;
+		} else {
+			this.tz_input.className = "incorrect_pattern";
+		}
+
+		$(this.tz_input).autocomplete({
+			select: function(event,ui){
+				if (widget.tz_list.includes(ui.item.label)){
+		          $(this).removeClass('incorrect_pattern');
+		        } else {
+		          $(this).addClass('incorrect_pattern');
+		        }	
+			},
+			source: function(request,response){
+				var results = $.ui.autocomplete.filter(widget.tz_list,request.term);
+				response(results.slice(0,10));
+			}
+		});
+
+		var tz_apply_dropdown = document.createElement('div');
+		tz_apply_dropdown.className = "dropdown";
+
+		var tz_apply_anchor = document.createElement('a');
+		tz_apply_anchor.setAttribute('data-toggle','dropdown');
+		tz_apply_anchor.setAttribute('role','button');
+		tz_apply_anchor.setAttribute('aria-expanded',false);
+		tz_apply_anchor.setAttribute('aria-controls','collapseUpload')
+
+		var tz_apply_btn_label = document.createElement('label');
+		tz_apply_btn_label.className ="upload_tool text-light";
+		var tz_apply_icon = document.createElement('i');
+		tz_apply_icon.className = "fas fa-arrow-alt-circle-right";
+
+		tz_apply_btn_label.appendChild(tz_apply_icon);
+
+
+		tz_apply_anchor.appendChild(tz_apply_btn_label);
+		tz_apply_dropdown.appendChild(tz_apply_anchor);
+
+		var tz_apply_dropdown_menu = document.createElement('div');
+		tz_apply_dropdown_menu.className = "dropdown-menu text-light";
+		tz_apply_dropdown_menu.style["background-color"] = "#454d54";
+		tz_apply_dropdown_menu.style.width = "auto";
+		tz_apply_dropdown_menu.setAttribute('aria-labelledby','dropdownMenuButton');
+
+		var tz_apply_dropdown_menu_inner = document.createElement('div');
+		tz_apply_dropdown_menu_inner.className = "container-fluid";
+
+		var tz_apply_all_btn_row = document.createElement('div');
+		tz_apply_all_btn_row.className = "row upload_tool justify-content-center";
+
+		this.tz_apply_all_btn = document.createElement("a");
+		this.tz_apply_all_btn.innerHTML = "<h6>Todo</h6>";
+
+		tz_apply_all_btn_row.appendChild(this.tz_apply_all_btn);
+
+		var tz_apply_selected_btn_row = document.createElement('div');
+		tz_apply_selected_btn_row.className = "row upload_tool justify-content-center";
+
+		this.tz_apply_selected_btn = document.createElement("a");
+		this.tz_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
+		tz_apply_selected_btn_row.appendChild(this.tz_apply_selected_btn);
+
+		tz_apply_dropdown_menu_inner.appendChild(tz_apply_selected_btn_row);
+		tz_apply_dropdown_menu_inner.appendChild(tz_apply_all_btn_row);
+
+		tz_apply_dropdown_menu.appendChild(tz_apply_dropdown_menu_inner);
+		tz_apply_dropdown.appendChild(tz_apply_dropdown_menu);
+
+		var tz_row = document.createElement('div');
+		tz_row.className = "row d-flex";
+
+		tz_row.appendChild(tz_label);
+		tz_row.appendChild(this.tz_input);
+		tz_row.appendChild(tz_apply_dropdown)
+
+		tz_col.appendChild(tz_row);
+
+
+
 
 		var metadata_date_col = document.createElement('div');
 		metadata_date_col.className = "col";
@@ -672,14 +767,24 @@ class FileUploader {
 
 		row2.appendChild(date_col);
 		row2.appendChild(time_col);
-		row2.appendChild(date_pattern_col);
-		row2.appendChild(item_type_col);
+		row2.appendChild(tz_col);
 		row2.appendChild(metadata_date_col);
 
+		var row3 = document.createElement('div');
+		row3.className = "row collapse justify-content-between";
+		row3.id = "date_tools";
+		row3.style["padding-left"] = "60px";
 
+		var empty_col = document.createElement('div');
+		empty_col.className = "col-3";
+
+		row3.appendChild(date_pattern_col);
+		row3.appendChild(item_type_col);
+		row3.appendChild(empty_col);
 
 		toolbar_container.appendChild(row);
 		toolbar_container.appendChild(row2);
+		toolbar_container.appendChild(row3);
 
 		this.top_toolbar.appendChild(toolbar_container);
 
@@ -701,7 +806,13 @@ class FileUploader {
 	          $(this).addClass('incorrect_pattern');
 	        }
 	      });
-
+	    this.tz_input.addEventListener('input',function(e){
+	        if (widget.tz_list.includes(this.value)){
+	          $(this).removeClass('incorrect_pattern');
+	        } else {
+	          $(this).addClass('incorrect_pattern');
+	        }
+	     });
 	    this.metadata_date_all_btn.addEventListener('click',function(e){
 	    	var fixable = widget.files.filter(widget.is_fixable);
 
@@ -907,6 +1018,7 @@ class FileUploader {
 			}
 		});
 
+
 		this.time_apply_selected_btn.addEventListener('click',function(e){
 			var valid_time = widget.validate_datetime(widget.time_input.value,'time');
 			if (valid_time){
@@ -918,6 +1030,43 @@ class FileUploader {
 							widget.set_file_time(file,valid_time);
 							var dinput = document.getElementById("time_input_file_"+check_boxes[i].file_id);
 							dinput.value = valid_time;
+							widget.toggle_status(check_boxes[i].file_id);
+						}
+					}
+				}
+			}
+		});
+
+		this.tz_apply_all_btn.addEventListener('click',function(e){
+			if (widget.tz_list.includes(widget.tz_input.value)){
+				var files = widget.files.filter(widget.is_fixable);
+				for (var i=0;i<files.length;i++){
+					files[i].captured_on_timezone = widget.tz_input.value;
+				}
+				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]');
+				for (var i=0;i<check_boxes.length;i++){
+					if (check_boxes[i].file_id != "all"){
+						var file = widget.get_file_by_id(check_boxes[i].file_id);
+						if (file){
+							var dinput = document.getElementById("tz_input_file_"+check_boxes[i].file_id);
+							dinput.value = widget.tz_input.value;
+							widget.toggle_status(check_boxes[i].file_id);
+						}
+					}
+				}
+			}
+		});
+
+		this.tz_apply_selected_btn.addEventListener('click',function(e){
+			if (widget.tz_list.includes(widget.tz_input.value)){
+				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
+				for (var i=0;i<check_boxes.length;i++){
+					if (check_boxes[i].file_id != "all"){
+						var file = widget.get_file_by_id(check_boxes[i].file_id);
+						if (file){
+							file.captured_on_timezone = widget.tz_input.value;
+							var dinput = document.getElementById("tz_input_file_"+check_boxes[i].file_id);
+							dinput.value = widget.tz_input.value;
 							widget.toggle_status(check_boxes[i].file_id);
 						}
 					}
@@ -1244,8 +1393,8 @@ class FileUploader {
 		var header_dateCol = document.createElement('div');
 		header_dateCol.className = 'col-2  justify-content-center text-center item_col';
 
-		var header_timeCol = document.createElement('div');
-		header_timeCol.className = 'col-2  justify-content-center text-center item_col';
+		var header_tzCol = document.createElement('div');
+		header_tzCol.className = 'col-2  justify-content-center text-center item_col';
 
 		var header_statusCol = document.createElement('div');
 		header_statusCol.className = 'col-2  justify-content-center text-center item_col';
@@ -1267,14 +1416,14 @@ class FileUploader {
     	header_itemtypeCol.appendChild(itemtypeTitle);
 
 		var dateTitle = document.createElement('div');
-    	dateTitle.textContent = 'Fecha';
+    	dateTitle.textContent = 'Fecha/Tiempo';
     	dateTitle.className = 'ml-4 ellipsise text-light header_title';
     	header_dateCol.appendChild(dateTitle);
 
-		var timeTitle = document.createElement('div');
-    	timeTitle.textContent = 'Tiempo';
-    	timeTitle.className = 'ml-4 ellipsise text-light header_title';
-    	header_timeCol.appendChild(timeTitle);
+		var tzTitle = document.createElement('div');
+    	tzTitle.textContent = 'Zona horaria';
+    	tzTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_tzCol.appendChild(tzTitle);
 
 	    var statusTitle = document.createElement('div');
 	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
@@ -1297,7 +1446,7 @@ class FileUploader {
 	    header.appendChild(header_descrCol);
 	    header.appendChild(header_itemtypeCol);
 	    header.appendChild(header_dateCol);
-	    header.appendChild(header_timeCol);
+	    header.appendChild(header_tzCol);
 	    header.appendChild(header_statusCol);
 
 	    this.file_list = document.createElement('div');
@@ -1692,9 +1841,9 @@ class FileUploader {
 				dateCol.className = 'col-2 justify-content-center  text-center item_col w-100';
 				dateCol.align = "center";
 
-				var timeCol = document.createElement('div');
-				timeCol.className = 'col-2 justify-content-center  text-center item_col w-100';
-				timeCol.align = "center";
+				var tzCol = document.createElement('div');
+				tzCol.className = 'col-2 justify-content-center  text-center item_col w-100';
+				tzCol.align = "center";
 
 				var statusCol = document.createElement('div');
 				statusCol.className = 'col-2 justify-content-center  text-center item_col';
@@ -1787,13 +1936,15 @@ class FileUploader {
 		        	dateInput.value = page.data[i].captured_on_date;
 		        	$(dateInput).removeClass('incorrect_pattern');
 		        }
-
-		        dateCol.appendChild(dateInput);
+		        var moment_row_1 = document.createElement('div');
+		        moment_row_1.className = "row";
+		        moment_row_1.appendChild(dateInput);
+		        dateCol.appendChild(moment_row_1);
 
 		        var timeInput = document.createElement('input');
 		        timeInput.type = "text";
 		        timeInput.style["text-align"]="center";
-		        timeInput.style.width = "110px";
+		        timeInput.style.width = "115px";
 		        timeInput.className = "incorrect_pattern ml-4 file_title";
 		        timeInput.id = "time_input_file_"+page.data[i]["file_id"];
           		timeInput.placeholder = "HH:mm:ss";
@@ -1818,7 +1969,44 @@ class FileUploader {
 		        	$(timeInput).removeClass('incorrect_pattern');
 		        }
 
-		        timeCol.appendChild(timeInput);
+		        var moment_row_2 = document.createElement('div');
+		        moment_row_2.className = "row";
+		        moment_row_2.appendChild(timeInput);
+		        dateCol.appendChild(moment_row_2);
+
+		        var tzInput = document.createElement('input');
+		        tzInput.type = "text";
+		        tzInput.style["text-align"]="center";
+		        tzInput.style.width = "130px";
+		        tzInput.className = "incorrect_pattern ml-4 file_title";
+		        tzInput.id = "tz_input_file_"+page.data[i]["file_id"];
+          		tzInput["file_id"] = page.data[i]["file_id"];
+
+		        $(tzInput).autocomplete({
+					select: function(event,ui){
+						var file = widget.get_file_by_id(this.file_id);
+						if (widget.tz_list.includes(ui.item.label)){
+				          file.captured_on_timezone = ui.item.label;
+				          file.captured_on_inrange = widget.datetime_in_range(file.captured_on_date,file.captured_on_time,file.captured_on_timezone);
+				        } else {
+				          file.captured_on_timezone = null;
+				          file.captured_on_inrange = false;
+				        }
+
+				        widget.toggle_status(this.file_id);
+					},
+					source: function(request,response){
+						var results = $.ui.autocomplete.filter(widget.tz_list,request.term);
+						response(results.slice(0,10));
+					}
+				});
+
+		        if (page.data[i].captured_on_timezone){
+		        	tzInput.value = page.data[i].captured_on_timezone;
+		        	$(tzInput).removeClass('incorrect_pattern');
+		        }
+
+		        tzCol.append(tzInput);
 
 				var status_btn = document.createElement('div');
 				status_btn.className ="col text-muted ml-4 ellipsise file_title";
@@ -1844,23 +2032,21 @@ class FileUploader {
 
 		        var status = "";
 
-		        if (!page.data[i].captured_on_time && !page.data[i].captured_on_date){
+		        if (!page.data[i].captured_on_time && !page.data[i].captured_on_date && !page.data[i].captured_on_timezone){
 		        	status = "Sin momento";
-		        } else if (!page.data[i].captured_on_date) {
-		        	status = "Sin fecha";
-		        } else if (!page.data[i].captured_on_time) {
-					if (!page.data[i].captured_on_inrange){
-						status = "Fuera de rango";
-					} else {
-						status = "Sin tiempo";
-					}
-		        } else {
-					if (!page.data[i].captured_on_inrange){
-						status = "Fuera de rango";
-					} else {
-						status = "Listo";
-					}
-		        }
+		        } else if (!page.data[i].captured_on_date){
+					status = "Sin fecha";
+				} else if (!page.data[i].captured_on_time) {
+					status = "Sin tiempo";
+				} else if (!page.data[i].captured_on_timezone) {
+					status = "Sin zona horaria";
+				} else if (!page.data[i].captured_on_inrange){
+					status = "Fuera de rango";	
+				} else {
+					status = "Listo";
+				}
+
+
 
 				if (!page.data[i].item_type){
 					if (status == "Listo"){
@@ -1901,6 +2087,7 @@ class FileUploader {
 			        widget.toggle_status(this.file_id);
 			    });
 
+
 			    $(timeInput).datetimepicker("option", "onSelect", function(){
 			    	var file = widget.get_file_by_id(this.file_id);
 					widget.set_file_time(file,this.value);
@@ -1913,12 +2100,22 @@ class FileUploader {
 			        widget.toggle_status(this.file_id);
 			      });
 
-			      status_btn.addEventListener('click',function(e){
+			   status_btn.addEventListener('click',function(e){
 			      		var file_id = this.file_id;
 			      		widget.upload_multiple(function(f){return widget.is_uploadable(f) && f.file_id == file_id});
 			      		
 			    });
-
+			    tzInput.addEventListener('input',function(e){
+			    		var file = widget.get_file_by_id(this.file_id)
+						if (widget.tz_list.includes(this.value)){
+				          file.captured_on_timezone = this.value;
+				          file.captured_on_inrange = widget.datetime_in_range(file.captured_on_date,file.captured_on_time,file.captured_on_timezone);
+				        } else {
+				          file.captured_on_timezone = null;
+				          file.captured_on_inrange = false;
+				        }
+				        widget.toggle_status(this.file_id)
+			    });
 			    item_type_input.addEventListener('change',function(e){
 			      	var file = widget.get_file_by_id(this.file_id);
 			      	var new_val = null;
@@ -1941,7 +2138,7 @@ class FileUploader {
 				row.appendChild(descrCol);
 				row.appendChild(itemTypeCol);
 				row.appendChild(dateCol);
-				row.appendChild(timeCol);
+				row.appendChild(tzCol);
 				row.appendChild(statusCol);
 				this.file_list.appendChild(row)
 				
@@ -2217,9 +2414,7 @@ class FileUploader {
 					exif = null;
 				}
 
-
           		if (exif) {
-
           			file.media_info = exif;
           			var date_time_original = exif.DateTimeOriginal;
 
@@ -2398,7 +2593,7 @@ class FileUploader {
         	file.captured_on_time = null;
         }
 
-        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time);
+        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time,file.captured_on_timezone);
 	}
 	set_file_date(file,date){
         var valid_date = this.validate_datetime(date);
@@ -2409,7 +2604,7 @@ class FileUploader {
         	file.captured_on_date = null;
         }
 
-        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time);
+        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time,file.captured_on_timezone);
 	}
 	set_file_datetime(file,date,time){		
         var valid_date = this.validate_datetime(date);
@@ -2427,9 +2622,12 @@ class FileUploader {
         	file.captured_on_time = null;
         }
 
-        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time);
+        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time,file.captured_on_timezone);
 	}
-	datetime_in_range(date,time){
+	datetime_in_range(date,time,timezone){
+		if (!timezone){
+			return false;
+		}
 		if (!date){
 			date = "";
 		}
@@ -2439,6 +2637,9 @@ class FileUploader {
 
 		var started_on = moment(this.started_on,"YYYY-MM-DD HH:mm:ss",true);
 		var ended_on = moment(this.ended_on,"YYYY-MM-DD HH:mm:ss",true);
+		started_on.tz('UTC');
+		ended_on.tz('UTC');
+
 		var date_arr = date.split("-");
 		var date_len = date_arr.length;
 		var time_arr = time.split(":");
@@ -2449,14 +2650,16 @@ class FileUploader {
 		switch (date_len){
 			case 1:{
 				helper_moment = moment(date + "-01-01","YYYY-MM-DD",true);
-				if ( !(helper_moment.isBefore(started_on,"year") || helper_moment.isAfter(ended_on,"year"))){
+				helper_moment.tz(timezone);
+				if ( !(helper_moment.utc().isBefore(started_on,"year") || helper_moment.utc().isAfter(ended_on,"year"))){
 					return true;
 				} 
 				break;
 			}
 			case 2:{
 				helper_moment = moment(date + "-01","YYYY-MM-DD",true);
-				if ( !(helper_moment.isBefore(started_on,"month") || helper_moment.isAfter(ended_on,"month"))){
+				helper_moment.tz(timezone);
+				if ( !(helper_moment.utc().isBefore(started_on,"month") || helper_moment.utc().isAfter(ended_on,"month"))){
 					return true;
 				} 
 				break;
@@ -2465,21 +2668,24 @@ class FileUploader {
 				switch(time_len){
 					case 1: {
 						helper_moment = moment(date,"YYYY-MM-DD",true);
-						if ( !(helper_moment.isBefore(started_on,"day") || helper_moment.isAfter(ended_on,"day"))){
+						helper_moment.tz(timezone);
+						if ( !(helper_moment.utc().isBefore(started_on,"day") || helper_moment.utc().isAfter(ended_on,"day"))){
 							return true;
 						}
 						break;
 					}
 					case 2:{
 						helper_moment = moment(date+" "+time,"YYYY-MM-DD HH:mm",true);
-						if ( !(helper_moment.isBefore(started_on,"minute") || helper_moment.isAfter(ended_on,"minute"))){
+						helper_moment.tz(timezone);
+						if ( !(helper_moment.utc().isBefore(started_on,"minute") || helper_moment.utc().isAfter(ended_on,"minute"))){
 							return true;
 						}		
 						break;
 					}
 					case 3:{
 						helper_moment = moment(date+" "+time,"YYYY-MM-DD HH:mm:ss",true);
-						if ( !(helper_moment.isBefore(started_on,"second") || helper_moment.isAfter(ended_on,"second"))){
+						helper_moment.tz(timezone);
+						if ( !(helper_moment.utc().isBefore(started_on,"second") || helper_moment.utc().utc().isAfter(ended_on,"second"))){
 							return true;
 						}			
 						break;
@@ -2628,9 +2834,8 @@ class FileUploader {
 	}
 	is_uploadable(file){
 		if (file.item_type){
-			if ((file.captured_on_date && file.captured_on_time && file.captured_on_inrange && !file.upload_response) || file.force_upload){
+			if ((file.captured_on_date && file.captured_on_time && file.captured_on_inrange && file.captured_on_timezone && !file.upload_response) || file.force_upload){
 				return true;
-				
 			}
 		}
 		return false;
@@ -2956,6 +3161,10 @@ class FileUploader {
 		file["captured_on_date"] = null;
 		file["captured_on_time"] = null;
 		file["captured_on_inrange"] = false;
+		file["captured_on_timezone"] = null;
+		if (this.site_timezone){
+			file["captured_on_timezone"] = this.site_timezone;
+		}
 		file["wrong_mime_type"] = this.is_mime_type_wrong(file);
 		file["item_type"] = this.get_item_type(file);
 		file["media_info"] = null;
@@ -3031,8 +3240,10 @@ class FileUploader {
 			var message = "Listo";
 			var date_ready = true;
 			var time_ready = true;
+			var tz_ready = true;
 			var tinput = document.getElementById("time_input_file_"+file_id);
 			var dinput = document.getElementById("date_input_file_"+file_id);
+			var tzinput = document.getElementById("tz_input_file_"+file_id);
 			var status_btn = document.getElementById("status_btn_"+file_id);
 			var statustext = document.getElementById("status_text_"+file_id);
 
@@ -3048,21 +3259,25 @@ class FileUploader {
 			} else {
 				$(tinput).removeClass("incorrect_pattern");
 			}
+			if (!file.captured_on_timezone){
+				tz_ready = false;
+				$(tzinput).addClass("incorrect_pattern");
+			} else {
+				$(tzinput).removeClass("incorrect_pattern");
+			}
 
-			if (!date_ready && !time_ready){
+			if (!date_ready && !time_ready && !tz_ready){
 				message = "Sin momento";
 			} else if (!date_ready){
 				message = "Sin fecha";
 			} else if (!time_ready) {
-				if (!file.captured_on_inrange){
-					message = "Fuera de rango";
-				} else {
-					message = "Sin tiempo";
-				}
+				message = "Sin tiempo";
+			} else if (!tz_ready) {
+				message = "Sin zona horaria";
+			} else if (!file.captured_on_inrange){
+				message = "Fuera de rango";	
 			} else {
-				if (!file.captured_on_inrange){
-					message = "Fuera de rango";
-				}
+				message = "Listo";
 			}
 
 			if (!file.item_type){
