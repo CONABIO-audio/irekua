@@ -30,7 +30,7 @@ class Site(IrekuaModelBaseUser):
         max_length=128,
         db_column='name',
         verbose_name=_('name'),
-        help_text=_('Name of site'),
+        help_text=_('Name of site (visible only to owner)'),
         blank=True,
         null=True)
     locality = models.CharField(

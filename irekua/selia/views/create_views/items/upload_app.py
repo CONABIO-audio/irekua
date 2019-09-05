@@ -111,13 +111,8 @@ class ItemUploadView(SeliaCreateView):
         licence = get_object_or_404(Licence, pk=licence_pk)
 
         initial = {
-            'collection': sampling_event_device.collection_device.collection,
-            'sampling_event': sampling_event_device.sampling_event,
             'sampling_event_device': sampling_event_device,
             'licence': licence,
-            'started_on': sampling_event_device.sampling_event.started_on.strftime('%Y-%m-%d %H:%M:%S'),
-            'ended_on': sampling_event_device.sampling_event.ended_on.strftime('%Y-%m-%d %H:%M:%S'),
-            'site_timezone': self.get_site_tz_info(sampling_event_device.sampling_event.collection_site.site)
         }
 
         return initial

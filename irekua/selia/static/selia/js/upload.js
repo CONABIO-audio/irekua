@@ -437,9 +437,9 @@ class FileUploader {
 		this.date_input.type = "text";
 
 		var minDate = new Date(this.started_on.split(" ")[0]);
-		minDate.setDate(minDate.getDate()+1);
+		minDate.setDate(minDate.getDate());
 		var maxDate = new Date(this.ended_on.split(" ")[0]);
-		maxDate.setDate(maxDate.getDate()+1);
+		maxDate.setDate(maxDate.getDate()+2);
 		var startDate = new Date(this.started_on.split(" ")[0]);
 		startDate.setDate(startDate.getDate()+1);
 
