@@ -134,14 +134,14 @@ class FileUploader {
 		upload_dropdown_menu_inner.className = "container-fluid";
 
 		var upload_all_btn_row = document.createElement('div');
-		upload_all_btn_row.className = "row upload_tool justify-content-center";
+		upload_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.upload_all_btn = document.createElement("a");
 		this.upload_all_btn.innerHTML = "<h6>Listos</h6";
 		upload_all_btn_row.appendChild(this.upload_all_btn);
 
 		var upload_selected_btn_row = document.createElement('div');
-		upload_selected_btn_row.className = "row upload_tool justify-content-center";
+		upload_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.upload_selected_btn = document.createElement("a");
 		this.upload_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -193,7 +193,7 @@ class FileUploader {
 		remove_dropdown_menu_inner.className = "container-fluid";
 
 		var remove_all_btn_row = document.createElement('div');
-		remove_all_btn_row.className = "row upload_tool justify-content-center";
+		remove_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.remove_all_btn = document.createElement("a");
 		this.remove_all_btn.innerHTML = "<h6>Todo</h6>";
@@ -201,7 +201,7 @@ class FileUploader {
 		remove_all_btn_row.appendChild(this.remove_all_btn);
 
 		var remove_selected_btn_row = document.createElement('div');
-		remove_selected_btn_row.className = "row upload_tool justify-content-center";
+		remove_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.remove_selected_btn = document.createElement("a");
 		this.remove_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -249,7 +249,7 @@ class FileUploader {
 		item_type_label.htmlFor = "itemDate";
 
 		this.item_type_input = document.createElement('select');
-		this.item_type_input.style.width = "200px";
+		this.item_type_input.style.width = "205px";
 
 		var options = ''
 		for (var i=0;i<this.item_types.length;i++){
@@ -288,7 +288,7 @@ class FileUploader {
 		item_type_apply_dropdown_menu_inner.className = "container-fluid";
 
 		var item_type_apply_all_btn_row = document.createElement('div');
-		item_type_apply_all_btn_row.className = "row upload_tool justify-content-center";
+		item_type_apply_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.item_type_apply_all_btn = document.createElement("a");
 		this.item_type_apply_all_btn.innerHTML = "<h6>Todo</h6>";
@@ -296,7 +296,7 @@ class FileUploader {
 		item_type_apply_all_btn_row.appendChild(this.item_type_apply_all_btn);
 
 		var item_type_apply_selected_btn_row = document.createElement('div');
-		item_type_apply_selected_btn_row.className = "row upload_tool justify-content-center";
+		item_type_apply_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.item_type_apply_selected_btn = document.createElement("a");
 		this.item_type_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -344,8 +344,8 @@ class FileUploader {
 
 
 		this.date_pattern_input = document.createElement('input');
-		this.date_pattern_input.style.width = "300px";
-		this.date_pattern_input.className = "incorrect_pattern";
+		this.date_pattern_input.style.width = "310px";
+		this.date_pattern_input.className = "incorrect_pattern text-center";
 		this.date_pattern_input.id = "itemDatePattern";
 		this.date_pattern_input.setAttribute('list','date_patterns');
 		this.date_pattern_input.placeholder = "Patrón de fecha en nombre del archivo";
@@ -392,7 +392,7 @@ class FileUploader {
 		date_pattern_apply_dropdown_menu_inner.className = "container-fluid";
 
 		var date_pattern_apply_all_btn_row = document.createElement('div');
-		date_pattern_apply_all_btn_row.className = "row upload_tool justify-content-center";
+		date_pattern_apply_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.date_pattern_apply_all_btn = document.createElement("a");
 		this.date_pattern_apply_all_btn.innerHTML = "<h6>Todo</h6>";
@@ -400,7 +400,7 @@ class FileUploader {
 		date_pattern_apply_all_btn_row.appendChild(this.date_pattern_apply_all_btn);
 
 		var date_pattern_apply_selected_btn_row = document.createElement('div');
-		date_pattern_apply_selected_btn_row.className = "row upload_tool justify-content-center";
+		date_pattern_apply_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.date_pattern_apply_selected_btn = document.createElement("a");
 		this.date_pattern_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -432,7 +432,7 @@ class FileUploader {
 		date_label.htmlFor = "itemDate";
 
 		this.date_input = document.createElement('input');
-		this.date_input.className = "incorrect_pattern";
+		this.date_input.className = "incorrect_pattern text-center";
 		this.date_input.style.width = "110px";
 		this.date_input.type = "text";
 
@@ -484,7 +484,7 @@ class FileUploader {
 		date_apply_dropdown_menu_inner.className = "container-fluid";
 
 		var date_apply_all_btn_row = document.createElement('div');
-		date_apply_all_btn_row.className = "row upload_tool justify-content-center";
+		date_apply_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.date_apply_all_btn = document.createElement("a");
 		this.date_apply_all_btn.innerHTML = "<h6>Todo</h6>";
@@ -492,7 +492,7 @@ class FileUploader {
 		date_apply_all_btn_row.appendChild(this.date_apply_all_btn);
 
 		var date_apply_selected_btn_row = document.createElement('div');
-		date_apply_selected_btn_row.className = "row upload_tool justify-content-center";
+		date_apply_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.date_apply_selected_btn = document.createElement("a");
 		this.date_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -521,8 +521,8 @@ class FileUploader {
 		time_label.htmlFor = "itemDate";
 
 		this.time_input = document.createElement('input');
-		this.time_input.className = "incorrect_pattern";
-		this.time_input.style.width = "80px";
+		this.time_input.className = "incorrect_pattern text-center";
+		this.time_input.style.width = "85px";
 		this.time_input.type = "text";
 
 		$(this.time_input).datetimepicker({
@@ -573,7 +573,7 @@ class FileUploader {
 		time_apply_dropdown_menu_inner.className = "container-fluid";
 
 		var time_apply_all_btn_row = document.createElement('div');
-		time_apply_all_btn_row.className = "row upload_tool justify-content-center";
+		time_apply_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.time_apply_all_btn = document.createElement("a");
 		this.time_apply_all_btn.innerHTML = "<h6>Todo</h6>";
@@ -581,7 +581,7 @@ class FileUploader {
 		time_apply_all_btn_row.appendChild(this.time_apply_all_btn);
 
 		var time_apply_selected_btn_row = document.createElement('div');
-		time_apply_selected_btn_row.className = "row upload_tool justify-content-center";
+		time_apply_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.time_apply_selected_btn = document.createElement("a");
 		this.time_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -610,6 +610,7 @@ class FileUploader {
 		tz_label.htmlFor = "itemDate";
 
 		this.tz_input = document.createElement('input');
+		this.tz_input.className = "text-center";
 		this.tz_input.style.width = "160px";
 		this.tz_input.type = "text";
 
@@ -663,7 +664,7 @@ class FileUploader {
 		tz_apply_dropdown_menu_inner.className = "container-fluid";
 
 		var tz_apply_all_btn_row = document.createElement('div');
-		tz_apply_all_btn_row.className = "row upload_tool justify-content-center";
+		tz_apply_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.tz_apply_all_btn = document.createElement("a");
 		this.tz_apply_all_btn.innerHTML = "<h6>Todo</h6>";
@@ -671,7 +672,7 @@ class FileUploader {
 		tz_apply_all_btn_row.appendChild(this.tz_apply_all_btn);
 
 		var tz_apply_selected_btn_row = document.createElement('div');
-		tz_apply_selected_btn_row.className = "row upload_tool justify-content-center";
+		tz_apply_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.tz_apply_selected_btn = document.createElement("a");
 		this.tz_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -731,7 +732,7 @@ class FileUploader {
 		metadata_date_dropdown_menu_inner.className = "container-fluid";
 
 		var metadata_date_all_btn_row = document.createElement('div');
-		metadata_date_all_btn_row.className = "row upload_tool justify-content-center";
+		metadata_date_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.metadata_date_all_btn = document.createElement("a");
 		this.metadata_date_all_btn.innerHTML = "<h6>Todo</h6>";
@@ -739,7 +740,7 @@ class FileUploader {
 		metadata_date_all_btn_row.appendChild(this.metadata_date_all_btn);
 
 		var metadata_date_selected_btn_row = document.createElement('div');
-		metadata_date_selected_btn_row.className = "row upload_tool justify-content-center";
+		metadata_date_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.metadata_date_selected_btn = document.createElement("a");
 		this.metadata_date_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -802,7 +803,25 @@ class FileUploader {
 	          $(this).addClass('incorrect_pattern');
 	        }
 	     });
-	    this.metadata_date_all_btn.addEventListener('click',function(e){
+
+		this.file_picker.addEventListener('change',function(e){
+			function finalize_callback() {
+				widget.render_by_name(['files','errors'])
+			}
+
+			widget.add_file_multiple(this.files,finalize_callback);
+		});
+
+		this.date_pattern_input.addEventListener('input',function(e){
+			var parser_map = widget.validate_parser_map(this.value);
+			if (parser_map){
+				$(this).removeClass('incorrect_pattern');
+			} else {
+				$(this).addClass('incorrect_pattern');
+			}
+		});
+
+	    metadata_date_all_btn_row.addEventListener('click',function(e){
 	    	var fixable = widget.files.filter(widget.is_fixable);
 
 	    	for (var i=0;i<fixable.length;i++){
@@ -824,7 +843,7 @@ class FileUploader {
 
 		});
 
-	    this.metadata_date_selected_btn.addEventListener('click',function(e){
+	    metadata_date_selected_btn_row.addEventListener('click',function(e){
 	    	var id_arr = widget.get_checked_ids();
 
 	    	for (var i=0;i<id_arr.length;i++){
@@ -870,28 +889,28 @@ class FileUploader {
 
 		});
 
-	    this.upload_all_btn.addEventListener('click',function(e){
+	    upload_all_btn_row.addEventListener('click',function(e){
 	    	widget.upload_multiple(widget.is_uploadable);
 		});
 
-	    this.upload_selected_btn.addEventListener('click',function(e){
+	    upload_selected_btn_row.addEventListener('click',function(e){
 	        var id_arr = widget.get_checked_ids();
 
 	    	widget.upload_multiple(function(f){return widget.is_uploadable(f) && id_arr.includes(f.file_id); });
 		});
 
-		this.remove_selected_btn.addEventListener('click',function(e){
+		remove_selected_btn_row.addEventListener('click',function(e){
 			widget.remove_multiple(widget.get_checked_ids());
 			widget.render_by_name(['files']);
 		});
 
-		this.remove_all_btn.addEventListener('click',function(e){
+		remove_all_btn_row.addEventListener('click',function(e){
 			widget.remove_all();
 
 			widget.render_by_name(['files']);
 		});
 
-		this.date_pattern_apply_selected_btn.addEventListener('click',function(e){
+		date_pattern_apply_selected_btn_row.addEventListener('click',function(e){
 			var parser_map = widget.validate_parser_map(widget.date_pattern_input.value);
 			if (parser_map){
 				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
@@ -921,7 +940,7 @@ class FileUploader {
 			}
 		});
 
-		this.date_pattern_apply_all_btn.addEventListener('click',function(e){
+		date_pattern_apply_all_btn_row.addEventListener('click',function(e){
 			var parser_map = widget.validate_parser_map(widget.date_pattern_input.value);
 			if (parser_map){
 				var files = widget.files.filter(widget.is_fixable);
@@ -936,7 +955,7 @@ class FileUploader {
 			}
 		});
 
-		this.item_type_apply_all_btn.addEventListener('click',function(e){
+		item_type_apply_all_btn_row.addEventListener('click',function(e){
 			var item_type = widget.item_type_input.value;
 			var selected_index = widget.item_type_input.selectedIndex;
 			var new_val = null;
@@ -963,7 +982,7 @@ class FileUploader {
 			
 		});
 
-		this.item_type_apply_selected_btn.addEventListener('click',function(e){
+		item_type_apply_selected_btn_row.addEventListener('click',function(e){
 			var item_type = widget.item_type_input.value;
 			var selected_index = widget.item_type_input.selectedIndex;
 			var new_val = null;
@@ -986,7 +1005,7 @@ class FileUploader {
 			
 		});
 
-		this.time_apply_all_btn.addEventListener('click',function(e){
+		time_apply_all_btn_row.addEventListener('click',function(e){
 			var valid_time = widget.validate_datetime(widget.time_input.value,'time');
 			if (valid_time){
 				var files = widget.files.filter(widget.is_fixable);
@@ -1008,7 +1027,7 @@ class FileUploader {
 		});
 
 
-		this.time_apply_selected_btn.addEventListener('click',function(e){
+		time_apply_selected_btn_row.addEventListener('click',function(e){
 			var valid_time = widget.validate_datetime(widget.time_input.value,'time');
 			if (valid_time){
 				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
@@ -1026,7 +1045,7 @@ class FileUploader {
 			}
 		});
 
-		this.tz_apply_all_btn.addEventListener('click',function(e){
+		tz_apply_all_btn_row.addEventListener('click',function(e){
 			if (widget.tz_list.includes(widget.tz_input.value)){
 				var files = widget.files.filter(widget.is_fixable);
 				for (var i=0;i<files.length;i++){
@@ -1048,7 +1067,7 @@ class FileUploader {
 			}
 		});
 
-		this.tz_apply_selected_btn.addEventListener('click',function(e){
+		tz_apply_selected_btn_row.addEventListener('click',function(e){
 			if (widget.tz_list.includes(widget.tz_input.value)){
 				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
 				for (var i=0;i<check_boxes.length;i++){
@@ -1067,7 +1086,7 @@ class FileUploader {
 			}
 		});
 
-		this.date_apply_all_btn.addEventListener('click',function(e){
+		date_apply_all_btn_row.addEventListener('click',function(e){
 			var valid_date = widget.validate_datetime(widget.date_input.value);
 			if (valid_date){
 				var files = widget.files.filter(widget.is_fixable);
@@ -1088,7 +1107,7 @@ class FileUploader {
 			}
 		});
 
-		this.date_apply_selected_btn.addEventListener('click',function(e){
+		date_apply_selected_btn_row.addEventListener('click',function(e){
 			var valid_date = widget.validate_datetime(widget.date_input.value);
 			if (valid_date){
 				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
@@ -1106,22 +1125,6 @@ class FileUploader {
 			}
 		});
 
-		this.file_picker.addEventListener('change',function(e){
-			function finalize_callback() {
-				widget.render_by_name(['files','errors'])
-			}
-
-			widget.add_file_multiple(this.files,finalize_callback);
-		});
-
-		this.date_pattern_input.addEventListener('input',function(e){
-			var parser_map = widget.validate_parser_map(this.value);
-			if (parser_map){
-				$(this).removeClass('incorrect_pattern');
-			} else {
-				$(this).addClass('incorrect_pattern');
-			}
-		});
 
 		this.parent.appendChild(this.top_toolbar);
 	}
