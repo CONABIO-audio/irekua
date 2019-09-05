@@ -1921,11 +1921,12 @@ class FileUploader {
 		        	dateInput.value = page.data[i].captured_on_date;
 		        	$(dateInput).removeClass('incorrect_pattern');
 		        }
-
+		        var moment_row_0 = document.createElement('div');
+		        moment_row_0.className = "row justify-content-center";
 		        var moment_row_1 = document.createElement('div');
 		        moment_row_1.className = "row";
 		        moment_row_1.appendChild(dateInput);
-		        dateCol.appendChild(moment_row_1);
+		        moment_row_0.appendChild(moment_row_1);
 
 		        var timeInput = document.createElement('input');
 		        timeInput.type = "text";
@@ -1958,7 +1959,10 @@ class FileUploader {
 		        var moment_row_2 = document.createElement('div');
 		        moment_row_2.className = "row";
 		        moment_row_2.appendChild(timeInput);
-		        dateCol.appendChild(moment_row_2);
+
+		        moment_row_0.appendChild(moment_row_2);
+
+		        dateCol.appendChild(moment_row_0);
 
 		        var tzInput = document.createElement('input');
 		        tzInput.type = "text";
