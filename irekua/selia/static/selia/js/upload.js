@@ -436,21 +436,11 @@ class FileUploader {
 		this.date_input.style.width = "110px";
 		this.date_input.type = "text";
 
-		var minDate = new Date(this.started_on.split(" ")[0]);
-		minDate.setDate(minDate.getDate());
-		var maxDate = new Date(this.ended_on.split(" ")[0]);
-		maxDate.setDate(maxDate.getDate()+2);
-		var startDate = new Date(this.started_on.split(" ")[0]);
-		startDate.setDate(startDate.getDate()+1);
-
 		$(this.date_input).datetimepicker({
 			format:'Y-m-d',
 			timepicker: false,
 			closeOnDateSelect: true,
 			validateOnBlur: false,
-			minDate: minDate,
-			maxDate: maxDate,
-			startDate: startDate,
 			onChangeDateTime: function(dp,$input){
 		        var date_input = widget.validate_datetime($input.val());
 		        if (date_input){
@@ -461,9 +451,8 @@ class FileUploader {
 		    }
 		});
 
-
+		this.set_datepicker_limits(this.date_input,this.site_timezone,1);
         this.date_input.placeholder = "YYYY-MM-DD";
-
 
 		var date_apply_dropdown = document.createElement('div');
 		date_apply_dropdown.className = "dropdown";
@@ -1041,7 +1030,7 @@ class FileUploader {
 			if (widget.tz_list.includes(widget.tz_input.value)){
 				var files = widget.files.filter(widget.is_fixable);
 				for (var i=0;i<files.length;i++){
-					files[i].captured_on_timezone = widget.tz_input.value;
+					widget.set_file_timezone(files[i],widget.tz_input.value);
 				}
 				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]');
 				for (var i=0;i<check_boxes.length;i++){
@@ -1049,6 +1038,8 @@ class FileUploader {
 						var file = widget.get_file_by_id(check_boxes[i].file_id);
 						if (file){
 							var dinput = document.getElementById("tz_input_file_"+check_boxes[i].file_id);
+							var date_input = document.getElementById("date_input_file_"+check_boxes[i].file_id);
+							widget.set_datepicker_limits(date_input,file.captured_on_timezone);
 							dinput.value = widget.tz_input.value;
 							widget.toggle_status(check_boxes[i].file_id);
 						}
@@ -1064,8 +1055,10 @@ class FileUploader {
 					if (check_boxes[i].file_id != "all"){
 						var file = widget.get_file_by_id(check_boxes[i].file_id);
 						if (file){
-							file.captured_on_timezone = widget.tz_input.value;
+							widget.set_file_timezone(file,widget.tz_input.value)
 							var dinput = document.getElementById("tz_input_file_"+check_boxes[i].file_id);
+							var date_input = document.getElementById("date_input_file_"+check_boxes[i].file_id);
+							widget.set_datepicker_limits(date_input,file.captured_on_timezone);
 							dinput.value = widget.tz_input.value;
 							widget.toggle_status(check_boxes[i].file_id);
 						}
@@ -1909,22 +1902,11 @@ class FileUploader {
           		dateInput.placeholder = "YYYY-MM-DD";
           		dateInput["file_id"] = page.data[i]["file_id"];
 
-          		var valid_date = false;
-				var minDate = new Date(this.started_on.split(" ")[0]);
-				minDate.setDate(minDate.getDate()+1);
-				var maxDate = new Date(this.ended_on.split(" ")[0]);
-				maxDate.setDate(maxDate.getDate()+1);
-				var startDate = new Date(this.started_on.split(" ")[0]);
-				startDate.setDate(startDate.getDate()+1);
-
 		        $(dateInput).datetimepicker({
 					format:'Y-m-d',
 					file_id: page.data[i]["file_id"],
 					validateOnBlur: false,
 					timepicker: false,
-					minDate: minDate,
-					maxDate: maxDate,
-					startDate: startDate,
 					onChangeDateTime: function(dp,$input){
 						var file = widget.get_file_by_id($input[0].file_id);
 						widget.set_file_date(file,$input.val());
@@ -1936,6 +1918,7 @@ class FileUploader {
 		        	dateInput.value = page.data[i].captured_on_date;
 		        	$(dateInput).removeClass('incorrect_pattern');
 		        }
+
 		        var moment_row_1 = document.createElement('div');
 		        moment_row_1.className = "row";
 		        moment_row_1.appendChild(dateInput);
@@ -1985,13 +1968,12 @@ class FileUploader {
 		        $(tzInput).autocomplete({
 					select: function(event,ui){
 						var file = widget.get_file_by_id(this.file_id);
-						if (widget.tz_list.includes(ui.item.label)){
-				          file.captured_on_timezone = ui.item.label;
-				          file.captured_on_inrange = widget.datetime_in_range(file.captured_on_date,file.captured_on_time,file.captured_on_timezone);
-				        } else {
-				          file.captured_on_timezone = null;
-				          file.captured_on_inrange = false;
-				        }
+						widget.set_file_timezone(file,ui.item.label)
+
+						if (file.captured_on_timezone){
+							var date_input = document.getElementById("date_input_file_"+file.file_id);
+							widget.set_datepicker_limits(date_input,file.captured_on_timezone);
+						}
 
 				        widget.toggle_status(this.file_id);
 					},
@@ -2005,6 +1987,8 @@ class FileUploader {
 		        	tzInput.value = page.data[i].captured_on_timezone;
 		        	$(tzInput).removeClass('incorrect_pattern');
 		        }
+
+				this.set_datepicker_limits(dateInput,page.data[i].captured_on_timezone)
 
 		        tzCol.append(tzInput);
 
@@ -2107,13 +2091,11 @@ class FileUploader {
 			    });
 			    tzInput.addEventListener('input',function(e){
 			    		var file = widget.get_file_by_id(this.file_id)
-						if (widget.tz_list.includes(this.value)){
-				          file.captured_on_timezone = this.value;
-				          file.captured_on_inrange = widget.datetime_in_range(file.captured_on_date,file.captured_on_time,file.captured_on_timezone);
-				        } else {
-				          file.captured_on_timezone = null;
-				          file.captured_on_inrange = false;
-				        }
+						widget.set_file_timezone(file,this.value);
+						if (file.captured_on_timezone){
+							var date_input = document.getElementById("date_input_file_"+file.file_id);
+							widget.set_datepicker_limits(date_input,file.captured_on_timezone);
+						}
 				        widget.toggle_status(this.file_id)
 			    });
 			    item_type_input.addEventListener('change',function(e){
@@ -2606,6 +2588,38 @@ class FileUploader {
 
         file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time,file.captured_on_timezone);
 	}
+	set_datepicker_limits(dateInput,timezone,buffer=0){
+		var started_on = moment(this.started_on,"YYYY-MM-DD HH:mm:ss",true);
+		var ended_on = moment(this.ended_on,"YYYY-MM-DD HH:mm:ss",true);
+		started_on.tz('UTC');
+		ended_on.tz('UTC');
+
+		if (this.tz_list.includes(timezone)){
+			started_on.tz(timezone)
+			ended_on.tz(timezone)
+		} else {
+			started_on.tz(this.site_timezone)
+			ended_on.tz(this.site_timezone)
+		}
+
+		var minDate = new Date(started_on.format('YYYY-MM-DD'));
+		minDate.setDate(minDate.getDate()+1-buffer);
+		var maxDate = new Date(ended_on.format('YYYY-MM-DD'));
+		maxDate.setDate(maxDate.getDate()+1+buffer);
+		var startDate = new Date(started_on.format('YYYY-MM-DD'));
+		startDate.setDate(startDate.getDate()+1);
+
+		$(dateInput).datetimepicker({"maxDate":maxDate,"minDate":minDate,"startDate":startDate});
+	}
+	set_file_timezone(file,tz_string){
+		if (this.tz_list.includes(tz_string)){
+          file.captured_on_timezone = tz_string;
+          file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time,file.captured_on_timezone);
+        } else {
+          file.captured_on_timezone = null;
+          file.captured_on_inrange = false;
+        }
+	}
 	set_file_datetime(file,date,time){		
         var valid_date = this.validate_datetime(date);
         var valid_time = this.validate_datetime(time,'time');
@@ -3057,6 +3071,9 @@ class FileUploader {
 	  			break;
 	  		}
 	  	}
+	  }
+	  if (file.captured_on_timezone){
+	  	formData.set('captured_on_timezone',file.captured_on_timezone);
 	  }
 
 	  $.ajax({

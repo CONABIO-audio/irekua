@@ -31,6 +31,7 @@ class ItemUploadView(SeliaCreateView):
         "captured_on_hour",
         "captured_on_minute",
         "captured_on_second",
+        "captured_on_timezone",
         "licence",
         "tags"
     ]
