@@ -1291,7 +1291,7 @@ class FileUploader {
 
 		this.blank_file_list = document.createElement('div');
 		this.blank_file_list.className = "row justify-content-center blank_item_list w-100";
-		this.blank_file_list.height = "600px";
+		this.blank_file_list.height = "800px";
 
 
 		var file_picker_col = document.createElement('div');
@@ -1470,8 +1470,8 @@ class FileUploader {
 
 	    this.file_list = document.createElement('div');
 	    this.file_list.className = "upload_list";
-	    this.file_list.style["min-height"] = "450px";
-	    this.file_list.style["max-height"] = "450px";
+	    this.file_list.style["min-height"] = "650px";
+	    this.file_list.style["max-height"] = "650px";
 
 	    this.file_list_table.appendChild(header);
 	    this.file_list_table.appendChild(this.file_list);
@@ -1584,7 +1584,7 @@ class FileUploader {
 		this.blank_error_list = document.createElement('div');
 		this.blank_error_list.className = "row blank_item_list justify-content-center w-100";
 		this.blank_error_list.style.border = "none";
-		this.blank_error_list.height = "300px";
+		this.blank_error_list.height = "500px";
 
 		var blank_message = document.createElement('a');
 		blank_message.innerHTML = "No hay errores"
@@ -1692,7 +1692,7 @@ class FileUploader {
 		this.blank_duplicate_list = document.createElement('div');
 		this.blank_duplicate_list.className = "row blank_item_list justify-content-center w-100";
 		this.blank_duplicate_list.style.border = "none";
-		this.blank_duplicate_list.height = "300px";
+		this.blank_duplicate_list.height = "500px";
 
 		var blank_message = document.createElement('a');
 		blank_message.innerHTML = "No hay duplicados"
@@ -1799,7 +1799,7 @@ class FileUploader {
 		this.blank_upload_list = document.createElement('div');
 		this.blank_upload_list.className = "row blank_item_list justify-content-center w-100";
 		this.blank_upload_list.style.border = "none";
-		this.blank_upload_list.height = "300px";
+		this.blank_upload_list.height = "500px";
 
 		var blank_message = document.createElement('a');
 		blank_message.innerHTML = "No se ha subido ningún archivo nuevo"
@@ -2164,6 +2164,7 @@ class FileUploader {
 
 
 		        var dateInput = document.createElement('input');
+		        dateInput.autocomplete = 'disabled';
 		        dateInput.type = "text";
 		        dateInput.style["text-align"]="center";
 		        dateInput.style.width = "115px";
@@ -2196,6 +2197,7 @@ class FileUploader {
 		        moment_row_0.appendChild(moment_row_1);
 
 		        var timeInput = document.createElement('input');
+		        timeInput.autocomplete = 'disabled';
 		        timeInput.type = "text";
 		        timeInput.style["text-align"]="center";
 		        timeInput.style.width = "115px";
@@ -2901,10 +2903,9 @@ class FileUploader {
 			time = "";
 		}
 
-		var started_on = moment(this.started_on,"YYYY-MM-DD HH:mm:ss",true);
-		var ended_on = moment(this.ended_on,"YYYY-MM-DD HH:mm:ss",true);
-		started_on.tz('UTC');
-		ended_on.tz('UTC');
+		var started_on = moment.tz(this.started_on,"YYYY-MM-DD HH:mm:ss",true,this.site_timezone);
+		var ended_on = moment.tz(this.ended_on,"YYYY-MM-DD HH:mm:ss",true,this.site_timezone);
+		
 
 		var date_arr = date.split("-");
 		var date_len = date_arr.length;
@@ -2915,17 +2916,15 @@ class FileUploader {
 
 		switch (date_len){
 			case 1:{
-				helper_moment = moment(date + "-01-01","YYYY-MM-DD",true);
-				helper_moment.tz(timezone);
-				if ( !(helper_moment.utc().isBefore(started_on,"year") || helper_moment.utc().isAfter(ended_on,"year"))){
+				helper_moment = moment(date + "-01-01","YYYY-MM-DD",true,timezone);
+				if ( !(helper_moment.isBefore(started_on,"year") || helper_moment.isAfter(ended_on,"year"))){
 					return true;
 				} 
 				break;
 			}
 			case 2:{
-				helper_moment = moment(date + "-01","YYYY-MM-DD",true);
-				helper_moment.tz(timezone);
-				if ( !(helper_moment.utc().isBefore(started_on,"month") || helper_moment.utc().isAfter(ended_on,"month"))){
+				helper_moment = moment(date + "-01","YYYY-MM-DD",true,timezone);
+				if ( !(helper_moment.isBefore(started_on,"month") || helper_moment.isAfter(ended_on,"month"))){
 					return true;
 				} 
 				break;
@@ -2933,25 +2932,22 @@ class FileUploader {
 			case 3:{
 				switch(time_len){
 					case 1: {
-						helper_moment = moment(date,"YYYY-MM-DD",true);
-						helper_moment.tz(timezone);
-						if ( !(helper_moment.utc().isBefore(started_on,"day") || helper_moment.utc().isAfter(ended_on,"day"))){
+						helper_moment = moment.tz(date,"YYYY-MM-DD",true,timezone);
+						if ( !(helper_moment.isBefore(started_on,"day") || helper_moment.isAfter(ended_on,"day"))){
 							return true;
 						}
 						break;
 					}
 					case 2:{
-						helper_moment = moment(date+" "+time,"YYYY-MM-DD HH:mm",true);
-						helper_moment.tz(timezone);
-						if ( !(helper_moment.utc().isBefore(started_on,"minute") || helper_moment.utc().isAfter(ended_on,"minute"))){
+						helper_moment = moment.tz(date+" "+time,"YYYY-MM-DD HH:mm",true,timezone);
+						if ( !(helper_moment.isBefore(started_on,"minute") || helper_moment.isAfter(ended_on,"minute"))){
 							return true;
 						}		
 						break;
 					}
 					case 3:{
-						helper_moment = moment(date+" "+time,"YYYY-MM-DD HH:mm:ss",true);
-						helper_moment.tz(timezone);
-						if ( !(helper_moment.utc().isBefore(started_on,"second") || helper_moment.utc().utc().isAfter(ended_on,"second"))){
+						helper_moment = moment.tz(date+" "+time,"YYYY-MM-DD HH:mm:ss",true,timezone);
+						if ( !(helper_moment.isBefore(started_on,"second") || helper_moment.isAfter(ended_on,"second"))){
 							return true;
 						}			
 						break;
@@ -3407,8 +3403,7 @@ class FileUploader {
 						break;
 					}
 				}
-				var dmoment = moment(extended_date,format,true);
-				dmoment.tz(timezone);
+				var dmoment = moment.tz(extended_date,format,true,timezone);
 				return {'moment':dmoment,'valid_up_to':date_len+time_len}
 			}
 
@@ -3428,9 +3423,9 @@ class FileUploader {
 				level = 'second';
 			}
 
-			if (lazy_moment1.moment.utc().isBefore(lazy_moment2.moment.utc(),level)){
+			if (lazy_moment1.moment.isBefore(lazy_moment2.moment,level)){
 				return -1;
-			} else if (lazy_moment2.moment.utc().isBefore(lazy_moment1.moment.utc(),level)){
+			} else if (lazy_moment2.moment.isBefore(lazy_moment1.moment,level)){
 				return 1;
 			} else {
 				return 0;
@@ -3494,8 +3489,7 @@ class FileUploader {
 						break;
 					}
 				}
-				var dmoment = moment(extended_date,format,true);
-				dmoment.tz(timezone);
+				var dmoment = moment.tz(extended_date,format,true,timezone);
 				return {'moment':dmoment,'valid_up_to':date_len+time_len}
 			}
 
@@ -3515,9 +3509,9 @@ class FileUploader {
 				level = 'second';
 			}
 
-			if (lazy_moment1.moment.utc().isBefore(lazy_moment2.moment.utc(),level)){
+			if (lazy_moment1.moment.isBefore(lazy_moment2.moment,level)){
 				return 1;
-			} else if (lazy_moment2.moment.utc().isBefore(lazy_moment1.moment.utc(),level)){
+			} else if (lazy_moment2.moment.isBefore(lazy_moment1.moment,level)){
 				return -1;
 			} else {
 				return 0;
