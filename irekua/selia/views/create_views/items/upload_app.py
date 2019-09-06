@@ -1,6 +1,5 @@
 from django import forms
 from django.core import serializers
-import json
 from django.shortcuts import get_object_or_404
 from django.shortcuts import reverse
 from django.http import HttpResponse
@@ -10,6 +9,10 @@ from database.models import Item
 from database.models import SamplingEventDevice
 from database.models import Licence
 from selia.views.create_views.create_base import SeliaCreateView
+
+import json
+import pytz
+from timezonefinder import TimezoneFinder
 
 
 class ItemUploadView(SeliaCreateView):
@@ -28,6 +31,7 @@ class ItemUploadView(SeliaCreateView):
         "captured_on_hour",
         "captured_on_minute",
         "captured_on_second",
+        "captured_on_timezone",
         "licence",
         "tags"
     ]
@@ -108,12 +112,8 @@ class ItemUploadView(SeliaCreateView):
         licence = get_object_or_404(Licence, pk=licence_pk)
 
         initial = {
-            'collection': sampling_event_device.collection_device.collection,
-            'sampling_event': sampling_event_device.sampling_event,
             'sampling_event_device': sampling_event_device,
             'licence': licence,
-            'started_on': sampling_event_device.sampling_event.started_on.strftime('%Y-%m-%d %H:%M:%S'),
-            'ended_on': sampling_event_device.sampling_event.ended_on.strftime('%Y-%m-%d %H:%M:%S')
         }
 
         return initial
@@ -124,6 +124,12 @@ class ItemUploadView(SeliaCreateView):
         serialized = ListSerializer(collection_item_types, many=True, context={'request':self.request})
 
         return json.dumps(serialized.data)
+
+    def get_site_tz_info(self,site):
+        tf = TimezoneFinder()
+        timezone = tf.certain_timezone_at(lng=site.longitude,lat=site.latitude)
+
+        return json.dumps({"site_timezone":timezone,"tz_list":pytz.all_timezones})
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -147,5 +153,6 @@ class ItemUploadView(SeliaCreateView):
         context["started_on"] = sampling_event_device.sampling_event.started_on.strftime('%Y-%m-%d %H:%M:%S');
         context["ended_on"] = sampling_event_device.sampling_event.ended_on.strftime('%Y-%m-%d %H:%M:%S');
         context["item_types"] = self.get_item_types(sampling_event_device)
+        context["tz_info"] = self.get_site_tz_info(sampling_event_device.sampling_event.collection_site.site)
 
         return context

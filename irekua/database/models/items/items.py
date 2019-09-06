@@ -171,6 +171,13 @@ class Item(IrekuaModelBaseUser):
         validators=[
             MinValueValidator(0),
             MaxValueValidator(59)])
+    captured_on_timezone = models.CharField(
+        max_length=256,
+        db_column='captured_on_timezone',
+        verbose_name=_('timezone'),
+        help_text=_('Timezone corresponding to date fields'),
+        blank=True,
+        null=True)
     licence = models.ForeignKey(
         'Licence',
         db_column='licence_id',

@@ -1,11 +1,16 @@
 from django import forms
 from django.utils.translation import gettext as _
 from django_filters import FilterSet,DateFilter
+from django_filters import BooleanFilter
 
 from database.models import CollectionSite
 
 
 class Filter(FilterSet):
+    is_own = BooleanFilter(
+        method='user_owns_object',
+        label=_('Mine'),
+        widget=forms.CheckboxInput())
     class Meta:
         model = CollectionSite
         fields = {
@@ -21,6 +26,10 @@ class Filter(FilterSet):
             'site__locality': ['icontains'],
             'created_on': ['gt', 'lt']
         }
+    def user_owns_object(self, queryset, name, value):
+        user = self.request.user
+        return queryset.filter(site__created_by=user)
+
 
 
 search_fields = (

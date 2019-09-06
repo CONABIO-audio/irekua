@@ -28,7 +28,6 @@ class Filter(FilterSet):
             }
         }
 
-
 search_fields = (
     'name',
     'locality',

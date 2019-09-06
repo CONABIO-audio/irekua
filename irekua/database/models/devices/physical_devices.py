@@ -13,9 +13,10 @@ class PhysicalDevice(IrekuaModelBaseUser):
     identifier = models.CharField(
         max_length=128,
         db_column='identifier',
-        verbose_name=_('custom id'),
-        help_text=_('Simple device identifier'),
-        blank=True)
+        verbose_name=_('name'),
+        help_text=_('Simple device identifier (visible only to owner)'),
+        blank=True,
+    )
     serial_number = models.CharField(
         max_length=128,
         db_column='serial_number',

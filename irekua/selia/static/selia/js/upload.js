@@ -1,6 +1,8 @@
 class FileUploader {
-	constructor(parent,form,item_types,started_on,ended_on,title){
+	constructor(parent,form,item_types,tz_info,started_on,ended_on,title){
 		this.started_on = started_on;
+		this.site_timezone = tz_info["site_timezone"];
+		this.tz_list = tz_info["tz_list"]
 		this.ended_on = ended_on;
 		this.parent = parent;
 		this.item_types = item_types;
@@ -26,6 +28,10 @@ class FileUploader {
 		this.total_error_pages = 0;
 		this.total_upload_pages = 0;
 		this.per_page = 10;
+		this.files_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
+		this.errors_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
+		this.duplicates_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
+		this.uploads_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
 		this.build_view();
 	}
 	build_view() {
@@ -132,14 +138,14 @@ class FileUploader {
 		upload_dropdown_menu_inner.className = "container-fluid";
 
 		var upload_all_btn_row = document.createElement('div');
-		upload_all_btn_row.className = "row upload_tool justify-content-center";
+		upload_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.upload_all_btn = document.createElement("a");
 		this.upload_all_btn.innerHTML = "<h6>Listos</h6";
 		upload_all_btn_row.appendChild(this.upload_all_btn);
 
 		var upload_selected_btn_row = document.createElement('div');
-		upload_selected_btn_row.className = "row upload_tool justify-content-center";
+		upload_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.upload_selected_btn = document.createElement("a");
 		this.upload_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -191,7 +197,7 @@ class FileUploader {
 		remove_dropdown_menu_inner.className = "container-fluid";
 
 		var remove_all_btn_row = document.createElement('div');
-		remove_all_btn_row.className = "row upload_tool justify-content-center";
+		remove_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.remove_all_btn = document.createElement("a");
 		this.remove_all_btn.innerHTML = "<h6>Todo</h6>";
@@ -199,7 +205,7 @@ class FileUploader {
 		remove_all_btn_row.appendChild(this.remove_all_btn);
 
 		var remove_selected_btn_row = document.createElement('div');
-		remove_selected_btn_row.className = "row upload_tool justify-content-center";
+		remove_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.remove_selected_btn = document.createElement("a");
 		this.remove_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -239,7 +245,7 @@ class FileUploader {
 		date_toggle_col.appendChild(date_toggle_dropdown);
 
 		var item_type_col = document.createElement('div');
-
+		item_type_col.align = "left";
 		item_type_col.className = "col-3";
 		var item_type_label = document.createElement('label');
 		item_type_label.className = "upload_tool text-light";
@@ -247,7 +253,8 @@ class FileUploader {
 		item_type_label.htmlFor = "itemDate";
 
 		this.item_type_input = document.createElement('select');
-		this.item_type_input.style.width = "200px";
+		this.item_type_input.className = "rounded";
+		this.item_type_input.style.width = "205px";
 
 		var options = ''
 		for (var i=0;i<this.item_types.length;i++){
@@ -286,7 +293,7 @@ class FileUploader {
 		item_type_apply_dropdown_menu_inner.className = "container-fluid";
 
 		var item_type_apply_all_btn_row = document.createElement('div');
-		item_type_apply_all_btn_row.className = "row upload_tool justify-content-center";
+		item_type_apply_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.item_type_apply_all_btn = document.createElement("a");
 		this.item_type_apply_all_btn.innerHTML = "<h6>Todo</h6>";
@@ -294,7 +301,7 @@ class FileUploader {
 		item_type_apply_all_btn_row.appendChild(this.item_type_apply_all_btn);
 
 		var item_type_apply_selected_btn_row = document.createElement('div');
-		item_type_apply_selected_btn_row.className = "row upload_tool justify-content-center";
+		item_type_apply_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.item_type_apply_selected_btn = document.createElement("a");
 		this.item_type_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -330,10 +337,11 @@ class FileUploader {
 		row2.className = "row collapse justify-content-between";
 		row2.id = "date_tools";
 		row2.style["padding-left"] = "60px";
+		row2.style["padding-bottom"] = "20px";
 
 		var date_pattern_col = document.createElement('div');
 
-		date_pattern_col.className = "col-4";
+		date_pattern_col.className = "col";
 		var date_pattern_label = document.createElement('label');
 		date_pattern_label.className = "upload_tool text-light";
 		date_pattern_label.appendChild(document.createTextNode('Patrón: '));
@@ -341,8 +349,8 @@ class FileUploader {
 
 
 		this.date_pattern_input = document.createElement('input');
-		this.date_pattern_input.style.width = "300px";
-		this.date_pattern_input.className = "incorrect_pattern";
+		this.date_pattern_input.style.width = "310px";
+		this.date_pattern_input.className = "incorrect_pattern text-center rounded";
 		this.date_pattern_input.id = "itemDatePattern";
 		this.date_pattern_input.setAttribute('list','date_patterns');
 		this.date_pattern_input.placeholder = "Patrón de fecha en nombre del archivo";
@@ -389,7 +397,7 @@ class FileUploader {
 		date_pattern_apply_dropdown_menu_inner.className = "container-fluid";
 
 		var date_pattern_apply_all_btn_row = document.createElement('div');
-		date_pattern_apply_all_btn_row.className = "row upload_tool justify-content-center";
+		date_pattern_apply_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.date_pattern_apply_all_btn = document.createElement("a");
 		this.date_pattern_apply_all_btn.innerHTML = "<h6>Todo</h6>";
@@ -397,7 +405,7 @@ class FileUploader {
 		date_pattern_apply_all_btn_row.appendChild(this.date_pattern_apply_all_btn);
 
 		var date_pattern_apply_selected_btn_row = document.createElement('div');
-		date_pattern_apply_selected_btn_row.className = "row upload_tool justify-content-center";
+		date_pattern_apply_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.date_pattern_apply_selected_btn = document.createElement("a");
 		this.date_pattern_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -429,25 +437,15 @@ class FileUploader {
 		date_label.htmlFor = "itemDate";
 
 		this.date_input = document.createElement('input');
-		this.date_input.className = "incorrect_pattern";
+		this.date_input.className = "incorrect_pattern text-center rounded";
 		this.date_input.style.width = "110px";
 		this.date_input.type = "text";
-
-		var minDate = new Date(this.started_on.split(" ")[0]);
-		minDate.setDate(minDate.getDate()+1);
-		var maxDate = new Date(this.ended_on.split(" ")[0]);
-		maxDate.setDate(maxDate.getDate()+1);
-		var startDate = new Date(this.started_on.split(" ")[0]);
-		startDate.setDate(startDate.getDate()+1);
 
 		$(this.date_input).datetimepicker({
 			format:'Y-m-d',
 			timepicker: false,
 			closeOnDateSelect: true,
 			validateOnBlur: false,
-			minDate: minDate,
-			maxDate: maxDate,
-			startDate: startDate,
 			onChangeDateTime: function(dp,$input){
 		        var date_input = widget.validate_datetime($input.val());
 		        if (date_input){
@@ -458,9 +456,8 @@ class FileUploader {
 		    }
 		});
 
-
+		this.set_datepicker_limits(this.date_input,this.site_timezone,1);
         this.date_input.placeholder = "YYYY-MM-DD";
-
 
 		var date_apply_dropdown = document.createElement('div');
 		date_apply_dropdown.className = "dropdown";
@@ -492,7 +489,7 @@ class FileUploader {
 		date_apply_dropdown_menu_inner.className = "container-fluid";
 
 		var date_apply_all_btn_row = document.createElement('div');
-		date_apply_all_btn_row.className = "row upload_tool justify-content-center";
+		date_apply_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.date_apply_all_btn = document.createElement("a");
 		this.date_apply_all_btn.innerHTML = "<h6>Todo</h6>";
@@ -500,7 +497,7 @@ class FileUploader {
 		date_apply_all_btn_row.appendChild(this.date_apply_all_btn);
 
 		var date_apply_selected_btn_row = document.createElement('div');
-		date_apply_selected_btn_row.className = "row upload_tool justify-content-center";
+		date_apply_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.date_apply_selected_btn = document.createElement("a");
 		this.date_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -529,8 +526,8 @@ class FileUploader {
 		time_label.htmlFor = "itemDate";
 
 		this.time_input = document.createElement('input');
-		this.time_input.className = "incorrect_pattern";
-		this.time_input.style.width = "80px";
+		this.time_input.className = "incorrect_pattern text-center rounded";
+		this.time_input.style.width = "85px";
 		this.time_input.type = "text";
 
 		$(this.time_input).datetimepicker({
@@ -581,7 +578,7 @@ class FileUploader {
 		time_apply_dropdown_menu_inner.className = "container-fluid";
 
 		var time_apply_all_btn_row = document.createElement('div');
-		time_apply_all_btn_row.className = "row upload_tool justify-content-center";
+		time_apply_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.time_apply_all_btn = document.createElement("a");
 		this.time_apply_all_btn.innerHTML = "<h6>Todo</h6>";
@@ -589,7 +586,7 @@ class FileUploader {
 		time_apply_all_btn_row.appendChild(this.time_apply_all_btn);
 
 		var time_apply_selected_btn_row = document.createElement('div');
-		time_apply_selected_btn_row.className = "row upload_tool justify-content-center";
+		time_apply_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.time_apply_selected_btn = document.createElement("a");
 		this.time_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -609,6 +606,99 @@ class FileUploader {
 		time_row.appendChild(time_apply_dropdown)
 
 		time_col.appendChild(time_row);
+
+		var tz_col = document.createElement('div');
+		tz_col.className = "col";
+		var tz_label = document.createElement('label');
+		tz_label.className = "upload_tool text-light";
+		tz_label.appendChild(document.createTextNode('Zona horaria: '));
+		tz_label.htmlFor = "itemDate";
+
+		this.tz_input = document.createElement('input');
+		this.tz_input.className = "text-center rounded";
+		this.tz_input.style.width = "160px";
+		this.tz_input.type = "text";
+
+		if (this.site_timezone){
+			this.tz_input.value = this.site_timezone;
+		} else {
+			$(this.tz_input).addClass("incorrect_pattern");
+		}
+
+		$(this.tz_input).autocomplete({
+			select: function(event,ui){
+				if (widget.tz_list.includes(ui.item.label)){
+		          $(this).removeClass('incorrect_pattern');
+		        } else {
+		          $(this).addClass('incorrect_pattern');
+		        }	
+			},
+			source: function(request,response){
+				var results = $.ui.autocomplete.filter(widget.tz_list,request.term);
+				response(results.slice(0,10));
+			}
+		});
+
+		var tz_apply_dropdown = document.createElement('div');
+		tz_apply_dropdown.className = "dropdown";
+
+		var tz_apply_anchor = document.createElement('a');
+		tz_apply_anchor.setAttribute('data-toggle','dropdown');
+		tz_apply_anchor.setAttribute('role','button');
+		tz_apply_anchor.setAttribute('aria-expanded',false);
+		tz_apply_anchor.setAttribute('aria-controls','collapseUpload')
+
+		var tz_apply_btn_label = document.createElement('label');
+		tz_apply_btn_label.className ="upload_tool text-light";
+		var tz_apply_icon = document.createElement('i');
+		tz_apply_icon.className = "fas fa-arrow-alt-circle-right";
+
+		tz_apply_btn_label.appendChild(tz_apply_icon);
+
+
+		tz_apply_anchor.appendChild(tz_apply_btn_label);
+		tz_apply_dropdown.appendChild(tz_apply_anchor);
+
+		var tz_apply_dropdown_menu = document.createElement('div');
+		tz_apply_dropdown_menu.className = "dropdown-menu text-light";
+		tz_apply_dropdown_menu.style["background-color"] = "#454d54";
+		tz_apply_dropdown_menu.style.width = "auto";
+		tz_apply_dropdown_menu.setAttribute('aria-labelledby','dropdownMenuButton');
+
+		var tz_apply_dropdown_menu_inner = document.createElement('div');
+		tz_apply_dropdown_menu_inner.className = "container-fluid";
+
+		var tz_apply_all_btn_row = document.createElement('div');
+		tz_apply_all_btn_row.className = "row multi_option justify-content-center";
+
+		this.tz_apply_all_btn = document.createElement("a");
+		this.tz_apply_all_btn.innerHTML = "<h6>Todo</h6>";
+
+		tz_apply_all_btn_row.appendChild(this.tz_apply_all_btn);
+
+		var tz_apply_selected_btn_row = document.createElement('div');
+		tz_apply_selected_btn_row.className = "row multi_option justify-content-center";
+
+		this.tz_apply_selected_btn = document.createElement("a");
+		this.tz_apply_selected_btn.innerHTML = "<h6>Selección</h6>";
+		tz_apply_selected_btn_row.appendChild(this.tz_apply_selected_btn);
+
+		tz_apply_dropdown_menu_inner.appendChild(tz_apply_selected_btn_row);
+		tz_apply_dropdown_menu_inner.appendChild(tz_apply_all_btn_row);
+
+		tz_apply_dropdown_menu.appendChild(tz_apply_dropdown_menu_inner);
+		tz_apply_dropdown.appendChild(tz_apply_dropdown_menu);
+
+		var tz_row = document.createElement('div');
+		tz_row.className = "row d-flex";
+
+		tz_row.appendChild(tz_label);
+		tz_row.appendChild(this.tz_input);
+		tz_row.appendChild(tz_apply_dropdown)
+
+		tz_col.appendChild(tz_row);
+
+
 
 
 		var metadata_date_col = document.createElement('div');
@@ -647,7 +737,7 @@ class FileUploader {
 		metadata_date_dropdown_menu_inner.className = "container-fluid";
 
 		var metadata_date_all_btn_row = document.createElement('div');
-		metadata_date_all_btn_row.className = "row upload_tool justify-content-center";
+		metadata_date_all_btn_row.className = "row multi_option justify-content-center";
 
 		this.metadata_date_all_btn = document.createElement("a");
 		this.metadata_date_all_btn.innerHTML = "<h6>Todo</h6>";
@@ -655,7 +745,7 @@ class FileUploader {
 		metadata_date_all_btn_row.appendChild(this.metadata_date_all_btn);
 
 		var metadata_date_selected_btn_row = document.createElement('div');
-		metadata_date_selected_btn_row.className = "row upload_tool justify-content-center";
+		metadata_date_selected_btn_row.className = "row multi_option justify-content-center";
 
 		this.metadata_date_selected_btn = document.createElement("a");
 		this.metadata_date_selected_btn.innerHTML = "<h6>Selección</h6>";
@@ -672,14 +762,24 @@ class FileUploader {
 
 		row2.appendChild(date_col);
 		row2.appendChild(time_col);
-		row2.appendChild(date_pattern_col);
-		row2.appendChild(item_type_col);
+		row2.appendChild(tz_col);
 		row2.appendChild(metadata_date_col);
 
+		var row3 = document.createElement('div');
+		row3.className = "row collapse justify-content-between";
+		row3.id = "date_tools";
+		row3.style["padding-left"] = "60px";
 
+		var empty_col = document.createElement('div');
+		empty_col.className = "col-3";
+
+		row3.appendChild(date_pattern_col);
+		row3.appendChild(item_type_col);
+		row3.appendChild(empty_col);
 
 		toolbar_container.appendChild(row);
 		toolbar_container.appendChild(row2);
+		toolbar_container.appendChild(row3);
 
 		this.top_toolbar.appendChild(toolbar_container);
 
@@ -701,8 +801,32 @@ class FileUploader {
 	          $(this).addClass('incorrect_pattern');
 	        }
 	      });
+	    this.tz_input.addEventListener('input',function(e){
+	        if (widget.tz_list.includes(this.value)){
+	          $(this).removeClass('incorrect_pattern');
+	        } else {
+	          $(this).addClass('incorrect_pattern');
+	        }
+	     });
 
-	    this.metadata_date_all_btn.addEventListener('click',function(e){
+		this.file_picker.addEventListener('change',function(e){
+			function finalize_callback() {
+				widget.render_by_name(['files','errors'])
+			}
+
+			widget.add_file_multiple(this.files,finalize_callback);
+		});
+
+		this.date_pattern_input.addEventListener('input',function(e){
+			var parser_map = widget.validate_parser_map(this.value);
+			if (parser_map){
+				$(this).removeClass('incorrect_pattern');
+			} else {
+				$(this).addClass('incorrect_pattern');
+			}
+		});
+
+	    metadata_date_all_btn_row.addEventListener('click',function(e){
 	    	var fixable = widget.files.filter(widget.is_fixable);
 
 	    	for (var i=0;i<fixable.length;i++){
@@ -724,7 +848,7 @@ class FileUploader {
 
 		});
 
-	    this.metadata_date_selected_btn.addEventListener('click',function(e){
+	    metadata_date_selected_btn_row.addEventListener('click',function(e){
 	    	var id_arr = widget.get_checked_ids();
 
 	    	for (var i=0;i<id_arr.length;i++){
@@ -770,28 +894,28 @@ class FileUploader {
 
 		});
 
-	    this.upload_all_btn.addEventListener('click',function(e){
+	    upload_all_btn_row.addEventListener('click',function(e){
 	    	widget.upload_multiple(widget.is_uploadable);
 		});
 
-	    this.upload_selected_btn.addEventListener('click',function(e){
+	    upload_selected_btn_row.addEventListener('click',function(e){
 	        var id_arr = widget.get_checked_ids();
 
 	    	widget.upload_multiple(function(f){return widget.is_uploadable(f) && id_arr.includes(f.file_id); });
 		});
 
-		this.remove_selected_btn.addEventListener('click',function(e){
+		remove_selected_btn_row.addEventListener('click',function(e){
 			widget.remove_multiple(widget.get_checked_ids());
 			widget.render_by_name(['files']);
 		});
 
-		this.remove_all_btn.addEventListener('click',function(e){
+		remove_all_btn_row.addEventListener('click',function(e){
 			widget.remove_all();
 
 			widget.render_by_name(['files']);
 		});
 
-		this.date_pattern_apply_selected_btn.addEventListener('click',function(e){
+		date_pattern_apply_selected_btn_row.addEventListener('click',function(e){
 			var parser_map = widget.validate_parser_map(widget.date_pattern_input.value);
 			if (parser_map){
 				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
@@ -821,7 +945,7 @@ class FileUploader {
 			}
 		});
 
-		this.date_pattern_apply_all_btn.addEventListener('click',function(e){
+		date_pattern_apply_all_btn_row.addEventListener('click',function(e){
 			var parser_map = widget.validate_parser_map(widget.date_pattern_input.value);
 			if (parser_map){
 				var files = widget.files.filter(widget.is_fixable);
@@ -836,7 +960,7 @@ class FileUploader {
 			}
 		});
 
-		this.item_type_apply_all_btn.addEventListener('click',function(e){
+		item_type_apply_all_btn_row.addEventListener('click',function(e){
 			var item_type = widget.item_type_input.value;
 			var selected_index = widget.item_type_input.selectedIndex;
 			var new_val = null;
@@ -863,7 +987,7 @@ class FileUploader {
 			
 		});
 
-		this.item_type_apply_selected_btn.addEventListener('click',function(e){
+		item_type_apply_selected_btn_row.addEventListener('click',function(e){
 			var item_type = widget.item_type_input.value;
 			var selected_index = widget.item_type_input.selectedIndex;
 			var new_val = null;
@@ -886,7 +1010,7 @@ class FileUploader {
 			
 		});
 
-		this.time_apply_all_btn.addEventListener('click',function(e){
+		time_apply_all_btn_row.addEventListener('click',function(e){
 			var valid_time = widget.validate_datetime(widget.time_input.value,'time');
 			if (valid_time){
 				var files = widget.files.filter(widget.is_fixable);
@@ -907,7 +1031,8 @@ class FileUploader {
 			}
 		});
 
-		this.time_apply_selected_btn.addEventListener('click',function(e){
+
+		time_apply_selected_btn_row.addEventListener('click',function(e){
 			var valid_time = widget.validate_datetime(widget.time_input.value,'time');
 			if (valid_time){
 				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
@@ -925,7 +1050,48 @@ class FileUploader {
 			}
 		});
 
-		this.date_apply_all_btn.addEventListener('click',function(e){
+		tz_apply_all_btn_row.addEventListener('click',function(e){
+			if (widget.tz_list.includes(widget.tz_input.value)){
+				var files = widget.files.filter(widget.is_fixable);
+				for (var i=0;i<files.length;i++){
+					widget.set_file_timezone(files[i],widget.tz_input.value);
+				}
+				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]');
+				for (var i=0;i<check_boxes.length;i++){
+					if (check_boxes[i].file_id != "all"){
+						var file = widget.get_file_by_id(check_boxes[i].file_id);
+						if (file){
+							var dinput = document.getElementById("tz_input_file_"+check_boxes[i].file_id);
+							var date_input = document.getElementById("date_input_file_"+check_boxes[i].file_id);
+							widget.set_datepicker_limits(date_input,file.captured_on_timezone);
+							dinput.value = widget.tz_input.value;
+							widget.toggle_status(check_boxes[i].file_id);
+						}
+					}
+				}
+			}
+		});
+
+		tz_apply_selected_btn_row.addEventListener('click',function(e){
+			if (widget.tz_list.includes(widget.tz_input.value)){
+				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
+				for (var i=0;i<check_boxes.length;i++){
+					if (check_boxes[i].file_id != "all"){
+						var file = widget.get_file_by_id(check_boxes[i].file_id);
+						if (file){
+							widget.set_file_timezone(file,widget.tz_input.value)
+							var dinput = document.getElementById("tz_input_file_"+check_boxes[i].file_id);
+							var date_input = document.getElementById("date_input_file_"+check_boxes[i].file_id);
+							widget.set_datepicker_limits(date_input,file.captured_on_timezone);
+							dinput.value = widget.tz_input.value;
+							widget.toggle_status(check_boxes[i].file_id);
+						}
+					}
+				}
+			}
+		});
+
+		date_apply_all_btn_row.addEventListener('click',function(e){
 			var valid_date = widget.validate_datetime(widget.date_input.value);
 			if (valid_date){
 				var files = widget.files.filter(widget.is_fixable);
@@ -946,7 +1112,7 @@ class FileUploader {
 			}
 		});
 
-		this.date_apply_selected_btn.addEventListener('click',function(e){
+		date_apply_selected_btn_row.addEventListener('click',function(e){
 			var valid_date = widget.validate_datetime(widget.date_input.value);
 			if (valid_date){
 				var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
@@ -964,22 +1130,6 @@ class FileUploader {
 			}
 		});
 
-		this.file_picker.addEventListener('change',function(e){
-			function finalize_callback() {
-				widget.render_by_name(['files','errors'])
-			}
-
-			widget.add_file_multiple(this.files,finalize_callback);
-		});
-
-		this.date_pattern_input.addEventListener('input',function(e){
-			var parser_map = widget.validate_parser_map(this.value);
-			if (parser_map){
-				$(this).removeClass('incorrect_pattern');
-			} else {
-				$(this).addClass('incorrect_pattern');
-			}
-		});
 
 		this.parent.appendChild(this.top_toolbar);
 	}
@@ -1244,8 +1394,8 @@ class FileUploader {
 		var header_dateCol = document.createElement('div');
 		header_dateCol.className = 'col-2  justify-content-center text-center item_col';
 
-		var header_timeCol = document.createElement('div');
-		header_timeCol.className = 'col-2  justify-content-center text-center item_col';
+		var header_tzCol = document.createElement('div');
+		header_tzCol.className = 'col-2  justify-content-center text-center item_col';
 
 		var header_statusCol = document.createElement('div');
 		header_statusCol.className = 'col-2  justify-content-center text-center item_col';
@@ -1257,28 +1407,28 @@ class FileUploader {
 		header_checkCol.appendChild(this.header_checkFile);
 
 		var fileTitle = document.createElement('div');
-    	fileTitle.textContent = 'Archivo';
+    	fileTitle.innerHTML = 'Archivo <i class="fas fa-sort"></i>';
     	fileTitle.className = 'ml-4 ellipsise text-light header_title';
     	header_descrCol.appendChild(fileTitle);
 
 		var itemtypeTitle = document.createElement('div');
-    	itemtypeTitle.textContent = 'Tipo';
+    	itemtypeTitle.innerHTML = 'Tipo <i class="fas fa-sort"></i>';
     	itemtypeTitle.className = 'ml-4 ellipsise text-light header_title';
     	header_itemtypeCol.appendChild(itemtypeTitle);
 
 		var dateTitle = document.createElement('div');
-    	dateTitle.textContent = 'Fecha';
+    	dateTitle.innerHTML = 'Fecha <i class="fas fa-sort"></i>';
     	dateTitle.className = 'ml-4 ellipsise text-light header_title';
     	header_dateCol.appendChild(dateTitle);
 
-		var timeTitle = document.createElement('div');
-    	timeTitle.textContent = 'Tiempo';
-    	timeTitle.className = 'ml-4 ellipsise text-light header_title';
-    	header_timeCol.appendChild(timeTitle);
+		var tzTitle = document.createElement('div');
+    	tzTitle.innerHTML = 'Zona horaria <i class="fas fa-sort"></i>';
+    	tzTitle.className = 'ml-4 ellipsise text-light header_title';
+    	header_tzCol.appendChild(tzTitle);
 
 	    var statusTitle = document.createElement('div');
 	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-	    statusTitle.textContent = "Estado";
+	    statusTitle.innerHTML = 'Estado <i class="fas fa-sort"></i>';
 	    header_statusCol.appendChild(statusTitle);
 
 		this.header_checkFile.addEventListener('input',function(e){
@@ -1297,8 +1447,26 @@ class FileUploader {
 	    header.appendChild(header_descrCol);
 	    header.appendChild(header_itemtypeCol);
 	    header.appendChild(header_dateCol);
-	    header.appendChild(header_timeCol);
+	    header.appendChild(header_tzCol);
 	    header.appendChild(header_statusCol);
+
+	    var widget = this;
+
+		fileTitle.addEventListener('click',function(e){
+			widget.list_sort_by('files','Archivo');
+		});
+		itemtypeTitle.addEventListener('click',function(e){
+			widget.list_sort_by('files','Tipo');
+		});
+		dateTitle.addEventListener('click',function(e){
+			widget.list_sort_by('files','Fecha');
+		});
+		tzTitle.addEventListener('click',function(e){
+			widget.list_sort_by('files','Zona horaria');
+		});
+		statusTitle.addEventListener('click',function(e){
+			widget.list_sort_by('files','Estado');
+		});
 
 	    this.file_list = document.createElement('div');
 	    this.file_list.className = "upload_list";
@@ -1382,17 +1550,26 @@ class FileUploader {
 		header_statusCol.className = 'col-6  justify-content-center text-center item_col';
 
 		var fileTitle = document.createElement('div');
-    	fileTitle.textContent = 'Archivo';
+    	fileTitle.innerHTML = 'Archivo <i class="fas fa-sort"></i>';
     	fileTitle.className = 'ml-4 ellipsise text-light header_title';
     	header_descrCol.appendChild(fileTitle);
 
 	    var statusTitle = document.createElement('div');
 	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-	    statusTitle.textContent = "Descripción";
+	    statusTitle.innerHTML = 'Descripción <i class="fas fa-sort"></i>';
 	    header_statusCol.appendChild(statusTitle);
 
 	    header.appendChild(header_descrCol);
 	    header.appendChild(header_statusCol);
+
+	    var widget = this;
+
+		fileTitle.addEventListener('click',function(e){
+			widget.list_sort_by('errors','Archivo');
+		});
+		statusTitle.addEventListener('click',function(e){
+			widget.list_sort_by('errors','Descripción');
+		});
 
 	    this.error_list = document.createElement('div');
 	    this.error_list.className = "upload_list";
@@ -1482,17 +1659,26 @@ class FileUploader {
 		header_statusCol.className = 'col-5 justify-content-center text-center item_col';
 
 		var fileTitle = document.createElement('div');
-    	fileTitle.textContent = 'Artículo';
+    	fileTitle.innerHTML = 'Archivo <i class="fas fa-sort"></i>';
     	fileTitle.className = 'ml-4 ellipsise text-light header_title';
     	header_descrCol.appendChild(fileTitle);
 
 	    var statusTitle = document.createElement('div');
 	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-	    statusTitle.textContent = "Link";
+	    statusTitle.innerHTML = 'Link <i class="fas fa-sort"></i>';
 	    header_statusCol.appendChild(statusTitle);
 
 	    header.appendChild(header_descrCol);
 	    header.appendChild(header_statusCol);
+
+	    var widget = this;
+
+	    fileTitle.addEventListener('click',function(e){
+			widget.list_sort_by('duplicates','Archivo');
+		});
+	    statusTitle.addEventListener('click',function(e){
+	    	widget.list_sort_by('duplicates','Link');
+	    });
 
 	    this.duplicate_list = document.createElement('div');
 	    this.duplicate_list.className = "upload_list";
@@ -1580,17 +1766,26 @@ class FileUploader {
 		header_statusCol.className = 'col-5  justify-content-center text-center item_col';
 
 		var fileTitle = document.createElement('div');
-    	fileTitle.textContent = 'Artículo';
+    	fileTitle.innerHTML = 'Artículo <i class="fas fa-sort"></i>';
     	fileTitle.className = 'ml-4 ellipsise text-light header_title';
     	header_descrCol.appendChild(fileTitle);
 
 	    var statusTitle = document.createElement('div');
 	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-	    statusTitle.textContent = "Link";
+	    statusTitle.innerHTML = 'Link <i class="fas fa-sort"></i>';
 	    header_statusCol.appendChild(statusTitle);
 
 	    header.appendChild(header_descrCol);
 	    header.appendChild(header_statusCol);
+
+	    var widget = this;
+
+	    fileTitle.addEventListener('click',function(e){
+			widget.list_sort_by('uploads','Archivo');
+		});
+	    statusTitle.addEventListener('click',function(e){
+	    	widget.list_sort_by('uploads','Link');
+	    });
 
 	    this.upload_list = document.createElement('div');
 	    this.upload_list.className = "upload_list";
@@ -1610,7 +1805,223 @@ class FileUploader {
 		blank_message.innerHTML = "No se ha subido ningún archivo nuevo"
 		this.blank_upload_list.appendChild(blank_message);
 	}
-	get_file_page(page, per_page, filter_function,sort_function=this.compare_names) {
+	list_sort_by(list_name,field_name){
+		switch(list_name){
+			case 'files':{
+				switch(field_name){
+					case 'Archivo':{
+						if (this.files_sort_by.field == field_name){
+							if (this.files_sort_by.order == "asc"){
+								this.files_sort_by.order = "desc";
+								this.files_sort_by.function = this.compare_file_names_desc;
+							} else {
+								this.files_sort_by.order = "asc";
+								this.files_sort_by.function = this.compare_file_names_asc;
+							}
+						} else {
+							this.files_sort_by.field = field_name;
+							this.files_sort_by.order = "desc";
+							this.files_sort_by.function = this.compare_file_names_desc;
+						}
+						break;
+					}
+					case 'Tipo':{
+						if (this.files_sort_by.field == field_name){
+							if (this.files_sort_by.order == "asc"){
+								this.files_sort_by.order = "desc";
+								this.files_sort_by.function = this.compare_file_types_desc;
+							} else {
+								this.files_sort_by.order = "asc";
+								this.files_sort_by.function = this.compare_file_types_asc;
+							}
+						} else {
+							this.files_sort_by.field = field_name;
+							this.files_sort_by.order = "desc";
+							this.files_sort_by.function = this.compare_file_types_desc;
+						}
+						break;
+					}
+					case 'Fecha':{
+						if (this.files_sort_by.field == field_name){
+							if (this.files_sort_by.order == "asc"){
+								this.files_sort_by.order = "desc";
+								this.files_sort_by.function = this.compare_datetimes_desc;
+							} else {
+								this.files_sort_by.order = "asc";
+								this.files_sort_by.function = this.compare_datetimes_asc;
+							}
+						} else {
+							this.files_sort_by.field = field_name;
+							this.files_sort_by.order = "desc";
+							this.files_sort_by.function = this.compare_datetimes_desc;
+						}
+						break;
+					}
+					case 'Zona horaria':{
+						if (this.files_sort_by.field == field_name){
+							if (this.files_sort_by.order == "asc"){
+								this.files_sort_by.order = "desc";
+								this.files_sort_by.function = this.compare_file_timezones_desc;
+							} else {
+								this.files_sort_by.order = "asc";
+								this.files_sort_by.function = this.compare_file_timezones_asc;
+							}
+						} else {
+							this.files_sort_by.field = field_name;
+							this.files_sort_by.order = "desc";
+							this.files_sort_by.function = this.compare_file_timezones_desc;
+						}
+						break;
+					}
+					case 'Estado':{
+						if (this.files_sort_by.field == field_name){
+							if (this.files_sort_by.order == "asc"){
+								this.files_sort_by.order = "desc";
+								this.files_sort_by.function = this.compare_file_states_desc;
+							} else {
+								this.files_sort_by.order = "asc";
+								this.files_sort_by.function = this.compare_file_states_asc;
+							}
+						} else {
+							this.files_sort_by.field = field_name;
+							this.files_sort_by.order = "desc";
+							this.files_sort_by.function = this.compare_file_states_desc;
+						}
+						break;
+					}
+					default:{
+						break;
+					}
+				}
+				this.render_by_name(["files"]);
+				break;
+			}
+			case 'errors':{
+				switch(field_name){
+					case 'Archivo':{
+						if (this.errors_sort_by.field == field_name){
+							if (this.errors_sort_by.order == "asc"){
+								this.errors_sort_by.order = "desc";
+								this.errors_sort_by.function = this.compare_file_names_desc;
+							} else {
+								this.errors_sort_by.order = "asc";
+								this.errors_sort_by.function = this.compare_file_names_asc;
+							}
+						} else {
+							this.errors_sort_by.field = field_name;
+							this.errors_sort_by.order = "desc";
+							this.errors_sort_by.function = this.compare_file_names_desc;
+						}
+						break;
+					}
+					case 'Descripción':{
+						if (this.errors_sort_by.field == field_name){
+							if (this.errors_sort_by.order == "asc"){
+								this.errors_sort_by.order = "desc";
+								this.errors_sort_by.function = this.compare_errors_desc;
+							} else {
+								this.errors_sort_by.order = "asc";
+								this.errors_sort_by.function = this.compare_errors_asc;
+							}
+						} else {
+							this.errors_sort_by.field = field_name;
+							this.errors_sort_by.order = "desc";
+							this.errors_sort_by.function = this.compare_errors_desc;
+						}
+						break;
+					}
+					default:{
+						break;
+					}
+				}
+				this.render_by_name(["errors"]);
+			}
+			case 'duplicates':{
+				switch(field_name){
+					case 'Archivo':{
+						if (this.duplicates_sort_by.field == field_name){
+							if (this.duplicates_sort_by.order == "asc"){
+								this.duplicates_sort_by.order = "desc";
+								this.duplicates_sort_by.function = this.compare_file_names_desc;
+							} else {
+								this.duplicates_sort_by.order = "asc";
+								this.duplicates_sort_by.function = this.compare_file_names_asc;
+							}
+						} else {
+							this.duplicates_sort_by.field = field_name;
+							this.duplicates_sort_by.order = "desc";
+							this.duplicates_sort_by.function = this.compare_file_names_desc;
+						}
+						break;
+					}
+					case 'Link':{
+						if (this.duplicates_sort_by.field == field_name){
+							if (this.duplicates_sort_by.order == "asc"){
+								this.duplicates_sort_by.order = "desc";
+								this.duplicates_sort_by.function = this.compare_uploaded_items_desc;
+							} else {
+								this.duplicates_sort_by.order = "asc";
+								this.duplicates_sort_by.function = this.compare_uploaded_items_asc;
+							}
+						} else {
+							this.duplicates_sort_by.field = field_name;
+							this.duplicates_sort_by.order = "desc";
+							this.duplicates_sort_by.function = this.compare_uploaded_items_desc;
+						}
+						break;
+					}
+					default:{
+						break;
+					}
+				}
+				this.render_by_name(["duplicates"]);
+			}
+			case 'uploads':{
+				switch(field_name){
+					case 'Archivo':{
+						if (this.uploads_sort_by.field == field_name){
+							if (this.uploads_sort_by.order == "asc"){
+								this.uploads_sort_by.order = "desc";
+								this.uploads_sort_by.function = this.compare_file_names_desc;
+							} else {
+								this.uploads_sort_by.order = "asc";
+								this.uploads_sort_by.function = this.compare_file_names_asc;
+							}
+						} else {
+							this.uploads_sort_by.field = field_name;
+							this.uploads_sort_by.order = "desc";
+							this.uploads_sort_by.function = this.compare_file_names_desc;
+						}
+						break;
+					}
+					case 'Link':{
+						if (this.uploads_sort_by.field == field_name){
+							if (this.uploads_sort_by.order == "asc"){
+								this.uploads_sort_by.order = "desc";
+								this.uploads_sort_by.function = this.compare_uploaded_items_desc;
+							} else {
+								this.uploads_sort_by.order = "asc";
+								this.uploads_sort_by.function = this.compare_uploaded_items_asc;
+							}
+						} else {
+							this.uploads_sort_by.field = field_name;
+							this.uploads_sort_by.order = "desc";
+							this.uploads_sort_by.function = this.compare_uploaded_items_desc;
+						}
+						break;
+					}
+					default:{
+						break;
+					}
+				}
+				this.render_by_name(["uploads"]);
+			}
+			default:{
+				break;
+			}
+		}
+	}
+	get_file_page(page, per_page, filter_function,sort_function=this.compare_file_names_desc) {
 		var page = page || 1;
 		if (page <= 0){
 			page = 1;
@@ -1692,9 +2103,9 @@ class FileUploader {
 				dateCol.className = 'col-2 justify-content-center  text-center item_col w-100';
 				dateCol.align = "center";
 
-				var timeCol = document.createElement('div');
-				timeCol.className = 'col-2 justify-content-center  text-center item_col w-100';
-				timeCol.align = "center";
+				var tzCol = document.createElement('div');
+				tzCol.className = 'col-2 justify-content-center  text-center item_col w-100';
+				tzCol.align = "center";
 
 				var statusCol = document.createElement('div');
 				statusCol.className = 'col-2 justify-content-center  text-center item_col';
@@ -1743,12 +2154,12 @@ class FileUploader {
 				            break;
 				        }
 				    }					
+				} else {
+					item_type_input.selectedIndex = -1;
 				}
 
 
 				itemTypeCol.appendChild(item_type_input)
-
-
 
 
 		        var dateInput = document.createElement('input');
@@ -1760,22 +2171,11 @@ class FileUploader {
           		dateInput.placeholder = "YYYY-MM-DD";
           		dateInput["file_id"] = page.data[i]["file_id"];
 
-          		var valid_date = false;
-				var minDate = new Date(this.started_on.split(" ")[0]);
-				minDate.setDate(minDate.getDate()+1);
-				var maxDate = new Date(this.ended_on.split(" ")[0]);
-				maxDate.setDate(maxDate.getDate()+1);
-				var startDate = new Date(this.started_on.split(" ")[0]);
-				startDate.setDate(startDate.getDate()+1);
-
 		        $(dateInput).datetimepicker({
 					format:'Y-m-d',
 					file_id: page.data[i]["file_id"],
 					validateOnBlur: false,
 					timepicker: false,
-					minDate: minDate,
-					maxDate: maxDate,
-					startDate: startDate,
 					onChangeDateTime: function(dp,$input){
 						var file = widget.get_file_by_id($input[0].file_id);
 						widget.set_file_date(file,$input.val());
@@ -1787,13 +2187,17 @@ class FileUploader {
 		        	dateInput.value = page.data[i].captured_on_date;
 		        	$(dateInput).removeClass('incorrect_pattern');
 		        }
-
-		        dateCol.appendChild(dateInput);
+		        var moment_row_0 = document.createElement('div');
+		        moment_row_0.className = "row justify-content-center";
+		        var moment_row_1 = document.createElement('div');
+		        moment_row_1.className = "row";
+		        moment_row_1.appendChild(dateInput);
+		        moment_row_0.appendChild(moment_row_1);
 
 		        var timeInput = document.createElement('input');
 		        timeInput.type = "text";
 		        timeInput.style["text-align"]="center";
-		        timeInput.style.width = "110px";
+		        timeInput.style.width = "115px";
 		        timeInput.className = "incorrect_pattern ml-4 file_title";
 		        timeInput.id = "time_input_file_"+page.data[i]["file_id"];
           		timeInput.placeholder = "HH:mm:ss";
@@ -1818,7 +2222,48 @@ class FileUploader {
 		        	$(timeInput).removeClass('incorrect_pattern');
 		        }
 
-		        timeCol.appendChild(timeInput);
+		        var moment_row_2 = document.createElement('div');
+		        moment_row_2.className = "row";
+		        moment_row_2.appendChild(timeInput);
+
+		        moment_row_0.appendChild(moment_row_2);
+
+		        dateCol.appendChild(moment_row_0);
+
+		        var tzInput = document.createElement('input');
+		        tzInput.type = "text";
+		        tzInput.style["text-align"]="center";
+		        tzInput.style.width = "130px";
+		        tzInput.className = "incorrect_pattern ml-4 file_title";
+		        tzInput.id = "tz_input_file_"+page.data[i]["file_id"];
+          		tzInput["file_id"] = page.data[i]["file_id"];
+
+		        $(tzInput).autocomplete({
+					select: function(event,ui){
+						var file = widget.get_file_by_id(this.file_id);
+						widget.set_file_timezone(file,ui.item.label)
+
+						if (file.captured_on_timezone){
+							var date_input = document.getElementById("date_input_file_"+file.file_id);
+							widget.set_datepicker_limits(date_input,file.captured_on_timezone);
+						}
+
+				        widget.toggle_status(this.file_id);
+					},
+					source: function(request,response){
+						var results = $.ui.autocomplete.filter(widget.tz_list,request.term);
+						response(results.slice(0,10));
+					}
+				});
+
+		        if (page.data[i].captured_on_timezone){
+		        	tzInput.value = page.data[i].captured_on_timezone;
+		        	$(tzInput).removeClass('incorrect_pattern');
+		        }
+
+				this.set_datepicker_limits(dateInput,page.data[i].captured_on_timezone)
+
+		        tzCol.append(tzInput);
 
 				var status_btn = document.createElement('div');
 				status_btn.className ="col text-muted ml-4 ellipsise file_title";
@@ -1842,41 +2287,17 @@ class FileUploader {
 		        statusText.className = "col text-muted ml-4 ellipsise file_title";
 		        statusText.id = "status_text_"+page.data[i]["file_id"];
 
-		        var status = "";
-
-		        if (!page.data[i].captured_on_time && !page.data[i].captured_on_date){
-		        	status = "Sin momento";
-		        } else if (!page.data[i].captured_on_date) {
-		        	status = "Sin fecha";
-		        } else if (!page.data[i].captured_on_time) {
-					if (!page.data[i].captured_on_inrange){
-						status = "Fuera de rango";
-					} else {
-						status = "Sin tiempo";
-					}
-		        } else {
-					if (!page.data[i].captured_on_inrange){
-						status = "Fuera de rango";
-					} else {
-						status = "Listo";
-					}
-		        }
-
-				if (!page.data[i].item_type){
-					if (status == "Listo"){
-						status = "Sin tipo"
-					} else {
-						status += " y sin tipo"
-					}
-				}
+		        var status = this.get_file_state(page.data[i]);
 
 		        statusText.textContent = status;
 
 		        if (status == "Listo"){
+		        	$(statusText).removeClass("upload_not_ready");
 		        	statusText.style.display = "none";
 					status_btn.style.display = "inline-block";
 		        	$(timeInput).removeClass('incorrect_pattern');
 		        } else {
+		        	$(statusText).addClass("upload_not_ready");
 		        	statusText.style.display = "inline-block";
 					status_btn.style.display = "none";
 		        }
@@ -1901,6 +2322,7 @@ class FileUploader {
 			        widget.toggle_status(this.file_id);
 			    });
 
+
 			    $(timeInput).datetimepicker("option", "onSelect", function(){
 			    	var file = widget.get_file_by_id(this.file_id);
 					widget.set_file_time(file,this.value);
@@ -1913,12 +2335,20 @@ class FileUploader {
 			        widget.toggle_status(this.file_id);
 			      });
 
-			      status_btn.addEventListener('click',function(e){
+			   status_btn.addEventListener('click',function(e){
 			      		var file_id = this.file_id;
 			      		widget.upload_multiple(function(f){return widget.is_uploadable(f) && f.file_id == file_id});
 			      		
 			    });
-
+			    tzInput.addEventListener('input',function(e){
+			    		var file = widget.get_file_by_id(this.file_id)
+						widget.set_file_timezone(file,this.value);
+						if (file.captured_on_timezone){
+							var date_input = document.getElementById("date_input_file_"+file.file_id);
+							widget.set_datepicker_limits(date_input,file.captured_on_timezone);
+						}
+				        widget.toggle_status(this.file_id)
+			    });
 			    item_type_input.addEventListener('change',function(e){
 			      	var file = widget.get_file_by_id(this.file_id);
 			      	var new_val = null;
@@ -1941,7 +2371,7 @@ class FileUploader {
 				row.appendChild(descrCol);
 				row.appendChild(itemTypeCol);
 				row.appendChild(dateCol);
-				row.appendChild(timeCol);
+				row.appendChild(tzCol);
 				row.appendChild(statusCol);
 				this.file_list.appendChild(row)
 				
@@ -2217,9 +2647,7 @@ class FileUploader {
 					exif = null;
 				}
 
-
           		if (exif) {
-
           			file.media_info = exif;
           			var date_time_original = exif.DateTimeOriginal;
 
@@ -2398,7 +2826,7 @@ class FileUploader {
         	file.captured_on_time = null;
         }
 
-        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time);
+        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time,file.captured_on_timezone);
 	}
 	set_file_date(file,date){
         var valid_date = this.validate_datetime(date);
@@ -2409,7 +2837,39 @@ class FileUploader {
         	file.captured_on_date = null;
         }
 
-        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time);
+        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time,file.captured_on_timezone);
+	}
+	set_datepicker_limits(dateInput,timezone,buffer=0){
+		var started_on = moment(this.started_on,"YYYY-MM-DD HH:mm:ss",true);
+		var ended_on = moment(this.ended_on,"YYYY-MM-DD HH:mm:ss",true);
+		started_on.tz('UTC');
+		ended_on.tz('UTC');
+
+		if (this.tz_list.includes(timezone)){
+			started_on.tz(timezone)
+			ended_on.tz(timezone)
+		} else {
+			started_on.tz(this.site_timezone)
+			ended_on.tz(this.site_timezone)
+		}
+
+		var minDate = new Date(started_on.format('YYYY-MM-DD'));
+		minDate.setDate(minDate.getDate()+1-buffer);
+		var maxDate = new Date(ended_on.format('YYYY-MM-DD'));
+		maxDate.setDate(maxDate.getDate()+1+buffer);
+		var startDate = new Date(started_on.format('YYYY-MM-DD'));
+		startDate.setDate(startDate.getDate()+1);
+
+		$(dateInput).datetimepicker({"maxDate":maxDate,"minDate":minDate,"startDate":startDate});
+	}
+	set_file_timezone(file,tz_string){
+		if (this.tz_list.includes(tz_string)){
+          file.captured_on_timezone = tz_string;
+          file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time,file.captured_on_timezone);
+        } else {
+          file.captured_on_timezone = null;
+          file.captured_on_inrange = false;
+        }
 	}
 	set_file_datetime(file,date,time){		
         var valid_date = this.validate_datetime(date);
@@ -2427,9 +2887,12 @@ class FileUploader {
         	file.captured_on_time = null;
         }
 
-        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time);
+        file.captured_on_inrange = this.datetime_in_range(file.captured_on_date,file.captured_on_time,file.captured_on_timezone);
 	}
-	datetime_in_range(date,time){
+	datetime_in_range(date,time,timezone){
+		if (!timezone){
+			return false;
+		}
 		if (!date){
 			date = "";
 		}
@@ -2439,6 +2902,9 @@ class FileUploader {
 
 		var started_on = moment(this.started_on,"YYYY-MM-DD HH:mm:ss",true);
 		var ended_on = moment(this.ended_on,"YYYY-MM-DD HH:mm:ss",true);
+		started_on.tz('UTC');
+		ended_on.tz('UTC');
+
 		var date_arr = date.split("-");
 		var date_len = date_arr.length;
 		var time_arr = time.split(":");
@@ -2449,14 +2915,16 @@ class FileUploader {
 		switch (date_len){
 			case 1:{
 				helper_moment = moment(date + "-01-01","YYYY-MM-DD",true);
-				if ( !(helper_moment.isBefore(started_on,"year") || helper_moment.isAfter(ended_on,"year"))){
+				helper_moment.tz(timezone);
+				if ( !(helper_moment.utc().isBefore(started_on,"year") || helper_moment.utc().isAfter(ended_on,"year"))){
 					return true;
 				} 
 				break;
 			}
 			case 2:{
 				helper_moment = moment(date + "-01","YYYY-MM-DD",true);
-				if ( !(helper_moment.isBefore(started_on,"month") || helper_moment.isAfter(ended_on,"month"))){
+				helper_moment.tz(timezone);
+				if ( !(helper_moment.utc().isBefore(started_on,"month") || helper_moment.utc().isAfter(ended_on,"month"))){
 					return true;
 				} 
 				break;
@@ -2465,21 +2933,24 @@ class FileUploader {
 				switch(time_len){
 					case 1: {
 						helper_moment = moment(date,"YYYY-MM-DD",true);
-						if ( !(helper_moment.isBefore(started_on,"day") || helper_moment.isAfter(ended_on,"day"))){
+						helper_moment.tz(timezone);
+						if ( !(helper_moment.utc().isBefore(started_on,"day") || helper_moment.utc().isAfter(ended_on,"day"))){
 							return true;
 						}
 						break;
 					}
 					case 2:{
 						helper_moment = moment(date+" "+time,"YYYY-MM-DD HH:mm",true);
-						if ( !(helper_moment.isBefore(started_on,"minute") || helper_moment.isAfter(ended_on,"minute"))){
+						helper_moment.tz(timezone);
+						if ( !(helper_moment.utc().isBefore(started_on,"minute") || helper_moment.utc().isAfter(ended_on,"minute"))){
 							return true;
 						}		
 						break;
 					}
 					case 3:{
 						helper_moment = moment(date+" "+time,"YYYY-MM-DD HH:mm:ss",true);
-						if ( !(helper_moment.isBefore(started_on,"second") || helper_moment.isAfter(ended_on,"second"))){
+						helper_moment.tz(timezone);
+						if ( !(helper_moment.utc().isBefore(started_on,"second") || helper_moment.utc().utc().isAfter(ended_on,"second"))){
 							return true;
 						}			
 						break;
@@ -2554,25 +3025,25 @@ class FileUploader {
 		var page = null;
 		switch(list_name){
 			case "file_list":{
-				page = this.get_file_page(this.file_page_number+1, this.per_page, this.is_fixable)
+				page = this.get_file_page(this.file_page_number+1, this.per_page, this.is_fixable,this.files_sort_by.function);
 				this.file_page_number = page.page;
 				this.total_file_pages = page.total_pages;
 				break;
 			}
 			case "error_list":{
-				page = this.get_file_page(this.error_page_number+1, this.per_page, this.has_errors)
+				page = this.get_file_page(this.error_page_number+1, this.per_page, this.has_errors,this.errors_sort_by.function);
 				this.error_page_number = page.page;
 				this.total_error_pages = page.total_pages;
 				break;
 			}
 			case "duplicate_list":{
-				page = this.get_file_page(this.duplicate_page_number+1, this.per_page, this.is_duplicate)
+				page = this.get_file_page(this.duplicate_page_number+1, this.per_page, this.is_duplicate,this.duplicates_sort_by.function)
 				this.duplicate_page_number = page.page;
 				this.total_duplicate_pages = page.total_pages;
 				break;
 			}
 			case "upload_list":{
-				page = this.get_file_page(this.upload_page_number+1, this.per_page, this.is_uploaded)
+				page = this.get_file_page(this.upload_page_number+1, this.per_page, this.is_uploaded,this.uploads_sort_by.function)
 				this.duplicate_page_number = page.page;
 				this.total_upload_pages = page.total_pages;
 				break;
@@ -2589,25 +3060,25 @@ class FileUploader {
 		var page = null;
 		switch(list_name){
 			case "file_list":{
-				page = this.get_file_page(this.file_page_number-1, this.per_page, this.is_fixable)
+				page = this.get_file_page(this.file_page_number-1, this.per_page, this.is_fixable,this.files_sort_by.function);
 				this.file_page_number = page.page;
 				this.total_file_pages = page.total_pages;
 				break;
 			}
 			case "error_list":{
-				page = this.get_file_page(this.error_page_number-1, this.per_page, this.has_errors)
+				page = this.get_file_page(this.error_page_number-1, this.per_page, this.has_errors,this.errors_sort_by.function);
 				this.error_page_number = page.page;
 				this.total_error_pages = page.total_pages;
 				break;
 			}
 			case "duplicate_list":{
-				page = this.get_file_page(this.duplicate_page_number-1, this.per_page, this.is_duplicate)
+				page = this.get_file_page(this.duplicate_page_number-1, this.per_page, this.is_duplicate,this.duplicates_sort_by.function)
 				this.duplicate_page_number = page.page;
 				this.total_duplicate_pages = page.total_pages;
 				break;
 			}
 			case "upload_list":{
-				page = this.get_file_page(this.upload_page_number-1, this.per_page, this.is_uploaded)
+				page = this.get_file_page(this.upload_page_number-1, this.per_page, this.is_uploaded,this.uploads_sort_by.function)
 				this.duplicate_page_number = page.page;
 				this.total_upload_pages = page.total_pages;
 				break;
@@ -2628,9 +3099,8 @@ class FileUploader {
 	}
 	is_uploadable(file){
 		if (file.item_type){
-			if ((file.captured_on_date && file.captured_on_time && file.captured_on_inrange && !file.upload_response) || file.force_upload){
+			if ((file.captured_on_date && file.captured_on_time && file.captured_on_inrange && file.captured_on_timezone && !file.upload_response) || file.force_upload){
 				return true;
-				
 			}
 		}
 		return false;
@@ -2689,7 +3159,179 @@ class FileUploader {
 		}
 		return false;
 	}
-	compare_names(f1,f2){
+	compare_file_states_desc(f1,f2){
+		function file_state(file){
+	        var status = "";
+
+	        if (!file.captured_on_time && !file.captured_on_date && !file.captured_on_timezone){
+	        	status = "Sin momento";
+	        } else if (!file.captured_on_date){
+				status = "Sin fecha";
+			} else if (!file.captured_on_time) {
+				status = "Sin tiempo";
+			} else if (!file.captured_on_timezone) {
+				status = "Sin zona horaria";
+			} else if (!file.captured_on_inrange){
+				status = "Fuera de rango";	
+			} else {
+				status = "Listo";
+			}
+
+			if (!file.item_type){
+				if (status == "Listo"){
+					status = "Sin tipo"
+				} else {
+					status += " y sin tipo"
+				}
+			}
+
+			return status;
+		}
+		var state1 = file_state(f1);
+		var state2 = file_state(f2);
+		if (state1 < state2){
+			return -1;
+		}
+		if (state1 > state2){
+			return 1;
+		}
+		return 0;
+
+	}
+	compare_errors_desc(f1,f2){
+		return 0;
+	}
+	compare_errors_asc(f1,f2){
+		return 0;
+	}
+	compare_uploaded_items_desc(f1,f2){
+		var pk1 = f1.upload_response.result.item.pk;
+		var pk2 = f2.upload_response.result.item.pk;
+		if (pk1 < pk2){
+			return -1;
+		} else if (pk2 < pk1){
+			return 1;
+		}
+		return 0;
+	}
+	compare_uploaded_items_asc(f1,f2){
+		var pk1 = f1.upload_response.result.item.pk;
+		var pk2 = f2.upload_response.result.item.pk;
+		if (pk1 < pk2){
+			return 1;
+		} else if (pk2 < pk1){
+			return -1;
+		}
+		return 0;
+	}
+	compare_file_states_asc(f1,f2){
+		function file_state(file){
+	        var status = "";
+
+	        if (!file.captured_on_time && !file.captured_on_date && !file.captured_on_timezone){
+	        	status = "Sin momento";
+	        } else if (!file.captured_on_date){
+				status = "Sin fecha";
+			} else if (!file.captured_on_time) {
+				status = "Sin tiempo";
+			} else if (!file.captured_on_timezone) {
+				status = "Sin zona horaria";
+			} else if (!file.captured_on_inrange){
+				status = "Fuera de rango";	
+			} else {
+				status = "Listo";
+			}
+
+			if (!file.item_type){
+				if (status == "Listo"){
+					status = "Sin tipo"
+				} else {
+					status += " y sin tipo"
+				}
+			}
+
+			return status;
+		}
+		var state1 = file_state(f1);
+		var state2 = file_state(f2);
+		if (state1 < state2){
+			return 1;
+		}
+		if (state1 > state2){
+			return -1;
+		}
+		return 0;
+
+	}
+	compare_file_timezones_desc(f1,f2){
+		if (!f1.captured_on_timezone && !f2.captured_on_timezone){
+			return 0;
+		} else if (!f1.captured_on_timezone){
+			return -1;
+		} else if (!f2.captured_on_timezone){
+			return 1;
+		}
+
+		if (f1.captured_on_timezone < f2.captured_on_timezone){
+			return -1;
+		}
+		if (f1.captured_on_timezone > f2.captured_on_timezone){
+			return 1;
+		}
+		return 0;
+	}
+	compare_file_timezones_asc(f1,f2){
+		if (!f1.captured_on_timezone && !f2.captured_on_timezone){
+			return 0;
+		} else if (!f1.captured_on_timezone){
+			return 1;
+		} else if (!f2.captured_on_timezone){
+			return -1;
+		}
+
+		if (f1.captured_on_timezone < f2.captured_on_timezone){
+			return 1;
+		}
+		if (f1.captured_on_timezone > f2.captured_on_timezone){
+			return -1;
+		}
+		return 0;
+	}
+	compare_file_types_desc(f1,f2){
+		if (!f1.item_type && !f2.item_type){
+			return 0;
+		} else if (!f1.item_type){
+			return -1;
+		} else if (!f2.item_type){
+			return 1;
+		}
+
+		if (f1.item_type < f2.item_type){
+			return -1;
+		}
+		if (f1.item_type > f2.item_type){
+			return 1;
+		}
+		return 0;
+	}
+	compare_file_types_asc(f1,f2){
+		if (!f1.item_type && !f2.item_type){
+			return 0;
+		} else if (!f1.item_type){
+			return 1;
+		} else if (!f2.item_type){
+			return -1;
+		}
+		
+		if (f1.item_type < f2.item_type){
+			return 1;
+		}
+		if (f1.item_type > f2.item_type){
+			return -1;
+		}
+		return 0;
+	}
+	compare_file_names_desc(f1,f2){
 		if (f1.name < f2.name){
 			return -1;
 		}
@@ -2698,48 +3340,24 @@ class FileUploader {
 		}
 		return 0;
 	}
-	compare_times(f1,f2){
-		if (!f1.captured_on_time && !f2.captured_on_time){
-			return 0;
-		} else if (!f1.captured_on_time){
-			return -1;
-		} else if (!f2.captured_on_time){
+	compare_file_names_asc(f1,f2){
+		if (f1.name < f2.name){
 			return 1;
-		} else {
-			function get_seconds(timestring){
-				var time_arr = timestring.split(":");
-				var time_len  = time_arr.length;
-				var seconds = 0;
-				switch(time_len){
-					case 1:{
-						seconds = parseInt(time_arr[0])*60*60;
-						break;
-					}
-					case 2:{
-						seconds = parseInt(time_arr[0])*60*60+parseInt(time_arr[1])*60;
-						break;
-					}
-					case 3:{
-						seconds = parseInt(time_arr[0])*60*60+parseInt(time_arr[1])*60+parseInt(time_arr[2]);
-						break;
-					}
-				}
-
-				return seconds;
-			}
-			var seconds1 = get_seconds(f1.captured_on_time);
-			var seconds2 = get_seconds(f2.captured_on_time);
-
-			if (seconds1 < seconds2){
-				return -1;
-			} else if (seconds2 < seconds1){
-				return 1;
-			} else {
-				return 0;
-			}
 		}
+		if (f1.name > f2.name){
+			return -1;
+		}
+		return 0;
 	}
-	compare_dates(f1,f2){
+	compare_datetimes_desc(f1,f2){
+		if (!f1.captured_on_timezone && !f2.captured_on_timezone){
+			return 0;
+		} else if (!f1.captured_on_timezone){
+			return -1;
+		} else if (!f2.captured_on_timezone){
+			return 1;
+		}
+
 		if (!f1.captured_on_date && !f2.captured_on_date){
 			return 0;
 		} else if (!f1.captured_on_date){
@@ -2747,10 +3365,16 @@ class FileUploader {
 		} else if (!f2.captured_on_date){
 			return 1;
 		} else {
-			function lazy_moment(datestring){
+			function lazy_moment(datestring,timestring,timezone){
+				if (!timestring){
+					timestring = "";
+				}
 				var date_arr = datestring.split("-");
 				var date_len = date_arr.length;
+				var time_arr = timestring.split(":");
+				var time_len = time_arr.length;
 				var extended_date = datestring;
+				var format = "YYYY-MM-DD";
 
 				switch (date_len){
 					case 1:{
@@ -2761,16 +3385,34 @@ class FileUploader {
 						extended_date += "-01"; 
 						break;
 					}
+					case 3:{
+						switch(time_len){
+							case 2:{
+								format = "YYYY-MM-DD HH:mm";
+								extended_date = extended_date+" "+timestring;
+								break;
+							}
+							case 3:{
+								format = "YYYY-MM-DD HH:mm:ss";
+								extended_date = extended_date+" "+timestring;
+								break;
+							}
+							default:{
+								break;
+							}
+						}
+					}
 					default:{
 						break;
 					}
 				}
-
-				return {'moment':moment(extended_date,"YYYY-MM-DD",true),'valid_up_to':date_len}
+				var dmoment = moment(extended_date,format,true);
+				dmoment.tz(timezone);
+				return {'moment':dmoment,'valid_up_to':date_len+time_len}
 			}
 
-			var lazy_moment1 = lazy_moment(f1.captured_on);
-			var lazy_moment2 = lazy_moment(f2.captured_on);
+			var lazy_moment1 = lazy_moment(f1.captured_on_date,f1.captured_on_time,f1.captured_on_timezone);
+			var lazy_moment2 = lazy_moment(f2.captured_on_date,f2.captured_on_time,f2.captured_on_timezone);
 
 			var level = 'year';
 			var valid_up_to = Math.min(lazy_moment1.valid_up_to,lazy_moment2.valid_up_to)
@@ -2779,16 +3421,134 @@ class FileUploader {
 				level = 'month';
 			} else if (valid_up_to == 3){
 				level = 'day';
+			} else if (valid_up_to == 5) {
+				level = 'minute';
+			} else if (valid_up_to == 6){
+				level = 'second';
 			}
 
-			if (lazy_moment1.moment.isBefore(lazy_moment2.moment,level)){
+			if (lazy_moment1.moment.utc().isBefore(lazy_moment2.moment.utc(),level)){
 				return -1;
-			} else if (lazy_moment2.moment.isBefore(lazy_moment1.moment,level)){
+			} else if (lazy_moment2.moment.utc().isBefore(lazy_moment1.moment.utc(),level)){
 				return 1;
 			} else {
 				return 0;
 			}
 		}
+	}
+	compare_datetimes_asc(f1,f2){
+		if (!f1.captured_on_timezone && !f2.captured_on_timezone){
+			return 0;
+		} else if (!f1.captured_on_timezone){
+			return 1;
+		} else if (!f2.captured_on_timezone){
+			return -1;
+		}
+
+		if (!f1.captured_on_date && !f2.captured_on_date){
+			return 0;
+		} else if (!f1.captured_on_date){
+			return 1;
+		} else if (!f2.captured_on_date){
+			return -1;
+		} else {
+			function lazy_moment(datestring,timestring,timezone){
+				if (!timestring){
+					timestring = "";
+				}
+				var date_arr = datestring.split("-");
+				var date_len = date_arr.length;
+				var time_arr = timestring.split(":");
+				var time_len = time_arr.length;
+				var extended_date = datestring;
+				var format = "YYYY-MM-DD";
+
+				switch (date_len){
+					case 1:{
+						extended_date += "-01-01";
+						break;
+					}
+					case 2:{
+						extended_date += "-01"; 
+						break;
+					}
+					case 3:{
+						switch(time_len){
+							case 2:{
+								format = "YYYY-MM-DD HH:mm";
+								extended_date = extended_date +" "+ timestring;
+								break;
+							}
+							case 3:{
+								format = "YYYY-MM-DD HH:mm:ss";
+								extended_date = extended_date +" "+ timestring;
+								break;
+							}
+							default:{
+								break;
+							}
+						}
+					}
+					default:{
+						break;
+					}
+				}
+				var dmoment = moment(extended_date,format,true);
+				dmoment.tz(timezone);
+				return {'moment':dmoment,'valid_up_to':date_len+time_len}
+			}
+
+			var lazy_moment1 = lazy_moment(f1.captured_on_date,f1.captured_on_time,f1.captured_on_timezone);
+			var lazy_moment2 = lazy_moment(f2.captured_on_date,f2.captured_on_time,f2.captured_on_timezone);
+
+			var level = 'year';
+			var valid_up_to = Math.min(lazy_moment1.valid_up_to,lazy_moment2.valid_up_to)
+
+			if (valid_up_to == 2){
+				level = 'month';
+			} else if (valid_up_to == 3){
+				level = 'day';
+			} else if (valid_up_to == 5) {
+				level = 'minute';
+			} else if (valid_up_to == 6){
+				level = 'second';
+			}
+
+			if (lazy_moment1.moment.utc().isBefore(lazy_moment2.moment.utc(),level)){
+				return 1;
+			} else if (lazy_moment2.moment.utc().isBefore(lazy_moment1.moment.utc(),level)){
+				return -1;
+			} else {
+				return 0;
+			}
+		}
+	}
+	get_file_state(file){
+        var status = "";
+
+        if (!file.captured_on_time && !file.captured_on_date && !file.captured_on_timezone){
+        	status = "Sin momento";
+        } else if (!file.captured_on_date){
+			status = "Sin fecha";
+		} else if (!file.captured_on_time) {
+			status = "Sin tiempo";
+		} else if (!file.captured_on_timezone) {
+			status = "Sin zona horaria";
+		} else if (!file.captured_on_inrange){
+			status = "Fuera de rango";	
+		} else {
+			status = "Listo";
+		}
+
+		if (!file.item_type){
+			if (status == "Listo"){
+				status = "Sin tipo"
+			} else {
+				status += " y sin tipo"
+			}
+		}
+
+		return status;
 	}
 	get_item_type(file){
 	  if (this.item_types.length == 1){
@@ -2853,6 +3613,9 @@ class FileUploader {
 	  		}
 	  	}
 	  }
+	  if (file.captured_on_timezone){
+	  	formData.set('captured_on_timezone',file.captured_on_timezone);
+	  }
 
 	  $.ajax({
 		  url: url,
@@ -2896,19 +3659,19 @@ class FileUploader {
 			name_arr = ['files','errors','duplicates','uploads'];
 		}
 		if (name_arr.includes('files')){
-			var file_page = this.get_file_page(this.file_page_number, this.per_page, this.is_fixable);
+			var file_page = this.get_file_page(this.file_page_number, this.per_page, this.is_fixable,this.files_sort_by.function);
 			this.render_file_list(file_page);
 		}
 		if (name_arr.includes('errors')){
-			var error_page = this.get_file_page(this.error_page_number, this.per_page, this.has_errors);
+			var error_page = this.get_file_page(this.error_page_number, this.per_page, this.has_errors,this.errors_sort_by.function);
 			this.render_error_list(error_page);
 		}
 		if (name_arr.includes('duplicates')){
-			var duplicate_page = this.get_file_page(this.duplicate_page_number, this.per_page, this.is_duplicate);
+			var duplicate_page = this.get_file_page(this.duplicate_page_number, this.per_page, this.is_duplicate,this.duplicates_sort_by.function);
 			this.render_duplicate_list(duplicate_page);
 		}
 		if (name_arr.includes('uploads')){
-			var upload_page = this.get_file_page(this.upload_page_number, this.per_page, this.is_uploaded);
+			var upload_page = this.get_file_page(this.upload_page_number, this.per_page, this.is_uploaded,this.uploads_sort_by.function);
 			this.render_upload_list(upload_page);
 		}
 	}
@@ -2956,6 +3719,10 @@ class FileUploader {
 		file["captured_on_date"] = null;
 		file["captured_on_time"] = null;
 		file["captured_on_inrange"] = false;
+		file["captured_on_timezone"] = null;
+		if (this.site_timezone){
+			file["captured_on_timezone"] = this.site_timezone;
+		}
 		file["wrong_mime_type"] = this.is_mime_type_wrong(file);
 		file["item_type"] = this.get_item_type(file);
 		file["media_info"] = null;
@@ -3028,11 +3795,12 @@ class FileUploader {
 	toggle_status(file_id) {
 		var file = this.get_file_by_id(file_id);
 		if (file){
-			var message = "Listo";
 			var date_ready = true;
 			var time_ready = true;
+			var tz_ready = true;
 			var tinput = document.getElementById("time_input_file_"+file_id);
 			var dinput = document.getElementById("date_input_file_"+file_id);
+			var tzinput = document.getElementById("tz_input_file_"+file_id);
 			var status_btn = document.getElementById("status_btn_"+file_id);
 			var statustext = document.getElementById("status_text_"+file_id);
 
@@ -3048,37 +3816,22 @@ class FileUploader {
 			} else {
 				$(tinput).removeClass("incorrect_pattern");
 			}
-
-			if (!date_ready && !time_ready){
-				message = "Sin momento";
-			} else if (!date_ready){
-				message = "Sin fecha";
-			} else if (!time_ready) {
-				if (!file.captured_on_inrange){
-					message = "Fuera de rango";
-				} else {
-					message = "Sin tiempo";
-				}
+			if (!file.captured_on_timezone){
+				tz_ready = false;
+				$(tzinput).addClass("incorrect_pattern");
 			} else {
-				if (!file.captured_on_inrange){
-					message = "Fuera de rango";
-				}
+				$(tzinput).removeClass("incorrect_pattern");
 			}
 
-			if (!file.item_type){
-				if (message == "Listo"){
-					message = "Sin tipo"
-				} else {
-					message += " y sin tipo"
-				}
-			}
+			var status = this.get_file_state(file);
+			statustext.textContent = status;
 
-			statustext.textContent = message;
-
-			if (message == "Listo"){
+			if (status == "Listo"){
+				$(statustext).removeClass("upload_not_ready");
 				statustext.style.display = "none";
 				status_btn.style.display = "inline-block";
 			} else {
+				$(statustext).addClass("upload_not_ready");
 				statustext.style.display = "inline-block";
 				status_btn.style.display = "none";
 			}

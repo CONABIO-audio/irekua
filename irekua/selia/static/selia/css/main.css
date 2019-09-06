@@ -97,6 +97,9 @@
   flex-direction: row;
   display: table-cell;
 }
+.upload_not_ready {
+  color: var(--step-color) !important;
+}
 .uploaded_item {
   border-radius: 10px;
   background-color: #e2f0c1 !important;
@@ -315,6 +318,14 @@ select option {
     margin: 10px;
 }
 
+.multi_option {
+    cursor: pointer;
+}
+
+.multi_option:hover {
+  background-color: #404040 !important;
+}
+
 .item_checkbox {
     width:20px;
     height:20px;
@@ -328,9 +339,9 @@ select option {
 }
 
 .header_title {
-    border-radius: 0px;
+    border-radius: 30px;
     padding: 5px;
-    background-color: #cc1f00 !important;
+    background-color: #b31b00 !important;
 }
 
 .file_title {

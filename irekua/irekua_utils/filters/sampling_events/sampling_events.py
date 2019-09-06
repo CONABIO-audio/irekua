@@ -5,6 +5,8 @@ from django.utils.translation import gettext as _
 from django_filters import FilterSet
 from django_filters import DateFilter
 from django_filters import ModelChoiceFilter
+from django_filters import BooleanFilter
+
 
 from dal import autocomplete
 
@@ -23,6 +25,7 @@ def get_queryset(f):
 
 
 class Filter(FilterSet):
+
     class Meta:
         model = SamplingEvent
         fields = {

@@ -27,11 +27,17 @@
       <div class="text-muted ml-4">{{ item.physical_device.serial_number }}</div>
     </div>
     <div class="row">
-      <h6>{% trans 'Collection Device id' %}</h6>
+      <h6>{% trans 'Collection Device ID' %}</h6>
       <div class="text-muted ml-4">{{ item.internal_id }}</div>
     </div>
   </div>
   <div class="col">
+    {% if item.physical_device.created_by == request.user %}
+      <div class="row">
+        <h6>{% trans 'Name' %}</h6>
+        <div class="text-muted ml-4">{{ item.physical_device.identifier }}</div>
+      </div>
+    {% endif %}
     <div class="row">
       <h6>{% trans 'Collection' %}</h6>
       <div class="text-muted ml-4">{{ item.collection }}</div>

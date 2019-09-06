@@ -2,12 +2,17 @@ from django import forms
 from django.db import models
 from django.utils.translation import gettext as _
 from django_filters import FilterSet,DateFilter
+from django_filters import BooleanFilter
 
 from database.models import SamplingEventDevice
 
 
 
 class Filter(FilterSet):
+    is_own = BooleanFilter(
+        method='user_owns_object',
+        label=_('Mine'),
+        widget=forms.CheckboxInput())
     class Meta:
         model = SamplingEventDevice
         fields = {
@@ -20,6 +25,9 @@ class Filter(FilterSet):
             'created_on': ['gt', 'lt'],
         }
 
+    def user_owns_object(self, queryset, name, value):
+        user = self.request.user
+        return queryset.filter(collection_device__physical_device__created_by=user)
 
 search_fields = (
     'collection_device__physical_device__device__serial_number',

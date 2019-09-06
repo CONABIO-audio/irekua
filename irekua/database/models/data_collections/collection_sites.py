@@ -44,8 +44,8 @@ class CollectionSite(IrekuaModelBaseUser):
     internal_id = models.CharField(
         max_length=64,
         db_column='internal_id',
-        verbose_name=_('internal id'),
-        help_text=_('ID of site within the collection'),
+        verbose_name=_('ID within collection'),
+        help_text=_('ID of site within the collection (visible to all collection users)'),
         blank=True)
 
     class Meta:

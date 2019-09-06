@@ -12,6 +12,7 @@ from database.models import Collection
 
 
 class Filter(FilterSet):
+
     class Meta:
         model = Collection
         fields = {
