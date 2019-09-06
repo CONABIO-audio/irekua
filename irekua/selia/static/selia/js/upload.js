@@ -2138,6 +2138,7 @@ class FileUploader {
 				item_type_input.style.height = "40px";
 				item_type_input.id = "item_type_input_file_"+page.data[i].file_id;
 				item_type_input.file_id = page.data[i].file_id;
+				item_type_input.className = "rounded";
 
 				var doptions = ''
 				for (var o=0;o<this.item_types.length;o++){
@@ -2166,7 +2167,7 @@ class FileUploader {
 		        dateInput.type = "text";
 		        dateInput.style["text-align"]="center";
 		        dateInput.style.width = "115px";
-		        dateInput.className = "incorrect_pattern ml-4 file_title";
+		        dateInput.className = "incorrect_pattern ml-4 file_title rounded";
 		        dateInput.id = "date_input_file_"+page.data[i]["file_id"];
           		dateInput.placeholder = "YYYY-MM-DD";
           		dateInput["file_id"] = page.data[i]["file_id"];
@@ -2198,7 +2199,7 @@ class FileUploader {
 		        timeInput.type = "text";
 		        timeInput.style["text-align"]="center";
 		        timeInput.style.width = "115px";
-		        timeInput.className = "incorrect_pattern ml-4 file_title";
+		        timeInput.className = "incorrect_pattern ml-4 file_title rounded";
 		        timeInput.id = "time_input_file_"+page.data[i]["file_id"];
           		timeInput.placeholder = "HH:mm:ss";
           		timeInput["file_id"] = page.data[i]["file_id"];
@@ -2234,7 +2235,7 @@ class FileUploader {
 		        tzInput.type = "text";
 		        tzInput.style["text-align"]="center";
 		        tzInput.style.width = "130px";
-		        tzInput.className = "incorrect_pattern ml-4 file_title";
+		        tzInput.className = "incorrect_pattern ml-4 file_title rounded";
 		        tzInput.id = "tz_input_file_"+page.data[i]["file_id"];
           		tzInput["file_id"] = page.data[i]["file_id"];
 
