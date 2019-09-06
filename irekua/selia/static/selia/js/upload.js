@@ -2154,12 +2154,12 @@ class FileUploader {
 				            break;
 				        }
 				    }					
+				} else {
+					item_type_input.selectedIndex = -1;
 				}
 
 
 				itemTypeCol.appendChild(item_type_input)
-
-
 
 
 		        var dateInput = document.createElement('input');
