@@ -97,6 +97,9 @@
   flex-direction: row;
   display: table-cell;
 }
+.upload_not_ready {
+  color: var(--step-color) !important;
+}
 .uploaded_item {
   border-radius: 10px;
   background-color: #e2f0c1 !important;
@@ -336,9 +339,9 @@ select option {
 }
 
 .header_title {
-    border-radius: 0px;
+    border-radius: 30px;
     padding: 5px;
-    background-color: #cc1f00 !important;
+    background-color: #b31b00 !important;
 }
 
 .file_title {

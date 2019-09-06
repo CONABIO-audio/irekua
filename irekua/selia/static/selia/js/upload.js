@@ -28,6 +28,10 @@ class FileUploader {
 		this.total_error_pages = 0;
 		this.total_upload_pages = 0;
 		this.per_page = 10;
+		this.files_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
+		this.errors_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
+		this.duplicates_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
+		this.uploads_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
 		this.build_view();
 	}
 	build_view() {
@@ -249,6 +253,7 @@ class FileUploader {
 		item_type_label.htmlFor = "itemDate";
 
 		this.item_type_input = document.createElement('select');
+		this.item_type_input.className = "rounded";
 		this.item_type_input.style.width = "205px";
 
 		var options = ''
@@ -345,7 +350,7 @@ class FileUploader {
 
 		this.date_pattern_input = document.createElement('input');
 		this.date_pattern_input.style.width = "310px";
-		this.date_pattern_input.className = "incorrect_pattern text-center";
+		this.date_pattern_input.className = "incorrect_pattern text-center rounded";
 		this.date_pattern_input.id = "itemDatePattern";
 		this.date_pattern_input.setAttribute('list','date_patterns');
 		this.date_pattern_input.placeholder = "Patrón de fecha en nombre del archivo";
@@ -432,7 +437,7 @@ class FileUploader {
 		date_label.htmlFor = "itemDate";
 
 		this.date_input = document.createElement('input');
-		this.date_input.className = "incorrect_pattern text-center";
+		this.date_input.className = "incorrect_pattern text-center rounded";
 		this.date_input.style.width = "110px";
 		this.date_input.type = "text";
 
@@ -521,7 +526,7 @@ class FileUploader {
 		time_label.htmlFor = "itemDate";
 
 		this.time_input = document.createElement('input');
-		this.time_input.className = "incorrect_pattern text-center";
+		this.time_input.className = "incorrect_pattern text-center rounded";
 		this.time_input.style.width = "85px";
 		this.time_input.type = "text";
 
@@ -610,14 +615,14 @@ class FileUploader {
 		tz_label.htmlFor = "itemDate";
 
 		this.tz_input = document.createElement('input');
-		this.tz_input.className = "text-center";
+		this.tz_input.className = "text-center rounded";
 		this.tz_input.style.width = "160px";
 		this.tz_input.type = "text";
 
 		if (this.site_timezone){
 			this.tz_input.value = this.site_timezone;
 		} else {
-			this.tz_input.className = "incorrect_pattern";
+			$(this.tz_input).addClass("incorrect_pattern");
 		}
 
 		$(this.tz_input).autocomplete({
@@ -1402,28 +1407,28 @@ class FileUploader {
 		header_checkCol.appendChild(this.header_checkFile);
 
 		var fileTitle = document.createElement('div');
-    	fileTitle.textContent = 'Archivo';
+    	fileTitle.innerHTML = 'Archivo <i class="fas fa-sort"></i>';
     	fileTitle.className = 'ml-4 ellipsise text-light header_title';
     	header_descrCol.appendChild(fileTitle);
 
 		var itemtypeTitle = document.createElement('div');
-    	itemtypeTitle.textContent = 'Tipo';
+    	itemtypeTitle.innerHTML = 'Tipo <i class="fas fa-sort"></i>';
     	itemtypeTitle.className = 'ml-4 ellipsise text-light header_title';
     	header_itemtypeCol.appendChild(itemtypeTitle);
 
 		var dateTitle = document.createElement('div');
-    	dateTitle.textContent = 'Fecha/Tiempo';
+    	dateTitle.innerHTML = 'Fecha <i class="fas fa-sort"></i>';
     	dateTitle.className = 'ml-4 ellipsise text-light header_title';
     	header_dateCol.appendChild(dateTitle);
 
 		var tzTitle = document.createElement('div');
-    	tzTitle.textContent = 'Zona horaria';
+    	tzTitle.innerHTML = 'Zona horaria <i class="fas fa-sort"></i>';
     	tzTitle.className = 'ml-4 ellipsise text-light header_title';
     	header_tzCol.appendChild(tzTitle);
 
 	    var statusTitle = document.createElement('div');
 	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-	    statusTitle.textContent = "Estado";
+	    statusTitle.innerHTML = 'Estado <i class="fas fa-sort"></i>';
 	    header_statusCol.appendChild(statusTitle);
 
 		this.header_checkFile.addEventListener('input',function(e){
@@ -1444,6 +1449,24 @@ class FileUploader {
 	    header.appendChild(header_dateCol);
 	    header.appendChild(header_tzCol);
 	    header.appendChild(header_statusCol);
+
+	    var widget = this;
+
+		fileTitle.addEventListener('click',function(e){
+			widget.list_sort_by('files','Archivo');
+		});
+		itemtypeTitle.addEventListener('click',function(e){
+			widget.list_sort_by('files','Tipo');
+		});
+		dateTitle.addEventListener('click',function(e){
+			widget.list_sort_by('files','Fecha');
+		});
+		tzTitle.addEventListener('click',function(e){
+			widget.list_sort_by('files','Zona horaria');
+		});
+		statusTitle.addEventListener('click',function(e){
+			widget.list_sort_by('files','Estado');
+		});
 
 	    this.file_list = document.createElement('div');
 	    this.file_list.className = "upload_list";
@@ -1527,17 +1550,26 @@ class FileUploader {
 		header_statusCol.className = 'col-6  justify-content-center text-center item_col';
 
 		var fileTitle = document.createElement('div');
-    	fileTitle.textContent = 'Archivo';
+    	fileTitle.innerHTML = 'Archivo <i class="fas fa-sort"></i>';
     	fileTitle.className = 'ml-4 ellipsise text-light header_title';
     	header_descrCol.appendChild(fileTitle);
 
 	    var statusTitle = document.createElement('div');
 	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-	    statusTitle.textContent = "Descripción";
+	    statusTitle.innerHTML = 'Descripción <i class="fas fa-sort"></i>';
 	    header_statusCol.appendChild(statusTitle);
 
 	    header.appendChild(header_descrCol);
 	    header.appendChild(header_statusCol);
+
+	    var widget = this;
+
+		fileTitle.addEventListener('click',function(e){
+			widget.list_sort_by('errors','Archivo');
+		});
+		statusTitle.addEventListener('click',function(e){
+			widget.list_sort_by('errors','Descripción');
+		});
 
 	    this.error_list = document.createElement('div');
 	    this.error_list.className = "upload_list";
@@ -1627,17 +1659,26 @@ class FileUploader {
 		header_statusCol.className = 'col-5 justify-content-center text-center item_col';
 
 		var fileTitle = document.createElement('div');
-    	fileTitle.textContent = 'Artículo';
+    	fileTitle.innerHTML = 'Archivo <i class="fas fa-sort"></i>';
     	fileTitle.className = 'ml-4 ellipsise text-light header_title';
     	header_descrCol.appendChild(fileTitle);
 
 	    var statusTitle = document.createElement('div');
 	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-	    statusTitle.textContent = "Link";
+	    statusTitle.innerHTML = 'Link <i class="fas fa-sort"></i>';
 	    header_statusCol.appendChild(statusTitle);
 
 	    header.appendChild(header_descrCol);
 	    header.appendChild(header_statusCol);
+
+	    var widget = this;
+
+	    fileTitle.addEventListener('click',function(e){
+			widget.list_sort_by('duplicates','Archivo');
+		});
+	    statusTitle.addEventListener('click',function(e){
+	    	widget.list_sort_by('duplicates','Link');
+	    });
 
 	    this.duplicate_list = document.createElement('div');
 	    this.duplicate_list.className = "upload_list";
@@ -1725,17 +1766,26 @@ class FileUploader {
 		header_statusCol.className = 'col-5  justify-content-center text-center item_col';
 
 		var fileTitle = document.createElement('div');
-    	fileTitle.textContent = 'Artículo';
+    	fileTitle.innerHTML = 'Artículo <i class="fas fa-sort"></i>';
     	fileTitle.className = 'ml-4 ellipsise text-light header_title';
     	header_descrCol.appendChild(fileTitle);
 
 	    var statusTitle = document.createElement('div');
 	    statusTitle.className = 'ml-4 ellipsise text-light header_title';
-	    statusTitle.textContent = "Link";
+	    statusTitle.innerHTML = 'Link <i class="fas fa-sort"></i>';
 	    header_statusCol.appendChild(statusTitle);
 
 	    header.appendChild(header_descrCol);
 	    header.appendChild(header_statusCol);
+
+	    var widget = this;
+
+	    fileTitle.addEventListener('click',function(e){
+			widget.list_sort_by('uploads','Archivo');
+		});
+	    statusTitle.addEventListener('click',function(e){
+	    	widget.list_sort_by('uploads','Link');
+	    });
 
 	    this.upload_list = document.createElement('div');
 	    this.upload_list.className = "upload_list";
@@ -1755,7 +1805,223 @@ class FileUploader {
 		blank_message.innerHTML = "No se ha subido ningún archivo nuevo"
 		this.blank_upload_list.appendChild(blank_message);
 	}
-	get_file_page(page, per_page, filter_function,sort_function=this.compare_names) {
+	list_sort_by(list_name,field_name){
+		switch(list_name){
+			case 'files':{
+				switch(field_name){
+					case 'Archivo':{
+						if (this.files_sort_by.field == field_name){
+							if (this.files_sort_by.order == "asc"){
+								this.files_sort_by.order = "desc";
+								this.files_sort_by.function = this.compare_file_names_desc;
+							} else {
+								this.files_sort_by.order = "asc";
+								this.files_sort_by.function = this.compare_file_names_asc;
+							}
+						} else {
+							this.files_sort_by.field = field_name;
+							this.files_sort_by.order = "desc";
+							this.files_sort_by.function = this.compare_file_names_desc;
+						}
+						break;
+					}
+					case 'Tipo':{
+						if (this.files_sort_by.field == field_name){
+							if (this.files_sort_by.order == "asc"){
+								this.files_sort_by.order = "desc";
+								this.files_sort_by.function = this.compare_file_types_desc;
+							} else {
+								this.files_sort_by.order = "asc";
+								this.files_sort_by.function = this.compare_file_types_asc;
+							}
+						} else {
+							this.files_sort_by.field = field_name;
+							this.files_sort_by.order = "desc";
+							this.files_sort_by.function = this.compare_file_types_desc;
+						}
+						break;
+					}
+					case 'Fecha':{
+						if (this.files_sort_by.field == field_name){
+							if (this.files_sort_by.order == "asc"){
+								this.files_sort_by.order = "desc";
+								this.files_sort_by.function = this.compare_datetimes_desc;
+							} else {
+								this.files_sort_by.order = "asc";
+								this.files_sort_by.function = this.compare_datetimes_asc;
+							}
+						} else {
+							this.files_sort_by.field = field_name;
+							this.files_sort_by.order = "desc";
+							this.files_sort_by.function = this.compare_datetimes_desc;
+						}
+						break;
+					}
+					case 'Zona horaria':{
+						if (this.files_sort_by.field == field_name){
+							if (this.files_sort_by.order == "asc"){
+								this.files_sort_by.order = "desc";
+								this.files_sort_by.function = this.compare_file_timezones_desc;
+							} else {
+								this.files_sort_by.order = "asc";
+								this.files_sort_by.function = this.compare_file_timezones_asc;
+							}
+						} else {
+							this.files_sort_by.field = field_name;
+							this.files_sort_by.order = "desc";
+							this.files_sort_by.function = this.compare_file_timezones_desc;
+						}
+						break;
+					}
+					case 'Estado':{
+						if (this.files_sort_by.field == field_name){
+							if (this.files_sort_by.order == "asc"){
+								this.files_sort_by.order = "desc";
+								this.files_sort_by.function = this.compare_file_states_desc;
+							} else {
+								this.files_sort_by.order = "asc";
+								this.files_sort_by.function = this.compare_file_states_asc;
+							}
+						} else {
+							this.files_sort_by.field = field_name;
+							this.files_sort_by.order = "desc";
+							this.files_sort_by.function = this.compare_file_states_desc;
+						}
+						break;
+					}
+					default:{
+						break;
+					}
+				}
+				this.render_by_name(["files"]);
+				break;
+			}
+			case 'errors':{
+				switch(field_name){
+					case 'Archivo':{
+						if (this.errors_sort_by.field == field_name){
+							if (this.errors_sort_by.order == "asc"){
+								this.errors_sort_by.order = "desc";
+								this.errors_sort_by.function = this.compare_file_names_desc;
+							} else {
+								this.errors_sort_by.order = "asc";
+								this.errors_sort_by.function = this.compare_file_names_asc;
+							}
+						} else {
+							this.errors_sort_by.field = field_name;
+							this.errors_sort_by.order = "desc";
+							this.errors_sort_by.function = this.compare_file_names_desc;
+						}
+						break;
+					}
+					case 'Descripción':{
+						if (this.errors_sort_by.field == field_name){
+							if (this.errors_sort_by.order == "asc"){
+								this.errors_sort_by.order = "desc";
+								this.errors_sort_by.function = this.compare_errors_desc;
+							} else {
+								this.errors_sort_by.order = "asc";
+								this.errors_sort_by.function = this.compare_errors_asc;
+							}
+						} else {
+							this.errors_sort_by.field = field_name;
+							this.errors_sort_by.order = "desc";
+							this.errors_sort_by.function = this.compare_errors_desc;
+						}
+						break;
+					}
+					default:{
+						break;
+					}
+				}
+				this.render_by_name(["errors"]);
+			}
+			case 'duplicates':{
+				switch(field_name){
+					case 'Archivo':{
+						if (this.duplicates_sort_by.field == field_name){
+							if (this.duplicates_sort_by.order == "asc"){
+								this.duplicates_sort_by.order = "desc";
+								this.duplicates_sort_by.function = this.compare_file_names_desc;
+							} else {
+								this.duplicates_sort_by.order = "asc";
+								this.duplicates_sort_by.function = this.compare_file_names_asc;
+							}
+						} else {
+							this.duplicates_sort_by.field = field_name;
+							this.duplicates_sort_by.order = "desc";
+							this.duplicates_sort_by.function = this.compare_file_names_desc;
+						}
+						break;
+					}
+					case 'Link':{
+						if (this.duplicates_sort_by.field == field_name){
+							if (this.duplicates_sort_by.order == "asc"){
+								this.duplicates_sort_by.order = "desc";
+								this.duplicates_sort_by.function = this.compare_uploaded_items_desc;
+							} else {
+								this.duplicates_sort_by.order = "asc";
+								this.duplicates_sort_by.function = this.compare_uploaded_items_asc;
+							}
+						} else {
+							this.duplicates_sort_by.field = field_name;
+							this.duplicates_sort_by.order = "desc";
+							this.duplicates_sort_by.function = this.compare_uploaded_items_desc;
+						}
+						break;
+					}
+					default:{
+						break;
+					}
+				}
+				this.render_by_name(["duplicates"]);
+			}
+			case 'uploads':{
+				switch(field_name){
+					case 'Archivo':{
+						if (this.uploads_sort_by.field == field_name){
+							if (this.uploads_sort_by.order == "asc"){
+								this.uploads_sort_by.order = "desc";
+								this.uploads_sort_by.function = this.compare_file_names_desc;
+							} else {
+								this.uploads_sort_by.order = "asc";
+								this.uploads_sort_by.function = this.compare_file_names_asc;
+							}
+						} else {
+							this.uploads_sort_by.field = field_name;
+							this.uploads_sort_by.order = "desc";
+							this.uploads_sort_by.function = this.compare_file_names_desc;
+						}
+						break;
+					}
+					case 'Link':{
+						if (this.uploads_sort_by.field == field_name){
+							if (this.uploads_sort_by.order == "asc"){
+								this.uploads_sort_by.order = "desc";
+								this.uploads_sort_by.function = this.compare_uploaded_items_desc;
+							} else {
+								this.uploads_sort_by.order = "asc";
+								this.uploads_sort_by.function = this.compare_uploaded_items_asc;
+							}
+						} else {
+							this.uploads_sort_by.field = field_name;
+							this.uploads_sort_by.order = "desc";
+							this.uploads_sort_by.function = this.compare_uploaded_items_desc;
+						}
+						break;
+					}
+					default:{
+						break;
+					}
+				}
+				this.render_by_name(["uploads"]);
+			}
+			default:{
+				break;
+			}
+		}
+	}
+	get_file_page(page, per_page, filter_function,sort_function=this.compare_file_names_desc) {
 		var page = page || 1;
 		if (page <= 0){
 			page = 1;
@@ -2021,39 +2287,17 @@ class FileUploader {
 		        statusText.className = "col text-muted ml-4 ellipsise file_title";
 		        statusText.id = "status_text_"+page.data[i]["file_id"];
 
-		        var status = "";
-
-		        if (!page.data[i].captured_on_time && !page.data[i].captured_on_date && !page.data[i].captured_on_timezone){
-		        	status = "Sin momento";
-		        } else if (!page.data[i].captured_on_date){
-					status = "Sin fecha";
-				} else if (!page.data[i].captured_on_time) {
-					status = "Sin tiempo";
-				} else if (!page.data[i].captured_on_timezone) {
-					status = "Sin zona horaria";
-				} else if (!page.data[i].captured_on_inrange){
-					status = "Fuera de rango";	
-				} else {
-					status = "Listo";
-				}
-
-
-
-				if (!page.data[i].item_type){
-					if (status == "Listo"){
-						status = "Sin tipo"
-					} else {
-						status += " y sin tipo"
-					}
-				}
+		        var status = this.get_file_state(page.data[i]);
 
 		        statusText.textContent = status;
 
 		        if (status == "Listo"){
+		        	$(statusText).removeClass("upload_not_ready");
 		        	statusText.style.display = "none";
 					status_btn.style.display = "inline-block";
 		        	$(timeInput).removeClass('incorrect_pattern');
 		        } else {
+		        	$(statusText).addClass("upload_not_ready");
 		        	statusText.style.display = "inline-block";
 					status_btn.style.display = "none";
 		        }
@@ -2781,25 +3025,25 @@ class FileUploader {
 		var page = null;
 		switch(list_name){
 			case "file_list":{
-				page = this.get_file_page(this.file_page_number+1, this.per_page, this.is_fixable)
+				page = this.get_file_page(this.file_page_number+1, this.per_page, this.is_fixable,this.files_sort_by.function);
 				this.file_page_number = page.page;
 				this.total_file_pages = page.total_pages;
 				break;
 			}
 			case "error_list":{
-				page = this.get_file_page(this.error_page_number+1, this.per_page, this.has_errors)
+				page = this.get_file_page(this.error_page_number+1, this.per_page, this.has_errors,this.errors_sort_by.function);
 				this.error_page_number = page.page;
 				this.total_error_pages = page.total_pages;
 				break;
 			}
 			case "duplicate_list":{
-				page = this.get_file_page(this.duplicate_page_number+1, this.per_page, this.is_duplicate)
+				page = this.get_file_page(this.duplicate_page_number+1, this.per_page, this.is_duplicate,this.duplicates_sort_by.function)
 				this.duplicate_page_number = page.page;
 				this.total_duplicate_pages = page.total_pages;
 				break;
 			}
 			case "upload_list":{
-				page = this.get_file_page(this.upload_page_number+1, this.per_page, this.is_uploaded)
+				page = this.get_file_page(this.upload_page_number+1, this.per_page, this.is_uploaded,this.uploads_sort_by.function)
 				this.duplicate_page_number = page.page;
 				this.total_upload_pages = page.total_pages;
 				break;
@@ -2816,25 +3060,25 @@ class FileUploader {
 		var page = null;
 		switch(list_name){
 			case "file_list":{
-				page = this.get_file_page(this.file_page_number-1, this.per_page, this.is_fixable)
+				page = this.get_file_page(this.file_page_number-1, this.per_page, this.is_fixable,this.files_sort_by.function);
 				this.file_page_number = page.page;
 				this.total_file_pages = page.total_pages;
 				break;
 			}
 			case "error_list":{
-				page = this.get_file_page(this.error_page_number-1, this.per_page, this.has_errors)
+				page = this.get_file_page(this.error_page_number-1, this.per_page, this.has_errors,this.errors_sort_by.function);
 				this.error_page_number = page.page;
 				this.total_error_pages = page.total_pages;
 				break;
 			}
 			case "duplicate_list":{
-				page = this.get_file_page(this.duplicate_page_number-1, this.per_page, this.is_duplicate)
+				page = this.get_file_page(this.duplicate_page_number-1, this.per_page, this.is_duplicate,this.duplicates_sort_by.function)
 				this.duplicate_page_number = page.page;
 				this.total_duplicate_pages = page.total_pages;
 				break;
 			}
 			case "upload_list":{
-				page = this.get_file_page(this.upload_page_number-1, this.per_page, this.is_uploaded)
+				page = this.get_file_page(this.upload_page_number-1, this.per_page, this.is_uploaded,this.uploads_sort_by.function)
 				this.duplicate_page_number = page.page;
 				this.total_upload_pages = page.total_pages;
 				break;
@@ -2915,7 +3159,179 @@ class FileUploader {
 		}
 		return false;
 	}
-	compare_names(f1,f2){
+	compare_file_states_desc(f1,f2){
+		function file_state(file){
+	        var status = "";
+
+	        if (!file.captured_on_time && !file.captured_on_date && !file.captured_on_timezone){
+	        	status = "Sin momento";
+	        } else if (!file.captured_on_date){
+				status = "Sin fecha";
+			} else if (!file.captured_on_time) {
+				status = "Sin tiempo";
+			} else if (!file.captured_on_timezone) {
+				status = "Sin zona horaria";
+			} else if (!file.captured_on_inrange){
+				status = "Fuera de rango";	
+			} else {
+				status = "Listo";
+			}
+
+			if (!file.item_type){
+				if (status == "Listo"){
+					status = "Sin tipo"
+				} else {
+					status += " y sin tipo"
+				}
+			}
+
+			return status;
+		}
+		var state1 = file_state(f1);
+		var state2 = file_state(f2);
+		if (state1 < state2){
+			return -1;
+		}
+		if (state1 > state2){
+			return 1;
+		}
+		return 0;
+
+	}
+	compare_errors_desc(f1,f2){
+		return 0;
+	}
+	compare_errors_asc(f1,f2){
+		return 0;
+	}
+	compare_uploaded_items_desc(f1,f2){
+		var pk1 = f1.upload_response.result.item.pk;
+		var pk2 = f2.upload_response.result.item.pk;
+		if (pk1 < pk2){
+			return -1;
+		} else if (pk2 < pk1){
+			return 1;
+		}
+		return 0;
+	}
+	compare_uploaded_items_asc(f1,f2){
+		var pk1 = f1.upload_response.result.item.pk;
+		var pk2 = f2.upload_response.result.item.pk;
+		if (pk1 < pk2){
+			return 1;
+		} else if (pk2 < pk1){
+			return -1;
+		}
+		return 0;
+	}
+	compare_file_states_asc(f1,f2){
+		function file_state(file){
+	        var status = "";
+
+	        if (!file.captured_on_time && !file.captured_on_date && !file.captured_on_timezone){
+	        	status = "Sin momento";
+	        } else if (!file.captured_on_date){
+				status = "Sin fecha";
+			} else if (!file.captured_on_time) {
+				status = "Sin tiempo";
+			} else if (!file.captured_on_timezone) {
+				status = "Sin zona horaria";
+			} else if (!file.captured_on_inrange){
+				status = "Fuera de rango";	
+			} else {
+				status = "Listo";
+			}
+
+			if (!file.item_type){
+				if (status == "Listo"){
+					status = "Sin tipo"
+				} else {
+					status += " y sin tipo"
+				}
+			}
+
+			return status;
+		}
+		var state1 = file_state(f1);
+		var state2 = file_state(f2);
+		if (state1 < state2){
+			return 1;
+		}
+		if (state1 > state2){
+			return -1;
+		}
+		return 0;
+
+	}
+	compare_file_timezones_desc(f1,f2){
+		if (!f1.captured_on_timezone && !f2.captured_on_timezone){
+			return 0;
+		} else if (!f1.captured_on_timezone){
+			return -1;
+		} else if (!f2.captured_on_timezone){
+			return 1;
+		}
+
+		if (f1.captured_on_timezone < f2.captured_on_timezone){
+			return -1;
+		}
+		if (f1.captured_on_timezone > f2.captured_on_timezone){
+			return 1;
+		}
+		return 0;
+	}
+	compare_file_timezones_asc(f1,f2){
+		if (!f1.captured_on_timezone && !f2.captured_on_timezone){
+			return 0;
+		} else if (!f1.captured_on_timezone){
+			return 1;
+		} else if (!f2.captured_on_timezone){
+			return -1;
+		}
+
+		if (f1.captured_on_timezone < f2.captured_on_timezone){
+			return 1;
+		}
+		if (f1.captured_on_timezone > f2.captured_on_timezone){
+			return -1;
+		}
+		return 0;
+	}
+	compare_file_types_desc(f1,f2){
+		if (!f1.item_type && !f2.item_type){
+			return 0;
+		} else if (!f1.item_type){
+			return -1;
+		} else if (!f2.item_type){
+			return 1;
+		}
+
+		if (f1.item_type < f2.item_type){
+			return -1;
+		}
+		if (f1.item_type > f2.item_type){
+			return 1;
+		}
+		return 0;
+	}
+	compare_file_types_asc(f1,f2){
+		if (!f1.item_type && !f2.item_type){
+			return 0;
+		} else if (!f1.item_type){
+			return 1;
+		} else if (!f2.item_type){
+			return -1;
+		}
+		
+		if (f1.item_type < f2.item_type){
+			return 1;
+		}
+		if (f1.item_type > f2.item_type){
+			return -1;
+		}
+		return 0;
+	}
+	compare_file_names_desc(f1,f2){
 		if (f1.name < f2.name){
 			return -1;
 		}
@@ -2924,48 +3340,24 @@ class FileUploader {
 		}
 		return 0;
 	}
-	compare_times(f1,f2){
-		if (!f1.captured_on_time && !f2.captured_on_time){
-			return 0;
-		} else if (!f1.captured_on_time){
-			return -1;
-		} else if (!f2.captured_on_time){
+	compare_file_names_asc(f1,f2){
+		if (f1.name < f2.name){
 			return 1;
-		} else {
-			function get_seconds(timestring){
-				var time_arr = timestring.split(":");
-				var time_len  = time_arr.length;
-				var seconds = 0;
-				switch(time_len){
-					case 1:{
-						seconds = parseInt(time_arr[0])*60*60;
-						break;
-					}
-					case 2:{
-						seconds = parseInt(time_arr[0])*60*60+parseInt(time_arr[1])*60;
-						break;
-					}
-					case 3:{
-						seconds = parseInt(time_arr[0])*60*60+parseInt(time_arr[1])*60+parseInt(time_arr[2]);
-						break;
-					}
-				}
-
-				return seconds;
-			}
-			var seconds1 = get_seconds(f1.captured_on_time);
-			var seconds2 = get_seconds(f2.captured_on_time);
-
-			if (seconds1 < seconds2){
-				return -1;
-			} else if (seconds2 < seconds1){
-				return 1;
-			} else {
-				return 0;
-			}
 		}
+		if (f1.name > f2.name){
+			return -1;
+		}
+		return 0;
 	}
-	compare_dates(f1,f2){
+	compare_datetimes_desc(f1,f2){
+		if (!f1.captured_on_timezone && !f2.captured_on_timezone){
+			return 0;
+		} else if (!f1.captured_on_timezone){
+			return -1;
+		} else if (!f2.captured_on_timezone){
+			return 1;
+		}
+
 		if (!f1.captured_on_date && !f2.captured_on_date){
 			return 0;
 		} else if (!f1.captured_on_date){
@@ -2973,10 +3365,16 @@ class FileUploader {
 		} else if (!f2.captured_on_date){
 			return 1;
 		} else {
-			function lazy_moment(datestring){
+			function lazy_moment(datestring,timestring,timezone){
+				if (!timestring){
+					timestring = "";
+				}
 				var date_arr = datestring.split("-");
 				var date_len = date_arr.length;
+				var time_arr = timestring.split(":");
+				var time_len = time_arr.length;
 				var extended_date = datestring;
+				var format = "YYYY-MM-DD";
 
 				switch (date_len){
 					case 1:{
@@ -2987,16 +3385,34 @@ class FileUploader {
 						extended_date += "-01"; 
 						break;
 					}
+					case 3:{
+						switch(time_len){
+							case 2:{
+								format = "YYYY-MM-DD HH:mm";
+								extended_date = extended_date+" "+timestring;
+								break;
+							}
+							case 3:{
+								format = "YYYY-MM-DD HH:mm:ss";
+								extended_date = extended_date+" "+timestring;
+								break;
+							}
+							default:{
+								break;
+							}
+						}
+					}
 					default:{
 						break;
 					}
 				}
-
-				return {'moment':moment(extended_date,"YYYY-MM-DD",true),'valid_up_to':date_len}
+				var dmoment = moment(extended_date,format,true);
+				dmoment.tz(timezone);
+				return {'moment':dmoment,'valid_up_to':date_len+time_len}
 			}
 
-			var lazy_moment1 = lazy_moment(f1.captured_on);
-			var lazy_moment2 = lazy_moment(f2.captured_on);
+			var lazy_moment1 = lazy_moment(f1.captured_on_date,f1.captured_on_time,f1.captured_on_timezone);
+			var lazy_moment2 = lazy_moment(f2.captured_on_date,f2.captured_on_time,f2.captured_on_timezone);
 
 			var level = 'year';
 			var valid_up_to = Math.min(lazy_moment1.valid_up_to,lazy_moment2.valid_up_to)
@@ -3005,16 +3421,134 @@ class FileUploader {
 				level = 'month';
 			} else if (valid_up_to == 3){
 				level = 'day';
+			} else if (valid_up_to == 5) {
+				level = 'minute';
+			} else if (valid_up_to == 6){
+				level = 'second';
 			}
 
-			if (lazy_moment1.moment.isBefore(lazy_moment2.moment,level)){
+			if (lazy_moment1.moment.utc().isBefore(lazy_moment2.moment.utc(),level)){
 				return -1;
-			} else if (lazy_moment2.moment.isBefore(lazy_moment1.moment,level)){
+			} else if (lazy_moment2.moment.utc().isBefore(lazy_moment1.moment.utc(),level)){
 				return 1;
 			} else {
 				return 0;
 			}
 		}
+	}
+	compare_datetimes_asc(f1,f2){
+		if (!f1.captured_on_timezone && !f2.captured_on_timezone){
+			return 0;
+		} else if (!f1.captured_on_timezone){
+			return 1;
+		} else if (!f2.captured_on_timezone){
+			return -1;
+		}
+
+		if (!f1.captured_on_date && !f2.captured_on_date){
+			return 0;
+		} else if (!f1.captured_on_date){
+			return 1;
+		} else if (!f2.captured_on_date){
+			return -1;
+		} else {
+			function lazy_moment(datestring,timestring,timezone){
+				if (!timestring){
+					timestring = "";
+				}
+				var date_arr = datestring.split("-");
+				var date_len = date_arr.length;
+				var time_arr = timestring.split(":");
+				var time_len = time_arr.length;
+				var extended_date = datestring;
+				var format = "YYYY-MM-DD";
+
+				switch (date_len){
+					case 1:{
+						extended_date += "-01-01";
+						break;
+					}
+					case 2:{
+						extended_date += "-01"; 
+						break;
+					}
+					case 3:{
+						switch(time_len){
+							case 2:{
+								format = "YYYY-MM-DD HH:mm";
+								extended_date = extended_date +" "+ timestring;
+								break;
+							}
+							case 3:{
+								format = "YYYY-MM-DD HH:mm:ss";
+								extended_date = extended_date +" "+ timestring;
+								break;
+							}
+							default:{
+								break;
+							}
+						}
+					}
+					default:{
+						break;
+					}
+				}
+				var dmoment = moment(extended_date,format,true);
+				dmoment.tz(timezone);
+				return {'moment':dmoment,'valid_up_to':date_len+time_len}
+			}
+
+			var lazy_moment1 = lazy_moment(f1.captured_on_date,f1.captured_on_time,f1.captured_on_timezone);
+			var lazy_moment2 = lazy_moment(f2.captured_on_date,f2.captured_on_time,f2.captured_on_timezone);
+
+			var level = 'year';
+			var valid_up_to = Math.min(lazy_moment1.valid_up_to,lazy_moment2.valid_up_to)
+
+			if (valid_up_to == 2){
+				level = 'month';
+			} else if (valid_up_to == 3){
+				level = 'day';
+			} else if (valid_up_to == 5) {
+				level = 'minute';
+			} else if (valid_up_to == 6){
+				level = 'second';
+			}
+
+			if (lazy_moment1.moment.utc().isBefore(lazy_moment2.moment.utc(),level)){
+				return 1;
+			} else if (lazy_moment2.moment.utc().isBefore(lazy_moment1.moment.utc(),level)){
+				return -1;
+			} else {
+				return 0;
+			}
+		}
+	}
+	get_file_state(file){
+        var status = "";
+
+        if (!file.captured_on_time && !file.captured_on_date && !file.captured_on_timezone){
+        	status = "Sin momento";
+        } else if (!file.captured_on_date){
+			status = "Sin fecha";
+		} else if (!file.captured_on_time) {
+			status = "Sin tiempo";
+		} else if (!file.captured_on_timezone) {
+			status = "Sin zona horaria";
+		} else if (!file.captured_on_inrange){
+			status = "Fuera de rango";	
+		} else {
+			status = "Listo";
+		}
+
+		if (!file.item_type){
+			if (status == "Listo"){
+				status = "Sin tipo"
+			} else {
+				status += " y sin tipo"
+			}
+		}
+
+		return status;
 	}
 	get_item_type(file){
 	  if (this.item_types.length == 1){
@@ -3125,19 +3659,19 @@ class FileUploader {
 			name_arr = ['files','errors','duplicates','uploads'];
 		}
 		if (name_arr.includes('files')){
-			var file_page = this.get_file_page(this.file_page_number, this.per_page, this.is_fixable);
+			var file_page = this.get_file_page(this.file_page_number, this.per_page, this.is_fixable,this.files_sort_by.function);
 			this.render_file_list(file_page);
 		}
 		if (name_arr.includes('errors')){
-			var error_page = this.get_file_page(this.error_page_number, this.per_page, this.has_errors);
+			var error_page = this.get_file_page(this.error_page_number, this.per_page, this.has_errors,this.errors_sort_by.function);
 			this.render_error_list(error_page);
 		}
 		if (name_arr.includes('duplicates')){
-			var duplicate_page = this.get_file_page(this.duplicate_page_number, this.per_page, this.is_duplicate);
+			var duplicate_page = this.get_file_page(this.duplicate_page_number, this.per_page, this.is_duplicate,this.duplicates_sort_by.function);
 			this.render_duplicate_list(duplicate_page);
 		}
 		if (name_arr.includes('uploads')){
-			var upload_page = this.get_file_page(this.upload_page_number, this.per_page, this.is_uploaded);
+			var upload_page = this.get_file_page(this.upload_page_number, this.per_page, this.is_uploaded,this.uploads_sort_by.function);
 			this.render_upload_list(upload_page);
 		}
 	}
@@ -3261,7 +3795,6 @@ class FileUploader {
 	toggle_status(file_id) {
 		var file = this.get_file_by_id(file_id);
 		if (file){
-			var message = "Listo";
 			var date_ready = true;
 			var time_ready = true;
 			var tz_ready = true;
@@ -3290,34 +3823,15 @@ class FileUploader {
 				$(tzinput).removeClass("incorrect_pattern");
 			}
 
-			if (!date_ready && !time_ready && !tz_ready){
-				message = "Sin momento";
-			} else if (!date_ready){
-				message = "Sin fecha";
-			} else if (!time_ready) {
-				message = "Sin tiempo";
-			} else if (!tz_ready) {
-				message = "Sin zona horaria";
-			} else if (!file.captured_on_inrange){
-				message = "Fuera de rango";	
-			} else {
-				message = "Listo";
-			}
+			var status = this.get_file_state(file);
+			statustext.textContent = status;
 
-			if (!file.item_type){
-				if (message == "Listo"){
-					message = "Sin tipo"
-				} else {
-					message += " y sin tipo"
-				}
-			}
-
-			statustext.textContent = message;
-
-			if (message == "Listo"){
+			if (status == "Listo"){
+				$(statustext).removeClass("upload_not_ready");
 				statustext.style.display = "none";
 				status_btn.style.display = "inline-block";
 			} else {
+				$(statustext).addClass("upload_not_ready");
 				statustext.style.display = "inline-block";
 				status_btn.style.display = "none";
 			}
