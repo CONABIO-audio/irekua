@@ -15,7 +15,7 @@ class Annotation(IrekuaModelBaseUser):
         (LOW, _('uncertain')),
         (MEDIUM, _('somewhat certain')),
         (HIGH, _('certain')),
-     ]
+    ]
     QUALITY_OPTIONS = [
         (LOW, _('low')),
         (MEDIUM, _('medium')),
@@ -105,8 +105,8 @@ class Annotation(IrekuaModelBaseUser):
         )
 
     def __str__(self):
-        msg = _('Annotation %(annotation_id)s of item %(item_id)s')
-        params = dict(annotation_id=self.id, item_id=self.item)
+        msg = _('Annotation of item %(item_id)s')
+        params = dict(item_id=self.item)
         return msg % params
 
     def clean(self):
@@ -137,10 +137,11 @@ class Annotation(IrekuaModelBaseUser):
         except ValidationError as error:
             raise ValidationError({'annotation_configuration': error})
 
-        try:
-            self.validate_labels(self.labels)
-        except ValidationError as error:
-            raise ValidationError({'labels': error})
+        if self.id:
+            try:
+                self.validate_labels(self.labels.all())
+            except ValidationError as error:
+                raise ValidationError({'labels': error})
 
         super(Annotation, self).clean()
 

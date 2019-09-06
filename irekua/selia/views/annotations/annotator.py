@@ -20,7 +20,13 @@ class CollectionItemAnnotatorView(SeliaAnnotationView):
                 args=[mark_safe('item_type_pk')]),
             'annotation_types': reverse(
                 'rest-api:collectiontype-annotation-types',
-                args=[collection.collection_type.pk])
+                args=[collection.collection_type.pk]),
+            'annotations': reverse(
+                'rest-api:item-annotations',
+                args=[self.item.pk]),
+            'annotation_detail': reverse(
+                'rest-api:annotation-detail',
+                args=[mark_safe('annotation_pk')]),
         }
 
     def get_context_data(self, *args, **kwargs):

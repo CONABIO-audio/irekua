@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from rest_framework import serializers
 
 from database.models import Annotation
+from database.models import AnnotationTool
 
 
 class SelectSerializer(serializers.ModelSerializer):
@@ -49,15 +50,24 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
+class AnnotationToolSerializer(serializers.Serializer):
+    name = serializers.CharField(required=True)
+    version = serializers.CharField(required=True)
+    description = serializers.CharField(required=False)
+    logo = serializers.CharField(required=False)
+    website = serializers.CharField(required=False)
+    configuration_schema = serializers.JSONField(required=False)
+
+
 class CreateSerializer(serializers.ModelSerializer):
-    label = serializers.JSONField()
+    annotation_tool = AnnotationToolSerializer()
 
     class Meta:
         model = Annotation
         fields = (
             'event_type',
             'annotation',
-            'label',
+            'labels',
             'certainty',
             'quality',
             'commentaries',
@@ -70,11 +80,28 @@ class CreateSerializer(serializers.ModelSerializer):
         item = self.context['item']
         user = self.context['request'].user
 
+        annotation_tool_info = validated_data.pop('annotation_tool')
+
+        name = annotation_tool_info.pop('name')
+        version = annotation_tool_info.pop('version')
+        annotation_tool, _ = AnnotationTool.objects.get_or_create(
+            name=name,
+            version=version,
+            defaults=annotation_tool_info)
+        annotation_tool.save()
+
         validated_data['item'] = item
         validated_data['created_by'] = user
         validated_data['modified_by'] = user
+        validated_data['annotation_tool'] = annotation_tool
 
-        return super().create(validated_data)
+        labels = validated_data.pop('labels')
+        annotation = Annotation(**validated_data)
+        annotation.save()
+
+        annotation.labels.set(labels)
+        annotation.save()
+        return annotation
 
     def update(self, validated_data):
         user = self.context['request'].user
