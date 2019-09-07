@@ -97,7 +97,7 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
         context = super().get_serializer_context()
 
         try:
-            annotation_id = self.get_object()
+            annotation = self.get_object()
         except (KeyError, AssertionError, AttributeError):
             annotation = None
 
@@ -160,7 +160,7 @@ class AnnotationViewSet(mixins.UpdateModelMixin,
     def get_list_queryset(self):
         user = self.request.user
 
-        if user.is_special():
+        if user.is_special:
             return models.Annotation.objects.all()
 
         collection_type_queryset = self.get_collection_type_admin_queryset(user)

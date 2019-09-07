@@ -54,7 +54,7 @@
 
   let info = {
     item: "{{ item.pk }}",
-    item_type: "{{ item.item_type.pk }}",
+    itemType: "{{ item.item_type.pk }}",
   }
 
   function getCookie(name) {
@@ -74,7 +74,6 @@
   }
   var csrftoken = getCookie('csrftoken');
 
-  console.log(csrftoken);
   function csrfSafeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
   }

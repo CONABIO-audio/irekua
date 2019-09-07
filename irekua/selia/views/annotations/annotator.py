@@ -14,10 +14,10 @@ class CollectionItemAnnotatorView(SeliaAnnotationView):
             'terms_autocomplete': reverse('selia:term_autocomplete'),
             'item': reverse(
                 'rest-api:item-detail',
-                args=['item_pk']),
+                args=[self.item.pk]),
             'item_type': reverse(
                 'rest-api:itemtype-detail',
-                args=[mark_safe('item_type_pk')]),
+                args=[self.item.item_type.pk]),
             'annotation_types': reverse(
                 'rest-api:collectiontype-annotation-types',
                 args=[collection.collection_type.pk]),

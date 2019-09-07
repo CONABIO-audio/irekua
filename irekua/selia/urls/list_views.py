@@ -63,8 +63,4 @@ urlpatterns = [
         'user/sites/',
         list_views.ListUserSitesView.as_view(),
         name='user_sites'),
-    path(
-        'items/detail/<pk>/annotations/',
-        list_views.ListAnnotationView.as_view(),
-        name='item_annotations')
 ]

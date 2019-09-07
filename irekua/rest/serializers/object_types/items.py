@@ -30,7 +30,7 @@ class ListSerializer(serializers.ModelSerializer):
 
 
 class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    event_types = events.SelectSerializer(
+    event_types = events.DetailSerializer(
         many=True,
         read_only=True)
     mime_types = mime_types.SelectSerializer(

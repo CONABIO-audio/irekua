@@ -433,3 +433,13 @@ a {
 .inner-shadow-sm {
   box-shadow: inset 0 .125rem .25rem rgba(0,0,0,.075)!important;
 }
+
+.lavander-dark {
+  background-color: var(--lavander-dark) !important;
+}
+
+
+.nav-tabs > .nav-item > .nav-link.active.light-green  {
+  background-color: var(--light-green) !important;
+  border-bottom-color: var(--light-green) !important;
+}

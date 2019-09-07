@@ -223,7 +223,10 @@ class ItemViewSet(mixins.UpdateModelMixin,
 
     @annotations.mapping.post
     def add_annotation(self, request, pk=None):
-        return self.create_related_object_view()
+        try:
+            return self.create_related_object_view()
+        except Exception as e:
+            print(e)
 
     @action(
         detail=True,

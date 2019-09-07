@@ -12,10 +12,10 @@ class IsCollectionAdmin(BasePermission):
         user = request.user
 
         item = obj.item
-        sampling_event = item.sampling_event
+        sampling_event = item.sampling_event_device.sampling_event
         collection = sampling_event.collection
 
-        return collection.is_collection_admin(user)
+        return collection.is_admin(user)
 
 
 class IsCollectionTypeAdmin(BasePermission):
@@ -23,7 +23,7 @@ class IsCollectionTypeAdmin(BasePermission):
         user = request.user
 
         item = obj.item
-        sampling_event = item.sampling_event
+        sampling_event = item.sampling_event_device.sampling_event
         collection = sampling_event.collection
         collection_type = collection.collection_type
 
@@ -35,7 +35,7 @@ class HasUpdatePermission(BasePermission):
         user = request.user
 
         item = obj.item
-        sampling_event = item.sampling_event
+        sampling_event = item.sampling_event_device.sampling_event
         collection = sampling_event.collection
 
         return collection.has_permission(
@@ -47,7 +47,7 @@ class HasViewPermission(BasePermission):
         user = request.user
 
         item = obj.item
-        sampling_event = item.sampling_event
+        sampling_event = item.sampling_event_device.sampling_event
         collection = sampling_event.collection
 
         return collection.has_permission(
@@ -59,7 +59,7 @@ class HasVotePermission(BasePermission):
         user = request.user
 
         item = obj.item
-        sampling_event = item.sampling_event
+        sampling_event = item.sampling_event_device.sampling_event
         collection = sampling_event.collection
 
         return collection.has_permission(

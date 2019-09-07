@@ -6,6 +6,10 @@ from rest_framework import serializers
 from database.models import Annotation
 from database.models import AnnotationTool
 
+from rest.serializers.terms.terms import ListSerializer as TermListSerializer
+from rest.serializers.terms.terms import ComplexTermSerializer
+from rest.serializers.users.users import ListSerializer as UserListSerializer
+
 
 class SelectSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,6 +21,9 @@ class SelectSerializer(serializers.ModelSerializer):
 
 
 class ListSerializer(serializers.ModelSerializer):
+    labels = TermListSerializer(many=True)
+    created_by = UserListSerializer()
+
     class Meta:
         model = Annotation
         fields = (
@@ -24,10 +31,17 @@ class ListSerializer(serializers.ModelSerializer):
             'id',
             'item',
             'event_type',
+            'annotation',
+            'annotation_type',
+            'created_on',
+            'created_by',
+            'labels'
         )
 
 
-class DetailSerializer(serializers.HyperlinkedModelSerializer):
+class DetailSerializer(serializers.ModelSerializer):
+    labels = ComplexTermSerializer(many=True)
+
     class Meta:
         model = Annotation
         fields = (
@@ -36,7 +50,7 @@ class DetailSerializer(serializers.HyperlinkedModelSerializer):
             'annotation_tool',
             'item',
             'event_type',
-            'label',
+            'labels',
             'annotation_type',
             'annotation',
             'annotation_configuration',
@@ -103,8 +117,21 @@ class CreateSerializer(serializers.ModelSerializer):
         annotation.save()
         return annotation
 
-    def update(self, validated_data):
+
+class UpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Annotation
+        fields = (
+            'annotation',
+            'labels',
+            'certainty',
+            'quality',
+            'commentaries',
+            'annotation_configuration',
+        )
+
+    def update(self, instance, validated_data):
         user = self.context['request'].user
 
         validated_data['modified_by'] = user
-        return super().update(validated_data)
+        return super().update(instance, validated_data)

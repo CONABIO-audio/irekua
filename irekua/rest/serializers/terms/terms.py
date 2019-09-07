@@ -65,3 +65,49 @@ class UpdateSerializer(serializers.ModelSerializer):
             'description',
             'metadata'
         )
+
+
+class EntailmentSerializer(serializers.Serializer):
+    term_type = serializers.CharField(
+        source='target.term_type')
+    description = serializers.CharField(
+        source='target.description')
+    value = serializers.CharField(
+        source='target.value')
+    id = serializers.IntegerField(
+        source='target.id')
+    scope = serializers.CharField(
+        source='target.scope')
+
+
+class TermSerializer(serializers.ModelSerializer):
+    term_type = serializers.StringRelatedField(many=False)
+
+    class Meta:
+        model = Term
+        fields = [
+            'id',
+            'scope',
+            'term_type',
+            'value',
+            'description',
+        ]
+
+
+class ComplexTermSerializer(serializers.ModelSerializer):
+    term_type = serializers.StringRelatedField(many=False)
+    entailments = EntailmentSerializer(
+        many=True,
+        read_only=True,
+        source='entailment_source')
+
+    class Meta:
+        model = Term
+        fields = [
+            'id',
+            'scope',
+            'term_type',
+            'value',
+            'description',
+            'entailments',
+        ]
