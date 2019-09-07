@@ -30,8 +30,8 @@ class ListSerializer(serializers.ModelSerializer):
         many=False,
         read_only=True,
         source='annotationtype')
-    icon = serializers.URLField(
-        source='annotationtype.icon.url')
+    icon = serializers.ImageField(
+        source='annotationtype.icon')
     annotation_schema = serializers.JSONField(
         source='annotationtype.annotation_schema')
 

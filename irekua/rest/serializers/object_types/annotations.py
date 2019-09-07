@@ -23,7 +23,6 @@ class ListSerializer(serializers.ModelSerializer):
             'url',
             'name',
             'description',
-            'icon'
         )
 
 
