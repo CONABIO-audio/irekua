@@ -1291,7 +1291,7 @@ class FileUploader {
 
 		this.blank_file_list = document.createElement('div');
 		this.blank_file_list.className = "row justify-content-center blank_item_list w-100";
-		this.blank_file_list.height = "800px";
+		this.blank_file_list.height = "600px";
 
 
 		var file_picker_col = document.createElement('div');
@@ -1470,8 +1470,8 @@ class FileUploader {
 
 	    this.file_list = document.createElement('div');
 	    this.file_list.className = "upload_list";
-	    this.file_list.style["min-height"] = "650px";
-	    this.file_list.style["max-height"] = "650px";
+	    this.file_list.style["min-height"] = "450px";
+	    this.file_list.style["max-height"] = "450px";
 
 	    this.file_list_table.appendChild(header);
 	    this.file_list_table.appendChild(this.file_list);
@@ -1584,7 +1584,7 @@ class FileUploader {
 		this.blank_error_list = document.createElement('div');
 		this.blank_error_list.className = "row blank_item_list justify-content-center w-100";
 		this.blank_error_list.style.border = "none";
-		this.blank_error_list.height = "500px";
+		this.blank_error_list.height = "300px";
 
 		var blank_message = document.createElement('a');
 		blank_message.innerHTML = "No hay errores"
@@ -1692,7 +1692,7 @@ class FileUploader {
 		this.blank_duplicate_list = document.createElement('div');
 		this.blank_duplicate_list.className = "row blank_item_list justify-content-center w-100";
 		this.blank_duplicate_list.style.border = "none";
-		this.blank_duplicate_list.height = "500px";
+		this.blank_duplicate_list.height = "300px";
 
 		var blank_message = document.createElement('a');
 		blank_message.innerHTML = "No hay duplicados"
@@ -1799,7 +1799,7 @@ class FileUploader {
 		this.blank_upload_list = document.createElement('div');
 		this.blank_upload_list.className = "row blank_item_list justify-content-center w-100";
 		this.blank_upload_list.style.border = "none";
-		this.blank_upload_list.height = "500px";
+		this.blank_upload_list.height = "300px";
 
 		var blank_message = document.createElement('a');
 		blank_message.innerHTML = "No se ha subido ningún archivo nuevo"

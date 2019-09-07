@@ -121,8 +121,8 @@
 }
 .upload_list {
   overflow-y: scroll;
-  min-height:615px;
-  max-height:615px;
+  min-height:415px;
+  max-height:415px;
   overflow-x:hidden;
   padding-right: 15px;
 }
@@ -349,7 +349,7 @@ select option {
 }
 
 .blank_item_list {
-  height: 700px;
+  height: 500px;
   text-align: center;
   border: 2px dashed;
   align-items: center;
