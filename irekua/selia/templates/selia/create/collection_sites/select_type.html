@@ -34,7 +34,7 @@
   <div class="form-container mb-4">
     <div class="row d-flex flex-wrap justify-content-center">
       {% for site_type in list %}
-      <a class="stretched-link btn btn-link" href="{% url 'selia:create_collection_site' %}?{{ request.GET.urlencode }}&site_type={{ site_type.pk }}">
+      <a class="btn btn-link" href="{% url 'selia:create_collection_site' %}?{{ request.GET.urlencode }}&site_type={{ site_type.pk }}">
         {% include 'selia/components/select_list_items/site_type.html' with item=site_type %}
       </a>
       {% endfor %}
