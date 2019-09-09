@@ -11,7 +11,9 @@ class CollectionItemAnnotatorView(SeliaAnnotationView):
     def get_urls(self):
         collection = self.item.sampling_event_device.sampling_event.collection
         return {
-            'terms_autocomplete': reverse('selia:term_autocomplete'),
+            'terms_autocomplete': reverse(
+                'selia:term_autocomplete',
+                args=[mark_safe('event_type_pk')]),
             'item': reverse(
                 'rest-api:item-detail',
                 args=[self.item.pk]),
