@@ -193,4 +193,5 @@ REST_FRAMEWORK = {
 }
 
 # Email configurations
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
 EMAIL = 'selia@conabio.gob.mx'

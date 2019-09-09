@@ -50,7 +50,7 @@ urlpatterns = [
         autocomplete.UserAutocomplete.as_view(),
         name='users_autocomplete'),
     path(
-        'autocomplete/<pk>/terms/',
+        'autocomplete/event_type/<pk>/terms/',
         TermListView.as_view(),
         name='term_autocomplete')
 ]

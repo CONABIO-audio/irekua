@@ -38,6 +38,10 @@
         <p class="text-muted">{{ object.last_name }}</p>
       </div>
     </div>
+
+    <div class="row py-4">
+      <a href="{% url 'registration:password_reset' %}" class="btn btn-link text-primary">{% trans 'Change password' %}</a>
+    </div>
   </div>
 
   {% if object.institution %}

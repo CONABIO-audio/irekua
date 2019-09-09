@@ -74,7 +74,7 @@ class MetacollectionAutocomplete(autocomplete.Select2QuerySetView):
 
 class TermsAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
-        qs = irekua_models.Collection.objects.all()
+        qs = irekua_models.Term.objects.all()
 
         term_type = self.forwarded.get('term_type', None)
 
@@ -82,7 +82,7 @@ class TermsAutocomplete(autocomplete.Select2QuerySetView):
             qs = qs.filter(term_type=term_type)
 
         if self.q:
-            qs = qs.filter(name__istartswith=self.q)
+            qs = qs.filter(value__istartswith=self.q)
 
         return qs
 

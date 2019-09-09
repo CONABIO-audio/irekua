@@ -4,7 +4,10 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.utils.translation import gettext_lazy as _
 
+from dal import autocomplete
+
 from . import models
+
 
 
 @admin.register(
@@ -25,7 +28,6 @@ from . import models
     models.DeviceType,
     models.Entailment,
     models.EntailmentType,
-    models.EventType,
     models.Institution,
     models.Item,
     models.ItemType,
@@ -143,6 +145,20 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ('email', 'username', 'first_name', 'last_name', 'institution')
     ordering = ('username', )
     filter_horizontal = ()
+
+
+class EventTypeForm(forms.ModelForm):
+    class Meta:
+        model = models.EventType
+        fields = ('__all__')
+        widgets = {
+            'should_imply': autocomplete.ModelSelect2Multiple(
+                url='selia:terms_autocomplete')
+        }
+
+class EventType(admin.ModelAdmin):
+    form = EventTypeForm
+admin.site.register(models.EventType, EventType)
 
 
 admin.site.register(models.User, UserAdmin)

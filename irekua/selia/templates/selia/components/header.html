@@ -1,7 +1,8 @@
 {% extends 'irekua/components/header.html' %}
+{% load static %}
 
 {% block nav-brand %}
-<a class="navbar-brand" style="color: white !important" href={% url 'selia:home' %}>Selia</a>
+<img src="{% static 'selia/img/selia.png' %}" height="50px" class="mr-2"/><a class="navbar-brand" style="color: white !important" href={% url 'selia:home' %}>Selia</a>
 {% endblock nav-brand %}
 
 {% block tab-items %}
