@@ -16,11 +16,11 @@ SUBJECT = _(
 
 MESSAGE = _(
     'Hi!\n'
-    'You have been invited to join Selia by %(inviter)s! '
+    'You have been invited to join Selia by {inviter}! '
     'A temporal password has been created for you. To access your temporal account '
-    'please enter the following site %(url)s with the info provided.\n\n'
-    'PASSWORD: %(password)s\n'
-    'USERNAME: %(username)s\n\n'
+    'please enter the following site {url} with the info provided.\n\n'
+    'PASSWORD: {password}\n'
+    'USERNAME: {username}\n\n'
     'Cheers!\n'
     'The Selia team'
 )
@@ -45,7 +45,7 @@ class CreateUserView(SeliaCreateView):
             inviter=self.request.user.username,
             password=user.password,
             username=user.username,
-            url=reverse('registration:login'))
+            url=self.request.build_absolute_uri(reverse('registration:login')))
 
         send_mail(
             SUBJECT,
