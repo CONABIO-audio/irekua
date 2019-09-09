@@ -32,9 +32,12 @@ class Filter(FilterSet):
                 }
             }
         }
+
     def user_owns_object(self, queryset, name, value):
-        user = self.request.user
-        return queryset.filter(created_by=user)
+        if value:
+            user = self.request.user
+            return queryset.filter(created_by=user)
+        return queryset
 
 search_fields = (
     'annotation_type',

@@ -29,7 +29,7 @@ class Filter(FilterSet):
     def user_owns_object(self, queryset, name, value):
         if value:
             user = self.request.user
-            return queryset.filter(physical_device__created_by=user)
+            return queryset.filter(collection_device__created_by=user)
         return queryset
 
 search_fields = (
