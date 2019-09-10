@@ -26,10 +26,12 @@ class Filter(FilterSet):
             'site__locality': ['icontains'],
             'created_on': ['gt', 'lt']
         }
-    def user_owns_object(self, queryset, name, value):
-        user = self.request.user
-        return queryset.filter(site__created_by=user)
 
+    def user_owns_object(self, queryset, name, value):
+        if value:
+            user = self.request.user
+            return queryset.filter(created_by=user)
+        return queryset
 
 
 search_fields = (

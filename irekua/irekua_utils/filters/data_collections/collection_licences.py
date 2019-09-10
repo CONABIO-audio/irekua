@@ -32,8 +32,10 @@ class Filter(FilterSet):
         }
 
     def user_owns_object(self, queryset, name, value):
-        user = self.request.user
-        return queryset.filter(created_by=user)
+        if value:
+            user = self.request.user
+            return queryset.filter(physical_device__created_by=user)
+        return queryset
 
 search_fields = (
     'internal_id',

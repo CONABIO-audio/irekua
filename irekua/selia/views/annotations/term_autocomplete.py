@@ -1,3 +1,5 @@
+from django.db.models import Q
+
 from rest_framework import serializers
 from rest_framework.generics import ListAPIView
 from django_filters import FilterSet
@@ -95,4 +97,11 @@ class TermFilter(FilterSet):
 class TermListView(ListAPIView):
     serializer_class = FullTermSerializer
     filterset_class = TermFilter
-    queryset = models.Term.objects.all()
+
+    def get_queryset(self):
+        queryset = models.Term.objects.all()
+
+        event_type = models.EventType.objects.get(pk=self.kwargs['pk'])
+        for term in event_type.should_imply.all():
+            queryset = queryset.filter(entailment_source__target=term)
+        return queryset

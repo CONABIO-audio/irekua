@@ -25,6 +25,10 @@ def get_queryset(f):
 
 
 class Filter(FilterSet):
+    is_own = BooleanFilter(
+        method='user_owns_object',
+        label=_('Mine'),
+        widget=forms.CheckboxInput())
 
     class Meta:
         model = SamplingEvent
@@ -55,6 +59,12 @@ class Filter(FilterSet):
                 }
             }
         }
+
+    def user_owns_object(self, queryset, name, value):
+        if value:
+            user = self.request.user
+            return queryset.filter(created_by=user)
+        return queryset
 
 
 search_fields = (

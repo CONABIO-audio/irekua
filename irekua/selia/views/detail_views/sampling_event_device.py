@@ -22,19 +22,19 @@ class SamplingEventDeviceUpdateForm(forms.ModelForm):
 class DetailSamplingEventDeviceView(SeliaDetailView):
     model = SamplingEventDevice
     form_class = SamplingEventDeviceUpdateForm
+    delete_redirect_url = 'selia:user_physical_devices'
 
     template_name = 'selia/detail/sampling_event_device.html'
-
     help_template = 'selia/components/help/sampling_event_device_detail.html'
     summary_template = 'selia/components/summaries/sampling_event_device.html'
     detail_template = 'selia/components/details/sampling_event_device.html'
     update_form_template = 'selia/components/update/sampling_event_device.html'
 
+    def get_delete_redirect_url_args(self):
+        return [self.object.sampling_event.pk]
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-
-
-
         sampling_event_device = self.object
         sampling_event = sampling_event_device.sampling_event
         sampling_event_type = sampling_event.sampling_event_type

@@ -22,7 +22,7 @@ class SelectCollectionUserRoleView(SeliaSelectView):
         url = reverse('selia:create_collection_user')
 
         query = self.request.GET.copy()
-        query['role_types'] = self.role_types.first().pk
+        query['role'] = self.role_types.first().pk
         full_url = '{url}?{query}'.format(
             url=url,
             query=query.urlencode())

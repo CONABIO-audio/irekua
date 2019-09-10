@@ -28,6 +28,8 @@ class DetailUserSiteView(SeliaDetailView):
     update_form_template = 'selia/components/update/site.html'
     viewer_template = 'selia/components/viewers/site.html'
 
+    delete_redirect_url = 'selia:user_sites'
+
     def has_view_permission(self):
         return self.object.created_by == self.request.user
 

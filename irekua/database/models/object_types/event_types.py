@@ -34,6 +34,14 @@ class EventType(IrekuaModelBase):
             'Valid term types with which to label this type '
             'of events'),
         blank=True)
+    should_imply = models.ManyToManyField(
+        'Term',
+        db_column='should_imply',
+        verbose_name='should imply',
+        help_text=_(
+            'Terms that should be implied (if meaningful) by '
+            'any terms used to describe this event type.'),
+        blank=True)
 
     class Meta:
         verbose_name = _('Event Type')

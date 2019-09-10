@@ -42,7 +42,7 @@
     <div class="row d-flex justify-content-center flex-wrap">
       {% for role in list %}
       <div class="col-3 p-4 bg-light list_item m-2">
-        <a class="strected-link" href="{% url 'selia:create_collection_user' %}?{{ request.GET.urlencode }}&role={{ role.pk }}">
+        <a class="btn" href="{% url 'selia:create_collection_user' %}?{{ request.GET.urlencode }}&role={{ role.pk }}">
           {% include 'selia/components/details/role.html' with object=role %}
         </a>
       </div>

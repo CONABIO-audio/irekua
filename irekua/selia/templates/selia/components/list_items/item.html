@@ -29,10 +29,16 @@
         <h6>{% trans 'Type' %}</h6>
         <div class="text-muted ml-4">{{ item.item_type.pk }}</div>
       </div>
-      <div class="row">
+      {% if item.tags.count != 0 %}
+      <div class="row d-flex flex-row">
         <h6>{% trans 'Tags' %}</h6>
-        <div class="text-muted ml-4">{{ item.tags.all }}</div>
+        <div class="d-inline mx-2">
+          {% for tag in item.tags.all %}
+          <span class="badge badge-dark">{{ tag }}</span>
+          {% endfor %}
+        </div>
       </div>
+      {% endif %}
   	</div>
 
     <div class="col">

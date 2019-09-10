@@ -36,24 +36,35 @@
     <div class="col">
       <h5 class="mt-0">{% trans 'File' %}</h5>
       <div class="text-muted ellipsis">
-      <a href="{{ object.item_file.url }}" target="_blank"><p>{{ object.item_file }}</p></a>
+        <a href="{{ object.item_file.url }}" target="_blank">{% trans 'Download' %}</a>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col">
       <h5 class="mt-0">{% trans 'Tags' %}</h5>
-      <p class="text-muted">{{ object.tags }}</p>
-    </div>
-    <div class="col">
-      <h5 class="mt-0">{% trans 'Media info' %}</h5>
-        <div class="d-flex flex-wrap">
-          {% show_json object.media_info %}
-        </div>
+      <div class="container-fluid">
+        {% for tag in item.tags.all %}
+        <span class="badge badge-dark">{{ tag }}</span>
+        {% empty %}
+        <span class="text-muted">{% trans 'No tags' %}</span>
+        {% endfor %}
+      </div>
     </div>
   </div>
+
+  {% if object.media_info %}
+  <h4 class="w-100 text-center">
+    <span class="border-bottom px-2">{% trans 'Media info' %}</span>
+  </h4>
+  <div class="d-flex flex-wrap">
+    {% show_json object.media_info %}
+  </div>
+  {% endif %}
   {% if object.metadata %}
-  <h4>{% trans 'Metadata' %}</h4>
+  <h4 class="w-100 text-center">
+    <span class="border-bottom px-2">{% trans 'Metadata' %}</span>
+  </h4>
   <div class="d-flex flex-wrap">
     {% show_json object.metadata %}
   </div>

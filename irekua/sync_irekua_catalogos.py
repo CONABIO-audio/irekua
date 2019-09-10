@@ -151,7 +151,11 @@ def process_term(all_terms, term, db_models):
     return db_term
 
 
+TERMS = {}
 def create_term(term_type, value, scope, metadata, db_models):
+    if (term_type.name, value, scope) in TERMS:
+        return TERMS[(term_type.name, value, scope)]
+
     if scope is None:
         db_term, _ = db_models.Term.objects.get_or_create(
             term_type=term_type,
@@ -160,6 +164,7 @@ def create_term(term_type, value, scope, metadata, db_models):
                 'metadata': metadata
             }
         )
+        TERMS[(term_type.name, value, scope)] = db_term
         return db_term
 
     db_term, _ = db_models.Term.objects.get_or_create(
@@ -168,8 +173,8 @@ def create_term(term_type, value, scope, metadata, db_models):
         scope=scope,
         defaults={
             'metadata': metadata
-        }
-    )
+        })
+    TERMS[(term_type.name, value, scope)] = db_term
     return db_term
 
 
