@@ -97,12 +97,16 @@ class FileUploader {
 		waveform_footer.style["margin-left"] = "auto";
 		waveform_footer.style["margin-right"] = "auto";
 		
-		var playpause = document.createElement('button');
-		playpause.className = "rounded";
-		playpause.style["background"] = "none !important";
-		playpause.innerHTML = "<i class='fas fa-play'></i><i class='fas fa-pause'></i>";
+		this.playpause = document.createElement('button');
+		this.playpause.className = "rounded";
+		this.playpause.innerHTML = "<i class='fas fa-pause'></i>";
 
-		waveform_footer.appendChild(playpause);
+		var rewind = document.createElement('button');
+		rewind.className = "rounded";
+		rewind.innerHTML = "<i class='fas fa-backward'></i>";
+
+		waveform_footer.appendChild(rewind);
+		waveform_footer.appendChild(this.playpause);
 
 		waveform_content.appendChild(waveform_header);
 		waveform_content.appendChild(waveform_body);
@@ -113,10 +117,17 @@ class FileUploader {
 		var widget = this;
 		$(this.waveform_container).on('hidden.bs.modal', function () {
     		widget.wavesurfer.pause();
+    		widget.playpause.innerHTML = "<i class='fas fa-play'></i>";
 		});
-
-		playpause.onclick = function(event){
-			widget.wavesurfer.playPause();
+		rewind.onclick = function(event){
+			widget.wavesurfer.seekTo(0);
+		}
+		this.playpause.onclick = function(event){
+			if (widget.wavesurfer.isPlaying()){
+				widget.wavesurfer.pause();
+			} else {
+				widget.wavesurfer.play();
+			}
 		}
 
 		this.waveform_container.appendChild(waveform_dialog);
@@ -3670,6 +3681,7 @@ class FileUploader {
 				    minPxPerSec: 1,
 				    height: 300,
 				    barWidth: 1,
+				    barGap: 1,
 	  				fillParent: false
 			});
 
@@ -3688,7 +3700,12 @@ class FileUploader {
 					return "00";
 				}
 			}
-
+			this.wavesurfer.on('play',function(){
+				widget.playpause.innerHTML = "<i class='fas fa-pause'></i>";
+			});
+			this.wavesurfer.on('pause',function(){
+				widget.playpause.innerHTML = "<i class='fas fa-play'></i>";
+			});
 			this.wavesurfer.on('audioprocess',function(){
 				if (widget.wavesurfer.isPlaying()){
 					var new_time = widget.wavesurfer.getCurrentTime();
