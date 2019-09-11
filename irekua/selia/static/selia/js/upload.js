@@ -85,11 +85,15 @@ class FileUploader {
 		waveform.style["background-color"] = "black";
 		waveform.id = "waveform";
 
+		var waveform_spec = document.createElement('div');
+		waveform_spec.id = "wave-spectrogram"
+
 		this.waveform_time = document.createElement('h5');
 		this.waveform_time.className = "text-light text-center"
 		this.waveform_time.style["padding-top"] = "20px";
 		this.waveform_time.id = "remainingTime";
 
+		waveform_body.appendChild(waveform_spec);
 		waveform_body.appendChild(waveform);
 
 		var waveform_footer = document.createElement('div');
@@ -119,6 +123,12 @@ class FileUploader {
     		widget.wavesurfer.pause();
     		widget.playpause.innerHTML = "<i class='fas fa-play'></i>";
 		});
+		        			
+
+		$(this.waveform_container).on('shown.bs.modal', function () {
+    		$('html').css("cursor", "auto");
+		});
+
 		rewind.onclick = function(event){
 			widget.wavesurfer.seekTo(0);
 		}
@@ -2134,6 +2144,7 @@ class FileUploader {
         	playbtn.innerHTML = "<i class='fas fa-file-audio'>"
         	var widget = this;
         	playbtn.addEventListener('click',function(event){
+        		
         		var load = false;
         		if (!widget.wavesurfer.file_id){
         			load = true;
@@ -2142,22 +2153,13 @@ class FileUploader {
         		}
 
         		if (load){
+        			
         			if (widget.wavesurfer.file_id){
         				widget.wavesurfer.pause();
         			}
-        			widget.wavesurfer.file_id = this.file_id;
         			widget.waveform_title.textContent = widget.get_file_by_id(this.file_id).name;
 	        		var dfile = widget.get_file_by_id(this.file_id);
-	        		widget.wavesurfer.empty();
-	        		widget.wavesurfer.load(URL.createObjectURL(dfile));
-	        		widget.wavesurfer.on('ready', function () {
-	        			var pxpersec = Math.round(900.0/widget.wavesurfer.getDuration());
-	        			widget.wavesurfer.params.minPxPerSec = pxpersec;
-	        			widget.wavesurfer.drawBuffer();
-						$(widget.waveform_container).modal();
-
-	    				widget.wavesurfer.play();
-					});
+	        		widget.refresh_wavesurfer(dfile);
         		} else {
 					$(widget.waveform_container).modal();
         			widget.wavesurfer.playPause();
@@ -3668,6 +3670,92 @@ class FileUploader {
 
 		return status;
 	}
+	refresh_wavesurfer(dfile){
+		$('html').css("cursor", "wait");
+	  	var audio_url = URL.createObjectURL(dfile);
+	  	var audio = new Audio();
+	  	var widget = this;
+	  	this.wavesurfer = null;
+	  	document.getElementById("waveform").innerHTML = "";
+	  	document.getElementById("wave-spectrogram").innerHTML = "";
+
+
+	  	$(audio).on("loadedmetadata",function(){
+	  		var pxpersec = Math.round(900.0/audio.duration);
+			widget.wavesurfer = WaveSurfer.create({
+					container:"#waveform",
+				    waveColor: 'white',
+				    progressColor: 'green',
+				    normalize: true,
+				    minPxPerSec: pxpersec,
+				    height: 200,
+				    barWidth: 1,
+				    barGap: 1,
+				    plugins: [
+				        WaveSurfer.spectrogram.create({
+				            wavesurfer: this,
+				            container: "#wave-spectrogram",
+				            labels: true
+				        })
+					],
+	  				fillParent: false
+			});
+
+			widget.wavesurfer["file_id"] = dfile.file_id;
+
+			function format_time_display(number){
+				if (number > 0){
+					if (number < 10){
+						return "0"+number;
+					} else {
+						return number;
+					}
+				} else {
+					return "00";
+				}
+			}
+			widget.wavesurfer.on('play',function(){
+				widget.playpause.innerHTML = "<i class='fas fa-pause'></i>";
+			});
+			widget.wavesurfer.on('pause',function(){
+				widget.playpause.innerHTML = "<i class='fas fa-play'></i>";
+			});
+			widget.wavesurfer.on('audioprocess',function(){
+				if (widget.wavesurfer.isPlaying()){
+					var new_time = widget.wavesurfer.getCurrentTime();
+					var hours = Math.floor(new_time/3600);
+					var minutes = Math.floor((new_time-hours*3600)/60);
+					var seconds = Math.floor(new_time-hours*3600-minutes*60);
+
+					widget.waveform_time.innerHTML = format_time_display(hours)+":"+format_time_display(minutes)+":"+format_time_display(seconds);
+				}
+			});
+			widget.wavesurfer.on('seek',function(position){
+				if (!widget.wavesurfer.isPlaying()){
+					var new_time = position*widget.wavesurfer.getDuration();
+					var hours = Math.floor(new_time/3600);
+					var minutes = Math.floor((new_time-hours*3600)/60);
+					var seconds = Math.floor(new_time-hours*3600-minutes*60);
+
+					widget.waveform_time.innerHTML = format_time_display(hours)+":"+format_time_display(minutes)+":"+format_time_display(seconds);
+				}
+
+				
+			});
+			widget.wavesurfer.on('ready', function () {
+				widget.wavesurfer.drawBuffer();
+				$(widget.waveform_container).modal();
+				widget.wavesurfer.play();
+			});
+
+			widget.wavesurfer.empty();
+	        widget.wavesurfer.load(URL.createObjectURL(dfile));
+	  	});
+
+	    audio.src = audio_url;
+
+
+	}
 	get_item_type(file){
 	  var ftype = file.type;
 	  if (ftype == "audio/wav"){
@@ -3679,9 +3767,16 @@ class FileUploader {
 				    progressColor: 'green',
 				    normalize: true,
 				    minPxPerSec: 1,
-				    height: 300,
+				    height: 200,
 				    barWidth: 1,
 				    barGap: 1,
+				    plugins: [
+				        WaveSurfer.spectrogram.create({
+				            wavesurfer: this,
+				            container: "#wave-spectrogram",
+				            labels: true
+				        })
+    				],
 	  				fillParent: false
 			});
 
