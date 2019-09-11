@@ -14,6 +14,7 @@ class FileUploader {
 		}
 		this.form = form;
 		this.title = title;
+		this.wavesurfer = null;
 		this.initialize();
 	}
 	initialize() {
@@ -28,6 +29,7 @@ class FileUploader {
 		this.total_error_pages = 0;
 		this.total_upload_pages = 0;
 		this.per_page = 10;
+
 		this.files_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
 		this.errors_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
 		this.duplicates_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
@@ -37,9 +39,88 @@ class FileUploader {
 	build_view() {
 		this.build_top_toolbar();
 		this.build_progress_bar();
+		this.build_wavesurfer();
 		this.build_body();
 	}
+	build_wavesurfer() {
+		this.waveform_container = document.createElement('div');
+		this.waveform_container.className = "modal fade";
+		this.waveform_container.role = "dialog";
+
+
+		var waveform_dialog = document.createElement('div');
+		waveform_dialog.className = "modal-dialog modal-lg modal-dialog-centered ";
+
+		var waveform_content = document.createElement('div');
+		waveform_content.className = "modal-content";
+		waveform_content.style["background-color"] = "black";
+
+		var waveform_header = document.createElement('div');
+		waveform_header.className = "modal-header";
+
+		var closebtn = document.createElement('button');
+		closebtn.type = "button";
+		closebtn.className = "close text-light";
+		closebtn.setAttribute('data-dismiss','modal');
+		closebtn.innerHTML = "&times;";
+
+
+		this.waveform_title = document.createElement('h4');
+		this.waveform_title.style.width = "600px";
+		this.waveform_title.className = "modal-title ellipsise text-light";
+
+
+		waveform_header.appendChild(this.waveform_title);
+		waveform_header.appendChild(closebtn);
+
+
+		var waveform_body = document.createElement('div');
+		waveform_body.className = "modal-body";
+		waveform_body.style["margin-left"] = "auto";
+		waveform_body.style["margin-right"] = "auto";
+
+		var waveform = document.createElement('div');
+		waveform.className = "rounded";
+		waveform.style["background-color"] = "black";
+		waveform.id = "waveform";
+
+		var waveform_timeline = document.createElement('div');
+		waveform_timeline.id = "waveform-timeline";
+
+		waveform_body.appendChild(waveform);
+		waveform_body.appendChild(waveform_timeline);
+
+		var waveform_footer = document.createElement('div');
+		waveform_footer.className = "modal-footer";
+		waveform_footer.style["margin-left"] = "auto";
+		waveform_footer.style["margin-right"] = "auto";
+		
+		var playpause = document.createElement('button');
+		playpause.className = "rounded";
+		playpause.style["background"] = "none !important";
+		playpause.innerHTML = "<i class='fas fa-play'></i><i class='fas fa-pause'></i>";
+
+		waveform_footer.appendChild(playpause);
+
+		waveform_content.appendChild(waveform_header);
+		waveform_content.appendChild(waveform_body);
+		waveform_content.appendChild(waveform_footer);
+		waveform_dialog.appendChild(waveform_content);
+
+		var widget = this;
+		$(this.waveform_container).on('hidden.bs.modal', function () {
+    		widget.wavesurfer.pause();
+    		
+		});
+
+		playpause.onclick = function(event){
+			widget.wavesurfer.playPause();
+		}
+
+		this.waveform_container.appendChild(waveform_dialog);
+	}
 	build_progress_bar() {
+
 		this.progress_container = document.createElement('div');
 		this.progress_container.className = "row p-2 w-100";
 		this.progress_container.style.display = "none";
@@ -1167,6 +1248,7 @@ class FileUploader {
 		this.build_file_list();
 
 		section_col.appendChild(this.progress_container);
+		section_col.appendChild(this.waveform_container);
 		section_col.appendChild(this.files_section);
 		this.body.appendChild(section_col);
 	}
@@ -2021,6 +2103,58 @@ class FileUploader {
 			}
 		}
 	}
+	get_file_thumbnail(file){
+        var thumbnail_div = document.createElement('div');
+        thumbnail_div.className = "justify-content-center media";
+
+        if (["image/jpeg","image/jpg","image/png"].includes(file.type)){
+	        var fileImage = document.createElement('img');
+	        fileImage.className = "itemimage_tiny ml-4";
+	        thumbnail_div.appendChild(fileImage);
+	        this.read_file_to_img(file,fileImage);
+
+        } else if (["audio/wav","audio/x-wav"].includes(file.type)){
+        	var playbtn = document.createElement('button');
+        	playbtn.style["font-size"] = "30px";
+        	playbtn["file_id"] = file.file_id;
+        	playbtn.className = "rounded";
+        	playbtn.innerHTML = "<i class='fas fa-volume-up'>"
+        	var widget = this;
+        	playbtn.addEventListener('click',function(event){
+        		var load = false;
+        		if (!widget.wavesurfer.file_id){
+        			load = true;
+        		} else if (widget.wavesurfer.file_id != this.file_id){
+        			load = true;
+        		}
+
+        		if (load){
+        			if (widget.wavesurfer.file_id){
+        				widget.wavesurfer.pause();
+        			}
+        			widget.wavesurfer.file_id = this.file_id;
+        			widget.waveform_title.textContent = widget.get_file_by_id(this.file_id).name;
+	        		var dfile = widget.get_file_by_id(this.file_id);
+	        		widget.wavesurfer.empty();
+	        		widget.wavesurfer.load(URL.createObjectURL(dfile));
+	        		widget.wavesurfer.on('ready', function () {
+	        			var pxpersec = Math.round(700.0/widget.wavesurfer.getDuration());
+	        			widget.wavesurfer.params.minPxPerSec = pxpersec;
+	        			widget.wavesurfer.drawBuffer();
+						$(widget.waveform_container).modal();
+
+	    				widget.wavesurfer.play();
+					});
+        		} else {
+					$(widget.waveform_container).modal();
+        			widget.wavesurfer.playPause();
+        		}
+        	});
+        	thumbnail_div.appendChild(playbtn);
+        }
+       	thumbnail_div.title = file.name;
+        return thumbnail_div;
+	}
 	get_file_page(page, per_page, filter_function,sort_function=this.compare_file_names_desc) {
 		var page = page || 1;
 		if (page <= 0){
@@ -2110,7 +2244,6 @@ class FileUploader {
 				var statusCol = document.createElement('div');
 				statusCol.className = 'col-2 justify-content-center  text-center item_col';
 
-
 				var checkFile = document.createElement('input');
 				checkFile.type = 'checkbox';
 				checkFile.className = 'item_checkbox file_title';
@@ -2119,20 +2252,8 @@ class FileUploader {
 
 				checkCol.appendChild(checkFile);
 
-
-		        var fileImage_div = document.createElement('div');
-		        fileImage_div.className = "justify-content-center media";
-		        var fileImage = document.createElement('img');
-		        fileImage.className = "itemimage_tiny ml-4";
-		        fileImage_div.appendChild(fileImage);
-		        fileImage_div.title = page.data[i].name;
-
-		        this.read_file_to_img(page.data[i],fileImage);
-
-
-		        descrCol.appendChild(fileImage_div);
-
-
+				var thumbnail_div = this.get_file_thumbnail(page.data[i]);
+		        descrCol.appendChild(thumbnail_div);
 		       
 				var item_type_input = document.createElement('select');
 				item_type_input.style.height = "40px";
@@ -2490,14 +2611,8 @@ class FileUploader {
 				var statusCol = document.createElement('div');
 				statusCol.className = 'col-5  justify-content-center text-center item_col';
 
-		        var fileImage_div = document.createElement('div');
-		        fileImage_div.className = "justify-content-center media";
-		        var fileImage = document.createElement('img');
-		        fileImage.className = "itemimage_tiny ml-4";
-		        fileImage.setAttribute('src',page.data[i].upload_response.result.item.url);
-		        fileImage_div.appendChild(fileImage);
-
-		        descrCol.appendChild(fileImage_div);
+		        var thumbnail_div = this.get_file_thumbnail(page.data[i]);
+		        descrCol.appendChild(thumbnail_div);
 
 		        var itemLink = document.createElement('a');
 		        itemLink.className = "btn-link ml-4 ellipsise";
@@ -2557,14 +2672,9 @@ class FileUploader {
 				statusCol.className = 'col-5  justify-content-center text-center item_col';
 
 
-		        var fileImage_div = document.createElement('div');
-		        fileImage_div.className = "justify-content-center media";
-		        var fileImage = document.createElement('img');
-		        fileImage.className = "itemimage_tiny ml-4";
-		        fileImage.setAttribute('src',page.data[i].upload_response.result.item.url);
-		        fileImage_div.appendChild(fileImage);
+		        var thumbnail_div = this.get_file_thumbnail(page.data[i]);
 
-		        descrCol.appendChild(fileImage_div);
+		        descrCol.appendChild(thumbnail_div);
 
 		        var itemLink = document.createElement('a');
 		        itemLink.className = "btn-link ml-4 ellipsise";
@@ -3546,9 +3656,25 @@ class FileUploader {
 		return status;
 	}
 	get_item_type(file){
+	  var ftype = file.type;
+	  if (ftype == "audio/wav"){
+	  	ftype = "audio/x-wav"
+	  	if (!this.wavesurfer){
+		  	this.wavesurfer = WaveSurfer.create({
+				container:"#waveform",
+			    waveColor: 'white',
+			    progressColor: 'purple',
+			    normalize: true,
+			    minPxPerSec: 1,
+			    barWidth: 3,
+  				fillParent: false
+			});
+			this.wavesurfer["file_id"] = null;
+	  	}
+	  }
 	  if (this.item_types.length == 1){
 	  	for (var i=0;i<this.item_types[0].mime_types.length;i++){
-	  		if (file.type == this.item_types[0].mime_types[i].mime_type){
+	  		if (ftype == this.item_types[0].mime_types[i].mime_type){
 	  			return this.item_types[0].item_type;
 	  			break;
 	  		}
@@ -3558,7 +3684,11 @@ class FileUploader {
 	  }
 	}
 	is_mime_type_wrong(file){
-		if (!this.mime_types.includes(file.type)){
+		var ftype = file.type;
+		if (ftype == "audio/wav"){
+			ftype = "audio/x-wav";
+		}
+		if (!this.mime_types.includes(ftype)){
 			return true;
 		}
 		return false;
