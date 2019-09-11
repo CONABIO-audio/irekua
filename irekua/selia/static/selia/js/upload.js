@@ -84,11 +84,13 @@ class FileUploader {
 		waveform.style["background-color"] = "black";
 		waveform.id = "waveform";
 
-		var waveform_timeline = document.createElement('div');
-		waveform_timeline.id = "waveform-timeline";
+		this.waveform_time = document.createElement('h5');
+		this.waveform_time.className = "text-light text-center"
+		this.waveform_time.style["padding-top"] = "20px";
+		this.waveform_time.id = "remainingTime";
 
 		waveform_body.appendChild(waveform);
-		waveform_body.appendChild(waveform_timeline);
+		waveform_body.appendChild(this.waveform_time);
 
 		var waveform_footer = document.createElement('div');
 		waveform_footer.className = "modal-footer";
@@ -110,7 +112,6 @@ class FileUploader {
 		var widget = this;
 		$(this.waveform_container).on('hidden.bs.modal', function () {
     		widget.wavesurfer.pause();
-    		
 		});
 
 		playpause.onclick = function(event){
@@ -2115,10 +2116,10 @@ class FileUploader {
 
         } else if (["audio/wav","audio/x-wav"].includes(file.type)){
         	var playbtn = document.createElement('button');
-        	playbtn.style["font-size"] = "30px";
+        	playbtn.style["font-size"] = "40px";
         	playbtn["file_id"] = file.file_id;
         	playbtn.className = "rounded";
-        	playbtn.innerHTML = "<i class='fas fa-volume-up'>"
+        	playbtn.innerHTML = "<i class='fas fa-file-audio'>"
         	var widget = this;
         	playbtn.addEventListener('click',function(event){
         		var load = false;
@@ -3660,17 +3661,57 @@ class FileUploader {
 	  if (ftype == "audio/wav"){
 	  	ftype = "audio/x-wav"
 	  	if (!this.wavesurfer){
-		  	this.wavesurfer = WaveSurfer.create({
-				container:"#waveform",
-			    waveColor: 'white',
-			    progressColor: 'purple',
-			    normalize: true,
-			    minPxPerSec: 1,
-			    barWidth: 3,
-  				fillParent: false
+			this.wavesurfer = WaveSurfer.create({
+					container:"#waveform",
+				    waveColor: 'white',
+				    progressColor: 'purple',
+				    normalize: true,
+				    minPxPerSec: 1,
+				    barWidth: 1,
+	  				fillParent: false
 			});
+
 			this.wavesurfer["file_id"] = null;
+
+	  		var widget = this;
+
+			function format_time_display(number){
+				if (number > 0){
+					if (number < 10){
+						return "0"+number;
+					} else {
+						return number;
+					}
+				} else {
+					return "00";
+				}
+			}
+
+			this.wavesurfer.on('audioprocess',function(){
+				if (widget.wavesurfer.isPlaying()){
+					var new_time = widget.wavesurfer.getCurrentTime();
+					var hours = Math.floor(new_time/3600);
+					var minutes = Math.floor((new_time-hours*3600)/60);
+					var seconds = Math.floor(new_time-hours*3600-minutes*60);
+
+					widget.waveform_time.innerHTML = format_time_display(hours)+":"+format_time_display(minutes)+":"+format_time_display(seconds);
+				}
+			});
+			this.wavesurfer.on('seek',function(position){
+				if (!widget.wavesurfer.isPlaying()){
+					var new_time = position*widget.wavesurfer.getDuration();
+					var hours = Math.floor(new_time/3600);
+					var minutes = Math.floor((new_time-hours*3600)/60);
+					var seconds = Math.floor(new_time-hours*3600-minutes*60);
+
+					widget.waveform_time.innerHTML = format_time_display(hours)+":"+format_time_display(minutes)+":"+format_time_display(seconds);
+				}
+
+				
+			});
+
 	  	}
+
 	  }
 	  if (this.item_types.length == 1){
 	  	for (var i=0;i<this.item_types[0].mime_types.length;i++){
