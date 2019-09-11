@@ -49,10 +49,11 @@ class FileUploader {
 
 
 		var waveform_dialog = document.createElement('div');
-		waveform_dialog.className = "modal-dialog modal-lg modal-dialog-centered ";
+		waveform_dialog.className = "modal-dialog modal-xl modal-dialog-centered ";
 
 		var waveform_content = document.createElement('div');
 		waveform_content.className = "modal-content";
+		waveform_content.style["overflow-x"] = "auto";
 		waveform_content.style["background-color"] = "black";
 
 		var waveform_header = document.createElement('div');
@@ -90,7 +91,6 @@ class FileUploader {
 		this.waveform_time.id = "remainingTime";
 
 		waveform_body.appendChild(waveform);
-		waveform_body.appendChild(this.waveform_time);
 
 		var waveform_footer = document.createElement('div');
 		waveform_footer.className = "modal-footer";
@@ -106,6 +106,7 @@ class FileUploader {
 
 		waveform_content.appendChild(waveform_header);
 		waveform_content.appendChild(waveform_body);
+		waveform_content.appendChild(this.waveform_time);
 		waveform_content.appendChild(waveform_footer);
 		waveform_dialog.appendChild(waveform_content);
 
@@ -2139,7 +2140,7 @@ class FileUploader {
 	        		widget.wavesurfer.empty();
 	        		widget.wavesurfer.load(URL.createObjectURL(dfile));
 	        		widget.wavesurfer.on('ready', function () {
-	        			var pxpersec = Math.round(700.0/widget.wavesurfer.getDuration());
+	        			var pxpersec = Math.round(900.0/widget.wavesurfer.getDuration());
 	        			widget.wavesurfer.params.minPxPerSec = pxpersec;
 	        			widget.wavesurfer.drawBuffer();
 						$(widget.waveform_container).modal();
@@ -3664,9 +3665,10 @@ class FileUploader {
 			this.wavesurfer = WaveSurfer.create({
 					container:"#waveform",
 				    waveColor: 'white',
-				    progressColor: 'purple',
+				    progressColor: 'green',
 				    normalize: true,
 				    minPxPerSec: 1,
+				    height: 300,
 				    barWidth: 1,
 	  				fillParent: false
 			});
