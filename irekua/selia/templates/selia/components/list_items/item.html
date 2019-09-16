@@ -1,90 +1,110 @@
 {% extends 'selia/components/list_item.html' %}
 {% load selia_buttons %}
+{% load selia_tags %}
 {% load static %}
 {% load i18n %}
 
 {% block list-item-content %}
 <div class="row w-100">
-  <div class="col-2">
-    <div class="row media">
-		<a href="{% url 'selia:item_detail' item.pk %}">
-		  <img class="itemimage" src="{{ item.item_file.url }}">
-		</a>
+    <div class="col">
+      {% listtitle %}
+      <div class="mr-2">
+        <a href="{% url 'selia:item_detail' item.pk %}">
+          <img src="{{ item.item_file.url }}" style="max-width: 10em; max-height: 10em;">
+        </a>
+      </div>
+      {% endlistimage %}
+        {% trans 'Item' %} {{ item.pk }}
+      {% endlistheader %}
+        <div>
+          {{ item.item_type }}
+        </div>
+        <a href="{% url 'selia:item_detail' item.pk %}">{% enter_button %}</a>
+      {% endlisttitle %}
     </div>
-  </div>
-  	<div class="col-2">
-  		<div class="row">
-      	<div class="media-body mt-0">
-        <h4 class="mt-0">{% trans 'Item ' %}{{ item.pk }}</h4>
-        <div class="text-muted"><a href="{% url 'selia:item_detail' item.pk %}">{% enter_button %}</a></div>
-      	</div>
-      </div>
-  	</div>
-  	<div class="col-3">
+
+    <div class="col">
        <div class="row">
-        <h6>{% trans 'Captured on' %}</h6>
-        <div class="text-muted ml-4">{{ item.captured_on }}</div>
+         {% listattribute %}
+          {% trans 'Captured on' %}
+         {% attributevalue %}
+           {{ item.captured_on }}
+         {% endlistattribute %}
       </div>
-     <div class="row">
-        <h6>{% trans 'Type' %}</h6>
-        <div class="text-muted ml-4">{{ item.item_type.pk }}</div>
+      <div class="row">
+        {% listattribute %}
+          {% trans 'Owner' %}
+        {% attributevalue %}
+          {{ item.created_by }}
+        {% endlistattribute %}
+      </div>
+      <div class="row">
+        {% listattribute %}
+          {% trans 'Licence' %}
+        {% attributevalue %}
+          {{ item.licence.licence_type }}
+        {% endlistattribute %}
       </div>
       {% if item.tags.count != 0 %}
       <div class="row d-flex flex-row">
-        <h6>{% trans 'Tags' %}</h6>
-        <div class="d-inline mx-2">
-          {% for tag in item.tags.all %}
-          <span class="badge badge-dark">{{ tag }}</span>
-          {% endfor %}
-        </div>
+        {% listattribute %}
+          {% trans 'Tags' %}
+        {% attributevalue %}
+          <div class="d-inline mx-2">
+            {% for tag in item.tags.all %}
+              <span class="badge badge-dark">{{ tag }}</span>
+            {% endfor %}
+          </div>
+        {% endlistattribute %}
       </div>
       {% endif %}
-  	</div>
+    </div>
 
     <div class="col">
       <div class="row">
-        <h6>{% trans 'Collection Site ID' %}</h6>
-        <div class="text-muted ml-4">
-          <a href="{% url 'selia:collection_site_detail' item.sampling_event_device.sampling_event.collection_site.pk %}">{{ item.sampling_event_device.sampling_event.collection_site.internal_id }}</a>
-        </div>
+        {% listattribute %}
+          {% trans 'Site Name' %}
+        {% attributevalue %}
+          <a href="{% url 'selia:collection_site_detail' item.sampling_event_device.sampling_event.collection_site.pk %}">
+            {{ item.sampling_event_device.sampling_event.collection_site.internal_id }}
+          </a>
+        {% endlistattribute %}
       </div>
       <div class="row">
-        <h6>{% trans 'Sampling event ID' %}</h6>
-        <div class="text-muted ml-4">
-          <a href="{% url 'selia:sampling_event_detail' item.sampling_event_device.sampling_event.pk %}">{{ item.sampling_event_device.sampling_event.pk }}</a>
-        </div>
+        {% listattribute %}
+          {% trans 'Sampling event' %}
+        {% attributevalue %}
+          <a href="{% url 'selia:sampling_event_detail' item.sampling_event_device.sampling_event.pk %}">
+            {{ item.sampling_event_device.sampling_event.pk }}
+          </a>
+        {% endlistattribute %}
       </div>
       <div class="row">
-        <h6>{% trans 'Collection Device ID' %}</h6>
-        <div class="text-muted ml-4">
-          <a href="{% url 'selia:sampling_event_device_detail' item.sampling_event_device.collection_device.pk %}">{{ item.sampling_event_device.collection_device.internal_id }}</a>
-        </div>
+        {% listattribute %}
+          {% trans 'Device Name' %}
+        {% attributevalue %}
+          <a href="{% url 'selia:sampling_event_device_detail' item.sampling_event_device.collection_device.pk %}">
+            {{ item.sampling_event_device.collection_device.internal_id }}
+          </a>
+        {% endlistattribute %}
       </div>
     </div>
 
-    <div class="col-3">
+    <div class="col">
       <div class="row">
-        <h6>{% trans 'Owner' %}</h6>
-        <div class="text-muted ml-4">{{ item.created_by }}</div>
-      </div>
-      <div class="row">
-        <h6>{% trans 'Licence' %}</h6>
-        <div class="text-muted ml-4">{{ item.licence.licence_type }}</div>
-      </div>
-      <div class="row">
-        <h6>{% trans 'Annotations' %}</h6>
-        <div class="text-muted ml-4">{{ item.annotation_set.count }}</div>
-      </div>
-      <div class="row">
-        <div class="col-2">
-          <div class="row">
-            <a href="{% url 'selia:item_annotations' item.pk %}">{% see_button %}</a>
-          </div>        </div>
-        <div class="col-2">
-          <a href="{% url 'selia:item_annotations' item.pk %}"><i class="fas fa-plus"></i></a>
-        </div>
+        {% listsummary %}
+          {% trans 'Annotations' %}
+        {% summarycount %}
+          {{ item.annotation_set.count }}
+        {% summarybuttons %}
+          <a href="{% url 'selia:item_annotations' item.pk %}">
+            {% see_button %}
+          </a>
+          <a class="ml-2" href="{% url 'selia:item_annotations' item.pk %}">
+            {% add_button %}
+          </a>
+        {% endlistsummary %}
       </div>
     </div>
-
   </div>
 {% endblock list-item-content %}

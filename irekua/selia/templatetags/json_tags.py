@@ -1,6 +1,7 @@
 from django import template
 from django.utils.html import format_html
 from django.utils.translation import gettext as _
+from django.template.loader import get_template
 
 register = template.Library()
 
@@ -11,41 +12,41 @@ def show_json(data):
 
 @register.simple_tag
 def parse_annotation_label(data):
-    header_level = 'h5'
+    header_level = 'h6'
     div_class = 'row'
+    header_class = 'text-gray-dark text-muted mb-0'
 
     headers = [
         '''<div class="{div_class}">
-                <{header_level}>{value}</{header_level}>
+                <{header_level} class="{header_class}">{value}</{header_level}>
            </div>'''.format(
                key=key.capitalize(),
                value=parse_json_value(value, 0),
                header_level=header_level,
+               header_class=header_class,
                div_class=div_class)
         for key, value in sorted(data.items())]
 
     return format_html(''.join(headers))
+
 
 def parse_json_object(data, level):
     if level == 0:
-        header_level = 'h5'
-        div_class = 'd-block m-1 bg-light border rounded p-3'
+        div_class = 'd-block mr-3 mb-3 bg-light'
     else:
-        header_level = 'h6'
-        div_class = 'd-block'
+        div_class = 'd-block ml-4'
 
-    headers = [
-        '''<div class="{div_class}">
-             <{header_level}>{key}</{header_level}>
-             <div class="container ml-4">{value}</div>
-           </div>'''.format(
-               key=key,
-               value=parse_json_value(value, level + 1),
-               header_level=header_level,
-               div_class=div_class)
-        for key, value in sorted(data.items())]
+    template = get_template('selia/widgets/json_object.html')
 
-    return format_html(''.join(headers))
+    context = {
+        'data': {
+            key: parse_json_value(value, level + 1)
+            for key, value in sorted(data.items())
+        },
+        'class': div_class
+    }
+
+    return template.render(context)
 
 
 def parse_json_list(data, level):
@@ -58,11 +59,11 @@ def parse_json_list(data, level):
 
 
 def parse_json_string(data):
-    return '<p class="text-muted">{}</p>'.format(data)
+    return '{}'.format(data)
 
 
 def parse_json_number(data):
-    return '<p class="text-muted">{}</p>'.format(data)
+    return '{}'.format(data)
 
 
 def parse_json_boolean(data):
@@ -71,7 +72,7 @@ def parse_json_boolean(data):
     else:
         response =  _('no')
 
-    return '<p class="text-muted">{}</p>'.format(response)
+    return '{}'.format(response)
 
 
 def parse_json_null():

@@ -1,59 +1,76 @@
 {% extends 'selia/components/list_item.html' %}
 {% load selia_buttons %}
+{% load selia_tags %}
 {% load static %}
 {% load i18n %}
 
 {% block list-item-content %}
 <div class="row w-100">
   <div class="col">
-    <div class="container h-100">
+    {% listtitle %}
+      <div class="pr-2" style="width: 15em;">
         {{ item.map_widget_no_controls }}
-    </div>
+      </div>
+    {% endlistimage %}
+      {% if item.name %}
+        {{ item.name }}
+      {% else %}
+        {% trans 'Site' %} {{item.pk }}
+      {% endif %}
+    {% endlistheader %}
+      {% if item.locality %}
+        <div>{{ item.locality }}</div>
+      {% endif %}
+      <a href="{% url 'selia:site_detail' item.pk %}">
+        {% enter_button %}
+      </a>
+    {% endlisttitle %}
   </div>
   <div class="col">
-    <div class="media">
-      <div class="media-body mt-0">
-        <h4 class="mt-0">
-          {% if item.name %}
-          {{ item.name }}
-          {% else %}
-          {% trans 'Site' %} {{item.pk }}
-          {% endif %}
-        </h4>
-        {% if item.locality %}
-        <div class="text-muted">{{ item.locality }}</div>
-        {% endif %}
-        <a href="{% url 'selia:site_detail' item.pk %}">{% enter_button %}</a>
-      </div>
+    <div class="row">
+      {% listattribute %}
+        {% trans 'Latitude' %}
+      {% attributevalue %}
+        {{ item.latitude|floatformat:'3' }}
+      {% endlistattribute %}
     </div>
-  </div>
-  <div class="col-2 mx-5">
-    <div class="row d-flex justify-content-between">
-      <h6>{% trans 'Latitude' %}</h6>
-      <div class="text-muted ml-4">{{ item.latitude|floatformat:'3' }}</div>
+    <div class="row">
+      {% listattribute %}
+        {% trans 'Longitude' %}
+      {% attributevalue %}
+        {{ item.longitude|floatformat:'3' }}
+      {% endlistattribute %}
     </div>
-    <div class="row d-flex justify-content-between">
-      <h6>{% trans 'Longitude' %}</h6>
-      <div class="text-muted ml-4">{{ item.longitude|floatformat:'3' }}</div>
-    </div>
-    <div class="row d-flex justify-content-between">
-      <h6>{% trans 'Altitude' %}</h6>
-      <div class="text-muted ml-4">{{ item.altitude|floatformat:'1' }}</div>
+    <div class="row">
+      {% listattribute %}
+        {% trans 'Altitude' %}
+      {% attributevalue %}
+        {{ item.altitude|floatformat:'1' }}
+      {% endlistattribute %}
     </div>
   </div>
 
-  <div class="col-2 mx-5">
-    <div class="row d-flex justify-content-between">
-      <h6>{% trans 'Collections' %}</h6>
-      <div class="text-muted ml-4">{{ item.collectionsite_set.count }}</div>
+  <div class="col">
+    <div class="row">
+      {% listsummary %}
+        {% trans 'Collections' %}
+      {% summarycount %}
+        {{ item.collectionsite_set.count }}
+      {% endlistsummary %}
     </div>
-    <div class="row d-flex justify-content-between">
-      <h6>{% trans 'Items captured' %}</h6>
-      <div class="text-muted ml-4">{{ item.items.count }}</div>
+    <div class="row">
+      {% listsummary %}
+        {% trans 'Items captured' %}
+      {% summarycount %}
+        {{ item.items.count }}
+      {% endlistsummary %}
     </div>
-    <div class="row d-flex justify-content-between">
-      <h6>{% trans 'Sampling events' %}</h6>
-      <div class="text-muted ml-4">{{ item.sampling_events.count }}</div>
+    <div class="row">
+      {% listsummary %}
+        {% trans 'Sampling events' %}
+      {% summarycount %}
+        {{ item.sampling_events.count }}
+      {% endlistsummary %}
     </div>
   </div>
 </div>

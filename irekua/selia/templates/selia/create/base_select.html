@@ -47,7 +47,7 @@
 
       <div class="w-100 bg-light p-4 list-group">
         {% for item in list.queryset %}
-          <a class="btn" href="{% url create_url %}?{% remove_form_fields request.GET list.forms %}&{{ prefix }}={{ item.pk }}">
+          <a href="{% url create_url %}?{% remove_form_fields request.GET list.forms %}&{{ prefix }}={{ item.pk }}">
             {% include list.templates.list_item with item=item %}
           </a>
           {% empty %}

@@ -3,6 +3,8 @@ from django import forms
 from database.models import PhysicalDevice
 from selia.views.detail_views.base import SeliaDetailView
 from selia.forms.json_field import JsonField
+from irekua_utils.permissions.devices import (
+    physical_devices as device_permissions)
 
 
 class PhysicalDeviceUpdateForm(forms.ModelForm):
@@ -28,4 +30,13 @@ class DetailPhysicalDeviceView(SeliaDetailView):
     update_form_template = 'selia/components/update/physical_device.html'
 
     def has_view_permission(self):
-        return self.object.created_by == self.request.user
+        user = self.request.user
+        return device_permissions.view(user, physical_device=self.object)
+
+    def has_change_permission(self):
+        user = self.request.user
+        return device_permissions.change(user, physical_device=self.object)
+
+    def has_delete_permission(self):
+        user = self.request.user
+        return device_permissions.delete(user, physical_device=self.object)

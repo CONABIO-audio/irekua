@@ -1,7 +1,11 @@
 from database.models import Collection
 from database.models import CollectionSite
 from database.models import SamplingEventType
+
 from irekua_utils.filters.data_collections import collection_sites as site_utils
+from irekua_utils.permissions.sampling_events import (
+    sampling_events as sampling_event_permissions)
+
 from selia.views.utils import SeliaList
 from selia.views.create_views.select_base import SeliaSelectView
 
@@ -11,13 +15,20 @@ class SelectSamplingEventSiteView(SeliaSelectView):
     prefix = 'collection_site'
     create_url = 'selia:create_sampling_event'
 
+    def get_objects(self):
+        if not hasattr(self, 'collection'):
+            self.collection = Collection.objects.get(pk=self.request.GET['collection'])
+
+    def has_view_permission(self):
+        user = self.request.user
+        return sampling_event_permissions.create(user, collection=self.collection)
+
     def get_context_data(self):
         context = super().get_context_data()
         context['collection'] = self.collection
         return context
 
     def get_list_class(self):
-        self.collection = Collection.objects.get(pk=self.request.GET['collection'])
         collection_sites = CollectionSite.objects.filter(collection=self.collection)
 
         sampling_event_type = SamplingEventType.objects.get(

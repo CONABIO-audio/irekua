@@ -11,7 +11,18 @@
       </div>
     </div>
     <div class="row">
-      <p class="card-text"><small class="text-muted">{% trans 'Updated on'%} {% now "SHORT_DATETIME_FORMAT" %}</small></p>
+      <div class="col">
+        <p class="card-text">
+          <small class="text-muted">
+            {% trans 'Updated on'%} {% now "SHORT_DATETIME_FORMAT" %}
+          </small>
+        </p>
+      </div>
+      <div class="col">
+        <a href='#' class="card-link float-right">
+          {% trans 'Download summary' %} <i class="fas fa-download"></i>
+        </a>
+      </div>
     </div>
   </div>
 </div>

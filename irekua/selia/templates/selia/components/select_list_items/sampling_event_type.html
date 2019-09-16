@@ -1,17 +1,16 @@
 {% extends 'selia/components/select_list_item.html' %}
+{% load selia_tags %}
 
 {% block list-item-content %}
-  <div class="row w-100">
+  <div class="row">
     <div class="col">
-      <div class="media">
-        {% if item.icon %}
-        <img class="mr-3 img-thumbnail" src="{{ item.icon.url }}" alt="logo">
-        {% endif %}
-        <div class="media-body mt-0">
-          <h5 class="mt-0">{{ item.pk }}</h5>
-          <p>{{ item.description }}</p>
-        </div>
-      </div>
+      {% listtitle %}
+        {% list_icon item.icon %}
+      {% endlistimage %}
+        {{ item }}
+      {% endlistheader %}
+        {{ item.description }}
+      {% endlisttitle %}
     </div>
   </div>
 {% endblock list-item-content %}

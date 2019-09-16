@@ -19,24 +19,26 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
-<div class="row p-2">
-  <div class="col-6">
-  	<div class="row p-2">
-      {% detail_component detail_template=detail_template object=licence %}
-	  </div>
-    {% if licence.document %}
-    	<div class="row p-2">
-        {% summary_component summary_template=summary_template object=licence %}
+<div class="container-fluid">
+  <div class="row p-2">
+    <div class="col-6">
+      <div class="row p-2">
+        {% detail_component detail_template=detail_template object=licence %}
       </div>
-    {% endif %}
+      {% if licence.document %}
+        <div class="row p-2">
+          {% summary_component summary_template=summary_template object=licence %}
+        </div>
+      {% endif %}
+    </div>
+    <div class="col-6 p-2">
+      {% if licence.document %}
+        {% viewer_component viewer_template=viewer_template object=licence %}
+      {% else %}
+        {% summary_component summary_template=summary_template object=licence %}
+      {% endif %}
+     </div>
   </div>
-  <div class="col-6 p-2">
-    {% if licence.document %}
-      {% viewer_component viewer_template=viewer_template object=licence %}
-    {% else %}
-      {% summary_component summary_template=summary_template object=licence %}
-    {% endif %}
-   </div>
 </div>
 {% endblock main-content %}
 

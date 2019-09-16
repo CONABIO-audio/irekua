@@ -11,11 +11,11 @@
   {% include 'selia/components/media/map_media.html' %}
 {% endblock head-extra %}
 
-{% block toolbar-title %}{% trans 'User Site Detail' %} {{ object.pk }}{% endblock %}
+{% block toolbar-title %}{% trans 'User Site Detail' %}{% endblock %}
 
 {% block toolbar-items %}
 <li class="navbar-item ">
-  <button type="button" class="btn btn-link">{% trans "Download Summary" %} <i class="fas fa-file-download"></i></button>
+  <button type="button" class="btn btn-link text-muted">{% trans "Download Summary" %} <i class="fas fa-download"></i></button>
 </li>
 <li class="navbar-item ">
   {% help_button %}
@@ -24,7 +24,8 @@
 
 
 {% block main-content %}
-  <div class="row p-2 w-100">
+<div class="container-fluid">
+  <div class="row p-2">
     <div class="col-6 p-2">
       {% detail_component detail_template=detail_template object=object %}
     </div>
@@ -37,6 +38,7 @@
       </div>
     </div>
   </div>
+</div>
 {% endblock main-content %}
 
 {% block modals-extra %}

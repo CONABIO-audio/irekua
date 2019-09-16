@@ -1,38 +1,51 @@
 {% extends 'selia/components/select_list_item.html' %}
+{% load selia_tags %}
 {% load static %}
 {% load i18n %}
 
 {% block list-item-content %}
 <div class="row w-100">
   <div class="col">
-    <div class="media">
-      {% if item.device.device_type.icon %}
-      <img class="mr-3 img-thumbnail" src="{{ item.device.device_type.icon.url }}" alt="logo">
-      {% endif %}
-      <div class="media-body mt-0">
-        <h4 class="mt-0">{{ item.device.brand }}</h4>
-        <div class="text-muted">{{ item.device.model }}</div>
+    {% listtitle %}
+      {% list_icon item.device.device_type.icon %}
+    {% endlistimage %}
+      {{ item.device.brand }}
+    {% endlistheader %}
+      <div class="text-muted">
+        {{ item.device.model }}
       </div>
+    {% endlisttitle %}
+  </div>
+  <div class="col">
+    <div class="row">
+      {% listattribute %}
+        {% trans 'Name' %}
+      {% attributevalue %}
+        {{ item.identifier }}
+      {% endlistattribute %}
+    </div>
+    <div class="row">
+      {% listattribute %}
+        {% trans 'Serial Number' %}
+      {% attributevalue %}
+        {{ item.serial_number }}
+      {% endlistattribute %}
     </div>
   </div>
   <div class="col">
     <div class="row">
-      <h6>{% trans 'Device type' %}</h6>
-      <div class="text-muted ml-4">{{ item.device.device_type }}</div>
+      {% listattribute %}
+        {% trans 'Device type' %}
+      {% attributevalue %}
+        {{ item.device.device_type }}
+      {% endlistattribute %}
     </div>
     <div class="row">
-      <h6>{% trans 'Serial Number' %}</h6>
-      <div class="text-muted ml-4">{{ item.serial_number }}</div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="row">
-      <h6>{% trans 'Owner' %}</h6>
-      <div class="text-muted ml-4">{{ item.created_by }}</div>
-    </div>
-    <div class="row">
-      <h6>{% trans 'Added on' %}</h6>
-      <div class="text-muted ml-4">{{ item.created_on }}</div>
+      {% listattribute %}
+        {% trans 'Added on' %}
+      {% attributevalue %}
+        {{ item.created_on | date }}
+      {% endlistattribute %}
     </div>
   </div>
 </div>

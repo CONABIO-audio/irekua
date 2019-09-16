@@ -92,17 +92,7 @@ class ItemViewSet(mixins.UpdateModelMixin,
             )
         ],
         'add_annotation': [
-            IsAuthenticated,
-            (
-                permissions.IsCreator |
-                permissions.HasAddAnnotationPermission |
-                permissions.IsCollectionAdmin |
-                permissions.IsCollectionTypeAdmin |
-                permissions.ItemIsOpenToAnnotate |
-                IsCurator |
-                IsModel |
-                IsAdmin
-            )
+            permissions.CanAnnotate,
         ],
         'tag_item': [
             IsAuthenticated,

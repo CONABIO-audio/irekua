@@ -1,52 +1,63 @@
 {% load json_tags %}
+{% load selia_tags %}
 {% load i18n %}
 
-<div class="media">
-  {% if object.logo %}
-  <img class="mr-3 img-thumbnail" src="{{ object.logo.url }}" alt="logo">
+{% detailtitle %}
+  {% detail_icon object.device.device_type.icon %}
+{% enddetailimage %}
+  {% if object.identifier %}
+    {{ object.identifier }}
+  {% else %}
+    {% trans 'Device' %}
   {% endif %}
-  <div class="media-body mt-0">
-    <h4 class="mt-0">{% trans 'Device ' %}{{ object.pk }}
-      {% if object.is_open %}
-      {% endif %}
-    </h4>
-    {{ object.description }}
-  </div>
-</div>
-<div class="container mt-3 mb-3">
+{% enddetailheader %}
+  {{ object.device.device_type }}
+{% enddetailtitle %}
+
+<div class="container-fluid mt-3 mb-3">
   <div class="row">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Device type' %}</h5>
-      <p class="text-muted">{{ object.device.device_type }}</p>
+      {% detailitem %}
+        {% trans 'Brand' %}
+      {% endhead %}
+        {{ object.device.brand }}
+      {% enddetailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Brand' %}</h5>
-      <p class="text-muted">{{ object.device.brand }}</p>
-    </div>
-    <div class="col">
-      <h5 class="mt-0">{% trans 'Model' %}</h5>
-      <p class="text-muted">{{ object.device.model }}</p>
+      {% detailitem %}
+        {% trans 'Model' %}
+      {% endhead %}
+        {{ object.device.model }}
+      {% enddetailitem %}
     </div>
   </div>
 
   <div class="row">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Serial number' %}</h5>
-      <p class="text-muted">{{ object.serial_number }}</p>
+      {% detailitem %}
+        {% trans 'Serial number' %}
+      {% endhead %}
+        {{ object.serial_number }}
+      {% enddetailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Name' %}</h5>
-      <p class="text-muted">{{ object.identifier }}</p>
+      {% detailitem %}
+        {% trans 'Name' %}
+      {% endhead %}
+        {{ object.identifier }}
+      {% enddetailitem %}
     </div>
   </div>
 
   {% if object.metadata %}
-  <div class="row">
-    <h5>{% trans 'Metadata' %}</h5>
-    <div class="d-flex flex-wrap">
-      {% show_json object.metadata %}
-    </div>
-  </div>
-  {% endif %}
+    {% detailsection %}
+      {% trans 'Metadata' %}
+    {% enddetailsection %}
 
+    <div class="row">
+      <div class="d-flex flex-wrap">
+        {% show_json object.metadata %}
+      </div>
+    </div>
+  {% endif %}
 </div>

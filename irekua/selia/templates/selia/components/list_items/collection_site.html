@@ -1,89 +1,110 @@
 {% extends 'selia/components/list_item.html' %}
 {% load static %}
 {% load selia_buttons %}
+{% load selia_tags %}
 {% load i18n %}
 
 {% block list-item-content %}
 <div class="row w-100">
   <div class="col">
-    <div class="container h-100">
+    {% listtitle %}
+      <div class="mr-3" style="width: 11em; height:100%;">
         {{ item.site.map_widget_no_controls }}
-    </div>
-  </div>
-  <div class="col">
-    <div class="media">
-      <div class="media-body mt-0">
-        <h4 class="mt-0">
-          {% if item.internal_id %}
-            {{ item.internal_id }}
-          {% else %}
-            {% trans 'Site' %}{{ item.pk }}
-          {% endif %}
-        </h4>
-        {% if item.site.locality %}
-          <div class="text-muted">{{ item.site.locality }}</div>
-        {% endif %}
-        <div class="text-muted"><a href="{% url 'selia:collection_site_detail' item.pk %}">{% enter_button %}</a></div>
       </div>
-    </div>
+    {% endlistimage %}
+      {% if item.internal_id %}
+        {{ item.internal_id }}
+      {% else %}
+        {% trans 'Site' %}{{ item.pk }}
+      {% endif %}
+    {% endlistheader %}
+      {% if item.site.locality %}
+      <div>
+        {{ item.site.locality }}
+      </div>
+      {% endif %}
+      <div>
+        <a href="{% url 'selia:collection_site_detail' item.pk %}">
+          {% enter_button %}
+        </a>
+      </div>
+    {% endlisttitle %}
   </div>
   <div class="col">
     <div class="row">
-      <h6>{% trans 'Site type' %}</h6>
-      <div class="text-muted ml-4">{{ item.site_type }}</div>
+      {% listattribute %}
+        {% trans 'Site type' %}
+      {% attributevalue %}
+        {{ item.site_type }}
+      {% endlistattribute %}
     </div>
     <div class="row">
-      <h6>{% trans 'Collection Site ID' %}</h6>
-      <div class="text-muted ml-4">{{ item.internal_id }}</div>
+      {% listattribute %}
+        {% trans 'Name' %}
+      {% attributevalue %}
+        {{ item.internal_id }}
+      {% endlistattribute %}
     </div>
     <div class="row">
-      <h6>{% trans 'Collection' %}</h6>
-      <div class="text-muted ml-4">{{ item.collection }}</div>
+      {% listattribute %}
+        {% trans 'Collection' %}
+      {% attributevalue %}
+        {{ item.collection }}
+      {% endlistattribute %}
     </div>
-
   </div>
 
   <div class="col">
     {% if item.site.created_by == request.user %}
     {% if item.site.name %}
     <div class="row">
-      <h6>{% trans 'Name' %}</h6>
-      <div class="text-muted ml-4">{{ item.site.name }}</div>
+      {% listattribute %}
+        {% trans 'Name' %}
+      {% attributevalue %}
+        {{ item.site.name }}
+      {% endlistattribute %}
     </div>
     {% endif %}
     {% endif %}
     {% if item.site.locality %}
     <div class="row">
-      <h6>{% trans 'Locality' %}</h6>
-      <div class="text-muted ml-4">{{ item.site.locality }}</div>
+      {% listattribute %}
+        {% trans 'Locality' %}
+      {% attributevalue %}
+        {{ item.site.locality }}
+      {% endlistattribute %}
     </div>
     {% endif %}
     <div class="row">
-      <h6>{% trans 'Owner' %}</h6>
-      <div class="text-muted ml-4">{{ item.site.created_by }}</div>
+      {% listattribute %}
+        {% trans 'Owner' %}
+      {% attributevalue %}
+        {{ item.site.created_by }}
+      {% endlistattribute %}
     </div>
   </div>
 
   <div class="col">
     <div class="row">
-      <div class="col d-flex">
-          <h6>{% trans 'Items' %}</h6>
-          <div class="text-muted ml-4">{{ item.items.count }}</div>
-      </div>
-      <div class="col-3">
-          <div class="row">
-            <a href="{% url 'selia:collection_items' item.collection.pk %}?sampling_event_device__sampling_event__collection_site={{ item.pk }}">{% see_button %}</a>
-          </div>
-      </div>
-      <div class="col-2">
-          <a href="{% url 'selia:create_item' %}?collection={{ collection.pk }}&collection_site={{ item.pk }}"><i class="fas fa-plus"></i></a>
-      </div>
+      {% listsummary %}
+        {% trans 'Items' %}
+      {% summarycount %}
+        {{ item.items.count }}
+      {% summarybuttons %}
+        <a href="{% url 'selia:create_item' %}?collection={{ collection.pk }}&collection_site={{ item.pk }}">
+          {% add_button %}
+        </a>
+        <a class="ml-2" href="{% url 'selia:collection_items' item.collection.pk %}?sampling_event_device__sampling_event__collection_site={{ item.pk }}">
+          {% see_button %}
+        </a>
+      {% endlistsummary %}
     </div>
     <div class="row">
-      <div class="col d-flex">
-          <h6>{% trans 'Sampling events' %}</h6>
-          <div class="text-muted ml-4">{{ item.samplingevent_set.count }}</div>
-      </div>
+      {% listsummary %}
+        {% trans 'Sampling events' %}
+      {% summarycount %}
+        {{ item.samplingevent_set.count }}
+      {% endlistsummary %}
     </div>
   </div>
 </div>

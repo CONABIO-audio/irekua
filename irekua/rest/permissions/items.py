@@ -1,4 +1,13 @@
 from rest_framework.permissions import BasePermission
+from irekua_utils.permissions.annotations import (
+    annotations as annotation_permissions)
+
+
+class CanAnnotate(BasePermission):
+    def has_permission(self, request, view):
+        item = view.get_object()
+        user = request.user
+        return annotation_permissions.create(user, item=item)
 
 
 class IsCreator(BasePermission):

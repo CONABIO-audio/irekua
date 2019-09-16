@@ -3,6 +3,8 @@ from django.views.generic.detail import SingleObjectMixin
 from database.models import SamplingEvent, SamplingEventDevice
 from selia.views.list_views.base import SeliaListView
 from irekua_utils.filters.sampling_events import sampling_event_devices
+from irekua_utils.permissions.sampling_events import (
+    devices as device_permissions)
 from django.utils.translation import gettext as _
 
 
@@ -18,6 +20,14 @@ class ListSamplingEventDevicesView(SeliaListView, SingleObjectMixin):
     filter_class = sampling_event_devices.Filter
     search_fields = sampling_event_devices.search_fields
     ordering_fields = sampling_event_devices.ordering_fields
+
+    def has_view_permission(self):
+        user = self.request.user
+        return device_permissions.list(user, sampling_event=self.object)
+
+    def has_create_permission(self):
+        user = self.request.user
+        return device_permissions.create(user, sampling_event=self.object)
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(queryset=SamplingEvent.objects.all())

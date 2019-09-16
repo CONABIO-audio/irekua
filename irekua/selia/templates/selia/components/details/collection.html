@@ -1,37 +1,41 @@
 {% load json_tags %}
+{% load selia_tags %}
 {% load i18n %}
 
-<div class="media">
-  {% if object.logo %}
-  <img class="mr-3 img-thumbnail" src="{{ object.logo.url }}" alt="logo">
-  {% endif %}
-  <div class="media-body mt-0">
-    <h4 class="mt-0">{{ object.name }}
-    </h4>
-    <p class="text-muted">
-      {{ object.description }}
-    </p>
-  </div>
-</div>
+{% detailtitle %}
+  {% detail_icon object.logo%}
+{% enddetailimage %}
+  {{ object.name }}
+{% enddetailheader %}
+  <p>
+    {{ object.description }}
+  </p>
+{% enddetailtitle %}
+
 <div class="container mt-3 mb-3">
   <div class="row">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Collection type' %}</h5>
-      <p class="text-muted">{{ object.collection_type }}</p>
+      {% detailitem %}
+        {% trans 'Collection type' %}
+      {% endhead %}
+        {{ object.collection_type }}
+      {% enddetailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Institution' %}</h5>
-      <p class="text-muted">{{ object.institution }}</p>
+      {% detailitem %}
+        {% trans 'Institution' %}
+      {% endhead %}
+        {{ object.institution }}
+      {% enddetailitem %}
     </div>
   </div>
 
   {% if object.metadata %}
   <div class="row">
-    <h4 class="w-100 text-center">
-      <span class="border-bottom px-2">
-        {% trans 'Metadata' %}
-      </span>
-    </h4>
+    {% detailsection %}
+      {% trans 'Metadata' %}
+    {% enddetailsection %}
+
     <div class="d-flex flex-wrap">
       {% show_json object.metadata %}
     </div>

@@ -11,12 +11,14 @@
 {% endblock %}
 
 {% block toolbar-items %}
-<li class="nav-item">
-  <a class="nav-link" href="{% url 'selia:create_licence' %}?collection={{ collection.pk }}">{% trans 'Add licence' %} <i class="fas fa-plus"></i> <i class="fas fa-tools"></i></a>
-</li>
-<li class="nav-item">
-      {% help_button %}
-</li>
+  {% if permissions.create %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'selia:create_licence' %}?collection={{ collection.pk }}">{% trans 'Add licence' %} <i class="fas fa-plus"></i> <i class="fas fa-tools"></i></a>
+  </li>
+  {% endif %}
+  <li class="nav-item">
+    {% help_button %}
+  </li>
 {% endblock toolbar-items %}
 
 {% block empty-message %}

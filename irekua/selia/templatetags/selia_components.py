@@ -1,8 +1,9 @@
 import re
 import uuid
 
-from django.utils.safestring import mark_safe
 from django import template
+from django.utils.safestring import mark_safe
+from django.template.loader import get_template
 from django.utils.translation import gettext as _
 from dal_select2.widgets import Select2WidgetMixin
 

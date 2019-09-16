@@ -1,6 +1,8 @@
 from django import forms
+from django.http import HttpResponseForbidden
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import SingleObjectMixin
+from django.utils.translation import gettext as _
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.shortcuts import reverse
@@ -117,7 +119,21 @@ class SeliaCreateView(CreateView, SingleObjectMixin):
 
             return self.form_invalid(form)
 
+    def get_objects(self):
+        pass
+
+    def post(self, *args, **kwargs):
+        self.get_objects()
+
+        if not self.has_view_permission():
+            msg = _('User does not have create permissions')
+            return HttpResponseForbidden(msg)
+
+        return super().post(*args, **kwargs)
+
     def get(self, *args, **kwargs):
+        self.get_objects()
+
         if not self.has_view_permission():
             return self.no_permission_redirect()
 

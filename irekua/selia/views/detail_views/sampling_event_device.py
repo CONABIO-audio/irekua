@@ -2,6 +2,8 @@ from django import forms
 
 from selia.views.detail_views.base import SeliaDetailView
 from selia.forms.json_field import JsonField
+from irekua_utils.permissions.sampling_events import (
+    devices as device_permissions)
 from database.models import SamplingEventDevice
 from database.models import SamplingEventTypeDeviceType
 
@@ -30,6 +32,18 @@ class DetailSamplingEventDeviceView(SeliaDetailView):
     detail_template = 'selia/components/details/sampling_event_device.html'
     update_form_template = 'selia/components/update/sampling_event_device.html'
 
+    def has_view_permission(self):
+        user = self.request.user
+        return device_permissions.view(user, sampling_event_device=self.object)
+
+    def has_change_permission(self):
+        user = self.request.user
+        return device_permissions.change(user, sampling_event_device=self.object)
+
+    def has_delete_permission(self):
+        user = self.request.user
+        return device_permissions.delete(user, sampling_event_device=self.object)
+
     def get_delete_redirect_url_args(self):
         return [self.object.sampling_event.pk]
 
@@ -40,17 +54,19 @@ class DetailSamplingEventDeviceView(SeliaDetailView):
         sampling_event_type = sampling_event.sampling_event_type
         collection_device = sampling_event_device.collection_device
         device = collection_device.physical_device.device
-        info = SamplingEventTypeDeviceType.objects.get(
-            sampling_event_type=sampling_event_type,
-            device_type=device.device_type)
 
         context['sampling_event_device'] = sampling_event_device
-        context['info'] = info
         context['device'] = device
 
-        context['form'].fields['metadata'].update_schema(
-            info.metadata_schema)
-        context['form'].fields['configuration'].update_schema(
-            device.configuration_schema)
+        if sampling_event_type.restrict_device_types:
+            info = SamplingEventTypeDeviceType.objects.get(
+                    sampling_event_type=sampling_event_type,
+                    device_type=device.device_type)
+
+            context['info'] = info
+            context['form'].fields['metadata'].update_schema(
+                info.metadata_schema)
+            context['form'].fields['configuration'].update_schema(
+                device.configuration_schema)
 
         return context

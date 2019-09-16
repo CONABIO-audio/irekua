@@ -47,3 +47,14 @@
     </a>
   </p>
 {% endblock %}
+
+{% block scripts-extra %}
+{{ block.super }}
+
+<script charset="utf-8">
+  $("a").on("click", "canvas", function (e) {
+    e.preventDefault();
+  });
+</script>
+{% endblock scripts-extra %}
+

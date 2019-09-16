@@ -1,69 +1,85 @@
 {% load json_tags %}
+{% load selia_tags %}
 {% load i18n %}
 
-<div class="media">
-  <div class="media-body mt-0">
-    <h4 class="mt-0">
-      {% trans 'Collection device' %} {{ object.pk }}
-    </h4>
-  </div>
-</div>
+{% detailtitle %}
+  {% detail_icon object.physical_device.device.device_type.icon %}
+{% enddetailimage %}
+  {% trans 'Collection Device' %}
+{% enddetailheader %}
+  <p>
+    {{ object.physical_device.device.device_type }}
+  </p>
+{% enddetailtitle %}
 
-<div class="container">
+
+<div class="container-fluid p-2">
   <div class="row mt-2">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Collection' %}</h5>
-      <p class="text-muted">{{ object.collection }}</p>
+      {% detailitem %}
+      {% trans 'Device type' %}
+      {% endhead %}
+      {{ object.physical_device.device.device_type }}
+      {% enddetailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Device ID in Collection' %}</h5>
-      <p class="text-muted">{{ object.internal_id }}</p>
+      {% detailitem %}
+        {% trans 'Name' %}
+      {% endhead %}
+        {{ object.internal_id }}
+      {% enddetailitem %}
+    </div>
+    <div class="col">
+      {% detailitem %}
+        {% trans 'Owner' %}
+      {% endhead %}
+        {{ object.physical_device.created_by }}
+      {% enddetailitem %}
     </div>
   </div>
 
-  <div class="row mb-2">
-    <h4 class="w-100 text-center">
-      <a href="{% url 'selia:physical_device_detail' object.physical_device.pk %}" class="border-bottom px-2">
-        {% trans 'Device info' %}
-      </a>
-    </h4>
-  </div>
+  {% detailsection %}
+    {% if object.created_by == user %}
+    <a href="{% url 'selia:physical_device_detail' object.physical_device.pk %}">
+      {% trans 'Device Info' %}
+    </a>
+    {% else %}
+      {% trans 'Device Info' %}
+    {% endif %}
+  {% enddetailsection %}
+
 
   <div class="row">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Device type' %}</h5>
-      <p class="text-muted">{{ object.physical_device.device.device_type }}</p>
+      {% detailitem %}
+        {% trans 'Brand' %}
+      {% endhead %}
+        {{ object.physical_device.device.brand }}
+      {% enddetailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Brand' %}</h5>
-      <p class="text-muted">{{ object.physical_device.device.brand }}</p>
+      {% detailitem %}
+        {% trans 'Model' %}
+      {% endhead %}
+        {{ object.physical_device.device.model }}
+      {% enddetailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Model' %}</h5>
-      <p class="text-muted">{{ object.physical_device.device.model }}</p>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <h5 class="mt-0">{% trans 'Serial number' %}</h5>
-      <p class="text-muted">{{ object.physical_device.serial_number }}</p>
-    </div>
-
-    <div class="col">
-      <h5 class="mt-0">{% trans 'Owner' %}</h5>
-      <p class="text-muted">{{ object.physical_device.created_by }}</p>
+      {% detailitem %}
+        {% trans 'Serial number' %}
+      {% endhead %}
+        {{ object.physical_device.serial_number }}
+      {% enddetailitem %}
     </div>
   </div>
 
   {% if object.metadata %}
   <div class="row">
     <div class="col">
-      <h4 class="w-100 text-center">
-        <span class="border-bottom px-2">
-          {% trans 'Metadata' %}
-        </span>
-      </h4>
+      {% detailsection %}
+        {% trans 'Metadata' %}
+      {% enddetailsection %}
+
       <div class="d-flex flex-wrap">
         {% show_json object.metadata %}
       </div>

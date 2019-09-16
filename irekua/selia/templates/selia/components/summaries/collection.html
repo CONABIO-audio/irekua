@@ -54,7 +54,7 @@
     <strong class="d-block text-gray-dark">{% trans 'Items' %}</strong>
     <div class="row">
       <div class="col-3">
-        {% trans 'Number' %}: {{ object.items }}
+        {% trans 'Number' %}: {{ object.items.count }}
       </div>
       <div class="col-7">
         {% trans 'Last added on' %}: {{ object.items.first.created_on }}
@@ -65,5 +65,3 @@
     </div>
   </div>
 </div>
-<br/>
-<a href='#' class="card-link float-right">{% trans 'Download summary' %}</a>

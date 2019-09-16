@@ -1,70 +1,66 @@
 {% extends 'selia/components/select_list_item.html' %}
 {% load static %}
+{% load selia_tags %}
 {% load i18n %}
 
 {% block list-item-content %}
-<div class="row w-100">
-  <div class="col-3">
-    <div class="container h-100">
-      {{ item.site.map_widget_no_controls }}
+<div class="row ml-0 w-100">
+  <div class="col">
+    {% listtitle %}
+      <div class="mr-2 rounded" style="width: 15em;">
+        {{ item.site.map_widget_no_controls }}
+      </div>
+    {% endlistimage %}
+      {% if item.name %}
+        {{ item.name }}
+      {% else %}
+        {% trans 'Site' %}
+      {% endif %}
+    {% endlistheader %}
+      <div>
+        {{ item.site_type }}
+      </div>
+    {% endlisttitle %}
+  </div>
+
+  <div class="col">
+    <div class="row">
+      {% listattribute %}
+        {% trans 'Latitude' %}
+      {% attributevalue %}
+        {{ item.site.latitude|floatformat:'3' }}
+      {% endlistattribute %}
+    </div>
+    <div class="row">
+      {% listattribute %}
+        {% trans 'Longitude' %}
+      {% attributevalue %}
+        {{ item.site.longitude|floatformat:'3' }}
+      {% endlistattribute %}
+    </div>
+    <div class="row">
+      {% listattribute %}
+        {% trans 'Altitude' %}
+      {% attributevalue %}
+        {{ item.site.altitude|floatformat:'1' }}
+      {% endlistattribute %}
     </div>
   </div>
 
   <div class="col">
-    <div class="media">
-      <div class="media-body mt-0">
-        <h4 class="mt-0">
-          {% if item.site.name %}
-          {{ item.site.name }}
-          {% else %}
-          {% trans 'Site' %} {{item.site.pk }}
-          {% endif %}
-        </h4>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-2 mx-5">
-    <div class="row d-flex justify-content-between">
-      <h6>
-        {% trans 'Latitude' %}
-      </h6>
-      <div class="text-muted ml-4">
-        {{ item.site.latitude|floatformat:'3' }}
-      </div>
-    </div>
-    <div class="row d-flex justify-content-between">
-      <h6>
-        {% trans 'Longitude' %}
-      </h6>
-      <div class="text-muted ml-4">
-        {{ item.site.longitude|floatformat:'3' }}
-      </div>
-    </div>
-    <div class="row d-flex justify-content-between">
-      <h6>{% trans 'Altitude' %}</h6>
-      <div class="text-muted ml-4">
-        {{ item.site.altitude|floatformat:'3' }}
-      </div>
-    </div>
-  </div>
-
-  <div class="col-2 mx-5">
-    <div class="row d-flex justify-content-between">
-      <h6>
+    <div class="row">
+      {% listattribute %}
         {% trans 'Locality' %}
-      </h6>
-      <div class="text-muted ml-4">
+      {% attributevalue %}
         {{ item.site.locality }}
-      </div>
+      {% endlistattribute %}
     </div>
-    <div class="row d-flex justify-content-between">
-      <h6>
+    <div class="row">
+      {% listattribute %}
         {% trans 'Created on' %}
-      </h6>
-      <div class="text-muted ml-4">
-        {{ item.site.created_on|date:"SHORT_DATE_FORMAT" }}
-      </div>
+      {% attributevalue %}
+        {{ item.site.created_on | date }}
+      {% endlistattribute %}
     </div>
   </div>
 

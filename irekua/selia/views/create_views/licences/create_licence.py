@@ -1,10 +1,11 @@
 from django import forms
 
-from selia.views.create_views.create_base import SeliaCreateView
 from database.models import Collection
 from database.models import Licence
 from database.models import LicenceType
 
+from irekua_utils.permissions import licences as licence_permissions
+from selia.views.create_views.create_base import SeliaCreateView
 from selia.forms.json_field import JsonField
 
 
@@ -28,11 +29,20 @@ class CreateLicenceView(SeliaCreateView):
     model = Licence
     form_class = CreateLicenceForm
 
+    def get_objects(self):
+        if not hasattr(self, 'collection'):
+            self.collection = Collection.objects.get(
+                pk=self.request.GET['collection'])
+
+        if not hasattr(self, 'licence_type'):
+            self.licence_type = LicenceType.objects.get(
+                name=self.request.GET['licence_type'])
+
+    def has_view_permission(self):
+        user = self.request.user
+        return licence_permissions.create(user, collection=self.collection)
+
     def get_initial(self, *args, **kwargs):
-        self.collection = Collection.objects.get(
-            name=self.request.GET['collection'])
-        self.licence_type = LicenceType.objects.get(
-            name=self.request.GET['licence_type'])
         return {
             'collection': self.collection,
             'licence_type': self.licence_type,

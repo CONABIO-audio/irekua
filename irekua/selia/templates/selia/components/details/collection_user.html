@@ -1,98 +1,94 @@
 {% load i18n %}
 {% load country_tags %}
+{% load selia_tags %}
 {% load json_tags %}
 {% load static %}
 
 
+{% detailtitle %}
+{% detail_icon object.role.icon %}
+{% enddetailimage %}
+{% trans 'Collection user'%}
+{% enddetailheader %}
+{{ object.role }}
+{% enddetailtitle %}
+
+{% detailsection %}
+{% trans 'User info' %}
+{% enddetailsection %}
+
 <div class="row">
   <div class="col">
-    <h4>{% trans 'Collection user'%} {{ object.pk}}</h4>
+    {% detailitem %}
+      {% trans 'Username' %}
+    {% endhead %}
+      {{ object.user.username }}
+    {% enddetailitem %}
+  </div>
+  <div class="col">
+    {% detailitem %}
+      {% trans 'Institution' %}
+    {% endhead %}
+      {{ object.user.institution }}
+    {% enddetailitem %}
   </div>
 </div>
 
-<div class="row w-100">
-  <div class="col m-2">
-    <div class="row mb-2">
-      <h4 class="text-center w-100">
-        <span class="border-bottom px-2">
-          {% trans 'User info' %}
-        </span>
-      </h4>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Username' %}</h5>
-        <p class="text-muted">{{ object.user.username }}</p>
-      </div>
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Institution' %}</h5>
-        <p class="text-muted">{{ object.user.institution }}</p>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <h5 class="mt-0">{% trans 'First name' %}</h5>
-        <p class="text-muted">{{ object.user.first_name }}</p>
-      </div>
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Last name' %}</h5>
-        <p class="text-muted">{{ object.user.last_name }}</p>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Email' %}</h5>
-        <p class="text-muted">{{ object.user.email }}</p>
-      </div>
-    </div>
+<div class="row">
+  <div class="col">
+    {% detailitem %}
+      {% trans 'First name' %}
+    {% endhead %}
+      {{ object.user.first_name }}
+    {% enddetailitem %}
+  </div>
+  <div class="col">
+    {% detailitem %}
+      {% trans 'Last name' %}
+    {% endhead %}
+      {{ object.user.last_name }}
+    {% enddetailitem %}
   </div>
 </div>
 
-<div class="row w-100">
-  <div class="col m-2">
-    <div class="row mb-2">
-      <h4 class="text-center w-100">
-        <span class="border-bottom px-2">
-          {% trans 'Role' %}
-        </span>
-      </h4>
-    </div>
+<div class="row">
+  <div class="col">
+    {% detailitem %}
+      {% trans 'Email' %}
+    {% endhead %}
+      {{ object.user.email }}
+    {% enddetailitem %}
+  </div>
+</div>
 
-    <div class="row">
-      {% if object.role.icon %}
-      <div class="col m-0 p-0">
-        <div class="media text-muted pt-3">
-          <img src="{{ object.role.icon.url }}" alt="role">
-        </div>
-      </div>
-      {% endif %}
+{% detailsection %}
+  {% trans 'Role' %}
+{% enddetailsection %}
 
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Role' %}</h5>
-        <p class="text-muted">{{ object.role }}</p>
-      </div>
+<div class="row">
+  <div class="col">
+    {% detailitem %}
+      {% trans 'Role' %}
+    {% endhead %}
+      {{ object.role }}
+    {% enddetailitem %}
+  </div>
 
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Description' %}</h5>
-        <p class="text-muted">{{ object.role.description }}</p>
-      </div>
-    </div>
+  <div class="col">
+    {% detailitem %}
+      {% trans 'Description' %}
+    {% endhead %}
+      {{ object.role.description }}
+    {% enddetailitem %}
   </div>
 </div>
 
 {% if object.metadata %}
-<div class="row w-100">
-  <div class="col m-2">
-    <div class="row border-bottom">
-      <h6 class="text-center w-100">{% trans 'Metadata' %}</h6>
-    </div>
+  {% detailsection %}
+    {% trans 'Metadata' %}
+  {% enddetailsection %}
 
-    <div class="row">
-      {% show_json object.metadata %}
-    </div>
+  <div class="row">
+    {% show_json object.metadata %}
   </div>
-</div>
 {% endif %}

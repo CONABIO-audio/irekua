@@ -24,7 +24,8 @@
 {% endblock toolbar-items %}
 
 {% block main-content %}
-  <div class="row p-2 w-100">
+<div class="container-fluid">
+  <div class="row p-2">
     <div class="col-6 p-2">
       {% detail_component detail_template=detail_template object=collection_site %}
     </div>
@@ -37,6 +38,7 @@
       </div>
     </div>
   </div>
+</div>
 {% endblock main-content %}
 
 {% block modals-extra %}

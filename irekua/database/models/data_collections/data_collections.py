@@ -105,6 +105,9 @@ class Collection(IrekuaModelBaseUser):
                 "add_collection_device",
                 _("Can add device to collection")),
             (
+                "add_collection_sampling_event",
+                _("Can add a sampling event to collection")),
+            (
                 "add_collection_user",
                 _("Can add user to collection")),
             (
@@ -174,9 +177,8 @@ class Collection(IrekuaModelBaseUser):
 
     @property
     def items(self):
-        queryset = Item.objects.filter(
+        return Item.objects.filter(
             sampling_event_device__sampling_event__collection=self)
-        return queryset.count()
 
     def add_user(self, user, role, metadata):
         CollectionUser.objects.create(  # pylint: disable=E1101
@@ -245,6 +247,13 @@ class Collection(IrekuaModelBaseUser):
         queryset = self.administrators.filter(id=user.id)  # pylint: disable=E1101
         return queryset.exists()
 
+    def is_user(self, user):
+        try:
+            self.users.get(pk=user.pk)
+            return True
+        except self.users.model.DoesNotExist:
+            return False
+
     def has_user(self, user):
         return CollectionUser.objects.filter(  # pylint: disable=E1101
             collection=self,
@@ -262,10 +271,13 @@ class Collection(IrekuaModelBaseUser):
         return role.has_permission(codename)
 
     def get_user_role(self, user):
-        collection_user = CollectionUser.objects.filter(  # pylint: disable=E1101
-            collection=self,
-            user=user).get()
-        return collection_user.role
+        try:
+            collection_user = CollectionUser.objects.get(  # pylint: disable=E1101
+                collection=self,
+                user=user)
+            return collection_user.role
+        except CollectionUser.DoesNotExist:
+            return None
 
     def update_is_open(self):
         restrictive_licences = self.licence_set.filter(

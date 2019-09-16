@@ -4,7 +4,12 @@ from database.models import Collection
 from database.models import CollectionSite
 
 from selia.views.list_views.base import SeliaListView
-
+from irekua_utils.permissions.data_collections import (
+    sites as site_permissions)
+from irekua_utils.permissions.data_collections import (
+    users as user_permissions)
+from irekua_utils.permissions import (
+    licences as licence_permissions)
 from irekua_utils.filters.data_collections import collection_sites
 
 
@@ -18,6 +23,20 @@ class ListCollectionSitesView(SeliaListView, SingleObjectMixin):
     filter_class = collection_sites.Filter
     search_fields = collection_sites.search_fields
     ordering_fields = collection_sites.ordering_fields
+
+    def has_create_permission(self):
+        user = self.request.user
+        return site_permissions.create(user, collection=self.object)
+
+    def get_permissions(self):
+        permissions = super().get_permissions()
+        user = self.request.user
+        permissions['list_collection_users'] = user_permissions.list(
+            user, collection=self.object)
+        permissions['list_collection_licences'] = licence_permissions.list(
+            user, collection=self.object)
+        return permissions
+
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(queryset=Collection.objects.all())

@@ -1,4 +1,5 @@
 {% extends 'selia/components/select_list_item.html' %}
+{% load selia_tags %}
 {% load selia_buttons %}
 {% load static %}
 {% load i18n %}
@@ -6,37 +7,54 @@
 {% block list-item-content %}
   <div class="row w-100">
     <div class="col">
-      <div class="media">
-        <div class="media-body mt-0">
-          <h4 class="mt-0">
-            {% trans 'Sampling event' %} {{item.pk }}
-          </h4>
+      {% listtitle %}
+        {% list_icon item.sampling_event_type.icon %}
+      {% endlistimage %}
+        {% trans 'Sampling event' %}
+      {% endlistheader %}
+        <div>
+          {{ item.sampling_event_type }}
         </div>
-      </div>
+      {% endlisttitle %}
     </div>
     <div class="col">
       <div class="row">
-        <h6>{% trans 'Sampling event type' %}</h6>
-        <div class="text-muted ml-4">{{ item.sampling_event_type }}</div>
+        {% listattribute %}
+          {% trans 'Sampling event type' %}
+        {% attributevalue %}
+          {{ item.sampling_event_type }}
+        {% endlistattribute %}
       </div>
       <div class="row">
-        <h6>{% trans 'Collection' %}</h6>
-        <div class="text-muted ml-4">{{ item.collection }}</div>
+        {% listattribute %}
+          {% trans 'Collection' %}
+        {% attributevalue %}
+          {{ item.collection }}
+        {% endlistattribute %}
       </div>
       <div class="row">
-        <h6>{% trans 'Collection site' %}</h6>
-        <div class="text-muted ml-4">{{ item.collection_site.site.name }}</div>
+        {% listattribute %}
+          {% trans 'Collection site' %}
+        {% attributevalue %}
+          {{ item.collection_site.site.name }}
+        {% endlistattribute %}
       </div>
     </div>
 
     <div class="col">
       <div class="row">
-        <h6>{% trans 'Started on' %}</h6>
-        <div class="text-muted ml-4">{{ item.started_on }}</div>
+        {% listattribute %}
+          {% trans 'Started on' %}
+        {% attributevalue %}
+          {{ item.started_on | date }}
+        {% endlistattribute %}
       </div>
       <div class="row">
-        <h6>{% trans 'Ended on' %}</h6>
-        <div class="text-muted ml-4">{{ item.ended_on }}</div>
+        {% listattribute %}
+          {% trans 'Ended on' %}
+        {% attributevalue %}
+          {{ item.ended_on | date }}
+        {% endlistattribute %}
       </div>
     </div>
 

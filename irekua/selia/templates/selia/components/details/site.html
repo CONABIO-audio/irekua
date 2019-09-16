@@ -1,39 +1,60 @@
 {% load json_tags %}
+{% load selia_tags %}
 {% load i18n %}
 
-<div class="media">
-  {% if object.logo %}
-  <img class="mr-3 img-thumbnail" src="{{ object.logo.url }}" alt="logo">
+{% detailtitle %}
+  {% detail_icon object.logo %}
+{% enddetailimage %}
+  {% if object.name %}
+    {{ object.name }}
+  {% else %}
+    {% trans 'Site' %}
   {% endif %}
-  <div class="media-body mt-0">
-    <h4 class="mt-0">{% trans 'Site ' %}{{ object.pk }}
-    </h4>
-  </div>
-</div>
+{% enddetailheader %}
+  {% if object.locality %}
+    {{ object.locality }}
+  {% endif %}
+{% enddetailtitle %}
+
 <div class="container mt-3 mb-3">
   <div class="row">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Name' %}</h5>
-      <p class="text-muted">{{ object.name }}</p>
+      {% detailitem %}
+        {% trans 'Name' %}
+      {% endhead %}
+        {{ object.name }}
+      {% enddetailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Locality' %}</h5>
-      <p class="text-muted">{{ object.locality }}</p>
+      {% detailitem %}
+        {% trans 'Locality' %}
+      {% endhead %}
+        {{ object.locality }}
+      {% enddetailitem %}
     </div>
   </div>
 
   <div class="row">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Latitude' %}</h5>
-      <p class="text-muted">{{ object.latitude }}</p>
+      {% detailitem %}
+        {% trans 'Latitude' %}
+      {% endhead %}
+        {{ object.latitude | floatformat:'3' }}
+      {% enddetailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Longitude' %}</h5>
-      <p class="text-muted">{{ object.longitude }}</p>
+      {% detailitem %}
+        {% trans 'Longitude' %}
+      {% endhead %}
+        {{ object.longitude | floatformat:'3' }}
+      {% enddetailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Altitude' %}</h5>
-      <p class="text-muted">{{ object.altitude }}</p>
+      {% detailitem %}
+        {% trans 'Altitude' %}
+      {% endhead %}
+        {{ object.altitude | floatformat:'1' }}
+      {% enddetailitem %}
     </div>
   </div>
 

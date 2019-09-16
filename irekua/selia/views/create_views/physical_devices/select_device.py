@@ -9,6 +9,8 @@ from database.models import DeviceType
 
 from selia.views.create_views.create_base import SeliaCreateView
 from selia.forms.type_field import TypeSelectField
+from irekua_utils.permissions.devices import (
+    physical_devices as device_permissions)
 
 
 class SelectDeviceForm(forms.Form):
@@ -54,6 +56,10 @@ class SelectPhysicalDeviceDeviceView(SeliaCreateView):
     form_class = SelectDeviceForm
     template_name = 'selia/create/physical_devices/select_device.html'
 
+    def has_view_permission(self):
+        user = self.request.user
+        return device_permissions.create(user)
+
     def get_form_kwargs(self, *args, **kwargs):
         form_kwargs = super().get_form_kwargs(*args, **kwargs)
         form_kwargs.pop('instance')
@@ -75,5 +81,4 @@ class SelectPhysicalDeviceDeviceView(SeliaCreateView):
 
         data = form.cleaned_data.copy()
         data.pop('device')
-
         return Device.objects.create(**data)

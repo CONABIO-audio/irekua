@@ -38,7 +38,7 @@
   {% selected_item 'collection' collection label %}
 
   {% trans 'Selected user' as label %}
-  {% selected_item 'user' user.email label %}
+  {% selected_item 'user' selected_user label %}
 
   {% trans 'Selected role' as label %}
   {% selected_item 'role' role label %}
@@ -46,7 +46,7 @@
 
 {% block form-content %}
   <input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
-  <input type="hidden" id="user_field" name="user" value="{{ user.pk }}">
+  <input type="hidden" id="user_field" name="user" value="{{ selected_user.pk }}">
   <input type="hidden" id="role_field" name="role" value="{{ role.pk }}">
 
   {% if role_info.metadata_schema %}

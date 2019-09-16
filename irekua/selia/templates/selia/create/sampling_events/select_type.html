@@ -29,9 +29,11 @@
   <div class="form-container mb-4">
     <div class="row d-flex flex-wrap justify-content-center">
       {% for sampling_event_type in sampling_event_types %}
-      <a class="btn btn-link" href="{% url 'selia:create_sampling_event' %}?{{ request.GET.urlencode }}&sampling_event_type={{ sampling_event_type.pk }}">
-        {% include 'selia/components/select_list_items/sampling_event_type.html' with item=sampling_event_type %}
-      </a>
+      <div class="p-2" style="width: 20em;">
+        <a href="{% url 'selia:create_sampling_event' %}?{{ request.GET.urlencode }}&sampling_event_type={{ sampling_event_type.pk }}">
+          {% include 'selia/components/select_list_items/sampling_event_type.html' with item=sampling_event_type %}
+        </a>
+      </div>
       {% endfor %}
     </div>
   </div>

@@ -21,7 +21,7 @@ class CreateManagerBase(View):
                 raise MissingParameterError(param)
 
     def has_view_permission(self):
-        return True
+        return self.request.user.is_authenticated
 
     def no_permission_redirect(self):
         return render(self.request, self.no_permission_template)

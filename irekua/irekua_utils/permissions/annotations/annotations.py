@@ -1,74 +1,97 @@
-def view(user, annotation):
+def view(user, annotation=None, **kwargs):
+    if annotation is None:
+        return False
+
+    if not user.is_authenticated:
+        return False
+
     if user.is_special:
         return True
 
-    if user == annotation.created_by:
+    if annotations.created_by == user:
         return True
 
-    licence = annotation.item.licence
-    licence_type = licence.licence_type
-
-    if not licence.is_active:
-        return True
-
-    if licence_type.can_view_annotations:
-        return True
-
-    collection = annotation.item.collection
-    collection_type = collection.collection_type
-
-    if collection_type.is_admin(user):
+    collection = (
+        annotation
+        .item
+        .sampling_event_device
+        .sampling_event
+        .collection)
+    if collection.collection_type.is_admin(user):
         return True
 
     if collection.is_admin(user):
         return True
 
-    if not collection.has_user(user):
+    if not collection.is_user(user):
         return False
 
-    return collection.has_permission(user, 'view_collection_annotations')
+    role = collection.get_user_role(user)
+    return role.has_permission('view_collection_annotations')
 
 
-def create(user, item):
-    if user.is_special: # No developer
+def create(user, item=None, **kwargs):
+    if item is None:
+        return False
+
+    if item.licence.licence_type.can_annotate:
         return True
 
-    licence = item.licence
-    licence_type = licence.licence_type
+    if not user.is_authenticated:
+        return False
 
-    if not licence.is_active:
+    if user.is_superuser | user.is_curator | user.is_model:
         return True
 
-    if licence_type.can_view_item:
+    if item.created_by == user:
         return True
 
-    collection = item.collection
-    collection_type = collection.collection_type
-
-    if collection_type.is_admin(user):
+    collection = (
+        item
+        .sampling_event_device
+        .sampling_event
+        .collection)
+    if collection.collection_type.is_admin(user):
         return True
 
     if collection.is_admin(user):
         return True
 
-    if not collection.has_user(user):
+    if not collection.is_user(user):
         return False
 
-    return collection.has_permission(user, 'add_collection_annotations')
+    role = collection.get_user_role(user)
+    return role.has_permission('add_collection_annotations')
 
 
-def change(user, annotation):
+def change(user, annotation=None, **kwargs):
+    if annotation is None:
+        return False
+
+    if not user.is_authenticated:
+        return False
+
     if user.is_superuser:
         return True
 
-    if user.is_curator:
+    if item.created_by == user:
         return True
 
-    return annotation.created_by == user
+    if not collection.is_user(user):
+        return False
+
+    role = collection.get_user_role(user)
+    return role.has_permission('change_collection_annotations')
 
 
-def delete(user, annotation):
+def delete(user, annotation=None, **kwargs):
+    if annotation is None:
+        return False
+
+    if not user.is_authenticated:
+        return False
+
     if user.is_superuser:
         return True
 
-    return annotation.created_by == user
+    return item.created_by == user

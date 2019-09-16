@@ -5,6 +5,8 @@ from database.models import PhysicalDevice
 
 from selia.forms.json_field import JsonField
 from selia.views.create_views.create_base import SeliaCreateView
+from irekua_utils.permissions.devices import (
+    physical_devices as device_permissions)
 
 
 class PhysicalDeviceCreateForm(forms.ModelForm):
@@ -28,13 +30,19 @@ class CreatePhysicalDeviceView(SeliaCreateView):
     template_name = 'selia/create/physical_devices/create_form.html'
     success_url = 'selia:user_physical_devices'
 
+    def get_objects(self):
+        if not hasattr(self, 'device'):
+            self.device = Device.objects.get(
+                pk=self.request.GET['device'])
+
+    def has_view_permission(self):
+        user = self.request.user
+        return device_permissions.create(user)
+
     def get_success_url_args(self):
         return []
 
     def get_initial(self):
-        self.device = Device.objects.get(
-            pk=self.request.GET['device'])
-
         return {
             'device': self.device,
             'bundle': True,

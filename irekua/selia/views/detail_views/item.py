@@ -2,6 +2,8 @@ from django.views.generic.detail import SingleObjectMixin
 from django import forms
 
 from database.models import Item
+from irekua_utils.permissions.items import (
+    items as item_permissions)
 from selia.views.detail_views.base import SeliaDetailView
 from selia.forms.json_field import JsonField
 
@@ -19,7 +21,7 @@ class CollectionItemUpdateForm(forms.ModelForm):
         ]
 
 
-class DetailItemView(SeliaDetailView, SingleObjectMixin):
+class DetailItemView(SeliaDetailView):
     model = Item
     form_class = CollectionItemUpdateForm
     delete_redirect_url = 'selia:collection_items'
@@ -30,6 +32,27 @@ class DetailItemView(SeliaDetailView, SingleObjectMixin):
     summary_template = 'selia/components/summaries/item.html'
     update_form_template = 'selia/components/update/item.html'
     viewer_template = 'selia/components/viewers/item_image.html'
+
+    def has_view_permission(self):
+        user = self.request.user
+        return item_permissions.view(user, item=self.object)
+
+    def has_change_permission(self):
+        user = self.request.user
+        return item_permissions.change(user, item=self.object)
+
+    def has_delete_permission(self):
+        user = self.request.user
+        return item_permissions.delete(user, item=self.object)
+
+    def has_download_permission(self):
+        user = self.request.user
+        return item_permissions.download(user, item=self.object)
+
+    def get_permissions(self):
+        permissions = super().get_permissions()
+        permissions['download'] = self.has_download_permission()
+        return permissions
 
     def get_delete_redirect_url_args(self):
         return [self.object.collection.pk]

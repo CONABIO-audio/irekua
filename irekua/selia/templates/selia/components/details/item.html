@@ -1,73 +1,115 @@
 {% load json_tags %}
+{% load selia_tags %}
+{% load selia_buttons %}
 {% load i18n %}
 
-<div class="media">
-  <div class="media-body mt-0">
-    <h4 class="mt-0">{% trans 'Item ' %} {{ object.pk }}
-    </h4>
+{% detailtitle %}
+  {% detail_icon object.item_type.icon %}
+{% enddetailimage %}
+  {% trans 'Item ' %} {{ object.pk }}
+{% enddetailheader %}
+  <div>
+    {{ object.item_type }}
   </div>
-</div>
+{% enddetailtitle %}
 <div class="container mt-3 mb-3">
   <div class="row">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Sampling event' %}</h5>
-      <p class="text-muted">{{ object.sampling_event_device.sampling_event.pk }}</p>
+      {% detailitem %}
+        {% trans 'Sampling event' %}
+      {% endhead %}
+        <a href="{% url 'selia:sampling_event_detail' object.sampling_event_device.sampling_event.pk %}" target="_blank">
+          {{ object.sampling_event_device.sampling_event.pk }}
+        </a>
+      {% enddetailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Device' %}</h5>
-      <p class="text-muted">{{ object.sampling_event_device.pk }}</p>
+      {% detailitem %}
+        {% trans 'Device' %}
+      {% endhead %}
+        <a href="{% url 'selia:sampling_event_device_detail' object.sampling_event_device.pk %}" target="_blank">
+          {{ object.sampling_event_device.pk }}
+        </a>
+      {% enddetailitem %}
     </div>
   </div>
    <div class="row">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Item type' %}</h5>
-      <p class="text-muted">{{ object.item_type }}</p>
+      {% detailitem %}
+        {% trans 'Item type' %}
+      {% endhead %}
+        {{ object.item_type }}
+      {% enddetailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'File size' %}</h5>
-      <p class="text-muted">{{ object.filesize }}</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <h5 class="mt-0">{% trans 'Captured on' %}</h5>
-      <p class="text-muted">{{ object.captured_on }}</p>
-    </div>
-    <div class="col">
-      <h5 class="mt-0">{% trans 'File' %}</h5>
-      <div class="text-muted ellipsis">
-        <a href="{{ object.item_file.url }}" target="_blank">{% trans 'Download' %}</a>
-      </div>
+      {% detailitem %}
+        {% trans 'File size' %}
+      {% endhead %}
+        {{ object.filesize }}
+      {% enddetailitem %}
     </div>
   </div>
   <div class="row">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Tags' %}</h5>
-      <div class="container-fluid">
-        {% for tag in item.tags.all %}
-        <span class="badge badge-dark">{{ tag }}</span>
-        {% empty %}
-        <span class="text-muted">{% trans 'No tags' %}</span>
-        {% endfor %}
-      </div>
+      {% detailitem %}
+        {% trans 'Captured on' %}
+      {% endhead %}
+        {{ object.captured_on }}
+      {% enddetailitem %}
+    </div>
+    <div class="col">
+      {% detailitem %}
+        {% trans 'Licence' %}
+      {% endhead %}
+        {{ object.licence.licence_type }}
+      {% enddetailitem %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      {% detailitem %}
+        {% trans 'Tags' %}
+      {% endhead %}
+        <div class="container-fluid">
+          {% for tag in item.tags.all %}
+            <span class="badge badge-dark">{{ tag }}</span>
+          {% empty %}
+            <span class="text-muted">{% trans 'No tags' %}</span>
+          {% endfor %}
+        </div>
+      {% enddetailitem %}
+    </div>
+    <div class="col">
+      {% detailitem %}
+      {% trans 'File' %}
+      {% endhead %}
+      {% if permissions.download %}
+      <a href="{{ object.item_file.url }}" target="_blank">{% trans 'Download' %}</a>
+      {% else %}
+      {% trans 'Sorry. You don\'t have permissions to download the original file' %}
+      {% endif %}
+      {% enddetailitem %}
     </div>
   </div>
 
   {% if object.media_info %}
-  <h4 class="w-100 text-center">
-    <span class="border-bottom px-2">{% trans 'Media info' %}</span>
-  </h4>
-  <div class="d-flex flex-wrap">
-    {% show_json object.media_info %}
-  </div>
+    {% detailsection %}
+      {% trans 'Media info' %}
+    {% enddetailsection %}
+
+    <div class="d-flex flex-wrap">
+      {% show_json object.media_info %}
+    </div>
   {% endif %}
+
   {% if object.metadata %}
-  <h4 class="w-100 text-center">
-    <span class="border-bottom px-2">{% trans 'Metadata' %}</span>
-  </h4>
-  <div class="d-flex flex-wrap">
-    {% show_json object.metadata %}
-  </div>
+    {% detailsection %}
+      {% trans 'Metadata' %}
+    {% enddetailsection %}
+
+    <div class="d-flex flex-wrap">
+      {% show_json object.metadata %}
+    </div>
   {% endif %}
 
 </div>

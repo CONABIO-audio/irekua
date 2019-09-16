@@ -7,6 +7,8 @@ from database.models import Collection
 from database.models import User
 
 from selia.views.create_views.create_base import SeliaCreateView
+from irekua_utils.permissions.data_collections import (
+    users as user_permissions)
 
 
 class SelectUserForm(forms.Form):
@@ -19,6 +21,15 @@ class SelectCollectionUserUserView(SeliaCreateView):
     prefix = 'user'
     form_class = SelectUserForm
 
+    def get_objects(self):
+        if not hasattr(self, 'collection'):
+            self.collection = Collection.objects.get(
+                name=self.request.GET['collection'])
+
+    def has_view_permission(self):
+        user = self.request.user
+        return user_permissions.create(user, collection=self.collection)
+
     def get_form_kwargs(self, *args, **kwargs):
         form_kwargs = super().get_form_kwargs(*args, **kwargs)
         form_kwargs.pop('instance')
@@ -26,8 +37,7 @@ class SelectCollectionUserUserView(SeliaCreateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['collection'] = Collection.objects.get(
-            name=self.request.GET['collection'])
+        context['collection'] = self.collection
         return context
 
     def save_form(self, form):

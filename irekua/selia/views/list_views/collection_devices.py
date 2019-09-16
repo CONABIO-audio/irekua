@@ -3,6 +3,12 @@ from django.views.generic.detail import SingleObjectMixin
 from database.models import Collection
 from database.models import CollectionDevice
 
+from irekua_utils.permissions.data_collections import (
+    devices as devices_permissions)
+from irekua_utils.permissions.data_collections import (
+    users as user_permissions)
+from irekua_utils.permissions import (
+    licences as licence_permissions)
 from selia.views.list_views.base import SeliaListView
 from irekua_utils.filters.data_collections import collection_devices
 
@@ -16,6 +22,19 @@ class ListCollectionDevicesView(SeliaListView, SingleObjectMixin):
     filter_class = collection_devices.Filter
     search_fields = collection_devices.search_fields
     ordering_fields = collection_devices.ordering_fields
+
+    def has_create_permission(self):
+        user = self.request.user
+        return devices_permissions.create(user, collection=self.object)
+
+    def get_permissions(self):
+        permissions = super().get_permissions()
+        user = self.request.user
+        permissions['list_collection_users'] = user_permissions.list(
+            user, collection=self.object)
+        permissions['list_collection_licences'] = licence_permissions.list(
+            user, collection=self.object)
+        return permissions
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(queryset=Collection.objects.all())

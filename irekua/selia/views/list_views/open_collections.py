@@ -14,8 +14,5 @@ class ListOpenCollectionsView(SeliaListView):
     search_fields = data_collections.search_fields
     ordering_fields = data_collections.ordering_fields
 
-    def has_view_permission(self):
-        return True
-
     def get_initial_queryset(self):
         return Collection.objects.filter(is_open=True)

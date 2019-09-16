@@ -7,6 +7,8 @@ from database.models import CollectionDevice
 from database.models import SamplingEventTypeDeviceType
 
 from selia.forms.json_field import JsonField
+from irekua_utils.permissions.sampling_events import (
+    devices as device_permissions)
 
 
 class CreateSamplingEventDeviceForm(forms.ModelForm):
@@ -43,20 +45,23 @@ class CreateSamplingEventDeviceView(SeliaCreateView):
             'sampling_event_device': self.object.pk
         }
 
-    def get_initial(self):
-        self.sampling_event = SamplingEvent.objects.get(
-            pk=self.request.GET['sampling_event'])
-        self.collection_device = CollectionDevice.objects.get(
-            pk=self.request.GET['collection_device'])
+    def get_objects(self):
+        if not hasattr(self, 'sampling_event'):
+            self.sampling_event = SamplingEvent.objects.get(
+                pk=self.request.GET['sampling_event'])
+        if not hasattr(self, 'collection_device'):
+            self.collection_device = CollectionDevice.objects.get(
+                pk=self.request.GET['collection_device'])
 
+    def has_view_permission(self):
+        user = self.request.user
+        return device_permissions.create(user, sampling_event=self.sampling_event)
+
+    def get_initial(self):
         return {
             'sampling_event': self.sampling_event,
             'collection_device': self.collection_device
         }
-
-    def post(self, *args, **kwargs):
-        print(self.request.POST)
-        return super().post(*args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -66,14 +71,16 @@ class CreateSamplingEventDeviceView(SeliaCreateView):
         context['collection_device'] = self.collection_device
 
         device = self.collection_device.physical_device.device
-        info = SamplingEventTypeDeviceType.objects.get(
-            sampling_event_type=self.sampling_event.sampling_event_type,
-            device_type=device.device_type)
 
-        context['info'] = info
-        context['form'].fields['metadata'].update_schema(
-            info.metadata_schema)
+        if self.sampling_event.sampling_event_type.restrict_device_types:
+            info = SamplingEventTypeDeviceType.objects.get(
+                sampling_event_type=self.sampling_event.sampling_event_type,
+                device_type=device.device_type)
 
-        context['form'].fields['configuration'].update_schema(
-            device.configuration_schema)
+            context['info'] = info
+            context['form'].fields['metadata'].update_schema(
+                info.metadata_schema)
+
+            context['form'].fields['configuration'].update_schema(
+                device.configuration_schema)
         return context

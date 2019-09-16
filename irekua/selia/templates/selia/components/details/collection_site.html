@@ -1,91 +1,97 @@
 {% load json_tags %}
 {% load i18n %}
+{% load selia_tags %}
 {% load selia_buttons %}
 
-<div class="media">
-  <div class="media-body mt-0">
-    <h4 class="mt-0">{% trans 'Collection site ' %}{{ object.pk }}
-    </h4>
-  </div>
-</div>
+{% detailtitle %}
+{% enddetailimage %}
+{% trans 'Collection Site' %}
+{% enddetailheader %}
+{{ object.site_type }}
+{% enddetailtitle %}
 
 <div class="container mt-3 mb-3">
   <div class="row">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Collection' %}</h5>
-      <p class="text-muted">
-        <a href="{% url 'selia:collection_detail' object.collection.pk %}">
-          {{ object.collection }}
-        </a>
-      </p>
+      {% detailitem %}
+        {% trans 'Name' %}
+      {% endhead %}
+        {{ object.internal_id }}
+      {% enddetailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Site ID in Collection' %}</h5>
-      <p class="text-muted">{{ object.internal_id }}</p>
-    </div>
-    <div class="col">
-      <h5 class="mt-0">{% trans 'Site type' %}</h5>
-      <p class="text-muted">{{ object.site_type }}</p>
+      {% detailitem %}
+        {% trans 'Owner' %}
+      {% endhead %}
+        {{ object.site.created_by }}
+      {% enddetailitem %}
     </div>
   </div>
 
-  <div class="row w-100">
-    <h4 class="w-100 text-center">
-      {% if user == object.site.created_by %}
-      <a class="border-bottom px-2" href="{% url 'selia:site_detail' object.site.pk %}">
+  {% detailsection %}
+    {% if user == object.site.created_by %}
+      <a href="{% url 'selia:site_detail' object.site.pk %}">
         {% trans 'Site info' %}
       </a>
-      {% else %}
-      <span class="border-bottom px-2">
-        {% trans 'Site info' %}
-      </span>
-      {% endif %}
-    </h4>
-  </div>
+    {% else %}
+      {% trans 'Site info' %}
+    {% endif %}
+  {% enddetailsection %}
 
   <div class="row mt-4">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Site name' %}</h5>
-      <p class="text-muted">{{ object.site.name }}</p>
+      {% detailitem %}
+        {% trans 'Locality' %}
+      {% endhead %}
+        {% if object.site.locality %}
+        {{ object.site.locality }}
+        {% else %}
+        ---
+        {% endif %}
+      {% enddetailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Locality' %}</h5>
-      <p class="text-muted">{{ object.site.locality }}</p>
-    </div>
-    <div class="col">
-      <h5 class="mt-0">{% trans 'Owner' %}</h5>
-      <p class="text-muted">{{ object.site.created_by }}</p>
+      {% detailitem %}
+        {% trans 'Altitude' %}
+      {% endhead %}
+        {% if object.site.altitude %}
+        {{ object.site.altitude | floatformat | default_if_none:'---' }}
+        {% else %}
+        ---
+        {% endif %}
+      {% enddetailitem %}
     </div>
   </div>
 
   <div class="row">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Latitude' %}</h5>
-      <p class="text-muted">{{ object.site.latitude }}</p>
+      {% detailitem %}
+        {% trans 'Latitude' %}
+      {% endhead %}
+        {{ object.site.latitude | floatformat:3 | default_if_none:'---' }}
+      {% enddetailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Longitude' %}</h5>
-      <p class="text-muted">{{ object.site.longitude }}</p>
-    </div>
-    <div class="col">
-      <h5 class="mt-0">{% trans 'Altitude' %}</h5>
-      <p class="text-muted">{{ object.site.altitude }}</p>
+      {% detailitem %}
+        {% trans 'Longitude' %}
+      {% endhead %}
+        {{ object.site.longitude | floatformat:3 | default_if_none:'---' }}
+      {% enddetailitem %}
     </div>
   </div>
 
   {% if object.metadata %}
-  <div class="row">
-    <div class="col">
-      <h4 class="w-100 text-center">
-        <span class="border-bottom px-2">
-          {% trans 'Metadata' %}
-        </span>
-      </h4>
-      <div class="d-flex flex-wrap">
-        {% show_json object.metadata %}
+    {% detailsection %}
+      {% trans 'Metadata' %}
+    {% enddetailsection %}
+
+    <div class="row">
+      <div class="col">
+        <div class="d-flex flex-wrap">
+          {% show_json object.metadata %}
+        </div>
       </div>
     </div>
-  </div>
   {% endif %}
 
 </div>

@@ -4,6 +4,12 @@ from django.utils.translation import gettext as _
 from database.models import Collection, SamplingEvent
 from selia.views.list_views.base import SeliaListView
 from irekua_utils.filters.data_collections import collection_sampling_events
+from irekua_utils.permissions.sampling_events import (
+    sampling_events as sampling_event_permissions)
+from irekua_utils.permissions.data_collections import (
+    users as user_permissions)
+from irekua_utils.permissions import (
+    licences as licence_permissions)
 
 
 class ListCollectionSamplingEventView(SeliaListView, SingleObjectMixin):
@@ -18,6 +24,23 @@ class ListCollectionSamplingEventView(SeliaListView, SingleObjectMixin):
     filter_class = collection_sampling_events.Filter
     search_fields = collection_sampling_events.search_fields
     ordering_fields = collection_sampling_events.ordering_fields
+
+    def get_permissions(self):
+        permissions = super().get_permissions()
+        user = self.request.user
+        permissions['list_collection_users'] = user_permissions.list(
+            user, collection=self.object)
+        permissions['list_collection_licences'] = licence_permissions.list(
+            user, collection=self.object)
+        return permissions
+
+    def has_create_permission(self):
+        user = self.request.user
+        return sampling_event_permissions.create(user, collection=self.object)
+
+    def has_view_permission(self):
+        user = self.request.user
+        return sampling_event_permissions.list(user, collection=self.object)
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(queryset=Collection.objects.all())

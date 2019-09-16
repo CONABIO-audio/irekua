@@ -36,7 +36,12 @@ class SeliaSelectView(TemplateView):
     def no_permission_redirect(self):
         return render(self.request, self.no_permission_template)
 
+    def get_objects(self):
+        pass
+
     def get(self, *args, **kwargs):
+        self.get_objects()
+
         if not self.has_view_permission():
             return self.no_permission_redirect()
 

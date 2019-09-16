@@ -51,7 +51,7 @@ class CreateCollectionUserView(SeliaCreateView):
         context = super().get_context_data(*args, **kwargs)
 
         context['collection'] = self.collection
-        context['user'] = self.user
+        context['selected_user'] = self.user
         context['role'] = self.role
 
         role_info = CollectionRole.objects.get(

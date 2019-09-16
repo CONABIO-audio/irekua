@@ -1,104 +1,140 @@
 {% load json_tags %}
+{% load selia_tags %}
 {% load i18n %}
 
-<div class="media">
-  <div class="media-body mt-0">
-    <h4 class="mt-0">{% trans 'Deployed device' %} {{ object.pk }}
-    </h4>
+{% detailtitle %}
+  {% detail_icon object.collection_device.physical_device.device.device_type.icon %}
+{% enddetailimage %}
+  {% if object.collection_device.internal_id %}
+    {{ object.collection_device.internal_id }} ({% trans 'deployed' %})
+  {% else %}
+    {% trans 'Deployed device' %}
+  {% endif %}
+{% enddetailheader %}
+  <div>
+    {{ object.collection_device.physical_device.device.device_type }}
+  </div>
+{% enddetailtitle %}
+
+{% detailsection %}
+  <a href="{% url 'selia:sampling_event_detail' object.sampling_event.pk %}">
+    {% trans 'Sampling Event Info' %}
+  </a>
+{% enddetailsection %}
+
+<div class="row">
+  <div class="col">
+    {% detailitem %}
+      {% trans 'Started on' %}
+    {% endhead %}
+      {{ object.sampling_event.started_on | date }}
+    {% detailitem %}
+  </div>
+  <div class="col">
+    {% detailitem %}
+      {% trans 'Ended on' %}
+    {% endhead %}
+      {{ object.sampling_event.ended_on | date}}
+    {% detailitem %}
   </div>
 </div>
 
-<div class="row mt-3 mb-3">
+<div class="row">
   <div class="col">
-    <div class="row p-2">
-      <h4 class="border-bottom">
-        <a href="{% url 'selia:sampling_event_detail' object.sampling_event.pk %}">
-          {% trans 'Sampling event info' %}
-        </a>
-      </h4>
-    </div>
-    <div class="row">
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Sampling event' %}</h5>
-        <p class="text-muted">{{ object.sampling_event.pk }}</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Collection' %}</h5>
-        <p class="text-muted">{{ object.sampling_event.collection }}</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Started on' %}</h5>
-        <p class="text-muted">{{ object.sampling_event.started_on | date }}</p>
-      </div>
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Ended on' %}</h5>
-        <p class="text-muted">{{ object.sampling_event.ended_on | date}}</p>
-      </div>
-    </div>
+    {% detailitem %}
+      {% trans 'Site name' %}
+    {% endhead %}
+      {{ object.sampling_event.collection_site.internal_id }}
+    {% detailitem %}
   </div>
   <div class="col">
-    <div class="row p-2">
-      <h4 class="border-bottom px-2">
-        <a href="{% url 'selia:collection_device_detail' object.collection_device.pk %}">
-          {% trans 'Device info' %}
-        </a>
-      </h4>
-    </div>
-    <div class="row">
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Device type' %}</h5>
-        <p class="text-muted">{{ object.collection_device.physical_device.device.device_type }}</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Brand' %}</h5>
-        <p class="text-muted">{{ object.collection_device.physical_device.device.brand }}</p>
-      </div>
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Model' %}</h5>
-        <p class="text-muted">{{ object.collection_device.physical_device.device.model }}</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Serial number' %}</h5>
-        <p class="text-muted">{{ object.collection_device.physical_device.serial_number }}</p>
-      </div>
-      <div class="col">
-        <h5 class="mt-0">{% trans 'Owner' %}</h5>
-        <p class="text-muted">{{ object.collection_device.physical_device.created_by }}</p>
-      </div>
-    </div>
+    {% detailitem %}
+      {% trans 'Site locality' %}
+    {% endhead %}
+      {{ object.sampling_event.collection_site.site.locality }}
+    {% detailitem %}
   </div>
+</div>
 
-  {% if object.metadata or object.configuration %}
-  <div class="row pt-2">
-    <div class="col">
-      {% if object.metadata %}
-      <h4 class="w-100 text-center">
-        <span class="border-bottom px-2">{% trans 'Deployment metadata' %}</span>
-      </h4>
+{% detailsection %}
+    <a href="{% url 'selia:collection_device_detail' object.collection_device.pk %}">
+      {% trans 'Device Info' %}
+    </a>
+{% enddetailsection %}
+
+<div class="row">
+  <div class="col">
+    {% detailitem %}
+      {% trans 'Device type' %}
+    {% endhead %}
+      {{ object.collection_device.physical_device.device.device_type }}
+    {% detailitem %}
+  </div>
+  <div class="col">
+    {% detailitem %}
+      {% trans 'Name' %}
+    {% endhead %}
+      {{ object.collection_device.internal_id }}
+    {% detailitem %}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    {% detailitem %}
+      {% trans 'Brand' %}
+    {% endhead %}
+      {{ object.collection_device.physical_device.device.brand }}
+    {% detailitem %}
+  </div>
+  <div class="col">
+    {% detailitem %}
+      {% trans 'Model' %}
+    {% endhead %}
+      {{ object.collection_device.physical_device.device.model }}
+    {% detailitem %}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    {% detailitem %}
+      {% trans 'Serial number' %}
+    {% endhead %}
+      {{ object.collection_device.physical_device.serial_number }}
+    {% detailitem %}
+  </div>
+  <div class="col">
+    {% detailitem %}
+      {% trans 'Owner' %}
+    {% endhead %}
+      {{ object.collection_device.physical_device.created_by }}
+    {% detailitem %}
+  </div>
+</div>
+
+{% if object.metadata or object.configuration %}
+  {% if object.metadata %}
+    {% detailsection %}
+      {% trans 'Deployment metadata' %}
+    {% enddetailsection %}
+
+    <div class="row">
       <div class="d-flex flex-wrap">
         {% show_json object.metadata %}
       </div>
-      {% endif %}
     </div>
-    <div class="col">
-      {% if object.configuration %}
-      <h4 class="w-100 text-center">
-        <span class="border-bottom px-2">{% trans 'Device configuration' %}</span>
-      </h4>
+  {% endif %}
+
+  {% if object.metadata %}
+    {% detailsection %}
+      {% trans 'Device configuration' %}
+    {% enddetailsection %}
+
+    <div class="row">
       <div class="d-flex flex-wrap">
         {% show_json object.configuration %}
       </div>
-      {% endif %}
     </div>
-  </div>
   {% endif %}
-
-</div>
+{% endif %}

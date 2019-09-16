@@ -1,47 +1,64 @@
 {% extends 'selia/components/select_list_item.html' %}
 {% load selia_buttons %}
+{% load selia_tags %}
 {% load static %}
 {% load i18n %}
 
 {% block list-item-content %}
 <div class="row w-100">
   <div class="col">
-    <div class="media">
-      {% if item.collection_device.physical_device.device.device_type.icon %}
-      <img class="mr-3 img-thumbnail" src="{{ item.collection_device.physical_device.device.device_type.icon.url }}" alt="icon">
-      {% endif %}
-      <div class="media-body mt-0">
-        <h4 class="mt-0">{{ item.collection_device.physical_device.device.brand }}</h4>
-        <div class="text-muted">{{ item.collection_device.physical_device.device.model }}</div>
-      </div>
+    {% listtitle %}
+      {% list_icon item.collection_device.physical_device.device.device_type.icon %}
+    {% endlistimage %}
+      {{ item.collection_device.physical_device.device.brand }}
+    {% endlistheader %}
+      {{ item.collection_device.physical_device.device.model }}
+    {% endlisttitle %}
+  </div>
+  <div class="col">
+    <div class="row">
+      {% listattribute %}
+        {% trans 'Device type' %}
+      {% attributevalue %}
+        {{ item.collection_device.physical_device.device.device_type }}
+      {% listattribute %}
+    </div>
+    <div class="row">
+      {% listattribute %}
+        {% trans 'Serial Number' %}
+      {% attributevalue %}
+        {{ item.collection_device.physical_device.serial_number }}
+      {% listattribute %}
+    </div>
+    <div class="row">
+      {% listattribute %}
+        {% trans 'Device Name' %}
+      {% attributevalue %}
+        {{ item.collection_device.internal_id }}
+      {% listattribute %}
     </div>
   </div>
   <div class="col">
     <div class="row">
-      <h6>{% trans 'Device type' %}</h6>
-      <div class="text-muted ml-4">{{ item.collection_device.physical_device.device.device_type }}</div>
+      {% listattribute %}
+        {% trans 'Collection' %}
+      {% attributevalue %}
+        {{ item.collection_device.collection }}
+      {% listattribute %}
     </div>
     <div class="row">
-      <h6>{% trans 'Serial Number' %}</h6>
-      <div class="text-muted ml-4">{{ item.collection_device.physical_device.serial_number }}</div>
+      {% listattribute %}
+        {% trans 'Owner' %}
+      {% attributevalue %}
+        {{ item.collection_device.physical_device.created_by }}
+      {% listattribute %}
     </div>
     <div class="row">
-      <h6>{% trans 'Collection Device id' %}</h6>
-      <div class="text-muted ml-4">{{ item.collection_device.internal_id }}</div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="row">
-      <h6>{% trans 'Collection' %}</h6>
-      <div class="text-muted ml-4">{{ item.collection_device.collection }}</div>
-    </div>
-    <div class="row">
-      <h6>{% trans 'Owner' %}</h6>
-      <div class="text-muted ml-4">{{ item.collection_device.physical_device.created_by }}</div>
-    </div>
-    <div class="row">
-      <h6>{% trans 'Added on' %}</h6>
-      <div class="text-muted ml-4">{{ item.collection_device.created_on }}</div>
+      {% listattribute %}
+        {% trans 'Added on' %}
+      {% attributevalue %}
+        {{ item.collection_device.created_on }}
+      {% listattribute %}
     </div>
   </div>
 

@@ -7,6 +7,8 @@ from database.models import Site
 from database.models import SiteType
 
 from irekua_utils.filters import sites as site_utils
+from irekua_utils.permissions.data_collections import (
+    sites as site_permissions)
 from selia.views.create_views.create_base import SeliaCreateView
 from selia.views.utils import SeliaList
 
@@ -30,9 +32,16 @@ class SelectCollectionSiteSiteView(SeliaCreateView):
     prefix = 'site'
     create_url = 'selia:create_collection_site'
 
+    def has_view_permission(self):
+        user = self.request.user
+        return site_permissions.create(user, collection=self.collection)
+
+    def get_objects(self):
+        if not hasattr(self, 'collection'):
+            self.collection = Collection.objects.get(pk=self.request.GET['collection'])
+
     def get_context_data(self):
         context = super().get_context_data()
-        self.collection = Collection.objects.get(pk=self.request.GET['collection'])
         context['collection'] = self.collection
         context['site_type'] = SiteType.objects.get(pk=self.request.GET['site_type'])
         context['list'] = self.get_site_list()

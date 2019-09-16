@@ -15,9 +15,11 @@
 {% endblock %}
 
 {% block toolbar-items %}
+  {% if permissions.create %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'selia:create_collection_site' %}?collection={{ collection.pk }}">{% trans 'Add Site' %} <i class="fas fa-plus"></i> <i class="fas fa-map-marked-alt"></i></a>
   </li>
+  {% endif %}
   <li class="nav-item">
     {% help_button %}
   </li>

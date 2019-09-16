@@ -1,44 +1,61 @@
 {% extends 'selia/components/list_item.html' %}
 {% load selia_buttons %}
-{% load static %}
+{% load selia_tags %}
 {% load i18n %}
 
 {% block list-item-content %}
   <div class="row w-100">
-    <div class="col-3">
-      <div class="media">
-        <div class="media-body mt-0">
-          <h4 class="mt-0">
-            {% trans 'Licence' %} {{item.pk }}
-          </h4>
-          <div class="text-muted"><a href="{% url 'selia:licence_detail' item.pk %}">{% enter_button %}</a></div>
+    <div class="col">
+      {% listtitle %}
+        {% list_icon item.licence_type.icon %}
+      {% endlistimage %}
+        {% trans 'Licence' %}
+      {% endlistheader %}
+        <div>
+          {{ item.licence_type }}
         </div>
+        <div>
+          <a href="{% url 'selia:licence_detail' item.pk %}">
+            {% enter_button %}
+          </a>
+        </div>
+      {% endlisttitle %}
+    </div>
+
+    <div class="col">
+      <div class="row">
+        {% listattribute %}
+          {% trans 'Licence type' %}
+        {% attributevalue %}
+          {{ item.licence_type }}
+        {% endlistattribute %}
+      </div>
+      <div class="row">
+        {% listattribute %}
+          {% trans 'Collection' %}
+        {% attributevalue %}
+          {{ item.collection }}
+        {% endlistattribute %}
       </div>
     </div>
-    <div class="col-3">
+
+    <div class="col">
       <div class="row">
-        <h6>{% trans 'Licence type' %}</h6>
-        <div class="text-muted ml-4">{{ item.licence_type }}</div>
-      </div>
-      <div class="row">
-        <h6>{% trans 'Collection' %}</h6>
-        <div class="text-muted ml-4">{{ item.collection }}</div>
+        {% listattribute %}
+          {% trans 'Signed by' %}
+        {% attributevalue %}
+          {{ item.created_by }}
+        {% endlistattribute %}
       </div>
     </div>
 
     <div class="col-3">
       <div class="row">
-        <h6>{% trans 'Signed by' %}</h6>
-        <div class="text-muted ml-4 ellipsis">{{ item.created_by }}</div>
-      </div>
-    </div>
-
-    <div class="col-3">
-      <div class="row">
-        <div class="col d-flex">
-          <h6>{% trans 'Items' %}</h6>
-          <div class="text-muted ml-4">{{ item.item_set.count }}</div>
-        </div>
+        {% listsummary %}
+          {% trans 'Items' %}
+        {% summarycount %}
+        {{   item.item_set.count }}
+        {% endlistsummary %}
       </div>
     </div>
   </div>

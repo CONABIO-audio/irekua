@@ -1,87 +1,127 @@
 {% extends 'selia/components/list_item.html' %}
 {% load selia_buttons %}
+{% load selia_tags %}
 {% load static %}
 {% load i18n %}
 
 {% block list-item-content %}
   <div class="row w-100">
   <div class="col">
-    <div class="media">
-      <div class="media-body mt-0">
-        <h4 class="mt-0">
-          {% trans 'Sampling event' %} {{item.pk }}
-        </h4>
-        <div class="text-muted"><a href="{% url 'selia:sampling_event_detail' item.pk %}">{% enter_button %}</a></div>
+    {% listtitle %}
+      {% list_icon item.sampling_event_type.icon %}
+    {% endlistimage %}
+      {% trans 'Sampling event' %}
+    {% endlistheader %}
+      <div>
+        {{ item.sampling_event_type }}
       </div>
-    </div>
+      <div>
+        <a href="{% url 'selia:sampling_event_detail' item.pk %}">
+          {% enter_button %}
+        </a>
+      </div>
+    {% endlisttitle %}
   </div>
     <div class="col">
+      {% if not collection %}
       <div class="row">
-        <h6>{% trans 'Collection' %}</h6>
-        <div class="text-muted ml-4">{{ item.collection }}</div>
-      </div>
-      <div class="row">
-        <h6>{% trans 'Collection Site ID' %}</h6>
-        <div class="text-muted ml-4"><a href="{% url 'selia:collection_site_detail' item.collection_site.pk %}">{{ item.collection_site.internal_id }}</a></div>
-      </div>
-      {% if item.collection_site.site.created_by == request.user %}
-      {% if item.collection_site.site.name %}
-      <div class="row">
-        <h6>{% trans 'Site name' %}</h6>
-        <div class="text-muted ml-4">{{ item.collection_site.site.name }}</div>
+        {% listattribute %}
+          {% trans 'Collection' %}
+        {% attributevalue %}
+          {{ item.collection }}
+        {% endlistattribute %}
       </div>
       {% endif %}
+      <div class="row">
+        {% listattribute %}
+          {% trans 'Collection Site' %}
+        {% attributevalue %}
+          <a href="{% url 'selia:collection_site_detail' item.collection_site.pk %}">
+            {{ item.collection_site.internal_id }}
+          </a>
+        {% endlistattribute %}
+      </div>
+      {% if item.collection_site.site.created_by == request.user %}
+        {% if item.collection_site.site.name %}
+        <div class="row">
+          {% listattribute %}
+            {% trans 'Site name' %}
+          {% attributevalue %}
+            {{ item.collection_site.site.name }}
+          {% endlistattribute %}
+        </div>
+        {% endif %}
       {% endif %}
       {% if item.collection_site.site.locality %}
       <div class="row">
-        <h6>{% trans 'Site locality' %}</h6>
-        <div class="text-muted ml-4">{{ item.collection_site.site.locality }}</div>
+        {% listattribute %}
+          {% trans 'Site locality' %}
+        {% attributevalue %}
+          {{ item.collection_site.site.locality }}
+        {% endlistattribute %}
       </div>
       {% endif %}
+      <div class="row">
+        {% listattribute %}
+          {% trans 'Site latitude' %}
+        {% attributevalue %}
+          {{ item.collection_site.site.latitude | floatformat:'3' }}
+        {% endlistattribute %}
+      </div>
+      <div class="row">
+        {% listattribute %}
+          {% trans 'Site longitude' %}
+        {% attributevalue %}
+          {{ item.collection_site.site.longitude | floatformat:'3' }}
+        {% endlistattribute %}
+      </div>
     </div>
 
     <div class="col">
       <div class="row">
-        <h6>{% trans 'Sampling event type' %}</h6>
-        <div class="text-muted ml-4">{{ item.sampling_event_type }}</div>
+        {% listattribute %}
+          {% trans 'Started on' %}
+        {% attributevalue %}
+          {{ item.started_on | date }}
+        {% endlistattribute %}
       </div>
       <div class="row">
-        <h6>{% trans 'Started on' %}</h6>
-        <div class="text-muted ml-4">{{ item.started_on|date }}</div>
-      </div>
-      <div class="row">
-        <h6>{% trans 'Ended on' %}</h6>
-        <div class="text-muted ml-4">{{ item.ended_on|date }}</div>
+        {% listattribute %}
+          {% trans 'Ended on' %}
+        {% attributevalue %}
+          {{ item.ended_on | date }}
+        {% endlistattribute %}
       </div>
     </div>
 
     <div class="col">
       <div class="row">
-        <div class="col d-flex">
-          <h6>{% trans 'Deployed devices' %}</h6>
-          <div class="text-muted ml-4">{{ item.samplingeventdevice_set.count }}</div>
-        </div>
-        <div class="col-2">
-          <div class="row">
-            <a href="{% url 'selia:sampling_event_devices' item.pk %}">{% see_button %}</a>
-          </div>
-        </div>
-        <div class="col-2">
-          <a href="{% url 'selia:create_sampling_event_device' %}?sampling_event={{ item.pk }}"><i class="fas fa-plus"></i></a>
-        </div>
+        {% listsummary %}
+          {% trans 'Deployed devices' %}
+        {% summarycount %}
+          {{ item.samplingeventdevice_set.count }}
+        {% summarybuttons %}
+          <a href="{% url 'selia:sampling_event_devices' item.pk %}">
+            {% see_button %}
+          </a>
+          <a class="ml-2" href="{% url 'selia:create_sampling_event_device' %}?sampling_event={{ item.pk }}">
+            {% add_button %}
+          </a>
+        {% endlistsummary %}
       </div>
       <div class="row">
-        <div class="col d-flex">
-          <h6>{% trans 'Items' %}</h6>
-          <div class="text-muted ml-4">{{ item.items.count }}</div>
-        </div>
-        <div class="col-2">
-          <div class="row">
-            <a href="{% url 'selia:sampling_event_items' item.pk %}">{% see_button %}</a>
-          </div>        </div>
-        <div class="col-2">
-          <a href="{% url 'selia:create_item' %}?sampling_event={{ item.pk }}"><i class="fas fa-plus"></i></a>
-        </div>
+        {% listsummary %}
+          {% trans 'Items' %}
+        {% summarycount %}
+          {{ item.items.count }}
+        {% summarybuttons %}
+          <a href="{% url 'selia:sampling_event_items' item.pk %}">
+            {% see_button %}
+          </a>
+          <a class="ml-2" href="{% url 'selia:create_item' %}?sampling_event={{ item.pk }}">
+            {% add_button %}
+          </a>
+        {% endlistsummary %}
       </div>
     </div>
   </div>

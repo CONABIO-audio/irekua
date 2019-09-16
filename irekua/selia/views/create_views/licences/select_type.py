@@ -5,15 +5,22 @@ from database.models import Collection
 from database.models import LicenceType
 
 from selia.views.create_views.select_base import SeliaSelectView
+from irekua_utils.permissions import licences as licence_permissions
 
 
 class SelectLicenceTypeView(SeliaSelectView):
     template_name = 'selia/create/licences/select_type.html'
     prefix = 'licence_type'
 
-    def should_redirect(self):
-        self.collection = Collection.objects.get(pk=self.request.GET['collection'])
+    def get_objects(self):
+        if not hasattr(self, 'collection'):
+            self.collection = Collection.objects.get(pk=self.request.GET['collection'])
 
+    def has_view_permission(self):
+        user = self.request.user
+        return licence_permissions.create(user, collection=self.collection)
+
+    def should_redirect(self):
         collection_type = self.collection.collection_type
 
         if collection_type.restrict_licence_types:
@@ -37,6 +44,11 @@ class SelectLicenceTypeView(SeliaSelectView):
         return self.licence_types
 
     def get(self, *args, **kwargs):
+        self.get_objects()
+
+        if not self.has_view_permission():
+            return self.no_permission_redirect()
+
         if self.should_redirect():
             return self.handle_single_type_redirect()
 

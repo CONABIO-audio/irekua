@@ -1,57 +1,75 @@
 {% load json_tags %}
+{% load selia_tags %}
 {% load i18n %}
 
-<div class="media">
-  <div class="media-body mt-0">
-    <h4 class="mt-0">{% trans 'Licence ' %}{{ object.pk }}
-    </h4>
+{% detailtitle %}
+  {% detail_icon object.licence_type.icon %}
+{% enddetailimage %}
+  {% trans 'Licence ' %}
+{% enddetailheader %}
+  <div>
+    {{ object.licence_type }}
   </div>
-</div>
+{% enddetailtitle %}
+
 <div class="container mt-3 mb-3">
   <div class="row">
     <div class="col">
-      <h5>{% trans 'Signed on'%}</h5>
-      <p class="text-muted">{{ object.created_on | date }}</p>
+      {% detailitem %}
+        {% trans 'Signed on'%}
+      {% endhead %}
+        {{ object.created_on | date }}
+      {% detailitem %}
     </div>
     <div class="col">
-      <h5>{% trans 'Signer'%}</h5>
-      <p class="text-muted">{{ object.created_by }}</p>
+      {% detailitem %}
+        {% trans 'Signer'%}
+      {% endhead %}
+        {{ object.created_by }}
+      {% detailitem %}
     </div>
   </div>
 
   <div class="row">
     <div class="col">
-      <h5 class="mt-0">{% trans 'Valid until' %}</h5>
-      {% if object.licence_type.years_valid_for > 50 %}
-      <p class="text-muted">-</p>
-      {% else %}
-      <p class="text-muted">{{ object.created_on.year|add:object.licence_type.years_valid_for }}</p>
-      {% endif %}
+      {% detailitem %}
+        {% trans 'Valid until' %}
+      {% endhead %}
+        {% if object.licence_type.years_valid_for > 50 %}
+          -
+        {% else %}
+          {{ object.created_on.year|add:object.licence_type.years_valid_for }}
+        {% endif %}
+      {% detailitem %}
     </div>
     <div class="col">
-      <h5 class="mt-0">{% trans 'Document' %}</h5>
-      {% if object.document %}
-      <a href="{{ object.document.url }}" target="_blank"><p>{{ object.document }}</p></a>
-      {% else %}
-      <p class="text-muted">-</p>
-      {% endif %}
+      {% detailitem %}
+        {% trans 'Document' %}
+      {% endhead %}
+        {% if object.document %}
+          <a href="{{ object.document.url }}" download>
+            {% trans 'Download' %}
+          </a>
+        {% else %}
+          -
+        {% endif %}
+      {% detailitem %}
     </div>
   </div>
 
-  {% if object.metadata %}
-  <h4>{% trans 'Metadata' %}</h4>
-  <div class="d-flex flex-wrap">
-    {% show_json object.metadata %}
-  </div>
-  {% endif %}
-
-  <hr/>
-
-  <div class="row w-100">
-    <h4 class="w-100 text-center">{% trans 'Licence type' %}</h4>
-    <p class="w-100 text-muted text-center">{{ object.licence_type }}</p>
-  </div>
+  {% detailsection %}
+    {% trans 'Licence type' %}
+  {% enddetailsection %}
 
   {% include 'selia/components/details/licence_type.html' with object=object.licence_type %}
 
+  {% if object.metadata %}
+    {% detailsection %}
+      {% trans 'Metadata' %}
+    {% enddetailsection %}
+
+    <div class="d-flex flex-wrap justify-content-between">
+      {% show_json object.metadata %}
+    </div>
+  {% endif %}
 </div>

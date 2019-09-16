@@ -3,6 +3,7 @@ from django.utils.translation import gettext as _
 from database.models import Site
 
 from irekua_utils.filters import sites
+from irekua_utils.permissions import sites as site_permissions
 from selia.views.list_views.base import SeliaListView
 
 
@@ -23,4 +24,9 @@ class ListUserSitesView(SeliaListView):
         return Site.objects.filter(created_by=self.request.user)
 
     def has_view_permission(self):
-        return True
+        user = self.request.user
+        return site_permissions.create(user)
+
+    def has_create_permission(self):
+        user = self.request.user
+        return site_permissions.create(user)

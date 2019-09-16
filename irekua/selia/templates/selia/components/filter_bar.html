@@ -1,7 +1,7 @@
 {% load selia_components %}
 {% load i18n %}
 
-{% if clear%}
+{% if clear %}
   <div class="container-fluid col-11 filter-bar">
     {% if search %}
       <a href="{{ request.get_full_path | remove_option:"search" }}" class="badge badge-dark filter-badge badge-pill p-2 mx-2 my-2">
@@ -16,7 +16,7 @@
     {% endfor %}
   </div>
 
-  <div class="col-1 container-fluid">
+  <div class="col-1 pr-0">
     <a class="btn btn-link text-light" href="?{% remove_form_fields request.GET forms %}">
       {% trans 'Clean' %} <i class="fas fa-eraser"></i>
     </a>

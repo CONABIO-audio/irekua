@@ -75,6 +75,7 @@
   </a>
 </li>
 
+{% if permissions.list_collection_licences %}
 {% url 'selia:collection_licences' collection.pk as detail_url %}
 <li class="nav-item">
   {% if detail_url in request.path|urlencode %}
@@ -86,7 +87,9 @@
     {% trans 'Licences' %}
   </a>
 </li>
+{% endif %}
 
+{% if permissions.list_collection_users %}
 {% url 'selia:collection_users' collection.pk as users_url %}
 <li class="nav-item">
   {% if users_url in request.path|urlencode %}
@@ -98,4 +101,5 @@
     {% trans 'Users' %}
   </a>
 </li>
+{% endif %}
 {% endblock navbar-items %}

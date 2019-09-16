@@ -7,6 +7,8 @@ from database.models import SiteType
 
 from selia.forms.json_field import JsonField
 from selia.views.create_views.create_base import SeliaCreateView
+from irekua_utils.permissions.data_collections import (
+    sites as site_permissions)
 
 
 class CollectionSiteCreateForm(forms.ModelForm):
@@ -30,17 +32,27 @@ class CollectionSiteCreateView(SeliaCreateView):
     template_name = 'selia/create/collection_sites/create_form.html'
     success_url = 'selia:collection_sites'
 
+    def has_view_permission(self):
+        user = self.request.user
+        return site_permissions.create(user, collection=self.collection)
+
     def get_success_url_args(self):
         return [self.request.GET['collection']]
 
-    def get_initial(self):
-        self.collection = Collection.objects.get(
-            pk=self.request.GET['collection'])
-        self.site = Site.objects.get(
-            pk=self.request.GET['site'])
-        self.site_type = SiteType.objects.get(
-            pk=self.request.GET['site_type'])
+    def get_objects(self):
+        if not hasattr(self, 'collection'):
+            self.collection = Collection.objects.get(
+                pk=self.request.GET['collection'])
 
+        if not hasattr(self, 'site'):
+            self.site = Site.objects.get(
+                pk=self.request.GET['site'])
+
+        if not hasattr(self, 'site_type'):
+            self.site_type = SiteType.objects.get(
+                pk=self.request.GET['site_type'])
+
+    def get_initial(self):
         return {
             'collection': self.collection,
             'site': self.site,

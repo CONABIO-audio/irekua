@@ -1,7 +1,10 @@
 from database.models import Licence
+from database.models import Collection
 from database.models import SamplingEventDevice
 
 from selia.views.create_views import SeliaSelectView
+from irekua_utils.permissions.items import (
+    items as item_permissions)
 
 
 class SelectItemLicenceView(SeliaSelectView):
@@ -9,11 +12,19 @@ class SelectItemLicenceView(SeliaSelectView):
     prefix = 'licence'
     create_url = 'selia:create_item'
 
+    def has_view_permission(self):
+        user = self.request.user
+        return item_permissions.create(user,
+                sampling_event_device=self.sampling_event_device)
+
+    def get_objects(self):
+        if not hasattr(self, 'sampling_event_device'):
+            self.sampling_event_device = SamplingEventDevice.objects.get(
+                pk=self.request.GET['sampling_event_device'])
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-
-        context['sampling_event_device'] = SamplingEventDevice.objects.get(
-            pk=self.request.GET['sampling_event_device'])
+        context['sampling_event_device'] = self.sampling_event_device
         return context
 
     def get_list_context_data(self):

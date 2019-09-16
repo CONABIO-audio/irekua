@@ -10,6 +10,12 @@ from database.models import CollectionSite
 from database.models import CollectionDevice
 from database.models import Item
 from database.models import Annotation
+from irekua_utils.permissions.data_collections import (
+    users as user_permissions)
+from irekua_utils.permissions.data_collections import (
+    users as user_permissions)
+from irekua_utils.permissions import (
+    licences as licence_permissions)
 
 
 class CollectionUserUpdateForm(forms.ModelForm):
@@ -36,8 +42,29 @@ class DetailCollectionUserView(SeliaDetailView, SingleObjectMixin):
     update_form_template = 'selia/components/update/collection_user.html'
     viewer_template = 'selia/components/viewers/collection_user.html'
 
+    def has_view_permission(self):
+        user = self.request.user
+        return user_permissions.view(user, collection_user=self.object)
+
+    def has_change_permission(self):
+        user = self.request.user
+        return user_permissions.change(user, collection_user=self.object)
+
+    def has_delete_permission(self):
+        user = self.request.user
+        return user_permissions.delete(user, collection_user=self.object)
+
     def get_delete_redirect_url_args(self):
         return [self.object.collection.pk]
+
+    def get_permissions(self):
+        permissions = super().get_permissions()
+        user = self.request.user
+        permissions['list_collection_users'] = user_permissions.list(
+            user, collection=self.object.collection)
+        permissions['list_collection_licences'] = licence_permissions.list(
+            user, collection=self.object.collection)
+        return permissions
 
     def get_summary_info(self):
         user = self.object.user

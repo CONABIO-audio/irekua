@@ -2,6 +2,7 @@ from django import forms
 
 from database.models import Site
 from selia.views.detail_views.base import SeliaDetailView
+from irekua_utils.permissions import sites as site_permissions
 
 
 class SiteUpdateForm(forms.ModelForm):
@@ -31,10 +32,13 @@ class DetailUserSiteView(SeliaDetailView):
     delete_redirect_url = 'selia:user_sites'
 
     def has_view_permission(self):
-        return self.object.created_by == self.request.user
+        user = self.request.user
+        return site_permissions.view(user, site=self.object)
 
     def has_delete_permission(self):
-        return True
+        user = self.request.user
+        return site_permissions.delete(user, site=self.object)
 
     def has_change_permission(self):
-        return True
+        user = self.request.user
+        return site_permissions.change(user, site=self.object)

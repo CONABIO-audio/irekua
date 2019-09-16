@@ -2,6 +2,8 @@ from database.models import SamplingEventDevice
 from database.models import SamplingEvent
 
 from irekua_utils.filters.sampling_events import sampling_event_devices as sampling_event_utils
+from irekua_utils.permissions.items import (
+    items as item_permissions)
 
 from selia.views.utils import SeliaList
 from selia.views.create_views import SeliaSelectView
@@ -12,11 +14,18 @@ class SelectItemSamplingEventDeviceView(SeliaSelectView):
     prefix = 'sampling_event_device'
     create_url = 'selia:create_item'
 
+    def has_view_permission(self):
+        user = self.request.user
+        return item_permissions.create(user, sampling_event=self.sampling_event)
+
+    def get_objects(self):
+        if not hasattr(self, 'sampling_event'):
+            self.sampling_event = SamplingEvent.objects.get(
+                pk=self.request.GET['sampling_event'])
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-
-        context['sampling_event'] = SamplingEvent.objects.get(
-            pk=self.request.GET['sampling_event'])
+        context['sampling_event'] = self.sampling_event
         return context
 
     def get_list_class(self):

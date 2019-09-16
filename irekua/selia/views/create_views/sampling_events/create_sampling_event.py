@@ -8,6 +8,8 @@ from database.models import CollectionSite
 from selia.forms.widgets import BootstrapDateTimePickerInput
 from selia.forms.json_field import JsonField
 from selia.views.create_views.create_base import SeliaCreateView
+from irekua_utils.permissions.sampling_events import (
+    sampling_events as sampling_event_permissions)
 
 
 class SamplingEventCreateForm(forms.ModelForm):
@@ -37,6 +39,21 @@ class SamplingEventCreateView(SeliaCreateView):
     success_url = 'selia:collection_sampling_events'
     template_name = 'selia/create/sampling_events/create_form.html'
 
+    def get_objects(self):
+        if not hasattr(self, 'collection'):
+            self.collection = Collection.objects.get(
+                pk=self.request.GET['collection'])
+        if not hasattr(self, 'collection_site'):
+            self.collection_site = CollectionSite.objects.get(
+                pk=self.request.GET['collection_site'])
+        if not hasattr(self, 'sampling_event_type'):
+            self.sampling_event_type = SamplingEventType.objects.get(
+                pk=self.request.GET['sampling_event_type'])
+
+    def has_view_permission(self):
+        user = self.request.user
+        return sampling_event_permissions.create(user, collection=self.collection)
+
     def get_success_url_args(self):
         return [self.request.GET['collection']]
 
@@ -47,13 +64,6 @@ class SamplingEventCreateView(SeliaCreateView):
         }
 
     def get_initial(self):
-        self.collection = Collection.objects.get(
-            pk=self.request.GET['collection'])
-        self.collection_site = CollectionSite.objects.get(
-            pk=self.request.GET['collection_site'])
-        self.sampling_event_type = SamplingEventType.objects.get(
-            pk=self.request.GET['sampling_event_type'])
-
         return {
             'collection': self.collection,
             'collection_site': self.collection_site,

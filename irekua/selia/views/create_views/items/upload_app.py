@@ -1,18 +1,23 @@
+import json
+import pytz
+from timezonefinder import TimezoneFinder
+
 from django import forms
 from django.core import serializers
 from django.shortcuts import get_object_or_404
 from django.shortcuts import reverse
 from django.http import HttpResponse
+
 from rest.serializers.object_types.data_collections.items import ListSerializer
+
 from database.models import Item, SamplingEventDevice, Licence, CollectionItemType
 from database.models import Item
 from database.models import SamplingEventDevice
 from database.models import Licence
-from selia.views.create_views.create_base import SeliaCreateView
 
-import json
-import pytz
-from timezonefinder import TimezoneFinder
+from selia.views.create_views.create_base import SeliaCreateView
+from irekua_utils.permissions.items import (
+        items as item_permissions)
 
 
 class ItemUploadView(SeliaCreateView):
@@ -131,6 +136,19 @@ class ItemUploadView(SeliaCreateView):
 
         return json.dumps({"site_timezone":timezone,"tz_list":pytz.all_timezones})
 
+    def get_objects(self):
+        if not hasattr(self, 'sampling_event_device'):
+            if "sampling_event_device" in self.request.GET:
+                sampling_event_device_pk = self.request.GET["sampling_event_device"]
+
+            self.sampling_event_device = get_object_or_404(
+                SamplingEventDevice, pk=sampling_event_device_pk)
+
+    def has_view_permission(self):
+        user = self.request.user
+        return item_permissions.create(user,
+            sampling_event_device=self.sampling_event_device)
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         sampling_event_device_pk = None
@@ -142,8 +160,7 @@ class ItemUploadView(SeliaCreateView):
         if "licence":
             licence_pk = self.request.GET["licence"]
 
-        sampling_event_device = get_object_or_404(
-            SamplingEventDevice, pk=sampling_event_device_pk)
+        sampling_event_device = self.sampling_event_device
         licence = get_object_or_404(Licence, pk=licence_pk)
 
         context["collection"] = sampling_event_device.collection_device.collection

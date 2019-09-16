@@ -41,11 +41,11 @@
   <div class="container-fluid form-container mb-4 px-4 pb-5">
     <div class="row d-flex justify-content-center flex-wrap">
       {% for role in list %}
-      <div class="col-3 p-4 bg-light list_item m-2">
-        <a class="btn" href="{% url 'selia:create_collection_user' %}?{{ request.GET.urlencode }}&role={{ role.pk }}">
-          {% include 'selia/components/details/role.html' with object=role %}
-        </a>
-      </div>
+        <div class="p-2" style="width: 20em;">
+          <a href="{% url 'selia:create_collection_user' %}?{{ request.GET.urlencode }}&role={{ role.pk }}">
+            {% include 'selia/components/select_list_items/role.html' with item=role %}
+          </a>
+        </div>
       {% empty %}
       <h4>{% trans 'There are no available roles for this collection' %}</h4>
       {% endfor %}

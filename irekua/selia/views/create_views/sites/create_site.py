@@ -1,5 +1,6 @@
 from selia.views.create_views.create_base import SeliaCreateView
 from database.models import Site
+from irekua_utils.permissions import sites as site_permissions
 
 
 class CreateSiteView(SeliaCreateView):
@@ -14,6 +15,10 @@ class CreateSiteView(SeliaCreateView):
         'name',
         'locality',
     ]
+
+    def has_view_permission(self):
+        user = self.request.user
+        return site_permissions.create(user)
 
     def get_additional_query_on_sucess(self):
         return {

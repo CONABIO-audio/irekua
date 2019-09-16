@@ -17,7 +17,7 @@ class SelectCollectionSiteCollectionView(SeliaSelectView):
 
             queryset = self.request.user.collection_users.all()
 
-            list_item_template = 'selia/components/select_list_items/user_collections.html'
+            list_item_template = 'selia/components/select_list_items/collection.html'
             filter_form_template = 'selia/components/filters/collection.html'
 
         return CollectionList
