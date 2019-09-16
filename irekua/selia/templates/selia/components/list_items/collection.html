@@ -85,7 +85,7 @@
         {% listsummary %}
           {% trans 'Items' %}
         {% summarycount %}
-          {{ item.items }}
+          {{ item.items.count }}
         {% summarybuttons %}
           <a href="{% url 'selia:create_item' %}?collection={{ item.pk }}">{% add_button %}</a>
           <a class="ml-2" href="{% url 'selia:collection_items' item.pk %}">{% see_button %}</a>
