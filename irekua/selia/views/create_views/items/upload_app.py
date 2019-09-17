@@ -86,10 +86,15 @@ class ItemUploadView(SeliaCreateView):
                     "url": duplicate[0].item_file.url
                 }
 
+            return HttpResponse(
+                json.dumps(upload_result),
+                content_type="application/json",
+                status=400)
+
         return HttpResponse(
             json.dumps(upload_result),
             content_type="application/json",
-            status=400)
+            status=200)
 
     def form_invalid(self, form):
         upload_result = {

@@ -1,8 +1,11 @@
 import os
 import mimetypes
+import datetime
 
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
+from django.utils import timezone
+from pytz import timezone as pytz_timezone
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.translation import gettext_lazy as _
@@ -230,30 +233,33 @@ class Item(IrekuaModelBaseUser):
         if self.captured_on is not None:
             return
 
+        if self.captured_on_timezone:
+            tz = pytz_timezone(self.captured_on_timezone)
+            captured_on = datetime.datetime.now(tz=tz)
+        else:
+            captured_on = timezone.now()
+
         if (
                 self.captured_on_year and
                 self.captured_on_month and
                 self.captured_on_day):
+
+            captured_on.replace(
+                year=self.captured_on_year,
+                month=self.captured_on_month,
+                day=self.captured_on_day)
 
             if (
                     self.captured_on_hour and
                     self.captured_on_minute and
                     self.captured_on_second):
 
-                self.captured_on = '{year}-{month}-{day} {hour}:{minute}:{second}'.format(
-                    year=self.captured_on_year,
-                    month=self.captured_on_month,
-                    day=self.captured_on_day,
+                captured_on.replace(
                     hour=self.captured_on_hour,
                     minute=self.captured_on_minute,
                     second=self.captured_on_second)
 
-            else:
-                self.captured_on = '{year}-{month}-{day}'.format(
-                    year=self.captured_on_year,
-                    month=self.captured_on_month,
-                    day=self.captured_on_day)
-
+            self.captured_on = captured_on
 
     def clean(self):
         self.check_captured_on()
