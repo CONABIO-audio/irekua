@@ -17,6 +17,7 @@ class FileUploader {
 		this.wavesurfer = null;
 		this.initialize();
 	}
+
 	initialize() {
 		this.files = [];
 		this.last_id = 0;
@@ -100,7 +101,7 @@ class FileUploader {
 		waveform_footer.className = "modal-footer";
 		waveform_footer.style["margin-left"] = "auto";
 		waveform_footer.style["margin-right"] = "auto";
-		
+
 		this.playpause = document.createElement('button');
 		this.playpause.className = "rounded";
 		this.playpause.innerHTML = "<i class='fas fa-pause'></i>";
@@ -123,7 +124,7 @@ class FileUploader {
     		widget.wavesurfer.pause();
     		widget.playpause.innerHTML = "<i class='fas fa-play'></i>";
 		});
-		        			
+
 
 		$(this.waveform_container).on('shown.bs.modal', function () {
     		$('html').css("cursor", "auto");
@@ -735,7 +736,7 @@ class FileUploader {
 		          $(this).removeClass('incorrect_pattern');
 		        } else {
 		          $(this).addClass('incorrect_pattern');
-		        }	
+		        }
 			},
 			source: function(request,response){
 				var results = $.ui.autocomplete.filter(widget.tz_list,request.term);
@@ -1031,7 +1032,7 @@ class FileUploader {
 							var dinput = document.getElementById("date_input_file_"+check_boxes[i].file_id);
 							var tinput = document.getElementById("time_input_file_"+check_boxes[i].file_id);
 							var datetime_obj = widget.parse_datetime(file.name,parser_map);
-	    					
+
 	    					widget.set_file_datetime(file,datetime_obj.date,datetime_obj.time);
 
 							if (file.captured_on_date){
@@ -1040,7 +1041,7 @@ class FileUploader {
 
 							if (file.captured_on_time){
 								tinput.value = file.captured_on_time;
-							}							
+							}
 
 							widget.toggle_status(check_boxes[i].file_id);
 						}
@@ -1088,7 +1089,7 @@ class FileUploader {
 					}
 				}
 			}
-			
+
 		});
 
 		item_type_apply_selected_btn_row.addEventListener('click',function(e){
@@ -1098,7 +1099,7 @@ class FileUploader {
 			if (item_type != ""){
 				new_val = item_type;
 			}
-					
+
 			var check_boxes = widget.file_list.querySelectorAll('input[type=checkbox]:checked');
 			for (var i=0;i<check_boxes.length;i++){
 				if (check_boxes[i].file_id != "all"){
@@ -1111,7 +1112,7 @@ class FileUploader {
 					}
 				}
 			}
-			
+
 		});
 
 		time_apply_all_btn_row.addEventListener('click',function(e){
@@ -2144,7 +2145,7 @@ class FileUploader {
         	playbtn.innerHTML = "<i class='fas fa-file-audio'>"
         	var widget = this;
         	playbtn.addEventListener('click',function(event){
-        		
+
         		var load = false;
         		if (!widget.wavesurfer.file_id){
         			load = true;
@@ -2153,7 +2154,7 @@ class FileUploader {
         		}
 
         		if (load){
-        			
+
         			if (widget.wavesurfer.file_id){
         				widget.wavesurfer.pause();
         			}
@@ -2247,7 +2248,7 @@ class FileUploader {
 				var itemTypeCol = document.createElement('div');
 				itemTypeCol.className = 'col-3 justify-content-center  text-center item_col';
 				itemTypeCol.style["padding-left"] = "40px"
- 
+
 				var dateCol = document.createElement('div');
 				dateCol.className = 'col-2 justify-content-center  text-center item_col w-100';
 				dateCol.align = "center";
@@ -2269,7 +2270,7 @@ class FileUploader {
 
 				var thumbnail_div = this.get_file_thumbnail(page.data[i]);
 		        descrCol.appendChild(thumbnail_div);
-		       
+
 				var item_type_input = document.createElement('select');
 				item_type_input.style.height = "40px";
 				item_type_input.id = "item_type_input_file_"+page.data[i].file_id;
@@ -2290,7 +2291,7 @@ class FileUploader {
 				            item_type_input.selectedIndex = j;
 				            break;
 				        }
-				    }					
+				    }
 				} else {
 					item_type_input.selectedIndex = -1;
 				}
@@ -2477,7 +2478,7 @@ class FileUploader {
 			   status_btn.addEventListener('click',function(e){
 			      		var file_id = this.file_id;
 			      		widget.upload_multiple(function(f){return widget.is_uploadable(f) && f.file_id == file_id});
-			      		
+
 			    });
 			    tzInput.addEventListener('input',function(e){
 			    		var file = widget.get_file_by_id(this.file_id)
@@ -2501,7 +2502,7 @@ class FileUploader {
 			    checkFile.addEventListener('input',function(e){
 			    	var file = widget.get_file_by_id(this.file_id);
 			    	if (file){
-			    		file.checked = this.checked;			    		
+			    		file.checked = this.checked;
 			    	}
 
 				});
@@ -2513,7 +2514,7 @@ class FileUploader {
 				row.appendChild(tzCol);
 				row.appendChild(statusCol);
 				this.file_list.appendChild(row)
-				
+
 			}
 		} else {
 			this.file_list_container.style.display = "none";
@@ -2545,7 +2546,7 @@ class FileUploader {
 			this.total_error_pages = page.total_pages;
 			$(this.error_page_label).html(page.page+"/"+page.total_pages);
 			var widget = this;
-			
+
 			for (var i=0;i<page.data.length;i++){
 				var row = document.createElement('div');
 				row.className = 'row d-flex justify-content-between error_item w-100';
@@ -2644,7 +2645,7 @@ class FileUploader {
 
 			}
 		} else {
-			
+
 			this.duplicate_list_container.style.display = "none";
 			this.blank_duplicate_list.style.display = "flex";
 		}
@@ -2735,7 +2736,7 @@ class FileUploader {
 				    if ("day" in parser_map){
 				    	date = date + "-" + date_context.toString().substring(parser_map["day"]["limits"][0],parser_map["day"]["limits"][1]);
 				    }
-				    
+
 			    }
 
 
@@ -2750,7 +2751,7 @@ class FileUploader {
 				    if ("second" in parser_map){
 				    	time = time + ":" + date_context.toString().substring(parser_map["second"]["limits"][0],parser_map["second"]["limits"][1]);
 				    }
-				    
+
 			    }
 
 		    }
@@ -2999,7 +3000,7 @@ class FileUploader {
           file.captured_on_inrange = false;
         }
 	}
-	set_file_datetime(file,date,time){		
+	set_file_datetime(file,date,time){
         var valid_date = this.validate_datetime(date);
         var valid_time = this.validate_datetime(time,'time');
 
@@ -3030,7 +3031,7 @@ class FileUploader {
 
 		var started_on = moment.tz(this.started_on,"YYYY-MM-DD HH:mm:ss",true,this.site_timezone);
 		var ended_on = moment.tz(this.ended_on,"YYYY-MM-DD HH:mm:ss",true,this.site_timezone);
-		
+
 
 		var date_arr = date.split("-");
 		var date_len = date_arr.length;
@@ -3044,14 +3045,14 @@ class FileUploader {
 				helper_moment = moment(date + "-01-01","YYYY-MM-DD",true,timezone);
 				if ( !(helper_moment.isBefore(started_on,"year") || helper_moment.isAfter(ended_on,"year"))){
 					return true;
-				} 
+				}
 				break;
 			}
 			case 2:{
 				helper_moment = moment(date + "-01","YYYY-MM-DD",true,timezone);
 				if ( !(helper_moment.isBefore(started_on,"month") || helper_moment.isAfter(ended_on,"month"))){
 					return true;
-				} 
+				}
 				break;
 			}
 			case 3:{
@@ -3067,14 +3068,14 @@ class FileUploader {
 						helper_moment = moment.tz(date+" "+time,"YYYY-MM-DD HH:mm",true,timezone);
 						if ( !(helper_moment.isBefore(started_on,"minute") || helper_moment.isAfter(ended_on,"minute"))){
 							return true;
-						}		
+						}
 						break;
 					}
 					case 3:{
 						helper_moment = moment.tz(date+" "+time,"YYYY-MM-DD HH:mm:ss",true,timezone);
 						if ( !(helper_moment.isBefore(started_on,"second") || helper_moment.isAfter(ended_on,"second"))){
 							return true;
-						}			
+						}
 						break;
 					}
 					default:{
@@ -3294,7 +3295,7 @@ class FileUploader {
 			} else if (!file.captured_on_timezone) {
 				status = "Sin zona horaria";
 			} else if (!file.captured_on_inrange){
-				status = "Fuera de rango";	
+				status = "Fuera de rango";
 			} else {
 				status = "Listo";
 			}
@@ -3359,7 +3360,7 @@ class FileUploader {
 			} else if (!file.captured_on_timezone) {
 				status = "Sin zona horaria";
 			} else if (!file.captured_on_inrange){
-				status = "Fuera de rango";	
+				status = "Fuera de rango";
 			} else {
 				status = "Listo";
 			}
@@ -3444,7 +3445,7 @@ class FileUploader {
 		} else if (!f2.item_type){
 			return -1;
 		}
-		
+
 		if (f1.item_type < f2.item_type){
 			return 1;
 		}
@@ -3504,7 +3505,7 @@ class FileUploader {
 						break;
 					}
 					case 2:{
-						extended_date += "-01"; 
+						extended_date += "-01";
 						break;
 					}
 					case 3:{
@@ -3590,7 +3591,7 @@ class FileUploader {
 						break;
 					}
 					case 2:{
-						extended_date += "-01"; 
+						extended_date += "-01";
 						break;
 					}
 					case 3:{
@@ -3655,7 +3656,7 @@ class FileUploader {
 		} else if (!file.captured_on_timezone) {
 			status = "Sin zona horaria";
 		} else if (!file.captured_on_inrange){
-			status = "Fuera de rango";	
+			status = "Fuera de rango";
 		} else {
 			status = "Listo";
 		}
@@ -3740,7 +3741,7 @@ class FileUploader {
 					widget.waveform_time.innerHTML = format_time_display(hours)+":"+format_time_display(minutes)+":"+format_time_display(seconds);
 				}
 
-				
+
 			});
 			widget.wavesurfer.on('ready', function () {
 				widget.wavesurfer.drawBuffer();
@@ -3821,7 +3822,7 @@ class FileUploader {
 					widget.waveform_time.innerHTML = format_time_display(hours)+":"+format_time_display(minutes)+":"+format_time_display(seconds);
 				}
 
-				
+
 			});
 
 	  	}
@@ -3905,9 +3906,25 @@ class FileUploader {
 		  cache: false,
 		  enctype: 'multipart/form-data',
 		  type: 'POST',
-
 		  success: function(data){
-	  	  	  var response_obj = null;
+				console.log('sucess in post');
+	  	 	var response_obj = null;
+			  try {
+			    response_obj = data;
+			    file["upload_response"] = response_obj;
+					console.log('sucess in parsing succesful post');
+			  } catch (error) {
+					console.log('error in parsing succesful post', data.result, data);
+			  	file["upload_response"] = null;
+			  }
+
+			  if (callback){
+					console.log('using callback in succesful post', callback);
+			  	callback(response_obj);
+			  }
+	    },
+	    error: function(data){
+	  		var response_obj = null;
 			  try {
 			    response_obj = JSON.parse(data.responseText);
 			    file["upload_response"] = response_obj;
@@ -3918,20 +3935,7 @@ class FileUploader {
 			  if (callback){
 			  	callback(response_obj);
 			  }
-	      },
-	      error: function(data){
-	  	  	  var response_obj = null;
-			  try {
-			    response_obj = JSON.parse(data.responseText);
-			    file["upload_response"] = response_obj;
-			  } catch (error) {
-			  	file["upload_response"] = null;
-			  }
-
-			  if (callback){
-			  	callback(response_obj);
-			  }
-	      }
+	  	}
 	  });
 	}
 	render_by_name(name_arr){
@@ -3939,7 +3943,7 @@ class FileUploader {
 			name_arr = ['files','errors','duplicates','uploads'];
 		}
 		if (name_arr.includes('files')){
-			var file_page = this.get_file_page(this.file_page_number, this.per_page, this.is_fixable,this.files_sort_by.function);
+			var file_page = this.get_file_page(this.file_page_number, this.per_page, this.is_fixable, this.files_sort_by.function);
 			this.render_file_list(file_page);
 		}
 		if (name_arr.includes('errors')){
@@ -3962,7 +3966,7 @@ class FileUploader {
     		.attr('aria-valuenow', percent);
   		$(this.progress_bar_label).html(percent + '%');
 	}
-	upload_multiple(filter_function,finalize_callback){
+	upload_multiple(filter_function, finalize_callback){
 		var to_upload = this.files.filter(filter_function);
 		if (to_upload.length > 0){
 			for (var i=0;i<to_upload.length;i++){
@@ -3977,13 +3981,13 @@ class FileUploader {
 
 			function gather(response){
 				file_count++;
-				widget.render_by_name(['errors','duplicates','uploads']);
-				widget.progress_upload(file_count,total_files);
+				widget.render_by_name(['errors', 'duplicates', 'uploads']);
+				widget.progress_upload(file_count, total_files);
 
 				if (file_count >= total_files-1){
 					setTimeout(function() {
 						widget.progress_container.style.display = "none";
-						widget.progress_upload(0,total_files);
+						widget.progress_upload(0, total_files);
 					}, 2000);
 				}
 			}
@@ -3991,7 +3995,7 @@ class FileUploader {
 			this.progress_container.style.display = "block";
 
 			for (var i=0;i<to_upload.length;i++){
-				this.upload_single(to_upload[i],gather);
+				this.upload_single(to_upload[i], gather);
 			}
 		}
 	}
