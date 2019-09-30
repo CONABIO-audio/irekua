@@ -54,7 +54,7 @@ class ItemType(IrekuaModelBase):
 
     def validate_item_type(self, item):
         mime_type_from_file, encoding = mimetypes.guess_type(item.item_file.url)
-        print('mimte type', mime_type_from_file)
+
         try:
             mime_type = self.mime_types.get(mime_type=mime_type_from_file)
         except self.mime_types.model.DoesNotExist:

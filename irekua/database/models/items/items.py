@@ -385,5 +385,8 @@ class Item(IrekuaModelBaseUser):
         self.save()
 
     def delete(self, *args, **kwargs):
-        self.item_file.delete()
+        try:
+            self.item_file.delete()
+        except ValueError:
+            pass
         super().delete(*args, **kwargs)

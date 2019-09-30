@@ -129,16 +129,16 @@ class ItemUploadView(SeliaCreateView):
         return initial
 
     def get_item_types(self,sampling_event_device):
-        collection_item_types = CollectionItemType.objects.filter(collection_type=sampling_event_device.collection_device.collection.collection_type, item_type__mime_types__in=sampling_event_device.collection_device.physical_device.device.device_type.mime_types.all()).distinct()
+        collection_item_types = CollectionItemType.objects.filter(
+            collection_type=sampling_event_device.collection_device.collection.collection_type,
+            item_type__mime_types__in=sampling_event_device.collection_device.physical_device.device.device_type.mime_types.all()).distinct()
 
         serialized = ListSerializer(collection_item_types, many=True, context={'request':self.request})
-
         return json.dumps(serialized.data)
 
     def get_site_tz_info(self,site):
         tf = TimezoneFinder()
         timezone = tf.certain_timezone_at(lng=site.longitude,lat=site.latitude)
-
         return json.dumps({"site_timezone":timezone,"tz_list":pytz.all_timezones})
 
     def get_objects(self):
