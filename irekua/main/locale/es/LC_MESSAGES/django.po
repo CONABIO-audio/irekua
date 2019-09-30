@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-29 21:26-0500\n"
+"POT-Creation-Date: 2019-09-30 00:04-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -394,7 +394,9 @@ msgstr "Nombre"
 
 #: database/models/data_collections/collection_devices.py:32
 msgid "ID of device within the collection (visible to all collection users)"
-msgstr "Nombre del dispositivo dentro de la colección (visible a los usuarios de la colección)"
+msgstr ""
+"Nombre del dispositivo dentro de la colección (visible a los usuarios de la "
+"colección)"
 
 #: database/models/data_collections/collection_devices.py:38
 #: database/models/data_collections/collection_sites.py:39
@@ -451,7 +453,9 @@ msgstr "Metadatos asociados al sitio en la colección"
 
 #: database/models/data_collections/collection_sites.py:48
 msgid "ID of site within the collection (visible to all collection users)"
-msgstr "Nombre del sitio dentro de la colección (visible a todos los usuarios de la colección)"
+msgstr ""
+"Nombre del sitio dentro de la colección (visible a todos los usuarios de la "
+"colección)"
 
 #: database/models/data_collections/collection_sites.py:52
 #: selia/templates/selia/components/details/collection_site.html:8
@@ -867,7 +871,7 @@ msgstr "Dispositivo fisico"
 msgid "Physical Devices"
 msgstr "Dispositivos físicos"
 
-#: database/models/devices/physical_devices.py:60
+#: database/models/devices/physical_devices.py:63
 #, python-format
 msgid "Device %(id)s of type %(device)s"
 msgstr "Dispositivo %(id)s de tipo %(device)s"
@@ -2358,7 +2362,7 @@ msgstr ""
 
 #: database/models/sites.py:33
 msgid "Name of site (visible only to owner)"
-msgstr ""
+msgstr "Nombre del sitio (visible únicamente al usuario)"
 
 #: database/models/sites.py:39 irekua_utils/filters/sites.py:40
 msgid "locality"
@@ -2381,20 +2385,16 @@ msgid "latitude"
 msgstr "Latitud"
 
 #: database/models/sites.py:51
-#, fuzzy
-#| msgid "Altitude of site (in meters)"
 msgid "Latitude of site (in decimal degrees)"
-msgstr "Altitud del sitio (en metros)"
+msgstr "Latitud del sitio (en grados decimales)"
 
 #: database/models/sites.py:55
 msgid "longitude"
 msgstr "Longitud"
 
 #: database/models/sites.py:56
-#, fuzzy
-#| msgid "Altitude of site (in meters)"
 msgid "Longitude of site (in decimal degrees)"
-msgstr "Altitud del sitio (en metros)"
+msgstr "Longitud del sitio (en grados decimales)"
 
 #: database/models/sites.py:61
 msgid "altitude"
@@ -3363,7 +3363,7 @@ msgstr "Tipo de colección"
 #: selia/templates/selia/create/collection_devices/create_form.html:56
 #: selia/templates/selia/create/collection_users/create_form.html:56
 #: selia/templates/selia/create/physical_devices/create_form.html:56
-#: selia/templates/selia/create/sampling_events/create_form.html:98
+#: selia/templates/selia/create/sampling_events/create_form.html:102
 msgid "Metadata"
 msgstr "Metadatos"
 
@@ -3643,7 +3643,7 @@ msgstr "Puede votar anotaciones"
 #: selia/templates/selia/components/list_items/sampling_event.html:83
 #: selia/templates/selia/components/select_list_items/sampling_events.html:47
 #: selia/templates/selia/components/update/sampling_event.html:6
-#: selia/templates/selia/create/sampling_events/create_form.html:74
+#: selia/templates/selia/create/sampling_events/create_form.html:78
 msgid "Started on"
 msgstr "Comenzó el"
 
@@ -3654,7 +3654,7 @@ msgstr "Comenzó el"
 #: selia/templates/selia/components/list_items/sampling_event.html:90
 #: selia/templates/selia/components/select_list_items/sampling_events.html:54
 #: selia/templates/selia/components/update/sampling_event.html:15
-#: selia/templates/selia/create/sampling_events/create_form.html:85
+#: selia/templates/selia/create/sampling_events/create_form.html:89
 msgid "Ended on"
 msgstr "Terminó el"
 
@@ -4050,7 +4050,7 @@ msgstr "Tipo"
 msgid "Can download item.licence_types"
 msgstr "Puede descargar artículos"
 
-#: selia/templates/selia/components/select_list_items/sampling_event_type.html:20
+#: selia/templates/selia/components/select_list_items/sampling_event_type.html:23
 msgid "Allowed device types"
 msgstr "Tipos de dispositivo permitidos"
 
@@ -4211,7 +4211,7 @@ msgstr "Agregar dispositivo a la colección"
 #: selia/templates/selia/create/sampling_event_devices/select_collection.html:24
 #: selia/templates/selia/create/sampling_event_devices/select_collection_device.html:16
 #: selia/templates/selia/create/sampling_event_devices/select_sampling_event.html:16
-#: selia/templates/selia/create/sampling_events/create_form.html:22
+#: selia/templates/selia/create/sampling_events/create_form.html:26
 #: selia/templates/selia/create/sampling_events/select_collection.html:13
 #: selia/templates/selia/create/sampling_events/select_site.html:20
 #: selia/templates/selia/create/sampling_events/select_type.html:16
@@ -4248,8 +4248,8 @@ msgstr "Seleccione dispositivo de usuario"
 #: selia/templates/selia/create/sampling_event_devices/select_collection.html:27
 #: selia/templates/selia/create/sampling_event_devices/select_collection_device.html:25
 #: selia/templates/selia/create/sampling_event_devices/select_sampling_event.html:21
-#: selia/templates/selia/create/sampling_events/create_form.html:35
 #: selia/templates/selia/create/sampling_events/create_form.html:39
+#: selia/templates/selia/create/sampling_events/create_form.html:43
 #: selia/templates/selia/create/sampling_events/select_collection.html:16
 #: selia/templates/selia/create/sampling_events/select_site.html:29
 #: selia/templates/selia/create/sampling_events/select_type.html:21
@@ -4359,7 +4359,7 @@ msgid "Selected site type"
 msgstr "Tipo de sitio seleccionado"
 
 #: selia/templates/selia/create/collection_sites/create_form.html:48
-#: selia/templates/selia/create/sampling_events/create_form.html:45
+#: selia/templates/selia/create/sampling_events/create_form.html:49
 msgid "Selected site"
 msgstr "Sitio seleccionado"
 
@@ -4746,7 +4746,7 @@ msgstr "Agregar uno nuevo"
 msgid "Create sampling event"
 msgstr "Crear evento de muestreo"
 
-#: selia/templates/selia/create/sampling_events/create_form.html:27
+#: selia/templates/selia/create/sampling_events/create_form.html:31
 #: selia/templates/selia/create/sampling_events/select_collection.html:14
 #: selia/templates/selia/create/sampling_events/select_site.html:25
 #: selia/templates/selia/create/sampling_events/select_type.html:19
@@ -4754,14 +4754,14 @@ msgstr "Crear evento de muestreo"
 msgid "Select sampling event type"
 msgstr "Seleccione el tipo de evento de muestreo"
 
-#: selia/templates/selia/create/sampling_events/create_form.html:32
+#: selia/templates/selia/create/sampling_events/create_form.html:36
 #: selia/templates/selia/create/sampling_events/select_collection.html:15
 #: selia/templates/selia/create/sampling_events/select_site.html:28
 #: selia/templates/selia/create/sampling_events/select_type.html:20
 msgid "Select collection site"
 msgstr "Seleccione sitio de Colección"
 
-#: selia/templates/selia/create/sampling_events/create_form.html:56
+#: selia/templates/selia/create/sampling_events/create_form.html:60
 msgid "Selected sampling event type"
 msgstr "Tipo de evento de muestreo seleccionado"
 
