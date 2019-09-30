@@ -74,10 +74,11 @@ class SeliaDetailView(UpdateView):
         return []
 
     def handle_delete(self):
+        self.object = self.get_object()
+
         if not self.has_delete_permission():
             return self.no_permission_redirect()
 
-        self.object = self.get_object()
         try:
             redirect_to = self.get_delete_redirect_url()
             redirect_url_args = self.get_delete_redirect_url_args()

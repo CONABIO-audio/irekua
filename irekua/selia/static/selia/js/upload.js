@@ -3912,14 +3912,11 @@ class FileUploader {
 			  try {
 			    response_obj = data;
 			    file["upload_response"] = response_obj;
-					console.log('sucess in parsing succesful post');
 			  } catch (error) {
-					console.log('error in parsing succesful post', data.result, data);
 			  	file["upload_response"] = null;
 			  }
 
 			  if (callback){
-					console.log('using callback in succesful post', callback);
 			  	callback(response_obj);
 			  }
 	    },
