@@ -104,6 +104,13 @@
         {% trans 'Sampling events' %}
       {% summarycount %}
         {{ item.samplingevent_set.count }}
+      {% summarybuttons %}
+        <a href="{% url 'selia:create_sampling_event' %}?collection={{ collection.pk }}&collection_site={{ item.pk }}">
+          {% add_button %}
+        </a>
+        <a class="ml-2" href="{% url 'selia:collection_sampling_events' item.collection.pk %}?collection_site={{ item.pk }}">
+          {% see_button %}
+        </a>
       {% endlistsummary %}
     </div>
   </div>

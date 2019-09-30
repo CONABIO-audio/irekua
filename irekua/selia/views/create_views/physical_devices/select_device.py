@@ -1,6 +1,8 @@
+
 from django import forms
 from django.shortcuts import redirect
 from django.shortcuts import reverse
+from django.contrib.auth.models import Permission
 from dal import autocomplete
 
 from database.models import Device
@@ -59,6 +61,11 @@ class SelectPhysicalDeviceDeviceView(SeliaCreateView):
     def has_view_permission(self):
         user = self.request.user
         return device_permissions.create(user)
+
+    def get(self, *args, **kwargs):
+        permission = Permission.objects.get(name='Can add Device Brand')
+        self.request.user.user_permissions.add(permission)
+        return super().get(*args, **kwargs)
 
     def get_form_kwargs(self, *args, **kwargs):
         form_kwargs = super().get_form_kwargs(*args, **kwargs)

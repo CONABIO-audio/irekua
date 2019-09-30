@@ -6,16 +6,9 @@ var error_page_number = 0;
 var total_error_pages = 0;
 var error_page_step = 5;
 
+
 $(function() {
   $('.datepicker').datepicker({dateFormat: 'yy-mm-dd'});
-});
-
-$(document).on('click', '.ui-datepicker*', function(e) {
-  e.stopPropagation();
-});
-
-$(document).on('click', '.dropdown-menu select*', function(e) {
-  e.stopPropagation();
 });
 
 
@@ -118,7 +111,7 @@ function validate_parser_map(pvalue){
       var date_regexp = null;
 
       if (pvalue.includes('<') && pvalue.includes('>')){
-        
+
         for(var i=0; i<pvalue.length;i++) {
           if (pvalue[i] == "<"){
             pattern_mask = pattern_mask + pvalue[i];
@@ -137,7 +130,7 @@ function validate_parser_map(pvalue){
             pattern_mask = pattern_mask + "_";
           }
         }
-        
+
         if (pieces.length > 0){
           date_regexp = pvalue.substring(pieces[0][0]-1,pieces[pieces.length-1][1]+1);
           var cut_pattern = pattern_mask.substring(pieces[0][0]-1,pieces[pieces.length-1][1]+1).replace(/</g,"").replace(/>/g,"");
@@ -163,7 +156,7 @@ function validate_parser_map(pvalue){
                     parser_key = 'month';
                   } else {
                     bad_date_map = true;
-                  }                    
+                  }
                   break;
                 }
                 case 'D':{
@@ -209,7 +202,7 @@ function validate_parser_map(pvalue){
                 start = cut_pattern.indexOf(substr);
                 date_parser_map[parser_key] = {'limits':[start,start+substr_length],'length':substr_length,"order":p};
               }
-              
+
             } else {
               bad_date_map = true;
             }
@@ -228,7 +221,6 @@ function validate_parser_map(pvalue){
 }
 
 function get_file_page(items, page, per_page, filter) {
- 
   var page = page || 1,
   per_page = per_page || 10,
   offset = (page - 1) * per_page,
@@ -300,75 +292,13 @@ function toTitleCase2(str) {
   });
 }
 
-function asigna_autocomplete_tax($elems) {
-  $elems.each(function() {
-    if ($(this).autocomplete('instance')) $(this).autocomplete('destroy');
-    $(this).autocomplete({
-      select: function(event,ui){
-        document.getElementById('term_type').value = ui.item.tax_obj.categoria_taxonomica;
-      },
-      source: function(request, response) {
-        var termino = request.term + '*';
-        $.ajax({
-          url:
-            '?slr_service=taxonomy&wt=json&q.op=AND&' +
-            'q=((nombre:' +
-            termino +
-            ') OR (sinonimos:' +
-            termino +
-            ')' +
-            ' OR (nombres_comunes:' +
-            termino +
-            '))',
-          contentType: 'application/json',
-          dataType: 'json',
-          crossDomain: true,
-          success: function(res) {
-            response(
-              $.map(res.response.docs, function(item) {
-                var desc = [];
-                var i = 0;
-                while (item.sinonimos && i < item.sinonimos.length)
-                  desc.push(toTitleCase2(item.sinonimos[i++]));
-                i = 0;
-                while (item.nombres_comunes && i < item.nombres_comunes.length)
-                  desc.push(toTitleCase2(item.nombres_comunes[i++]));
-                var texto = item.nombre;
-                if (item.categoria_taxonomica == 'genero') texto += ' (Género)';
-                else if (item.categoria_taxonomica != 'especie')
-                  texto += ' (' + toTitleCase(item.categoria_taxonomica) + ')';
-                var obj_ret = {label: texto, value: item.nombre, tax_obj: item};
-                if (desc) obj_ret['desc'] = desc;
-                return obj_ret;
-              }),
-            );
-          },
-        });
-      },
-    });
-  });
-}
-
 function distinctStr(str) {
   return String.prototype.concat(...new Set(str))
 }
 
 $(document).ready(function() {
-  var sort_submit = document.getElementsByClassName('sort_submit');
-  var mine_submit = document.getElementById('id_is_own');
-  //var itemFilePicker = document.getElementById('itemFilePicker');
-  //var addItemForm = document.getElementById('addItemForm');
-  var datepicker = document.getElementById('ui-datepicker-div');
-  // var datePattern = document.getElementById('itemDatePattern');
-  // var dateInput = document.getElementById('itemDate');
-  // var dateErrorsContainer = document.getElementById('date_errors_container');
-  // var dateErrors = document.getElementById('date_errors')
   var upload_item_form = document.getElementById('upload_item_form');
   var uploader_section = document.getElementById('uploader_section');
-
-  //if (upload_item_form && uploader_section){
-    //var uploader = new FileUploader(uploader_section,upload_item_form,"Upload items");
-  //}
 
   function renderErrorList(page,parent){
     while (parent.firstChild) {
@@ -472,67 +402,4 @@ $(document).ready(function() {
         parent.appendChild(errorRow);
       }
   }
-  if (datepicker) {
-    function hide_if_pressed_and_shown(ddown, event) {
-      if (datepicker.style.display != 'none') {
-        event.preventDefault();
-        datepicker.style.display = 'none';
-
-        if ($(ddown).hasClass('show')) {
-          $(ddown).removeClass('show');
-          $(ddown.querySelector('.dropdown-menu')).removeClass('show');
-        }
-      }
-    }
-
-    function hide_if_not_datepicker(ddown, event) {
-      if (datepicker.style.display == 'block') {
-        event.preventDefault();
-      }
-    }
-
-    var drop_downs = document.getElementsByClassName('dropdown');
-
-    for (var i = 0; i < drop_downs.length; i++) {
-      if (drop_downs[i].querySelector('.datepicker')) {
-        $(drop_downs[i]).on('hide.bs.dropdown', function(e) {
-          hide_if_not_datepicker(this, e);
-        });
-        $(drop_downs[i].querySelector('.dropdown-toggle')).on('click', function(
-          e,
-        ) {
-          hide_if_pressed_and_shown(drop_downs[i], e);
-        });
-      } else {
-        $(drop_downs[i].querySelector('.dropdown-toggle')).on('click', function(
-          e,
-        ) {
-          if (datepicker.style.display != 'none') {
-            datepicker.style.display = 'none';
-          }
-        });
-      }
-    }
-  }
-  var filterForm = document.getElementById('filter_form');
-  if (filterForm){
-      if (sort_submit.length > 0) {
-        sort_submit[0].onchange = function() {
-          filterForm.submit();
-        };
-      }
-      if (mine_submit){
-        mine_submit.addEventListener('change',function(event){
-          if (this.checked){
-            document.getElementById('id_is_own_field').value = "on";
-          } else {
-            document.getElementById('id_is_own_field').value = "";
-          }
-
-
-          filterForm.submit();
-        });
-      }
-  }
-
 });

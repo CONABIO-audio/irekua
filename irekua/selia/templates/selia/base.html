@@ -8,17 +8,11 @@
 <link rel="stylesheet" href="{% static 'selia/css/main.css' %}">
 <link rel="stylesheet" href="{% static 'irekua/vendor/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" />
-{% block stylesheet-extra %}{% endblock stylesheet-extra %}
 {% endblock %}
 
 {% block scripts-extra %}
-<script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.26/moment-timezone-with-data.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
 <script type="text/javascript" src="{% static 'selia/js/base.js' %}"></script>
-{% block local-scripts %}
-{% endblock local-scripts%}
 {% endblock scripts-extra %}
 
 {% block header %}

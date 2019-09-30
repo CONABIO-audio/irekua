@@ -5,6 +5,7 @@
 
 <script type="text/javascript">
   var Form = JSONSchemaForm.default;
+
   var schema_{{ widget.name }} = {{ widget.attrs.schema|safe }};
   var value_{{ widget.name }} = {{ widget.value|safe }};
   var inputElement_{{ widget.name }} = document.getElementById("metadata_input_{{ widget.name }}");
@@ -55,14 +56,19 @@
     }
   }
 
+  const uiSchema = {
+    "ui:widget": "select"
+  };
+
   document.addEventListener("DOMContentLoaded", () => {
-    update_{{ widget.name }} = React.createElement('button', {className: "collapse"}, 'Update');
+    var update_{{ widget.name }} = React.createElement('button', {className: "collapse"}, 'Update');
     var jsonForm_{{ widget.name }} = React.createElement(Form, {
         schema: schema_{{ widget.name }},
         onChange: onChange_{{ widget.name }},
         formData: value_{{ widget.name }},
         ref: registerRef_{{ widget.name }},
         liveValidate: true,
+        uiSchema: uiSchema,
         FieldTemplate: CustomFieldTemplate,
         ErrorList: () => '',
       }, [ update_{{ widget.name }} ])

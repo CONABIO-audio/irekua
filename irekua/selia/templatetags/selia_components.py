@@ -340,3 +340,8 @@ def selected_item(template, item, label):
         'id': random_id,
         'label': label
     }
+
+
+@register.inclusion_tag('selia/components/is_own_checkbox.html')
+def is_own_checkbox(form):
+    return {'form': form}

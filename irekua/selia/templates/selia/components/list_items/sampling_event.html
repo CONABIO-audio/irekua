@@ -92,6 +92,13 @@
           {{ item.ended_on | date }}
         {% endlistattribute %}
       </div>
+      <div class="row">
+        {% listattribute %}
+          {% trans 'Created by' %}
+        {% attributevalue %}
+          {{ item.created_by.username }}
+        {% endlistattribute %}
+      </div>
     </div>
 
     <div class="col">
@@ -104,7 +111,7 @@
           <a href="{% url 'selia:sampling_event_devices' item.pk %}">
             {% see_button %}
           </a>
-          <a class="ml-2" href="{% url 'selia:create_sampling_event_device' %}?sampling_event={{ item.pk }}">
+          <a class="ml-2" href="{% url 'selia:create_sampling_event_device' %}?sampling_event={{ item.pk }}&collection={{ item.collection.pk }}">
             {% add_button %}
           </a>
         {% endlistsummary %}
@@ -118,7 +125,7 @@
           <a href="{% url 'selia:sampling_event_items' item.pk %}">
             {% see_button %}
           </a>
-          <a class="ml-2" href="{% url 'selia:create_item' %}?sampling_event={{ item.pk }}">
+          <a class="ml-2" href="{% url 'selia:create_item' %}?sampling_event={{ item.pk }}&collection={{ item.collection.pk }}">
             {% add_button %}
           </a>
         {% endlistsummary %}
