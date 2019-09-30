@@ -389,16 +389,12 @@ msgstr "Colección a la que pertenece el dispositivo"
 
 #: database/models/data_collections/collection_devices.py:31
 #: database/models/data_collections/collection_sites.py:47
-#, fuzzy
-#| msgid "ID of site within the collection"
 msgid "ID within collection"
-msgstr "ID del sitio dentro de la colección"
+msgstr "Nombre"
 
 #: database/models/data_collections/collection_devices.py:32
-#, fuzzy
-#| msgid "ID of device within the collection"
 msgid "ID of device within the collection (visible to all collection users)"
-msgstr "ID del dispositivo dentro de la colección"
+msgstr "Nombre del dispositivo dentro de la colección (visible a los usuarios de la colección)"
 
 #: database/models/data_collections/collection_devices.py:38
 #: database/models/data_collections/collection_sites.py:39
@@ -454,10 +450,8 @@ msgid "Metadata associated to site in collection"
 msgstr "Metadatos asociados al sitio en la colección"
 
 #: database/models/data_collections/collection_sites.py:48
-#, fuzzy
-#| msgid "ID of site within the collection"
 msgid "ID of site within the collection (visible to all collection users)"
-msgstr "ID del sitio dentro de la colección"
+msgstr "Nombre del sitio dentro de la colección (visible a todos los usuarios de la colección)"
 
 #: database/models/data_collections/collection_sites.py:52
 #: selia/templates/selia/components/details/collection_site.html:8

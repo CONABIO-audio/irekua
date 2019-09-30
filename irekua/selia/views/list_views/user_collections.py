@@ -1,3 +1,5 @@
+from database.models import Collection
+
 from selia.views.list_views.base import SeliaListView
 from irekua_utils.filters.data_collections import data_collections
 
@@ -14,7 +16,18 @@ class ListUserCollectionsView(SeliaListView):
     ordering_fields = data_collections.ordering_fields
 
     def get_initial_queryset(self):
-        return self.request.user.collection_users.all()
+        user = self.request.user
+        queryset = user.collection_users.all()
+
+        if user.collection_administrators.exists():
+            queryset = queryset.union(user.collection_administrators.all())
+
+        if user.collectiontype_set.exists():
+            managed_collections = Collection.objects.filter(
+                collection_type__in=user.collectiontype_set.all())
+            queryset = queryset.union(managed_collections)
+
+        return queryset
 
     def has_view_permission(self):
         return self.request.user.is_authenticated

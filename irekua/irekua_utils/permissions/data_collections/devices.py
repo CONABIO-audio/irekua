@@ -48,7 +48,9 @@ def create(user, collection=None, **kwargs):
         return False
 
     role = collection.get_user_role(user)
-    return role.has_permission('add_collection_devices')
+    can = role.has_permission('add_collection_device')
+    print('can', can)
+    return can
 
 
 def change(user, collection_device=None, **kwargs):
