@@ -14,7 +14,7 @@ class Locality(models.Model):
         blank=False)
     description = models.TextField(
         blank=True,
-        db_column='description';
+        db_column='description',
         verbose_name=_('description'),
         help_text=_('Description of the locality'))
     locality_type = models.ForeignKey(
@@ -26,7 +26,7 @@ class Locality(models.Model):
         blank=False,
         null=False)
     geometry = MultiPolygonField(
-        blank=True
+        blank=True,
         db_column='geometry',
         verbose_name=_('geometry'),
         help_text=_('Geometry of locality'),
@@ -38,6 +38,10 @@ class Locality(models.Model):
         default=empty_JSON,
         blank=True,
         null=True)
+
+    is_part_of = models.ManyToManyField(
+        "self",
+        symmetrical=False)
 
     class Meta:
         verbose_name = _('Location')

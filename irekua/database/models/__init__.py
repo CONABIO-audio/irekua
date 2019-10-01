@@ -41,8 +41,13 @@ from .terms.terms import Term
 from .users.institutions import Institution
 from .users.roles import Role
 from .users.users import User
+
 from .temp.upload_session import UploadSession
 from .temp.upload_event import UploadEvent
+
+from .locality import Locality
+from .locality_type import LocalityType
+
 
 __all__ = [
     'Annotation',
