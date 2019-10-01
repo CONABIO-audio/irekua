@@ -160,6 +160,18 @@ class Site(IrekuaModelBaseUser):
 
         return widget.render(name, self.geo_ref)
 
+    @property
+    def map_widget_obscured(self):
+        name = 'point_{}'.format(self.pk)
+        widget = IrekuaMapWidgetObscured(attrs={
+            'map_width': '100%',
+            'map_height': '100%',
+            'id': name,
+            'disabled': True})
+
+        return widget.render(name, self.geo_ref)
+
+
 
 class IrekuaMapWidget(forms.OSMWidget):
     default_zoom = 12
@@ -169,3 +181,8 @@ class IrekuaMapWidget(forms.OSMWidget):
 class IrekuaMapWidgetNoControls(forms.OSMWidget):
     default_zoom = 9
     template_name = 'irekua/components/map_widget_no_controls.html'
+
+
+class IrekuaMapWidgetObscured(forms.OSMWidget):
+    default_zoom = 12
+    template_name = 'irekua/components/map_widget_obscured.html'
