@@ -36,6 +36,27 @@ class FileUploader {
 		this.duplicates_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
 		this.uploads_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
 		this.build_view();
+
+		var widget = this;
+
+		document.addEventListener('dragover',function(e){
+			if (!e.target.id){
+				e.stopPropagation();
+				e.preventDefault();
+			} else if (e.target.id != "file_list_col"){
+				e.stopPropagation();
+				e.preventDefault();
+			}
+		});
+		document.addEventListener('drop',function(e){
+			if (!e.target.id){
+				e.stopPropagation();
+				e.preventDefault();
+			} else if (e.target.id != "file_list_col"){
+				e.stopPropagation();
+				e.preventDefault();
+			}
+		});
 	}
 	build_view() {
 		this.build_top_toolbar();
@@ -1260,6 +1281,7 @@ class FileUploader {
 			$(this.files_section).remove();
 		}
 		var section_col = document.createElement('div');
+		section_col.id = "file_list_col";
 		section_col.className = "col-8 justify-content-center w-100";
 
 		var widget = this;
@@ -1267,12 +1289,21 @@ class FileUploader {
 		section_col.addEventListener('dragover',function(e){
 			e.stopPropagation();
 			e.preventDefault();
+			$(this).addClass( 'dragover' );
+			e.dataTransfer.dropEffect = 'copy';
+		});
+
+		section_col.addEventListener('dragleave',function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			$(this).removeClass( 'dragover' );
 			e.dataTransfer.dropEffect = 'copy';
 		});
 
 		section_col.addEventListener('drop',function(e){
 		    e.stopPropagation();
 		    e.preventDefault();
+		    $(this).removeClass( 'dragover' );
 			function finalize_callback() {
 				widget.render_by_name(['files','errors'])
 			}

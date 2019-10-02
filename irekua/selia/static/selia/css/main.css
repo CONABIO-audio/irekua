@@ -438,6 +438,9 @@ a {
   background-color: var(--lavander-dark) !important;
 }
 
+.dragover {
+  background-color: var(--lavander-dark) !important;
+}
 
 .nav-tabs > .nav-item > .nav-link.active.light-green  {
   background-color: var(--light-green) !important;
