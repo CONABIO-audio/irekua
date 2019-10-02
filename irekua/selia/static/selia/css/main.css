@@ -443,3 +443,31 @@ a {
   background-color: var(--light-green) !important;
   border-bottom-color: var(--light-green) !important;
 }
+
+.progress-bar{
+ background:  rgb(120, 215, 255);
+-webkit-animation-name: pulse; /* Chrome, Safari, Opera */
+-webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
+-webkit-animation-iteration-count: infinite;
+animation-name: pulse;
+animation-duration: 1s;
+animation-iteration-count: infinite;
+}
+
+//create the animation
+@-webkit-keyframes pulse { // for chrome, safari, opera
+0%   {background: rgb(120, 215, 255);}
+25%   {background: rgb(120, 215, 255);}
+50%   {background: rgb(120, 215, 255);}
+75%  {background: rgb(120, 231, 255);}
+85%{background: rgb(120, 215, 255);}
+100% {background: rgb(120, 215, 255);}
+}
+
+@keyframes pulse {
+0%   {background: rgb(120, 215, 255);}
+25%   {background: rgb(120, 215, 255);}
+50%   {background: rgb(120, 215, 255);}
+75%  {background: rgb(120, 231, 255);}
+100% {background: rgb(120, 215, 255);}
+}

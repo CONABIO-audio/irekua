@@ -155,13 +155,13 @@ class FileUploader {
 		this.progress_bar = document.createElement('div');
 		this.progress_bar.className = "progress-bar progress-bar-success progress-bar-striped";
 		this.progress_bar.role = "progressbar";
-		this.progress_bar.style.width = "0%";
-		this.progress_bar.setAttribute('aria-valuenow','0');
+		this.progress_bar.style.width = "5%";
+		this.progress_bar.setAttribute('aria-valuenow','5');
 		this.progress_bar.setAttribute('aria-valuemin','0');
 		this.progress_bar.setAttribute('aria-valuemax','100');
 
 		this.progress_bar_label = document.createElement('span');
-		this.progress_bar_label.innerHTML = '0%';
+		this.progress_bar_label.innerHTML = '5%';
 
 		this.progress_bar.appendChild(this.progress_bar_label);
 		progress_outer.appendChild(this.progress_bar);
@@ -3957,7 +3957,8 @@ class FileUploader {
 		}
 	}
 	progress_upload(count,total){
-  		var percent = Math.round((count * 100) / total);
+
+  		var percent = Math.max(5,Math.round((count * 100) / total));
   		$(this.progress_bar)
     		.css('width', percent + '%')
     		.attr('aria-valuenow', percent);
