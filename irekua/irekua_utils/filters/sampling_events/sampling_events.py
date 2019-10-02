@@ -39,6 +39,11 @@ class Filter(FilterSet):
             'ended_on': ['lt', 'gt'],
             'started_on': ['lt', 'gt'],
             'collection_site': ['exact'],
+            'collection_site__site__name': ['icontains'],
+            'created_by': ['exact'],
+            'created_by__username': ['icontains'],
+            'created_by__first_name': ['icontains'],
+            'created_by__last_name': ['icontains'],
         }
 
 

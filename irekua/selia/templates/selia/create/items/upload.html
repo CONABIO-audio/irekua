@@ -4,7 +4,7 @@
 {% load selia_components %}
 
 {% block secondary-navbar %}
-  {% include 'selia/navbars/user.html' %}
+  {% include 'selia/navbars/sampling_event_device.html' %}
 {% endblock %}
 
 {% block toolbar-title %}
@@ -13,9 +13,13 @@
 
 {% block scripts-extra %}
 {{ block.super }}
+
+<script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.26/moment-timezone-with-data.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
 <script src="https://unpkg.com/wavesurfer.js/dist/wavesurfer.js"></script>
 <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.spectrogram.js"></script>
-
+<script type="text/javascript" src="{% static 'selia/js/list.js' %}"></script>
 <script type="text/javascript" src="{% static 'selia/js/upload.js' %}"></script>
 <script type="text/javascript">
 let started_on = '{{ started_on }}';

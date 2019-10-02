@@ -48,12 +48,12 @@ class Site(IrekuaModelBaseUser):
     latitude = models.FloatField(
         db_column='latitude',
         verbose_name=_('latitude'),
-        help_text=_('Latitude of site'),
+        help_text=_('Latitude of site (in decimal degrees)'),
         blank=True)
     longitude = models.FloatField(
         db_column='longitude',
         verbose_name=_('longitude'),
-        help_text=_('Longitude of site'),
+        help_text=_('Longitude of site (in decimal degrees)'),
         blank=True)
     altitude = models.FloatField(
         blank=True,
@@ -69,13 +69,13 @@ class Site(IrekuaModelBaseUser):
         ordering = ['-created_on']
 
     def sync_coordinates_and_georef(self):
+        if self.latitude is not None and self.longitude is not None:
+            self.geo_ref = Point([self.longitude, self.latitude])
+            return
+
         if self.geo_ref:
             self.latitude = self.geo_ref.y
             self.longitude = self.geo_ref.x
-            return
-
-        if self.latitude is not None and self.longitude is not None:
-            self.geo_ref = Point([self.longitude, self.latitude])
             return
 
         msg = _('Geo reference or longitude-latitude must be provided')

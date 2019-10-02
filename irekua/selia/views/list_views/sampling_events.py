@@ -3,7 +3,7 @@ from django.utils.translation import gettext as _
 
 from database.models import Collection, SamplingEvent
 from selia.views.list_views.base import SeliaListView
-from irekua_utils.filters.data_collections import collection_sampling_events
+from irekua_utils.filters.sampling_events import sampling_events
 from irekua_utils.permissions.sampling_events import (
     sampling_events as sampling_event_permissions)
 from irekua_utils.permissions.data_collections import (
@@ -21,9 +21,9 @@ class ListCollectionSamplingEventView(SeliaListView, SingleObjectMixin):
 
     empty_message = _('No sampling events are registered in this sampling event')
 
-    filter_class = collection_sampling_events.Filter
-    search_fields = collection_sampling_events.search_fields
-    ordering_fields = collection_sampling_events.ordering_fields
+    filter_class = sampling_events.Filter
+    search_fields = sampling_events.search_fields
+    ordering_fields = sampling_events.ordering_fields
 
     def get_permissions(self):
         permissions = super().get_permissions()

@@ -47,7 +47,7 @@ def create(user, collection=None, **kwargs):
         return False
 
     role = collection.get_user_role(user)
-    return role.has_permission('add_collection_sites')
+    return role.has_permission('add_collection_site')
 
 def change(user, collection_site=None, **kwargs):
     if collection_site is None:

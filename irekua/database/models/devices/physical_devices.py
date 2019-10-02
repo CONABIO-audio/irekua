@@ -57,6 +57,9 @@ class PhysicalDevice(IrekuaModelBaseUser):
         ordering = ['-created_on']
 
     def __str__(self):
+        if self.identifier:
+            return self.identifier
+
         msg = _('Device %(id)s of type %(device)s')
         params = dict(
             id=self.id,

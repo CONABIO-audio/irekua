@@ -62,6 +62,13 @@
         {{ item.site.created_on | date }}
       {% endlistattribute %}
     </div>
+    <div class="row">
+      {% listattribute %}
+        {% trans 'Created by' %}
+      {% attributevalue %}
+        {{ item.site.created_by.username }}
+      {% endlistattribute %}
+    </div>
   </div>
 
 </div>

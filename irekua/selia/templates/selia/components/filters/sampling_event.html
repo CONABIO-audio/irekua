@@ -80,4 +80,12 @@
     </div>
   </div>
 
+  {% if 'user' not in request.path %}
+  <div class="col">
+    <label class="text-light">
+      {% is_own_checkbox filter.form %}
+    </label>
+  </div>
+  {% endif %}
+
 </div>

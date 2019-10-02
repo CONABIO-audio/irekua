@@ -1,7 +1,8 @@
 from django import forms
 from django.db import models
 from django.utils.translation import gettext as _
-from django_filters import FilterSet,DateFilter
+from django_filters import FilterSet
+from django_filters import DateFilter
 from django_filters import BooleanFilter
 
 
@@ -42,12 +43,8 @@ class Filter(FilterSet):
         return queryset
 
 search_fields = (
-    'created_on',
-    'created_by',
-    'sampling_event_type',
-    'collection_site__site__name',
-    'started_on',
-    'ended_on'
+    'sampling_event_type__name',
+    'collection_site__internal_id',
 )
 
 

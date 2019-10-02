@@ -1,7 +1,7 @@
 from django import forms
 from django.db import models
 from django.utils.translation import gettext as _
-from django_filters import FilterSet,DateFilter
+from django_filters import FilterSet, DateFilter
 from django_filters import BooleanFilter
 
 from database.models import SamplingEventDevice

@@ -46,7 +46,7 @@ def create(user, sampling_event=None, collection=None, **kwargs):
         return False
 
     role = collection.get_user_role(user)
-    return role.has_permission('add_collection_sampling_events')
+    return role.has_permission('add_collection_sampling_event')
 
 
 def view(user, sampling_event_device=None, **kwargs):

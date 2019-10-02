@@ -5,7 +5,9 @@
 <form id="filter_form" action="#" method="get">
 
   {% for field, value in request.GET.items %}
+    {% if field != 'page' %}
     <input type="hidden" name="{{ field }}"  value="{{ value }}">
+    {% endif %}
   {% endfor %}
 
   <div class="container-fluid w-100 text-light px-4 py-2 filter_bar" style="background-color: #465362;">
@@ -35,12 +37,12 @@
         </div>
       {% endif %}
     </div>
-    <div class="row w-100 collapse" id="collapseFilters">
-      <div class="col-12">
+    <div class="row collapse" id="collapseFilters">
+      <div class="col">
         {% include template with filter=forms.filter %}
       </div>
     </div>
-    <div class="row w-100">
+    <div class="row mb-1">
       {% filter_bar forms %}
     </div>
   </div>

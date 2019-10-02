@@ -26,15 +26,17 @@
 {% block main-content %}
 <div class="container-fluid">
   <div class="row p-2">
-    <div class="col-6 p-2">
-      {% detail_component detail_template=detail_template object=object %}
+    <div class="col-6">
+      <div class="row p-2">
+          {% detail_component detail_template=detail_template object=object %}
+      </div>
+      <div class="row p-2">
+          {% summary_component summary_template=summary_template object=object %}
+      </div>
     </div>
     <div class="col-6">
       <div class="row p-2">
           {% viewer_component viewer_template=viewer_template object=object %}
-      </div>
-      <div class="row p-2">
-          {% summary_component summary_template=summary_template object=object %}
       </div>
     </div>
   </div>
