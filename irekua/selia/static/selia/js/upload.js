@@ -36,6 +36,27 @@ class FileUploader {
 		this.duplicates_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
 		this.uploads_sort_by = {"field":"Archivo","order":"desc","function":this.compare_file_names_desc};
 		this.build_view();
+
+		var widget = this;
+
+		document.addEventListener('dragover',function(e){
+			if (!e.target.id){
+				e.stopPropagation();
+				e.preventDefault();
+			} else if (e.target.id != "file_list_col"){
+				e.stopPropagation();
+				e.preventDefault();
+			}
+		});
+		document.addEventListener('drop',function(e){
+			if (!e.target.id){
+				e.stopPropagation();
+				e.preventDefault();
+			} else if (e.target.id != "file_list_col"){
+				e.stopPropagation();
+				e.preventDefault();
+			}
+		});
 	}
 	build_view() {
 		this.build_top_toolbar();
@@ -155,13 +176,13 @@ class FileUploader {
 		this.progress_bar = document.createElement('div');
 		this.progress_bar.className = "progress-bar progress-bar-success progress-bar-striped";
 		this.progress_bar.role = "progressbar";
-		this.progress_bar.style.width = "0%";
-		this.progress_bar.setAttribute('aria-valuenow','0');
+		this.progress_bar.style.width = "5%";
+		this.progress_bar.setAttribute('aria-valuenow','5');
 		this.progress_bar.setAttribute('aria-valuemin','0');
 		this.progress_bar.setAttribute('aria-valuemax','100');
 
 		this.progress_bar_label = document.createElement('span');
-		this.progress_bar_label.innerHTML = '0%';
+		this.progress_bar_label.innerHTML = '5%';
 
 		this.progress_bar.appendChild(this.progress_bar_label);
 		progress_outer.appendChild(this.progress_bar);
@@ -1260,7 +1281,34 @@ class FileUploader {
 			$(this.files_section).remove();
 		}
 		var section_col = document.createElement('div');
+		section_col.id = "file_list_col";
 		section_col.className = "col-8 justify-content-center w-100";
+
+		var widget = this;
+
+		section_col.addEventListener('dragover',function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			$(this).addClass( 'dragover' );
+			e.dataTransfer.dropEffect = 'copy';
+		});
+
+		section_col.addEventListener('dragleave',function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			$(this).removeClass( 'dragover' );
+			e.dataTransfer.dropEffect = 'copy';
+		});
+
+		section_col.addEventListener('drop',function(e){
+		    e.stopPropagation();
+		    e.preventDefault();
+		    $(this).removeClass( 'dragover' );
+			function finalize_callback() {
+				widget.render_by_name(['files','errors'])
+			}
+			widget.add_file_multiple(e.dataTransfer.files,finalize_callback);
+		});
 
 		this.files_section = document.createElement('div');
 		this.files_section.className = "container-fluid justify-content-center p-2";
@@ -3957,7 +4005,8 @@ class FileUploader {
 		}
 	}
 	progress_upload(count,total){
-  		var percent = Math.round((count * 100) / total);
+
+  		var percent = Math.max(5,Math.round((count * 100) / total));
   		$(this.progress_bar)
     		.css('width', percent + '%')
     		.attr('aria-valuenow', percent);
