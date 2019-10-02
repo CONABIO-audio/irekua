@@ -15,7 +15,7 @@ class LocalityType(models.Model):
         db_column='description',
         verbose_name=_('description'),
         help_text=_('Description of type of locality'))
-    source = models.CharField(
+    source = models.URLField(
         max_length=128,
         blank=True,
         db_column='source',
@@ -27,7 +27,7 @@ class LocalityType(models.Model):
         verbose_name=_('original datum'),
         help_text=_(
             'Datum used for the original coordinates for localities'
-            ' of this type'))
+            ' of this type in WTK format'))
     metadata_schema = JSONField(
         db_column='metadata_schema',
         verbose_name=_('metadata_schema'),
@@ -35,6 +35,11 @@ class LocalityType(models.Model):
         default=empty_JSON,
         blank=True,
         null=True)
+    publication_date = models.DateField(
+        blank=True,
+        db_column='publication_date',
+        verbose_name=_('publication date'),
+        help_text=_('Date of publication of localities defined in this type'))
 
     class Meta:
         verbose_name = _('Location Type')
