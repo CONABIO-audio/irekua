@@ -1262,6 +1262,23 @@ class FileUploader {
 		var section_col = document.createElement('div');
 		section_col.className = "col-8 justify-content-center w-100";
 
+		var widget = this;
+
+		section_col.addEventListener('dragover',function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			e.dataTransfer.dropEffect = 'copy';
+		});
+
+		section_col.addEventListener('drop',function(e){
+		    e.stopPropagation();
+		    e.preventDefault();
+			function finalize_callback() {
+				widget.render_by_name(['files','errors'])
+			}
+			widget.add_file_multiple(e.dataTransfer.files,finalize_callback);
+		});
+
 		this.files_section = document.createElement('div');
 		this.files_section.className = "container-fluid justify-content-center p-2";
 
