@@ -29,15 +29,24 @@ class SelectItemSamplingEventView(SeliaSelectView):
         context['collection'] = self.collection
         return context
 
-    def get_list_class(self):
-        collection_pk = self.request.GET['collection']
+    def get_queryset(self):
+        queryset = SamplingEvent.objects.filter(
+            collection__name=self.request.GET['collection'])
 
+        if 'collection_device' in self.request.GET:
+            collection_device_pk = self.request.GET['collection_device']
+            queryset = queryset.filter(
+                samplingeventdevice__collection_device=collection_device_pk)
+
+        return queryset
+
+    def get_list_class(self):
         class SamplingEventList(SeliaList):
             filter_class = sampling_event_utils.Filter
             search_fields = sampling_event_utils.search_fields
             ordering_fields = sampling_event_utils.ordering_fields
 
-            queryset = SamplingEvent.objects.filter(collection__name=collection_pk)
+            queryset = self.get_queryset()
 
             list_item_template = 'selia/components/select_list_items/sampling_events.html'
             filter_form_template = 'selia/components/filters/sampling_event.html'
