@@ -29,4 +29,5 @@ urlpatterns = [
     url(r'', include(('selia.urls', 'selia'))),
     url(r'^registration/', include(('registration.urls', 'registration'))),
     url(r'^file_handling/', include(('file_handler.urls', 'file_handler'))),
+    url(r'^process/upload/', include((('thumbnails_irekua.urls', 'thumbnails_irekua'))))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
