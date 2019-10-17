@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'irekua',
     'irekua_utils',
     'file_handler',
+    'thumbnails_irekua',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
