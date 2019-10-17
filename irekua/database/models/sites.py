@@ -1,5 +1,6 @@
 from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models import PointField
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.gis import forms
 from django.db import models
 from django.core.exceptions import ValidationError
@@ -49,11 +50,13 @@ class Site(IrekuaModelBaseUser):
         db_column='latitude',
         verbose_name=_('latitude'),
         help_text=_('Latitude of site (in decimal degrees)'),
+        validators=[MinValueValidator(-90), MaxValueValidator(90)],
         blank=True)
     longitude = models.FloatField(
         db_column='longitude',
         verbose_name=_('longitude'),
         help_text=_('Longitude of site (in decimal degrees)'),
+        validators=[MinValueValidator(-180), MaxValueValidator(180)],
         blank=True)
     altitude = models.FloatField(
         blank=True,

@@ -40,8 +40,8 @@ class SelectCollectionSiteSiteView(SeliaCreateView):
         if not hasattr(self, 'collection'):
             self.collection = Collection.objects.get(pk=self.request.GET['collection'])
 
-    def get_context_data(self):
-        context = super().get_context_data()
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
         context['collection'] = self.collection
         context['site_type'] = SiteType.objects.get(pk=self.request.GET['site_type'])
         context['list'] = self.get_site_list()
