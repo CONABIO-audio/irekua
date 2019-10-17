@@ -58,14 +58,6 @@ def handle_succesful_save(item):
         "result": {
             "item": {
                 "pk": item.pk,
-                "created_on": str(item.created_on),
-                "captured_on": str(item.captured_on),
-                "captured_on_year": str(item.captured_on_year),
-                "captured_on_month": str(item.captured_on_month),
-                "captured_on_day": str(item.captured_on_day),
-                "captured_on_hour": str(item.captured_on_hour),
-                "captured_on_minute": str(item.captured_on_minute),
-                "captured_on_second": str(item.captured_on_second),
                 "detail_url": reverse("selia:item_detail", args=[item.pk]),
                 "url": item.item_file.url
             }
@@ -83,14 +75,6 @@ def handle_validation_error(item, error):
             "result": {
                 "item": {
                     "pk": duplicate.pk,
-                    "created_on": str(duplicate.created_on),
-                    "captured_on": str(item.captured_on),
-                    "captured_on_year": str(item.captured_on_year),
-                    "captured_on_month": str(item.captured_on_month),
-                    "captured_on_day": str(item.captured_on_day),
-                    "captured_on_hour": str(item.captured_on_hour),
-                    "captured_on_minute": str(item.captured_on_minute),
-                    "captured_on_second": str(item.captured_on_second),
                     "detail_url": reverse("selia:item_detail", args=[duplicate.pk]),
                     "url": duplicate.item_file.url
                 }
