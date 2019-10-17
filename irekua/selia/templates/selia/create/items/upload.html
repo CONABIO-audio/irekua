@@ -19,9 +19,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
 <script src="https://unpkg.com/wavesurfer.js/dist/wavesurfer.js"></script>
 <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.spectrogram.js"></script>
+
 <script type="text/javascript" src="{% static 'selia/js/list.js' %}"></script>
 <script type="text/javascript" src="{% static 'selia/js/upload.js' %}"></script>
 <script type="text/javascript">
+
 let started_on = '{{ started_on }}';
 let ended_on = '{{ ended_on }}';
 let item_types = {{ item_types | safe }};
@@ -67,7 +69,7 @@ $(document).ready(function() {
 {% endblock %}
 
 {% block main-content %}
-  <form id="upload_item_form" action="?sampling_event_device={{ sampling_event_device.pk }}&licence={{ licence.pk }}" method="post" enctype="multipart/form-data" style="display:none;">
+  <form id="upload_item_form" action="{% url 'thumbnails_irekua:item_upload' %}?sampling_event_device={{ sampling_event_device.pk }}&licence={{ licence.pk }}" method="post" enctype="multipart/form-data" style="display:none;">
   {% csrf_token %}
   	<input type="hidden" id="collection_field" name="collection" value="{{ collection.pk }}">
   	<input type="hidden" id="sampling_event_device_field" name="sampling_event_device" value="{{ sampling_event_device.pk }}">
@@ -81,5 +83,6 @@ $(document).ready(function() {
     <input type="hidden" id="captured_on_timezone_field" name="captured_on_timezone" value="">
   	<input type="hidden" id="captured_on_field" name="captured_on" value="">
   </form>
+
   <div id="uploader_section" class="row justify-content-center" style="width:auto;"></div>
 {% endblock main-content %}

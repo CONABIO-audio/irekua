@@ -3,5 +3,5 @@ from .views import upload
 
 
 urlpatterns = [
-    path('', upload),
+    path('', upload, name="item_upload"),
 ]
