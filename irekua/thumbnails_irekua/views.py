@@ -5,6 +5,7 @@ from django.views.decorators.http import require_POST
 from django.forms import ModelForm
 
 from database.models import Item
+from .thumbnails import create_thumbnail
 
 
 class UploadForm(ModelForm):
@@ -53,6 +54,8 @@ def process_valid_form(request, form):
 
 
 def handle_succesful_save(item):
+    create_thumbnail(item)
+
     upload_result = {
         "result_type": "success",
         "result": {
