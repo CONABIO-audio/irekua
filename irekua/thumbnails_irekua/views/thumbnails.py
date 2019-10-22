@@ -8,8 +8,8 @@ from django.shortcuts import redirect
 
 @require_GET
 def generate_thumbnail(request):
-    Item.objects.get(pk=request.GET["pk"])
-    im = get_thumbnail(Item.item_thumbnail, '100x100', crop='center', quality=99)
+    item = Item.objects.get(pk=request.GET["pk"])
+    im = get_thumbnail(item.item_thumbnail, '100x100', crop='center', quality=99)
     return redirect(im.url)
 
 
