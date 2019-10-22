@@ -28,7 +28,4 @@ def create_thumbnail(item):
     processor = get_processor(mime_type)
     thumbnail = processor(item)
     item.item_thumbnail = thumbnail
-    print(thumbnail)
-    print(item)
     item.save()
-    print(item)

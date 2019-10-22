@@ -2,6 +2,8 @@ from thumbnails_irekua.thumbnails import register_processor
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import io
 from PIL import Image
+import numpy as np
+import librosa
 
 SIZE = (500,500)
 
