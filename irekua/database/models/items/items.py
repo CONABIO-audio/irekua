@@ -13,6 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from database.utils import empty_JSON
 from database.utils import hash_file
 from database.models.base import IrekuaModelBaseUser
+from sorl.thumbnail import ImageField
 
 
 mimetypes.init()
@@ -44,6 +45,30 @@ def get_item_path(instance, filename):
         ext=extension)
     return path
 
+def get_thumbnail_path(instance, filename):
+    path_fmt = os.path.join(
+        'thumbnails',
+        '{collection}',
+        '{sampling_event}',
+        '{sampling_event_device}',
+        '{hash}{ext}')
+
+    mime_type, __ = mimetypes.guess_type(filename)
+    extension = 'jpg'
+
+    sampling_event_device = instance.sampling_event_device
+    sampling_event = sampling_event_device.sampling_event
+    collection = sampling_event.collection
+
+    hash_string = instance.hash
+
+    path = path_fmt.format(
+        collection=collection.pk,
+        sampling_event=sampling_event.pk,
+        sampling_event_device=sampling_event_device.pk,
+        hash=hash_string,
+        ext=extension)
+    return path
 
 class Item(IrekuaModelBaseUser):
     hash_string = None
@@ -75,6 +100,13 @@ class Item(IrekuaModelBaseUser):
         db_column='item_file',
         verbose_name=_('item file'),
         help_text=_('Upload file associated to file'),
+        blank=True,
+        null=True)
+    item_thumbnail = ImageField(
+        upload_to=get_thumbnail_path,
+        db_column='item_thumbnail',
+        verbose_name=_('item thumbnail'),
+        help_text=_('Thumbnail associated to file'),
         blank=True,
         null=True)
     media_info = JSONField(

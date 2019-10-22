@@ -3899,6 +3899,7 @@ class FileUploader {
 	}
 	upload_single(file,callback) {
 	  var url = this.form.action;
+	  console.log(url)
 	  var formData = new FormData($(this.form)[0]);
 
 	  formData.set('item_file', file);

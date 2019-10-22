@@ -26,4 +26,9 @@ def get_processor(mime_type):
 def create_thumbnail(item):
     mime_type, _ = mimetypes.guess_type(item.item_file.url)
     processor = get_processor(mime_type)
-    thumbnail = processor(item.item_file)
+    thumbnail = processor(item)
+    item.item_thumbnail = thumbnail
+    print(thumbnail)
+    print(item)
+    item.save()
+    print(item)

@@ -68,7 +68,10 @@ INSTALLED_APPS = [
     'irekua_utils',
     'file_handler',
     'thumbnails_irekua',
+    'sorl.thumbnail',
 ]
+
+THUMBNAIL_DEBUG = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 SITE_ID = 1
