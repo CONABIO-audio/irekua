@@ -6,6 +6,8 @@ from irekua_utils.permissions.items import (
     items as item_permissions)
 from selia.views.detail_views.base import SeliaDetailView
 from selia.forms.json_field import JsonField
+import mimetypes
+mimetypes.init()
 
 
 class CollectionItemUpdateForm(forms.ModelForm):
@@ -31,7 +33,7 @@ class DetailItemView(SeliaDetailView):
     detail_template = 'selia/components/details/item.html'
     summary_template = 'selia/components/summaries/item.html'
     update_form_template = 'selia/components/update/item.html'
-    viewer_template = 'selia/components/viewers/item_image.html'
+    viewer_template = 'selia/components/viewers/item_audio.html'
 
     def has_view_permission(self):
         user = self.request.user
@@ -48,6 +50,17 @@ class DetailItemView(SeliaDetailView):
     def has_download_permission(self):
         user = self.request.user
         return item_permissions.download(user, item=self.object)
+
+    def get_object_mimetype(self):
+        mimeguess = mimetypes.guess_type(self.get_object().item_file.url)
+        return mimeguess[0]
+
+    def get_viewer_template(self):
+        mimetype = self.get_object_mimetype()
+        if mimetype == "audio/x-wav":
+            return 'selia/components/viewers/item_audio.html'
+        else:
+            return 'selia/components/viewers/item_image.html'
 
     def get_permissions(self):
         permissions = super().get_permissions()
@@ -67,6 +80,7 @@ class DetailItemView(SeliaDetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
+        context['mimetype'] = self.get_object_mimetype()
         context['collection_device'] = self.object
         context["next_object"] = self.get_next_object()
         context["prev_object"] = self.get_prev_object()
